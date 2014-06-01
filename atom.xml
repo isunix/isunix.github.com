@@ -4,7 +4,7 @@
   <title><![CDATA[Steven's Blog]]></title>
   <link href="http://isunix.github.io/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-05-31T21:47:25+08:00</updated>
+  <updated>2014-06-01T16:18:33+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,38 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Brew Update Errors Fixed]]></title>
+    <link href="http://isunix.github.io/blog/2014/06/01/brew-update-errors-fixed/"/>
+    <updated>2014-06-01T16:12:00+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/06/01/brew-update-errors-fixed</id>
+    <content type="html"><![CDATA[<p>I met several errors while updating my homebrew, one is:  </p>
+
+<p><img src="http://isunix.github.io/images/sun/first.png" />    </p>
+
+<p>the solution is:   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">cd `brew --prefix`    
+</span><span class="line">git remote add origin https://github.com/mxcl/homebrew.git   
+</span><span class="line">git fetch origin    
+</span><span class="line">git reset --hard origin/master 
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>the other is:   </p>
+
+<p><img src="http://isunix.github.io/images/sun/second.png" />    </p>
+
+<p>To address this this error, we just have have to change the permissions on the folder to a certain user:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">chown -R sun .git  </span></code></pre></td></tr></table></div></figure></notextile></div>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[On the Error Using Rake New_post Under Zsh]]></title>

@@ -5,11 +5,15 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>On the Error Using Rake New_post Under Zsh - Steven's Blog</title>
+  <title>Brew Update Errors Fixed - Steven's Blog</title>
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="When I issue the command “rake new_post[]” using the zsh, I got the error telling me that “no matches found”. I googled, it said if using “noglob &hellip;">
+  <meta name="description" content="I met several errors while updating my homebrew, one is: the solution is: 1
+2
+3
+4
+cd `brew --prefix` git remote add origin https://github.com/mxcl/ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +22,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://isunix.github.io/blog/2014/05/31/on-the-error-using-rake-new-post-under-zsh">
+  <link rel="canonical" href="http://isunix.github.io/blog/2014/06/01/brew-update-errors-fixed">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Steven's Blog" type="application/atom+xml">
@@ -53,7 +57,7 @@
   
   <header>
     
-      <h1 class="entry-title">On the Error Using Rake New_post Under Zsh</h1>
+      <h1 class="entry-title">Brew Update Errors Fixed</h1>
     
     
       <p class="meta">
@@ -69,26 +73,37 @@
   
 
 
-<time datetime="2014-05-31T17:48:54+08:00" pubdate data-updated="true">May 31<span>st</span>, 2014</time>
+<time datetime="2014-06-01T16:12:00+08:00" pubdate data-updated="true">Jun 1<span>st</span>, 2014</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>When I issue the command “rake new_post[]” using the zsh, I got the error telling me that “no matches found”. I googled, it said if using “noglob rake” rather than simply “rake”, this problem will be solved. But in my case, it does not work. </p>
+<div class="entry-content"><p>I met several errors while updating my homebrew, one is:  </p>
 
-<p>My expedient solution here is, issuing the followng command:   </p>
+<p><img src="/images/sun/first.png" />    </p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">rake "new_post[on the error using rake new_post under zsh]"</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>rather than in the normal way:   </p>
+<p>the solution is:   </p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">rake new_post["on the error using rake new_post under zsh"]</span></code></pre></td></tr></table></div></figure></notextile></div>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">cd `brew --prefix`    
+</span><span class="line">git remote add origin https://github.com/mxcl/homebrew.git   
+</span><span class="line">git fetch origin    
+</span><span class="line">git reset --hard origin/master 
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>It works in my case, but it is not a nice solution for sure.</p>
+<p>the other is:   </p>
+
+<p><img src="/images/sun/second.png" />    </p>
+
+<p>To address this this error, we just have have to change the permissions on the folder to a certain user:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">chown -R sun .git  </span></code></pre></td></tr></table></div></figure></notextile></div>
 </div>
 
 
@@ -111,12 +126,12 @@
   
 
 
-<time datetime="2014-05-31T17:48:54+08:00" pubdate data-updated="true">May 31<span>st</span>, 2014</time>
+<time datetime="2014-06-01T16:12:00+08:00" pubdate data-updated="true">Jun 1<span>st</span>, 2014</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/blog/'>Blog</a>
+    <a class='category' href='/blog/categories/git/'>git</a>
   
 </span>
 
@@ -132,10 +147,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2014/05/31/my-story-with-perl/" title="Previous Post: My Story With Perl">&laquo; My Story With Perl</a>
+        <a class="basic-alignment left" href="/blog/2014/05/31/on-the-error-using-rake-new-post-under-zsh/" title="Previous Post: on the error using rake new_post under zsh">&laquo; on the error using rake new_post under zsh</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2014/06/01/brew-update-errors-fixed/" title="Next Post: brew update errors fixed">brew update errors fixed &raquo;</a>
       
     </p>
   </footer>

@@ -296,6 +296,67 @@
 </span><span class="line">eval { &amp;rescue_scheme_42 };
 </span><span class="line">print "Continuing after error: $@" if $@;
 </span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>eval代码块后的分号是必须的， 因为eval是一个函数(而不是一个控制结构， 像if或者while那样)。但是这个块是真正的代码块并且可能包含词法变量(“my” 变量)还有其他的任意的声明。作为一个函数， eval像一个子程序那样是有着一个返回值的(最后一个被估值的表达式， 或者return关键字提前返回的值)。当然如果块中的代码失败了，没有值会返回。这在表两上下文中会给出undef，在列表上下文中会给出一个空的列表。因此， 另外一种计算均值的安全的方法是：  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">my $average = eval { $total / $count };
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>现在$average要么是商要么是undef， 这取决于这个操作完成地成功与否。  </p>
+
+<p>Perl甚至支持嵌套的eval代码块。只要eval在运行着， eval代码块在不或错误方面的的影响力就会延续下去， 所以eval能捕捉到嵌套的子程序调用的错误。尽管如此， eval没办法捕捉到那些最严重的错误， 就是那些Perl会停止运行的错误。 这些包括未捕获的信号， 内存溢出以及一些其他的灾难。 eval也不会捕捉语法的错误。因为Perl会把eval代码块同其余的代码一起编译， 它是在编译时而不是在运行时捕捉错误的。它也不会捕捉warnigns(警告)(尽管Perl提供了一种截取错误信息的方法，请参看$SIG{<strong>WARN</strong>}).  </p>
+
+<h2 id="eval-1">用eval来操作动态代码</h2>
+
+<p>还有第二种形式的eval， 它的参数是一个字符串表达式而不是一个块。它在运行时的时候编译运行来自字符串的代码。 尽管这个允许并且被支持的， 如果有不值得信任的数据进入到字符串中去的话， 会是很危险的。 除了几个很显著的例外之外， 我们建议你避免在字符串上使用eval。我们将会迟点使用它， 你可能在别人的代码中见到它， 所以我们还是在这里展示给你看它是怎么工作的把：  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">eval '$sum = 2 + 2';
+</span><span class="line">print "The sum is $sum\n";</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Perl会在这段代码的周围的词法上下文中去执行这些代码， 意味着这事实上如同我们就把代码直接输入在那里一样。eval的结果是最后被估值的表达式，所以其实我们并不需要eval中的整个的声明。 </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">#!/usr/bin/env perl     
+</span><span class="line">
+</span><span class="line">foreach my $operator (qw(+ - * /)) {
+</span><span class="line">	my $result = eval "2 $operator 2";
+</span><span class="line">	print "2 $operator 2 is $result\n";
+</span><span class="line">
+</span><span class="line">}
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>这里我们遍历了操作符 + - * /并且在我们的eval块中一个个地使用了它们。在我们传给eval的字符串中， 我们把$operator的值插入到字符串中去。 eval执行字符串所代表的代码， 然后返回最后被估值的表达式， 在前面我们把这个表达式赋值给了$result。   </p>
+
+<p>如果eval不能正常地编译运行我们交给它的Perl代码的话， 它就会像在块形式中那样设置$@的值。在下面的例子中， 我们想要捕获除零错误， 但是我们啥值也没有除以(另一种类型的错误)。   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">print 'The quotient is ', eval '5 /', "\n";
+</span><span class="line">warn $@ if $@;</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>这里eval会捕获语法错误， 把错误信息放到$@中， 在调用eval之后我们就会立即检查这个变量的。  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">The quotient is  
+</span><span class="line">syntax error at (eval 1) line 2, at EOF</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>后面在第10，17，还有18章中，我们会使用这个方式来选择性地加载模块。如果我们不能加载某个模块， Perl正常情况下会停止这个程序。 所以当这种情况发生的时候， 我们将会捕获到这个错误， 并且自行恢复。  </p>
+
+<p>为了避免你没有注意到我们前面的警告，我们再说一遍: 在使用这种形式的eval的时候要非常的小心。如果能找到另外一种完成你要做的事情的方法的时候，先尝试那个方法。我们会在接来下的第10章中使用它来从外部的文件加载代码， 但是那个时候我们还会展现给你一种更好的做那件事的方法。   </p>
+
+<h2 id="section-1">练习</h2>
+
+<ol>
+  <li>练习1[15 分钟] <br />
+写一个程序来接收来自命令行的一组文件名，使用grep来选择大小按比特位来算的话小于1000的文件名。使用map来变换这个列表中的字符串， 在每个文件名前放上4个空格， 在后面放上一个换行符。打印最终的结果列表。   </li>
+</ol>
 
 </div>
 

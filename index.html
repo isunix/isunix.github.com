@@ -9,7 +9,7 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="Today while I was running a php script from the PHPStrom by a browser, I got the following error telling me that “php-cgi not found.”. I have no &hellip;">
+  <meta name="description" content="模块是我们的程序的基础部分。他们提供可重用的子程序，变量，甚至面向对象的类。在我们建造自己的模块的过程中， 我们会向你展现一些你可能会感兴趣的。我们同样会看一些别人已经写好的模块的用法。 标准发布版本 Perl本身已经自带了很多的流行的模块。事实上， 最新进的50+ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -61,6 +61,102 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/08/intermediate-perl-di-san-zhang-shi-yong-mo-kuai/">Intermediate Perl 第三章 使用模块</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-06-08T01:16:53+08:00" pubdate data-updated="true">Jun 8<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>模块是我们的程序的基础部分。他们提供可重用的子程序，变量，甚至面向对象的类。在我们建造自己的模块的过程中， 我们会向你展现一些你可能会感兴趣的。我们同样会看一些别人已经写好的模块的用法。   </p>
+
+<h2 id="section">标准发布版本</h2>
+
+<p>Perl本身已经自带了很多的流行的模块。事实上， 最新进的50+MB的发布版本中的绝大部分都是来自于模块。在1996年10月， Perl 5.003_07版本中有98个模块。今天， 在2006年年初， Perl5.8.8有359个模块。事实上这是Perl的一个优势之一:它已经自带了很多的你在写有用的还有复杂的程序的时候所需要的东西， 那样就省了你的很多的工作了。   </p>
+
+<p>在整本书中， 我们都会试着识别出哪些模块是Perl自带的(在大部分情况下， 识别出它们是自哪一版开始进入Perl的)。我们将称呼这些为”核心模块” 或者强调它们是在”标准发布版本”中。如果你安装了Perl, 你应该就有了这些模块。由于当我们在写作本书的时候， 我们使用的是Perl 5.8.7, 我们将假定这就是当前的Perl的版本。    </p>
+
+<p>当你在开发自己的代码的时候， 你可能会考虑自己是否想要只使用核心模块，那样你就可以确信任何其他只要是和你的Perl版本是一样的人， 都将会有那些模块。我们将会避开这个争论， 主要是因为我们太爱CPAN了， 简直离不开它了。   </p>
+
+<h2 id="section-1">使用模块</h2>
+<p>几乎每一个Perl模块都跟有文档，即使我们可能不知道所有的幕后的魔术是怎么运作的，当我们知道如何使用接口的时候我们真的没必要担心那些。毕竟那就是接口存在的原因: 隐藏细节。   </p>
+
+<p>在我们的本地机器上， 我们可以使用perldoc命令来阅读模块的文档。我们把感兴趣的模块的名称给它，它就会帮我们输出模块的文档。   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">NAME
+	fileparse − split a pathname into pieces 
+</span><span class="line">
+	basename − extract just the filename from a path 
+</span><span class="line">
+	dirname − extract just the directory from a path
+</span><span class="line">	
+SYNOPSIS
+	use File::Basename;
+</span><span class="line">
+	($name,$path,$suffix) = fileparse($fullname,@suffixlist)    
+</span><span class="line">	fileparse_set_fstype($os_string);
+	$basename = basename($fullname,@suffixlist);
+	$dirname = dirname($fullname);</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>我们把文档的顶部的那段包含了进来是为了向你展示最重要的部分(至少是在你刚开始的时候是最重要的)。模块的文档一般都会遵循过去的unix主页的格式， 也就是以NAME还有SYNOPSIS部分开始。   </p>
+
+<p>大纲部分给出了模块使用的例子。如果我们能够停止一会儿理解， 然后跟着例子来， 我们就可以使用某个模块了。也就是说，可能你还不是很熟悉大纲中的某些Perl的技巧和语法，但是你可以仅仅是跟着例子来然后让一切运行完好。   </p>
+
+<p>现在由于Perl是过程式，函数式，面向对象以及其它的语言类型的综合体， Perl的模块也有着不同接口。我们将会以稍微有点不同的方式来使用这些模块，但是只要我们能够去查阅文档，就应该不会有问题的。   </p>
+
+<h2 id="section-2">功能性接口</h2>
+<p>为了加载一个模块，我们使用Perl内建的use。我们在这里不会进入所有具体的细节，但是在第10章还有第15章我们会的。现在我们只是想使用模块。让我们以File::Basename这个核心发布版本中的模块来开始。为了把它加载到我们的脚本中去， 我们来：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">use File::Basename;</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>当我们这么做的时候， File::Basename向我们的脚本中引进三个子例程，fileparse, basename 以及 dirname， 从此刻起， 我们可以这么来:   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">my $basename = basename( $some_full_path );
+</span><span class="line">my $dirname = dirname( $some_full_path);</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>这就好像是我们自己写了basename还有dirname这两个子例程， 或者它们像是(接近是)内建的Perl函数一样。 这些子程序会把路径名中的文件名还有目录名找出来。例如， 如果 $some_full_path 是 D:\Projects\IsIandRescue\plan7.rtf(假定程序是在windows机器上运行的), 那么$basename将会是plan7.rtf, $dirname将会是D:\Projects\IsIandRescue。    </p>
+
+<p>File::Basename这个模块自己会知道它是在何种机器上运行的, 因此它的函数能够明白怎么正确地针对我们可能遇到的分隔符来解析字符串。   </p>
+
+<p>然而，假定我们已经有了一个叫dirname的子程序， 现在我们就会用File::Basename中的定义把它覆盖掉了. 如果我们已经开启了warnings，我们将会看到一个消息声明。否则的话，Perl就完全地不关心了。   </p>
+
+<h2 id="section-3">选择引入什么</h2>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -812,57 +908,6 @@
 <p>It is very nice to meet someone who is very proficient in Perl. But what is to be noted is, you can learn from someone, but do not count on someone to help teach you, they do not have the obligations to do that. </p>
 
 <p>That is it, let us embark on a new journey!  </p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/05/24/clone-octopress-from-github-to-another-machine-and-publish-posts/">Clone Octopress From Github to Another Machine and Publish Posts</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-05-24T14:00:50+08:00" pubdate data-updated="true">May 24<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>When you want to clone a octopress blog from the github to a machine and then enabled to publish posts from the cloned repo, you can follow the following steps:   </p>
-
-<ol>
-  <li>git clone -b source https://github.com/isunix/isunix.github.com octopress    </li>
-  <li>cd octopress    </li>
-  <li>git clone https://github.com/isunix/isunix.github.com _deploy        </li>
-  <li>sudo gem install bundler   </li>
-  <li>bundle install    </li>
-  <li>rake new_post[“The Title of Your Article”]    </li>
-  <li>bundle exec rake generate</li>
-  <li>bundle exec rake preview    </li>
-  <li>bundle exec rake deploy    </li>
-  <li>git add . </li>
-  <li>git commit -m ‘your comment’  </li>
-  <li>git push origin source</li>
-</ol>
 </div>
   
   

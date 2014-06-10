@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Perl | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/perl/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-06-08T20:14:37+08:00</updated>
+  <updated>2014-06-10T20:54:35+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -190,6 +190,107 @@ use lib qw(/Users/home/Ginger);
 有的时候我们会在一个发布版本中看到Makefile.PL还有Build.PL这两个文件。那个时候我们该怎么做呢？我们可以使用任意一个。选择你最喜欢的来玩！  </p>
 
 <h2 id="section-5">在合适的时间来设定路径</h2>
+
+<p>Perl通过在特殊的Perl数组@INC中定义的路径来查找模块。use声明在编译时执行，所以它会在编译时查看模块搜索路径@INC。除非我们把@INC考虑在内，否则那会以一种很难理解的方式让我们的程序崩溃掉。   </p>
+
+<p>例如，假设我们有自己的目录/home/giliigan/lib, 我们把自己的模块Navigation::SeatOfPants放在/home/gilligan/lib/Navigation/SeatOfPants.pm里。当我们加载自己的模块的时候，Perl就找不到了。 </p>
+
+<p><code>
+use Navigation::SeatOfPants;
+</code>  <br />
+Perl会向我们抱怨它在@INC中找不到模块， 并且会展现给我们看在那个数组里的所有的路径:    </p>
+
+<p><code>
+Can't locate Navigation/SeatofPants.pm in @INC (@INC contains: ...)
+</code> <br />
+你可能会想我们应该仅仅在调用use之前把我们的模块的路径添加到@INC中去。然而，即使添加如下的东西:  </p>
+
+<p><code>
+unshift @INC, '/Users/gilligan/lib'; # 崩溃
+use Navigation::SeatOfPants;
+</code><br />
+也不会起作用的。为什么呢？因为unshift在运行时才起作用，这是use在编译之后的很长时间才发生的。这两个声明在词法上很接近， 但是在时间上并不接近。仅仅因为我们把它们写在了一块并不表示它们是以那样的顺序来执行的。我们想在use执行前改变@INC。一种处理这个的方式是在unshift周围添加一个BEGIN块:    </p>
+
+<p><code>
+BEGIN { unshift @INC, '/Users/gilligan/lib'; }
+use Navigation::SeatOfPants;
+</code> <br />
+现在这个BEGIN块就会在编译时编译还有运行了, 会接下来的use设置合适的路径。   </p>
+
+<p>然而，这很烦人而且需要的解释可能超出了你觉得舒服的范围了，尤其是对于那些后来的可能需要维护修改你的代码的人。让我们以一种我们之前用过的一种简单的声明来代替那一团东西:  </p>
+
+<p><code>
+use lib '/Users/gilligan/lib';
+use Navigation::SeatOfPants;
+</code> <br />
+这里， lib声明会接收一个或者多个参数然后把它们添加到@INC数组的开头，就如同之前的unshift所做的。这是行得通是因为它是在编译时执行的，而不是在运行时。因此它对紧接着的use是适时的。 </p>
+
+<p>一个use lib声明通常总是有一个地址依赖的路径名，一般情况下我们鼓励大家把它放到文件的开头的部分。这样当我们得移动文件到一个新的系统或者lib的路径有变化的时候，我们在找的时候还有更新的时候会方便点的。(当然，如果我们能够在标准的@INC地址中安装我们的模块的话，我们就可以避免使用use lib了， 但那并不总是实际的.)    </p>
+
+<p>要把use lib想成是“使用这个路径来找到我的库(还有模块)” 而不是使用这个目录。很经常的，我们会看到如下的代码:     </p>
+
+<p><code>
+use lib '/Users/gilligan/lib/Navigation/SeatOfPants.pm'; # 错误
+</code> <br />
+然后这个程序要会想为什么没有把定义给加载进来. 要注意use lib事实上是在编译时运行的，所以下面的也是不会起作用的:   </p>
+
+<p><code>
+my $LIB_DIR = '/Users/gilligan/lib';
+...
+use lib $LIB_DIR; # 崩溃
+use Navigation::SeatOfPants;
+</code><br />
+当然，Perl在编译时就会建立起$LIB_DIR的声明（所以用use strict的时候我们是不会得到错误警告的，尽管真正的use lib是会抱怨的)， 但是真正的/home/gilligan/lib的值是直到运行时才会赋值的。呀，又太迟了。  </p>
+
+<p>此时此刻，我们得在BEGIN块里放进一些东西，或者依靠另一个编译时操作:用use constant来设置一个常数:    </p>
+
+<p><code>
+use constant LIB_DIR =&gt; '/Users/gilligan/lib';
+...
+use lib LIB_DIR;
+use Navigation::SeatOfPants;
+</code><br />
+啊哈，又解决了。就是这个样子了，除非我们需要模块依赖一个计算的结果。(啥时该休止啊，快来人让这个疯狂的行为停止掉吧!)这应该会解决99%我们的需要了。  </p>
+
+<h2 id="section-6">解决模块的依赖性</h2>
+
+<p>我们刚刚看到如果我们想要安装一个需要使用Module::Build的模块，我们得先安装Module::Build。那只是令我们头疼的依赖性问题中的很小的一个例子了。 我们可能得安装好几个其他的模块，它们当中的每一个又都反过来得依赖更多的模块。   </p>
+
+<p>幸运的是， 我们有工具来帮助我们。CPAM.pm模块自从Perl5.004就是核心发布版本的一个部分了。它给了我们一个交互的安装shell.</p>
+
+<p>```
+$ perl -MCPAN -e shell
+cpan shell –CPAN exploration ….
+Readline support </p>
+
+<p>cpan&gt;
+```<br />
+为了安装一个模块还有它的依赖，我们使用命令install然后跟着模块的名字.现在CPAN.pm处理所有的下载，解压，building, 测试嗨哟安装模块的过程， 而且它会递归地处理那些依赖:</p>
+
+<p><code>
+cpan&gt; install CGI::Prototype
+</code> <br />
+只是那也太多了，所以Brian创建了一个脚本cpan，它也是跟着Perl发行版本的。我们只要把我们想要安装的模块列出来，它就会帮我们处理接下来的情况了:<br />
+<code>
+cpan CGI::Prototype HTTP::Cookies::Safari Test::Pod
+</code> </p>
+
+<p>另一个很酷的工具是CPANPLUS，是CPAN.pm的完全的重写，但是在我么写作本书的时候它还不是核心发布版本中的一部分. <br />
+<code>
+$ perl -MCPANPLUS -e shell
+CPAN Terminal&gt;
+</code><br />
+为了安装一个模块，我们使用i命令.<br />
+<code>
+CPAN Terminal&gt; i CGI::Prototype
+</code> <br />
+CPANPLUS模块带了一个很方便的脚本，叫cpanp。我们我们给它i开关还有一组模块，它就会像之前那样安装它们了  <br />
+<code>
+cpan i CGI::Prototype HTTP::Cookies::Safari Test::Pod
+</code>  </p>
+
+<h2 id="section-7">练习</h2>
+<p>(未翻)</p>
 
 ]]></content>
   </entry>

@@ -4,7 +4,7 @@
   <title><![CDATA[Steven's Blog]]></title>
   <link href="http://isunix.github.io/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-06-10T20:58:53+08:00</updated>
+  <updated>2014-06-11T19:49:33+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,87 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[中级Perl 引用入门]]></title>
+    <link href="http://isunix.github.io/blog/2014/06/11/zhong-ji-perl-yin-yong-ru-men/"/>
+    <updated>2014-06-11T18:45:27+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/06/11/zhong-ji-perl-yin-yong-ru-men</id>
+    <content type="html"><![CDATA[<p>引用是Perl的复杂的数据结构，面向对象编程还有花哨的子程序的基石。它们是在Perl4还有Perl5这段时间被添加进去的。    </p>
+
+<p>一个Perl的标量变量存有一个单一的值。一个数组存有一个或者多个标量的有序列表。一个哈希存有一组标量作为值， 然后以另外一组值作为键。尽管一个标量可以是一个任意的字符串，那样就允许复杂的数据被嵌入到数组或者哈希里面去，但是上面的三种数据类型没有一种是很合适复杂的数据间的相互关系的。这就是引用的活了。让我们以一个例子开头看下引用的重要性。  </p>
+
+<h2 id="section">在许多数组上面执行同样的任务</h2>
+
+<p>在Minnow开始一个短途旅途的(例如，一个3小时的观光), 我们应该检查每一个乘客还有全体乘务人员来确保他们都拥有必备的旅行用品。比如说， 为了还上航行的安全，Minnow穿上的每个人都得有个救生圈，一些遮光剂，一个水壶还有一个雨衣。我们可以写一些代码来检查Skipper的储备。   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">my @required = qw(preserver sunscreen water_bottle jacket);
+my @skipper = qw(blue_shirt hat jacket preserver sunscreen);
+for my $item (@required) {
+	unless (grep $item eq $_, @skipper) { # not found in list?
+	print "skipper is missing $item.\n";
+	}
+}</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>grep在标量上下文中返回表达式 $item eq $_ 返回 true 的次数，当这件东西在清单里的时候就是1，不在的话就是0. 如果值是0的话，就是假,这个时候我们就把信息给打印出来。   </p>
+
+<p>当然如果我们想要检查Gilligan还有Professor的话，我们可能会写如下的代码:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">my @gilligan = qw(red_shirt hat lucky_socks water_bottle);
+for my $item (@required) {
+	unless (grep $item eq $_, @gilligan) { # not found in list?
+	print "gilligan is missing $item.\n";
+	}
+}
+
+my @professor = qw(sunscreen water_bottle slide_rule batteries radio);
+for my $item (@required) {
+	unless (grep $item eq $_, @professor) { # not found in list?
+	print "professor is missing $item.\n";
+	}
+}</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>你可能开始注意到这里有很多的冗余的代码，并且想到我们应该把它重构到一个可以重用的通用的子程序中(你是正确的):   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">sub check_required_items {
+	my $who = shift;
+	my @required = qw(preserver sunscreen water_bottle jacket);
+	for my $item (@required) {
+		unless (grep $item eq $_, @_) { # not found in list?
+			print "$who is missing $item.\n";
+		}
+	}
+}
+
+my @gilligan = qw(red_shirt hat lucky_socks water_bottle);
+check_required_items('gilligan', @gilligan);</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Perl一开始通过它的@_数组给了子程序5个条款：名字gilligan还有属于Gilligan的4个东西。在shift操作之后，@_就只有4个东西了。因此grep通过和清单比对来检查每个所必备的东西。   </p>
+
+<p>到目前为止，一切都很好。我们可以同过一点多余的代码来检查Skipper还有Professor的：  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">my @skipper = qw(blue_shirt hat jacket preserver sunscreen);
+my @professor = qw(sunscreen water_bottle slide_rule batteries radio);
+check_required_items('skipper', @skipper);
+check_required_items('professor', @professor);
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>对于其他的乘客，我们在需要的地方重复下就行了。尽管这个代码符合一开始的要求，我们有两个问题得处理: </p>
+
+<p>*为了创建@_, Perl把数组的整个内容都拷下下来扫描。对于一个元素的话这没什么问题，但是如果数组很大的话，把数据拷贝然后仅仅就是为了传给子程序的话就显得有点浪费了。   </p>
+
+<p>*假如我们想要修改原先的数组来迫使供应清单包括一些必备的东西，因为我们在子程序中有一个副本(传值),对@_做的任何的修改都不会自动地反映到对应的供应清单数组中去。   </p>
+
+<p>为了解决一个或者两个问题，我们需要的是引用传递而非值传递。这就是doctor(或者Professor)所要求的。  </p>
+
+<h2 id="section-1">对一个数组做引用</h2>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Intermediate Perl 第三章 使用模块]]></title>

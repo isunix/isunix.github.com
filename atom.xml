@@ -4,7 +4,7 @@
   <title><![CDATA[Steven's Blog]]></title>
   <link href="http://isunix.github.io/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-06-11T19:49:33+08:00</updated>
+  <updated>2014-06-11T21:02:08+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -90,6 +90,50 @@ check_required_items('professor', @professor);
 <p>为了解决一个或者两个问题，我们需要的是引用传递而非值传递。这就是doctor(或者Professor)所要求的。  </p>
 
 <h2 id="section-1">对一个数组做引用</h2>
+
+<p>在反斜线()的很多的其他的意思当中，它还是”对某项东西进行引用”的操作符。当我们把它用在一个数组名的前面的时候，比如， \@skipper， 他的结果就是对那个数组的引用。对数组的引用就像是指针: 它指向数组，但是它不是数组本身。  </p>
+
+<p>任何变量适宜地方都是适用于引用。它可以作用于一个数组或者哈希的元素，或者一个普通的标量变量， 像下面这样:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">my $reference_to_skipper = \@skipper;</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>引用可以被拷贝:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">my $second_reference_to_skipper = $reference_to_skipper;</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>甚至于：  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">my $third_reference_to_skipper = \@skipper; </span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>我们可以相互交换这3个引用。我们甚至可以说它们是相同的，因为事实上，它们就是相同的东西:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">if ($reference_to_skipper = = $second_reference_to_skipper) {
+	print "They are identical references.\n";
+}</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>这个等式比较两个引用的数值形式。这里引用的数值形式是@skipper内部数据结构的唯一的内存地址, 它在变量的生命周期里是不会改变的。如果我们使用eq或者print来查看它的字符串形式，我们会得到调试出来的字符串:   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">ARRAY(0x1a2b3c)</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>对于这个数组它也是唯一的，因为它包含了数组的唯一地址的16进制表示。调试出来的字符串同样也表示了这是个数组引用。当然要是我们在我们的代码中看到类似的输出，那就基本上表示了有bug。使用我们代码的用户是对16进制的存储地址块没有兴趣的。  </p>
+
+<p>因为我们可以拷贝一个引用，向一个子程序传递一个参数事实上就是拷贝，我们可以使用下面的代码来向子程序中的数组传递一个引用:   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">my @skipper = qw(blue_shirt hat jacket preserver sunscreen);
+check_required_items("The Skipper", \@skipper);
+
+sub check_required_items {
+	my $who = shift;
+	my $items = shift;
+	my @required = qw(preserver sunscreen water_bottle jacket);
+	...
+}</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>现在子程序中的$items是对数组@skipper的一个引用。但是我么怎么能够从一个引用得到我们原先的数组呢? 那当然是我们对引用进行解引用了。</p>
+
+<h2 id="section-2">对数组引用进行解引用</h2>
 
 ]]></content>
   </entry>

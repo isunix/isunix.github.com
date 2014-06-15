@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Dancer | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/dancer/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-06-16T00:11:45+08:00</updated>
+  <updated>2014-06-16T00:17:13+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -44,8 +44,9 @@ get qr{/hello/([\w]+)} =&gt; sub {
 };
 </code>  </p>
 
-<p>4.Routes may include some matching conditions (on the useragent and the hostname at the moment):   <br />
-```perl
+<p>4.Routes may include some matching conditions (on the useragent and the hostname at the moment):     </p>
+
+<p>```perl  <br />
 get ‘/foo’, {agent =&gt; ‘Songbird (\d.\d)[\d\/]*?’} =&gt; sub {
   ‘foo method for songbird’
 }</p>
@@ -55,10 +56,10 @@ get ‘/foo’, {agent =&gt; ‘Songbird (\d.\d)[\d\/]*?’} =&gt; sub {
 }
 ```  </p>
 
-<p>5.An action can choose not to serve the current request and ask Dancer to process the request with the next matching route. This is done with the pass keyword, like in the following example:
-```perl  </p>
+<p>5.An action can choose not to serve the current request and ask Dancer to process the request with the next matching route. This is done with the pass keyword, like in the following example:    </p>
 
-<p>get ‘/say/:word’ =&gt; sub {
+<p>```perl
+get ‘/say/:word’ =&gt; sub {
     return pass if (params-&gt;{word} =~ /^\d+$/);
     “I say a word: “.params-&gt;{word};
 };</p>
@@ -72,12 +73,14 @@ get ‘/foo’, {agent =&gt; ‘Songbird (\d.\d)[\d\/]*?’} =&gt; sub {
 
 <p>7.You can use the load method to include additional routes into your application.</p>
 
-<p>8.A Dancer application can access the information from its config file easily with the config keyword:
-<code>perl
-get '/appname' =&gt; sub {
-    return "This is " . config-&gt;{appname};
+<p>8.A Dancer application can access the information from its config file easily with the config keyword:    </p>
+
+<p>```perl    </p>
+
+<p>get ‘/appname’ =&gt; sub {
+    return “This is “ . config-&gt;{appname};
 };
-</code>   </p>
+```   </p>
 
 <p>9.In order to enable the logging system for your application, you first have to start the logger engine in your config.yml:   </p>
 

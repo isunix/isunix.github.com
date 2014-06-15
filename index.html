@@ -128,25 +128,27 @@ get &#39;/hello/:name?&#39; =&gt; sub { &quot;Hello there &quot &hellip;">
 </span><span class="line"><span class="p">};</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>4.Routes may include some matching conditions (on the useragent and the hostname at the moment):   <br />
-&lt;div class=&#8217;bogus-wrapper&#8217;&gt;<notextile><figure class="code">&lt;figcaption&gt;<span></span>&lt;/figcaption&gt;&lt;div class=&#8221;highlight&#8221;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#8221;gutter&#8221;&gt;&lt;pre class=&#8221;line-numbers&#8221;&gt;<span class="line-number">1</span>
+<p>4.Routes may include some matching conditions (on the useragent and the hostname at the moment):     </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
 <span class="line-number">3</span>
 <span class="line-number">4</span>
 <span class="line-number">5</span>
 <span class="line-number">6</span>
 <span class="line-number">7</span>
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217;&gt;&lt;pre&gt;<code class="perl"><span class="line"><span class="n">get</span> <span class="s">&#39;/foo&#39;</span><span class="p">,</span> <span class="p">{</span><span class="n">agent</span> <span class="o">=&gt;</span> <span class="s">&#39;Songbird (\d\.\d)[\d\/]*?&#39;</span><span class="p">}</span> <span class="o">=&gt;</span> <span class="k">sub </span><span class="p">{</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">get</span> <span class="s">&#39;/foo&#39;</span><span class="p">,</span> <span class="p">{</span><span class="n">agent</span> <span class="o">=&gt;</span> <span class="s">&#39;Songbird (\d\.\d)[\d\/]*?&#39;</span><span class="p">}</span> <span class="o">=&gt;</span> <span class="k">sub </span><span class="p">{</span>
 </span><span class="line">  <span class="s">&#39;foo method for songbird&#39;</span>
 </span><span class="line"><span class="p">}</span>
 </span><span class="line">
 </span><span class="line"><span class="n">get</span> <span class="s">&#39;/foo&#39;</span> <span class="o">=&gt;</span> <span class="k">sub </span><span class="p">{</span>
 </span><span class="line">  <span class="s">&#39;all browsers except songbird&#39;</span>
 </span><span class="line"><span class="p">}</span>
-</span></code>&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</figure></notextile>&lt;/div&gt;  </p>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>5.An action can choose not to serve the current request and ask Dancer to process the request with the next matching route. This is done with the pass keyword, like in the following example:
-&lt;div class=&#8217;bogus-wrapper&#8217;&gt;<notextile><figure class="code">&lt;figcaption&gt;<span></span>&lt;/figcaption&gt;&lt;div class=&#8221;highlight&#8221;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#8221;gutter&#8221;&gt;&lt;pre class=&#8221;line-numbers&#8221;&gt;<span class="line-number">1</span>
+<p>5.An action can choose not to serve the current request and ask Dancer to process the request with the next matching route. This is done with the pass keyword, like in the following example:    </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
 <span class="line-number">3</span>
 <span class="line-number">4</span>
@@ -154,7 +156,7 @@ get &#39;/hello/:name?&#39; =&gt; sub { &quot;Hello there &quot &hellip;">
 <span class="line-number">6</span>
 <span class="line-number">7</span>
 <span class="line-number">8</span>
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217;&gt;&lt;pre&gt;<code class="perl"><span class="line"><span class="n">get</span> <span class="s">&#39;/say/:word&#39;</span> <span class="o">=&gt;</span> <span class="k">sub </span><span class="p">{</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">get</span> <span class="s">&#39;/say/:word&#39;</span> <span class="o">=&gt;</span> <span class="k">sub </span><span class="p">{</span>
 </span><span class="line">    <span class="k">return</span> <span class="n">pass</span> <span class="k">if</span> <span class="p">(</span><span class="n">params</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">word</span><span class="p">}</span> <span class="o">=~</span><span class="sr"> /^\d+$/</span><span class="p">);</span>
 </span><span class="line">    <span class="s">&quot;I say a word: &quot;</span><span class="o">.</span><span class="n">params</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">word</span><span class="p">};</span>
 </span><span class="line"><span class="p">};</span>
@@ -162,20 +164,21 @@ get &#39;/hello/:name?&#39; =&gt; sub { &quot;Hello there &quot &hellip;">
 </span><span class="line"><span class="n">get</span> <span class="s">&#39;/say/:number&#39;</span> <span class="o">=&gt;</span> <span class="k">sub </span><span class="p">{</span>
 </span><span class="line">    <span class="s">&quot;I say a number: &quot;</span><span class="o">.</span><span class="n">params</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">number</span><span class="p">};</span>
 </span><span class="line"><span class="p">};</span>
-</span></code>&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</figure></notextile>&lt;/div&gt;   </p>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>6.Before hooks, after hooks, before_template_render hooks. </p>
 
 <p>7.You can use the load method to include additional routes into your application.</p>
 
-<p>8.A Dancer application can access the information from its config file easily with the config keyword:
-&lt;div class=&#8217;bogus-wrapper&#8217;&gt;<notextile><figure class="code">&lt;figcaption&gt;<span></span>&lt;/figcaption&gt;&lt;div class=&#8221;highlight&#8221;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#8221;gutter&#8221;&gt;&lt;pre class=&#8221;line-numbers&#8221;&gt;<span class="line-number">1</span>
+<p>8.A Dancer application can access the information from its config file easily with the config keyword:    </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
 <span class="line-number">3</span>
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217;&gt;&lt;pre&gt;<code class="perl"><span class="line"><span class="n">get</span> <span class="s">&#39;/appname&#39;</span> <span class="o">=&gt;</span> <span class="k">sub </span><span class="p">{</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">get</span> <span class="s">&#39;/appname&#39;</span> <span class="o">=&gt;</span> <span class="k">sub </span><span class="p">{</span>
 </span><span class="line">    <span class="k">return</span> <span class="s">&quot;This is &quot;</span> <span class="o">.</span> <span class="n">config</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">appname</span><span class="p">};</span>
 </span><span class="line"><span class="p">};</span>
-</span></code>&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</figure></notextile>&lt;/div&gt;   </p>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>9.In order to enable the logging system for your application, you first have to start the logger engine in your config.yml:   </p>
 

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Perl | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/perl/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-06-14T15:08:28+08:00</updated>
+  <updated>2014-06-15T18:19:38+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[中级Perl 引用入门]]></title>
+    <title type="html"><![CDATA[Intermediate Perl 第四章 引用入门]]></title>
     <link href="http://isunix.github.io/blog/2014/06/11/zhong-ji-perl-yin-yong-ru-men/"/>
     <updated>2014-06-11T18:45:27+08:00</updated>
     <id>http://isunix.github.io/blog/2014/06/11/zhong-ji-perl-yin-yong-ru-men</id>
@@ -26,7 +26,7 @@
 
 <p>在Minnow开始一个短途旅途的(例如，一个3小时的观光), 我们应该检查每一个乘客还有全体乘务人员来确保他们都拥有必备的旅行用品。比如说， 为了还上航行的安全，Minnow穿上的每个人都得有个救生圈，一些遮光剂，一个水壶还有一个雨衣。我们可以写一些代码来检查Skipper的储备。   </p>
 
-<p><code>
+<p><code>perl
 my @required = qw(preserver sunscreen water_bottle jacket);
 my @skipper = qw(blue_shirt hat jacket preserver sunscreen);
 for my $item (@required) {
@@ -40,7 +40,7 @@ for my $item (@required) {
 
 <p>当然如果我们想要检查Gilligan还有Professor的话，我们可能会写如下的代码:  </p>
 
-<p>```
+<p>```perl
 my @gilligan = qw(red_shirt hat lucky_socks water_bottle);
 for my $item (@required) {
 	unless (grep $item eq $_, @gilligan) { # not found in list?
@@ -58,7 +58,7 @@ for my $item (@required) {
 
 <p>你可能开始注意到这里有很多的冗余的代码，并且想到我们应该把它重构到一个可以重用的通用的子程序中(你是正确的):   </p>
 
-<p>```
+<p>```perl
 sub check_required_items {
 	my $who = shift;
 	my @required = qw(preserver sunscreen water_bottle jacket);
@@ -77,7 +77,7 @@ check_required_items(‘gilligan’, @gilligan);
 
 <p>到目前为止，一切都很好。我们可以同过一点多余的代码来检查Skipper还有Professor的：  </p>
 
-<p><code>
+<p><code>perl
 my @skipper = qw(blue_shirt hat jacket preserver sunscreen);
 my @professor = qw(sunscreen water_bottle slide_rule batteries radio);
 check_required_items('skipper', @skipper);
@@ -109,26 +109,26 @@ my $second_reference_to_skipper = $reference_to_skipper;
 </code><br />
 甚至于：  </p>
 
-<p><code>
+<p><code>perl
 my $third_reference_to_skipper = \@skipper; 
 </code> <br />
 我们可以相互交换这3个引用。我们甚至可以说它们是相同的，因为事实上，它们就是相同的东西:  </p>
 
-<p><code>
+<p><code>perl
 if ($reference_to_skipper = = $second_reference_to_skipper) {
 	print "They are identical references.\n";
 }
 </code><br />
 这个等式比较两个引用的数值形式。这里引用的数值形式是@skipper内部数据结构的唯一的内存地址, 它在变量的生命周期里是不会改变的。如果我们使用eq或者print来查看它的字符串形式，我们会得到调试出来的字符串:   </p>
 
-<p><code>
+<p><code>perl
 ARRAY(0x1a2b3c)
 </code><br />
 对于这个数组它也是唯一的，因为它包含了数组的唯一地址的16进制表示。调试出来的字符串同样也表示了这是个数组引用。当然要是我们在我们的代码中看到类似的输出，那就基本上表示了有bug。使用我们代码的用户是对16进制的存储地址块没有兴趣的。  </p>
 
 <p>因为我们可以拷贝一个引用，向一个子程序传递一个参数事实上就是拷贝，我们可以使用下面的代码来向子程序中的数组传递一个引用:   </p>
 
-<p>```
+<p>```perl
 my @skipper = qw(blue_shirt hat jacket preserver sunscreen);
 check_required_items(“The Skipper”, \@skipper);</p>
 

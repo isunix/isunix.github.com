@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>中级Perl 引用入门 - Steven's Blog</title>
+  <title>Intermediate Perl 第四章 引用入门 - Steven's Blog</title>
   <meta name="author" content="Steven Sun">
 
   
@@ -54,7 +54,7 @@
   
   <header>
     
-      <h1 class="entry-title">中级Perl 引用入门</h1>
+      <h1 class="entry-title">Intermediate Perl 第四章 引用入门</h1>
     
     
       <p class="meta">
@@ -85,59 +85,94 @@
 
 <p>在Minnow开始一个短途旅途的(例如，一个3小时的观光), 我们应该检查每一个乘客还有全体乘务人员来确保他们都拥有必备的旅行用品。比如说， 为了还上航行的安全，Minnow穿上的每个人都得有个救生圈，一些遮光剂，一个水壶还有一个雨衣。我们可以写一些代码来检查Skipper的储备。   </p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">my @required = qw(preserver sunscreen water_bottle jacket);
-my @skipper = qw(blue_shirt hat jacket preserver sunscreen);
-for my $item (@required) {
-	unless (grep $item eq $_, @skipper) { # not found in list?
-	print "skipper is missing $item.\n";
-	}
-}</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">@required</span> <span class="o">=</span> <span class="sx">qw(preserver sunscreen water_bottle jacket)</span><span class="p">;</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">@skipper</span> <span class="o">=</span> <span class="sx">qw(blue_shirt hat jacket preserver sunscreen)</span><span class="p">;</span>
+</span><span class="line"><span class="k">for</span> <span class="k">my</span> <span class="nv">$item</span> <span class="p">(</span><span class="nv">@required</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">	<span class="k">unless</span> <span class="p">(</span><span class="nb">grep</span> <span class="nv">$item</span> <span class="ow">eq</span> <span class="nv">$_</span><span class="p">,</span> <span class="nv">@skipper</span><span class="p">)</span> <span class="p">{</span> <span class="c1"># not found in list?</span>
+</span><span class="line">	<span class="k">print</span> <span class="s">&quot;skipper is missing $item.\n&quot;</span><span class="p">;</span>
+</span><span class="line">	<span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>grep在标量上下文中返回表达式 $item eq $_ 返回 true 的次数，当这件东西在清单里的时候就是1，不在的话就是0. 如果值是0的话，就是假,这个时候我们就把信息给打印出来。   </p>
 
 <p>当然如果我们想要检查Gilligan还有Professor的话，我们可能会写如下的代码:  </p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">my @gilligan = qw(red_shirt hat lucky_socks water_bottle);
-for my $item (@required) {
-	unless (grep $item eq $_, @gilligan) { # not found in list?
-	print "gilligan is missing $item.\n";
-	}
-}
-
-my @professor = qw(sunscreen water_bottle slide_rule batteries radio);
-for my $item (@required) {
-	unless (grep $item eq $_, @professor) { # not found in list?
-	print "professor is missing $item.\n";
-	}
-}</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">@gilligan</span> <span class="o">=</span> <span class="sx">qw(red_shirt hat lucky_socks water_bottle)</span><span class="p">;</span>
+</span><span class="line"><span class="k">for</span> <span class="k">my</span> <span class="nv">$item</span> <span class="p">(</span><span class="nv">@required</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">	<span class="k">unless</span> <span class="p">(</span><span class="nb">grep</span> <span class="nv">$item</span> <span class="ow">eq</span> <span class="nv">$_</span><span class="p">,</span> <span class="nv">@gilligan</span><span class="p">)</span> <span class="p">{</span> <span class="c1"># not found in list?</span>
+</span><span class="line">	<span class="k">print</span> <span class="s">&quot;gilligan is missing $item.\n&quot;</span><span class="p">;</span>
+</span><span class="line">	<span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="k">my</span> <span class="nv">@professor</span> <span class="o">=</span> <span class="sx">qw(sunscreen water_bottle slide_rule batteries radio)</span><span class="p">;</span>
+</span><span class="line"><span class="k">for</span> <span class="k">my</span> <span class="nv">$item</span> <span class="p">(</span><span class="nv">@required</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">	<span class="k">unless</span> <span class="p">(</span><span class="nb">grep</span> <span class="nv">$item</span> <span class="ow">eq</span> <span class="nv">$_</span><span class="p">,</span> <span class="nv">@professor</span><span class="p">)</span> <span class="p">{</span> <span class="c1"># not found in list?</span>
+</span><span class="line">	<span class="k">print</span> <span class="s">&quot;professor is missing $item.\n&quot;</span><span class="p">;</span>
+</span><span class="line">	<span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>你可能开始注意到这里有很多的冗余的代码，并且想到我们应该把它重构到一个可以重用的通用的子程序中(你是正确的):   </p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">sub check_required_items {
-	my $who = shift;
-	my @required = qw(preserver sunscreen water_bottle jacket);
-	for my $item (@required) {
-		unless (grep $item eq $_, @_) { # not found in list?
-			print "$who is missing $item.\n";
-		}
-	}
-}
-
-my @gilligan = qw(red_shirt hat lucky_socks water_bottle);
-check_required_items('gilligan', @gilligan);</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">sub </span><span class="nf">check_required_items</span> <span class="p">{</span>
+</span><span class="line">	<span class="k">my</span> <span class="nv">$who</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
+</span><span class="line">	<span class="k">my</span> <span class="nv">@required</span> <span class="o">=</span> <span class="sx">qw(preserver sunscreen water_bottle jacket)</span><span class="p">;</span>
+</span><span class="line">	<span class="k">for</span> <span class="k">my</span> <span class="nv">$item</span> <span class="p">(</span><span class="nv">@required</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">		<span class="k">unless</span> <span class="p">(</span><span class="nb">grep</span> <span class="nv">$item</span> <span class="ow">eq</span> <span class="nv">$_</span><span class="p">,</span> <span class="nv">@_</span><span class="p">)</span> <span class="p">{</span> <span class="c1"># not found in list?</span>
+</span><span class="line">			<span class="k">print</span> <span class="s">&quot;$who is missing $item.\n&quot;</span><span class="p">;</span>
+</span><span class="line">		<span class="p">}</span>
+</span><span class="line">	<span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="k">my</span> <span class="nv">@gilligan</span> <span class="o">=</span> <span class="sx">qw(red_shirt hat lucky_socks water_bottle)</span><span class="p">;</span>
+</span><span class="line"><span class="n">check_required_items</span><span class="p">(</span><span class="s">&#39;gilligan&#39;</span><span class="p">,</span> <span class="nv">@gilligan</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>Perl一开始通过它的@_数组给了子程序5个条款：名字gilligan还有属于Gilligan的4个东西。在shift操作之后，@_就只有4个东西了。因此grep通过和清单比对来检查每个所必备的东西。   </p>
 
 <p>到目前为止，一切都很好。我们可以同过一点多余的代码来检查Skipper还有Professor的：  </p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">my @skipper = qw(blue_shirt hat jacket preserver sunscreen);
-my @professor = qw(sunscreen water_bottle slide_rule batteries radio);
-check_required_items('skipper', @skipper);
-check_required_items('professor', @professor);
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">@skipper</span> <span class="o">=</span> <span class="sx">qw(blue_shirt hat jacket preserver sunscreen)</span><span class="p">;</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">@professor</span> <span class="o">=</span> <span class="sx">qw(sunscreen water_bottle slide_rule batteries radio)</span><span class="p">;</span>
+</span><span class="line"><span class="n">check_required_items</span><span class="p">(</span><span class="s">&#39;skipper&#39;</span><span class="p">,</span> <span class="nv">@skipper</span><span class="p">);</span>
+</span><span class="line"><span class="n">check_required_items</span><span class="p">(</span><span class="s">&#39;professor&#39;</span><span class="p">,</span> <span class="nv">@professor</span><span class="p">);</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>对于其他的乘客，我们在需要的地方重复下就行了。尽管这个代码符合一开始的要求，我们有两个问题得处理: </p>

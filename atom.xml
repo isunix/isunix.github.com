@@ -4,7 +4,7 @@
   <title><![CDATA[Steven's Blog]]></title>
   <link href="http://isunix.github.io/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-06-15T18:23:07+08:00</updated>
+  <updated>2014-06-15T20:11:09+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -185,6 +185,215 @@
 <p>现在子程序中的$items是对数组@skipper的一个引用。但是我么怎么能够从一个引用得到我们原先的数组呢? 那当然是我们对引用进行解引用了。</p>
 
 <h2 id="section-2">对数组引用进行解引用</h2>
+
+<p>如果你看一下@skipper的话，你会发现他包含了两部分：@符号以及数组的名字。类似的， 语法$syntax[1]包含了中间部分的数组名以及在外围部分的一些语法来得到数组的第二个元素(指标值1是第二个元素因为指标值从0开始).    </p>
+
+<p>下面有个小的技巧: 我们可以向数组中放置任何一个包含在大括号中的引用，来代替数组名，这样就得到了一个获得原先数组的方法。也就是说，任何我们用skipper来命令数组的地方，我们都可以使用大括号中包含引用的形式.：{$items}。例如， 下面的这两行都表示整个的数组。  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">@</span> <span class="nv">skipper</span>
+</span><span class="line">
+</span><span class="line"><span class="nv">@</span><span class="p">{</span> <span class="nv">$items</span> <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>而下面的这两行都表示了数组的第二个元素:   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">$skipper</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</span><span class="line">
+</span><span class="line"><span class="nv">$</span><span class="p">{</span><span class="nv">$items</span><span class="p">}[</span><span class="mi">1</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>通过使用引用过的形式，我们把代码还有获取数组的方法从实际的数组分离开了。让我们看一下这是怎样改变了这个子程序的其余的部分的。   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">sub </span><span class="nf">check_required_items</span> <span class="p">{</span>
+</span><span class="line">	<span class="k">my</span> <span class="nv">$who</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
+</span><span class="line">	<span class="k">my</span> <span class="nv">$items</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
+</span><span class="line">	<span class="k">my</span> <span class="nv">@required</span> <span class="o">=</span> <span class="sx">qw(preserver sunscreen water_bottle jacket)</span><span class="p">;</span>
+</span><span class="line">	<span class="k">for</span> <span class="k">my</span> <span class="nv">$item</span> <span class="p">(</span><span class="nv">@required</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">		<span class="k">unless</span> <span class="p">(</span><span class="nb">grep</span> <span class="nv">$item</span> <span class="ow">eq</span> <span class="nv">$_</span><span class="p">,</span> <span class="nv">@</span><span class="p">{</span><span class="nv">$items</span><span class="p">})</span> <span class="p">{</span> <span class="c1"># not found in list?</span>
+</span><span class="line">		<span class="k">print</span> <span class="s">&quot;$who is missing $item.\n&quot;</span><span class="p">;</span>
+</span><span class="line">		<span class="p">}</span>
+</span><span class="line">	<span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>我们所做的就是把@_(供应清单的副本)替换成@{$items},一个对原先供应清单的引用的解引用. 现在我们就可以像之前那样，对子程序调用几次了:   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">@skipper</span> <span class="o">=</span> <span class="sx">qw(blue_shirt hat jacket preserver sunscreen)</span><span class="p">;</span>
+</span><span class="line"><span class="n">check_required_items</span><span class="p">(</span><span class="s">&#39;The Skipper&#39;</span><span class="p">,</span> <span class="o">\</span><span class="nv">@skipper</span><span class="p">);</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">@professor</span> <span class="o">=</span> <span class="sx">qw(sunscreen water_bottle slide_rule batteries radio)</span><span class="p">;</span>
+</span><span class="line"><span class="n">check_required_items</span><span class="p">(</span><span class="s">&#39;Professor&#39;</span><span class="p">,</span> <span class="o">\</span><span class="nv">@professor</span><span class="p">);</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">@gilligan</span> <span class="o">=</span> <span class="sx">qw(red_shirt hat lucky_socks water_bottle)</span><span class="p">;</span>
+</span><span class="line"><span class="n">check_required_items</span><span class="p">(</span><span class="s">&#39;Gilligan&#39;</span><span class="p">,</span> <span class="o">\</span><span class="nv">@gilligan</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>在每一种情况下，$items都指向一个不同的数组，所以每次我们调用的时候，同样的代码都指向不同的数组。只是引用的最重要的用法之一: 把代码从它所作用的数据结构上面分离开来，那样我们就可以更方便地重用代码了。  </p>
+
+<p>通过引用传递数组解决了我们之前提到的两个问题中的第一个问题. 现在，我们得到了一个指向供应清单的单一的引用引用， 而不是把整个的供应清单都拷贝到@_数组中去.   </p>
+
+<p>我们可以把子程序开头的两个shift给去掉吗? 当然， 但是那样会牺牲掉清晰性的.   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">sub </span><span class="nf">check_required_items</span> <span class="p">{</span>
+</span><span class="line">	<span class="k">my</span> <span class="nv">@required</span> <span class="o">=</span> <span class="sx">qw(preserver sunscreen water_bottle jacket)</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">	<span class="k">for</span> <span class="k">my</span> <span class="nv">$item</span> <span class="p">(</span><span class="nv">@required</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">		<span class="k">unless</span> <span class="p">(</span><span class="nb">grep</span> <span class="nv">$item</span> <span class="ow">eq</span> <span class="nv">$_</span><span class="p">,</span> <span class="nv">@</span><span class="p">{</span><span class="nv">$_</span><span class="p">[</span><span class="mi">1</span><span class="p">]})</span> <span class="p">{</span> <span class="c1"># not found in list?</span>
+</span><span class="line">		<span class="k">print</span> <span class="s">&quot;$_[0] is missing $item.\n&quot;</span><span class="p">;</span>
+</span><span class="line">		<span class="p">}</span>
+</span><span class="line">	<span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>在@_中仍然有两个元素, 第一个元素是乘客或者乘务人员的名字， 我们将在错误信息中使用到。第二个元素是对正确的供应清单的引用，我们在grep表达式中会使用到.   </p>
+
+<h2 id="section-3">把括号去掉</h2>
+
+<p>绝大多数时候，我们想要解引用的那个引用都是简单的标量变量, 如 @{$items} 或者 ${$items}[1]. 在那些情况下去掉大括号，而毫不含糊地就形成了 @$items或者 $$items[1].  </p>
+
+<p>然而， 要是大括号中的值不是一个简单的标量变量的时候, 我们就不可以把括号个去掉了. 例如, 对于来自上个自程序中的重写@{$_[1]}, 我们就不可以把括号给去掉了, 那是对数组的单一元素的访问，不是一个标量。  </p>
+
+<p>这个规则也表示了我们将很容易看到”缺失”的括号得放到什么地方去. 当我们看到 $$items[1]这个听讨厌的语法的时候，我们可以知道大括号肯定属于简单的表量变量$items的周围。因此，$items肯定是数组的一个引用.  </p>
+
+<p>因此， 上面那个子程序的一个看起来更加舒服的版本就是:    </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">sub </span><span class="nf">check_required_items</span> <span class="p">{</span>
+</span><span class="line">	<span class="k">my</span> <span class="nv">$who</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
+</span><span class="line">	<span class="k">my</span> <span class="nv">$items</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
+</span><span class="line">	<span class="k">my</span> <span class="nv">@required</span> <span class="o">=</span> <span class="sx">qw(preserver sunscreen water_bottle jacket)</span><span class="p">;</span>
+</span><span class="line">	<span class="k">for</span> <span class="k">my</span> <span class="nv">$item</span> <span class="p">(</span><span class="nv">@required</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">		<span class="k">unless</span> <span class="p">(</span><span class="nb">grep</span> <span class="nv">$item</span> <span class="ow">eq</span> <span class="nv">$_</span><span class="p">,</span> <span class="nv">@$items</span><span class="p">)</span> <span class="p">{</span> <span class="c1"># not found in list?</span>
+</span><span class="line">		<span class="k">print</span> <span class="s">&quot;$who is missing $item.\n&quot;</span><span class="p">;</span>
+</span><span class="line">		<span class="p">}</span>
+</span><span class="line">	<span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>唯一的区别就是我们把@$items周围的括号给去掉了.  </p>
+
+<h2 id="section-4">修改数组</h2>
+
+<p>你已经看到了怎样通过一个数组的引用来解决过度的复制的问题. 现在让我们看下怎样修改原先的数组.  </p>
+
+<p>对于每一个缺失的供应品，我们把它push到一个数组里面去， 强迫乘客考虑这个条款:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">sub </span><span class="nf">check_required_items</span> <span class="p">{</span>
+</span><span class="line">	<span class="k">my</span> <span class="nv">$who</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
+</span><span class="line">	<span class="k">my</span> <span class="nv">$items</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
+</span><span class="line">	<span class="k">my</span> <span class="nv">@required</span> <span class="o">=</span> <span class="sx">qw(preserver sunscreen water_bottle jacket)</span><span class="p">;</span>
+</span><span class="line">	<span class="k">my</span> <span class="nv">@missing</span> <span class="o">=</span> <span class="p">(</span> <span class="p">);</span>
+</span><span class="line">	<span class="k">for</span> <span class="k">my</span> <span class="nv">$item</span> <span class="p">(</span><span class="nv">@required</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">		<span class="k">unless</span> <span class="p">(</span><span class="nb">grep</span> <span class="nv">$item</span> <span class="ow">eq</span> <span class="nv">$_</span><span class="p">,</span> <span class="nv">@$items</span><span class="p">)</span> <span class="p">{</span> <span class="c1"># not found in list?</span>
+</span><span class="line">		<span class="k">print</span> <span class="s">&quot;$who is missing $item.\n&quot;</span><span class="p">;</span>
+</span><span class="line">		<span class="nb">push</span> <span class="nv">@missing</span><span class="p">,</span> <span class="nv">$item</span><span class="p">;</span>
+</span><span class="line">	    <span class="p">}</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line">	<span class="k">if</span> <span class="p">(</span><span class="nv">@missing</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">		<span class="k">print</span> <span class="s">&quot;Adding @missing to @$items for $who.\n&quot;</span><span class="p">;</span>
+</span><span class="line">	    <span class="nb">push</span> <span class="nv">@$items</span><span class="p">,</span> <span class="nv">@missing</span><span class="p">;</span>
+</span><span class="line">	<span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>注意下添加的@missing数组。如果我们在扫描的过程中发现了任何物品缺失了， 我们可以把它push到@missing中去。如果在扫描完了之后这个数组中有东西的话，我们就把它添加到原先的供应清单中去。  </p>
+
+<p>关键点就是这个子程序中的最后一行。我们对$items数组引用进行解引用，访问原先的数组，然后把@missing中元素添加进去。要是没有引用传值的话，我们将只能修改数据的一个本地的拷贝，那样将对原先的数组没有任何的影响。  </p>
+
+<p>同样的, @items(以及它的更加常见的形式@{$items})可以在双引号引起来的字符串中运作。我们不可以在@和接下来的任何的字符之间包含空格，尽管我们可以在大括号中包含任意数量的空格， 就好像那是正常的Perl代码一样。  </p>
+
+<h2 id="section-5">嵌套的数据结构</h2>
+
+<p>在下面的例子中，数组@_包含了两个元素, 其中之一仍然是数组. 如果我们对一个数组进行引用，而这个数组又包含了一个一个对数组的引用, 那将会怎么样呢？ 我们得到的将是一个复杂的数据结构, 这将是非常有用的。  </p>
+
+<p>例如, 我们可以先构建一个更大的数据结构，它包含了整个的供应清单, 通过来对数据进行递归，我们将得到Skipper, Gilligan还有Professor的信息:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">@skipper</span> <span class="o">=</span> <span class="sx">qw(blue_shirt hat jacket preserver sunscreen)</span><span class="p">;</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">@skipper_with_name</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;Skipper&#39;</span><span class="p">,</span> <span class="o">\</span><span class="nv">@skipper</span><span class="p">);</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">@professor</span> <span class="o">=</span> <span class="sx">qw(sunscreen water_bottle slide_rule batteries radio)</span><span class="p">;</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">@professor_with_name</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;Professor&#39;</span><span class="p">,</span> <span class="o">\</span><span class="nv">@professor</span><span class="p">);</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">@gilligan</span> <span class="o">=</span> <span class="sx">qw(red_shirt hat lucky_socks water_bottle)</span><span class="p">;</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">@gilligan_with_name</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;Gilligan&#39;</span><span class="p">,</span> <span class="o">\</span><span class="nv">@gilligan</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>现在@skipper_with_name就有两个元素了, 第二个元素是数组的引用，同我们之前传递给子程序的是相似的。现在我们把这些都组合起来:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">@all_with_names</span> <span class="o">=</span> <span class="p">(</span>
+</span><span class="line"><span class="o">\</span><span class="nv">@skipper_with_name</span><span class="p">,</span>
+</span><span class="line"><span class="o">\</span><span class="nv">@professor_with_name</span><span class="p">,</span>
+</span><span class="line"><span class="o">\</span><span class="nv">@gilligan_with_name</span><span class="p">,</span>
+</span><span class="line"><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>注意我们只有3个元素，其中的每一个都是一个对一个数组的引用，这个数组有两个元素: 名字还有对应的初始供应列表。图4-1是它的一个图片:  </p>
+
+<p><img src="http://isunix.github.io/images/sun/perl_4.1.png" />   </p>
+
+<p>因此，$all_with_names[2]将会是对于Gilligan的数据的数组引用。如果你把它解引用的话@{$all_with_names[2]}，你将得到一个两个元素的数组，”Gilligan”还有另一个数组引用。 </p>
 
 ]]></content>
   </entry>

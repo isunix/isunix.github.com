@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Vim | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/vim/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-07-01T13:48:33+08:00</updated>
+  <updated>2014-07-01T19:55:08+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -28,7 +28,31 @@
 
 <p>the ^M character is made by typing ctrl + v first then hit enter.   </p>
 
-<p>Bingo.</p>
+<p>Also I write a perl script to convert the from dos to unix and also delete chars in code followng the “//”.</p>
+
+<p>```perl</p>
+
+<p>open($IN, “$ARGV[0]”) or die “in: $@”;
+open($OUT, “&gt;”, “$ARGV[0].new”) or die “out: $@”;</p>
+
+<p>while (&lt;$IN&gt;){
+    my $line = $_;
+    $line =~ s/(\/\/.*)//g;
+    print $OUT $line;
+}</p>
+
+<p>$command = “mv $ARGV[0].new $ARGV[0] &amp;&amp; chmod 777 $ARGV[0] &amp;&amp; dos2unix $ARGV[0]”;</p>
+
+<p>system($command);
+print “successfully deleted and converted!\n”;
+close($IN);
+close($OUT); </p>
+
+<p>```</p>
+
+<p>The code just explains itself.  </p>
+
+<p>Bingo!</p>
 ]]></content>
   </entry>
   

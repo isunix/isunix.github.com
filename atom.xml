@@ -4,7 +4,7 @@
   <title><![CDATA[Steven's Blog]]></title>
   <link href="http://isunix.github.io/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-07-02T19:10:49+08:00</updated>
+  <updated>2014-07-15T13:32:14+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,43 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Swqp Two Values Without Introducing a Temporary Variable]]></title>
+    <link href="http://isunix.github.io/blog/2014/07/15/swqp-two-values-without-introducing-a-temporary-variable/"/>
+    <updated>2014-07-15T13:29:26+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/07/15/swqp-two-values-without-introducing-a-temporary-variable</id>
+    <content type="html"><![CDATA[<p>The usual way for us to swap two values in c is by introducing a intermediate variable. But actually there is way for us to complete the task wnile not adding a new varible.   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="cp">#include &lt;stdlib.h&gt;</span>
+</span><span class="line"><span class="cp">#include &lt;stdio.h&gt;</span>
+</span><span class="line">
+</span><span class="line"><span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+</span><span class="line">  <span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">;</span>
+</span><span class="line">  <span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%d %d&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">b</span><span class="p">);</span>
+</span><span class="line">  <span class="n">a</span> <span class="o">=</span> <span class="n">b</span> <span class="o">-</span> <span class="n">a</span><span class="p">;</span>
+</span><span class="line">  <span class="n">b</span> <span class="o">=</span> <span class="n">b</span> <span class="o">-</span> <span class="n">a</span><span class="p">;</span>
+</span><span class="line">  <span class="n">a</span> <span class="o">=</span> <span class="n">b</span> <span class="o">+</span> <span class="n">a</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span>
+</span><span class="line">  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[我得自己debug]]></title>
@@ -1840,27 +1877,6 @@
 
 <div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 </pre></td><td class="code"><pre><code class=""><span class="line">chown -R sun .git  </span></code></pre></td></tr></table></div></figure></notextile></div>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[On the Error Using Rake New_post Under Zsh]]></title>
-    <link href="http://isunix.github.io/blog/2014/05/31/on-the-error-using-rake-new-post-under-zsh/"/>
-    <updated>2014-05-31T17:48:54+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/05/31/on-the-error-using-rake-new-post-under-zsh</id>
-    <content type="html"><![CDATA[<p>When I issue the command “rake new_post[]” using the zsh, I got the error telling me that “no matches found”. I googled, it said if using “noglob rake” rather than simply “rake”, this problem will be solved. But in my case, it does not work. </p>
-
-<p>My expedient solution here is, issuing the followng command:   </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">rake "new_post[on the error using rake new_post under zsh]"</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>rather than in the normal way:   </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">rake new_post["on the error using rake new_post under zsh"]</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>It works in my case, but it is not a nice solution for sure.</p>
 ]]></content>
   </entry>
   

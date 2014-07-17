@@ -4,7 +4,7 @@
   <title><![CDATA[Steven's Blog]]></title>
   <link href="http://isunix.github.io/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-07-17T15:19:37+08:00</updated>
+  <updated>2014-07-17T16:13:28+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,112 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[About the Use of State in Perl]]></title>
+    <link href="http://isunix.github.io/blog/2014/07/17/about-the-use-of-state-in-perl/"/>
+    <updated>2014-07-17T16:02:20+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/07/17/about-the-use-of-state-in-perl</id>
+    <content type="html"><![CDATA[<p>算了还是引用一下«learning perl»中文翻译版本中的话吧:   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">在Perl中可以使用my操作符来创建私有变量， 但是每次调用这个子程序的时候，这个私有变量都会被重新定义。而使用state操作符来声明的变量，我们便可以在子程序的多次调用期间保留变量之前的值， 并将变量的作用域限于子程序内部
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>让我们来看下使用my还有使用state所产生的不同的效果吧。  </p>
+
+<p>首先是my:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="mf">5.010</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="n">running_sum</span><span class="p">(</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span> <span class="p">);</span>
+</span><span class="line"><span class="n">running_sum</span><span class="p">(</span> <span class="mi">1</span><span class="o">..</span><span class="mi">3</span> <span class="p">);</span>
+</span><span class="line"><span class="n">running_sum</span><span class="p">(</span> <span class="mi">4</span> <span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="k">sub </span><span class="nf">running_sum</span> <span class="p">{</span>
+</span><span class="line">    <span class="k">my</span> <span class="nv">$sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line">    <span class="k">my</span> <span class="nv">@numbers</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">foreach</span> <span class="k">my</span> <span class="nv">$number</span> <span class="p">(</span> <span class="nv">@_</span> <span class="p">)</span> <span class="p">{</span>
+</span><span class="line">      <span class="nb">push</span> <span class="nv">@numbers</span><span class="p">,</span> <span class="nv">$number</span><span class="p">;</span>
+</span><span class="line">      <span class="nv">$sum</span> <span class="o">+=</span> <span class="nv">$number</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">    <span class="n">say</span> <span class="s">&quot;the sum of (@numbers) is $sum&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>这段code产生的结果是:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">the</span> <span class="n">sum</span> <span class="n">of</span> <span class="p">(</span><span class="mi">5</span> <span class="mi">6</span><span class="p">)</span> <span class="n">is</span> <span class="mi">11</span>
+</span><span class="line"><span class="n">the</span> <span class="n">sum</span> <span class="n">of</span> <span class="p">(</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">)</span> <span class="n">is</span> <span class="mi">6</span>
+</span><span class="line"><span class="n">the</span> <span class="n">sum</span> <span class="n">of</span> <span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="n">is</span> <span class="mi">4</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>下面是state:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="mf">5.010</span><span class="p">;</span>
+</span><span class="line"><span class="n">running_sum</span><span class="p">(</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span> <span class="p">);</span>
+</span><span class="line"><span class="n">running_sum</span><span class="p">(</span> <span class="mi">1</span><span class="o">..</span><span class="mi">3</span> <span class="p">);</span>
+</span><span class="line"><span class="n">running_sum</span><span class="p">(</span> <span class="mi">4</span> <span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="k">sub </span><span class="nf">running_sum</span> <span class="p">{</span>
+</span><span class="line">    <span class="n">state</span> <span class="nv">$sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line">    <span class="n">state</span> <span class="nv">@numbers</span><span class="p">;</span>
+</span><span class="line">    <span class="k">foreach</span> <span class="k">my</span> <span class="nv">$number</span> <span class="p">(</span> <span class="nv">@_</span> <span class="p">)</span> <span class="p">{</span>
+</span><span class="line">        <span class="nb">push</span> <span class="nv">@numbers</span><span class="p">,</span> <span class="nv">$number</span><span class="p">;</span>
+</span><span class="line">        <span class="nv">$sum</span> <span class="o">+=</span> <span class="nv">$number</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="n">say</span> <span class="s">&quot;The sum of (@numbers) is $sum&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>它的结果是:   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">The</span> <span class="n">sum</span> <span class="n">of</span> <span class="p">(</span><span class="mi">5</span> <span class="mi">6</span><span class="p">)</span> <span class="n">is</span> <span class="mi">11</span>
+</span><span class="line"><span class="n">The</span> <span class="n">sum</span> <span class="n">of</span> <span class="p">(</span><span class="mi">5</span> <span class="mi">6</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">)</span> <span class="n">is</span> <span class="mi">17</span>
+</span><span class="line"><span class="n">The</span> <span class="n">sum</span> <span class="n">of</span> <span class="p">(</span><span class="mi">5</span> <span class="mi">6</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">)</span> <span class="n">is</span> <span class="mi">21</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Perl中单行或者多行输出结果]]></title>
@@ -1859,20 +1965,6 @@
 写一个程序来接收来自命令行的一组文件名，使用grep来选择大小按比特位来算的话小于1000的文件名。使用map来变换这个列表中的字符串， 在每个文件名前放上4个空格， 在后面放上一个换行符。打印最终的结果列表。   </li>
 </ol>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[How to Find the Password for Pidgin]]></title>
-    <link href="http://isunix.github.io/blog/2014/06/05/how-to-find-the-password-for-pidgin/"/>
-    <updated>2014-06-05T20:49:16+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/06/05/how-to-find-the-password-for-pidgin</id>
-    <content type="html"><![CDATA[<p>Use the following command line to find the password for your account on pidgin:   </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line">cat <span class="nv">$HOME</span>/.purple/accounts.xml | grep pass
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>and it works. </p>
 ]]></content>
   </entry>
   

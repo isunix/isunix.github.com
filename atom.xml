@@ -4,7 +4,7 @@
   <title><![CDATA[Steven's Blog]]></title>
   <link href="http://isunix.github.io/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-07-15T13:37:07+08:00</updated>
+  <updated>2014-07-17T10:39:48+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,62 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Split Mids to Several Lines With Fixed Number Per Line]]></title>
+    <link href="http://isunix.github.io/blog/2014/07/17/split-mids-to-several-lines-with-fixed-number-per-line/"/>
+    <updated>2014-07-17T10:26:09+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/07/17/split-mids-to-several-lines-with-fixed-number-per-line</id>
+    <content type="html"><![CDATA[<p>We have many mids with one mid every line, now we want to print all those mids out with a fixed number of mids per line. I want to realize this function in Perl first without success, so I am using PHP. </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+</pre></td><td class="code"><pre><code class="php"><span class="line"><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class="line">
+</span><span class="line"><span class="nv">$scriptname</span> <span class="o">=</span> <span class="nv">$argv</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+</span><span class="line"><span class="nv">$txt_file</span> <span class="o">=</span> <span class="nv">$argv</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+</span><span class="line"><span class="nv">$dir</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="nv">$contents</span> <span class="o">=</span> <span class="nb">file_get_contents</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">$dir</span><span class="s2">/</span><span class="si">$txt_file</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nx">FILE_USE_INCLUDE_PATH</span><span class="p">);</span>
+</span><span class="line"><span class="nv">$contents</span> <span class="o">=</span> <span class="nx">trim</span><span class="p">(</span><span class="nv">$contents</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="nv">$mid_splited</span> <span class="o">=</span> <span class="nb">preg_split</span><span class="p">(</span><span class="s2">&quot;/</span><span class="se">\n</span><span class="s2">/&quot;</span><span class="p">,</span> <span class="nv">$contents</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="nv">$count_mids</span> <span class="o">=</span> <span class="nb">count</span><span class="p">(</span><span class="nv">$mid_splited</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="k">for</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;</span> <span class="nv">$count_mids</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">){</span>
+</span><span class="line">  <span class="k">print</span> <span class="s2">&quot;</span><span class="si">$mid_splited[$i]</span><span class="s2"> &quot;</span><span class="p">;</span>
+</span><span class="line">  <span class="k">if</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">%</span> <span class="mi">7</span> <span class="o">==</span> <span class="mi">0</span><span class="p">){</span>
+</span><span class="line">    <span class="k">print</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">;</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line"><span class="cp">?&gt;</span><span class="x"></span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>　</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Swap Two Values Without Introducing a Temporary Variable]]></title>
@@ -1845,38 +1901,6 @@
 
 <p>–Damian Conway, 2003年5月。                                                             </p>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Brew Update Errors Fixed]]></title>
-    <link href="http://isunix.github.io/blog/2014/06/01/brew-update-errors-fixed/"/>
-    <updated>2014-06-01T16:12:00+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/06/01/brew-update-errors-fixed</id>
-    <content type="html"><![CDATA[<p>I met several errors while updating my homebrew, one is:  </p>
-
-<p><img src="http://isunix.github.io/images/sun/first.png" />    </p>
-
-<p>the solution is:   </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">cd `brew --prefix`    
-</span><span class="line">git remote add origin https://github.com/mxcl/homebrew.git   
-</span><span class="line">git fetch origin    
-</span><span class="line">git reset --hard origin/master 
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>the other is:   </p>
-
-<p><img src="http://isunix.github.io/images/sun/second.png" />    </p>
-
-<p>To address this this error, we just have have to change the permissions on the folder to a certain user:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">chown -R sun .git  </span></code></pre></td></tr></table></div></figure></notextile></div>
 ]]></content>
   </entry>
   

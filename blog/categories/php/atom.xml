@@ -4,7 +4,7 @@
   <title><![CDATA[Category: PHP | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/php/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-07-15T13:37:07+08:00</updated>
+  <updated>2014-07-17T10:39:48+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,42 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Split Mids to Several Lines With Fixed Number Per Line]]></title>
+    <link href="http://isunix.github.io/blog/2014/07/17/split-mids-to-several-lines-with-fixed-number-per-line/"/>
+    <updated>2014-07-17T10:26:09+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/07/17/split-mids-to-several-lines-with-fixed-number-per-line</id>
+    <content type="html"><![CDATA[<p>We have many mids with one mid every line, now we want to print all those mids out with a fixed number of mids per line. I want to realize this function in Perl first without success, so I am using PHP. </p>
+
+<p>```php </p>
+
+<?php
+
+$scriptname = $argv[0];
+$txt_file = $argv[1];
+$dir = ".";
+
+$contents = file_get_contents("$dir/$txt_file", FILE_USE_INCLUDE_PATH);
+$contents = trim($contents);
+
+$mid_splited = preg_split("/\n/", $contents);
+
+$count_mids = count($mid_splited);
+
+for ($i = 0; $i < $count_mids; $i++){
+  print "$mid_splited[$i] ";
+  if ($i % 7 == 0){
+    print "\n";
+  }
+}
+
+
+?>
+
+<p>```　</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Php-cgi Not Found Error]]></title>

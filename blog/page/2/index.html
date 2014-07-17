@@ -9,8 +9,10 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="Of course you can google about it, but I just keep it down so that every time I do it, I do not need to google again. It is pretty easy. 1
-{\% img [ &hellip;">
+  <meta name="description" content="1.A route pattern can contain one or more tokens, and tokens can be optional. 1
+2
+3
+get &#39;/hello/:name?&#39; =&gt; sub { &quot;Hello there &quot &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -63,6 +65,138 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/16/dancer-introduction-notes/">Dancer::Introduction Notes</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-06-16T00:05:17+08:00" pubdate data-updated="true">Jun 16<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>1.A route pattern can contain one or more tokens, and tokens can be optional.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">get</span> <span class="s">&#39;/hello/:name?&#39;</span> <span class="o">=&gt;</span> <span class="k">sub </span><span class="p">{</span>
+</span><span class="line">    <span class="s">&quot;Hello there &quot;</span> <span class="o">.</span> <span class="p">(</span><span class="n">param</span><span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">)</span> <span class="o">||</span> <span class="s">&quot;whoever you are!&quot;</span><span class="p">);</span>
+</span><span class="line"><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>2.A route can contain a wildcard (represented by a ‘*’). Each wildcard match will be returned in an arrayref, accessible via the `splat’ keyword:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">get</span> <span class="s">&#39;/download/*.*&#39;</span> <span class="o">=&gt;</span> <span class="k">sub </span><span class="p">{</span>
+</span><span class="line">    <span class="k">my</span> <span class="p">(</span><span class="nv">$file</span><span class="p">,</span> <span class="nv">$ext</span><span class="p">)</span> <span class="o">=</span> <span class="n">splat</span><span class="p">;</span>
+</span><span class="line">    <span class="c1"># do something with $file.$ext here</span>
+</span><span class="line"><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>3.A route can be defined with a Perl regular expression. In order to tell Dancer to consider the route as a real regexp, the route must be defined explicitly with qr{}, like the following:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">get</span> <span class="sx">qr{/hello/([\w]+)}</span> <span class="o">=&gt;</span> <span class="k">sub </span><span class="p">{</span>
+</span><span class="line">    <span class="k">my</span> <span class="p">(</span><span class="nv">$name</span><span class="p">)</span> <span class="o">=</span> <span class="n">splat</span><span class="p">;</span>
+</span><span class="line">    <span class="k">return</span> <span class="s">&quot;Hello $name&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>4.Routes may include some matching conditions (on the useragent and the hostname at the moment):     </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">get</span> <span class="s">&#39;/foo&#39;</span><span class="p">,</span> <span class="p">{</span><span class="n">agent</span> <span class="o">=&gt;</span> <span class="s">&#39;Songbird (\d\.\d)[\d\/]*?&#39;</span><span class="p">}</span> <span class="o">=&gt;</span> <span class="k">sub </span><span class="p">{</span>
+</span><span class="line">  <span class="s">&#39;foo method for songbird&#39;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="n">get</span> <span class="s">&#39;/foo&#39;</span> <span class="o">=&gt;</span> <span class="k">sub </span><span class="p">{</span>
+</span><span class="line">  <span class="s">&#39;all browsers except songbird&#39;</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>5.An action can choose not to serve the current request and ask Dancer to process the request with the next matching route. This is done with the pass keyword, like in the following example:    </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">get</span> <span class="s">&#39;/say/:word&#39;</span> <span class="o">=&gt;</span> <span class="k">sub </span><span class="p">{</span>
+</span><span class="line">    <span class="k">return</span> <span class="n">pass</span> <span class="k">if</span> <span class="p">(</span><span class="n">params</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">word</span><span class="p">}</span> <span class="o">=~</span><span class="sr"> /^\d+$/</span><span class="p">);</span>
+</span><span class="line">    <span class="s">&quot;I say a word: &quot;</span><span class="o">.</span><span class="n">params</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">word</span><span class="p">};</span>
+</span><span class="line"><span class="p">};</span>
+</span><span class="line">
+</span><span class="line"><span class="n">get</span> <span class="s">&#39;/say/:number&#39;</span> <span class="o">=&gt;</span> <span class="k">sub </span><span class="p">{</span>
+</span><span class="line">    <span class="s">&quot;I say a number: &quot;</span><span class="o">.</span><span class="n">params</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">number</span><span class="p">};</span>
+</span><span class="line"><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>6.Before hooks, after hooks, before_template_render hooks. </p>
+
+<p>7.You can use the load method to include additional routes into your application.</p>
+
+<p>8.A Dancer application can access the information from its config file easily with the config keyword:    </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">get</span> <span class="s">&#39;/appname&#39;</span> <span class="o">=&gt;</span> <span class="k">sub </span><span class="p">{</span>
+</span><span class="line">    <span class="k">return</span> <span class="s">&quot;This is &quot;</span> <span class="o">.</span> <span class="n">config</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">appname</span><span class="p">};</span>
+</span><span class="line"><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>9.In order to enable the logging system for your application, you first have to start the logger engine in your config.yml:   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">logger:</span> <span class="s">&#39;file&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>10.Dancer configures the Template::Toolkit engine to use &lt;% %&gt; brackets instead of its default [% %] brackets, although you can change this in your config file. Of course you have to import the “Template” module.  </p>
+
+<p>11.A layout is a special view, located in the ‘layouts’ directory (inside the views directory) which must have a token named `content’. That token marks the place where to render the action view. This lets you define a global layout for your actions. Any tokens that you defined when you called the ‘template’ keyword are available in the layouts, as well as the standard session, request, and params tokens. This allows you to insert per-page content into the HTML boilerplate, such as page titles, current-page tags for navigation, etc. (refer to the standard document for more details).</p>
+
+<p>12.Through  “set serializer =&gt; ‘JSON’;”  we can do data serializer;</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1475,65 +1609,6 @@
 
 <p>–Damian Conway, 2003年5月。                                                             </p>
 
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/06/01/brew-update-errors-fixed/">Brew Update Errors Fixed</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-06-01T16:12:00+08:00" pubdate data-updated="true">Jun 1<span>st</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I met several errors while updating my homebrew, one is:  </p>
-
-<p><img src="/images/sun/first.png" />    </p>
-
-<p>the solution is:   </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">cd `brew --prefix`    
-</span><span class="line">git remote add origin https://github.com/mxcl/homebrew.git   
-</span><span class="line">git fetch origin    
-</span><span class="line">git reset --hard origin/master 
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>the other is:   </p>
-
-<p><img src="/images/sun/second.png" />    </p>
-
-<p>To address this this error, we just have have to change the permissions on the folder to a certain user:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">chown -R sun .git  </span></code></pre></td></tr></table></div></figure></notextile></div>
 </div>
   
   

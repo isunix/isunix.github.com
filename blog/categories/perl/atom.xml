@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Perl | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/perl/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-07-18T19:38:37+08:00</updated>
+  <updated>2014-07-18T20:23:32+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,49 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Using of Loops in Perl]]></title>
+    <link href="http://isunix.github.io/blog/2014/07/18/using-of-loops-in-perl/"/>
+    <updated>2014-07-18T19:59:02+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/07/18/using-of-loops-in-perl</id>
+    <content type="html"><![CDATA[<p>«Learning Perl»中的一个例子。  </p>
+
+<p><code>
+Make a program that will repeatedly ask the user to guess a secret number
+from 1 to 100 until the user guesses the secret number. Your program should pick
+the number at random by using the magical formula int(1 + rand 100).§ When
+the user guesses wrong, the program should respond, “Too high” or “Too low.” If
+the user enters the word quit or exit, or if the user enters a blank line, the program
+should quit. Of course, if the user guesses correctly, the program should quit then
+as well!
+</code>  </p>
+
+<p>还是把code贴在这里吧！ </p>
+
+<p>```perl</p>
+
+<p>my $secret = int(1 + rand(100));</p>
+
+<p>while(<stdin>){
+    print "please enter a guess from 1 to 100: ";
+    chomp(my $guess = <stdin>);
+    if ($guess =~ /quit|exit|\A\s*\z/i){
+        print "sorry you gave up, the number was $secret.\n";
+        last;
+    } elsif ($guess &lt; $secret){
+        print "too small!\n";
+    } elsif ($guess == $secret){
+        print "that was it!\n";
+        last;
+    } else {
+        print "too large!\n";
+    }
+}  </stdin></stdin></p>
+
+<p>```</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Use Examples Regarding Hash in Perl]]></title>
@@ -229,30 +272,6 @@ print "@sorted\n"</stdin></p>
 <p>```  </p>
 
 <p>这里的关键的地方就是chomp这个函数。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Generate Chapters at Once]]></title>
-    <link href="http://isunix.github.io/blog/2014/07/17/generate-chapters-at-once/"/>
-    <updated>2014-07-17T10:47:48+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/07/17/generate-chapters-at-once</id>
-    <content type="html"><![CDATA[<p>I use this script to generate chapters at once. The number of chapters you want to generate in passed through the command line as the first argument.  </p>
-
-<p>```perl </p>
-
-<p>use strict;
-use warnings;
-use utf8;
-use Data::Dumper;</p>
-
-<p>my $chap_num = $ARGV[0];</p>
-
-<p>for(my $i = 1; $i &lt;= $chap_num; $i++){
-    mkdir “chap_$i”;
-}</p>
-
-<p>```</p>
 ]]></content>
   </entry>
   

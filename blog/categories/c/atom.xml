@@ -4,7 +4,7 @@
   <title><![CDATA[Category: C | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/c/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-07-17T19:05:51+08:00</updated>
+  <updated>2014-07-18T14:28:31+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,117 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Notes on Tail Recursion Using C]]></title>
+    <link href="http://isunix.github.io/blog/2014/07/18/notes-on-tail-recursion-using-c/"/>
+    <updated>2014-07-18T13:50:41+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/07/18/notes-on-tail-recursion-using-c</id>
+    <content type="html"><![CDATA[<p>还是先上一段递归的c代码吧:  </p>
+
+<p>```c
+#include <stdlib.h>
+#include <stdio.h /></stdlib.h></p>
+
+<p>int FibonacciRecursive(int n){
+  if(n &lt; 2){
+    return n;
+  }
+  return (FibonacciRecursive(n-1) + FibonacciRecursive(n-2));
+}</p>
+
+<p>int main(){
+  printf(“Fibonacci number till 6 is: %d\n”, FibonacciRecursive(6));
+}</p>
+
+<p>```    </p>
+
+<p>而所谓的尾递归就是把当前的运算结果（或路径）放在参数里传给下层函数, 采用尾递归的算法示例如下:   </p>
+
+<p>```c</p>
+
+<p>int FibonacciTailRecursive(int n, int ret1, int ret2){
+  if(n==0){
+    return ret1;
+  }
+  return FibonacciTailRecursive(n-1, ret2, ret1 + ret2);
+}</p>
+
+<p>```   </p>
+
+<p>一下是一个在别人的博客中看到的利用递归还有尾递归来求单链表的长度的例子。 </p>
+
+<p>```c
+#include <stdlib.h>
+#include <stdio.h /></stdlib.h></p>
+
+<p>typedef struct node{
+  int data;
+  struct node* next;
+}node, *linklist;</p>
+
+<p>void InitLinklist(linklist* head){
+  if(<em>head != NULL){
+    free(</em>head);
+  }
+  <em>head = (node</em>)malloc(sizeof(node));
+  (*head)-&gt;next = NULL;
+}</p>
+
+<p>void InsertNode(linklist* head, int d){
+  node* newNode = (node<em>)malloc(sizeof(node));
+  newNode-&gt;data = d;
+  newNode-&gt;next = (</em>head)-&gt;next;
+  (*head)-&gt;next = newNode;
+}</p>
+
+<p>//using recursion to get the length of the linklist;
+int GetLengthRecursive(linklist head){
+  if(head-&gt;next == NULL){
+    return 0;
+  }
+  return (GetLengthRecursive(head-&gt;next) + 1);
+}</p>
+
+<p>//using tail recursive to get the length of a linklist,
+//with the help of the variable “acc” to store the length of the current linklist, increment it</p>
+
+<p>int GetLengthTailRecursive(linklist head, int *acc){
+  if(head-&gt;next == NULL){
+    return *acc;
+  }
+  *acc = *acc + 1;
+  return GetLengthTailRecursive(head-&gt;next, acc);
+}</p>
+
+<p>void PrintLinklist(linklist head){
+  node* pnode = head-&gt;next;
+  while(pnode){
+    printf(“%d-&gt;”, pnode-&gt;data);
+    pnode = pnode-&gt;next;
+  }
+  printf(“-&gt;NULL\n”);
+}</p>
+
+<p>int main(){
+  linklist head = NULL;
+  int len = 0;
+  InitLinklist(&amp;head);
+  InsertNode(&amp;head, 10);
+  InsertNode(&amp;head, 21);
+  InsertNode(&amp;head, 14);
+  InsertNode(&amp;head, 19);
+  InsertNode(&amp;head, 132);
+  InsertNode(&amp;head, 192);
+  PrintLinklist(head);
+  printf(“The length of linklist is: %d\n”, GetLengthRecursive(head));
+  GetLengthTailRecursive(head, &amp;len);
+  printf(“the length of linklist is: %d\n”, len);
+}</p>
+
+<p>```</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Swap Two Values Without Introducing a Temporary Variable]]></title>

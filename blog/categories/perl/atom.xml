@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Perl | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/perl/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-07-18T20:24:03+08:00</updated>
+  <updated>2014-07-18T21:00:57+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,42 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Examples of Using Grep and Map in Perl]]></title>
+    <link href="http://isunix.github.io/blog/2014/07/18/examples-of-using-grep-and-map-in-perl/"/>
+    <updated>2014-07-18T20:55:08+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/07/18/examples-of-using-grep-and-map-in-perl</id>
+    <content type="html"><![CDATA[<p>在«Learnign Perl»中，初步介绍了perl的一些高级用法， 我之前翻译了些intermediate perl, 但是最近这段时间实在是太忙了， 而且现在还有很多其他的事情得去处理，所以真的不知道得到什么时候才可以继续拾起翻译intermediate perl的任务来。好了，下面把学习perl中的一些关于map还有grep的例子记录在这里，也方便自己以后来查询。   </p>
+
+<p>```perl
+my @odd_numbers = grep { $_ % 2 } 1..1000;  </p>
+
+<p>my @matching_lines = grep { /\bfred\b/i } &lt;$fh&gt;;</p>
+
+<p>my @matching_lines = grep /\bfred\b/i, &lt;$fh&gt;;  </p>
+
+<p>my @matching_lines = grep /\bfred\b/i, &lt;$fh&gt;;
+my $line_count = @matching_lines;  </p>
+
+<p>my $line_count = grep /\bfred\b/i, &lt;$fh&gt;;  </p>
+
+<p>my @data = (4.75, 1.5, 2, 1234, 6.9456, 12345678.9, 29.95);
+my @formatted_data = map { &amp;big_money($_) } @data;  </p>
+
+<p>print “The money numbers are:\n”,
+map { sprintf(“%25s\n”, $_) } @formatted_data;  </p>
+
+<p>my @data = (4.75, 1.5, 2, 1234, 6.9456, 12345678.9, 29.95);
+print “The money numbers are:\n”,
+map { sprintf(“%25s\n”, &amp;big_money($_) ) } @data;  </p>
+
+<p>print “Some powers of two are:\n”,
+map “\t” . ( 2 ** $_ ) . “\n”, 0..15;  </p>
+
+<p>```</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Using of Loops in Perl]]></title>
@@ -245,33 +281,6 @@ The sum of (5 6 1 2 3) is 17
 The sum of (5 6 1 2 3 4) is 21</p>
 
 <p>```</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Perl中单行或者多行输出结果]]></title>
-    <link href="http://isunix.github.io/blog/2014/07/17/perlzhong-dan-xing-huo-zhe-duo-xing-shu-chu-jie-guo/"/>
-    <updated>2014-07-17T15:14:23+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/07/17/perlzhong-dan-xing-huo-zhe-duo-xing-shu-chu-jie-guo</id>
-    <content type="html"><![CDATA[<p>我们在标准输入中得到多行的值， 现在我们想要以单行还有多行的结果来把它们给显示出来， 要是想单行显示的话，可以如下:</p>
-
-<p>```perl</p>
-
-<p>chomp(@lines = <stdin>);
-@sorted = sort @lines;
-print "@sorted\n"</stdin></p>
-
-<p>```</p>
-
-<p>多行的话可以:  </p>
-
-<p>```perl </p>
-
-<p>print sort <stdin>;</stdin></p>
-
-<p>```  </p>
-
-<p>这里的关键的地方就是chomp这个函数。</p>
 ]]></content>
   </entry>
   

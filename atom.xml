@@ -4,7 +4,7 @@
   <title><![CDATA[Steven's Blog]]></title>
   <link href="http://isunix.github.io/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-07-18T20:24:03+08:00</updated>
+  <updated>2014-07-18T21:00:57+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,73 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Examples of Using Grep and Map in Perl]]></title>
+    <link href="http://isunix.github.io/blog/2014/07/18/examples-of-using-grep-and-map-in-perl/"/>
+    <updated>2014-07-18T20:55:08+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/07/18/examples-of-using-grep-and-map-in-perl</id>
+    <content type="html"><![CDATA[<p>在«Learnign Perl»中，初步介绍了perl的一些高级用法， 我之前翻译了些intermediate perl, 但是最近这段时间实在是太忙了， 而且现在还有很多其他的事情得去处理，所以真的不知道得到什么时候才可以继续拾起翻译intermediate perl的任务来。好了，下面把学习perl中的一些关于map还有grep的例子记录在这里，也方便自己以后来查询。   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">@odd_numbers</span> <span class="o">=</span> <span class="nb">grep</span> <span class="p">{</span> <span class="nv">$_</span> <span class="nv">%</span> <span class="nv">2</span> <span class="p">}</span> <span class="mi">1</span><span class="o">..</span><span class="mi">1000</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">my</span> <span class="nv">@matching_lines</span> <span class="o">=</span> <span class="nb">grep</span> <span class="p">{</span> <span class="sr">/\bfred\b/i</span> <span class="p">}</span> <span class="sr">&lt;$fh&gt;</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">my</span> <span class="nv">@matching_lines</span> <span class="o">=</span> <span class="nb">grep</span> <span class="sr">/\bfred\b/i</span><span class="p">,</span> <span class="sr">&lt;$fh&gt;</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">my</span> <span class="nv">@matching_lines</span> <span class="o">=</span> <span class="nb">grep</span> <span class="sr">/\bfred\b/i</span><span class="p">,</span> <span class="sr">&lt;$fh&gt;</span><span class="p">;</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">$line_count</span> <span class="o">=</span> <span class="nv">@matching_lines</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line"><span class="k">my</span> <span class="nv">$line_count</span> <span class="o">=</span> <span class="nb">grep</span> <span class="sr">/\bfred\b/i</span><span class="p">,</span> <span class="sr">&lt;$fh&gt;</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line"><span class="k">my</span> <span class="nv">@data</span> <span class="o">=</span> <span class="p">(</span><span class="mf">4.75</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1234</span><span class="p">,</span> <span class="mf">6.9456</span><span class="p">,</span> <span class="mf">12345678.9</span><span class="p">,</span> <span class="mf">29.95</span><span class="p">);</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">@formatted_data</span> <span class="o">=</span> <span class="nb">map</span> <span class="p">{</span> <span class="o">&amp;</span><span class="n">big_money</span><span class="p">(</span><span class="nv">$_</span><span class="p">)</span> <span class="p">}</span> <span class="nv">@data</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;The money numbers are:\n&quot;</span><span class="p">,</span>
+</span><span class="line"><span class="nb">map</span> <span class="p">{</span> <span class="nb">sprintf</span><span class="p">(</span><span class="s">&quot;%25s\n&quot;</span><span class="p">,</span> <span class="nv">$_</span><span class="p">)</span> <span class="p">}</span> <span class="nv">@formatted_data</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line"><span class="k">my</span> <span class="nv">@data</span> <span class="o">=</span> <span class="p">(</span><span class="mf">4.75</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1234</span><span class="p">,</span> <span class="mf">6.9456</span><span class="p">,</span> <span class="mf">12345678.9</span><span class="p">,</span> <span class="mf">29.95</span><span class="p">);</span>
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;The money numbers are:\n&quot;</span><span class="p">,</span>
+</span><span class="line"><span class="nb">map</span> <span class="p">{</span> <span class="nb">sprintf</span><span class="p">(</span><span class="s">&quot;%25s\n&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">big_money</span><span class="p">(</span><span class="nv">$_</span><span class="p">)</span> <span class="p">)</span> <span class="p">}</span> <span class="nv">@data</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;Some powers of two are:\n&quot;</span><span class="p">,</span>
+</span><span class="line"><span class="nb">map</span> <span class="s">&quot;\t&quot;</span> <span class="o">.</span> <span class="p">(</span> <span class="mi">2</span> <span class="o">**</span> <span class="nv">$_</span> <span class="p">)</span> <span class="o">.</span> <span class="s">&quot;\n&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="o">..</span><span class="mi">15</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Using of Loops in Perl]]></title>
@@ -1328,25 +1395,6 @@ as well!</span></code></pre></td></tr></table></div></figure></notextile></div>
 <p>11.A layout is a special view, located in the ‘layouts’ directory (inside the views directory) which must have a token named `content’. That token marks the place where to render the action view. This lets you define a global layout for your actions. Any tokens that you defined when you called the ‘template’ keyword are available in the layouts, as well as the standard session, request, and params tokens. This allows you to insert per-page content into the HTML boilerplate, such as page titles, current-page tags for navigation, etc. (refer to the standard document for more details).</p>
 
 <p>12.Through  “set serializer =&gt; ‘JSON’;”  we can do data serializer;</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[How to Insert Pictures in Octopress]]></title>
-    <link href="http://isunix.github.io/blog/2014/06/15/how-to-insert-pictures-in-octopress/"/>
-    <updated>2014-06-15T23:14:54+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/06/15/how-to-insert-pictures-in-octopress</id>
-    <content type="html"><![CDATA[<p>Of course you can google about it, but I just keep it down so that every time I do it, I do not need to google again. It is pretty easy. </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line">{\% img [class names] /path/to/image [width] [height] [title text [alt text]] \%}
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>Of course you need to remove the “\” in the above line. I just it there so it will be interpreted as inserting a pic here. Sorry about this.</p>
-
-<p>Just add your pics in the above format. Note here I add a subdir in the source/images/ dir.  </p>
-
-<p>That is it. </p>
 ]]></content>
   </entry>
   

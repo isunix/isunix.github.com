@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Perl | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/perl/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-07-21T18:23:46+08:00</updated>
+  <updated>2014-07-21T21:36:12+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,83 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Perl Script to Comiple C/cpp Files Conveniently]]></title>
+    <link href="http://isunix.github.io/blog/2014/07/21/perl-script-to-comiple-c-slash-cpp-files-conveniently/"/>
+    <updated>2014-07-21T21:31:33+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/07/21/perl-script-to-comiple-c-slash-cpp-files-conveniently</id>
+    <content type="html"><![CDATA[<p>我自己在编译c还有c++文件的时候， 总感觉每次都得敲像下面这种格式的一串字符， 感觉很麻烦的。   </p>
+
+<p>```c
+gcc -o hello hello.c</p>
+
+<p>```</p>
+
+<p>所以就有了现在的这个脚本。使用方法很简单，想上面这个hello.c的文件，我们只要发出下面的命令:    </p>
+
+<p>```c</p>
+
+<p>cpl hello.c   </p>
+
+<p>```</p>
+
+<p>就可以编译出来一个去掉以原来的文件名去掉ext的文件。  </p>
+
+<p>很简单吧！哈哈！  </p>
+
+<p>下面给出来代码， 还是继续把doc写进去的那种。</p>
+
+<p>```perl</p>
+
+<p>use 5.010;
+use strict;
+use warnings;
+use utf8;
+use Cwd;
+use File::Basename;</p>
+
+<p>my $currentDir = getcwd;
+my $file = $ARGV[0];
+my $fullpath = “$currentDir/$file”;
+my @suffix_list = qw(.cpp .c);</p>
+
+<p>my ($name, $dir, $ext) = fileparse($file, @suffix_list);
+given($ext){</p>
+
+<pre><code>when(".c"){
+    my $compile_c = "gcc -o $name $file";
+    system($compile_c);
+}
+
+when(".cpp"){
+    my $compile_cpp = "g++ -o $name $file";
+    system($compile_cpp);
+}
+
+default{
+    say "$file is of an type not compilable!";
+} }
+</code></pre>
+
+<p><strong>END</strong>
+=pod</p>
+
+<p>=head1 NAME</p>
+
+<p>cpl</p>
+
+<p>=head1 SYNOPSIS
+    $ cpl filename</p>
+
+<p>cpl –use gcc/g++ to compile a file with c/cpp extension. Usually we will do things like “gcc -o hello hello.c”, but with this scipt, we can just issue command like this, “gcp hello.c”;</p>
+
+<p>Thanks,
+Steven</p>
+
+<p>```</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Perl Script to Delete Files Without Extension]]></title>
@@ -180,50 +257,6 @@ as well!
         print "too large!\n";
     }
 }  </stdin></p>
-
-<p>```</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Use Examples Regarding Hash in Perl]]></title>
-    <link href="http://isunix.github.io/blog/2014/07/18/use-examples-regarding-hash-in-perl/"/>
-    <updated>2014-07-18T19:18:44+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/07/18/use-examples-regarding-hash-in-perl</id>
-    <content type="html"><![CDATA[<p>1.要求用户输入人名， 打印出对应的item.</p>
-
-<p>```perl</p>
-
-<p>my %last_name = qw{
-    fred flintstone
-    barney rubble
-    wilma flintstone
-};</p>
-
-<p>print “please enter a first name: “;
-chomp(my $name = <stdin>);
-print "that's $name $last_name{$name}.\n";</stdin></p>
-
-<p>```<br />
-这是一个很典型的标准用法了。  </p>
-
-<p>2.要求用户进行几行输入，然后统计频数.   </p>
-
-<p>```perl
-use strict;
-use warnings;
-use utf8;</p>
-
-<p>my (@words, %count, $word);
-chomp(@words = <stdin>);</stdin></p>
-
-<p>foreach $word (@words){
-    $count{$word} += 1;
-}</p>
-
-<p>foreach $word (keys %count){
-    print “$word was seen $count{$word} times.\n”;
-}</p>
 
 <p>```</p>
 ]]></content>

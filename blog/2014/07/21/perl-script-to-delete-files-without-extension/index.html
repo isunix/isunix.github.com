@@ -1,0 +1,251 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Perl Script to Delete Files Without Extension - Steven's Blog</title>
+  <meta name="author" content="Steven Sun">
+
+  
+  <meta name="description" content="I want to delete those files without the extension I need, so I just write this perl script. The directory can also be specified on the command line &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://isunix.github.io/blog/2014/07/21/perl-script-to-delete-files-without-extension">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Steven's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=Open+Sans:400,700&subset=latin" rel="stylesheet" type="text/css" />
+<link href='http://fonts.googleapis.com/css?family=Noto+Serif:400,700' rel='stylesheet' type='text/css'>
+
+
+
+  
+
+</head>
+
+<body    class="collapse-sidebar sidebar-footer" >
+  <nav id="main-nav" role="navigation">
+<ul class="main-navigation">
+  <li><a href="/" class="nav-link">Blog</a></li>
+  <li><a href="/blog/archives" class="nav-link">Archives</a></li>
+  <li><a href="/atom.xml" class="nav-link">RSS</a></li>
+  <li><a href="/about" class="nav-link">About</a></li>
+</ul>
+
+</nav>
+  
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Perl Script to Delete Files Without Extension</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-21T18:18:34+08:00" pubdate data-updated="true">Jul 21<span>st</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>I want to delete those files without the extension I need, so I just write this perl script. The directory can also be specified on the command line. I list all those extensions I need as a pattern.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+<span class="line-number">35</span>
+<span class="line-number">36</span>
+<span class="line-number">37</span>
+<span class="line-number">38</span>
+<span class="line-number">39</span>
+<span class="line-number">40</span>
+<span class="line-number">41</span>
+<span class="line-number">42</span>
+<span class="line-number">43</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="n">strict</span><span class="p">;</span>
+</span><span class="line"><span class="k">use</span> <span class="n">warnings</span><span class="p">;</span>
+</span><span class="line"><span class="k">use</span> <span class="n">utf8</span><span class="p">;</span>
+</span><span class="line"><span class="k">use</span> <span class="n">Cwd</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">my</span> <span class="nv">$targetDir</span> <span class="o">=</span> <span class="nv">$ARGV</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">||</span> <span class="n">getcwd</span><span class="p">;</span>
+</span><span class="line"><span class="nb">chdir</span> <span class="nv">$targetDir</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">my</span> <span class="nv">$pattern</span> <span class="o">=</span> <span class="sx">qr/\.(md|py|php|sh|bash|zsh|vimrc|eamcs|c|cpp|java|pl|js|css|html|rb|txt)/</span><span class="n">i</span><span class="p">,</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">@file_list</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line"><span class="nb">opendir</span><span class="p">(</span><span class="k">my</span> <span class="nv">$dh</span><span class="p">,</span> <span class="nv">$targetDir</span><span class="p">)</span> <span class="o">||</span> <span class="nb">die</span> <span class="s">&quot;can&#39;t opendir $targetDir: $!&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="k">while</span> <span class="p">(</span><span class="nb">readdir</span> <span class="nv">$dh</span><span class="p">){</span>
+</span><span class="line">    <span class="k">next</span> <span class="k">unless</span> <span class="o">-</span><span class="n">f</span><span class="p">;</span>
+</span><span class="line">    <span class="k">next</span> <span class="k">if</span> <span class="nv">$_</span> <span class="o">=~</span> <span class="nv">$pattern</span><span class="p">;</span>
+</span><span class="line">    <span class="nb">push</span> <span class="nv">@file_list</span><span class="p">,</span> <span class="nv">$_</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line"><span class="nb">closedir</span> <span class="nv">$dh</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;The following files are going to be deleted: @file_list\n&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="nb">unlink</span> <span class="nv">@file_list</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="cp">__END__</span>
+</span><span class="line"><span class="cp">=pod</span>
+</span><span class="line">
+</span><span class="line"><span class="cp">=head1 NAME</span>
+</span><span class="line">
+</span><span class="line"><span class="cp">delete-files.pl -delete those files without the extension as specifed in the pattern</span>
+</span><span class="line">
+</span><span class="line"><span class="cp">=head1 SYNOPSIS</span>
+</span><span class="line">
+</span><span class="line"><span class="cp">    $ delete-files</span>
+</span><span class="line"><span class="cp">It reads the files in the directory where you execute this script, and delete those</span>
+</span><span class="line"><span class="cp">not having the extension as is specified &quot;(md|py|php|sh|bash|zsh|vimrc|eamcs|c|cpp|java|pl|js|css|html|rb|txt)&quot;</span>
+</span><span class="line">
+</span><span class="line"><span class="cp">Please use this script carefully. If you have somefile without extension which you also</span>
+</span><span class="line"><span class="cp">consider them important, they maybe deleted.</span>
+</span><span class="line">
+</span><span class="line"><span class="cp">Thanks,</span>
+</span><span class="line"><span class="cp">Steven</span>
+</span><span class="line">
+</span><span class="line"><span class="cp">=cut</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>I also wrote document for this scirpt. haha!</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Steven Sun</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-21T18:18:34+08:00" pubdate data-updated="true">Jul 21<span>st</span>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/perl/'>Perl</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/07/20/java-project-in-eclipse/" title="Previous Post: java project in eclipse">&laquo; java project in eclipse</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Steven Sun -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

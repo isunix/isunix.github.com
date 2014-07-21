@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Perl | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/perl/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-07-20T12:52:52+08:00</updated>
+  <updated>2014-07-21T18:23:46+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,62 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Perl Script to Delete Files Without Extension]]></title>
+    <link href="http://isunix.github.io/blog/2014/07/21/perl-script-to-delete-files-without-extension/"/>
+    <updated>2014-07-21T18:18:34+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/07/21/perl-script-to-delete-files-without-extension</id>
+    <content type="html"><![CDATA[<p>I want to delete those files without the extension I need, so I just write this perl script. The directory can also be specified on the command line. I list all those extensions I need as a pattern.</p>
+
+<p>```perl
+use strict;
+use warnings;
+use utf8;
+use Cwd;</p>
+
+<p>my $targetDir = $ARGV[0] || getcwd;
+chdir $targetDir;</p>
+
+<p>my $pattern = qr/.(md|py|php|sh|bash|zsh|vimrc|eamcs|c|cpp|java|pl|js|css|html|rb|txt)/i,
+my @file_list;</p>
+
+<p>opendir(my $dh, $targetDir) || die “can’t opendir $targetDir: $!”;
+while (readdir $dh){
+    next unless -f;
+    next if $_ =~ $pattern;
+    push @file_list, $_;
+}
+closedir $dh;</p>
+
+<p>print “The following files are going to be deleted: @file_list\n”;
+unlink @file_list;</p>
+
+<p><strong>END</strong>
+=pod</p>
+
+<p>=head1 NAME</p>
+
+<p>delete-files.pl -delete those files without the extension as specifed in the pattern</p>
+
+<p>=head1 SYNOPSIS</p>
+
+<pre><code>$ delete-files It reads the files in the directory where you execute this script, and delete those not having the extension as is specified "(md|py|php|sh|bash|zsh|vimrc|eamcs|c|cpp|java|pl|js|css|html|rb|txt)"
+</code></pre>
+
+<p>Please use this script carefully. If you have somefile without extension which you also
+consider them important, they maybe deleted.</p>
+
+<p>Thanks,
+Steven</p>
+
+<p>=cut</p>
+
+<p>```</p>
+
+<p>I also wrote document for this scirpt. haha!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Split Mids to Several Lines With Fixed Number Per Line Using Perl]]></title>
@@ -168,73 +224,6 @@ chomp(@words = <stdin>);</stdin></p>
 <p>foreach $word (keys %count){
     print “$word was seen $count{$word} times.\n”;
 }</p>
-
-<p>```</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Interesting Use of State in Perl]]></title>
-    <link href="http://isunix.github.io/blog/2014/07/17/interesting-use-of-state-in-perl/"/>
-    <updated>2014-07-17T18:48:44+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/07/17/interesting-use-of-state-in-perl</id>
-    <content type="html"><![CDATA[<p>还是来自«learning perl»中的例子。</p>
-
-<ol>
-  <li>写一个名为greet的子例程，当给定一个人名作为参数的时候，打出欢迎他的信息，并告诉他前一个来宾的名字。  </li>
-</ol>
-
-<p>```perl</p>
-
-<p>use 5.010;
-greet(‘Fred’);
-greet(‘Barney’);</p>
-
-<p>sub greet{
-    state $last_person;</p>
-
-<pre><code>my $name = shift;
-
-print "Hi, $name!";
-
-if (defined $last_person) {
-    print "$last_person is also here!\n";
-}
-
-else {
-    print "you are the first one here!\n";
-}
-
-$last_person = $name; } 
-</code></pre>
-
-<p>```<br />
-2.修改程序1， 告诉所有新来的人之前已经迎来了哪些人.   </p>
-
-<p>```perl 
-use Data::Dumper;
-use 5.010;</p>
-
-<p>greet(‘Fred’);
-greet(‘Barney’);
-greet(‘Wilma’);
-greet(‘Betty’);</p>
-
-<p>sub greet{
-    state @before;</p>
-
-<pre><code>my $name = shift;
-print "Hi, $name!";
-
-if (@before){
-    print " I have seen @before\n";
-}
-else {
-    print " you are the first one here!\n";
-}
-
-push @before, $name; }
-</code></pre>
 
 <p>```</p>
 ]]></content>

@@ -180,9 +180,145 @@ my @all_with_names = (\@skipper_with_name,\@professor_with_name,\@gilligan_wi
  
 {% img /images/sun/perl_4.1.png %}   
 
-因此，$all_with_names[2]将会是对于Gilligan的数据的数组引用。如果你把它解引用的话@{$all_with_names[2]}，你将得到一个两个元素的数组，"Gilligan"还有另一个数组引用。 
+因此，$all_with_names[2]将会是对于Gilligan的数据的数组引用。如果你把它解引用的话@{$all_with_names[2]}，你将得到一个两个元素的数组，"Gilligan"还有另一个数组引用。     
 
+我们该怎么访问那个数组引用呢？ 得再次使用我们的规则了， 也就是${$all_with_names[2]}[1]. 换句话说， 在有了$all_tiwh_names[2]之后， 我们会把它解引用到一个像是普通的数组$DUMMY[1]一样的表达式中去， 所以我们将用{$all_with_names[2]}来替换DUMMY.  
 
+我们该如何使用这种数据结构来调用已经存在的 check_required_itesm()例程呢？ 下面的代码是足够简单的了。
+
+```perl
+for my $person (@all_with_names) {	my $who = $$person[0];	my $provisions_reference = $$person[1];	check_required_items($who, $provisions_reference);}
+```  
+这并不要求对子程序做任何的改变。随着循环的推进， 控制变量$person将会依次是$all_with_names[0], $all_with_names[1], $all_with_names[2]中的一个。当我们解引用$$person[0]之后， 我们会依次得到 “Skipper”， “Professor”，还有“Gilligan”。$$person[1]是某个人对应的供应清单的数组引用。  
+
+当然， 由于整个的被解引用的数组精确地匹配了参数列表，我们也可以把这个过程简化的。   
+
+```perl    
+for my $person (@all_with_names) {	check_required_items(@$person);}
+
+```   
+甚至是：  
+
+```perl
+
+check_required_items(@$_) for @all_with_names;  
+
+```  
+
+正如你所看到的， 多层次的优化会导致困惑的。请确定你考虑到当一个月之后你得再次读你的代码的时候， 你是否能明白。 如果那还不够的话，请考虑下当你离职之后那个接手你的工作的人。   
+
+##通过箭头来简化嵌套的元素引用   
+
+再次看下大括号形式的解引用。正如在我们之前的例子中一样， 对于Gilligan的清单的数组引用是${$all_with_names[2]}[1]. 现在如果我们想知道Gilligan的第一个供应清单该怎么办呢？我们得对这个条款再进一步的解引用， 所以又是另外的一层大括号了: ${${$all_with_names[2]}[1]}[0]. 这真的令人讨厌的语法啊。我们能够简化它吗？ 当然可以！  
+
+每当我们要写${DUMMY}[$y]的时候，我们可以写DUMMY->[$y]来代替。换句话说，我们可以这样来解引用一个数组的引用， 找出这个数组中的一个特定的元素，这可以简单地通过在定义这个数组的表达式的后面跟上一个箭头还有中括号引起来的下标。   
+
+对于这个例子，这意味着我们可以用$all_with_names[2]->[1]来挑出针对Gilligan的数组引用，以及$all_with_names[2]->[1]->[0]来表示Gilligan的第一个物品清单。哇， 那看起来真的舒服多了。   
+
+如果那还不够简单的话，还有一条规则可循: 如果箭头处在像方括号这样的可以包含下标的东西之间，我们可以把箭头个去掉。$all_with_names[2]->[1]->[0]就变成了$all_with_names[2][1][0]。 现在看起来就更加地舒服了。   
+
+(以下省略一段不翻译了)。  
+
+##对哈希的引用   
+
+正如我们可以对数组进行引用，我们也可以对哈希进行引用。再一次地，我们使用反斜杠来作为引用的操作符。  
+
+```perl  
+
+my %gilligan_info = (	name => 'Gilligan',	hat => 'White',	shirt => 'Red',	position => 'First Mate',);
+my $hash_ref = \%gilligan_info;
+
+```   
+
+我们可以对一个哈希引用进行解引用来得到原先的数据。这个策略同对一个数组引用进行解引用是类似的。  
+
+我们像在没有引用的情况下一样写出哈希的语法，然后在包含引用的那个东西的周围使用大括号括起来， 这样子来替换掉原先的哈希名字。例如，为了超出某个键的特定的值，我们可以这样来做:  
+
+```perl 
+
+my $name = $ gilligan_info { 'name' };my $name = $ { $hash_ref } { 'name' };
+
+```
+在这个例子中，大括号是有着两种不同的意思的. 第一对大括号代表的表达式返回一个引用，而第二个大括号是作为代表哈希键的表达式的界定符.  
+
+如果要在整个的哈希上面进行操作的话， 我们可以像下面这样:  
+
+```perl  
+
+my @keys = keys % gilligan_info;my @keys = keys % { $hash_ref };
+
+```
+如同数组的引用一样，我们可以在有些情况下使用快捷方式来替换复杂的大括号的这种形式. 例如， 如果在大括号中只有一个简单的标量变量的话，我们就可以把大括号个去掉的:   
+
+```perl
+
+my $name = $$hash_ref{'name'};my @keys = keys %$hash_ref;
+
+```   
+像数组的引用一样， 当指向某个具体的哈希元素的时候，我们可以使用箭头的形式:  
+
+```perl
+
+my $name = $hash_ref->{'name'};
+
+```   
+
+由于凡是标量变量可以存在的地方，哈希的引用都可以存在，所以我们可以创建一个哈希引用的数组：
+
+```perl   
+
+my %gilligan_info = (	name => 'Gilligan',	hat => 'White',	shirt => 'Red',	position => 'First Mate',);
+my %skipper_info = (	name => 'Skipper',	hat => 'Black',	shirt => 'Blue',	position => 'Captain',);
+my @crew = (\%gilligan_info, \%skipper_info);  
+
+```  
+
+因此，$crew[0]是一个指向关于Gilligan的信息的哈希引用。我们可以通过下面的其中之一来得到Gilligan的名字：  
+
+```perl
+
+${ $crew[0] } { 'name' }my $ref = $crew[0]; $$ref{'name'}$crew[0]->{'name'}$crew[0]{'name'}
+
+```   
+
+让我们来打印出一个员工的花名册:  
+
+```perl
+
+my %gilligan_info = (	name => 'Gilligan',	hat => 'White',	shirt => 'Red',	position => 'First Mate',);
+my %skipper_info = (	name => 'Skipper',	hat => 'Black',	shirt => 'Blue',	position => 'Captain',);
+my @crew = (\%gilligan_info, \%skipper_info);my $format = "%-15s %-7s %-7s %-15s\n";printf $format, qw(Name Shirt Hat Position);for my $crewmember (@crew) {	printf $format,	$crewmember->{'name'},	$crewmember->{'shirt'},	$crewmember->{'hat'},	$crewmember->{'position'};}
+
+最后的这部分看起来很冗余，我们可以使用哈希切割来简化它。如果原先的语法是: 
+
+```perl
+
+@ gilligan_info { qw(name position) }
+
+```  
+
+从引用得来的哈希切割的表示方法如下:  
+
+```perl
+@ { $hash_ref } { qw(name position) }
+
+```
+
+我们可以把第一对大括号给去掉，因为里面唯一的东西是一个简单的标量变量值。  
+
+```perl 
+
+@ $hash_ref { qw(name position) }
+
+```  
+这样我们就可以把那个最后的循环替换成:  
+
+```perl
+
+for my $crewmember (@crew) {	printf $format, @$crewmember{qw(name shirt hat position)};}
+
+```
+对于数组切割或者哈希切割没有使用箭头形式的简化表示， 正如对于整个的数组后者哈希也没有简化表示一样。
 
 
    

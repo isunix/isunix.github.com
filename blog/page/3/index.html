@@ -1024,6 +1024,7 @@ python -m timeit -s&quot;import mymodule as m&quot; &quot; &hellip;">
 </span><span class="line">	<span class="p">}</span>
 </span><span class="line"><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
+
 <p>在@_中仍然有两个元素, 第一个元素是乘客或者乘务人员的名字， 我们将在错误信息中使用到。第二个元素是对正确的供应清单的引用，我们在grep表达式中会使用到.   </p>
 
 <h2 id="section-3">把括号去掉</h2>
@@ -1150,7 +1151,102 @@ python -m timeit -s&quot;import mymodule as m&quot; &quot; &hellip;">
 
 <p>我们该怎么访问那个数组引用呢？ 得再次使用我们的规则了， 也就是${$all_with_names[2]}[1]. 换句话说， 在有了$all_tiwh_names[2]之后， 我们会把它解引用到一个像是普通的数组$DUMMY[1]一样的表达式中去， 所以我们将用{$all_with_names[2]}来替换DUMMY.  </p>
 
-<p>我们该如何使用这种数据结构来调用已经存在的 check_required_itesm()例程呢？ 下面的代码是足够简单的了。</p>
+<p>我们该如何使用这种数据结构来调用已经存在的 check_required_itesm()例程呢？ 下面的代码是足够简单的了:   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">for</span> <span class="k">my</span> <span class="nv">$person</span> <span class="p">(</span><span class="nv">@all_with_names</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">	<span class="k">my</span> <span class="nv">$who</span> <span class="o">=</span> <span class="nv">$$person</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+</span><span class="line">	<span class="k">my</span> <span class="nv">$provisions_reference</span> <span class="o">=</span> <span class="nv">$$person</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+</span><span class="line">	<span class="n">check_required_items</span><span class="p">(</span><span class="nv">$who</span><span class="p">,</span> <span class="nv">$provisions_reference</span><span class="p">);</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>这并不要求对子程序做任何的改变。随着循环的推进， 控制变量$person将会依次是$all_with_names[0], $all_with_names[1], $all_with_names[2]中的一个。当我们解引用<script type="math/tex">person[0]之后， 我们会依次得到 “Skipper”， “Professor”，还有“Gilligan”。</script>person[1]是某个人对应的供应清单的数组引用。  </p>
+
+<p>当然， 由于整个的被解引用的数组精确地匹配了参数列表，我们也可以把这个过程简化的。   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">for</span> <span class="k">my</span> <span class="nv">$person</span> <span class="p">(</span><span class="nv">@all_with_names</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">	<span class="n">check_required_items</span><span class="p">(</span><span class="nv">@$person</span><span class="p">);</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>甚至是:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">check_required_items</span><span class="p">(</span><span class="nv">@$_</span><span class="p">)</span> <span class="k">for</span> <span class="nv">@all_with_names</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>正如你所看到的， 多层次的优化会导致困惑的。请确定你考虑到当一个月之后你得再次读你的代码的时候， 你是否能明白。 如果那还不够的话，请考虑下当你离职之后那个接手你的工作的人。   </p>
+
+<h2 id="section-6">通过箭头来简化嵌套的元素引用</h2>
+
+<p>再次看下大括号形式的解引用。正如在我们之前的例子中一样， 对于Gilligan的清单的数组引用是${$all_with_names[2]}[1]. 现在如果我们想知道Gilligan的第一个供应清单该怎么办呢？我们得对这个条款再进一步的解引用， 所以又是另外的一层大括号了: ${${$all_with_names[2]}[1]}[0]. 这真的令人讨厌的语法啊。我们能够简化它吗？ 当然可以！  </p>
+
+<p>每当我们要写${DUMMY}[$y]的时候，我们可以写DUMMY-&gt;[$y]来代替。换句话说，我们可以这样来解引用一个数组的引用， 找出这个数组中的一个特定的元素，这可以简单地通过在定义这个数组的表达式的后面跟上一个箭头还有中括号引起来的下标。   </p>
+
+<p>对于这个例子，这意味着我们可以用$all_with_names[2]-&gt;[1]来挑出针对Gilligan的数组引用，以及$all_with_names[2]-&gt;[1]-&gt;[0]来表示Gilligan的第一个物品清单。哇， 那看起来真的舒服多了。   </p>
+
+<p>如果那还不够简单的话，还有一条规则可循: 如果箭头处在像方括号这样的可以包含下标的东西之间，我们可以把箭头个去掉。$all_with_names[2]-&gt;[1]-&gt;[0]就变成了$all_with_names[2][1][0]。 现在看起来就更加地舒服了。   </p>
+
+<p>(以下省略一段不翻译了)。  </p>
+
+<h2 id="section-7">对哈希的引用</h2>
+
+<p>正如我们可以对数组进行引用，我们也可以对哈希进行引用。再一次地，我们使用反斜杠来作为引用的操作符.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">%gilligan_info</span> <span class="o">=</span> <span class="p">(</span>
+</span><span class="line">	<span class="n">name</span> <span class="o">=&gt;</span> <span class="s">&#39;Gilligan&#39;</span><span class="p">,</span>
+</span><span class="line">	<span class="n">hat</span> <span class="o">=&gt;</span> <span class="s">&#39;White&#39;</span><span class="p">,</span>
+</span><span class="line">	<span class="n">shirt</span> <span class="o">=&gt;</span> <span class="s">&#39;Red&#39;</span><span class="p">,</span>
+</span><span class="line">	<span class="n">position</span> <span class="o">=&gt;</span> <span class="s">&#39;First Mate&#39;</span><span class="p">,</span>
+</span><span class="line"><span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="k">my</span> <span class="nv">$hash_ref</span> <span class="o">=</span> <span class="o">\</span><span class="nv">%gilligan_info</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>我们可以对一个哈希引用进行解引用来得到原先的数据。这个策略同对一个数组引用进行解引用是类似的。  </p>
+
+<p>我们像在没有引用的情况下一样写出哈希的语法，然后在包含引用的那个东西的周围使用大括号括起来， 这样子来替换掉原先的哈希名字。例如，为了超出某个键的特定的值，我们可以这样来做:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">$name</span> <span class="o">=</span> <span class="nv">$</span> <span class="nv">gilligan_info</span> <span class="p">{</span> <span class="s">&#39;name&#39;</span> <span class="p">};</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">$name</span> <span class="o">=</span> <span class="nv">$</span> <span class="p">{</span> <span class="nv">$hash_ref</span> <span class="p">}</span> <span class="p">{</span> <span class="s">&#39;name&#39;</span> <span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>在这个例子中，大括号是有着两种不同的意思的. 第一对大括号代表的表达式返回一个引用，而第二个大括号是作为代表哈希键的表达式的界定符.  </p>
+
+<p>如同数组的引用一样，我们可以在有些情况下使用快捷方式来替换复杂的大括号的这种形式. 例如， 如果在大括号中只有一个简单的标量变量的话，我们就可以把大括号个去掉的.   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">$name</span> <span class="o">=</span> <span class="nv">$$hash_ref</span><span class="p">{</span><span class="s">&#39;name&#39;</span><span class="p">};</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">@keys</span> <span class="o">=</span> <span class="nb">keys</span> <span class="nv">%$hash_ref</span><span class="p">;</span>
+</span><span class="line">
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>像数组的引用一样， 当指向某个具体的哈希元素的时候，我们可以使用箭头的形式:   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">$name</span> <span class="o">=</span> <span class="nv">$hash_ref</span><span class="o">-&gt;</span><span class="p">{</span><span class="s">&#39;name&#39;</span><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>由于凡是标量变量可以存在的地方, 哈希的引用都可以存在, 所以我们可以创建一个哈希引用的数组,   </p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
@@ -1162,28 +1258,39 @@ python -m timeit -s&quot;import mymodule as m&quot; &quot; &hellip;">
 <span class="line-number">8</span>
 <span class="line-number">9</span>
 <span class="line-number">10</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">for</span> <span class="k">my</span> <span class="nv">$person</span> <span class="p">(</span><span class="nv">@all_with_names</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">	<span class="k">my</span> <span class="nv">$who</span> <span class="o">=</span> <span class="nv">$$person</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
-</span><span class="line">	<span class="k">my</span> <span class="nv">$provisions_reference</span> <span class="o">=</span> <span class="nv">$$person</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
-</span><span class="line">	<span class="n">check_required_items</span><span class="p">(</span><span class="nv">$who</span><span class="p">,</span> <span class="nv">$provisions_reference</span><span class="p">);</span>
-</span><span class="line"><span class="p">}</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">%gilligan_info</span> <span class="o">=</span> <span class="p">(</span>
+</span><span class="line">	<span class="n">name</span> <span class="o">=&gt;</span> <span class="s">&#39;Gilligan&#39;</span><span class="p">,</span>
+</span><span class="line">	<span class="n">hat</span> <span class="o">=&gt;</span> <span class="s">&#39;White&#39;</span><span class="p">,</span>
+</span><span class="line">	<span class="n">shirt</span> <span class="o">=&gt;</span> <span class="s">&#39;Red&#39;</span><span class="p">,</span>
+</span><span class="line">	<span class="n">position</span> <span class="o">=&gt;</span> <span class="s">&#39;First Mate&#39;</span><span class="p">,</span>
+</span><span class="line"><span class="p">);</span>
 </span><span class="line">
-</span><span class="line"><span class="sb">``</span><span class="err">`</span>
-</span><span class="line"><span class="err">这并不要求对子程序做任何的改变。随着循环的推进，</span> <span class="err">控制变量</span><span class="nv">$person</span><span class="err">将会依次是</span><span class="nv">$all_with_names</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nv">$all_with_names</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nv">$all_with_names</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="err">中的一个。当我们解引用</span><span class="nv">$$person</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="err">之后，</span> <span class="err">我们会依次得到</span> <span class="err">“</span><span class="n">Skipper</span><span class="err">”，</span> <span class="err">“</span><span class="n">Professor</span><span class="err">”，还有“</span><span class="n">Gilligan</span><span class="err">”。</span><span class="nv">$$person</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="err">是某个人对应的供应清单的数组引用。</span>
-</span><span class="line">
-</span><span class="line"><span class="err">当然，</span> <span class="err">由于整个的被解引用的数组精确地匹配了参数列表，我们也可以把这个过程简化的。</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">%skipper_info</span> <span class="o">=</span> <span class="p">(</span>
+</span><span class="line">	<span class="n">name</span> <span class="o">=&gt;</span> <span class="s">&#39;Skipper&#39;</span><span class="p">,</span>
+</span><span class="line">	<span class="n">hat</span> <span class="o">=&gt;</span> <span class="s">&#39;Black&#39;</span><span class="p">,</span>
+</span><span class="line">	<span class="n">shirt</span> <span class="o">=&gt;</span> <span class="s">&#39;Blue&#39;</span><span class="p">,</span>
+</span><span class="line">	<span class="n">position</span> <span class="o">=&gt;</span> <span class="s">&#39;Captain&#39;</span><span class="p">,</span>
+</span><span class="line"><span class="p">);</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">@crew</span> <span class="o">=</span> <span class="p">(</span><span class="o">\</span><span class="nv">%gilligan_info</span><span class="p">,</span> <span class="o">\</span><span class="nv">%skipper_info</span><span class="p">);</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>perl  <br />
-for my $person (@all_with_names) {
-	check_required_items(@$person);
-}</p>
+
+<p>因此, $crew[0]是一个指向关于Gilligan的信息的哈希引用。我们可以通过下面的其中之一来得到Gilligan的名字:    </p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="err">甚至是：</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">$</span><span class="p">{</span> <span class="nv">$crew</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">}</span> <span class="p">{</span> <span class="s">&#39;name&#39;</span> <span class="p">}</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">$ref</span> <span class="o">=</span> <span class="nv">$crew</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span> <span class="nv">$$ref</span><span class="p">{</span><span class="s">&#39;name&#39;</span><span class="p">}</span>
+</span><span class="line"><span class="nv">$crew</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="p">{</span><span class="s">&#39;name&#39;</span><span class="p">}</span>
+</span><span class="line"><span class="nv">$crew</span><span class="p">[</span><span class="mi">0</span><span class="p">]{</span><span class="s">&#39;name&#39;</span><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>perl</p>
 
-<p>check_required_items(@$_) for @all_with_names;  </p>
+<p>让我们来打印出一个员工的花名册, </p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
@@ -1202,138 +1309,44 @@ for my $person (@all_with_names) {
 <span class="line-number">15</span>
 <span class="line-number">16</span>
 <span class="line-number">17</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="err">正如你所看到的，</span> <span class="err">多层次的优化会导致困惑的。请确定你考虑到当一个月之后你得再次读你的代码的时候，</span> <span class="err">你是否能明白。</span> <span class="err">如果那还不够的话，请考虑下当你离职之后那个接手你的工作的人。</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line">
+</span><span class="line"><span class="k">my</span> <span class="nv">%gilligan_info</span> <span class="o">=</span> <span class="p">(</span>
+</span><span class="line">	<span class="n">name</span> <span class="o">=&gt;</span> <span class="s">&#39;Gilligan&#39;</span><span class="p">,</span>
+</span><span class="line">	<span class="n">hat</span> <span class="o">=&gt;</span> <span class="s">&#39;White&#39;</span><span class="p">,</span>
+</span><span class="line">	<span class="n">shirt</span> <span class="o">=&gt;</span> <span class="s">&#39;Red&#39;</span><span class="p">,</span>
+</span><span class="line">	<span class="n">position</span> <span class="o">=&gt;</span> <span class="s">&#39;First Mate&#39;</span><span class="p">,</span>
+</span><span class="line"><span class="p">);</span>
 </span><span class="line">
-</span><span class="line"><span class="c1">##通过箭头来简化嵌套的元素引用   </span>
+</span><span class="line"><span class="k">my</span> <span class="nv">%skipper_info</span> <span class="o">=</span> <span class="p">(</span>
+</span><span class="line">	<span class="n">name</span> <span class="o">=&gt;</span> <span class="s">&#39;Skipper&#39;</span><span class="p">,</span>
+</span><span class="line">	<span class="n">hat</span> <span class="o">=&gt;</span> <span class="s">&#39;Black&#39;</span><span class="p">,</span>
+</span><span class="line">	<span class="n">shirt</span> <span class="o">=&gt;</span> <span class="s">&#39;Blue&#39;</span><span class="p">,</span>
+</span><span class="line">	<span class="n">position</span> <span class="o">=&gt;</span> <span class="s">&#39;Captain&#39;</span><span class="p">,</span>
+</span><span class="line"><span class="p">);</span>
 </span><span class="line">
-</span><span class="line"><span class="err">再次看下大括号形式的解引用。正如在我们之前的例子中一样，</span> <span class="err">对于</span><span class="n">Gilligan</span><span class="err">的清单的数组引用是</span><span class="nv">$</span><span class="p">{</span><span class="nv">$all_with_names</span><span class="p">[</span><span class="mi">2</span><span class="p">]}[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span> <span class="err">现在如果我们想知道</span><span class="n">Gilligan</span><span class="err">的第一个供应清单该怎么办呢？我们得对这个条款再进一步的解引用，</span> <span class="err">所以又是另外的一层大括号了</span><span class="p">:</span> <span class="nv">$</span><span class="p">{</span><span class="nv">$</span><span class="p">{</span><span class="nv">$all_with_names</span><span class="p">[</span><span class="mi">2</span><span class="p">]}[</span><span class="mi">1</span><span class="p">]}[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span> <span class="err">这真的令人讨厌的语法啊。我们能够简化它吗？</span> <span class="err">当然可以！</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">@crew</span> <span class="o">=</span> <span class="p">(</span><span class="o">\</span><span class="nv">%gilligan_info</span><span class="p">,</span> <span class="o">\</span><span class="nv">%skipper_info</span><span class="p">);</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">$format</span> <span class="o">=</span> <span class="s">&quot;%-15s %-7s %-7s %-15s\n&quot;</span><span class="p">;</span>
 </span><span class="line">
-</span><span class="line"><span class="err">每当我们要写</span><span class="nv">$</span><span class="p">{</span><span class="n">DUMMY</span><span class="p">}[</span><span class="nv">$y</span><span class="p">]</span><span class="err">的时候，我们可以写</span><span class="n">DUMMY</span><span class="o">-&gt;</span><span class="p">[</span><span class="nv">$y</span><span class="p">]</span><span class="err">来代替。换句话说，我们可以这样来解引用一个数组的引用，</span> <span class="err">找出这个数组中的一个特定的元素，这可以简单地通过在定义这个数组的表达式的后面跟上一个箭头还有中括号引起来的下标。</span>
+</span><span class="line"><span class="nb">printf</span> <span class="nv">$format</span><span class="p">,</span> <span class="sx">qw(Name Shirt Hat Position)</span><span class="p">;</span>
 </span><span class="line">
-</span><span class="line"><span class="err">对于这个例子，这意味着我们可以用</span><span class="nv">$all_with_names</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">-&gt;</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="err">来挑出针对</span><span class="n">Gilligan</span><span class="err">的数组引用，以及</span><span class="nv">$all_with_names</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">-&gt;</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-&gt;</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="err">来表示</span><span class="n">Gilligan</span><span class="err">的第一个物品清单。哇，</span> <span class="err">那看起来真的舒服多了。</span>
-</span><span class="line">
-</span><span class="line"><span class="err">如果那还不够简单的话，还有一条规则可循</span><span class="p">:</span> <span class="err">如果箭头处在像方括号这样的可以包含下标的东西之间，我们可以把箭头个去掉。</span><span class="nv">$all_with_names</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">-&gt;</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-&gt;</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="err">就变成了</span><span class="nv">$all_with_names</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="err">。</span> <span class="err">现在看起来就更加地舒服了。</span>
-</span><span class="line">
-</span><span class="line"><span class="p">(</span><span class="err">以下省略一段不翻译了</span><span class="p">)</span><span class="err">。</span>
-</span><span class="line">
-</span><span class="line"><span class="c1">##对哈希的引用   </span>
-</span><span class="line">
-</span><span class="line"><span class="err">正如我们可以对数组进行引用，我们也可以对哈希进行引用。再一次地，我们使用反斜杠来作为引用的操作符。</span>
+</span><span class="line"><span class="k">for</span> <span class="k">my</span> <span class="nv">$crewmember</span> <span class="p">(</span><span class="nv">@crew</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">	<span class="nb">printf</span> <span class="nv">$format</span><span class="p">,</span>
+</span><span class="line">	<span class="nv">$crewmember</span><span class="o">-&gt;</span><span class="p">{</span><span class="s">&#39;name&#39;</span><span class="p">},</span>
+</span><span class="line">	<span class="nv">$crewmember</span><span class="o">-&gt;</span><span class="p">{</span><span class="s">&#39;shirt&#39;</span><span class="p">},</span>
+</span><span class="line">	<span class="nv">$crewmember</span><span class="o">-&gt;</span><span class="p">{</span><span class="s">&#39;hat&#39;</span><span class="p">},</span>
+</span><span class="line">	<span class="nv">$crewmember</span><span class="o">-&gt;</span><span class="p">{</span><span class="s">&#39;position&#39;</span><span class="p">};</span>
+</span><span class="line"><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>perl  </p>
-
-<p>my %gilligan_info = (
-	name =&gt; ‘Gilligan’,
-	hat =&gt; ‘White’,
-	shirt =&gt; ‘Red’,
-	position =&gt; ‘First Mate’,
-);</p>
-
-<p>my $hash_ref = \%gilligan_info;</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="err">我们可以对一个哈希引用进行解引用来得到原先的数据。这个策略同对一个数组引用进行解引用是类似的。</span>
-</span><span class="line">
-</span><span class="line"><span class="err">我们像在没有引用的情况下一样写出哈希的语法，然后在包含引用的那个东西的周围使用大括号括起来，</span> <span class="err">这样子来替换掉原先的哈希名字。例如，为了超出某个键的特定的值，我们可以这样来做</span><span class="p">:</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>perl </p>
-
-<p>my $name = $ gilligan_info { ‘name’ };
-my $name = $ { $hash_ref } { ‘name’ };</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="err">在这个例子中，大括号是有着两种不同的意思的</span><span class="o">.</span> <span class="err">第一对大括号代表的表达式返回一个引用，而第二个大括号是作为代表哈希键的表达式的界定符</span><span class="o">.</span>
-</span><span class="line">
-</span><span class="line"><span class="err">如果要在整个的哈希上面进行操作的话，</span> <span class="err">我们可以像下面这样</span><span class="p">:</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>perl  </p>
-
-<p>my @keys = keys % gilligan_info;
-my @keys = keys % { $hash_ref };</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="err">如同数组的引用一样，我们可以在有些情况下使用快捷方式来替换复杂的大括号的这种形式</span><span class="o">.</span> <span class="err">例如，</span> <span class="err">如果在大括号中只有一个简单的标量变量的话，我们就可以把大括号个去掉的</span><span class="p">:</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>perl</p>
-
-<p>my $name = $$hash_ref{‘name’};
-my @keys = keys %$hash_ref;</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="err">像数组的引用一样，</span> <span class="err">当指向某个具体的哈希元素的时候，我们可以使用箭头的形式</span><span class="p">:</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>perl</p>
-
-<p>my $name = $hash_ref-&gt;{‘name’};</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="err">由于凡是标量变量可以存在的地方，哈希的引用都可以存在，所以我们可以创建一个哈希引用的数组：</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>perl   </p>
-
-<p>my %gilligan_info = (
-	name =&gt; ‘Gilligan’,
-	hat =&gt; ‘White’,
-	shirt =&gt; ‘Red’,
-	position =&gt; ‘First Mate’,
-);</p>
-
-<p>my %skipper_info = (
-	name =&gt; ‘Skipper’,
-	hat =&gt; ‘Black’,
-	shirt =&gt; ‘Blue’,
-	position =&gt; ‘Captain’,
-);</p>
-
-<p>my @crew = (\%gilligan_info, \%skipper_info);  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="err">因此，</span><span class="nv">$crew</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="err">是一个指向关于</span><span class="n">Gilligan</span><span class="err">的信息的哈希引用。我们可以通过下面的其中之一来得到</span><span class="n">Gilligan</span><span class="err">的名字：</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>perl</p>
-
-<p>${ $crew[0] } { ‘name’ }
-my $ref = $crew[0]; $$ref{‘name’}
-$crew[0]-&gt;{‘name’}
-$crew[0]{‘name’}</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="err">让我们来打印出一个员工的花名册</span><span class="p">:</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>perl</p>
-
-<p>my %gilligan_info = (
-	name =&gt; ‘Gilligan’,
-	hat =&gt; ‘White’,
-	shirt =&gt; ‘Red’,
-	position =&gt; ‘First Mate’,
-);</p>
-
-<p>my %skipper_info = (
-	name =&gt; ‘Skipper’,
-	hat =&gt; ‘Black’,
-	shirt =&gt; ‘Blue’,
-	position =&gt; ‘Captain’,
-);</p>
-
-<p>my @crew = (\%gilligan_info, \%skipper_info);
-my $format = “%-15s %-7s %-7s %-15s\n”;</p>
-
-<p>printf $format, qw(Name Shirt Hat Position);</p>
-
-<p>for my $crewmember (@crew) {
-	printf $format,
-	$crewmember-&gt;{‘name’},
-	$crewmember-&gt;{‘shirt’},
-	$crewmember-&gt;{‘hat’},
-	$crewmember-&gt;{‘position’};
-}</p>
-
-<p>&#8220;`</p>
 
 <p>最后的这部分看起来很冗余，我们可以使用哈希切割来简化它。如果原先的语法是: </p>
 

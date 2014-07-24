@@ -4,7 +4,7 @@
   <title><![CDATA[Steven's Blog]]></title>
   <link href="http://isunix.github.io/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-07-24T16:24:22+08:00</updated>
+  <updated>2014-07-24T17:03:57+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,58 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[About the Sort Function in Perl]]></title>
+    <link href="http://isunix.github.io/blog/2014/07/24/about-the-sort-function-in-perl/"/>
+    <updated>2014-07-24T16:51:22+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/07/24/about-the-sort-function-in-perl</id>
+    <content type="html"><![CDATA[<p>This blog post is about the sort function in Perl. Mostly it is from the book “perl for dummies”, since I am reading it now.   </p>
+
+<p>This is a good book, since it explains many concepts very clearly.  </p>
+
+<p>The “sort” function sorts a list alphabeticlly. Perl also allows us to sort a list according to the rule we defined.  </p>
+
+<p>if alphabetically, we can write the code as the following:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">@strs</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;cognition&#39;</span><span class="p">,</span> <span class="s">&#39;attune&#39;</span><span class="p">,</span> <span class="s">&#39;bell&#39;</span><span class="p">);</span>
+</span><span class="line"><span class="k">print</span> <span class="nb">join</span><span class="p">(</span><span class="s">&#39; &#39;</span><span class="p">,</span> <span class="nb">sort</span> <span class="nv">@strs</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>It will give the following result:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">attune</span> <span class="n">bell</span> <span class="n">cognition</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Here below I will show what we can do if we want to sort based on the way we want it to be:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">@strs</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;cognition&#39;</span><span class="p">,</span> <span class="s">&#39;attune&#39;</span><span class="p">,</span> <span class="s">&#39;bell&#39;</span><span class="p">);</span>
+</span><span class="line"><span class="k">print</span> <span class="nb">join</span><span class="p">(</span><span class="s">&#39; &#39;</span><span class="p">,</span> <span class="nb">sort</span><span class="p">{</span><span class="nb">length</span><span class="p">(</span><span class="nv">$a</span><span class="p">)</span> <span class="sr">&lt;=&gt;</span> <span class="nb">length</span><span class="p">(</span><span class="nv">$b</span><span class="p">)}</span> <span class="nv">@strs</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>The above code will sort the list according to the length of the string in the list.  </p>
+
+<p>What if the our so-called rule is a subroutine?  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">sub </span><span class="nf">lensort</span> <span class="p">{</span> <span class="nb">length</span><span class="p">(</span><span class="nv">$a</span><span class="p">)</span> <span class="sr">&lt;=&gt;</span> <span class="nb">length</span><span class="p">(</span><span class="nv">$b</span><span class="p">)</span> <span class="p">};</span>
+</span><span class="line">
+</span><span class="line"><span class="nv">@strs</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;cognition&#39;</span><span class="p">,</span> <span class="s">&#39;attune&#39;</span><span class="p">,</span> <span class="s">&#39;bell&#39;</span><span class="p">);</span>
+</span><span class="line"><span class="k">print</span> <span class="nb">join</span><span class="p">(</span><span class="s">&#39; &#39;</span><span class="p">,</span> <span class="nb">sort</span> <span class="n">lensort</span> <span class="nv">@strs</span><span class="p">);</span>
+</span><span class="line">
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>This post is going to be continued. I will add more thing as I come accross more useful and interesing examples regarding the sort function.  </p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[About the Defined Function in Perl]]></title>
@@ -1239,43 +1291,6 @@ as well!</span></code></pre></td></tr></table></div></figure></notextile></div>
 </span><span class="line"><span class="cp">?&gt;</span><span class="x"></span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 <p>　</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Swap Two Values Without Introducing a Temporary Variable]]></title>
-    <link href="http://isunix.github.io/blog/2014/07/15/swqp-two-values-without-introducing-a-temporary-variable/"/>
-    <updated>2014-07-15T13:29:26+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/07/15/swqp-two-values-without-introducing-a-temporary-variable</id>
-    <content type="html"><![CDATA[<p>The usual way for us to swap two values in c is by introducing a intermediate variable. But actually there is way for us to complete the task wnile not adding a new varible.   </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="cp">#include &lt;stdlib.h&gt;</span>
-</span><span class="line"><span class="cp">#include &lt;stdio.h&gt;</span>
-</span><span class="line">
-</span><span class="line"><span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
-</span><span class="line">  <span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">;</span>
-</span><span class="line">  <span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%d %d&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">b</span><span class="p">);</span>
-</span><span class="line">  <span class="n">a</span> <span class="o">=</span> <span class="n">b</span> <span class="o">-</span> <span class="n">a</span><span class="p">;</span>
-</span><span class="line">  <span class="n">b</span> <span class="o">=</span> <span class="n">b</span> <span class="o">-</span> <span class="n">a</span><span class="p">;</span>
-</span><span class="line">  <span class="n">a</span> <span class="o">=</span> <span class="n">b</span> <span class="o">+</span> <span class="n">a</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line">  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span>
-</span><span class="line">  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
 ]]></content>
   </entry>
   

@@ -4,7 +4,7 @@
   <title><![CDATA[Steven's Blog]]></title>
   <link href="http://isunix.github.io/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-07-24T15:45:53+08:00</updated>
+  <updated>2014-07-24T16:24:22+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,31 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[About the Defined Function in Perl]]></title>
+    <link href="http://isunix.github.io/blog/2014/07/24/about-the-defined-function-in-perl/"/>
+    <updated>2014-07-24T16:09:53+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/07/24/about-the-defined-function-in-perl</id>
+    <content type="html"><![CDATA[<p>在”perl for dummies” 这本书中有段很精彩的关于defined 函数的说明。现在记录如下:    </p>
+
+<p>在perl中构建语句的一个基本规则是: 使用变量前应该在赋值语句的右边定义它们，这样做可以防止perl给未定义的变量插入默认值.  </p>
+
+<p>未定义的变量的存在是有意义的。照搬书中的例子，如果试图从空列表中提取数据， pop函数就会返回一个未定义的值。让pop函数返回未定义的值比返回假值要好，因为’false’可能就是列表中的某个元素。  </p>
+
+<p>那么我们怎么去判断一个函数是否返回未定义的值呢？ 这里”defined” 就派上用场了。该函数会作用于一个变量或者表达式。如果这个被作用的对象已被定义，defined函数就会返回真， 否则就会返回假。 通常会跟着if或者unless来使用的。  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">unless</span> <span class="p">(</span><span class="nb">defined</span><span class="p">(</span><span class="nv">$Yummy</span> <span class="o">=</span> <span class="nb">pop</span><span class="p">(</span><span class="nv">@Bonbons</span><span class="p">))){</span>
+</span><span class="line">	<span class="k">print</span> <span class="s">&quot;there are no more bonbos left.&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>如果@Bonbons这个列表是空的， defined函数就会返回假值，就会执行print语句，这个时候$Yummy变量将包含一个未定义的值。   </p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[A Typical Perl Script to Search Info in a File]]></title>
@@ -1251,15 +1276,6 @@ as well!</span></code></pre></td></tr></table></div></figure></notextile></div>
 </span><span class="line">  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 </span><span class="line"><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[我得自己debug]]></title>
-    <link href="http://isunix.github.io/blog/2014/07/02/wo-de-zi-ji-debug/"/>
-    <updated>2014-07-02T19:10:07+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/07/02/wo-de-zi-ji-debug</id>
-    <content type="html"><![CDATA[<p>慢工出细活， 得养成自己debug的习惯！</p>
 ]]></content>
   </entry>
   

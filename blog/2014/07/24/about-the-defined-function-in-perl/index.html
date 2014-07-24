@@ -1,0 +1,177 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>About the Defined Function in Perl - Steven's Blog</title>
+  <meta name="author" content="Steven Sun">
+
+  
+  <meta name="description" content="在”perl for dummies” 这本书中有段很精彩的关于defined 函数的说明。现在记录如下: 在perl中构建语句的一个基本规则是: 使用变量前应该在赋值语句的右边定义它们，这样做可以防止perl给未定义的变量插入默认值. 未定义的变量的存在是有意义的。照搬书中的例子， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://isunix.github.io/blog/2014/07/24/about-the-defined-function-in-perl">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Steven's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=Open+Sans:400,700&subset=latin" rel="stylesheet" type="text/css" />
+<link href='http://fonts.googleapis.com/css?family=Noto+Serif:400,700' rel='stylesheet' type='text/css'>
+
+
+
+  
+
+</head>
+
+<body    class="collapse-sidebar sidebar-footer" >
+  <nav id="main-nav" role="navigation">
+<ul class="main-navigation">
+  <li><a href="/" class="nav-link">Blog</a></li>
+  <li><a href="/blog/archives" class="nav-link">Archives</a></li>
+  <li><a href="/atom.xml" class="nav-link">RSS</a></li>
+  <li><a href="/about" class="nav-link">About</a></li>
+</ul>
+
+</nav>
+  
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">About the Defined Function in Perl</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-24T16:09:53+08:00" pubdate data-updated="true">Jul 24<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>在”perl for dummies” 这本书中有段很精彩的关于defined 函数的说明。现在记录如下:    </p>
+
+<p>在perl中构建语句的一个基本规则是: 使用变量前应该在赋值语句的右边定义它们，这样做可以防止perl给未定义的变量插入默认值.  </p>
+
+<p>未定义的变量的存在是有意义的。照搬书中的例子，如果试图从空列表中提取数据， pop函数就会返回一个未定义的值。让pop函数返回未定义的值比返回假值要好，因为’false’可能就是列表中的某个元素。  </p>
+
+<p>那么我们怎么去判断一个函数是否返回未定义的值呢？ 这里”defined” 就派上用场了。该函数会作用于一个变量或者表达式。如果这个被作用的对象已被定义，defined函数就会返回真， 否则就会返回假。 通常会跟着if或者unless来使用的。  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">unless</span> <span class="p">(</span><span class="nb">defined</span><span class="p">(</span><span class="nv">$Yummy</span> <span class="o">=</span> <span class="nb">pop</span><span class="p">(</span><span class="nv">@Bonbons</span><span class="p">))){</span>
+</span><span class="line">	<span class="k">print</span> <span class="s">&quot;there are no more bonbos left.&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>如果@Bonbons这个列表是空的， defined函数就会返回假值，就会执行print语句，这个时候$Yummy变量将包含一个未定义的值。   </p>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Steven Sun</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-24T16:09:53+08:00" pubdate data-updated="true">Jul 24<span>th</span>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/perl/'>Perl</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/07/24/a-typical-perl-script-to-search-info-in-a-file/" title="Previous Post: a typical perl script to search info in a file">&laquo; a typical perl script to search info in a file</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Steven Sun -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

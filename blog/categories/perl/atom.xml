@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Perl | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/perl/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-07-24T15:06:14+08:00</updated>
+  <updated>2014-07-24T15:23:15+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,53 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[A Typical Perl Program]]></title>
+    <link href="http://isunix.github.io/blog/2014/07/24/a-typical-perl-program/"/>
+    <updated>2014-07-24T15:17:20+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/07/24/a-typical-perl-program</id>
+    <content type="html"><![CDATA[<p>Of courese there are many perl programms that can be claimed as “typical”, yet you can not what is truely “typical”. The one below is where I met in the book “perl for dummies”. Ok, show you the code now.   </p>
+
+<p>```perl  </p>
+
+<p>$TheFile = “sample.txt”;</p>
+
+<p>open(INFILE, $TheFile) or die “The file $TheFile could “ .  “not be found.\n”;</p>
+
+<p>$CharCount = 0;
+$WordCount = 0;
+$LineCount = 0;</p>
+
+<p>while(<infile>) {
+  $TheLine = $_;
+  chomp($TheLine);</infile></p>
+
+<p>$LineCount = $LineCount + 1;
+  $LineLen = length($TheLine);
+  $CharCount = $CharCount + $LineLen;</p>
+
+<p>if($TheLine eq “”) { next }; ##evaluate the next line;
+  $WordCount = $WordCount + 1;
+  $CharPos = 0;</p>
+
+<p>until($CharPos == $LineLen) {
+    if(substr($TheLine, $CharPos, 1) eq “ “)
+      { $WordCount = $WordCount + 1 }
+    $CharPos = $CharPos + 1;
+  }
+}</p>
+
+<p>print “For the file $TheFile:\n”;
+print “Number of characters $CharCount\n”;
+print “Number of words    $WordCount\n”;
+print “Number of lines    $LineCount\n”;</p>
+
+<p>```    </p>
+
+<p>I list this program here, because We can learn how to use chomp, $_, &lt;&gt;, until, next, eq, ==, next, substr, FILEHANDLE all these import concepts in perl programming in one script. </p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Perl One-liner to Remove Blank Lines]]></title>
@@ -167,43 +214,6 @@ Steven</p>
 <p>```</p>
 
 <p>I also wrote document for this scirpt. haha!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Split Mids to Several Lines With Fixed Number Per Line Using Perl]]></title>
-    <link href="http://isunix.github.io/blog/2014/07/18/split-mids-to-several-lines-with-fixed-number-per-line-using-perl/"/>
-    <updated>2014-07-18T21:38:16+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/07/18/split-mids-to-several-lines-with-fixed-number-per-line-using-perl</id>
-    <content type="html"><![CDATA[<p>事情是这样的，在工作中有许多的mids，想要贴到一个文本框中去，但是在进行reinjection后，是成每行一个mid的格式。我们想要把它们变成是每行给定数目的mids这样的格式， 方便贴到文本框中去. 之前用php实现过， 现在贴出来perl的版本的。</p>
-
-<p>```perl</p>
-
-<h1 id="usageperl-scriptpl-filetxt">usage：perl script.pl file.txt</h1>
-<p>use strict;
-use warnings;
-use utf8;</p>
-
-<p>my $columns = $ARGV[1] || 8;
-open(my $IN, “$ARGV[0]”) or die “in: $@”;
-open(my $OUT, “&gt;”, “$ARGV[0].new”) or die “out: $@”;</p>
-
-<p>while(chomp(my @lines = &lt;$IN&gt;)){</p>
-
-<pre><code>    for(my $i=1; $i &lt;= @lines; $i++){
-        my $t = $i - 1;
-        print $OUT "$lines[$t]";
-        if($i % $columns == 0){
-            print $OUT "\n";
-        }
-    }
-}
-</code></pre>
-
-<p>close($IN);
-close($OUT);</p>
-
-<p>```</p>
 ]]></content>
   </entry>
   

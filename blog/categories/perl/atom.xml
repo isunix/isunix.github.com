@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Perl | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/perl/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-07-24T18:19:01+08:00</updated>
+  <updated>2014-07-24T19:53:13+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,85 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[About the of My and Our and Local in Perl]]></title>
+    <link href="http://isunix.github.io/blog/2014/07/24/about-the-of-my-and-our-and-local-in-perl/"/>
+    <updated>2014-07-24T19:32:11+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/07/24/about-the-of-my-and-our-and-local-in-perl</id>
+    <content type="html"><![CDATA[<p>关于perl中的my， our，local的用法自己一直都是一知半解的。以至于基本上在程序中把所有的变量的前面都加上my， 省事还不报错!   </p>
+
+<p>I am still not familiar the concept, but I will list some examples here to add as a reminder.  </p>
+
+<p><code>perl   
+our $var = 1;
+{
+	our $var = 2;
+	print "$var\n";
+}
+print "$var\n";    
+</code>`</p>
+
+<p>It will give us the result:  </p>
+
+<p><code>
+2
+2
+</code>  </p>
+
+<p>If the code looks like this:   </p>
+
+<p><code>perl   
+my $var = 1;
+{
+	my $var = 2;
+	print "$var\n";
+}
+print "$var\n";    
+</code>   </p>
+
+<p>It will give us the result:   </p>
+
+<p><code> 
+2
+1  
+</code></p>
+
+<p>If the code is:   </p>
+
+<p><code>perl  
+our $var = 1;
+{
+	my $var = 2;
+	print "$var\n";
+}
+print "$var\n";    
+</code>   <br />
+It will give us the following result:  </p>
+
+<p><code>
+2
+1
+</code></p>
+
+<p>if the code is:  </p>
+
+<p><code>perl 
+my $var = 1;
+{
+	our $var = 2;
+	print "$var\n";
+}
+print "$var\n";    
+</code><br />
+It will give us the result:   </p>
+
+<p><code>
+2
+1
+</code></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Minutes About Stdin]]></title>
@@ -167,53 +246,6 @@ unless (defined($Yummy = pop(@Bonbons))){
 <p>```
 We can learn the use of while, endless loop, file-handle, last, tr, seek, $_, eq, split, string concatenation if-else, chomp, ==, eq all these things in one perl script.  </p>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[A Typical Perl Program]]></title>
-    <link href="http://isunix.github.io/blog/2014/07/24/a-typical-perl-program/"/>
-    <updated>2014-07-24T15:17:20+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/07/24/a-typical-perl-program</id>
-    <content type="html"><![CDATA[<p>Of courese there are many perl programms that can be claimed as “typical”, yet you can not what is truely “typical”. The one below is where I met in the book “perl for dummies”. Ok, show you the code now.   </p>
-
-<p>```perl  </p>
-
-<p>$TheFile = “sample.txt”;</p>
-
-<p>open(INFILE, $TheFile) or die “The file $TheFile could “ .  “not be found.\n”;</p>
-
-<p>$CharCount = 0;
-$WordCount = 0;
-$LineCount = 0;</p>
-
-<p>while(<infile>) {
-  $TheLine = $_;
-  chomp($TheLine);</infile></p>
-
-<p>$LineCount = $LineCount + 1;
-  $LineLen = length($TheLine);
-  $CharCount = $CharCount + $LineLen;</p>
-
-<p>if($TheLine eq “”) { next }; ##evaluate the next line;
-  $WordCount = $WordCount + 1;
-  $CharPos = 0;</p>
-
-<p>until($CharPos == $LineLen) {
-    if(substr($TheLine, $CharPos, 1) eq “ “)
-      { $WordCount = $WordCount + 1 }
-    $CharPos = $CharPos + 1;
-  }
-}</p>
-
-<p>print “For the file $TheFile:\n”;
-print “Number of characters $CharCount\n”;
-print “Number of words    $WordCount\n”;
-print “Number of lines    $LineCount\n”;</p>
-
-<p>```    </p>
-
-<p>I list this program here, because We can learn how to use chomp, length, $_, &lt;&gt;, until, next, eq, ==, next, substr, FILEHANDLE, string concatenation, how to tell if it is a word and so on, all these import concepts in perl programming in one script. </p>
 ]]></content>
   </entry>
   

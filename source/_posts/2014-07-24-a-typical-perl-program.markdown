@@ -43,4 +43,4 @@ print "Number of lines    $LineCount\n";
 
 ```    
 
-I list this program here, because We can learn how to use chomp, $_, <>, until, next, eq, ==, next, substr, FILEHANDLE all these import concepts in perl programming in one script. 
+I list this program here, because We can learn how to use chomp, length, $_, <>, until, next, eq, ==, next, substr, FILEHANDLE, string concatenation, how to tell if it is a word and so on, all these import concepts in perl programming in one script. 

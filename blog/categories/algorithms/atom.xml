@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Algorithms | Steven's Blog]]></title>
+  <link href="http://isunix.github.io/blog/categories/algorithms/atom.xml" rel="self"/>
+  <link href="http://isunix.github.io/"/>
+  <updated>2014-08-01T13:13:25+08:00</updated>
+  <id>http://isunix.github.io/</id>
+  <author>
+    <name><![CDATA[Steven Sun]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[线性表顺序存储的的指针实现以及引用实现]]></title>
+    <link href="http://isunix.github.io/blog/2014/08/01/xian-xing-biao-shun-xu-cun-chu-de-de-zhi-zhen-shi-xian-yi-ji-yin-yong-shi-xian/"/>
+    <updated>2014-08-01T12:23:17+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/08/01/xian-xing-biao-shun-xu-cun-chu-de-de-zhi-zhen-shi-xian-yi-ji-yin-yong-shi-xian</id>
+    <content type="html"><![CDATA[<p>在线性表的顺序存储中， 我们既可以使用指针来实现这些抽象的数据类型，也可以使用C++中的引用来操作。   </p>
+
+<p>下面让我们来先用指针来实现。   </p>
+
+<p>For the sake of convenience, the following paragraphs will be using English to illustrate now.  </p>
+
+<p>```c
+#include “stdio.h”  <br />
+#include “stdlib.h” <br />
+#include “math.h”    </p>
+
+<h1 id="define-ok-1">define OK 1</h1>
+<p>#define ERROR 0
+#define TRUE 1
+#define FALSE 0
+/<em>In c, there there is no “TRUE” or “FALSE”</em>/   </p>
+
+<h1 id="define-maxsize-20">define MAXSIZE 20</h1>
+<p>typedef int Status;
+typedef int ElemType; </p>
+
+<p>/<em>define a struct</em>/
+typedef struct {
+	ElemType data[MAXSIZE];      <br />
+	int length;                              <br />
+}SqList;  </p>
+
+<p>/<em>initial the sequential list, as we can, L is a pointer</em>/  <br />
+Status InitList(SqList *L) { 
+    L-&gt;length=0;
+    return OK;
+}</p>
+
+<p>/<em>test if the initial sequential list is empty, not here the argument “L” is not a pointer</em>/
+Status ListEmpty(SqList L) { 
+	if(L.length==0)
+		return TRUE;
+	else
+		return FALSE;
+}  </p>
+
+<p>/<em>if not empty, clean it</em>/
+Status ClearList(SqList *L) { 
+    L-&gt;length=0;
+    return OK;
+}</p>
+
+<p>/<em>if alreay exists, return its length</em>/ 
+int ListLength(SqList L) {
+	return L.length;
+}</p>
+
+<p>/<em>get the i th element, return its value using e</em>/ 
+Status GetElem(SqList L,int i,ElemType *e) {
+    if(L.length==0 || i&lt;1 || i&gt;L.length)
+            return ERROR;
+    *e=L.data[i-1];</p>
+
+<pre><code>return OK; }
+</code></pre>
+
+<p>/<em>find the element e</em>/
+int LocateElem(SqList L,ElemType e) {
+    int i;
+    if (L.length==0)
+            return 0;
+    for(i=0;i&lt;L.length;i++)
+    {
+            if (L.data[i]==e)
+                    break;
+    }
+    if(i&gt;=L.length)
+            return 0;</p>
+
+<pre><code>return i+1; }  
+</code></pre>
+
+<p>/<em>if L already exists, insert element e in front of element i, add the length of L by 1</em>/
+Status ListInsert(SqList *L,int i,ElemType e)
+{ 
+	int k;
+	if (L-&gt;length==MAXSIZE)<br />
+		return ERROR;
+	if (i&lt;1 || i&gt;L-&gt;length+1)
+		return ERROR;</p>
+
+<pre><code>if (i&lt;=L-&gt;length) {
+	for(k=L-&gt;length-1;k&gt;=i-1;k--)  
+		L-&gt;data[k+1]=L-&gt;data[k];
+}
+
+L-&gt;data[i-1]=e;          
+L-&gt;length++;
+
+return OK; }  
+</code></pre>
+
+<p>/<em>delete the i th element of L, returing its value using e, subtract the length by 1</em>/<br />
+Status ListDelete(SqList *L,int i,ElemType *e) 
+{ 
+    int k;
+    if (L-&gt;length==0)             <br />
+		return ERROR;
+    if (i&lt;1 || i&gt;L-&gt;length)       <br />
+        return ERROR;</p>
+
+<pre><code>*e=L-&gt;data[i-1];
+
+if (i&lt;L-&gt;length) {
+    for(k=i;k&lt;L-&gt;length;k++)
+		L-&gt;data[k-1]=L-&gt;data[k];
+}
+
+L-&gt;length--;
+return OK; }
+</code></pre>
+
+<p>/<em>print out an element in L</em>/
+Status visit(ElemType c) {
+    printf(“%d “,c);
+    return OK;
+}</p>
+
+<p>/<em>if L already exists, using the visit function defined above to traverse L and print out the whole List</em>/<br />
+Status ListTraverse(SqList L){
+	int i;
+    for(i=0;i&lt;L.length;i++)
+            visit(L.data[i]);
+    printf(“\n”);
+    return OK;
+}</p>
+
+<p>/*After all these steps above, now we will define our “main” function. */</p>
+
+<p>int main() {
+	SqList L;
+	ElemType e;
+	Status i;
+	/<em>and blabla</em>/
+}</p>
+
+<p>```  </p>
+
+<p>We will then realize the  “reference” version using c++.  </p>
+
+<p>First we will create a file named “sqlist.cpp”.  </p>
+
+<p>```cpp
+#include <stdio.h>
+#include <stdlib.h>
+#define MaxSize 50</stdlib.h></stdio.h></p>
+
+<p>typedef char ElemType; 
+typedef struct {
+	ElemType data[MaxSize];		
+   	int length;					
+} SqList;  </p>
+
+<p>/<em>create the list</em>/<br />
+void CreateList(SqList *&amp;L,ElemType a[],int n) {
+	int i;
+	L=(SqList *)malloc(sizeof(SqList));
+	for (i=0;i&lt;n;i++)
+		L-&gt;data[i]=a[i];
+	L-&gt;length=n;
+}</p>
+
+<p>/<em>initial the list</em>/<br />
+void InitList(SqList *&amp;L) {
+	L=(SqList *)malloc(sizeof(SqList));	
+	L-&gt;length=0;
+}</p>
+
+<p>/<em>destroy the list</em>/<br />
+void DestroyList(SqList *&amp;L) {
+	free(L);
+}</p>
+
+<p>/<em>test if the list is empty or not</em>/
+int ListEmpty(SqList *L)
+{
+	return(L-&gt;length==0);
+}</p>
+
+<p>/<em>return the list’s length if it exists</em>/<br />
+int ListLength(SqList *L) {
+	return(L-&gt;length);
+}   </p>
+
+<p>/<em>show the list, same as the “traverse” function above</em>/<br />
+void DispList(SqList *L) {
+	int i;
+	if (ListEmpty(L)) return;
+	for (i=0;i<l->length;i++)
+		printf("%c ",L-&gt;data[i]);
+	printf("\n");
+}  </l-></p>
+
+<p>/<em>get the i th element of L, returning its value using e</em>/<br />
+int GetElem(SqList *L,int i,ElemType &amp;e) {
+	if (i&lt;1 || i&gt;L-&gt;length)
+		return 0;
+	e=L-&gt;data[i-1];
+	return 1;
+}</p>
+
+<p>/<em>find the element e in L</em>/<br />
+int LocateElem(SqList *L, ElemType e) {
+	int i=0;
+	while (i<l->length &amp;&amp; L-&gt;data[i]!=e) i++;
+	if (i&gt;=L-&gt;length)
+		return 0;
+	else
+		return i+1;
+}</l-></p>
+
+<p>/<em>insert element e infront of i in L, right shift the element after data[i]</em>/
+int ListInsert(SqList *&amp;L,int i,ElemType e) {
+	int j;
+	if (i&lt;1 || i&gt;L-&gt;length+1)
+		return 0;
+	i–;						
+	for (j=L-&gt;length;j&gt;i;j–) 	
+		L-&gt;data[j]=L-&gt;data[j-1];
+	L-&gt;data[i]=e;
+	L-&gt;length++;				</p>
+
+<pre><code>return 1; }  
+</code></pre>
+
+<p>/<em>delete element i in L, returning its value using e</em>/ 
+int ListDelete(SqList *&amp;L,int i,ElemType &amp;e){
+	int j;
+	if (i&lt;1 || i&gt;L-&gt;length)
+		return 0;
+	i–;						
+	e=L-&gt;data[i];
+	for (j=i;j<l->length-1;j++)	
+		L-&gt;data[j]=L-&gt;data[j+1];
+	L-&gt;length--;				
+	return 1;
+}</l-></p>
+
+<p>```  </p>
+
+<p>We can just “#include “sqlist.h”” in a file where we want to use all those function defined in sqlist.h</p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -4,7 +4,7 @@
   <title><![CDATA[Steven's Blog]]></title>
   <link href="http://isunix.github.io/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-08-04T11:04:36+08:00</updated>
+  <updated>2014-08-05T15:43:06+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,107 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Jquery 拾遗]]></title>
+    <link href="http://isunix.github.io/blog/2014/08/05/jquery-shi-yi/"/>
+    <updated>2014-08-05T11:18:49+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/08/05/jquery-shi-yi</id>
+    <content type="html"><![CDATA[<p>This blog post is about some of the usages of jQuery while I am learning and using jQuery. I keep a note of it so that I can pick it up conveniently later.  </p>
+
+<ol>
+  <li>append a paragraph to the front of your body.  </li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="kd">var</span> <span class="nx">para</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;&lt;p&gt;&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="o">:</span> <span class="s2">&quot;I&#39;m a new paragraph!&quot;</span><span class="p">,</span> <span class="s2">&quot;css&quot;</span><span class="o">:</span><span class="p">{</span><span class="s2">&quot;background&quot;</span><span class="o">:</span><span class="s2">&quot;yellow&quot;</span><span class="p">}});</span>
+</span><span class="line"><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;body&quot;</span><span class="p">).</span><span class="nx">prepend</span><span class="p">(</span><span class="nx">para</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>and also we can do it using the “prepentTo” method.  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;&lt;p&gt;&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="o">:</span> <span class="s2">&quot;I&#39;m a new people!&quot;</span><span class="p">,</span> <span class="s2">&quot;css&quot;</span><span class="o">:</span><span class="p">{</span><span class="s2">&quot;background&quot;</span><span class="o">:</span><span class="s2">&quot;red&quot;</span><span class="p">}}).</span><span class="nx">prependTo</span><span class="p">(</span><span class="s2">&quot;body&quot;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>If we want to insert before/after an element, we can use the following method.  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;&lt;p&gt;&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="o">:</span> <span class="s2">&quot;a new paragraph.&quot;</span><span class="p">}).</span><span class="nx">insertAfter</span><span class="p">(</span><span class="s2">&quot;p.foo&quot;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>For the “wrap” method, it is like this:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;span&quot;</span><span class="p">).</span><span class="nx">wrap</span><span class="p">(</span><span class="s2">&quot;&lt;strong /&gt;&quot;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>This will wrap all “span”” tag with “strong” tag. Or we can have the nested tags inside “wrap”:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;span&quot;</span><span class="p">).</span><span class="nx">wrap</span><span class="p">(</span><span class="s2">&quot;&lt;strong&gt;&lt;em&gt;&lt;/em&gt;&lt;/strong&gt;&quot;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<ol>
+  <li>We can also use callback function to do some selective adding.  </li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;span&quot;</span><span class="p">).</span><span class="nx">wrap</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span><span class="k">return</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">is</span><span class="p">(</span><span class="s2">&quot;.foo&quot;</span><span class="p">)</span> <span class="o">?</span> <span class="s2">&quot;&lt;strong&gt;&quot;</span> <span class="o">:</span> <span class="s2">&quot;&lt;em&gt;&quot;</span><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<ol>
+  <li>to get the last id attributes of a paragraph:  </li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;p:eq(3)&quot;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>and to modify its id to “bar”, we can do this:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#bar&quot;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;bat&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<ol>
+  <li>if you want to remove an attribute from an element, we can use the “removeAttr” method.  </li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;:checkbox&quot;</span><span class="p">).</span><span class="nx">removeAttr</span><span class="p">(</span><span class="s2">&quot;disabled&quot;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<ol>
+  <li>
+    <p>text() can just act on “text”, while html() can act on html contents.   </p>
+  </li>
+  <li>
+    <p>.val() is used to get the value or content of a form element, like:  </p>
+  </li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="js"><span class="line">
+</span><span class="line"><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;:submit&quot;</span><span class="p">).</span><span class="nx">val</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>or  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;:submit&quot;</span><span class="p">).</span><span class="nx">val</span><span class="p">(</span><span class="s2">&quot;Sign IN&quot;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<ol>
+  <li>
+    <p>.addClass(), .removeClass(), .toggleClass() are also 3 often used methods.   </p>
+  </li>
+  <li>
+    <p>.map() and .each(), .show() and .hide(), .fadeIn(), .fadeOut(), .fadeTo() , these are common methods. </p>
+  </li>
+</ol>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[链表的两种实现方式]]></title>
@@ -2166,33 +2267,6 @@ as well!</span></code></pre></td></tr></table></div></figure></notextile></div>
 </span><span class="line">    <span class="k">print</span> <span class="s">&quot;$word was seen $count{$word} times.\n&quot;</span><span class="p">;</span>
 </span><span class="line"><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[在看的书]]></title>
-    <link href="http://isunix.github.io/blog/2014/07/18/zai-kan-de-shu/"/>
-    <updated>2014-07-18T18:45:19+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/07/18/zai-kan-de-shu</id>
-    <content type="html"><![CDATA[<p>最近要看的书很多很多， 现在这里列出来几本吧!   </p>
-
-<ol>
-  <li>我是一只IT小小鸟   </li>
-  <li>Python Standard Library   </li>
-  <li>Learning Perl  </li>
-  <li>啊哈算法</li>
-  <li>啊哈C</li>
-  <li>coffeescript程序设计（Programming In Coffeescript）</li>
-  <li>图解HTTP </li>
-  <li>征服C指针 </li>
-  <li>JS the good parts</li>
-  <li>javascript高级程序设计</li>
-</ol>
-
-<p>好像有点多了，我这样的资质很浅的人， 竟然同时看这么多的书， 实在是有点儿不自量力，所以感到非常非常地累。    </p>
-
-<p>很多其他的书还没有列出来呢， 改日再列出来。 之所以要这么做，是因为想要做个记录，而不是为了像别人展现我看了多少多少书。(我都不知道有谁会看我的这个博客, 哈哈！)</p>
-
 ]]></content>
   </entry>
   

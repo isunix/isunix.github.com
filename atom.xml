@@ -4,7 +4,7 @@
   <title><![CDATA[Steven's Blog]]></title>
   <link href="http://isunix.github.io/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-08-08T15:59:08+08:00</updated>
+  <updated>2014-08-08T16:13:06+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,44 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Callback Function in node.js]]></title>
+    <link href="http://isunix.github.io/blog/2014/08/08/callback-function-in-node-dot-js/"/>
+    <updated>2014-08-08T16:03:41+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/08/08/callback-function-in-node-dot-js</id>
+    <content type="html"><![CDATA[<p>Asynchronous IO is Node.js is very hard to understand. Here is one example from the book “Node.js开发指南”.  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="kd">function</span> <span class="nx">readFileCallBack</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">  <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">    <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
+</span><span class="line">  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class="line">    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">var</span> <span class="nx">fs</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;fs&#39;</span><span class="p">);</span>
+</span><span class="line"><span class="nx">fs</span><span class="p">.</span><span class="nx">readFile</span><span class="p">(</span><span class="s1">&#39;file.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;utf-8&#39;</span><span class="p">,</span> <span class="nx">readFileCallBack</span><span class="p">);</span>
+</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;end.&#39;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>When fs.readFile is called, is just sents the asynchronous I/O to the operating system, then it comes to back and executes the statements following it. After that, it enter into the event loop to listen on the event. When fs accepts the event finished by the I/O request, the event loop will call the callback function to finish the following work.  </p>
+
+<p>Thus in this case, we will see the “end.” first and then the contents of the file.txt.</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Syntax Hightlighting in Markdown]]></title>
@@ -2343,63 +2381,6 @@
     <id>http://isunix.github.io/blog/2014/07/20/java-project-in-eclipse</id>
     <content type="html"><![CDATA[<p>在eclipse中新建一个java project，接下来建立一个source folder， 然后在source folder中建立一个package， 再在package中建立一个class. 注意这里的package+class不能和另一个source folder中的完全相同。   </p>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Split Mids to Several Lines With Fixed Number Per Line Using Perl]]></title>
-    <link href="http://isunix.github.io/blog/2014/07/18/split-mids-to-several-lines-with-fixed-number-per-line-using-perl/"/>
-    <updated>2014-07-18T21:38:16+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/07/18/split-mids-to-several-lines-with-fixed-number-per-line-using-perl</id>
-    <content type="html"><![CDATA[<p>事情是这样的，在工作中有许多的mids，想要贴到一个文本框中去，但是在进行reinjection后，是成每行一个mid的格式。我们想要把它们变成是每行给定数目的mids这样的格式， 方便贴到文本框中去. 之前用php实现过， 现在贴出来perl的版本的。</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="c1">#usage：perl script.pl file.txt</span>
-</span><span class="line"><span class="k">use</span> <span class="n">strict</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="n">warnings</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="n">utf8</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line">
-</span><span class="line"><span class="k">my</span> <span class="nv">$columns</span> <span class="o">=</span> <span class="nv">$ARGV</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">||</span> <span class="mi">8</span><span class="p">;</span>
-</span><span class="line"><span class="nb">open</span><span class="p">(</span><span class="k">my</span> <span class="nv">$IN</span><span class="p">,</span> <span class="s">&quot;$ARGV[0]&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">die</span> <span class="s">&quot;in: $@&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="nb">open</span><span class="p">(</span><span class="k">my</span> <span class="nv">$OUT</span><span class="p">,</span> <span class="s">&quot;&gt;&quot;</span><span class="p">,</span> <span class="s">&quot;$ARGV[0].new&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">die</span> <span class="s">&quot;out: $@&quot;</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">while</span><span class="p">(</span><span class="nb">chomp</span><span class="p">(</span><span class="k">my</span> <span class="nv">@lines</span> <span class="o">=</span> <span class="sr">&lt;$IN&gt;</span><span class="p">)){</span>
-</span><span class="line">
-</span><span class="line">        <span class="k">for</span><span class="p">(</span><span class="k">my</span> <span class="nv">$i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;=</span> <span class="nv">@lines</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">){</span>
-</span><span class="line">            <span class="k">my</span> <span class="nv">$t</span> <span class="o">=</span> <span class="nv">$i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
-</span><span class="line">            <span class="k">print</span> <span class="nv">$OUT</span> <span class="s">&quot;$lines[$t]&quot;</span><span class="p">;</span>
-</span><span class="line">            <span class="k">if</span><span class="p">(</span><span class="nv">$i</span> <span class="nv">%</span> <span class="err">$</span><span class="nv">columns</span> <span class="o">==</span> <span class="mi">0</span><span class="p">){</span>
-</span><span class="line">                <span class="k">print</span> <span class="nv">$OUT</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span>
-</span><span class="line">            <span class="p">}</span>
-</span><span class="line">        <span class="p">}</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="nb">close</span><span class="p">(</span><span class="nv">$IN</span><span class="p">);</span>
-</span><span class="line"><span class="nb">close</span><span class="p">(</span><span class="nv">$OUT</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
 ]]></content>
   </entry>
   

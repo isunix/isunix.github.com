@@ -9,7 +9,18 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="When we want to insert a code block in markdown, we have to know the language type supported by markdown. Here is a full list of many of the &hellip;">
+  <meta name="description" content="Asynchronous IO is Node.js is very hard to understand. Here is one example from the book “Node.js开发指南”. 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+function &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -62,6 +73,71 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/08/callback-function-in-node-dot-js/">Callback Function in node.js</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-08T16:03:41+08:00" pubdate data-updated="true">Aug 8<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Asynchronous IO is Node.js is very hard to understand. Here is one example from the book “Node.js开发指南”.  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="kd">function</span> <span class="nx">readFileCallBack</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">  <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">    <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
+</span><span class="line">  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class="line">    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">var</span> <span class="nx">fs</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;fs&#39;</span><span class="p">);</span>
+</span><span class="line"><span class="nx">fs</span><span class="p">.</span><span class="nx">readFile</span><span class="p">(</span><span class="s1">&#39;file.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;utf-8&#39;</span><span class="p">,</span> <span class="nx">readFileCallBack</span><span class="p">);</span>
+</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;end.&#39;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>When fs.readFile is called, is just sents the asynchronous I/O to the operating system, then it comes to back and executes the statements following it. After that, it enter into the event loop to listen on the event. When fs accepts the event finished by the I/O request, the event loop will call the callback function to finish the following work.  </p>
+
+<p>Thus in this case, we will see the “end.” first and then the contents of the file.txt.</p>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -2109,57 +2185,6 @@
 </span><span class="line"><span class="c1">#1,6,0  </span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/07/24/minutes-about-stdin/">Minutes About Stdin</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-07-24T17:26:27+08:00" pubdate data-updated="true">Jul 24<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>There are some minute details about perl that we need to take care. So here I take a note for later reminder. </p>
-
-<ol>
-  <li>
-    <p>STDERR will print out the error messages to the screen or to a file if you want.   </p>
-  </li>
-  <li>
-    <p>If we have a line of code like:  </p>
-  </li>
-</ol>
-
-<p><code>perl  
-  $GetALine = &lt;STDIN&gt;;
- </code></p>
-
-<p>It will wait for the user to enter something and then append a line ending character to the string that the user enters. </p>
 </div>
   
   

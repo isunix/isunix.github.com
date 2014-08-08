@@ -5,7 +5,7 @@ date: 2014-08-08 16:03:41 +0800
 comments: true
 categories: Node.js
 ---
-Asynchronous IO is Node.js is very hard to understand. Here is one example from the book "Node.js开发指南".  
+Asynchronous IO in Node.js is very hard to understand. Here is one example from the book "Node.js开发指南".  
 
 ```js 
 

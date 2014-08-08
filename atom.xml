@@ -4,7 +4,7 @@
   <title><![CDATA[Steven's Blog]]></title>
   <link href="http://isunix.github.io/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-08-08T16:41:30+08:00</updated>
+  <updated>2014-08-08T17:56:58+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,45 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Notes on the Use of Module in node.js]]></title>
+    <link href="http://isunix.github.io/blog/2014/08/08/notes-on-the-use-of-module-in-node-dot-js/"/>
+    <updated>2014-08-08T17:11:27+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/08/08/notes-on-the-use-of-module-in-node-dot-js</id>
+    <content type="html"><![CDATA[<ol>
+  <li>
+    <p>require 不会重复加载模块，也就是说无论调用多少次 require，获得的模块都是同一个。  </p>
+  </li>
+  <li>
+    <p>Node.js 提供了 exports 和 require 两个对象，其中 exports 是模块公开的接口，require 用于从外部获取一个模块的接口，即所获
+取模块的 exports 对象。   </p>
+  </li>
+  <li>
+    <p>exports 本身仅仅是一个普通的空对象，即 {}，它专门用来声明接口，本质上是通过它为模块闭包的内部建立了一个有限的访问接口.   </p>
+  </li>
+  <li>
+    <p>Node.js 在调用某个包时，会首先检查包中 package.json 文件的 main 字段，将其作为包的接口模块，如果 package.json 或 main 字段不存在，会尝试寻找 index.js 或 index.node 作为包的接口。</p>
+  </li>
+  <li>
+    <p>following the following steps to create and publish a module. </p>
+  </li>
+</ol>
+
+<p><code>
+mkdir stsunmodule
+cd stsunmodule
+npm init  (then answer all the questions as been prompted)
+touch index.js
+npm adduser
+npm whoami  (use this command to test if your account is created successfully)
+npm publish
+</code>
+then you can got the site “https://search.npmjs.org” to check if your module is published successfully.  </p>
+
+<p>You can also use “npm unpublish” to unpublish your module.  </p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Callback Function in node.js]]></title>
@@ -2405,16 +2444,6 @@
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>I also wrote document for this scirpt. haha!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Java Project in Eclipse]]></title>
-    <link href="http://isunix.github.io/blog/2014/07/20/java-project-in-eclipse/"/>
-    <updated>2014-07-20T12:50:26+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/07/20/java-project-in-eclipse</id>
-    <content type="html"><![CDATA[<p>在eclipse中新建一个java project，接下来建立一个source folder， 然后在source folder中建立一个package， 再在package中建立一个class. 注意这里的package+class不能和另一个source folder中的完全相同。   </p>
-
 ]]></content>
   </entry>
   

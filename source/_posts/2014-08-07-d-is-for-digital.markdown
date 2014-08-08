@@ -14,4 +14,5 @@ I did not have access to computer until I was in high school. what a world.
 
 ```
 GSM 和CDMA 都会利用数据压缩来尽可能减少封装信号的比特量。对于通过嘈杂的无线电信道发送数据时无法避免的错误，再添加错误校验来解决问题。 
+```
 

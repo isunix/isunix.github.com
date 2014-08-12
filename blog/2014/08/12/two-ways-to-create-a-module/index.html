@@ -1,0 +1,231 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Two Ways to Build a Module - Steven's Blog</title>
+  <meta name="author" content="Steven Sun">
+
+  
+  <meta name="description" content="There are two build systems for building a module. One is to use the old and stable “ExtUtils::Makemaker”, and new one is using “Module::Build”. We &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://isunix.github.io/blog/2014/08/12/two-ways-to-create-a-module">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Steven's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=Open+Sans:400,700&subset=latin" rel="stylesheet" type="text/css" />
+<link href='http://fonts.googleapis.com/css?family=Noto+Serif:400,700' rel='stylesheet' type='text/css'>
+
+
+
+  
+
+</head>
+
+<body    class="collapse-sidebar sidebar-footer" >
+  <nav id="main-nav" role="navigation">
+<ul class="main-navigation">
+  <li><a href="/" class="nav-link">Blog</a></li>
+  <li><a href="/blog/archives" class="nav-link">Archives</a></li>
+  <li><a href="/atom.xml" class="nav-link">RSS</a></li>
+  <li><a href="/about" class="nav-link">About</a></li>
+</ul>
+
+</nav>
+  
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Two Ways to Build a Module</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-12T20:51:22+08:00" pubdate data-updated="true">Aug 12<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>There are two build systems for building a module. One is to use the old and stable “ExtUtils::Makemaker”, and new one is using “Module::Build”. We will use the Module::Starter module to help us create a module.  </p>
+
+<p>By default, Module::Starter create a distribution with Makefile.PL</p>
+
+<p>First with Makefile.PL  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">module</span><span class="o">-</span><span class="n">starter</span> <span class="o">--</span><span class="n">module</span><span class="o">=</span><span class="s">&quot;Animal&quot;</span> <span class="o">--</span><span class="n">author</span><span class="o">=</span><span class="s">&quot;Steven Sun&quot;</span> <span class="o">--</span><span class="n">email</span><span class="o">=</span><span class="n">steven</span><span class="o">.</span><span class="n">sun2013</span><span class="nv">@gmail</span><span class="o">.</span><span class="n">com</span> <span class="o">--</span><span class="n">verbose</span>
+</span><span class="line">
+</span><span class="line"><span class="n">This</span> <span class="n">is</span> <span class="n">the</span> <span class="n">same</span> <span class="n">as:</span>
+</span><span class="line"><span class="n">module</span><span class="o">-</span><span class="n">starter</span> <span class="o">--</span><span class="n">builder</span><span class="o">=</span><span class="s">&quot;ExtUtils::Makemaker&quot;</span> <span class="o">--</span><span class="n">module</span><span class="o">=</span><span class="s">&quot;Animal&quot;</span> <span class="o">--</span><span class="n">author</span><span class="o">=</span><span class="s">&quot;Steven Sun&quot;</span> <span class="o">--</span><span class="n">email</span><span class="o">=</span><span class="n">steven</span><span class="o">.</span><span class="n">sun2013</span><span class="nv">@gmail</span><span class="o">.</span><span class="n">com</span> <span class="o">--</span><span class="n">verbose</span>
+</span><span class="line">
+</span><span class="line"><span class="n">perl</span> <span class="n">Makefile</span><span class="o">.</span><span class="n">PL</span>
+</span><span class="line"><span class="n">make</span>
+</span><span class="line"><span class="n">make</span> <span class="n">test</span>
+</span><span class="line"><span class="n">make</span> <span class="n">disttest</span>
+</span><span class="line"><span class="n">make</span> <span class="n">dist</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Next we will show you the “Build.PL”</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">module</span><span class="o">-</span><span class="n">starter</span> <span class="o">--</span><span class="n">builder</span><span class="o">=</span><span class="s">&quot;Module::Build&quot;</span> <span class="o">--</span><span class="n">module</span><span class="o">=</span><span class="s">&quot;Animal&quot;</span> <span class="o">--</span><span class="n">author</span><span class="o">=</span><span class="s">&quot;Steven Sun&quot;</span> <span class="o">--</span><span class="n">email</span><span class="o">=</span><span class="n">steven</span><span class="o">.</span><span class="n">sun2013</span><span class="nv">@gmail</span><span class="o">.</span><span class="n">com</span> <span class="o">--</span><span class="n">verbose</span>
+</span><span class="line">
+</span><span class="line"><span class="ow">or</span> <span class="n">in</span> <span class="n">a</span> <span class="n">simpler</span> <span class="n">way</span><span class="p">,</span> <span class="n">we</span> <span class="n">can</span> <span class="k">do</span> <span class="n">this:</span>
+</span><span class="line"><span class="n">module</span><span class="o">-</span><span class="n">starter</span> <span class="o">--</span><span class="n">mb</span> <span class="o">--</span><span class="n">module</span><span class="o">=</span><span class="s">&quot;Animal&quot;</span> <span class="o">--</span><span class="n">author</span><span class="o">=</span><span class="s">&quot;Steven Sun&quot;</span> <span class="o">--</span><span class="n">email</span><span class="o">=</span><span class="n">steven</span><span class="o">.</span><span class="n">sun2013</span><span class="nv">@gmail</span><span class="o">.</span><span class="n">com</span> <span class="o">--</span><span class="n">verbose</span>
+</span><span class="line">
+</span><span class="line"><span class="n">perl</span> <span class="n">Build</span><span class="o">.</span><span class="n">PL</span>
+</span><span class="line"><span class="o">./</span><span class="n">Build</span>
+</span><span class="line"><span class="o">./</span><span class="n">Build</span> <span class="n">test</span>
+</span><span class="line"><span class="o">./</span><span class="n">Build</span> <span class="n">disttest</span>       <span class="c1">##this will create a .tar.gz archive which we can distribute now.  </span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>For the Module::Build way, there is a shortcut.   </p>
+
+<p>We don’t want to type that long command line every time, so module-starter can get that information from a    <br />
+configuration file $HOME/.module-starter/config. If we’re on Windows, that .module-starter name is a bit of a    <br />
+problem, so we can set the MODULE_STARTER_DIR environment variable to the name of the directory that contains
+config. Inside config, we can list the parameter names and values separated by a colon.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">author:</span> <span class="n">Steven</span> <span class="n">Sun</span>
+</span><span class="line"><span class="n">email:</span> <span class="n">steven</span><span class="o">.</span><span class="n">sun2013</span><span class="nv">@gmail</span><span class="o">.</span><span class="n">com</span>
+</span><span class="line"><span class="n">builder:</span> <span class="nn">Module::</span><span class="n">Build</span>
+</span><span class="line"><span class="n">verbose:</span> <span class="mi">1</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>Once we have our configuration file setup, life is much easier since we only need to specify the name of the distribution that we want to create. </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">%</span> <span class="nv">module</span><span class="err">−</span><span class="n">starter</span> <span class="err">−−</span><span class="n">module</span><span class="o">=</span><span class="n">Animal</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Steven Sun</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-12T20:51:22+08:00" pubdate data-updated="true">Aug 12<span>th</span>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/perl/'>Perl</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/08/08/notes-on-the-use-of-module-in-node-dot-js/" title="Previous Post: notes on the use of module in node.js">&laquo; notes on the use of module in node.js</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Steven Sun -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

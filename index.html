@@ -9,8 +9,7 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="require 不会重复加载模块，也就是说无论调用多少次 require，获得的模块都是同一个。 Node.js 提供了 exports 和 require 两个对象，其中 exports 是模块公开的接口，require 用于从外部获取一个模块的接口，即所获
-取模块的 exports 对象。 &hellip;">
+  <meta name="description" content="There are two build systems for building a module. One is to use the old and stable “ExtUtils::Makemaker”, and new one is using “Module::Build”. We &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -63,6 +62,112 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/12/two-ways-to-create-a-module/">Two Ways to Build a Module</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-12T20:51:22+08:00" pubdate data-updated="true">Aug 12<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>There are two build systems for building a module. One is to use the old and stable “ExtUtils::Makemaker”, and new one is using “Module::Build”. We will use the Module::Starter module to help us create a module.  </p>
+
+<p>By default, Module::Starter create a distribution with Makefile.PL</p>
+
+<p>First with Makefile.PL  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">module</span><span class="o">-</span><span class="n">starter</span> <span class="o">--</span><span class="n">module</span><span class="o">=</span><span class="s">&quot;Animal&quot;</span> <span class="o">--</span><span class="n">author</span><span class="o">=</span><span class="s">&quot;Steven Sun&quot;</span> <span class="o">--</span><span class="n">email</span><span class="o">=</span><span class="n">steven</span><span class="o">.</span><span class="n">sun2013</span><span class="nv">@gmail</span><span class="o">.</span><span class="n">com</span> <span class="o">--</span><span class="n">verbose</span>
+</span><span class="line">
+</span><span class="line"><span class="n">This</span> <span class="n">is</span> <span class="n">the</span> <span class="n">same</span> <span class="n">as:</span>
+</span><span class="line"><span class="n">module</span><span class="o">-</span><span class="n">starter</span> <span class="o">--</span><span class="n">builder</span><span class="o">=</span><span class="s">&quot;ExtUtils::Makemaker&quot;</span> <span class="o">--</span><span class="n">module</span><span class="o">=</span><span class="s">&quot;Animal&quot;</span> <span class="o">--</span><span class="n">author</span><span class="o">=</span><span class="s">&quot;Steven Sun&quot;</span> <span class="o">--</span><span class="n">email</span><span class="o">=</span><span class="n">steven</span><span class="o">.</span><span class="n">sun2013</span><span class="nv">@gmail</span><span class="o">.</span><span class="n">com</span> <span class="o">--</span><span class="n">verbose</span>
+</span><span class="line">
+</span><span class="line"><span class="n">perl</span> <span class="n">Makefile</span><span class="o">.</span><span class="n">PL</span>
+</span><span class="line"><span class="n">make</span>
+</span><span class="line"><span class="n">make</span> <span class="n">test</span>
+</span><span class="line"><span class="n">make</span> <span class="n">disttest</span>
+</span><span class="line"><span class="n">make</span> <span class="n">dist</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Next we will show you the “Build.PL”</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">module</span><span class="o">-</span><span class="n">starter</span> <span class="o">--</span><span class="n">builder</span><span class="o">=</span><span class="s">&quot;Module::Build&quot;</span> <span class="o">--</span><span class="n">module</span><span class="o">=</span><span class="s">&quot;Animal&quot;</span> <span class="o">--</span><span class="n">author</span><span class="o">=</span><span class="s">&quot;Steven Sun&quot;</span> <span class="o">--</span><span class="n">email</span><span class="o">=</span><span class="n">steven</span><span class="o">.</span><span class="n">sun2013</span><span class="nv">@gmail</span><span class="o">.</span><span class="n">com</span> <span class="o">--</span><span class="n">verbose</span>
+</span><span class="line">
+</span><span class="line"><span class="ow">or</span> <span class="n">in</span> <span class="n">a</span> <span class="n">simpler</span> <span class="n">way</span><span class="p">,</span> <span class="n">we</span> <span class="n">can</span> <span class="k">do</span> <span class="n">this:</span>
+</span><span class="line"><span class="n">module</span><span class="o">-</span><span class="n">starter</span> <span class="o">--</span><span class="n">mb</span> <span class="o">--</span><span class="n">module</span><span class="o">=</span><span class="s">&quot;Animal&quot;</span> <span class="o">--</span><span class="n">author</span><span class="o">=</span><span class="s">&quot;Steven Sun&quot;</span> <span class="o">--</span><span class="n">email</span><span class="o">=</span><span class="n">steven</span><span class="o">.</span><span class="n">sun2013</span><span class="nv">@gmail</span><span class="o">.</span><span class="n">com</span> <span class="o">--</span><span class="n">verbose</span>
+</span><span class="line">
+</span><span class="line"><span class="n">perl</span> <span class="n">Build</span><span class="o">.</span><span class="n">PL</span>
+</span><span class="line"><span class="o">./</span><span class="n">Build</span>
+</span><span class="line"><span class="o">./</span><span class="n">Build</span> <span class="n">test</span>
+</span><span class="line"><span class="o">./</span><span class="n">Build</span> <span class="n">disttest</span>       <span class="c1">##this will create a .tar.gz archive which we can distribute now.  </span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>For the Module::Build way, there is a shortcut.   </p>
+
+<p>We don’t want to type that long command line every time, so module-starter can get that information from a    <br />
+configuration file $HOME/.module-starter/config. If we’re on Windows, that .module-starter name is a bit of a    <br />
+problem, so we can set the MODULE_STARTER_DIR environment variable to the name of the directory that contains
+config. Inside config, we can list the parameter names and values separated by a colon.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">author:</span> <span class="n">Steven</span> <span class="n">Sun</span>
+</span><span class="line"><span class="n">email:</span> <span class="n">steven</span><span class="o">.</span><span class="n">sun2013</span><span class="nv">@gmail</span><span class="o">.</span><span class="n">com</span>
+</span><span class="line"><span class="n">builder:</span> <span class="nn">Module::</span><span class="n">Build</span>
+</span><span class="line"><span class="n">verbose:</span> <span class="mi">1</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>Once we have our configuration file setup, life is much easier since we only need to specify the name of the distribution that we want to create. </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">%</span> <span class="nv">module</span><span class="err">−</span><span class="n">starter</span> <span class="err">−−</span><span class="n">module</span><span class="o">=</span><span class="n">Animal</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1878,137 +1983,6 @@ You can also use “npm unpublish” to unpublish your module.  </p>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>We can just “#include “sqlist.h”” in a file where we want to use all those function defined in sqlist.h</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/07/25/notes-on-the-book-perl-debugged/">Notes on the Book Perl-debugged</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-07-25T15:25:02+08:00" pubdate data-updated="true">Jul 25<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>这篇blog是Perl debugged的阅读笔记。    </p>
-
-<p>1.If we want to know more about Perl, we can type one of the following 3 commands:   </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">perldoc</span> <span class="n">perl</span>
-</span><span class="line"><span class="n">perldoc</span> <span class="n">perltoc</span>
-</span><span class="line"><span class="n">perldoc</span> <span class="n">perlintro</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>or you can just use the “man perl” command.  </p>
-
-<ol>
-  <li>More on perldoc  </li>
-</ol>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-<span class="line-number">28</span>
-<span class="line-number">29</span>
-<span class="line-number">30</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">perldoc</span> <span class="n">perlsyn</span>
-</span><span class="line"><span class="c1">#this will show the info of Perl syntax.   </span>
-</span><span class="line">
-</span><span class="line"><span class="n">perldoc</span> <span class="n">perldata</span>
-</span><span class="line"><span class="c1">#this will show the info of Perl data types.  </span>
-</span><span class="line">
-</span><span class="line"><span class="n">perldoc</span> <span class="n">perlop</span>
-</span><span class="line"><span class="c1">#this will show the info of Perl operators and precedence.</span>
-</span><span class="line">
-</span><span class="line">
-</span><span class="line"><span class="n">perldoc</span> <span class="n">perlre</span>
-</span><span class="line"><span class="c1">#this will show the info of Perl regular expressions.   </span>
-</span><span class="line">
-</span><span class="line"><span class="n">perldoc</span> <span class="n">perllol</span>
-</span><span class="line"><span class="c1">#this will show the info of Manipulating arrays of arrays in Perl.   </span>
-</span><span class="line">
-</span><span class="line"><span class="n">perldoc</span> <span class="n">perlsub</span>
-</span><span class="line"><span class="c1">#this will show the info of Perl subroutines.    </span>
-</span><span class="line">
-</span><span class="line"><span class="n">perldoc</span> <span class="n">perlfunc</span>
-</span><span class="line"><span class="c1">#this will show the info of Perl buintin functions.   </span>
-</span><span class="line">
-</span><span class="line"><span class="n">perldoc</span> <span class="n">perlfaq</span>
-</span><span class="line"><span class="c1">#this will show the info of frequently asked questions about perl </span>
-</span><span class="line">
-</span><span class="line"><span class="n">perldoc</span> <span class="n">perlstyle</span>
-</span><span class="line"><span class="c1">#this will show the info of Perl style guide.  </span>
-</span><span class="line">
-</span><span class="line"><span class="n">perldoc</span> <span class="n">perltrap</span>
-</span><span class="line"><span class="c1">#this will show the info of Perl traps for the unwary. </span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>3.If want to look for the info a funcion in perl, we can do:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">perldoc</span> <span class="o">-</span><span class="n">f</span> <span class="nb">split</span>
-</span><span class="line"><span class="c1">#take split as an example.  </span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>For all those asked-often questions, you can use the following command to take a look at it:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">perldoc</span> <span class="o">-</span><span class="sx">q sleep </span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>4.聪明的人知道他们可以改变自己的态度， 信念和行为， 而且他们知道如何去改变。  </p>
-
-<p>5.In emacs, we can use “M-X perldb” to enable the perl debugging mode.  </p>
-
 </div>
   
   

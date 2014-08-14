@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Algorithms | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/algorithms/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-08-13T11:54:44+08:00</updated>
+  <updated>2014-08-14T10:30:28+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,182 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Common Tips Using Java to Practice Algorithms]]></title>
+    <link href="http://isunix.github.io/blog/2014/08/14/common-tips-using-java-to-practice-algorithms/"/>
+    <updated>2014-08-14T10:07:16+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/08/14/common-tips-using-java-to-practice-algorithms</id>
+    <content type="html"><![CDATA[<p>There are common structues and tips while practicing algorithms and data structueres using java. I will try to keep them down in this post.   </p>
+
+<p>1.hash tables  </p>
+
+<p><code>java
+public HashMap&lt;Integer, Student&gt; buildMap(Student[] students) {
+  HashMap&lt;IntegerJ Student&gt; map = new HashMap&lt;Integer, Student&gt;();
+    for (Student s : students) map.put(s.getld(), s);
+    return map;
+}
+</code> </p>
+
+<p>2.ArrayList(Dinamically Resizing Array) </p>
+
+<p><code>java
+public ArrayList&lt;String&gt; merge(String[] words, String[] more) {
+  ArrayList&lt;String&gt; sentence = new Arrayl_ist&lt;String&gt;();
+  for (String w : words) sentence.add(w);
+  for (String w : more) sentence.add(w);
+  return sentence;
+}
+</code>   </p>
+
+<p>3.StringBuffer   </p>
+
+<p><code>java
+public String joinWords(String[] words){
+  StringBuffer sentence = new StringBuffer();
+  for (String w : words){
+    sentence.append(w);
+  }
+  return sentence.toString();
+}
+</code>  </p>
+
+<p>4.LinkedList  </p>
+
+<p>```java<br />
+class Node {
+  Node next = null;
+  int data;</p>
+
+<p>public Node(int d) {
+  data = d;
+  }</p>
+
+<p>void appendToTail(int d) {
+    Node end = new Node(d);
+    Node n = this;
+    while (n.next != null) {
+      n = n.next;
+    }
+    n.next = end;
+  }
+}
+```  </p>
+
+<p>5.Deleting a node from a singly linkes list.  </p>
+
+<p>```java
+Node deleteNode(Node head, int d) {
+  Node n = head;</p>
+
+<p>if (n.data == d) {
+    return head.next; /* moved head */
+  }</p>
+
+<p>while (n.next 1= null) {
+    if (n.next.data == d) {
+      n.next = n.next.next;
+      return head; /* head didn’t change */
+    }
+    n = n.next;
+  }
+  return head;
+}
+```  </p>
+
+<p>6.Implementing a stack</p>
+
+<p>```java
+class Stack {
+  Node top;</p>
+
+<p>Object pop() {
+    if(top != null) {
+      Object item = top.data;
+      p = top.next;
+      return item;
+    }
+    return null;
+  }</p>
+
+<p>void push(0bject item) {
+    Node t = new Node(item);
+    next = top;
+    top = t;
+  }</p>
+
+<p>Object peek() {
+    return top.data;
+  }
+}
+```  </p>
+
+<p>7.Implementing a queue.  </p>
+
+<p>```java<br />
+class Queue {
+  Node first, last;</p>
+
+<p>void enqueue(0bject item) {
+    if(first == null) {
+      last = new Node(item);
+      first = last;
+      } else {
+        last.next = new Node(item);
+        last = last.next;
+      }
+  }</p>
+
+<p>Object dequeueQ {
+    if (first != null) {
+      Object item = first.data;
+      first = first.next;
+      return item;
+    }
+    return null;
+  }
+}
+```</p>
+
+<p>8.pseudocode to implement DFS</p>
+
+<p><code>java
+void search(Node root) {
+  if (root == null) return;
+  visit(root);
+  root.visited = true;
+  foreach (Node n in root.adjacent) {
+    if (n.visited == false) {
+      search(n);
+    }
+  }
+}
+</code>  </p>
+
+<p>9.BFS.</p>
+
+<p>```java
+void search(Node root) {
+  Queue queue = new QueueQ;
+  root.visited = true;
+  visit(root);
+  queue.enqueue(root); // Add to end of queue</p>
+
+<p>while (!queue.isEmpty()) {
+    Node r = queue.dequeueQ; // Remove from front of queue
+    foreach (Node n in r.adjacent) {
+      if (n.visited == false) {
+        visit(n);
+        n.visited = true;
+        queue.enqueue(n);
+      }
+    }
+  }
+}
+```</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[二叉树遍历的递归与非递归实现]]></title>

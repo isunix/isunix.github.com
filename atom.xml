@@ -4,7 +4,7 @@
   <title><![CDATA[Steven's Blog]]></title>
   <link href="http://isunix.github.io/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-08-14T10:30:28+08:00</updated>
+  <updated>2014-08-14T10:57:26+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,155 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Using Python to Implement a Stack]]></title>
+    <link href="http://isunix.github.io/blog/2014/08/14/using-python-to-implement-a-stack/"/>
+    <updated>2014-08-14T10:53:40+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/08/14/using-python-to-implement-a-stack</id>
+    <content type="html"><![CDATA[<p>In this post, we are going to implement a stack using Python. We are gonna do it using two ways. The first is by pushing to the end of the list, and pop out the rightmost item. The second is by “pushing” to the leftmost and pop out the leftmost item.  </p>
+
+<ol>
+  <li>push to the end  </li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+<span class="line-number">35</span>
+<span class="line-number">36</span>
+<span class="line-number">37</span>
+<span class="line-number">38</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="k">class</span> <span class="nc">Stack</span><span class="p">:</span>
+</span><span class="line">    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">def</span> <span class="nf">is_empty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class="line">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="o">==</span> <span class="p">[]</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">def</span> <span class="nf">push</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">def</span> <span class="nf">pop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class="line">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+</span><span class="line">
+</span><span class="line">    <span class="sd">&#39;&#39;&#39;</span>
+</span><span class="line"><span class="sd">    returns the top item from the stack but does not remove it.</span>
+</span><span class="line"><span class="sd">    It needs no parameters.</span>
+</span><span class="line"><span class="sd">    The stack is not modified.</span>
+</span><span class="line"><span class="sd">    &#39;&#39;&#39;</span>
+</span><span class="line">    <span class="k">def</span> <span class="nf">peek</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class="line">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">def</span> <span class="nf">size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class="line">        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="n">s</span> <span class="o">=</span> <span class="n">Stack</span><span class="p">()</span>
+</span><span class="line"><span class="k">print</span> <span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">is_empty</span><span class="p">())</span>
+</span><span class="line"><span class="n">s</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+</span><span class="line"><span class="n">s</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="s">&#39;dog&#39;</span><span class="p">)</span>
+</span><span class="line"><span class="k">print</span> <span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">peek</span><span class="p">())</span>
+</span><span class="line"><span class="k">print</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
+</span><span class="line"><span class="k">print</span> <span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">peek</span><span class="p">())</span>
+</span><span class="line"><span class="n">s</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+</span><span class="line"><span class="k">print</span> <span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">size</span><span class="p">())</span>
+</span><span class="line"><span class="k">print</span> <span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">is_empty</span><span class="p">())</span>
+</span><span class="line"><span class="n">s</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="mf">8.4</span><span class="p">)</span>
+</span><span class="line"><span class="k">print</span> <span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
+</span><span class="line"><span class="k">print</span> <span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
+</span><span class="line"><span class="k">print</span> <span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">size</span><span class="p">())</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<ol>
+  <li>push to the front end</li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="k">class</span> <span class="nc">Stack</span><span class="p">:</span>
+</span><span class="line">    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">def</span> <span class="nf">is_empty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class="line">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="o">==</span> <span class="p">[]</span>
+</span><span class="line">
+</span><span class="line">    <span class="c">#push, inserting at the front end.</span>
+</span><span class="line">    <span class="k">def</span> <span class="nf">push</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line">    <span class="c">#pop out the leftest item.</span>
+</span><span class="line">    <span class="k">def</span> <span class="nf">pop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class="line">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">def</span> <span class="nf">peek</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class="line">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">def</span> <span class="nf">size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class="line">        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="n">s</span> <span class="o">=</span> <span class="n">Stack</span><span class="p">()</span>
+</span><span class="line"><span class="n">s</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="s">&#39;hello&#39;</span><span class="p">)</span>
+</span><span class="line"><span class="n">s</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="s">&#39;true&#39;</span><span class="p">)</span>
+</span><span class="line"><span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
+</span><span class="line"><span class="k">print</span> <span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Common Tips Using Java to Practice Algorithms]]></title>
@@ -3248,19 +3397,6 @@ You can also use “npm unpublish” to unpublish your module.  </p>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>I list this program here, because We can learn how to use chomp, length, $_, &lt;&gt;, until, next, eq, ==, next, substr, FILEHANDLE, string concatenation, how to tell if it is a word and so on, all these import concepts in perl programming in one script. </p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Perl One-liner to Remove Blank Lines]]></title>
-    <link href="http://isunix.github.io/blog/2014/07/24/perl-one-liner-to-remove-blank-lines/"/>
-    <updated>2014-07-24T15:05:16+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/07/24/perl-one-liner-to-remove-blank-lines</id>
-    <content type="html"><![CDATA[<p>Here below is the one-liner I found to remove a blank line in a file.   </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">perl</span> <span class="o">-</span><span class="n">pi</span> <span class="o">-</span><span class="n">e</span> <span class="s">&#39;s!^\s+?$!!&#39;</span> <span class="n">file</span><span class="o">.</span><span class="n">txt</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
 ]]></content>
   </entry>
   

@@ -36,6 +36,7 @@ perl Build.PL
 ./Build  
 ./Build test
 ./Build disttest       ##this will create a .tar.gz archive which we can distribute now.  
+./Build dist
 ```
 
 For the Module::Build way, there is a shortcut.   

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "表链结点以及树结点的实现"
+title: "链表结点以及树结点的实现"
 date: 2014-08-18 12:54:05 +0800
 comments: true
 categories: 

@@ -9,7 +9,8 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="The case scenario is: I have namy source files of codes and the commoents there and some print messages are in English, of course I can open the file &hellip;">
+  <meta name="description" content="The question is: 1
+Implement an algorithm to determine if a string has all unique characters. What if you can not use additional data structures? We &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -62,6 +63,132 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/19/ctci-q1-dot-1/">CTCI-Q1.1</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-19T16:16:38+08:00" pubdate data-updated="true">Aug 19<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>The question is: </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="yaml"><span class="line"><span class="l-Scalar-Plain">Implement an algorithm to determine if a string has all unique characters. What if you can not use additional data structures?</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>We will try to solve this problem using four languages c++, java, python.</p>
+
+<p>In order to simplify this problem, we shorten the character set to ASCII.</p>
+
+<p>In this case, if the string is longer that 256, surely at least two will be the same. </p>
+
+<p>We can create an array char_set whose values are booleans. thus char_set[val] = true means that the char is in the array and char_set[val] = false means that the char is not in the array.  </p>
+
+<p>1.java version:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+</pre></td><td class="code"><pre><code class="java"><span class="line"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">isUnique</span><span class="o">(</span><span class="n">String</span> <span class="n">str</span><span class="o">)</span> <span class="o">{</span>
+</span><span class="line">        <span class="k">if</span> <span class="o">(</span><span class="n">str</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">&gt;</span> <span class="mi">256</span><span class="o">)</span> <span class="o">{</span>
+</span><span class="line">            <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+</span><span class="line">        <span class="o">}</span>
+</span><span class="line">        <span class="kt">boolean</span><span class="o">[]</span> <span class="n">acsii_set</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">boolean</span><span class="o">[</span><span class="mi">256</span><span class="o">];</span>
+</span><span class="line">        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">str</span><span class="o">.</span><span class="na">length</span><span class="o">();</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+</span><span class="line">            <span class="kt">int</span> <span class="n">val</span> <span class="o">=</span> <span class="n">str</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+</span><span class="line">            <span class="k">if</span> <span class="o">(</span><span class="n">ascii_set</span><span class="o">[</span><span class="n">val</span><span class="o">])</span> <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+</span><span class="line">            <span class="n">ascii_set</span><span class="o">[</span><span class="n">val</span><span class="o">]</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+</span><span class="line">        <span class="o">}</span>
+</span><span class="line">        <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+</span><span class="line">    <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>2.c++ version:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+</pre></td><td class="code"><pre><code class="cpp"><span class="line"><span class="kt">bool</span> <span class="n">isUnique</span><span class="p">(</span><span class="n">string</span> <span class="n">str</span><span class="p">){</span>
+</span><span class="line">	<span class="k">if</span><span class="p">(</span><span class="n">str</span><span class="p">.</span><span class="n">length</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">256</span><span class="p">){</span>
+</span><span class="line">		<span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+</span><span class="line">	<span class="p">}</span>
+</span><span class="line">	<span class="kt">bool</span> <span class="n">ascii_set</span><span class="p">[</span><span class="mi">256</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="kc">false</span><span class="p">};</span>
+</span><span class="line">	<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">str</span><span class="p">.</span><span class="n">length</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+</span><span class="line">		<span class="kt">int</span> <span class="n">val</span> <span class="o">=</span> <span class="n">str</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+</span><span class="line">		<span class="k">if</span> <span class="p">(</span><span class="n">ascii_set</span><span class="p">[</span><span class="n">val</span><span class="p">]){</span>
+</span><span class="line">			<span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+</span><span class="line">		<span class="p">}</span>
+</span><span class="line">		<span class="n">ascii_set</span><span class="p">[</span><span class="n">value</span><span class="p">]</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+</span><span class="line">	<span class="p">}</span>
+</span><span class="line">	<span class="n">reutrn</span> <span class="kc">true</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>3.python version:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="k">def</span> <span class="nf">is_unique</span><span class="p">(</span><span class="nb">str</span><span class="p">):</span>
+</span><span class="line">	<span class="n">charsTable</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+</span><span class="line">	<span class="k">for</span> <span class="n">c</span> <span class="n">n</span> <span class="nb">str</span><span class="p">:</span>
+</span><span class="line">		<span class="k">if</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">charsTable</span><span class="p">:</span>
+</span><span class="line">			<span class="k">return</span> <span class="bp">False</span>
+</span><span class="line">		<span class="n">charsTable</span><span class="o">.</span><span class="n">add</span><span class="p">()</span>
+</span><span class="line">	<span class="k">return</span> <span class="bp">True</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -2091,72 +2218,6 @@ config. Inside config, we can list the parameter names and values separated by a
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 </pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">%</span> <span class="nv">module</span><span class="err">−</span><span class="n">starter</span> <span class="err">−−</span><span class="n">module</span><span class="o">=</span><span class="n">Animal</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/08/08/notes-on-the-use-of-module-in-node-dot-js/">Notes on the Use of Module in node.js</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-08-08T17:11:27+08:00" pubdate data-updated="true">Aug 8<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><ol>
-  <li>
-    <p>require 不会重复加载模块，也就是说无论调用多少次 require，获得的模块都是同一个。  </p>
-  </li>
-  <li>
-    <p>Node.js 提供了 exports 和 require 两个对象，其中 exports 是模块公开的接口，require 用于从外部获取一个模块的接口，即所获
-取模块的 exports 对象。   </p>
-  </li>
-  <li>
-    <p>exports 本身仅仅是一个普通的空对象，即 {}，它专门用来声明接口，本质上是通过它为模块闭包的内部建立了一个有限的访问接口.   </p>
-  </li>
-  <li>
-    <p>Node.js 在调用某个包时，会首先检查包中 package.json 文件的 main 字段，将其作为包的接口模块，如果 package.json 或 main 字段不存在，会尝试寻找 index.js 或 index.node 作为包的接口。</p>
-  </li>
-  <li>
-    <p>following the following steps to create and publish a module. </p>
-  </li>
-</ol>
-
-<ul>
-  <li>mkdir stsunmodule  </li>
-  <li>cd stsunmodule  </li>
-  <li>npm init  (then answer all the questions as been prompted)    </li>
-  <li>touch index.js   </li>
-  <li>npm adduser  </li>
-  <li>npm whoami  (use this command to test if your account is created successfully)   </li>
-  <li>npm publish   </li>
-</ul>
-
-<p>then you can go to the site “https://search.npmjs.org” to check if your module is published successfully.<br />
-You can also use “npm unpublish” to unpublish your module.  </p>
 </div>
   
   

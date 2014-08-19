@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Algorithms | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/algorithms/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-08-19T16:08:45+08:00</updated>
+  <updated>2014-08-19T20:31:36+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,75 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[CTCI-Q1.1]]></title>
+    <link href="http://isunix.github.io/blog/2014/08/19/ctci-q1-dot-1/"/>
+    <updated>2014-08-19T16:16:38+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/08/19/ctci-q1-dot-1</id>
+    <content type="html"><![CDATA[<p>The question is: </p>
+
+<p><code>yaml
+Implement an algorithm to determine if a string has all unique characters. What if you can not use additional data structures?
+</code></p>
+
+<p>We will try to solve this problem using four languages c++, java, python.</p>
+
+<p>In order to simplify this problem, we shorten the character set to ASCII.</p>
+
+<p>In this case, if the string is longer that 256, surely at least two will be the same. </p>
+
+<p>We can create an array char_set whose values are booleans. thus char_set[val] = true means that the char is in the array and char_set[val] = false means that the char is not in the array.  </p>
+
+<p>1.java version:</p>
+
+<p><code>java
+public static boolean isUnique(String str) {
+        if (str.length() &gt; 256) {
+            return false;
+        }
+        boolean[] acsii_set = new boolean[256];
+        for (int i = 0; i &lt; str.length(); i++) {
+            int val = str.charAt(i);
+            if (ascii_set[val]) return false;
+            ascii_set[val] = true;
+        }
+        return true;
+    }
+</code></p>
+
+<p>2.c++ version:</p>
+
+<p><code>cpp
+bool isUnique(string str){
+	if(str.length() &gt; 256){
+		return false;
+	}
+	bool ascii_set[256] = {false};
+	for (int i=0; i &lt; str.length(); i++){
+		int val = str[i];
+		if (ascii_set[val]){
+			return false;
+		}
+		ascii_set[value] = true;
+	}
+	reutrn true;
+}
+</code>  </p>
+
+<p>3.python version:</p>
+
+<p><code>py
+def is_unique(str):
+	charsTable = set()
+	for c n str:
+		if c in charsTable:
+			return False
+		charsTable.add()
+	return True
+</code></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Remove Duplicates From an Unsorted Linked List]]></title>
@@ -715,286 +784,6 @@ void Print(SqBiTree T)
 
 <p>Now we will show you how to do without using the recursion method.  </p>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[链表的两种实现方式]]></title>
-    <link href="http://isunix.github.io/blog/2014/08/02/lian-biao-de-liang-chong-shi-xian-fang-shi/"/>
-    <updated>2014-08-02T10:31:18+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/08/02/lian-biao-de-liang-chong-shi-xian-fang-shi</id>
-    <content type="html"><![CDATA[<p>这是关于线性表链式存住的两种实现方式，一个使用指针，一个使用c++中的引用。其实这两种方式是大同小异的。  </p>
-
-<p>The first method will use pointer in c.  </p>
-
-<p>```c<br />
-/<em>first inlcude all those need header files.</em>/
-#include “stdio.h”
-#include “string.h”
-#include “ctype.h”
-#include “stdlib.h”
-#include “math.h”</p>
-
-<p>/<em>define those constants needed</em>/
-#define OK 1
-#define ERROR 0
-#define TRUE 1
-#define FALSE 0</p>
-
-<p>/<em>define the initial size allocated.</em>/
-#define MAXSIZE 20</p>
-
-<p>/<em>define the return type of a function</em>/
-typedef int Status;
-typedef int ElemType;</p>
-
-<p>/<em>define a struct Node with the name Node, and make LinkList a pointer point to Node</em>/
-typedef struct Node {
-    ElemType data;
-    struct Node *next;
-}Node;
-typedef struct Node *LinkList;</p>
-
-<p>/<em>initialize the LinkList</em>/
-Status InitList(LinkList <em>L)
-{
-    *L=(LinkList)malloc(sizeof(Node));   <br />
-    if(!(</em>L)) 
-    	return ERROR;
-    (*L)-&gt;next=NULL; </p>
-
-<pre><code>return OK; }
-</code></pre>
-
-<p>Status ListEmpty(LinkList L){
-    if(L-&gt;next)
-    	return FALSE;
-    else
-    	return TRUE;
-}</p>
-
-<p>/<em>if the linklist already exists, set it to empty</em>/
-Status ClearList(LinkList <em>L)
-{
-	LinkList p,q;
-	p=(</em>L)-&gt;next;     /<em>p points to the first node</em>/    <br />
-	while(p)          /<em>it means not to the end of the linklist</em>/    <br />
-	{
-		q=p-&gt;next;
-		free(p);
-		p=q;
-	}
-	(<em>L)-&gt;next=NULL;  /</em>pointer field for the head Node will be null*/     <br />
-	return OK;
-}</p>
-
-<p>/<em>return the length of the linklist</em>/
-int ListLength(LinkList L)
-{
-    int i=0;
-    LinkList p=L-&gt;next;  /<em>p points to the first node</em>/
-    while(p)
-    {
-        i++;
-        p=p-&gt;next;
-    }
-    return i;
-}</p>
-
-<p>/<em>get the i th element of L and returning its value using e</em>/
-Status GetElem(LinkList L,int i,ElemType <em>e) {
-	int j;
-	LinkList p;		/</em> declare a node “p” <em>/
-	p = L-&gt;next;		/</em> let p point to the first node of L <em>/
-	j = 1;		
-	while (p &amp;&amp; j&lt;i)<br />
-	{
-		p = p-&gt;next;  /</em> let p point to the next node <em>/
-		++j;
-	}
-	if ( !p || j&gt;i )
-		return ERROR;  /</em>  the i th element does not exist <em>/
-	*e = p-&gt;data;   /</em>  get the data of the i th element */
-	return OK;
-}</p>
-
-<p>/* locate element e in L <em>/<br />
-int LocateElem(LinkList L,ElemType e) {
-    int i=0;
-    LinkList p=L-&gt;next;
-    while(p)
-    {
-        i++;
-        if(p-&gt;data==e) /</em> find the element */
-                return i;
-        p=p-&gt;next;
-    }</p>
-
-<pre><code>return 0; }
-</code></pre>
-
-<p>/<em>insert at the location of the i th element</em>/ 	
-Status ListInsert(LinkList <em>L,int i,ElemType e)
-{
-	int j;
-	LinkList p,s;
-	p = *L;
-	j = 1;
-	while (p &amp;&amp; j &lt; i)     /</em> find the i th node */
-	{
-		p = p-&gt;next;
-		++j;
-	}
-	if (!p || j &gt; i)
-		return ERROR; <br />
-	s = (LinkList)malloc(sizeof(Node));<br />
-	s-&gt;data = e;
-	s-&gt;next = p-&gt;next;    <br />
-	p-&gt;next = s;        <br />
-	return OK;
-}  </p>
-
-<p>/<em>delete the i th element, returning its value using e</em>/</p>
-
-<p>Status ListDelete(LinkList *L,int i,ElemType *e)
-{
-	int j;
-	LinkList p,q;
-	p = *L;
-	j = 1;
-	while (p-&gt;next &amp;&amp; j &lt; i)	
-	{
-        p = p-&gt;next;
-        ++j;
-	}
-	if (!(p-&gt;next) || j &gt; i)
-	    return ERROR;         <br />
-	q = p-&gt;next;
-	p-&gt;next = q-&gt;next;			
-	*e = q-&gt;data;             <br />
-	free(q);                 <br />
-	return OK;
-}</p>
-
-<p>/<em>print out all elements</em>/  </p>
-
-<p>Status visit(ElemType c) {
-    printf(“%d “,c);
-    return OK;
-}</p>
-
-<p>Status ListTraverse(LinkList L)
-{
-    LinkList p=L-&gt;next;
-    while(p)
-    {
-        visit(p-&gt;data);
-        p=p-&gt;next;
-    }
-    printf(“\n”);
-    return OK;
-}</p>
-
-<p>/<em>create the data for the n elements randomly, create a linked list with head node</em>/</p>
-
-<p>void CreateListHead(LinkList <em>L, int n)
-{
-	LinkList p;
-	int i;
-	srand(time(0));                       <br />
-	*L = (LinkList)malloc(sizeof(Node));
-	(</em>L)-&gt;next = NULL;                    <br />
-	for (i=0; i&lt;n; i++)
-	{
-		p = (LinkList)malloc(sizeof(Node)); 
-		p-&gt;data = rand()%100+1;           <br />
-		p-&gt;next = (<em>L)-&gt;next;
-		(</em>L)-&gt;next = p;						
-	}
-}</p>
-
-<p>/<em>create the data for the n elements randomly, create a linked list with tail node</em>/</p>
-
-<p>void CreateListTail(LinkList <em>L, int n)
-{
-	LinkList p,r;
-	int i;
-	srand(time(0));                    <br />
-	*L = (LinkList)malloc(sizeof(Node)); 
-	r=</em>L;                              <br />
-	for (i=0; i&lt;n; i++)
-	{
-		p = (Node *)malloc(sizeof(Node)); 
-		p-&gt;data = rand()%100+1;         <br />
-		r-&gt;next=p;                      <br />
-		r = p;                          <br />
-	}
-	r-&gt;next = NULL;                     <br />
-}</p>
-
-<p>/<em>in the main function you  have to do the following initializations</em>/ </p>
-
-<p>int main()
-{
-    LinkList L;
-    ElemType e;
-    Status i;
-    int j,k;
-    i=InitList(&amp;L);
-	/<em>blahblah</em>/
-}</p>
-
-<p>```  </p>
-
-<p>The following is a version using c++’s reference “&amp;”, it is a little different, but mostly wil be the same as the above.  </p>
-
-<p>```cpp
-#include <stdio.h>
-#include <stdlib.h /></stdio.h></p>
-
-<p>typedef char ElemType;
-typedef struct LNode  		
-{
-	ElemType data;
-	struct LNode *next;		
-} LinkList;</p>
-
-<p>/<em>creating the linked list by inserting at the head</em>/  </p>
-
-<p>void CreateListF(LinkList *&amp;L,ElemType a[],int n)
-{
-	LinkList *s;int i;
-	L=(LinkList *)malloc(sizeof(LinkList));  	
-	L-&gt;next=NULL;
-	for (i=0;i&lt;n;i++)
-	{
-		s=(LinkList *)malloc(sizeof(LinkList));
-		s-&gt;data=a[i];
-		s-&gt;next=L-&gt;next;			
-		L-&gt;next=s;
-	}
-}</p>
-
-<p>/<em>creating the linked list by inserting at the tail</em>/
-void CreateListR(LinkList <em>&amp;L,ElemType a[],int n)
-{
-	LinkList *s,</em>r;int i;
-	L=(LinkList *)malloc(sizeof(LinkList));  	
-	L-&gt;next=NULL;
-	r=L;					
-	for (i=0;i&lt;n;i++)
-	{
-		s=(LinkList *)malloc(sizeof(LinkList));
-		s-&gt;data=a[i];
-		r-&gt;next=s;			
-		r=s;
-	}
-	r-&gt;next=NULL;			
-}</p>
-
-<p>/<em>and blah and blah</em>/</p>
-
-<p>```</p>
 ]]></content>
   </entry>
   

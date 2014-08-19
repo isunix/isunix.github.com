@@ -9,8 +9,53 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="The question is: 1
-Implement an algorithm to determine if a string has all unique characters. What if you can not use additional data structures? We &hellip;">
+  <meta name="description" content="1.sequence stack 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -63,6 +108,578 @@ Implement an algorithm to determine if a string has all unique characters. What 
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/19/shun-xu-zhan-de-cyu-yan-shi-xian/">顺序栈和链栈的c语言实现</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-19T21:29:35+08:00" pubdate data-updated="true">Aug 19<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>1.sequence stack </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+<span class="line-number">35</span>
+<span class="line-number">36</span>
+<span class="line-number">37</span>
+<span class="line-number">38</span>
+<span class="line-number">39</span>
+<span class="line-number">40</span>
+<span class="line-number">41</span>
+<span class="line-number">42</span>
+<span class="line-number">43</span>
+<span class="line-number">44</span>
+<span class="line-number">45</span>
+<span class="line-number">46</span>
+<span class="line-number">47</span>
+<span class="line-number">48</span>
+<span class="line-number">49</span>
+<span class="line-number">50</span>
+<span class="line-number">51</span>
+<span class="line-number">52</span>
+<span class="line-number">53</span>
+<span class="line-number">54</span>
+<span class="line-number">55</span>
+<span class="line-number">56</span>
+<span class="line-number">57</span>
+<span class="line-number">58</span>
+<span class="line-number">59</span>
+<span class="line-number">60</span>
+<span class="line-number">61</span>
+<span class="line-number">62</span>
+<span class="line-number">63</span>
+<span class="line-number">64</span>
+<span class="line-number">65</span>
+<span class="line-number">66</span>
+<span class="line-number">67</span>
+<span class="line-number">68</span>
+<span class="line-number">69</span>
+<span class="line-number">70</span>
+<span class="line-number">71</span>
+<span class="line-number">72</span>
+<span class="line-number">73</span>
+<span class="line-number">74</span>
+<span class="line-number">75</span>
+<span class="line-number">76</span>
+<span class="line-number">77</span>
+<span class="line-number">78</span>
+<span class="line-number">79</span>
+<span class="line-number">80</span>
+<span class="line-number">81</span>
+<span class="line-number">82</span>
+<span class="line-number">83</span>
+<span class="line-number">84</span>
+<span class="line-number">85</span>
+<span class="line-number">86</span>
+<span class="line-number">87</span>
+<span class="line-number">88</span>
+<span class="line-number">89</span>
+<span class="line-number">90</span>
+<span class="line-number">91</span>
+<span class="line-number">92</span>
+<span class="line-number">93</span>
+<span class="line-number">94</span>
+<span class="line-number">95</span>
+<span class="line-number">96</span>
+<span class="line-number">97</span>
+<span class="line-number">98</span>
+<span class="line-number">99</span>
+<span class="line-number">100</span>
+<span class="line-number">101</span>
+<span class="line-number">102</span>
+<span class="line-number">103</span>
+<span class="line-number">104</span>
+<span class="line-number">105</span>
+<span class="line-number">106</span>
+<span class="line-number">107</span>
+<span class="line-number">108</span>
+<span class="line-number">109</span>
+<span class="line-number">110</span>
+<span class="line-number">111</span>
+<span class="line-number">112</span>
+<span class="line-number">113</span>
+<span class="line-number">114</span>
+<span class="line-number">115</span>
+<span class="line-number">116</span>
+<span class="line-number">117</span>
+<span class="line-number">118</span>
+<span class="line-number">119</span>
+<span class="line-number">120</span>
+<span class="line-number">121</span>
+<span class="line-number">122</span>
+</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="cp">#include &quot;stdio.h&quot;</span>
+</span><span class="line"><span class="cp">#include &quot;stdlib.h&quot;</span>
+</span><span class="line"><span class="cp">#include &quot;math.h&quot;</span>
+</span><span class="line"><span class="cp">#include &quot;time.h&quot;</span>
+</span><span class="line">
+</span><span class="line"><span class="cp">#define OK 1</span>
+</span><span class="line"><span class="cp">#define ERROR 0</span>
+</span><span class="line"><span class="cp">#define TRUE 1</span>
+</span><span class="line"><span class="cp">#define FALSE 0</span>
+</span><span class="line"><span class="cp">#define MAXSIZE 1000 </span><span class="cm">/* 存储空间初始分配量 */</span><span class="cp"></span>
+</span><span class="line">
+</span><span class="line"><span class="k">typedef</span> <span class="kt">int</span> <span class="n">Status</span><span class="p">;</span>
+</span><span class="line"><span class="k">typedef</span> <span class="kt">int</span> <span class="n">SElemType</span><span class="p">;</span> <span class="cm">/* SElemType类型根据实际情况而定，这里假设为int */</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 顺序栈结构 */</span>
+</span><span class="line"><span class="k">typedef</span> <span class="k">struct</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="n">SElemType</span> <span class="n">data</span><span class="p">[</span><span class="n">MAXSIZE</span><span class="p">];</span>
+</span><span class="line">        <span class="kt">int</span> <span class="n">top</span><span class="p">;</span> <span class="cm">/* 用于栈顶指针 */</span>
+</span><span class="line"><span class="p">}</span><span class="n">SqStack</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="n">Status</span> <span class="nf">visit</span><span class="p">(</span><span class="n">SElemType</span> <span class="n">c</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d &quot;</span><span class="p">,</span><span class="n">c</span><span class="p">);</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/*  构造一个空栈S */</span>
+</span><span class="line"><span class="n">Status</span> <span class="nf">InitStack</span><span class="p">(</span><span class="n">SqStack</span> <span class="o">*</span><span class="n">S</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="cm">/* S.data=(SElemType *)malloc(MAXSIZE*sizeof(SElemType)); */</span>
+</span><span class="line">        <span class="n">S</span><span class="o">-&gt;</span><span class="n">top</span><span class="o">=-</span><span class="mi">1</span><span class="p">;</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 把S置为空栈 */</span>
+</span><span class="line"><span class="n">Status</span> <span class="nf">ClearStack</span><span class="p">(</span><span class="n">SqStack</span> <span class="o">*</span><span class="n">S</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="n">S</span><span class="o">-&gt;</span><span class="n">top</span><span class="o">=-</span><span class="mi">1</span><span class="p">;</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 若栈S为空栈，则返回TRUE，否则返回FALSE */</span>
+</span><span class="line"><span class="n">Status</span> <span class="nf">StackEmpty</span><span class="p">(</span><span class="n">SqStack</span> <span class="n">S</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="k">if</span> <span class="p">(</span><span class="n">S</span><span class="p">.</span><span class="n">top</span><span class="o">==-</span><span class="mi">1</span><span class="p">)</span>
+</span><span class="line">                <span class="k">return</span> <span class="n">TRUE</span><span class="p">;</span>
+</span><span class="line">        <span class="k">else</span>
+</span><span class="line">                <span class="k">return</span> <span class="n">FALSE</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 返回S的元素个数，即栈的长度 */</span>
+</span><span class="line"><span class="kt">int</span> <span class="nf">StackLength</span><span class="p">(</span><span class="n">SqStack</span> <span class="n">S</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">S</span><span class="p">.</span><span class="n">top</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 若栈不空，则用e返回S的栈顶元素，并返回OK；否则返回ERROR */</span>
+</span><span class="line"><span class="n">Status</span> <span class="nf">GetTop</span><span class="p">(</span><span class="n">SqStack</span> <span class="n">S</span><span class="p">,</span><span class="n">SElemType</span> <span class="o">*</span><span class="n">e</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="k">if</span> <span class="p">(</span><span class="n">S</span><span class="p">.</span><span class="n">top</span><span class="o">==-</span><span class="mi">1</span><span class="p">)</span>
+</span><span class="line">                <span class="k">return</span> <span class="n">ERROR</span><span class="p">;</span>
+</span><span class="line">        <span class="k">else</span>
+</span><span class="line">                <span class="o">*</span><span class="n">e</span><span class="o">=</span><span class="n">S</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="n">S</span><span class="p">.</span><span class="n">top</span><span class="p">];</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 插入元素e为新的栈顶元素 */</span>
+</span><span class="line"><span class="n">Status</span> <span class="nf">Push</span><span class="p">(</span><span class="n">SqStack</span> <span class="o">*</span><span class="n">S</span><span class="p">,</span><span class="n">SElemType</span> <span class="n">e</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="k">if</span><span class="p">(</span><span class="n">S</span><span class="o">-&gt;</span><span class="n">top</span> <span class="o">==</span> <span class="n">MAXSIZE</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="cm">/* 栈满 */</span>
+</span><span class="line">        <span class="p">{</span>
+</span><span class="line">                <span class="k">return</span> <span class="n">ERROR</span><span class="p">;</span>
+</span><span class="line">        <span class="p">}</span>
+</span><span class="line">        <span class="n">S</span><span class="o">-&gt;</span><span class="n">top</span><span class="o">++</span><span class="p">;</span>				<span class="cm">/* 栈顶指针增加一 */</span>
+</span><span class="line">        <span class="n">S</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">[</span><span class="n">S</span><span class="o">-&gt;</span><span class="n">top</span><span class="p">]</span><span class="o">=</span><span class="n">e</span><span class="p">;</span>  <span class="cm">/* 将新插入元素赋值给栈顶空间 */</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 若栈不空，则删除S的栈顶元素，用e返回其值，并返回OK；否则返回ERROR */</span>
+</span><span class="line"><span class="n">Status</span> <span class="nf">Pop</span><span class="p">(</span><span class="n">SqStack</span> <span class="o">*</span><span class="n">S</span><span class="p">,</span><span class="n">SElemType</span> <span class="o">*</span><span class="n">e</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="k">if</span><span class="p">(</span><span class="n">S</span><span class="o">-&gt;</span><span class="n">top</span><span class="o">==-</span><span class="mi">1</span><span class="p">)</span>
+</span><span class="line">                <span class="k">return</span> <span class="n">ERROR</span><span class="p">;</span>
+</span><span class="line">        <span class="o">*</span><span class="n">e</span><span class="o">=</span><span class="n">S</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">[</span><span class="n">S</span><span class="o">-&gt;</span><span class="n">top</span><span class="p">];</span>	<span class="cm">/* 将要删除的栈顶元素赋值给e */</span>
+</span><span class="line">        <span class="n">S</span><span class="o">-&gt;</span><span class="n">top</span><span class="o">--</span><span class="p">;</span>				<span class="cm">/* 栈顶指针减一 */</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 从栈底到栈顶依次对栈中每个元素显示 */</span>
+</span><span class="line"><span class="n">Status</span> <span class="nf">StackTraverse</span><span class="p">(</span><span class="n">SqStack</span> <span class="n">S</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+</span><span class="line">        <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+</span><span class="line">        <span class="k">while</span><span class="p">(</span><span class="n">i</span><span class="o">&lt;=</span><span class="n">S</span><span class="p">.</span><span class="n">top</span><span class="p">)</span>
+</span><span class="line">        <span class="p">{</span>
+</span><span class="line">                <span class="n">visit</span><span class="p">(</span><span class="n">S</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="o">++</span><span class="p">]);</span>
+</span><span class="line">        <span class="p">}</span>
+</span><span class="line">        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="kt">int</span> <span class="n">j</span><span class="p">;</span>
+</span><span class="line">        <span class="n">SqStack</span> <span class="n">s</span><span class="p">;</span>
+</span><span class="line">        <span class="kt">int</span> <span class="n">e</span><span class="p">;</span>
+</span><span class="line">        <span class="k">if</span><span class="p">(</span><span class="n">InitStack</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="p">)</span><span class="o">==</span><span class="n">OK</span><span class="p">)</span>
+</span><span class="line">                <span class="k">for</span><span class="p">(</span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="n">j</span><span class="o">&lt;=</span><span class="mi">10</span><span class="p">;</span><span class="n">j</span><span class="o">++</span><span class="p">)</span>
+</span><span class="line">                        <span class="n">Push</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="p">,</span><span class="n">j</span><span class="p">);</span>
+</span><span class="line">        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;栈中元素依次为：&quot;</span><span class="p">);</span>
+</span><span class="line">        <span class="n">StackTraverse</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
+</span><span class="line">        <span class="n">Pop</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="p">,</span><span class="o">&amp;</span><span class="n">e</span><span class="p">);</span>
+</span><span class="line">        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;弹出的栈顶元素 e=%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">e</span><span class="p">);</span>
+</span><span class="line">        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;栈空否：%d(1:空 0:否)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">StackEmpty</span><span class="p">(</span><span class="n">s</span><span class="p">));</span>
+</span><span class="line">        <span class="n">GetTop</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="o">&amp;</span><span class="n">e</span><span class="p">);</span>
+</span><span class="line">        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;栈顶元素 e=%d 栈的长度为%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">e</span><span class="p">,</span><span class="n">StackLength</span><span class="p">(</span><span class="n">s</span><span class="p">));</span>
+</span><span class="line">        <span class="n">ClearStack</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="p">);</span>
+</span><span class="line">        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;清空栈后，栈空否：%d(1:空 0:否)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">StackEmpty</span><span class="p">(</span><span class="n">s</span><span class="p">));</span>
+</span><span class="line">
+</span><span class="line">        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>2.Linked stack</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+<span class="line-number">35</span>
+<span class="line-number">36</span>
+<span class="line-number">37</span>
+<span class="line-number">38</span>
+<span class="line-number">39</span>
+<span class="line-number">40</span>
+<span class="line-number">41</span>
+<span class="line-number">42</span>
+<span class="line-number">43</span>
+<span class="line-number">44</span>
+<span class="line-number">45</span>
+<span class="line-number">46</span>
+<span class="line-number">47</span>
+<span class="line-number">48</span>
+<span class="line-number">49</span>
+<span class="line-number">50</span>
+<span class="line-number">51</span>
+<span class="line-number">52</span>
+<span class="line-number">53</span>
+<span class="line-number">54</span>
+<span class="line-number">55</span>
+<span class="line-number">56</span>
+<span class="line-number">57</span>
+<span class="line-number">58</span>
+<span class="line-number">59</span>
+<span class="line-number">60</span>
+<span class="line-number">61</span>
+<span class="line-number">62</span>
+<span class="line-number">63</span>
+<span class="line-number">64</span>
+<span class="line-number">65</span>
+<span class="line-number">66</span>
+<span class="line-number">67</span>
+<span class="line-number">68</span>
+<span class="line-number">69</span>
+<span class="line-number">70</span>
+<span class="line-number">71</span>
+<span class="line-number">72</span>
+<span class="line-number">73</span>
+<span class="line-number">74</span>
+<span class="line-number">75</span>
+<span class="line-number">76</span>
+<span class="line-number">77</span>
+<span class="line-number">78</span>
+<span class="line-number">79</span>
+<span class="line-number">80</span>
+<span class="line-number">81</span>
+<span class="line-number">82</span>
+<span class="line-number">83</span>
+<span class="line-number">84</span>
+<span class="line-number">85</span>
+<span class="line-number">86</span>
+<span class="line-number">87</span>
+<span class="line-number">88</span>
+<span class="line-number">89</span>
+<span class="line-number">90</span>
+<span class="line-number">91</span>
+<span class="line-number">92</span>
+<span class="line-number">93</span>
+<span class="line-number">94</span>
+<span class="line-number">95</span>
+<span class="line-number">96</span>
+<span class="line-number">97</span>
+<span class="line-number">98</span>
+<span class="line-number">99</span>
+<span class="line-number">100</span>
+<span class="line-number">101</span>
+<span class="line-number">102</span>
+<span class="line-number">103</span>
+<span class="line-number">104</span>
+<span class="line-number">105</span>
+<span class="line-number">106</span>
+<span class="line-number">107</span>
+<span class="line-number">108</span>
+<span class="line-number">109</span>
+<span class="line-number">110</span>
+<span class="line-number">111</span>
+<span class="line-number">112</span>
+<span class="line-number">113</span>
+<span class="line-number">114</span>
+<span class="line-number">115</span>
+<span class="line-number">116</span>
+<span class="line-number">117</span>
+<span class="line-number">118</span>
+<span class="line-number">119</span>
+<span class="line-number">120</span>
+<span class="line-number">121</span>
+<span class="line-number">122</span>
+<span class="line-number">123</span>
+<span class="line-number">124</span>
+<span class="line-number">125</span>
+<span class="line-number">126</span>
+<span class="line-number">127</span>
+<span class="line-number">128</span>
+<span class="line-number">129</span>
+<span class="line-number">130</span>
+<span class="line-number">131</span>
+<span class="line-number">132</span>
+<span class="line-number">133</span>
+<span class="line-number">134</span>
+<span class="line-number">135</span>
+<span class="line-number">136</span>
+<span class="line-number">137</span>
+<span class="line-number">138</span>
+<span class="line-number">139</span>
+<span class="line-number">140</span>
+<span class="line-number">141</span>
+<span class="line-number">142</span>
+<span class="line-number">143</span>
+</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="cp">#include &quot;stdio.h&quot;</span>
+</span><span class="line"><span class="cp">#include &quot;stdlib.h&quot;</span>
+</span><span class="line"><span class="cp">#include &quot;math.h&quot;</span>
+</span><span class="line"><span class="cp">#include &quot;time.h&quot;</span>
+</span><span class="line">
+</span><span class="line"><span class="cp">#define OK 1</span>
+</span><span class="line"><span class="cp">#define ERROR 0</span>
+</span><span class="line"><span class="cp">#define TRUE 1</span>
+</span><span class="line"><span class="cp">#define FALSE 0</span>
+</span><span class="line"><span class="cp">#define MAXSIZE 1000 </span><span class="cm">/* 存储空间初始分配量 */</span><span class="cp"></span>
+</span><span class="line">
+</span><span class="line"><span class="k">typedef</span> <span class="kt">int</span> <span class="n">Status</span><span class="p">;</span>
+</span><span class="line"><span class="k">typedef</span> <span class="kt">int</span> <span class="n">SElemType</span><span class="p">;</span> <span class="cm">/* SElemType类型根据实际情况而定，这里假设为int */</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 链栈结构 */</span>
+</span><span class="line"><span class="k">typedef</span> <span class="k">struct</span> <span class="n">StackNode</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="n">SElemType</span> <span class="n">data</span><span class="p">;</span>
+</span><span class="line">        <span class="k">struct</span> <span class="n">StackNode</span> <span class="o">*</span><span class="n">next</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span><span class="n">StackNode</span><span class="p">,</span><span class="o">*</span><span class="n">LinkStackPtr</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line"><span class="k">typedef</span> <span class="k">struct</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="n">LinkStackPtr</span> <span class="n">top</span><span class="p">;</span>
+</span><span class="line">        <span class="kt">int</span> <span class="n">count</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span><span class="n">LinkStack</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="n">Status</span> <span class="nf">visit</span><span class="p">(</span><span class="n">SElemType</span> <span class="n">c</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d &quot;</span><span class="p">,</span><span class="n">c</span><span class="p">);</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/*  构造一个空栈S */</span>
+</span><span class="line"><span class="n">Status</span> <span class="nf">InitStack</span><span class="p">(</span><span class="n">LinkStack</span> <span class="o">*</span><span class="n">S</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="n">S</span><span class="o">-&gt;</span><span class="n">top</span> <span class="o">=</span> <span class="p">(</span><span class="n">LinkStackPtr</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">StackNode</span><span class="p">));</span>
+</span><span class="line">        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">S</span><span class="o">-&gt;</span><span class="n">top</span><span class="p">)</span>
+</span><span class="line">                <span class="k">return</span> <span class="n">ERROR</span><span class="p">;</span>
+</span><span class="line">        <span class="n">S</span><span class="o">-&gt;</span><span class="n">top</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
+</span><span class="line">        <span class="n">S</span><span class="o">-&gt;</span><span class="n">count</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 把S置为空栈 */</span>
+</span><span class="line"><span class="n">Status</span> <span class="nf">ClearStack</span><span class="p">(</span><span class="n">LinkStack</span> <span class="o">*</span><span class="n">S</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="n">LinkStackPtr</span> <span class="n">p</span><span class="p">,</span><span class="n">q</span><span class="p">;</span>
+</span><span class="line">        <span class="n">p</span><span class="o">=</span><span class="n">S</span><span class="o">-&gt;</span><span class="n">top</span><span class="p">;</span>
+</span><span class="line">        <span class="k">while</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+</span><span class="line">        <span class="p">{</span>
+</span><span class="line">                <span class="n">q</span><span class="o">=</span><span class="n">p</span><span class="p">;</span>
+</span><span class="line">                <span class="n">p</span><span class="o">=</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+</span><span class="line">                <span class="n">free</span><span class="p">(</span><span class="n">q</span><span class="p">);</span>
+</span><span class="line">        <span class="p">}</span>
+</span><span class="line">        <span class="n">S</span><span class="o">-&gt;</span><span class="n">count</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 若栈S为空栈，则返回TRUE，否则返回FALSE */</span>
+</span><span class="line"><span class="n">Status</span> <span class="nf">StackEmpty</span><span class="p">(</span><span class="n">LinkStack</span> <span class="n">S</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="k">if</span> <span class="p">(</span><span class="n">S</span><span class="p">.</span><span class="n">count</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span>
+</span><span class="line">                <span class="k">return</span> <span class="n">TRUE</span><span class="p">;</span>
+</span><span class="line">        <span class="k">else</span>
+</span><span class="line">                <span class="k">return</span> <span class="n">FALSE</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 返回S的元素个数，即栈的长度 */</span>
+</span><span class="line"><span class="kt">int</span> <span class="nf">StackLength</span><span class="p">(</span><span class="n">LinkStack</span> <span class="n">S</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">S</span><span class="p">.</span><span class="n">count</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 若栈不空，则用e返回S的栈顶元素，并返回OK；否则返回ERROR */</span>
+</span><span class="line"><span class="n">Status</span> <span class="nf">GetTop</span><span class="p">(</span><span class="n">LinkStack</span> <span class="n">S</span><span class="p">,</span><span class="n">SElemType</span> <span class="o">*</span><span class="n">e</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="k">if</span> <span class="p">(</span><span class="n">S</span><span class="p">.</span><span class="n">top</span><span class="o">==</span><span class="nb">NULL</span><span class="p">)</span>
+</span><span class="line">                <span class="k">return</span> <span class="n">ERROR</span><span class="p">;</span>
+</span><span class="line">        <span class="k">else</span>
+</span><span class="line">                <span class="o">*</span><span class="n">e</span><span class="o">=</span><span class="n">S</span><span class="p">.</span><span class="n">top</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">;</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 插入元素e为新的栈顶元素 */</span>
+</span><span class="line"><span class="n">Status</span> <span class="nf">Push</span><span class="p">(</span><span class="n">LinkStack</span> <span class="o">*</span><span class="n">S</span><span class="p">,</span><span class="n">SElemType</span> <span class="n">e</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="n">LinkStackPtr</span> <span class="n">s</span><span class="o">=</span><span class="p">(</span><span class="n">LinkStackPtr</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">StackNode</span><span class="p">));</span>
+</span><span class="line">        <span class="n">s</span><span class="o">-&gt;</span><span class="n">data</span><span class="o">=</span><span class="n">e</span><span class="p">;</span>
+</span><span class="line">        <span class="n">s</span><span class="o">-&gt;</span><span class="n">next</span><span class="o">=</span><span class="n">S</span><span class="o">-&gt;</span><span class="n">top</span><span class="p">;</span>	<span class="cm">/* 把当前的栈顶元素赋值给新结点的直接后继 */</span>
+</span><span class="line">        <span class="n">S</span><span class="o">-&gt;</span><span class="n">top</span><span class="o">=</span><span class="n">s</span><span class="p">;</span>         <span class="cm">/* 将新的结点s赋值给栈顶指针 */</span>
+</span><span class="line">        <span class="n">S</span><span class="o">-&gt;</span><span class="n">count</span><span class="o">++</span><span class="p">;</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 若栈不空，则删除S的栈顶元素，用e返回其值，并返回OK；否则返回ERROR */</span>
+</span><span class="line"><span class="n">Status</span> <span class="nf">Pop</span><span class="p">(</span><span class="n">LinkStack</span> <span class="o">*</span><span class="n">S</span><span class="p">,</span><span class="n">SElemType</span> <span class="o">*</span><span class="n">e</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="n">LinkStackPtr</span> <span class="n">p</span><span class="p">;</span>
+</span><span class="line">        <span class="k">if</span><span class="p">(</span><span class="n">StackEmpty</span><span class="p">(</span><span class="o">*</span><span class="n">S</span><span class="p">))</span>
+</span><span class="line">                <span class="k">return</span> <span class="n">ERROR</span><span class="p">;</span>
+</span><span class="line">        <span class="o">*</span><span class="n">e</span><span class="o">=</span><span class="n">S</span><span class="o">-&gt;</span><span class="n">top</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">;</span>
+</span><span class="line">        <span class="n">p</span><span class="o">=</span><span class="n">S</span><span class="o">-&gt;</span><span class="n">top</span><span class="p">;</span>					<span class="cm">/* 将栈顶结点赋值给p */</span>
+</span><span class="line">        <span class="n">S</span><span class="o">-&gt;</span><span class="n">top</span><span class="o">=</span><span class="n">S</span><span class="o">-&gt;</span><span class="n">top</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>    <span class="cm">/* 使得栈顶指针下移一位，指向后一结点 */</span>
+</span><span class="line">        <span class="n">free</span><span class="p">(</span><span class="n">p</span><span class="p">);</span>                    <span class="cm">/* 释放结点p */</span>
+</span><span class="line">        <span class="n">S</span><span class="o">-&gt;</span><span class="n">count</span><span class="o">--</span><span class="p">;</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="n">Status</span> <span class="nf">StackTraverse</span><span class="p">(</span><span class="n">LinkStack</span> <span class="n">S</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="n">LinkStackPtr</span> <span class="n">p</span><span class="p">;</span>
+</span><span class="line">        <span class="n">p</span><span class="o">=</span><span class="n">S</span><span class="p">.</span><span class="n">top</span><span class="p">;</span>
+</span><span class="line">        <span class="k">while</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+</span><span class="line">        <span class="p">{</span>
+</span><span class="line">                 <span class="n">visit</span><span class="p">(</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">);</span>
+</span><span class="line">                 <span class="n">p</span><span class="o">=</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+</span><span class="line">        <span class="p">}</span>
+</span><span class="line">        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="kt">int</span> <span class="n">j</span><span class="p">;</span>
+</span><span class="line">        <span class="n">LinkStack</span> <span class="n">s</span><span class="p">;</span>
+</span><span class="line">        <span class="kt">int</span> <span class="n">e</span><span class="p">;</span>
+</span><span class="line">        <span class="k">if</span><span class="p">(</span><span class="n">InitStack</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="p">)</span><span class="o">==</span><span class="n">OK</span><span class="p">)</span>
+</span><span class="line">                <span class="k">for</span><span class="p">(</span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="n">j</span><span class="o">&lt;=</span><span class="mi">10</span><span class="p">;</span><span class="n">j</span><span class="o">++</span><span class="p">)</span>
+</span><span class="line">                        <span class="n">Push</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="p">,</span><span class="n">j</span><span class="p">);</span>
+</span><span class="line">        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;栈中元素依次为：&quot;</span><span class="p">);</span>
+</span><span class="line">        <span class="n">StackTraverse</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
+</span><span class="line">        <span class="n">Pop</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="p">,</span><span class="o">&amp;</span><span class="n">e</span><span class="p">);</span>
+</span><span class="line">        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;弹出的栈顶元素 e=%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">e</span><span class="p">);</span>
+</span><span class="line">        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;栈空否：%d(1:空 0:否)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">StackEmpty</span><span class="p">(</span><span class="n">s</span><span class="p">));</span>
+</span><span class="line">        <span class="n">GetTop</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="o">&amp;</span><span class="n">e</span><span class="p">);</span>
+</span><span class="line">        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;栈顶元素 e=%d 栈的长度为%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">e</span><span class="p">,</span><span class="n">StackLength</span><span class="p">(</span><span class="n">s</span><span class="p">));</span>
+</span><span class="line">        <span class="n">ClearStack</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="p">);</span>
+</span><span class="line">        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;清空栈后，栈空否：%d(1:空 0:否)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">StackEmpty</span><span class="p">(</span><span class="n">s</span><span class="p">));</span>
+</span><span class="line">        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -2110,114 +2727,6 @@ Implement an algorithm to determine if a string has all unique characters. What 
 
 <p>Now we will show you how to do without using the recursion method.  </p>
 
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/08/12/two-ways-to-create-a-module/">Two Ways to Build a Module</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-08-12T20:51:22+08:00" pubdate data-updated="true">Aug 12<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>There are two build systems for building a module. One is to use the old and stable “ExtUtils::Makemaker”, and new one is using “Module::Build”. We will use the Module::Starter module to help us create a module.  </p>
-
-<p>By default, Module::Starter create a distribution with Makefile.PL</p>
-
-<p>First with Makefile.PL  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">module</span><span class="o">-</span><span class="n">starter</span> <span class="o">--</span><span class="n">module</span><span class="o">=</span><span class="s">&quot;Animal&quot;</span> <span class="o">--</span><span class="n">author</span><span class="o">=</span><span class="s">&quot;Steven Sun&quot;</span> <span class="o">--</span><span class="n">email</span><span class="o">=</span><span class="n">steven</span><span class="o">.</span><span class="n">sun2013</span><span class="nv">@gmail</span><span class="o">.</span><span class="n">com</span> <span class="o">--</span><span class="n">verbose</span>
-</span><span class="line">
-</span><span class="line"><span class="n">This</span> <span class="n">is</span> <span class="n">the</span> <span class="n">same</span> <span class="n">as:</span>
-</span><span class="line"><span class="n">module</span><span class="o">-</span><span class="n">starter</span> <span class="o">--</span><span class="n">builder</span><span class="o">=</span><span class="s">&quot;ExtUtils::Makemaker&quot;</span> <span class="o">--</span><span class="n">module</span><span class="o">=</span><span class="s">&quot;Animal&quot;</span> <span class="o">--</span><span class="n">author</span><span class="o">=</span><span class="s">&quot;Steven Sun&quot;</span> <span class="o">--</span><span class="n">email</span><span class="o">=</span><span class="n">steven</span><span class="o">.</span><span class="n">sun2013</span><span class="nv">@gmail</span><span class="o">.</span><span class="n">com</span> <span class="o">--</span><span class="n">verbose</span>
-</span><span class="line">
-</span><span class="line"><span class="n">perl</span> <span class="n">Makefile</span><span class="o">.</span><span class="n">PL</span>
-</span><span class="line"><span class="n">make</span>
-</span><span class="line"><span class="n">make</span> <span class="n">test</span>
-</span><span class="line"><span class="n">make</span> <span class="n">disttest</span>
-</span><span class="line"><span class="n">make</span> <span class="n">dist</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>Next we will show you the “Build.PL”</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">module</span><span class="o">-</span><span class="n">starter</span> <span class="o">--</span><span class="n">builder</span><span class="o">=</span><span class="s">&quot;Module::Build&quot;</span> <span class="o">--</span><span class="n">module</span><span class="o">=</span><span class="s">&quot;Animal&quot;</span> <span class="o">--</span><span class="n">author</span><span class="o">=</span><span class="s">&quot;Steven Sun&quot;</span> <span class="o">--</span><span class="n">email</span><span class="o">=</span><span class="n">steven</span><span class="o">.</span><span class="n">sun2013</span><span class="nv">@gmail</span><span class="o">.</span><span class="n">com</span> <span class="o">--</span><span class="n">verbose</span>
-</span><span class="line">
-</span><span class="line"><span class="ow">or</span> <span class="n">in</span> <span class="n">a</span> <span class="n">simpler</span> <span class="n">way</span><span class="p">,</span> <span class="n">we</span> <span class="n">can</span> <span class="k">do</span> <span class="n">this:</span>
-</span><span class="line"><span class="n">module</span><span class="o">-</span><span class="n">starter</span> <span class="o">--</span><span class="n">mb</span> <span class="o">--</span><span class="n">module</span><span class="o">=</span><span class="s">&quot;Animal&quot;</span> <span class="o">--</span><span class="n">author</span><span class="o">=</span><span class="s">&quot;Steven Sun&quot;</span> <span class="o">--</span><span class="n">email</span><span class="o">=</span><span class="n">steven</span><span class="o">.</span><span class="n">sun2013</span><span class="nv">@gmail</span><span class="o">.</span><span class="n">com</span> <span class="o">--</span><span class="n">verbose</span>
-</span><span class="line">
-</span><span class="line"><span class="n">perl</span> <span class="n">Build</span><span class="o">.</span><span class="n">PL</span>
-</span><span class="line"><span class="o">./</span><span class="n">Build</span>
-</span><span class="line"><span class="o">./</span><span class="n">Build</span> <span class="n">test</span>
-</span><span class="line"><span class="o">./</span><span class="n">Build</span> <span class="n">disttest</span>       <span class="c1">##this will create a .tar.gz archive which we can distribute now.  </span>
-</span><span class="line"><span class="o">./</span><span class="n">Build</span> <span class="n">dist</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>For the Module::Build way, there is a shortcut.   </p>
-
-<p>We don’t want to type that long command line every time, so module-starter can get that information from a    <br />
-configuration file $HOME/.module-starter/config. If we’re on Windows, that .module-starter name is a bit of a    <br />
-problem, so we can set the MODULE_STARTER_DIR environment variable to the name of the directory that contains
-config. Inside config, we can list the parameter names and values separated by a colon.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">author:</span> <span class="n">Steven</span> <span class="n">Sun</span>
-</span><span class="line"><span class="n">email:</span> <span class="n">steven</span><span class="o">.</span><span class="n">sun2013</span><span class="nv">@gmail</span><span class="o">.</span><span class="n">com</span>
-</span><span class="line"><span class="n">builder:</span> <span class="nn">Module::</span><span class="n">Build</span>
-</span><span class="line"><span class="n">verbose:</span> <span class="mi">1</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>Once we have our configuration file setup, life is much easier since we only need to specify the name of the distribution that we want to create. </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">%</span> <span class="nv">module</span><span class="err">−</span><span class="n">starter</span> <span class="err">−−</span><span class="n">module</span><span class="o">=</span><span class="n">Animal</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
 </div>
   
   

@@ -1,0 +1,80 @@
+---
+layout: post
+title: "CTCI-Q1.1"
+date: 2014-08-19 16:16:38 +0800
+comments: true
+categories: Algorithms
+---
+The question is: 
+
+```yaml
+Implement an algorithm to determine if a string has all unique characters. What if you can not use additional data structures?
+```
+
+We will try to solve this problem using four languages c++, java, python.
+
+In order to simplify this problem, we shorten the character set to ASCII.
+
+In this case, if the string is longer that 256, surely at least two will be the same. 
+
+We can create an array char_set whose values are booleans. thus char_set[val] = true means that the char is in the array and char_set[val] = false means that the char is not in the array.  
+
+1.java version:
+
+```java
+public static boolean isUnique(String str) {
+        if (str.length() > 256) {
+            return false;
+        }
+        boolean[] acsii_set = new boolean[256];
+        for (int i = 0; i < str.length(); i++) {
+            int val = str.charAt(i);
+            if (ascii_set[val]) return false;
+            ascii_set[val] = true;
+        }
+        return true;
+    }
+```
+
+2.c++ version:
+
+```cpp
+bool isUnique(string str){
+	if(str.length() > 256){
+		return false;
+	}
+	bool ascii_set[256] = {false};
+	for (int i=0; i < str.length(); i++){
+		int val = str[i];
+		if (ascii_set[val]){
+			return false;
+		}
+		ascii_set[value] = true;
+	}
+	reutrn true;
+}
+```  
+
+3.python version:
+
+```py
+#!/usr/local/bin/python3
+# -*- coding: utf-8 -*-
+
+
+def is_unique(str):
+    charsTable = set()
+    for c in str:
+        if c in charsTable:
+            return False
+        charsTable.add(c)
+    return True
+
+
+test_str1 = "hello"
+test_str2 = "abcdef"
+ans1 = is_unique(test_str1)
+ans2 = is_unique(test_str2)
+print(ans1)
+print(ans2)
+```

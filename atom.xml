@@ -4,7 +4,7 @@
   <title><![CDATA[Steven's Blog]]></title>
   <link href="http://isunix.github.io/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-08-20T17:48:05+08:00</updated>
+  <updated>2014-08-21T16:30:24+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,44 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Nohup简介]]></title>
+    <link href="http://isunix.github.io/blog/2014/08/21/nohupjian-jie/"/>
+    <updated>2014-08-21T15:45:34+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/08/21/nohupjian-jie</id>
+    <content type="html"><![CDATA[<p>我把这个东西放到Python的category里来，是因为我在写Flask的web应用的时候，遇到部署的问题，需要用到一个工具， 可以一直让这个web进程去运行。土鳖的我还以为这得用到cronjob， 其实用个工具可以帮我们完成这样的一个任务的， 这就是这篇post所要介绍的”nohup”</p>
+
+<p>比如说我现在在一个叫server.sh的文件中写入了如下的内容来run一个web server:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">gunicorn -w 4 -b 0.0.0.0:1234 myapp:app
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>首先这个Flask web apppication, 不同的框架使用gunicorn大同小异。然后使用的是gunicorn这个http server. 具体的关于gunicorn的知识可以自己去查下。只是有点是：你得先安装下的:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">pip</span> <span class="n">install</span> <span class="n">gunicorn</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Here the “-w” args means worker, namely 4 processes here.   </p>
+
+<p>For my application, if I want to use nohup, I will have to issue the following command. </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">nohup ./server.sh &amp;
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Nohuo will create a nohup.out file in the directory where you run the command. </p>
+
+<p>nohup 只不过是让进程脱离父进程, 这样即使父进程死掉，它也还在运行。</p>
+
+<p>Thus if we want to use “jobs” to see process, we will not be able to see it. we can use the “ps a” command line to see the the process.  </p>
+
+<p>使用 fg %jobnumber　会将任务拿到前台执行，拿到前台后如果要关闭这个任务按Ctrl+c组合键即可，但如果要暂停这个任务可以按Ctrl+z组合键这时就会将任务置于暂停状态。</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[在读传习录注疏]]></title>
@@ -3246,541 +3284,6 @@ You can also use “npm unpublish” to unpublish your module.  </p>
     <p>.map() and .each(), .show() and .hide(), .fadeIn(), .fadeOut(), .fadeTo() , these are common methods. </p>
   </li>
 </ol>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[链表的两种实现方式]]></title>
-    <link href="http://isunix.github.io/blog/2014/08/02/lian-biao-de-liang-chong-shi-xian-fang-shi/"/>
-    <updated>2014-08-02T10:31:18+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/08/02/lian-biao-de-liang-chong-shi-xian-fang-shi</id>
-    <content type="html"><![CDATA[<p>这是关于线性表链式存住的两种实现方式，一个使用指针，一个使用c++中的引用。其实这两种方式是大同小异的。  </p>
-
-<p>The first method will use pointer in c.  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-<span class="line-number">28</span>
-<span class="line-number">29</span>
-<span class="line-number">30</span>
-<span class="line-number">31</span>
-<span class="line-number">32</span>
-<span class="line-number">33</span>
-<span class="line-number">34</span>
-<span class="line-number">35</span>
-<span class="line-number">36</span>
-<span class="line-number">37</span>
-<span class="line-number">38</span>
-<span class="line-number">39</span>
-<span class="line-number">40</span>
-<span class="line-number">41</span>
-<span class="line-number">42</span>
-<span class="line-number">43</span>
-<span class="line-number">44</span>
-<span class="line-number">45</span>
-<span class="line-number">46</span>
-<span class="line-number">47</span>
-<span class="line-number">48</span>
-<span class="line-number">49</span>
-<span class="line-number">50</span>
-<span class="line-number">51</span>
-<span class="line-number">52</span>
-<span class="line-number">53</span>
-<span class="line-number">54</span>
-<span class="line-number">55</span>
-<span class="line-number">56</span>
-<span class="line-number">57</span>
-<span class="line-number">58</span>
-<span class="line-number">59</span>
-<span class="line-number">60</span>
-<span class="line-number">61</span>
-<span class="line-number">62</span>
-<span class="line-number">63</span>
-<span class="line-number">64</span>
-<span class="line-number">65</span>
-<span class="line-number">66</span>
-<span class="line-number">67</span>
-<span class="line-number">68</span>
-<span class="line-number">69</span>
-<span class="line-number">70</span>
-<span class="line-number">71</span>
-<span class="line-number">72</span>
-<span class="line-number">73</span>
-<span class="line-number">74</span>
-<span class="line-number">75</span>
-<span class="line-number">76</span>
-<span class="line-number">77</span>
-<span class="line-number">78</span>
-<span class="line-number">79</span>
-<span class="line-number">80</span>
-<span class="line-number">81</span>
-<span class="line-number">82</span>
-<span class="line-number">83</span>
-<span class="line-number">84</span>
-<span class="line-number">85</span>
-<span class="line-number">86</span>
-<span class="line-number">87</span>
-<span class="line-number">88</span>
-<span class="line-number">89</span>
-<span class="line-number">90</span>
-<span class="line-number">91</span>
-<span class="line-number">92</span>
-<span class="line-number">93</span>
-<span class="line-number">94</span>
-<span class="line-number">95</span>
-<span class="line-number">96</span>
-<span class="line-number">97</span>
-<span class="line-number">98</span>
-<span class="line-number">99</span>
-<span class="line-number">100</span>
-<span class="line-number">101</span>
-<span class="line-number">102</span>
-<span class="line-number">103</span>
-<span class="line-number">104</span>
-<span class="line-number">105</span>
-<span class="line-number">106</span>
-<span class="line-number">107</span>
-<span class="line-number">108</span>
-<span class="line-number">109</span>
-<span class="line-number">110</span>
-<span class="line-number">111</span>
-<span class="line-number">112</span>
-<span class="line-number">113</span>
-<span class="line-number">114</span>
-<span class="line-number">115</span>
-<span class="line-number">116</span>
-<span class="line-number">117</span>
-<span class="line-number">118</span>
-<span class="line-number">119</span>
-<span class="line-number">120</span>
-<span class="line-number">121</span>
-<span class="line-number">122</span>
-<span class="line-number">123</span>
-<span class="line-number">124</span>
-<span class="line-number">125</span>
-<span class="line-number">126</span>
-<span class="line-number">127</span>
-<span class="line-number">128</span>
-<span class="line-number">129</span>
-<span class="line-number">130</span>
-<span class="line-number">131</span>
-<span class="line-number">132</span>
-<span class="line-number">133</span>
-<span class="line-number">134</span>
-<span class="line-number">135</span>
-<span class="line-number">136</span>
-<span class="line-number">137</span>
-<span class="line-number">138</span>
-<span class="line-number">139</span>
-<span class="line-number">140</span>
-<span class="line-number">141</span>
-<span class="line-number">142</span>
-<span class="line-number">143</span>
-<span class="line-number">144</span>
-<span class="line-number">145</span>
-<span class="line-number">146</span>
-<span class="line-number">147</span>
-<span class="line-number">148</span>
-<span class="line-number">149</span>
-<span class="line-number">150</span>
-<span class="line-number">151</span>
-<span class="line-number">152</span>
-<span class="line-number">153</span>
-<span class="line-number">154</span>
-<span class="line-number">155</span>
-<span class="line-number">156</span>
-<span class="line-number">157</span>
-<span class="line-number">158</span>
-<span class="line-number">159</span>
-<span class="line-number">160</span>
-<span class="line-number">161</span>
-<span class="line-number">162</span>
-<span class="line-number">163</span>
-<span class="line-number">164</span>
-<span class="line-number">165</span>
-<span class="line-number">166</span>
-<span class="line-number">167</span>
-<span class="line-number">168</span>
-<span class="line-number">169</span>
-<span class="line-number">170</span>
-<span class="line-number">171</span>
-<span class="line-number">172</span>
-<span class="line-number">173</span>
-<span class="line-number">174</span>
-<span class="line-number">175</span>
-<span class="line-number">176</span>
-<span class="line-number">177</span>
-<span class="line-number">178</span>
-<span class="line-number">179</span>
-<span class="line-number">180</span>
-<span class="line-number">181</span>
-<span class="line-number">182</span>
-<span class="line-number">183</span>
-<span class="line-number">184</span>
-<span class="line-number">185</span>
-<span class="line-number">186</span>
-<span class="line-number">187</span>
-<span class="line-number">188</span>
-<span class="line-number">189</span>
-<span class="line-number">190</span>
-<span class="line-number">191</span>
-<span class="line-number">192</span>
-<span class="line-number">193</span>
-<span class="line-number">194</span>
-<span class="line-number">195</span>
-<span class="line-number">196</span>
-<span class="line-number">197</span>
-<span class="line-number">198</span>
-<span class="line-number">199</span>
-<span class="line-number">200</span>
-<span class="line-number">201</span>
-<span class="line-number">202</span>
-<span class="line-number">203</span>
-<span class="line-number">204</span>
-<span class="line-number">205</span>
-<span class="line-number">206</span>
-<span class="line-number">207</span>
-<span class="line-number">208</span>
-<span class="line-number">209</span>
-<span class="line-number">210</span>
-<span class="line-number">211</span>
-<span class="line-number">212</span>
-<span class="line-number">213</span>
-<span class="line-number">214</span>
-<span class="line-number">215</span>
-</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="cm">/*first inlcude all those need header files.*/</span>
-</span><span class="line"><span class="cp">#include &quot;stdio.h&quot;</span>
-</span><span class="line"><span class="cp">#include &quot;string.h&quot;</span>
-</span><span class="line"><span class="cp">#include &quot;ctype.h&quot;</span>
-</span><span class="line"><span class="cp">#include &quot;stdlib.h&quot;</span>
-</span><span class="line"><span class="cp">#include &quot;math.h&quot;</span>
-</span><span class="line">
-</span><span class="line"><span class="cm">/*define those constants needed*/</span>
-</span><span class="line"><span class="cp">#define OK 1</span>
-</span><span class="line"><span class="cp">#define ERROR 0</span>
-</span><span class="line"><span class="cp">#define TRUE 1</span>
-</span><span class="line"><span class="cp">#define FALSE 0</span>
-</span><span class="line">
-</span><span class="line"><span class="cm">/*define the initial size allocated.*/</span>
-</span><span class="line"><span class="cp">#define MAXSIZE 20</span>
-</span><span class="line">
-</span><span class="line"><span class="cm">/*define the return type of a function*/</span>
-</span><span class="line"><span class="k">typedef</span> <span class="kt">int</span> <span class="n">Status</span><span class="p">;</span>
-</span><span class="line"><span class="k">typedef</span> <span class="kt">int</span> <span class="n">ElemType</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="cm">/*define a struct Node with the name Node, and make LinkList a pointer point to Node*/</span>
-</span><span class="line"><span class="k">typedef</span> <span class="k">struct</span> <span class="n">Node</span> <span class="p">{</span>
-</span><span class="line">    <span class="n">ElemType</span> <span class="n">data</span><span class="p">;</span>
-</span><span class="line">    <span class="k">struct</span> <span class="n">Node</span> <span class="o">*</span><span class="n">next</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span><span class="n">Node</span><span class="p">;</span>
-</span><span class="line"><span class="k">typedef</span> <span class="k">struct</span> <span class="n">Node</span> <span class="o">*</span><span class="n">LinkList</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="cm">/*initialize the LinkList*/</span>
-</span><span class="line"><span class="n">Status</span> <span class="nf">InitList</span><span class="p">(</span><span class="n">LinkList</span> <span class="o">*</span><span class="n">L</span><span class="p">)</span>
-</span><span class="line"><span class="p">{</span>
-</span><span class="line">    <span class="o">*</span><span class="n">L</span><span class="o">=</span><span class="p">(</span><span class="n">LinkList</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Node</span><span class="p">));</span>
-</span><span class="line">    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="o">*</span><span class="n">L</span><span class="p">))</span>
-</span><span class="line">    	<span class="k">return</span> <span class="n">ERROR</span><span class="p">;</span>
-</span><span class="line">    <span class="p">(</span><span class="o">*</span><span class="n">L</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">next</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line">    <span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="n">Status</span> <span class="nf">ListEmpty</span><span class="p">(</span><span class="n">LinkList</span> <span class="n">L</span><span class="p">){</span>
-</span><span class="line">    <span class="k">if</span><span class="p">(</span><span class="n">L</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">)</span>
-</span><span class="line">    	<span class="k">return</span> <span class="n">FALSE</span><span class="p">;</span>
-</span><span class="line">    <span class="k">else</span>
-</span><span class="line">    	<span class="k">return</span> <span class="n">TRUE</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="cm">/*if the linklist already exists, set it to empty*/</span>
-</span><span class="line"><span class="n">Status</span> <span class="nf">ClearList</span><span class="p">(</span><span class="n">LinkList</span> <span class="o">*</span><span class="n">L</span><span class="p">)</span>
-</span><span class="line"><span class="p">{</span>
-</span><span class="line">	<span class="n">LinkList</span> <span class="n">p</span><span class="p">,</span><span class="n">q</span><span class="p">;</span>
-</span><span class="line">	<span class="n">p</span><span class="o">=</span><span class="p">(</span><span class="o">*</span><span class="n">L</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>     <span class="cm">/*p points to the first node*/</span>
-</span><span class="line">	<span class="k">while</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>          <span class="cm">/*it means not to the end of the linklist*/</span>
-</span><span class="line">	<span class="p">{</span>
-</span><span class="line">		<span class="n">q</span><span class="o">=</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
-</span><span class="line">		<span class="n">free</span><span class="p">(</span><span class="n">p</span><span class="p">);</span>
-</span><span class="line">		<span class="n">p</span><span class="o">=</span><span class="n">q</span><span class="p">;</span>
-</span><span class="line">	<span class="p">}</span>
-</span><span class="line">	<span class="p">(</span><span class="o">*</span><span class="n">L</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">next</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>  <span class="cm">/*pointer field for the head Node will be null*/</span>
-</span><span class="line">	<span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="cm">/*return the length of the linklist*/</span>
-</span><span class="line"><span class="kt">int</span> <span class="nf">ListLength</span><span class="p">(</span><span class="n">LinkList</span> <span class="n">L</span><span class="p">)</span>
-</span><span class="line"><span class="p">{</span>
-</span><span class="line">    <span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-</span><span class="line">    <span class="n">LinkList</span> <span class="n">p</span><span class="o">=</span><span class="n">L</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>  <span class="cm">/*p points to the first node*/</span>
-</span><span class="line">    <span class="k">while</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
-</span><span class="line">    <span class="p">{</span>
-</span><span class="line">        <span class="n">i</span><span class="o">++</span><span class="p">;</span>
-</span><span class="line">        <span class="n">p</span><span class="o">=</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">    <span class="k">return</span> <span class="n">i</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="cm">/*get the i th element of L and returning its value using e*/</span>
-</span><span class="line"><span class="n">Status</span> <span class="nf">GetElem</span><span class="p">(</span><span class="n">LinkList</span> <span class="n">L</span><span class="p">,</span><span class="kt">int</span> <span class="n">i</span><span class="p">,</span><span class="n">ElemType</span> <span class="o">*</span><span class="n">e</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">	<span class="kt">int</span> <span class="n">j</span><span class="p">;</span>
-</span><span class="line">	<span class="n">LinkList</span> <span class="n">p</span><span class="p">;</span>		<span class="cm">/* declare a node &quot;p&quot; */</span>
-</span><span class="line">	<span class="n">p</span> <span class="o">=</span> <span class="n">L</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>		<span class="cm">/* let p point to the first node of L */</span>
-</span><span class="line">	<span class="n">j</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>		
-</span><span class="line">	<span class="k">while</span> <span class="p">(</span><span class="n">p</span> <span class="o">&amp;&amp;</span> <span class="n">j</span><span class="o">&lt;</span><span class="n">i</span><span class="p">)</span>
-</span><span class="line">	<span class="p">{</span>
-</span><span class="line">		<span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>  <span class="cm">/* let p point to the next node */</span>
-</span><span class="line">		<span class="o">++</span><span class="n">j</span><span class="p">;</span>
-</span><span class="line">	<span class="p">}</span>
-</span><span class="line">	<span class="k">if</span> <span class="p">(</span> <span class="o">!</span><span class="n">p</span> <span class="o">||</span> <span class="n">j</span><span class="o">&gt;</span><span class="n">i</span> <span class="p">)</span>
-</span><span class="line">		<span class="k">return</span> <span class="n">ERROR</span><span class="p">;</span>  <span class="cm">/*  the i th element does not exist */</span>
-</span><span class="line">	<span class="o">*</span><span class="n">e</span> <span class="o">=</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">;</span>   <span class="cm">/*  get the data of the i th element */</span>
-</span><span class="line">	<span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="cm">/* locate element e in L */</span>
-</span><span class="line"><span class="kt">int</span> <span class="nf">LocateElem</span><span class="p">(</span><span class="n">LinkList</span> <span class="n">L</span><span class="p">,</span><span class="n">ElemType</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">    <span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-</span><span class="line">    <span class="n">LinkList</span> <span class="n">p</span><span class="o">=</span><span class="n">L</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
-</span><span class="line">    <span class="k">while</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
-</span><span class="line">    <span class="p">{</span>
-</span><span class="line">        <span class="n">i</span><span class="o">++</span><span class="p">;</span>
-</span><span class="line">        <span class="k">if</span><span class="p">(</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">data</span><span class="o">==</span><span class="n">e</span><span class="p">)</span> <span class="cm">/* find the element */</span>
-</span><span class="line">                <span class="k">return</span> <span class="n">i</span><span class="p">;</span>
-</span><span class="line">        <span class="n">p</span><span class="o">=</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">
-</span><span class="line">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">	
-</span><span class="line"><span class="cm">/*insert at the location of the i th element*/</span> 	
-</span><span class="line"><span class="n">Status</span> <span class="nf">ListInsert</span><span class="p">(</span><span class="n">LinkList</span> <span class="o">*</span><span class="n">L</span><span class="p">,</span><span class="kt">int</span> <span class="n">i</span><span class="p">,</span><span class="n">ElemType</span> <span class="n">e</span><span class="p">)</span>
-</span><span class="line"><span class="p">{</span>
-</span><span class="line">	<span class="kt">int</span> <span class="n">j</span><span class="p">;</span>
-</span><span class="line">	<span class="n">LinkList</span> <span class="n">p</span><span class="p">,</span><span class="n">s</span><span class="p">;</span>
-</span><span class="line">	<span class="n">p</span> <span class="o">=</span> <span class="o">*</span><span class="n">L</span><span class="p">;</span>
-</span><span class="line">	<span class="n">j</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-</span><span class="line">	<span class="k">while</span> <span class="p">(</span><span class="n">p</span> <span class="o">&amp;&amp;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">i</span><span class="p">)</span>     <span class="cm">/* find the i th node */</span>
-</span><span class="line">	<span class="p">{</span>
-</span><span class="line">		<span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
-</span><span class="line">		<span class="o">++</span><span class="n">j</span><span class="p">;</span>
-</span><span class="line">	<span class="p">}</span>
-</span><span class="line">	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">p</span> <span class="o">||</span> <span class="n">j</span> <span class="o">&gt;</span> <span class="n">i</span><span class="p">)</span>
-</span><span class="line">		<span class="k">return</span> <span class="n">ERROR</span><span class="p">;</span>
-</span><span class="line">	<span class="n">s</span> <span class="o">=</span> <span class="p">(</span><span class="n">LinkList</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Node</span><span class="p">));</span>
-</span><span class="line">	<span class="n">s</span><span class="o">-&gt;</span><span class="n">data</span> <span class="o">=</span> <span class="n">e</span><span class="p">;</span>
-</span><span class="line">	<span class="n">s</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
-</span><span class="line">	<span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="n">s</span><span class="p">;</span>
-</span><span class="line">	<span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="cm">/*delete the i th element, returning its value using e*/</span>
-</span><span class="line">
-</span><span class="line"><span class="n">Status</span> <span class="nf">ListDelete</span><span class="p">(</span><span class="n">LinkList</span> <span class="o">*</span><span class="n">L</span><span class="p">,</span><span class="kt">int</span> <span class="n">i</span><span class="p">,</span><span class="n">ElemType</span> <span class="o">*</span><span class="n">e</span><span class="p">)</span>
-</span><span class="line"><span class="p">{</span>
-</span><span class="line">	<span class="kt">int</span> <span class="n">j</span><span class="p">;</span>
-</span><span class="line">	<span class="n">LinkList</span> <span class="n">p</span><span class="p">,</span><span class="n">q</span><span class="p">;</span>
-</span><span class="line">	<span class="n">p</span> <span class="o">=</span> <span class="o">*</span><span class="n">L</span><span class="p">;</span>
-</span><span class="line">	<span class="n">j</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-</span><span class="line">	<span class="k">while</span> <span class="p">(</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">&amp;&amp;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">i</span><span class="p">)</span>	
-</span><span class="line">	<span class="p">{</span>
-</span><span class="line">        <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
-</span><span class="line">        <span class="o">++</span><span class="n">j</span><span class="p">;</span>
-</span><span class="line">	<span class="p">}</span>
-</span><span class="line">	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">)</span> <span class="o">||</span> <span class="n">j</span> <span class="o">&gt;</span> <span class="n">i</span><span class="p">)</span>
-</span><span class="line">	    <span class="k">return</span> <span class="n">ERROR</span><span class="p">;</span>
-</span><span class="line">	<span class="n">q</span> <span class="o">=</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
-</span><span class="line">	<span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="n">q</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>			
-</span><span class="line">	<span class="o">*</span><span class="n">e</span> <span class="o">=</span> <span class="n">q</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">;</span>
-</span><span class="line">	<span class="n">free</span><span class="p">(</span><span class="n">q</span><span class="p">);</span>
-</span><span class="line">	<span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="cm">/*print out all elements*/</span>
-</span><span class="line">
-</span><span class="line"><span class="n">Status</span> <span class="nf">visit</span><span class="p">(</span><span class="n">ElemType</span> <span class="n">c</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d &quot;</span><span class="p">,</span><span class="n">c</span><span class="p">);</span>
-</span><span class="line">    <span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="n">Status</span> <span class="nf">ListTraverse</span><span class="p">(</span><span class="n">LinkList</span> <span class="n">L</span><span class="p">)</span>
-</span><span class="line"><span class="p">{</span>
-</span><span class="line">    <span class="n">LinkList</span> <span class="n">p</span><span class="o">=</span><span class="n">L</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
-</span><span class="line">    <span class="k">while</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
-</span><span class="line">    <span class="p">{</span>
-</span><span class="line">        <span class="n">visit</span><span class="p">(</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">);</span>
-</span><span class="line">        <span class="n">p</span><span class="o">=</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-</span><span class="line">    <span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="cm">/*create the data for the n elements randomly, create a linked list with head node*/</span>
-</span><span class="line">
-</span><span class="line"><span class="kt">void</span> <span class="nf">CreateListHead</span><span class="p">(</span><span class="n">LinkList</span> <span class="o">*</span><span class="n">L</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">)</span>
-</span><span class="line"><span class="p">{</span>
-</span><span class="line">	<span class="n">LinkList</span> <span class="n">p</span><span class="p">;</span>
-</span><span class="line">	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
-</span><span class="line">	<span class="n">srand</span><span class="p">(</span><span class="n">time</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span>
-</span><span class="line">	<span class="o">*</span><span class="n">L</span> <span class="o">=</span> <span class="p">(</span><span class="n">LinkList</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Node</span><span class="p">));</span>
-</span><span class="line">	<span class="p">(</span><span class="o">*</span><span class="n">L</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-</span><span class="line">	<span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-</span><span class="line">	<span class="p">{</span>
-</span><span class="line">		<span class="n">p</span> <span class="o">=</span> <span class="p">(</span><span class="n">LinkList</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Node</span><span class="p">));</span>
-</span><span class="line">		<span class="n">p</span><span class="o">-&gt;</span><span class="n">data</span> <span class="o">=</span> <span class="n">rand</span><span class="p">()</span><span class="o">%</span><span class="mi">100</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
-</span><span class="line">		<span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">L</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
-</span><span class="line">		<span class="p">(</span><span class="o">*</span><span class="n">L</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="n">p</span><span class="p">;</span>						
-</span><span class="line">	<span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="cm">/*create the data for the n elements randomly, create a linked list with tail node*/</span>
-</span><span class="line">
-</span><span class="line"><span class="kt">void</span> <span class="nf">CreateListTail</span><span class="p">(</span><span class="n">LinkList</span> <span class="o">*</span><span class="n">L</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">)</span>
-</span><span class="line"><span class="p">{</span>
-</span><span class="line">	<span class="n">LinkList</span> <span class="n">p</span><span class="p">,</span><span class="n">r</span><span class="p">;</span>
-</span><span class="line">	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
-</span><span class="line">	<span class="n">srand</span><span class="p">(</span><span class="n">time</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span>
-</span><span class="line">	<span class="o">*</span><span class="n">L</span> <span class="o">=</span> <span class="p">(</span><span class="n">LinkList</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Node</span><span class="p">));</span>
-</span><span class="line">	<span class="n">r</span><span class="o">=*</span><span class="n">L</span><span class="p">;</span>
-</span><span class="line">	<span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-</span><span class="line">	<span class="p">{</span>
-</span><span class="line">		<span class="n">p</span> <span class="o">=</span> <span class="p">(</span><span class="n">Node</span> <span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Node</span><span class="p">));</span>
-</span><span class="line">		<span class="n">p</span><span class="o">-&gt;</span><span class="n">data</span> <span class="o">=</span> <span class="n">rand</span><span class="p">()</span><span class="o">%</span><span class="mi">100</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
-</span><span class="line">		<span class="n">r</span><span class="o">-&gt;</span><span class="n">next</span><span class="o">=</span><span class="n">p</span><span class="p">;</span>
-</span><span class="line">		<span class="n">r</span> <span class="o">=</span> <span class="n">p</span><span class="p">;</span>
-</span><span class="line">	<span class="p">}</span>
-</span><span class="line">	<span class="n">r</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="cm">/*in the main function you  have to do the following initializations*/</span>
-</span><span class="line">
-</span><span class="line"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
-</span><span class="line"><span class="p">{</span>
-</span><span class="line">    <span class="n">LinkList</span> <span class="n">L</span><span class="p">;</span>
-</span><span class="line">    <span class="n">ElemType</span> <span class="n">e</span><span class="p">;</span>
-</span><span class="line">    <span class="n">Status</span> <span class="n">i</span><span class="p">;</span>
-</span><span class="line">    <span class="kt">int</span> <span class="n">j</span><span class="p">,</span><span class="n">k</span><span class="p">;</span>
-</span><span class="line">    <span class="n">i</span><span class="o">=</span><span class="n">InitList</span><span class="p">(</span><span class="o">&amp;</span><span class="n">L</span><span class="p">);</span>
-</span><span class="line">	<span class="cm">/*blahblah*/</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>The following is a version using c++’s reference “&amp;”, it is a little different, but mostly wil be the same as the above.  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-<span class="line-number">28</span>
-<span class="line-number">29</span>
-<span class="line-number">30</span>
-<span class="line-number">31</span>
-<span class="line-number">32</span>
-<span class="line-number">33</span>
-<span class="line-number">34</span>
-<span class="line-number">35</span>
-<span class="line-number">36</span>
-<span class="line-number">37</span>
-<span class="line-number">38</span>
-<span class="line-number">39</span>
-<span class="line-number">40</span>
-<span class="line-number">41</span>
-<span class="line-number">42</span>
-<span class="line-number">43</span>
-<span class="line-number">44</span>
-</pre></td><td class="code"><pre><code class="cpp"><span class="line"><span class="cp">#include &lt;stdio.h&gt;</span>
-</span><span class="line"><span class="cp">#include &lt;stdlib.h&gt;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">typedef</span> <span class="kt">char</span> <span class="n">ElemType</span><span class="p">;</span>
-</span><span class="line"><span class="k">typedef</span> <span class="k">struct</span> <span class="n">LNode</span>  		
-</span><span class="line"><span class="p">{</span>
-</span><span class="line">	<span class="n">ElemType</span> <span class="n">data</span><span class="p">;</span>
-</span><span class="line">	<span class="k">struct</span> <span class="n">LNode</span> <span class="o">*</span><span class="n">next</span><span class="p">;</span>		
-</span><span class="line"><span class="p">}</span> <span class="n">LinkList</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="cm">/*creating the linked list by inserting at the head*/</span>
-</span><span class="line">
-</span><span class="line"><span class="kt">void</span> <span class="n">CreateListF</span><span class="p">(</span><span class="n">LinkList</span> <span class="o">*&amp;</span><span class="n">L</span><span class="p">,</span><span class="n">ElemType</span> <span class="n">a</span><span class="p">[],</span><span class="kt">int</span> <span class="n">n</span><span class="p">)</span>
-</span><span class="line"><span class="p">{</span>
-</span><span class="line">	<span class="n">LinkList</span> <span class="o">*</span><span class="n">s</span><span class="p">;</span><span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
-</span><span class="line">	<span class="n">L</span><span class="o">=</span><span class="p">(</span><span class="n">LinkList</span> <span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">LinkList</span><span class="p">));</span>  	
-</span><span class="line">	<span class="n">L</span><span class="o">-&gt;</span><span class="n">next</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
-</span><span class="line">	<span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">n</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
-</span><span class="line">	<span class="p">{</span>
-</span><span class="line">		<span class="n">s</span><span class="o">=</span><span class="p">(</span><span class="n">LinkList</span> <span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">LinkList</span><span class="p">));</span>
-</span><span class="line">		<span class="n">s</span><span class="o">-&gt;</span><span class="n">data</span><span class="o">=</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-</span><span class="line">		<span class="n">s</span><span class="o">-&gt;</span><span class="n">next</span><span class="o">=</span><span class="n">L</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>			
-</span><span class="line">		<span class="n">L</span><span class="o">-&gt;</span><span class="n">next</span><span class="o">=</span><span class="n">s</span><span class="p">;</span>
-</span><span class="line">	<span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="cm">/*creating the linked list by inserting at the tail*/</span>
-</span><span class="line"><span class="kt">void</span> <span class="n">CreateListR</span><span class="p">(</span><span class="n">LinkList</span> <span class="o">*&amp;</span><span class="n">L</span><span class="p">,</span><span class="n">ElemType</span> <span class="n">a</span><span class="p">[],</span><span class="kt">int</span> <span class="n">n</span><span class="p">)</span>
-</span><span class="line"><span class="p">{</span>
-</span><span class="line">	<span class="n">LinkList</span> <span class="o">*</span><span class="n">s</span><span class="p">,</span><span class="o">*</span><span class="n">r</span><span class="p">;</span><span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
-</span><span class="line">	<span class="n">L</span><span class="o">=</span><span class="p">(</span><span class="n">LinkList</span> <span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">LinkList</span><span class="p">));</span>  	
-</span><span class="line">	<span class="n">L</span><span class="o">-&gt;</span><span class="n">next</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
-</span><span class="line">	<span class="n">r</span><span class="o">=</span><span class="n">L</span><span class="p">;</span>					
-</span><span class="line">	<span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">n</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
-</span><span class="line">	<span class="p">{</span>
-</span><span class="line">		<span class="n">s</span><span class="o">=</span><span class="p">(</span><span class="n">LinkList</span> <span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">LinkList</span><span class="p">));</span>
-</span><span class="line">		<span class="n">s</span><span class="o">-&gt;</span><span class="n">data</span><span class="o">=</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-</span><span class="line">		<span class="n">r</span><span class="o">-&gt;</span><span class="n">next</span><span class="o">=</span><span class="n">s</span><span class="p">;</span>			
-</span><span class="line">		<span class="n">r</span><span class="o">=</span><span class="n">s</span><span class="p">;</span>
-</span><span class="line">	<span class="p">}</span>
-</span><span class="line">	<span class="n">r</span><span class="o">-&gt;</span><span class="n">next</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>			
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="cm">/*and blah and blah*/</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
 ]]></content>
   </entry>
   

@@ -4,7 +4,7 @@
   <title><![CDATA[Steven's Blog]]></title>
   <link href="http://isunix.github.io/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-08-28T13:44:58+08:00</updated>
+  <updated>2014-08-29T13:36:32+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,41 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Git Set Up]]></title>
+    <link href="http://isunix.github.io/blog/2014/08/28/git-set-up/"/>
+    <updated>2014-08-28T13:46:06+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/08/28/git-set-up</id>
+    <content type="html"><![CDATA[<p>I am writing this tool since I do not want to surf the internet and look for the steps to build git repo.  </p>
+
+<p>This problem I want to solve is: I want to build git repo in one server and clone it if I want to have it on another server.  </p>
+
+<p>On server A:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">git</span> <span class="n">config</span> <span class="o">--</span><span class="n">global</span> <span class="n">user</span><span class="o">.</span><span class="n">name</span> <span class="s">&quot;Steven Sun&quot;</span>
+</span><span class="line"><span class="n">git</span> <span class="n">config</span> <span class="o">--</span><span class="n">global</span> <span class="n">user</span><span class="o">.</span><span class="n">email</span> <span class="s">&quot;stsun@gmail.com&quot;</span>
+</span><span class="line"><span class="n">git</span> <span class="n">config</span> <span class="o">--</span><span class="n">global</span> <span class="o">--</span><span class="n">list</span>
+</span><span class="line"><span class="n">git</span> <span class="n">config</span> <span class="o">--</span><span class="n">global</span> <span class="n">color</span><span class="o">.</span><span class="n">ui</span> <span class="s">&quot;auto&quot;</span>
+</span><span class="line">
+</span><span class="line"><span class="nb">mkdir</span> <span class="n">mysite</span>
+</span><span class="line"><span class="n">cd</span> <span class="n">mysite</span>
+</span><span class="line"><span class="n">git</span> <span class="n">init</span>
+</span><span class="line"><span class="n">git</span> <span class="n">add</span> <span class="o">.</span>
+</span><span class="line">
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Notes on Flask]]></title>
@@ -2890,78 +2925,6 @@ config. Inside config, we can list the parameter names and values separated by a
 
 <p>then you can go to the site “https://search.npmjs.org” to check if your module is published successfully.<br />
 You can also use “npm unpublish” to unpublish your module.  </p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Callback Function in node.js]]></title>
-    <link href="http://isunix.github.io/blog/2014/08/08/callback-function-in-node-dot-js/"/>
-    <updated>2014-08-08T16:03:41+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/08/08/callback-function-in-node-dot-js</id>
-    <content type="html"><![CDATA[<p>Asynchronous IO in Node.js is very hard to understand. Here is one example from the book “Node.js开发指南”.  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="kd">function</span> <span class="nx">readFileCallBack</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">  <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">    <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
-</span><span class="line">  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span><span class="line">    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
-</span><span class="line">  <span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="kd">var</span> <span class="nx">fs</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;fs&#39;</span><span class="p">);</span>
-</span><span class="line"><span class="nx">fs</span><span class="p">.</span><span class="nx">readFile</span><span class="p">(</span><span class="s1">&#39;file.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;utf-8&#39;</span><span class="p">,</span> <span class="nx">readFileCallBack</span><span class="p">);</span>
-</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;end.&#39;</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>When fs.readFile is called, it just sents the asynchronous I/O to the operating system, then it comes back and executes the statements following it. After that, it enters into the event loop to listen on the event. When fs accepts the event finished by the I/O request, the event loop will call the callback function to finish the following work.  </p>
-
-<p>Thus in this case, we will see the “end.” first and then the contents of the file.txt.   </p>
-
-<p>To understand how it works, it may help for us to get a basic knowledge of what is event. </p>
-
-<p>Take the following code as an example.    </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-</pre></td><td class="code"><pre><code class="js"><span class="line">
-</span><span class="line"><span class="kd">var</span> <span class="nx">EventEmitter</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;events&#39;</span><span class="p">).</span><span class="nx">EventEmitter</span><span class="p">;</span>
-</span><span class="line"><span class="kd">var</span> <span class="nx">event</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">EventEmitter</span><span class="p">();</span>
-</span><span class="line">
-</span><span class="line"><span class="nx">event</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;some_event&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span>
-</span><span class="line">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;some_event occured.&#39;</span><span class="p">);</span>
-</span><span class="line"><span class="p">});</span>
-</span><span class="line">
-</span><span class="line"><span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-</span><span class="line">  <span class="nx">event</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="s1">&#39;some_event&#39;</span><span class="p">);</span>
-</span><span class="line"><span class="p">},</span> <span class="mi">1000</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>We will see that “some_event occurred” appeares on the console. It is because event object registes a listener on the event some_event, we sent to “event” object the event some_event after a second(1000 ms) through setTimeout, it then will call the listener on some_event and the function is executed.   </p>
-
-<p>Node.js 程序由事件循环开始，到事件循环结束，所有的逻辑都是事件的回调函数，所以 Node.js 始终在事件循环中，程序入口就是事件循环第一个事件的回调函数。事件的回调函数在执行的过程中，可能会发出 I/O 请求或直接发射（emit）事件，执行完毕后再返回事件循环，事件循环会检查事件队列中有没有未处理的事件，直到程序结束。</p>
-
-<p>与其他语言不同的是，Node.js 没有显式的事件循环，类似 Ruby 的 EventMachine::run()的函数在 Node.js 中是不存在的。Node.js 的事件循环对开发者不可见，由 libev 库实现。libev支持多种类型的事件，如 ev_io、ev_timer、ev_signal、ev_idle 等，在 Node.js 中均被EventEmitter 封装。libev 事件循环的每一次迭代，在 Node.js 中就是一次 Tick，libev 不断检查是否有活动的、可供检测的事件监听器，直到检测不到时才退出事件循环，进程结束。</p>
-
 ]]></content>
   </entry>
   

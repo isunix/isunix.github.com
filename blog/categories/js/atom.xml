@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Js | Steven's Blog]]></title>
+  <link href="http://isunix.github.io/blog/categories/js/atom.xml" rel="self"/>
+  <link href="http://isunix.github.io/"/>
+  <updated>2014-08-31T18:21:24+08:00</updated>
+  <id>http://isunix.github.io/</id>
+  <author>
+    <name><![CDATA[Steven Sun]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Useful Js Code Snippets]]></title>
+    <link href="http://isunix.github.io/blog/2014/08/31/useful-js-code-snippets/"/>
+    <updated>2014-08-31T17:47:03+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/08/31/useful-js-code-snippets</id>
+    <content type="html"><![CDATA[<p>1.To sort an array from small to big nums, we can use the following method.</p>
+
+<p>```js
+function compare(num1, num2){
+  return num1 - num2;
+}</p>
+
+<p>var nums = [3,1,2,100,4,200];
+nums.sort(compare);
+print(nums);
+```  </p>
+
+<p>2.reduce, every, some, forEach迭代器方法  </p>
+
+<p>3.map will give out a new array:  </p>
+
+<p>```js
+function first(word){
+  return word[0];
+}</p>
+
+<p>var words = [“for”, “your”, “info”];
+var acronym = words.map(first);
+print(acronym.join(“”));
+//fyi</p>
+
+<p>//print(acronym);
+//f,y,i</p>
+
+<p>```
+note how we used join to avoid the “,”</p>
+
+<p>4.filter  </p>
+
+<p>Filter is quite similar to “every”, it accept a function whose return value is boolean. In contrast to “every”, when filter(func) evaluated to true, it does not retrun “true”, it returns a new array, whose item is the those items in the original way after beed passed to the funcition.  </p>
+
+<p>```js
+function passing(num) {
+   return num &gt;= 60;
+}</p>
+
+<p>var grades = [];
+for (var i = 0; i &lt; 20; ++i) {
+   grades[i] = Math.floor(Math.random() * 101);
+}
+var passGrades = grades.filter(passing);
+print(grades);
+print(passGrades);
+```</p>
+
+<p>5.the following code shows how to get a studetnt’s average score and how to get a discipline’s averge score. </p>
+
+<p>```js
+//discipline’s average score  </p>
+
+<p>var grades = [[89, 77, 78],[76, 82, 81],[91, 94, 89]];
+var total = 0;
+var average = 0.0;
+for (var col = 0; col &lt; grades.length; ++col) {
+   for (var row = 0; row &lt; grades[col].length; ++row) {
+      total += grades[row][col];
+   }</p>
+
+<p>average = total / grades[col].length;
+   print(“Test “ + parseInt(col+1) + “ average: “ + 
+         average.toFixed(2));
+   total = 0;
+   average = 0.0;
+}</p>
+
+<p>//a student’s average score</p>
+
+<p>var grades = [[89, 77, 78],[76, 82, 81],[91, 94, 89]];
+var total = 0;
+var average = 0.0;
+for (var row = 0; row &lt; grades.length; ++row) {
+   for (var col = 0; col &lt; grades[row].length; ++col) {
+      total += grades[row][col];
+   }
+   average = total / grades[row].length;
+   print(“Student “ + parseInt(row+1) + “ average: “ +  <br />
+         average.toFixed(2));
+   total = 0;
+   average = 0.0;
+}
+```</p>
+]]></content>
+  </entry>
+  
+</feed>

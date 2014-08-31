@@ -4,7 +4,7 @@
   <title><![CDATA[Steven's Blog]]></title>
   <link href="http://isunix.github.io/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-08-29T13:36:32+08:00</updated>
+  <updated>2014-08-31T11:06:11+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,142 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[程序的输入输出]]></title>
+    <link href="http://isunix.github.io/blog/2014/08/31/cheng-xu-de-shu-ru-shu-chu/"/>
+    <updated>2014-08-31T10:45:18+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/08/31/cheng-xu-de-shu-ru-shu-chu</id>
+    <content type="html"><![CDATA[<p>介绍三种程序的输入输出方法。   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="cp">#include &lt;stdlib.h&gt;</span>
+</span><span class="line"><span class="cp">#include &lt;stdio.h&gt;</span>
+</span><span class="line"><span class="cp">#define INF 100000</span>
+</span><span class="line">
+</span><span class="line"><span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+</span><span class="line">
+</span><span class="line">  <span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">min</span><span class="o">=</span><span class="n">INF</span><span class="p">,</span> <span class="n">max</span><span class="o">=-</span><span class="n">INF</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+</span><span class="line">  <span class="k">while</span><span class="p">(</span><span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%d&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">x</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">){</span>
+</span><span class="line">    <span class="n">s</span> <span class="o">+=</span> <span class="n">x</span><span class="p">;</span>
+</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">&lt;</span> <span class="n">min</span><span class="p">)</span> <span class="n">min</span><span class="o">=</span><span class="n">x</span><span class="p">;</span>
+</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="n">max</span><span class="p">)</span> <span class="n">max</span><span class="o">=</span><span class="n">x</span><span class="p">;</span>
+</span><span class="line">    <span class="n">n</span><span class="o">++</span><span class="p">;</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line">  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d %d %.3f</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">min</span><span class="p">,</span> <span class="n">max</span><span class="p">,</span> <span class="p">(</span><span class="kt">double</span><span class="p">)</span><span class="n">s</span><span class="o">/</span><span class="n">n</span><span class="p">);</span>
+</span><span class="line">  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="cp">#define LOCAL</span>
+</span><span class="line"><span class="cp">#include &lt;stdlib.h&gt;</span>
+</span><span class="line"><span class="cp">#include &lt;stdio.h&gt;</span>
+</span><span class="line"><span class="cp">#define INF 10000000</span>
+</span><span class="line">
+</span><span class="line"><span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+</span><span class="line">  <span class="err">#</span><span class="n">ifdef</span> <span class="n">LOCAL</span>
+</span><span class="line">    <span class="n">freopen</span><span class="p">(</span><span class="s">&quot;data.in&quot;</span><span class="p">,</span> <span class="s">&quot;r&quot;</span><span class="p">,</span> <span class="n">stdin</span><span class="p">);</span>
+</span><span class="line">    <span class="n">freopen</span><span class="p">(</span><span class="s">&quot;data.out&quot;</span><span class="p">,</span> <span class="s">&quot;w&quot;</span><span class="p">,</span> <span class="n">stdout</span><span class="p">);</span>
+</span><span class="line">  <span class="err">#</span><span class="n">endif</span>
+</span><span class="line">
+</span><span class="line">  <span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">min</span><span class="o">=</span><span class="n">INF</span><span class="p">,</span> <span class="n">max</span><span class="o">=-</span><span class="n">INF</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+</span><span class="line">  <span class="k">while</span><span class="p">(</span><span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%d&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">x</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">){</span>
+</span><span class="line">    <span class="n">s</span> <span class="o">+=</span> <span class="n">x</span><span class="p">;</span>
+</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">&lt;</span> <span class="n">min</span><span class="p">)</span> <span class="n">min</span><span class="o">=</span><span class="n">x</span><span class="p">;</span>
+</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="n">max</span><span class="p">)</span> <span class="n">max</span><span class="o">=</span><span class="n">x</span><span class="p">;</span>
+</span><span class="line">    <span class="n">n</span><span class="o">++</span><span class="p">;</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line">  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d %d %.3f</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">min</span><span class="p">,</span> <span class="n">max</span><span class="p">,</span> <span class="p">(</span><span class="kt">double</span><span class="p">)</span><span class="n">s</span><span class="o">/</span><span class="n">n</span><span class="p">);</span>
+</span><span class="line">  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="cp">#include &lt;stdlib.h&gt;</span>
+</span><span class="line"><span class="cp">#include &lt;stdio.h&gt;</span>
+</span><span class="line"><span class="cp">#define INF 10000000</span>
+</span><span class="line">
+</span><span class="line"><span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+</span><span class="line">  <span class="kt">FILE</span> <span class="o">*</span><span class="n">fin</span><span class="p">,</span> <span class="o">*</span><span class="n">fout</span><span class="p">;</span>
+</span><span class="line">  <span class="n">fin</span> <span class="o">=</span> <span class="n">fopen</span><span class="p">(</span><span class="s">&quot;data.in&quot;</span><span class="p">,</span> <span class="s">&quot;rb&quot;</span><span class="p">);</span>
+</span><span class="line">  <span class="n">fout</span> <span class="o">=</span> <span class="n">fopen</span><span class="p">(</span><span class="s">&quot;data.out&quot;</span><span class="p">,</span> <span class="s">&quot;wb&quot;</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line">  <span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">min</span><span class="o">=</span><span class="n">INF</span><span class="p">,</span> <span class="n">max</span><span class="o">=-</span><span class="n">INF</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+</span><span class="line">  <span class="k">while</span><span class="p">(</span><span class="n">fscanf</span><span class="p">(</span><span class="n">fin</span><span class="p">,</span> <span class="s">&quot;%d&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">x</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">){</span>
+</span><span class="line">    <span class="n">s</span> <span class="o">+=</span> <span class="n">x</span><span class="p">;</span>
+</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">&lt;</span> <span class="n">min</span><span class="p">)</span> <span class="n">min</span><span class="o">=</span><span class="n">x</span><span class="p">;</span>
+</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="n">max</span><span class="p">)</span> <span class="n">max</span><span class="o">=</span><span class="n">x</span><span class="p">;</span>
+</span><span class="line">    <span class="n">n</span><span class="o">++</span><span class="p">;</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">  <span class="n">fprintf</span><span class="p">(</span><span class="n">fout</span><span class="p">,</span> <span class="s">&quot;%d %d %.3f</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">min</span><span class="p">,</span> <span class="n">max</span><span class="p">,</span> <span class="p">(</span><span class="kt">double</span><span class="p">)</span><span class="n">s</span><span class="o">/</span><span class="n">n</span><span class="p">);</span>
+</span><span class="line">  <span class="n">fclose</span><span class="p">(</span><span class="n">fin</span><span class="p">);</span>
+</span><span class="line">  <span class="n">fclose</span><span class="p">(</span><span class="n">fout</span><span class="p">);</span>
+</span><span class="line">  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Git Set Up]]></title>
@@ -2886,45 +3022,6 @@ config. Inside config, we can list the parameter names and values separated by a
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 </pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">%</span> <span class="nv">module</span><span class="err">−</span><span class="n">starter</span> <span class="err">−−</span><span class="n">module</span><span class="o">=</span><span class="n">Animal</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Notes on the Use of Module in node.js]]></title>
-    <link href="http://isunix.github.io/blog/2014/08/08/notes-on-the-use-of-module-in-node-dot-js/"/>
-    <updated>2014-08-08T17:11:27+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/08/08/notes-on-the-use-of-module-in-node-dot-js</id>
-    <content type="html"><![CDATA[<ol>
-  <li>
-    <p>require 不会重复加载模块，也就是说无论调用多少次 require，获得的模块都是同一个。  </p>
-  </li>
-  <li>
-    <p>Node.js 提供了 exports 和 require 两个对象，其中 exports 是模块公开的接口，require 用于从外部获取一个模块的接口，即所获
-取模块的 exports 对象。   </p>
-  </li>
-  <li>
-    <p>exports 本身仅仅是一个普通的空对象，即 {}，它专门用来声明接口，本质上是通过它为模块闭包的内部建立了一个有限的访问接口.   </p>
-  </li>
-  <li>
-    <p>Node.js 在调用某个包时，会首先检查包中 package.json 文件的 main 字段，将其作为包的接口模块，如果 package.json 或 main 字段不存在，会尝试寻找 index.js 或 index.node 作为包的接口。</p>
-  </li>
-  <li>
-    <p>following the following steps to create and publish a module. </p>
-  </li>
-</ol>
-
-<ul>
-  <li>mkdir stsunmodule  </li>
-  <li>cd stsunmodule  </li>
-  <li>npm init  (then answer all the questions as been prompted)    </li>
-  <li>touch index.js   </li>
-  <li>npm adduser  </li>
-  <li>npm whoami  (use this command to test if your account is created successfully)   </li>
-  <li>npm publish   </li>
-</ul>
-
-<p>then you can go to the site “https://search.npmjs.org” to check if your module is published successfully.<br />
-You can also use “npm unpublish” to unpublish your module.  </p>
 ]]></content>
   </entry>
   

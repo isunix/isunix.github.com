@@ -4,7 +4,7 @@
   <title><![CDATA[Steven's Blog]]></title>
   <link href="http://isunix.github.io/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-09-05T14:20:44+08:00</updated>
+  <updated>2014-09-05T17:58:10+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,108 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Object Oriented Perl]]></title>
+    <link href="http://isunix.github.io/blog/2014/09/05/object-oriented-perl/"/>
+    <updated>2014-09-05T15:46:51+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/09/05/object-oriented-perl</id>
+    <content type="html"><![CDATA[<p>We can find details about the info list below by issuing “perldoc perlobj”, or “perldoc perlootut”</p>
+
+<p>1.When we bless something, we are not blessing the variable which contains a reference to that thing, nor are we blessing the reference that the variable stores; we are blessing the thing that the variable refers to (sometimes known as the referent).  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="nn">Scalar::</span><span class="n">Util</span> <span class="s">&#39;blessed&#39;</span><span class="p">;</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">$foo</span> <span class="o">=</span> <span class="p">{};</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">$bar</span> <span class="o">=</span> <span class="nv">$foo</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="nb">bless</span> <span class="nv">$foo</span><span class="p">,</span> <span class="s">&#39;Class&#39;</span><span class="p">;</span>
+</span><span class="line"><span class="k">print</span> <span class="n">blessed</span><span class="p">(</span> <span class="nv">$bar</span> <span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="nv">$bar</span> <span class="o">=</span> <span class="s">&quot;some other value&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="k">print</span> <span class="n">blessed</span><span class="p">(</span> <span class="nv">$bar</span> <span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>The first will print out “Class” and second undef(of course you can see it).</p>
+
+<p>When we call “bless” on a variable, we are actually blessing the underlying data structure that the variable refers to. We are not blessing the reference itself, nor the variable that contains that reference. That’s why the second call to “blessed( $bar )” returns false. At that point $bar is no longer storing a reference to an
+object. You will sometimes see older books or documentation mention “blessing a reference” or describe an object as a “blessed reference”, but this is incorrect. It isn’t the reference that is blessed as an object; it’s the thing the reference refers to (i.e. the referent).   </p>
+
+<p>2.Objects are merely Perl data structures (hashes, arrays, scalars, filehandles, etc.) that have been explicitly associated with a particular class. That explicit association is created by the built-in “bless” function.</p>
+
+<p>3.An object is simply a data structure that knows to which class it belongs.A class is simply a package. A class provides methods that expect to operate on objects. A method is simply a subroutine that expects a reference to an object (or a package name, for class methods) as the first argument. </p>
+
+<p>4.Each package contains a special array called @ISA. The @ISA array contains a list of that class’s parent classes, if any. This array is examined when Perl does method resolution. It is possible to manually set @ISA. and you may see this in older Perl code. Much older code also uses the base pragma. For new code, we recommend that you use the parent pragma to declare your parents.  This pragma will take care of setting @ISA.  It will also load the parent classes and make sure that the package doesn’t inherit from itself.  </p>
+
+<p>5.However the parent classes are set, the package’s @ISA variable will contain a list of those parents. This is simply a list of scalars, each of which is a string that corresponds to a package name.   </p>
+
+<p>6.All classes inherit from the UNIVERSAL class implicitly. The UNIVERSAL class is implemented by the Perl core, and provides several default methods, such as “isa()”, “can()”, and “VERSION()”.  The “UNIVERSAL” class will never appear in a package’s @ISA variable.  </p>
+
+<p>7.Perl provides no special constructor syntax. This means that a class must implement its own constructor. A constructor is simply a class method that returns a reference to a new object.    </p>
+
+<p>8.A simple read-only accessor simply gets the value of a single attribute:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">sub </span><span class="nf">path</span> <span class="p">{</span>
+</span><span class="line">	<span class="k">my</span> <span class="nv">$self</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
+</span><span class="line">	<span class="k">return</span> <span class="nv">$self</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">path</span><span class="p">};</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>A read-write accessor will allow the caller to set the value as well as get it:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">sub </span><span class="nf">path</span> <span class="p">{</span>
+</span><span class="line">	<span class="k">my</span> <span class="nv">$self</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="nv">@_</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">    	<span class="nv">$self</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">path</span><span class="p">}</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">return</span> <span class="nv">$self</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">path</span><span class="p">};</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>9.More on bless. </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">$object</span> <span class="o">=</span> <span class="nb">bless</span> <span class="p">{},</span> <span class="nv">$class</span><span class="p">;</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">$object</span> <span class="o">=</span> <span class="nb">bless</span> <span class="p">{};</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>In the first form, the anonymous hash is being blessed into the class
+in $class. In the second form, the anonymous hash is blessed into the
+current package. The second form is strongly discouraged, because it breaks the ability of a subclass to reuse the parent’s constructor, but you may still run across it in existing code.   </p>
+
+<p>10.If you simply want to check that a variable contains an object reference, we recommend that you use “defined blessed($object)”, since “ref” returns true values for all references, not just objects.  </p>
+
+<p>11.If you call a method that doesn’t exist in a class, Perl will throw an error. However, if that class or any of its parent classes defines an “AUTOLOAD” method, that “AUTOLOAD” method is called instead.   </p>
+
+<p>12.All the examples so far have shown objects based on a blessed hash. However, it’s possible to bless any type of data structure or referent, including scalars, globs, and subroutines. You may see this sort of thing when looking at code in the wild.  </p>
+
+<p>13.You should also check out perlmodlib for some style guides on constructing both modules and classes.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Ssh-keygen Usage]]></title>
@@ -2203,295 +2305,6 @@ exceptions occurred.</p>
 </span><span class="line"><span class="n">s</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="s">&#39;true&#39;</span><span class="p">)</span>
 </span><span class="line"><span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
 </span><span class="line"><span class="k">print</span> <span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Common Tips Using Java to Practice Algorithms]]></title>
-    <link href="http://isunix.github.io/blog/2014/08/14/common-tips-using-java-to-practice-algorithms/"/>
-    <updated>2014-08-14T10:07:16+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/08/14/common-tips-using-java-to-practice-algorithms</id>
-    <content type="html"><![CDATA[<p>There are common structues and tips while practicing algorithms and data structueres using java. I will try to keep them down in this post.   </p>
-
-<p>1.hash tables  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-</pre></td><td class="code"><pre><code class="java"><span class="line"><span class="kd">public</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Student</span><span class="o">&gt;</span> <span class="n">buildMap</span><span class="o">(</span><span class="n">Student</span><span class="o">[]</span> <span class="n">students</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">  <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">IntegerJ</span> <span class="n">Student</span><span class="o">&gt;</span> <span class="n">map</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Student</span><span class="o">&gt;();</span>
-</span><span class="line">    <span class="k">for</span> <span class="o">(</span><span class="n">Student</span> <span class="n">s</span> <span class="o">:</span> <span class="n">students</span><span class="o">)</span> <span class="n">map</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">s</span><span class="o">.</span><span class="na">getld</span><span class="o">(),</span> <span class="n">s</span><span class="o">);</span>
-</span><span class="line">    <span class="k">return</span> <span class="n">map</span><span class="o">;</span>
-</span><span class="line"><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>2.ArrayList(Dinamically Resizing Array) </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-</pre></td><td class="code"><pre><code class="java"><span class="line"><span class="kd">public</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="nf">merge</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">words</span><span class="o">,</span> <span class="n">String</span><span class="o">[]</span> <span class="n">more</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">  <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">sentence</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Arrayl_ist</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;();</span>
-</span><span class="line">  <span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">w</span> <span class="o">:</span> <span class="n">words</span><span class="o">)</span> <span class="n">sentence</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">w</span><span class="o">);</span>
-</span><span class="line">  <span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">w</span> <span class="o">:</span> <span class="n">more</span><span class="o">)</span> <span class="n">sentence</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">w</span><span class="o">);</span>
-</span><span class="line">  <span class="k">return</span> <span class="n">sentence</span><span class="o">;</span>
-</span><span class="line"><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>3.StringBuffer   </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-</pre></td><td class="code"><pre><code class="java"><span class="line"><span class="kd">public</span> <span class="n">String</span> <span class="nf">joinWords</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">words</span><span class="o">){</span>
-</span><span class="line">  <span class="n">StringBuffer</span> <span class="n">sentence</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuffer</span><span class="o">();</span>
-</span><span class="line">  <span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">w</span> <span class="o">:</span> <span class="n">words</span><span class="o">){</span>
-</span><span class="line">    <span class="n">sentence</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">w</span><span class="o">);</span>
-</span><span class="line">  <span class="o">}</span>
-</span><span class="line">  <span class="k">return</span> <span class="n">sentence</span><span class="o">.</span><span class="na">toString</span><span class="o">();</span>
-</span><span class="line"><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>4.LinkedList  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-</pre></td><td class="code"><pre><code class="java"><span class="line"><span class="kd">class</span> <span class="nc">Node</span> <span class="o">{</span>
-</span><span class="line">  <span class="n">Node</span> <span class="n">next</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-</span><span class="line">  <span class="kt">int</span> <span class="n">data</span><span class="o">;</span>
-</span><span class="line">
-</span><span class="line">  <span class="kd">public</span> <span class="nf">Node</span><span class="o">(</span><span class="kt">int</span> <span class="n">d</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">  <span class="n">data</span> <span class="o">=</span> <span class="n">d</span><span class="o">;</span>
-</span><span class="line">  <span class="o">}</span>
-</span><span class="line">
-</span><span class="line">  <span class="kt">void</span> <span class="nf">appendToTail</span><span class="o">(</span><span class="kt">int</span> <span class="n">d</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">    <span class="n">Node</span> <span class="n">end</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Node</span><span class="o">(</span><span class="n">d</span><span class="o">);</span>
-</span><span class="line">    <span class="n">Node</span> <span class="n">n</span> <span class="o">=</span> <span class="k">this</span><span class="o">;</span>
-</span><span class="line">    <span class="k">while</span> <span class="o">(</span><span class="n">n</span><span class="o">.</span><span class="na">next</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">      <span class="n">n</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
-</span><span class="line">    <span class="o">}</span>
-</span><span class="line">    <span class="n">n</span><span class="o">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">end</span><span class="o">;</span>
-</span><span class="line">  <span class="o">}</span>
-</span><span class="line"><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>5.Deleting a node from a singly linkes list.  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-</pre></td><td class="code"><pre><code class="java"><span class="line"><span class="n">Node</span> <span class="nf">deleteNode</span><span class="o">(</span><span class="n">Node</span> <span class="n">head</span><span class="o">,</span> <span class="kt">int</span> <span class="n">d</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">  <span class="n">Node</span> <span class="n">n</span> <span class="o">=</span> <span class="n">head</span><span class="o">;</span>
-</span><span class="line">
-</span><span class="line">  <span class="k">if</span> <span class="o">(</span><span class="n">n</span><span class="o">.</span><span class="na">data</span> <span class="o">==</span> <span class="n">d</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">    <span class="k">return</span> <span class="n">head</span><span class="o">.</span><span class="na">next</span><span class="o">;</span> <span class="cm">/* moved head */</span>
-</span><span class="line">  <span class="o">}</span>
-</span><span class="line">
-</span><span class="line">  <span class="k">while</span> <span class="o">(</span><span class="n">n</span><span class="o">.</span><span class="na">next</span> <span class="mi">1</span><span class="o">=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">    <span class="k">if</span> <span class="o">(</span><span class="n">n</span><span class="o">.</span><span class="na">next</span><span class="o">.</span><span class="na">data</span> <span class="o">==</span> <span class="n">d</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">      <span class="n">n</span><span class="o">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="na">next</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
-</span><span class="line">      <span class="k">return</span> <span class="n">head</span><span class="o">;</span> <span class="cm">/* head didn&#39;t change */</span>
-</span><span class="line">    <span class="o">}</span>
-</span><span class="line">    <span class="n">n</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
-</span><span class="line">  <span class="o">}</span>
-</span><span class="line">  <span class="k">return</span> <span class="n">head</span><span class="o">;</span>
-</span><span class="line"><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>6.Implementing a stack</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-</pre></td><td class="code"><pre><code class="java"><span class="line"><span class="kd">class</span> <span class="nc">Stack</span> <span class="o">{</span>
-</span><span class="line">  <span class="n">Node</span> <span class="n">top</span><span class="o">;</span>
-</span><span class="line">
-</span><span class="line">  <span class="n">Object</span> <span class="nf">pop</span><span class="o">()</span> <span class="o">{</span>
-</span><span class="line">    <span class="k">if</span><span class="o">(</span><span class="n">top</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">      <span class="n">Object</span> <span class="n">item</span> <span class="o">=</span> <span class="n">top</span><span class="o">.</span><span class="na">data</span><span class="o">;</span>
-</span><span class="line">      <span class="n">p</span> <span class="o">=</span> <span class="n">top</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
-</span><span class="line">      <span class="k">return</span> <span class="n">item</span><span class="o">;</span>
-</span><span class="line">    <span class="o">}</span>
-</span><span class="line">    <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
-</span><span class="line">  <span class="o">}</span>
-</span><span class="line">
-</span><span class="line">  <span class="kt">void</span> <span class="nf">push</span><span class="o">(</span><span class="mi">0</span><span class="n">bject</span> <span class="n">item</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">    <span class="n">Node</span> <span class="n">t</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Node</span><span class="o">(</span><span class="n">item</span><span class="o">);</span>
-</span><span class="line">    <span class="n">next</span> <span class="o">=</span> <span class="n">top</span><span class="o">;</span>
-</span><span class="line">    <span class="n">top</span> <span class="o">=</span> <span class="n">t</span><span class="o">;</span>
-</span><span class="line">  <span class="o">}</span>
-</span><span class="line">
-</span><span class="line">  <span class="n">Object</span> <span class="nf">peek</span><span class="o">()</span> <span class="o">{</span>
-</span><span class="line">    <span class="k">return</span> <span class="n">top</span><span class="o">.</span><span class="na">data</span><span class="o">;</span>
-</span><span class="line">  <span class="o">}</span>
-</span><span class="line"><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>7.Implementing a queue.  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-</pre></td><td class="code"><pre><code class="java"><span class="line"><span class="kd">class</span> <span class="nc">Queue</span> <span class="o">{</span>
-</span><span class="line">  <span class="n">Node</span> <span class="n">first</span><span class="o">,</span> <span class="n">last</span><span class="o">;</span>
-</span><span class="line">
-</span><span class="line">  <span class="kt">void</span> <span class="nf">enqueue</span><span class="o">(</span><span class="mi">0</span><span class="n">bject</span> <span class="n">item</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">    <span class="k">if</span><span class="o">(</span><span class="n">first</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">      <span class="n">last</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Node</span><span class="o">(</span><span class="n">item</span><span class="o">);</span>
-</span><span class="line">      <span class="n">first</span> <span class="o">=</span> <span class="n">last</span><span class="o">;</span>
-</span><span class="line">      <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-</span><span class="line">        <span class="n">last</span><span class="o">.</span><span class="na">next</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Node</span><span class="o">(</span><span class="n">item</span><span class="o">);</span>
-</span><span class="line">        <span class="n">last</span> <span class="o">=</span> <span class="n">last</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
-</span><span class="line">      <span class="o">}</span>
-</span><span class="line">  <span class="o">}</span>
-</span><span class="line">
-</span><span class="line">  <span class="n">Object</span> <span class="n">dequeueQ</span> <span class="o">{</span>
-</span><span class="line">    <span class="k">if</span> <span class="o">(</span><span class="n">first</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">      <span class="n">Object</span> <span class="n">item</span> <span class="o">=</span> <span class="n">first</span><span class="o">.</span><span class="na">data</span><span class="o">;</span>
-</span><span class="line">      <span class="n">first</span> <span class="o">=</span> <span class="n">first</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
-</span><span class="line">      <span class="k">return</span> <span class="n">item</span><span class="o">;</span>
-</span><span class="line">    <span class="o">}</span>
-</span><span class="line">    <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
-</span><span class="line">  <span class="o">}</span>
-</span><span class="line"><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>8.pseudocode to implement DFS</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-</pre></td><td class="code"><pre><code class="java"><span class="line"><span class="kt">void</span> <span class="nf">search</span><span class="o">(</span><span class="n">Node</span> <span class="n">root</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">  <span class="k">if</span> <span class="o">(</span><span class="n">root</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="k">return</span><span class="o">;</span>
-</span><span class="line">  <span class="n">visit</span><span class="o">(</span><span class="n">root</span><span class="o">);</span>
-</span><span class="line">  <span class="n">root</span><span class="o">.</span><span class="na">visited</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
-</span><span class="line">  <span class="n">foreach</span> <span class="o">(</span><span class="n">Node</span> <span class="n">n</span> <span class="n">in</span> <span class="n">root</span><span class="o">.</span><span class="na">adjacent</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">    <span class="k">if</span> <span class="o">(</span><span class="n">n</span><span class="o">.</span><span class="na">visited</span> <span class="o">==</span> <span class="kc">false</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">      <span class="n">search</span><span class="o">(</span><span class="n">n</span><span class="o">);</span>
-</span><span class="line">    <span class="o">}</span>
-</span><span class="line">  <span class="o">}</span>
-</span><span class="line"><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>9.BFS.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-</pre></td><td class="code"><pre><code class="java"><span class="line"><span class="kt">void</span> <span class="nf">search</span><span class="o">(</span><span class="n">Node</span> <span class="n">root</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">  <span class="n">Queue</span> <span class="n">queue</span> <span class="o">=</span> <span class="k">new</span> <span class="n">QueueQ</span><span class="o">;</span>
-</span><span class="line">  <span class="n">root</span><span class="o">.</span><span class="na">visited</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
-</span><span class="line">  <span class="n">visit</span><span class="o">(</span><span class="n">root</span><span class="o">);</span>
-</span><span class="line">  <span class="n">queue</span><span class="o">.</span><span class="na">enqueue</span><span class="o">(</span><span class="n">root</span><span class="o">);</span> <span class="c1">// Add to end of queue</span>
-</span><span class="line">
-</span><span class="line">  <span class="k">while</span> <span class="o">(!</span><span class="n">queue</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">())</span> <span class="o">{</span>
-</span><span class="line">    <span class="n">Node</span> <span class="n">r</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="na">dequeueQ</span><span class="o">;</span> <span class="c1">// Remove from front of queue</span>
-</span><span class="line">    <span class="n">foreach</span> <span class="o">(</span><span class="n">Node</span> <span class="n">n</span> <span class="n">in</span> <span class="n">r</span><span class="o">.</span><span class="na">adjacent</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">      <span class="k">if</span> <span class="o">(</span><span class="n">n</span><span class="o">.</span><span class="na">visited</span> <span class="o">==</span> <span class="kc">false</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">        <span class="n">visit</span><span class="o">(</span><span class="n">n</span><span class="o">);</span>
-</span><span class="line">        <span class="n">n</span><span class="o">.</span><span class="na">visited</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
-</span><span class="line">        <span class="n">queue</span><span class="o">.</span><span class="na">enqueue</span><span class="o">(</span><span class="n">n</span><span class="o">);</span>
-</span><span class="line">      <span class="o">}</span>
-</span><span class="line">    <span class="o">}</span>
-</span><span class="line">  <span class="o">}</span>
-</span><span class="line"><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 ]]></content>
   </entry>

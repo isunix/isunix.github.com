@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Perl | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/perl/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-09-05T14:20:44+08:00</updated>
+  <updated>2014-09-05T17:58:10+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,91 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Object Oriented Perl]]></title>
+    <link href="http://isunix.github.io/blog/2014/09/05/object-oriented-perl/"/>
+    <updated>2014-09-05T15:46:51+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/09/05/object-oriented-perl</id>
+    <content type="html"><![CDATA[<p>We can find details about the info list below by issuing “perldoc perlobj”, or “perldoc perlootut”</p>
+
+<p>1.When we bless something, we are not blessing the variable which contains a reference to that thing, nor are we blessing the reference that the variable stores; we are blessing the thing that the variable refers to (sometimes known as the referent).  </p>
+
+<p>```pl</p>
+
+<p>use Scalar::Util ‘blessed’;
+my $foo = {};
+my $bar = $foo;</p>
+
+<p>bless $foo, ‘Class’;
+print blessed( $bar );</p>
+
+<p>$bar = “some other value”;
+print blessed( $bar );</p>
+
+<p>```</p>
+
+<p>The first will print out “Class” and second undef(of course you can see it).</p>
+
+<p>When we call “bless” on a variable, we are actually blessing the underlying data structure that the variable refers to. We are not blessing the reference itself, nor the variable that contains that reference. That’s why the second call to “blessed( $bar )” returns false. At that point $bar is no longer storing a reference to an
+object. You will sometimes see older books or documentation mention “blessing a reference” or describe an object as a “blessed reference”, but this is incorrect. It isn’t the reference that is blessed as an object; it’s the thing the reference refers to (i.e. the referent).   </p>
+
+<p>2.Objects are merely Perl data structures (hashes, arrays, scalars, filehandles, etc.) that have been explicitly associated with a particular class. That explicit association is created by the built-in “bless” function.</p>
+
+<p>3.An object is simply a data structure that knows to which class it belongs.A class is simply a package. A class provides methods that expect to operate on objects. A method is simply a subroutine that expects a reference to an object (or a package name, for class methods) as the first argument. </p>
+
+<p>4.Each package contains a special array called @ISA. The @ISA array contains a list of that class’s parent classes, if any. This array is examined when Perl does method resolution. It is possible to manually set @ISA. and you may see this in older Perl code. Much older code also uses the base pragma. For new code, we recommend that you use the parent pragma to declare your parents.  This pragma will take care of setting @ISA.  It will also load the parent classes and make sure that the package doesn’t inherit from itself.  </p>
+
+<p>5.However the parent classes are set, the package’s @ISA variable will contain a list of those parents. This is simply a list of scalars, each of which is a string that corresponds to a package name.   </p>
+
+<p>6.All classes inherit from the UNIVERSAL class implicitly. The UNIVERSAL class is implemented by the Perl core, and provides several default methods, such as “isa()”, “can()”, and “VERSION()”.  The “UNIVERSAL” class will never appear in a package’s @ISA variable.  </p>
+
+<p>7.Perl provides no special constructor syntax. This means that a class must implement its own constructor. A constructor is simply a class method that returns a reference to a new object.    </p>
+
+<p>8.A simple read-only accessor simply gets the value of a single attribute:  </p>
+
+<p>```pl</p>
+
+<p>sub path {
+	my $self = shift;
+	return $self-&gt;{path};
+} 
+```  </p>
+
+<p>A read-write accessor will allow the caller to set the value as well as get it:  </p>
+
+<p>```pl</p>
+
+<p>sub path {
+	my $self = shift;</p>
+
+<pre><code>if (@_) {
+	$self-&gt;{path} = shift;
+}
+
+return $self-&gt;{path}; } ```  
+</code></pre>
+
+<p>9.More on bless. </p>
+
+<p><code>pl
+my $object = bless {}, $class;
+my $object = bless {};
+</code></p>
+
+<p>In the first form, the anonymous hash is being blessed into the class
+in $class. In the second form, the anonymous hash is blessed into the
+current package. The second form is strongly discouraged, because it breaks the ability of a subclass to reuse the parent’s constructor, but you may still run across it in existing code.   </p>
+
+<p>10.If you simply want to check that a variable contains an object reference, we recommend that you use “defined blessed($object)”, since “ref” returns true values for all references, not just objects.  </p>
+
+<p>11.If you call a method that doesn’t exist in a class, Perl will throw an error. However, if that class or any of its parent classes defines an “AUTOLOAD” method, that “AUTOLOAD” method is called instead.   </p>
+
+<p>12.All the examples so far have shown objects based on a blessed hash. However, it’s possible to bless any type of data structure or referent, including scalars, globs, and subroutines. You may see this sort of thing when looking at code in the wild.  </p>
+
+<p>13.You should also check out perlmodlib for some style guides on constructing both modules and classes.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Ssh-keygen Usage]]></title>
@@ -234,164 +319,6 @@ perldoc -f split
 4.聪明的人知道他们可以改变自己的态度， 信念和行为， 而且他们知道如何去改变。  </p>
 
 <p>5.In emacs, we can use “M-X perldb” to enable the perl debugging mode.  </p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[About the Use of My and Our in Perl]]></title>
-    <link href="http://isunix.github.io/blog/2014/07/24/about-the-of-my-and-our-and-local-in-perl/"/>
-    <updated>2014-07-24T19:32:11+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/07/24/about-the-of-my-and-our-and-local-in-perl</id>
-    <content type="html"><![CDATA[<p>关于perl中的my， our的用法自己一直都是一知半解的。以至于基本上在程序中把所有的变量的前面都加上my， 省事还不报错!   </p>
-
-<p>I am still not familiar the concept, but I will list some examples here to add as a reminder.  </p>
-
-<p><code>perl   
-our $var = 1;
-{
-	our $var = 2;
-	print "$var\n";
-}
-print "$var\n";    
-</code></p>
-
-<p>It will give us the result:  </p>
-
-<p><code>
-2
-2
-</code><br />
-If the code looks like this:   </p>
-
-<p><code>perl   
-my $var = 1;
-{
-	my $var = 2;
-	print "$var\n";
-}
-print "$var\n";    
-</code> <br />
-It will give us the result:   </p>
-
-<p><code> 
-2
-1  
-</code>
-If the code is:   </p>
-
-<p><code>perl  
-our $var = 1;
-{
-	my $var = 2;
-	print "$var\n";
-}
-print "$var\n";    
-</code>   <br />
-It will give us the following result:  </p>
-
-<p><code>
-2
-1
-</code>
-if the code is:  </p>
-
-<p><code>perl 
-my $var = 1;
-{
-	our $var = 2;
-	print "$var\n";
-}
-print "$var\n";    
-</code><br />
-It will give us the result:   </p>
-
-<p><code>
-2
-1
-</code>   </p>
-
-<p>If the code is one of the following, it will give us the result 2:  </p>
-
-<p>```perl<br />
-my $var = 1;
-my $var = 2;
-print $var, “\n”;  </p>
-
-<p>our $var = 1;
-our $var = 2;
-print $var, “\n”;     </p>
-
-<p>my $var = 1;
-our $var = 2;
-print $var, “\n”;   </p>
-
-<p>our $var = 1;
-my $var = 2;
-print $var, “\n”; 
-``` <br />
-I still can not claim I understand my and our.   </p>
-
-<p>We will give more examples on this.  </p>
-
-<p>The following 3 code snippets will give us the result (1, 6, 11):   </p>
-
-<p>```perl</p>
-
-<p>my $i = 0;
-for ($i = 1; $i&lt;10; $i++){
-    print $i, “\n”;
-    $i = $i + 4;
-}
-print $i, “\n”;
-#1,6,11   </p>
-
-<p>our $i = 0;
-for ($i = 1; $i&lt;10; $i++){
-    print $i, “\n”;
-    $i = $i + 4;
-}
-print $i, “\n”;
-#1,6,11   </p>
-
-<p>our $i = 0;
-for (our $i = 1; $i&lt;10; $i++){
-    print $i, “\n”;
-    $i = $i + 4;
-}</p>
-
-<p>print $i, “\n”;
-#1,6,11 <br />
-```  </p>
-
-<p>While the following 3 will give us the result (1, 6, 0):  </p>
-
-<p>```perl  </p>
-
-<p>my $i = 0;
-for (my $i = 1; $i&lt;10; $i++){
-    print $i, “\n”;
-    $i = $i + 4;
-}
-print $i, “\n”;
-#1,6,0</p>
-
-<p>my $i = 0;
-for (our $i = 1; $i&lt;10; $i++){
-    print $i, “\n”;
-    $i = $i + 4;
-}
-#1,6,0  </p>
-
-<p>our $i = 0;
-for (my $i = 1; $i&lt;10; $i++){
-    print $i, “\n”;
-    $i = $i + 4;
-}
-print $i, “\n”;
-#1,6,0  </p>
-
-<p>```</p>
 
 ]]></content>
   </entry>

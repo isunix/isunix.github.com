@@ -9,7 +9,7 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="Say I am on a server named “stsun1” and every time I want to login to a server named “stsun2”, I have to enter my password, by using ssh-keygen we &hellip;">
+  <meta name="description" content="We can find details about the info list below by issuing “perldoc perlobj”, or “perldoc perlootut” 1.When we bless something, we are not blessing the &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -62,6 +62,135 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/05/object-oriented-perl/">Object Oriented Perl</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-05T15:46:51+08:00" pubdate data-updated="true">Sep 5<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>We can find details about the info list below by issuing “perldoc perlobj”, or “perldoc perlootut”</p>
+
+<p>1.When we bless something, we are not blessing the variable which contains a reference to that thing, nor are we blessing the reference that the variable stores; we are blessing the thing that the variable refers to (sometimes known as the referent).  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="nn">Scalar::</span><span class="n">Util</span> <span class="s">&#39;blessed&#39;</span><span class="p">;</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">$foo</span> <span class="o">=</span> <span class="p">{};</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">$bar</span> <span class="o">=</span> <span class="nv">$foo</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="nb">bless</span> <span class="nv">$foo</span><span class="p">,</span> <span class="s">&#39;Class&#39;</span><span class="p">;</span>
+</span><span class="line"><span class="k">print</span> <span class="n">blessed</span><span class="p">(</span> <span class="nv">$bar</span> <span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="nv">$bar</span> <span class="o">=</span> <span class="s">&quot;some other value&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="k">print</span> <span class="n">blessed</span><span class="p">(</span> <span class="nv">$bar</span> <span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>The first will print out “Class” and second undef(of course you can see it).</p>
+
+<p>When we call “bless” on a variable, we are actually blessing the underlying data structure that the variable refers to. We are not blessing the reference itself, nor the variable that contains that reference. That’s why the second call to “blessed( $bar )” returns false. At that point $bar is no longer storing a reference to an
+object. You will sometimes see older books or documentation mention “blessing a reference” or describe an object as a “blessed reference”, but this is incorrect. It isn’t the reference that is blessed as an object; it’s the thing the reference refers to (i.e. the referent).   </p>
+
+<p>2.Objects are merely Perl data structures (hashes, arrays, scalars, filehandles, etc.) that have been explicitly associated with a particular class. That explicit association is created by the built-in “bless” function.</p>
+
+<p>3.An object is simply a data structure that knows to which class it belongs.A class is simply a package. A class provides methods that expect to operate on objects. A method is simply a subroutine that expects a reference to an object (or a package name, for class methods) as the first argument. </p>
+
+<p>4.Each package contains a special array called @ISA. The @ISA array contains a list of that class’s parent classes, if any. This array is examined when Perl does method resolution. It is possible to manually set @ISA. and you may see this in older Perl code. Much older code also uses the base pragma. For new code, we recommend that you use the parent pragma to declare your parents.  This pragma will take care of setting @ISA.  It will also load the parent classes and make sure that the package doesn’t inherit from itself.  </p>
+
+<p>5.However the parent classes are set, the package’s @ISA variable will contain a list of those parents. This is simply a list of scalars, each of which is a string that corresponds to a package name.   </p>
+
+<p>6.All classes inherit from the UNIVERSAL class implicitly. The UNIVERSAL class is implemented by the Perl core, and provides several default methods, such as “isa()”, “can()”, and “VERSION()”.  The “UNIVERSAL” class will never appear in a package’s @ISA variable.  </p>
+
+<p>7.Perl provides no special constructor syntax. This means that a class must implement its own constructor. A constructor is simply a class method that returns a reference to a new object.    </p>
+
+<p>8.A simple read-only accessor simply gets the value of a single attribute:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">sub </span><span class="nf">path</span> <span class="p">{</span>
+</span><span class="line">	<span class="k">my</span> <span class="nv">$self</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
+</span><span class="line">	<span class="k">return</span> <span class="nv">$self</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">path</span><span class="p">};</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>A read-write accessor will allow the caller to set the value as well as get it:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">sub </span><span class="nf">path</span> <span class="p">{</span>
+</span><span class="line">	<span class="k">my</span> <span class="nv">$self</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="nv">@_</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">    	<span class="nv">$self</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">path</span><span class="p">}</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">return</span> <span class="nv">$self</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">path</span><span class="p">};</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>9.More on bless. </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">$object</span> <span class="o">=</span> <span class="nb">bless</span> <span class="p">{},</span> <span class="nv">$class</span><span class="p">;</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">$object</span> <span class="o">=</span> <span class="nb">bless</span> <span class="p">{};</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>In the first form, the anonymous hash is being blessed into the class
+in $class. In the second form, the anonymous hash is blessed into the
+current package. The second form is strongly discouraged, because it breaks the ability of a subclass to reuse the parent’s constructor, but you may still run across it in existing code.   </p>
+
+<p>10.If you simply want to check that a variable contains an object reference, we recommend that you use “defined blessed($object)”, since “ref” returns true values for all references, not just objects.  </p>
+
+<p>11.If you call a method that doesn’t exist in a class, Perl will throw an error. However, if that class or any of its parent classes defines an “AUTOLOAD” method, that “AUTOLOAD” method is called instead.   </p>
+
+<p>12.All the examples so far have shown objects based on a blessed hash. However, it’s possible to bless any type of data structure or referent, including scalars, globs, and subroutines. You may see this sort of thing when looking at code in the wild.  </p>
+
+<p>13.You should also check out perlmodlib for some style guides on constructing both modules and classes.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -826,51 +955,6 @@ exceptions occurred.</p>
 <p>Thus if we want to use “jobs” to see process, we will not be able to see it. we can use the “ps a” command line to see the the process.  </p>
 
 <p>使用 fg %jobnumber　会将任务拿到前台执行，拿到前台后如果要关闭这个任务按Ctrl+c组合键即可，但如果要暂停这个任务可以按Ctrl+z组合键这时就会将任务置于暂停状态。</p>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/08/20/zai-du-chuan-xi-lu-zhu-shu/">在读传习录注疏</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-08-20T17:40:20+08:00" pubdate data-updated="true">Aug 20<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I am reading the book “传习录注疏”， I learnt that it is a very good book. </p>
-
-<p>很想知道给那么多人成为圣人的大家的思想言行是什么个样子。 </p>
-
-<p>Here below is the book I am reading now. </p>
-
-<p><img src="/images/sun/chuanxi.jpg" />  </p>
-
-<p>It is a little difficult. But I am delving into it now.</p>
 
 </div>
   

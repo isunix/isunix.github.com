@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Perl | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/perl/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-09-02T22:03:07+08:00</updated>
+  <updated>2014-09-05T14:20:44+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,37 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Ssh-keygen Usage]]></title>
+    <link href="http://isunix.github.io/blog/2014/09/05/ssh-keygen-usage/"/>
+    <updated>2014-09-05T13:57:20+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/09/05/ssh-keygen-usage</id>
+    <content type="html"><![CDATA[<p>Say I am on a server named “stsun1” and every time I want to login to a server named “stsun2”, I have to enter my password, by using ssh-keygen we can avoid this.  </p>
+
+<p>```</p>
+
+<ol>
+  <li>
+    <p>login to stsun1     </p>
+  </li>
+  <li>
+    <p>cd ~/.ssh and check if you have ‘id_rsa’,  ‘id_rsa.pub’ files, if not, go to step 3, if you already have one, go to step 4.    </p>
+  </li>
+  <li>
+    <p>ssh-keygen -t rsa, and you will see ‘id_rsa’,  ‘id_rsa.pub’ files.    </p>
+  </li>
+  <li>
+    <p>copy the .pub file to the .ssh dir on server stsun2, then “cat id_rsa.pub » ~/.ssh/authorized_keys”</p>
+  </li>
+</ol>
+
+<p>```</p>
+
+<p>That’ all!</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Git Set Up]]></title>
@@ -362,30 +393,6 @@ print $i, “\n”;
 
 <p>```</p>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Minutes About Stdin]]></title>
-    <link href="http://isunix.github.io/blog/2014/07/24/minutes-about-stdin/"/>
-    <updated>2014-07-24T17:26:27+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/07/24/minutes-about-stdin</id>
-    <content type="html"><![CDATA[<p>There are some minute details about perl that we need to take care. So here I take a note for later reminder. </p>
-
-<ol>
-  <li>
-    <p>STDERR will print out the error messages to the screen or to a file if you want.   </p>
-  </li>
-  <li>
-    <p>If we have a line of code like:  </p>
-  </li>
-</ol>
-
-<p><code>perl  
-  $GetALine = &lt;STDIN&gt;;
- </code></p>
-
-<p>It will wait for the user to enter something and then append a line ending character to the string that the user enters. </p>
 ]]></content>
   </entry>
   

@@ -4,7 +4,7 @@
   <title><![CDATA[Steven's Blog]]></title>
   <link href="http://isunix.github.io/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-09-05T19:01:26+08:00</updated>
+  <updated>2014-09-05T22:12:51+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,22 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Notes on Perlrun]]></title>
+    <link href="http://isunix.github.io/blog/2014/09/05/notes-on-perlrun/"/>
+    <updated>2014-09-05T19:24:02+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/09/05/notes-on-perlrun</id>
+    <content type="html"><![CDATA[<p>We keep notes on some of the useful notes on perl command line knowledge here.  </p>
+
+<p>1.-i[extension]:  </p>
+
+<p>specifies that files processed by the “&lt;&gt;” construct are to be edited in-place.  It does this by renaming the input file, opening the output file by the original name, and selecting that output file as the default for print() statements.   </p>
+
+<p>2.-p:
+causes Perl to assume the following loop around your program, which makes it iterate over filename arguments somewhat like sed.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Useful Perl Man Page]]></title>
@@ -49,6 +65,14 @@
 <span class="line-number">27</span>
 <span class="line-number">28</span>
 <span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+<span class="line-number">35</span>
+<span class="line-number">36</span>
+<span class="line-number">37</span>
 </pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">perlre</span>
 </span><span class="line">
 </span><span class="line"><span class="n">perlobj</span>
@@ -78,6 +102,14 @@
 </span><span class="line"><span class="n">perldsc</span>
 </span><span class="line">
 </span><span class="line"><span class="n">perllol</span>
+</span><span class="line">
+</span><span class="line"><span class="n">perlrun</span>
+</span><span class="line">
+</span><span class="line"><span class="n">perldebug</span>
+</span><span class="line">
+</span><span class="line"><span class="n">perlnewmod</span>
+</span><span class="line">
+</span><span class="line"><span class="n">perlfaq3</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>And below are some modules we may find useful:  </p>
@@ -269,7 +301,46 @@ or an object. We can also pass additional arguments to the method:</p>
 </span><span class="line"><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>26.The “has()” subroutine declares an attribute, and “Moose” automatically creates accessors for these attributes. It also takes care of creating a “new()” method for you. This constructor knows about the attributes you declared.   </p>
+<p>26.The “has()” subroutine declares an attribute, and “Moose” automatically creates accessors for these attributes. It also takes care of creating a “new()” method for you. This constructor knows about the attributes you declared.     </p>
+
+<p>27.与@INC数组类似，@INC包含文件的寻找路径, @ISA数组含有类(包)名，当一个方法在当前包中未找到的时就到@ISA中中的包去寻找。@ISA中还含有当前类继承的基类名。  </p>
+
+<p>28.oo中的new可以有如下的几种写法的: 注意这两种写法的区别  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="c1">#!/usr/bin/perl</span>
+</span><span class="line"><span class="k">use</span> <span class="n">Cocoa</span><span class="p">;</span>
+</span><span class="line"><span class="nv">$cup</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Cocoa</span><span class="p">;</span>
+</span><span class="line"><span class="nv">$cup</span><span class="o">-&gt;</span><span class="n">setImports</span><span class="p">(</span> <span class="s">&#39;java.io.InputStream&#39;</span><span class="p">,</span> <span class="s">&#39;java.net.*&#39;</span><span class="p">);</span>
+</span><span class="line"><span class="nv">$cup</span><span class="o">-&gt;</span><span class="n">declareMain</span><span class="p">(</span> <span class="s">&quot;Msg&quot;</span> <span class="p">,</span> <span class="s">&quot;java.applet.Applet&quot;</span><span class="p">,</span> <span class="s">&quot;Runnable&quot;</span><span class="p">);</span>
+</span><span class="line"><span class="nv">$cup</span><span class="o">-&gt;</span><span class="n">closeMain</span><span class="p">();</span>
+</span><span class="line">
+</span><span class="line"><span class="ow">or</span>
+</span><span class="line">
+</span><span class="line"><span class="c1">#!/usr/bin/perl</span>
+</span><span class="line"><span class="k">use</span> <span class="n">Cocoa</span><span class="p">;</span>
+</span><span class="line"><span class="nv">$cup</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Cocoa</span><span class="p">;</span>
+</span><span class="line"><span class="nn">Cocoa::</span><span class="n">setImports</span><span class="p">(</span><span class="nv">$cup</span><span class="p">,</span> <span class="s">&#39;java.io.InputStream&#39;</span><span class="p">,</span> <span class="s">&#39;java.net.*&#39;</span><span class="p">);</span>
+</span><span class="line"><span class="nn">Cocoa::</span><span class="n">declareMain</span><span class="p">(</span><span class="nv">$cup</span><span class="p">,</span> <span class="s">&quot;Msg&quot;</span> <span class="p">,</span> <span class="s">&quot;java.applet.Applet&quot;</span><span class="p">,</span> <span class="s">&quot;Runnable&quot;</span><span class="p">);</span>
+</span><span class="line"><span class="nn">Cocoa::</span><span class="n">closeMain</span><span class="p">(</span><span class="nv">$cup</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>29.类方法通过@ISA数组继承.</p>
+
 ]]></content>
   </entry>
   
@@ -2252,69 +2323,6 @@ exceptions occurred.</p>
 </span><span class="line"><span class="nb">open</span><span class="p">(</span><span class="s">&#39;file&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>						<span class="c"># read entire file into line strings list</span>
 </span><span class="line"><span class="nb">open</span><span class="p">(</span><span class="s">&#39;file&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span> 						<span class="c"># read next line, through &#39;\n&#39;  </span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Install Python on Centos Locally]]></title>
-    <link href="http://isunix.github.io/blog/2014/08/14/install-python-on-centos-locally/"/>
-    <updated>2014-08-14T12:25:15+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/08/14/install-python-on-centos-locally</id>
-    <content type="html"><![CDATA[<p>This post depicts how to install Python on the CentOS in your local dir.  </p>
-
-<p>1.First show the python2.x version.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">wget</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">python</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">ftp</span><span class="o">/</span><span class="n">python</span><span class="o">/</span><span class="mf">2.7</span><span class="o">.</span><span class="mi">6</span><span class="o">/</span><span class="n">Python</span><span class="o">-</span><span class="mf">2.7</span><span class="o">.</span><span class="mf">6.</span><span class="n">tar</span><span class="o">.</span><span class="n">xz</span>
-</span><span class="line"><span class="n">tar</span> <span class="o">-</span><span class="n">zxvf</span> <span class="n">Python</span><span class="o">-</span><span class="mf">2.7</span><span class="o">.</span><span class="mf">6.</span><span class="n">tar</span><span class="o">.</span><span class="n">xz</span>
-</span><span class="line"><span class="n">cd</span> <span class="n">Python</span><span class="o">-</span><span class="mf">2.7</span><span class="o">.</span><span class="mi">6</span>
-</span><span class="line"><span class="o">./</span><span class="n">configure</span> <span class="o">--</span><span class="n">prefix</span><span class="o">=/</span><span class="n">home</span><span class="o">/</span><span class="n">sun</span><span class="o">/</span><span class="n">local</span> <span class="o">--</span><span class="n">enable</span><span class="o">-</span><span class="nb">unicode</span><span class="o">=</span><span class="n">ucs4</span> <span class="o">--</span><span class="n">enable</span><span class="o">-</span><span class="n">shared</span> <span class="n">LDFLAGS</span><span class="o">=</span><span class="s">&quot;-Wl,-rpath /home/sun/local/lib&quot;</span>
-</span><span class="line"><span class="n">make</span> <span class="o">&amp;&amp;</span> <span class="n">make</span> <span class="n">altinstall</span>
-</span><span class="line">
-</span><span class="line"><span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">bitbucket</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">pypa</span><span class="o">/</span><span class="n">setuptools</span><span class="o">/</span><span class="n">raw</span><span class="o">/</span><span class="n">bootstrap</span><span class="o">/</span><span class="n">ez_setup</span><span class="o">.</span><span class="n">py</span>
-</span><span class="line"><span class="n">python</span> <span class="n">ez_setup</span><span class="o">.</span><span class="n">py</span>
-</span><span class="line"><span class="n">easy_install</span><span class="o">-</span><span class="mf">2.7</span> <span class="n">pip</span>
-</span><span class="line"><span class="n">pip2</span><span class="o">.</span><span class="mi">7</span> <span class="n">install</span> <span class="p">[</span><span class="n">packagename</span><span class="p">]</span>
-</span><span class="line"><span class="p">(</span><span class="n">pip</span> <span class="n">defaults</span> <span class="n">to</span> <span class="n">pip2</span><span class="o">.</span><span class="mi">7</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>2.Now the python3.x version</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">wget</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">python</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">ftp</span><span class="o">/</span><span class="n">python</span><span class="o">/</span><span class="mf">3.4</span><span class="o">.</span><span class="mi">1</span><span class="o">/</span><span class="n">Python</span><span class="o">-</span><span class="mf">3.4</span><span class="o">.</span><span class="mf">1.</span><span class="n">tar</span><span class="o">.</span><span class="n">xz</span>
-</span><span class="line"><span class="n">tar</span> <span class="n">xf</span> <span class="n">Python</span><span class="o">-</span><span class="mf">3.4</span><span class="o">.</span><span class="mf">1.</span><span class="n">tar</span><span class="o">.</span><span class="n">xz</span>
-</span><span class="line"><span class="n">cd</span> <span class="n">Python</span><span class="o">-</span><span class="mf">3.4</span><span class="o">.</span><span class="mi">1</span>
-</span><span class="line"><span class="o">./</span><span class="n">configure</span> <span class="o">--</span><span class="n">prefix</span><span class="o">=/</span><span class="n">hom</span><span class="o">/</span><span class="n">sun</span><span class="o">/</span><span class="n">local</span> <span class="o">--</span><span class="n">enable</span><span class="o">-</span><span class="n">shared</span> <span class="n">LDFLAGS</span><span class="o">=</span><span class="s">&quot;-Wl,-rpath /home/sun/local/lib&quot;</span>
-</span><span class="line"><span class="n">make</span> <span class="o">&amp;&amp;</span> <span class="n">make</span> <span class="n">altinstall</span>
-</span><span class="line">
-</span><span class="line"><span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">bitbucket</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">pypa</span><span class="o">/</span><span class="n">setuptools</span><span class="o">/</span><span class="n">raw</span><span class="o">/</span><span class="n">bootstrap</span><span class="o">/</span><span class="n">ez_setup</span><span class="o">.</span><span class="n">py</span>
-</span><span class="line"><span class="n">mv</span> <span class="n">python3</span><span class="o">.</span><span class="mi">4</span> <span class="n">python3</span>
-</span><span class="line"><span class="n">python3</span> <span class="n">ez_setup</span><span class="o">.</span><span class="n">py</span>
-</span><span class="line"><span class="n">easy_install</span><span class="o">-</span><span class="mf">3.4</span> <span class="n">pip</span>
-</span><span class="line"><span class="n">pip3</span> <span class="n">install</span> <span class="p">[</span><span class="n">packagename</span><span class="p">]</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>If you want to install the package used by python3, you need to using the command “pip3 install [packagename]”, otherwise just “pip install [packagename]”</p>
 ]]></content>
   </entry>
   

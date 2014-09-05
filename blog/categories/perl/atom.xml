@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Perl | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/perl/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-09-05T19:01:26+08:00</updated>
+  <updated>2014-09-05T22:12:51+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,22 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Notes on Perlrun]]></title>
+    <link href="http://isunix.github.io/blog/2014/09/05/notes-on-perlrun/"/>
+    <updated>2014-09-05T19:24:02+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/09/05/notes-on-perlrun</id>
+    <content type="html"><![CDATA[<p>We keep notes on some of the useful notes on perl command line knowledge here.  </p>
+
+<p>1.-i[extension]:  </p>
+
+<p>specifies that files processed by the “&lt;&gt;” construct are to be edited in-place.  It does this by renaming the input file, opening the output file by the original name, and selecting that output file as the default for print() statements.   </p>
+
+<p>2.-p:
+causes Perl to assume the following loop around your program, which makes it iterate over filename arguments somewhat like sed.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Useful Perl Man Page]]></title>
@@ -49,7 +65,15 @@ perlre</p>
 
 <p>perldsc   </p>
 
-<p>perllol</p>
+<p>perllol  </p>
+
+<p>perlrun</p>
+
+<p>perldebug  </p>
+
+<p>perlnewmod    </p>
+
+<p>perlfaq3</p>
 
 <p>```  </p>
 
@@ -203,7 +227,33 @@ package File::MP3;</p>
 
 <p>```  </p>
 
-<p>26.The “has()” subroutine declares an attribute, and “Moose” automatically creates accessors for these attributes. It also takes care of creating a “new()” method for you. This constructor knows about the attributes you declared.   </p>
+<p>26.The “has()” subroutine declares an attribute, and “Moose” automatically creates accessors for these attributes. It also takes care of creating a “new()” method for you. This constructor knows about the attributes you declared.     </p>
+
+<p>27.与@INC数组类似，@INC包含文件的寻找路径, @ISA数组含有类(包)名，当一个方法在当前包中未找到的时就到@ISA中中的包去寻找。@ISA中还含有当前类继承的基类名。  </p>
+
+<p>28.oo中的new可以有如下的几种写法的: 注意这两种写法的区别  </p>
+
+<p>```pl
+#!/usr/bin/perl
+use Cocoa;
+$cup = new Cocoa;
+$cup-&gt;setImports( ‘java.io.InputStream’, ‘java.net.*’);
+$cup-&gt;declareMain( “Msg” , “java.applet.Applet”, “Runnable”);
+$cup-&gt;closeMain();  </p>
+
+<p>or </p>
+
+<h1 id="usrbinperl">!/usr/bin/perl</h1>
+<p>use Cocoa;
+$cup = new Cocoa;
+Cocoa::setImports($cup, ‘java.io.InputStream’, ‘java.net.*’);
+Cocoa::declareMain($cup, “Msg” , “java.applet.Applet”, “Runnable”);
+Cocoa::closeMain($cup); </p>
+
+<p>```    </p>
+
+<p>29.类方法通过@ISA数组继承.</p>
+
 ]]></content>
   </entry>
   
@@ -292,68 +342,6 @@ git clone ssh://example.com/path/to/repo.git/
 </code>  </p>
 
 <p>For the details, please refer to online resources.  </p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Two Ways to Build a Module]]></title>
-    <link href="http://isunix.github.io/blog/2014/08/12/two-ways-to-create-a-module/"/>
-    <updated>2014-08-12T20:51:22+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/08/12/two-ways-to-create-a-module</id>
-    <content type="html"><![CDATA[<p>There are two build systems for building a module. One is to use the old and stable “ExtUtils::Makemaker”, and new one is using “Module::Build”. We will use the Module::Starter module to help us create a module.  </p>
-
-<p>By default, Module::Starter create a distribution with Makefile.PL</p>
-
-<p>First with Makefile.PL  </p>
-
-<p>```pl
-module-starter –module=”Animal” –author=”Steven Sun” –email=steven.sun2013@gmail.com –verbose    </p>
-
-<p>This is the same as:<br />
-module-starter –builder=”ExtUtils::Makemaker” –module=”Animal” –author=”Steven Sun” –email=steven.sun2013@gmail.com –verbose    </p>
-
-<p>perl Makefile.PL <br />
-make
-make test <br />
-make disttest<br />
-make dist
-```</p>
-
-<p>Next we will show you the “Build.PL”</p>
-
-<p>```pl<br />
-module-starter –builder=”Module::Build” –module=”Animal” –author=”Steven Sun” –email=steven.sun2013@gmail.com –verbose </p>
-
-<p>or in a simpler way, we can do this:<br />
-module-starter –mb –module=”Animal” –author=”Steven Sun” –email=steven.sun2013@gmail.com –verbose  </p>
-
-<p>perl Build.PL <br />
-./Build<br />
-./Build test
-./Build disttest       ##this will create a .tar.gz archive which we can distribute now.<br />
-./Build dist
-```</p>
-
-<p>For the Module::Build way, there is a shortcut.   </p>
-
-<p>We don’t want to type that long command line every time, so module-starter can get that information from a    <br />
-configuration file $HOME/.module-starter/config. If we’re on Windows, that .module-starter name is a bit of a    <br />
-problem, so we can set the MODULE_STARTER_DIR environment variable to the name of the directory that contains
-config. Inside config, we can list the parameter names and values separated by a colon.</p>
-
-<p>```perl</p>
-
-<p>author: Steven Sun<br />
-email: steven.sun2013@gmail.com<br />
-builder: Module::Build<br />
-verbose: 1
-```<br />
-Once we have our configuration file setup, life is much easier since we only need to specify the name of the distribution that we want to create. </p>
-
-<p>```perl  </p>
-
-<p>% module−starter −−module=Animal<br />
-```</p>
 ]]></content>
   </entry>
   

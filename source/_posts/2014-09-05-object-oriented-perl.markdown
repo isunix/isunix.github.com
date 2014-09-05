@@ -84,4 +84,56 @@ current package. The second form is strongly discouraged, because it breaks the 
 
 12.All the examples so far have shown objects based on a blessed hash. However, it's possible to bless any type of data structure or referent, including scalars, globs, and subroutines. You may see this sort of thing when looking at code in the wild.  
 
-13.You should also check out perlmodlib for some style guides on constructing both modules and classes.
+13.You should also check out perlmodlib for some style guides on constructing both modules and classes.  
+
+14.As we said earlier, most Perl objects are hashes, but an object can be an instance of any Perl data type (scalar, array, etc.). Turning a plain data structure into an object is done by blessing that data structure using Perl's "bless" function.  
+
+15.Once a referent has been blessed, the "blessed" function from the Scalar::Util core module can tell us its class name. This subroutine returns an object's class when passed an object, and false otherwise.  
+
+16.A constructor creates a new object. In Perl, a class's constructor is just another method, unlike some other languages, which provide syntax for constructors. Most Perl classes use "new" as the name for their constructor: my $file = File->new(...);   
+
+17.What makes a method special is how it's called. The arrow operator ("->") tells Perl that we are calling a method.   
+
+18.When we make a method call, Perl arranges for the method's invocant to be passed as the first argument. Invocant is a fancy name for the thing on the left side of the arrow. The invocant can either be a class name
+or an object. We can also pass additional arguments to the method:
+
+```pl
+sub print_info {
+	my $self   = shift;
+    my $prefix = shift // "This file is at ";
+
+   	print $prefix, ", ", $self->path, "\n";
+}
+
+$file->print_info("The file is located at ");
+# The file is located at /etc/hostname
+```  
+
+19.Each class can define its attributes. Attributes are sometimes called properties.  
+
+20.Perl has no special syntax for attributes. Under the hood, attributes are often stored as keys in the object's underlying hash, but don't worry about this.   
+
+21.You might also see the terms getter and setter. These are two types of accessors. A getter gets the attribute's value, while a setter sets it. Another term for a setter is mutator. We recommend that you only access attributes via accessor methods.   
+
+22.Attributes are typically defined as read-only or read-write. Read-only attributes can only be set when the object is first created, while read-write attributes can be altered at any time.  
+
+23.We often refer to inheritance relationships as parent-child or "superclass/subclass" relationships. Sometimes we say that the child has an is-a relationship with its parent class.   
+
+24.The process of determining what method should be used is called method resolution. What Perl does is look at the object's class first ("File::MP3" in this case). If that class defines the method, then that class's version of the method is called. If not, Perl looks at each parent class in turn. For "File::MP3", its only parent is "File". If "File::MP3" does not define the method, but "File" does, then Perl calls the method in "File".  
+
+25.It is possible to explicitly call a parent method from a child:
+
+```pl
+package File::MP3;
+
+use parent 'File';  
+
+sub print_info {
+	my $self = shift;
+	$self->SUPER::print_info();
+	print "Its title is ", $self->title, "\n";
+}
+
+```  
+
+26.The "has()" subroutine declares an attribute, and "Moose" automatically creates accessors for these attributes. It also takes care of creating a "new()" method for you. This constructor knows about the attributes you declared.   

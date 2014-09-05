@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Perl | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/perl/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-09-05T17:58:10+08:00</updated>
+  <updated>2014-09-05T19:01:26+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,63 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Useful Perl Man Page]]></title>
+    <link href="http://isunix.github.io/blog/2014/09/05/useful-perl-man-page/"/>
+    <updated>2014-09-05T18:14:03+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/09/05/useful-perl-man-page</id>
+    <content type="html"><![CDATA[<p>We can check them like “perl perlre”. These useful perl manuals are:</p>
+
+<p>```pl
+perlre</p>
+
+<p>perlobj</p>
+
+<p>perlootut</p>
+
+<p>perlmodlib  </p>
+
+<p>perlintro  </p>
+
+<p>perlsyn   </p>
+
+<p>perlop  </p>
+
+<p>perlsub  </p>
+
+<p>perlrequick  </p>
+
+<p>perlretut  </p>
+
+<p>perlfunc  </p>
+
+<p>perlref  </p>
+
+<p>perlreftut</p>
+
+<p>perldsc   </p>
+
+<p>perllol</p>
+
+<p>```  </p>
+
+<p>And below are some modules we may find useful:  </p>
+
+<p>```pl
+Moose::Manual  </p>
+
+<p>Mouse</p>
+
+<p>Mouse::Tiny</p>
+
+<p>Class::Accessor </p>
+
+<p>Role::Tiny</p>
+
+<p>```</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Object Oriented Perl]]></title>
@@ -94,7 +151,59 @@ current package. The second form is strongly discouraged, because it breaks the 
 
 <p>12.All the examples so far have shown objects based on a blessed hash. However, it’s possible to bless any type of data structure or referent, including scalars, globs, and subroutines. You may see this sort of thing when looking at code in the wild.  </p>
 
-<p>13.You should also check out perlmodlib for some style guides on constructing both modules and classes.</p>
+<p>13.You should also check out perlmodlib for some style guides on constructing both modules and classes.  </p>
+
+<p>14.As we said earlier, most Perl objects are hashes, but an object can be an instance of any Perl data type (scalar, array, etc.). Turning a plain data structure into an object is done by blessing that data structure using Perl’s “bless” function.  </p>
+
+<p>15.Once a referent has been blessed, the “blessed” function from the Scalar::Util core module can tell us its class name. This subroutine returns an object’s class when passed an object, and false otherwise.  </p>
+
+<p>16.A constructor creates a new object. In Perl, a class’s constructor is just another method, unlike some other languages, which provide syntax for constructors. Most Perl classes use “new” as the name for their constructor: my $file = File-&gt;new(…);   </p>
+
+<p>17.What makes a method special is how it’s called. The arrow operator (“-&gt;”) tells Perl that we are calling a method.   </p>
+
+<p>18.When we make a method call, Perl arranges for the method’s invocant to be passed as the first argument. Invocant is a fancy name for the thing on the left side of the arrow. The invocant can either be a class name
+or an object. We can also pass additional arguments to the method:</p>
+
+<p>```pl
+sub print_info {
+	my $self   = shift;
+    my $prefix = shift // “This file is at “;</p>
+
+   	print $prefix, “, “, $self-&gt;path, “\n”;
+<p>}</p>
+
+<p>$file-&gt;print_info(“The file is located at “);
+# The file is located at /etc/hostname
+```  </p>
+
+<p>19.Each class can define its attributes. Attributes are sometimes called properties.  </p>
+
+<p>20.Perl has no special syntax for attributes. Under the hood, attributes are often stored as keys in the object’s underlying hash, but don’t worry about this.   </p>
+
+<p>21.You might also see the terms getter and setter. These are two types of accessors. A getter gets the attribute’s value, while a setter sets it. Another term for a setter is mutator. We recommend that you only access attributes via accessor methods.   </p>
+
+<p>22.Attributes are typically defined as read-only or read-write. Read-only attributes can only be set when the object is first created, while read-write attributes can be altered at any time.  </p>
+
+<p>23.We often refer to inheritance relationships as parent-child or “superclass/subclass” relationships. Sometimes we say that the child has an is-a relationship with its parent class.   </p>
+
+<p>24.The process of determining what method should be used is called method resolution. What Perl does is look at the object’s class first (“File::MP3” in this case). If that class defines the method, then that class’s version of the method is called. If not, Perl looks at each parent class in turn. For “File::MP3”, its only parent is “File”. If “File::MP3” does not define the method, but “File” does, then Perl calls the method in “File”.  </p>
+
+<p>25.It is possible to explicitly call a parent method from a child:</p>
+
+<p>```pl
+package File::MP3;</p>
+
+<p>use parent ‘File’;  </p>
+
+<p>sub print_info {
+	my $self = shift;
+	$self-&gt;SUPER::print_info();
+	print “Its title is “, $self-&gt;title, “\n”;
+}</p>
+
+<p>```  </p>
+
+<p>26.The “has()” subroutine declares an attribute, and “Moose” automatically creates accessors for these attributes. It also takes care of creating a “new()” method for you. This constructor knows about the attributes you declared.   </p>
 ]]></content>
   </entry>
   
@@ -245,81 +354,6 @@ Once we have our configuration file setup, life is much easier since we only nee
 
 <p>% module−starter −−module=Animal<br />
 ```</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Notes on the Book Perl-debugged]]></title>
-    <link href="http://isunix.github.io/blog/2014/07/25/notes-on-the-book-perl-debugged/"/>
-    <updated>2014-07-25T15:25:02+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/07/25/notes-on-the-book-perl-debugged</id>
-    <content type="html"><![CDATA[<p>这篇blog是Perl debugged的阅读笔记。    </p>
-
-<p>1.If we want to know more about Perl, we can type one of the following 3 commands:   </p>
-
-<p>```perl 
-perldoc perl<br />
-perldoc perltoc<br />
-perldoc perlintro  </p>
-
-<p>```   <br />
-or you can just use the “man perl” command.  </p>
-
-<ol>
-  <li>More on perldoc  </li>
-</ol>
-
-<p>```perl<br />
-perldoc perlsyn<br />
-#this will show the info of Perl syntax.   </p>
-
-<p>perldoc perldata<br />
-#this will show the info of Perl data types.  </p>
-
-<p>perldoc perlop<br />
-#this will show the info of Perl operators and precedence.</p>
-
-<p>perldoc perlre <br />
-#this will show the info of Perl regular expressions.   </p>
-
-<p>perldoc perllol<br />
-#this will show the info of Manipulating arrays of arrays in Perl.   </p>
-
-<p>perldoc perlsub<br />
-#this will show the info of Perl subroutines.    </p>
-
-<p>perldoc perlfunc <br />
-#this will show the info of Perl buintin functions.   </p>
-
-<p>perldoc perlfaq<br />
-#this will show the info of frequently asked questions about perl </p>
-
-<p>perldoc perlstyle
-#this will show the info of Perl style guide.  </p>
-
-<p>perldoc perltrap<br />
-#this will show the info of Perl traps for the unwary. </p>
-
-<p>```  </p>
-
-<p>3.If want to look for the info a funcion in perl, we can do:  </p>
-
-<p><code>perl  
-perldoc -f split
-#take split as an example.  
-</code>  </p>
-
-<p>For all those asked-often questions, you can use the following command to take a look at it:  </p>
-
-<p>```perl  </p>
-
-<p>perldoc -q sleep   </p>
-
-<p>```  <br />
-4.聪明的人知道他们可以改变自己的态度， 信念和行为， 而且他们知道如何去改变。  </p>
-
-<p>5.In emacs, we can use “M-X perldb” to enable the perl debugging mode.  </p>
-
 ]]></content>
   </entry>
   

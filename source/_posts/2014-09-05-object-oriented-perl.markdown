@@ -136,4 +136,31 @@ sub print_info {
 
 ```  
 
-26.The "has()" subroutine declares an attribute, and "Moose" automatically creates accessors for these attributes. It also takes care of creating a "new()" method for you. This constructor knows about the attributes you declared.   
+26.The "has()" subroutine declares an attribute, and "Moose" automatically creates accessors for these attributes. It also takes care of creating a "new()" method for you. This constructor knows about the attributes you declared.     
+
+27.与@INC数组类似，@INC包含文件的寻找路径, @ISA数组含有类(包)名，当一个方法在当前包中未找到的时就到@ISA中中的包去寻找。@ISA中还含有当前类继承的基类名。  
+
+28.oo中的new可以有如下的几种写法的: 注意这两种写法的区别  
+
+```pl
+#!/usr/bin/perl
+use Cocoa;
+$cup = new Cocoa;
+$cup->setImports( 'java.io.InputStream', 'java.net.*');
+$cup->declareMain( "Msg" , "java.applet.Applet", "Runnable");
+$cup->closeMain();  
+
+or 
+
+#!/usr/bin/perl
+use Cocoa;
+$cup = new Cocoa;
+Cocoa::setImports($cup, 'java.io.InputStream', 'java.net.*');
+Cocoa::declareMain($cup, "Msg" , "java.applet.Applet", "Runnable");
+Cocoa::closeMain($cup); 
+
+```    
+
+29.类方法通过@ISA数组继承.
+
+

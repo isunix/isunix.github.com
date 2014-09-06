@@ -36,7 +36,15 @@ perlreftut
 
 perldsc   
 
-perllol
+perllol  
+
+perlrun
+
+perldebug  
+
+perlnewmod    
+
+perlfaq3
 
 ```  
 

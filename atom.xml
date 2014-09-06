@@ -4,7 +4,7 @@
   <title><![CDATA[Steven's Blog]]></title>
   <link href="http://isunix.github.io/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-09-06T21:49:45+08:00</updated>
+  <updated>2014-09-07T01:26:56+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,51 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Some Perl Standard Modules]]></title>
+    <link href="http://isunix.github.io/blog/2014/09/07/some-perl-standard-modules/"/>
+    <updated>2014-09-07T01:10:52+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/09/07/some-perl-standard-modules</id>
+    <content type="html"><![CDATA[<p>Below are some pelr standard perl modules which deserves deep learning, using “perldoc perlmodlib” to see a complete list of all the modules in the Perl distribution.    </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nn">Data::</span><span class="n">Dumper</span>
+</span><span class="line"><span class="n">perldoc</span> <span class="o">-</span><span class="n">f</span> <span class="nb">eval</span>
+</span><span class="line"><span class="nn">File::</span><span class="n">Find</span>
+</span><span class="line"><span class="nn">Getopt::</span><span class="n">Std</span>
+</span><span class="line"><span class="nn">Getopt::</span><span class="n">Long</span>
+</span><span class="line"><span class="nn">File::</span><span class="n">Spec</span>
+</span><span class="line"><span class="n">Benchmark</span>
+</span><span class="line"><span class="nn">File::</span><span class="n">Slurp</span>
+</span><span class="line"><span class="nn">Bundle::</span><span class="n">LWP</span>
+</span><span class="line"><span class="nn">Bundle::</span><span class="n">libnet</span>
+</span><span class="line"><span class="nn">Text::</span><span class="n">Wrap</span>
+</span><span class="line"><span class="nn">Text::</span><span class="n">Tabs</span>
+</span><span class="line"><span class="nn">Pod::</span><span class="n">Autopod</span>
+</span><span class="line"><span class="nn">HTML::</span><span class="n">Parser</span>
+</span><span class="line"><span class="n">Storable</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>If you want to install a module in a certian path, use “perl Makefile.PL –PREFIX=/my/module/path”.   </p>
+
+<p>Also read “perldoc perlnewmod”.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Perl Debug Tut]]></title>
@@ -1849,33 +1894,6 @@ exceptions occurred.</p>
 </span><span class="line"><span class="k">print</span><span class="p">(</span><span class="n">ans1</span><span class="p">)</span>
 </span><span class="line"><span class="k">print</span><span class="p">(</span><span class="n">ans2</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Check File Encoding and Convert a File to a Certain Encoding]]></title>
-    <link href="http://isunix.github.io/blog/2014/08/19/check-file-encoding-and-convert-a-file-to-a-certain-encoding/"/>
-    <updated>2014-08-19T13:58:55+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/08/19/check-file-encoding-and-convert-a-file-to-a-certain-encoding</id>
-    <content type="html"><![CDATA[<p>The case scenario is: I have namy source files of codes and the commoents there and some print messages are in English, of course I can open the file in vim and issue the following command to make them to utf-8 encoding:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="vim"><span class="line"><span class="p">:</span><span class="k">set</span> <span class="nb">fileencoding</span><span class="p">=</span>utf8
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>The question here is I have many files thus I do not want to do this repeatedly. So a script to ease the pain is needed.   </p>
-
-<p>If we want to know the file’s encoding, we can issue the following command:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">file</span> <span class="n">filename</span>
-</span><span class="line"><span class="ow">or</span>
-</span><span class="line"><span class="n">file</span> <span class="o">-</span><span class="n">mime</span> <span class="n">filename</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>Ok, I am stucked here, I have no idea how to do this ritht now. mabe later.   </p>
-
 ]]></content>
   </entry>
   

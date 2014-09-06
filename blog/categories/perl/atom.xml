@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Perl | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/perl/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-09-06T14:37:34+08:00</updated>
+  <updated>2014-09-06T21:49:45+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,41 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Perl Debug Tut]]></title>
+    <link href="http://isunix.github.io/blog/2014/09/06/perl-debug-tut/"/>
+    <updated>2014-09-06T21:48:04+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/09/06/perl-debug-tut</id>
+    <content type="html"><![CDATA[<p>Use the following way to see the detailed info of perl debugger info.  </p>
+
+<p><code>pl
+perldoc perldebguts
+</code></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Mastering Perl Learning Notes]]></title>
+    <link href="http://isunix.github.io/blog/2014/09/06/mastering-perl-learning-notes/"/>
+    <updated>2014-09-06T18:03:53+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/09/06/mastering-perl-learning-notes</id>
+    <content type="html"><![CDATA[<p>This is for the book “mastering perl”. There are some code snippets in this book which I think is quite useful, thus I keep a note of them below.  </p>
+
+<p>1.global matching:  </p>
+
+<p><code>pl
+$_ = "Just another Perl hacker,";
+my @words = /(\S+)/g; # "Just" "another" "Perl" "hacker,"
+print join("",split(@words));
+</code>  </p>
+
+<p>2.my $word_count = () = /(\S+)/g; <br />
+It will give out the number of matched items.</p>
+
+<p>3.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Fun Perl Code Snippets]]></title>
@@ -118,200 +153,6 @@ Moose::Manual  </p>
 <p>Role::Tiny</p>
 
 <p>```</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Object Oriented Perl]]></title>
-    <link href="http://isunix.github.io/blog/2014/09/05/object-oriented-perl/"/>
-    <updated>2014-09-05T15:46:51+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/09/05/object-oriented-perl</id>
-    <content type="html"><![CDATA[<p>We can find details about the info list below by issuing “perldoc perlobj”, or “perldoc perlootut”</p>
-
-<p>1.When we bless something, we are not blessing the variable which contains a reference to that thing, nor are we blessing the reference that the variable stores; we are blessing the thing that the variable refers to (sometimes known as the referent).  </p>
-
-<p>```pl</p>
-
-<p>use Scalar::Util ‘blessed’;
-my $foo = {};
-my $bar = $foo;</p>
-
-<p>bless $foo, ‘Class’;
-print blessed( $bar );</p>
-
-<p>$bar = “some other value”;
-print blessed( $bar );</p>
-
-<p>```</p>
-
-<p>The first will print out “Class” and second undef(of course you can see it).</p>
-
-<p>When we call “bless” on a variable, we are actually blessing the underlying data structure that the variable refers to. We are not blessing the reference itself, nor the variable that contains that reference. That’s why the second call to “blessed( $bar )” returns false. At that point $bar is no longer storing a reference to an
-object. You will sometimes see older books or documentation mention “blessing a reference” or describe an object as a “blessed reference”, but this is incorrect. It isn’t the reference that is blessed as an object; it’s the thing the reference refers to (i.e. the referent).   </p>
-
-<p>2.Objects are merely Perl data structures (hashes, arrays, scalars, filehandles, etc.) that have been explicitly associated with a particular class. That explicit association is created by the built-in “bless” function.</p>
-
-<p>3.An object is simply a data structure that knows to which class it belongs.A class is simply a package. A class provides methods that expect to operate on objects. A method is simply a subroutine that expects a reference to an object (or a package name, for class methods) as the first argument. </p>
-
-<p>4.Each package contains a special array called @ISA. The @ISA array contains a list of that class’s parent classes, if any. This array is examined when Perl does method resolution. It is possible to manually set @ISA. and you may see this in older Perl code. Much older code also uses the base pragma. For new code, we recommend that you use the parent pragma to declare your parents.  This pragma will take care of setting @ISA.  It will also load the parent classes and make sure that the package doesn’t inherit from itself.  </p>
-
-<p>5.However the parent classes are set, the package’s @ISA variable will contain a list of those parents. This is simply a list of scalars, each of which is a string that corresponds to a package name.   </p>
-
-<p>6.All classes inherit from the UNIVERSAL class implicitly. The UNIVERSAL class is implemented by the Perl core, and provides several default methods, such as “isa()”, “can()”, and “VERSION()”.  The “UNIVERSAL” class will never appear in a package’s @ISA variable.  </p>
-
-<p>7.Perl provides no special constructor syntax. This means that a class must implement its own constructor. A constructor is simply a class method that returns a reference to a new object.    </p>
-
-<p>8.A simple read-only accessor simply gets the value of a single attribute:  </p>
-
-<p>```pl</p>
-
-<p>sub path {
-	my $self = shift;
-	return $self-&gt;{path};
-} 
-```  </p>
-
-<p>A read-write accessor will allow the caller to set the value as well as get it:  </p>
-
-<p>```pl</p>
-
-<p>sub path {
-	my $self = shift;</p>
-
-<pre><code>if (@_) {
-	$self-&gt;{path} = shift;
-}
-
-return $self-&gt;{path}; } ```  
-</code></pre>
-
-<p>9.More on bless. </p>
-
-<p><code>pl
-my $object = bless {}, $class;
-my $object = bless {};
-</code></p>
-
-<p>In the first form, the anonymous hash is being blessed into the class
-in $class. In the second form, the anonymous hash is blessed into the
-current package. The second form is strongly discouraged, because it breaks the ability of a subclass to reuse the parent’s constructor, but you may still run across it in existing code.   </p>
-
-<p>10.If you simply want to check that a variable contains an object reference, we recommend that you use “defined blessed($object)”, since “ref” returns true values for all references, not just objects.  </p>
-
-<p>11.If you call a method that doesn’t exist in a class, Perl will throw an error. However, if that class or any of its parent classes defines an “AUTOLOAD” method, that “AUTOLOAD” method is called instead.   </p>
-
-<p>12.All the examples so far have shown objects based on a blessed hash. However, it’s possible to bless any type of data structure or referent, including scalars, globs, and subroutines. You may see this sort of thing when looking at code in the wild.  </p>
-
-<p>13.You should also check out perlmodlib for some style guides on constructing both modules and classes.  </p>
-
-<p>14.As we said earlier, most Perl objects are hashes, but an object can be an instance of any Perl data type (scalar, array, etc.). Turning a plain data structure into an object is done by blessing that data structure using Perl’s “bless” function.  </p>
-
-<p>15.Once a referent has been blessed, the “blessed” function from the Scalar::Util core module can tell us its class name. This subroutine returns an object’s class when passed an object, and false otherwise.  </p>
-
-<p>16.A constructor creates a new object. In Perl, a class’s constructor is just another method, unlike some other languages, which provide syntax for constructors. Most Perl classes use “new” as the name for their constructor: my $file = File-&gt;new(…);   </p>
-
-<p>17.What makes a method special is how it’s called. The arrow operator (“-&gt;”) tells Perl that we are calling a method.   </p>
-
-<p>18.When we make a method call, Perl arranges for the method’s invocant to be passed as the first argument. Invocant is a fancy name for the thing on the left side of the arrow. The invocant can either be a class name
-or an object. We can also pass additional arguments to the method:</p>
-
-<p>```pl
-sub print_info {
-	my $self   = shift;
-    my $prefix = shift // “This file is at “;</p>
-
-   	print $prefix, “, “, $self-&gt;path, “\n”;
-<p>}</p>
-
-<p>$file-&gt;print_info(“The file is located at “);
-# The file is located at /etc/hostname
-```  </p>
-
-<p>19.Each class can define its attributes. Attributes are sometimes called properties.  </p>
-
-<p>20.Perl has no special syntax for attributes. Under the hood, attributes are often stored as keys in the object’s underlying hash, but don’t worry about this.   </p>
-
-<p>21.You might also see the terms getter and setter. These are two types of accessors. A getter gets the attribute’s value, while a setter sets it. Another term for a setter is mutator. We recommend that you only access attributes via accessor methods.   </p>
-
-<p>22.Attributes are typically defined as read-only or read-write. Read-only attributes can only be set when the object is first created, while read-write attributes can be altered at any time.  </p>
-
-<p>23.We often refer to inheritance relationships as parent-child or “superclass/subclass” relationships. Sometimes we say that the child has an is-a relationship with its parent class.   </p>
-
-<p>24.The process of determining what method should be used is called method resolution. What Perl does is look at the object’s class first (“File::MP3” in this case). If that class defines the method, then that class’s version of the method is called. If not, Perl looks at each parent class in turn. For “File::MP3”, its only parent is “File”. If “File::MP3” does not define the method, but “File” does, then Perl calls the method in “File”.  </p>
-
-<p>25.It is possible to explicitly call a parent method from a child:</p>
-
-<p>```pl
-package File::MP3;</p>
-
-<p>use parent ‘File’;  </p>
-
-<p>sub print_info {
-	my $self = shift;
-	$self-&gt;SUPER::print_info();
-	print “Its title is “, $self-&gt;title, “\n”;
-}</p>
-
-<p>```  </p>
-
-<p>26.The “has()” subroutine declares an attribute, and “Moose” automatically creates accessors for these attributes. It also takes care of creating a “new()” method for you. This constructor knows about the attributes you declared.     </p>
-
-<p>27.与@INC数组类似，@INC包含文件的寻找路径, @ISA数组含有类(包)名，当一个方法在当前包中未找到的时就到@ISA中中的包去寻找。@ISA中还含有当前类继承的基类名。  </p>
-
-<p>28.oo中的new可以有如下的几种写法的: 注意这两种写法的区别  </p>
-
-<p>```pl
-#!/usr/bin/perl
-use Cocoa;
-$cup = new Cocoa;
-$cup-&gt;setImports( ‘java.io.InputStream’, ‘java.net.*’);
-$cup-&gt;declareMain( “Msg” , “java.applet.Applet”, “Runnable”);
-$cup-&gt;closeMain();  </p>
-
-<p>or </p>
-
-<h1 id="usrbinperl">!/usr/bin/perl</h1>
-<p>use Cocoa;
-$cup = new Cocoa;
-Cocoa::setImports($cup, ‘java.io.InputStream’, ‘java.net.*’);
-Cocoa::declareMain($cup, “Msg” , “java.applet.Applet”, “Runnable”);
-Cocoa::closeMain($cup); </p>
-
-<p>```    </p>
-
-<p>29.类方法通过@ISA数组继承.</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Ssh-keygen Usage]]></title>
-    <link href="http://isunix.github.io/blog/2014/09/05/ssh-keygen-usage/"/>
-    <updated>2014-09-05T13:57:20+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/09/05/ssh-keygen-usage</id>
-    <content type="html"><![CDATA[<p>Say I am on a server named “stsun1” and every time I want to login to a server named “stsun2”, I have to enter my password, by using ssh-keygen we can avoid this.  </p>
-
-<p>```</p>
-
-<ol>
-  <li>
-    <p>login to stsun1     </p>
-  </li>
-  <li>
-    <p>cd ~/.ssh and check if you have ‘id_rsa’,  ‘id_rsa.pub’ files, if not, go to step 3, if you already have one, go to step 4.    </p>
-  </li>
-  <li>
-    <p>ssh-keygen -t rsa, and you will see ‘id_rsa’,  ‘id_rsa.pub’ files.    </p>
-  </li>
-  <li>
-    <p>copy the .pub file to the .ssh dir on server stsun2, then “cat id_rsa.pub » ~/.ssh/authorized_keys”</p>
-  </li>
-</ol>
-
-<p>```</p>
-
-<p>That’ all!</p>
-
 ]]></content>
   </entry>
   

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Perl | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/perl/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-09-05T22:12:51+08:00</updated>
+  <updated>2014-09-06T14:37:34+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,33 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Fun Perl Code Snippets]]></title>
+    <link href="http://isunix.github.io/blog/2014/09/06/fun-perl-code-snippets/"/>
+    <updated>2014-09-06T10:02:29+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/09/06/fun-perl-code-snippets</id>
+    <content type="html"><![CDATA[<p>I collect some useful code snippets here for later usage or just keep a note of what I have read.  </p>
+
+<p>1.find files larger than a specifed size(in byte):   </p>
+
+<p><code>pl
+use File::Find;
+find(sub { print "$_\n" if -s $_ &gt; $ARGV[0]; }, ".");
+</code><br />
+2.we can use “man module::name” or “perldoc module::name” to check the detailed info of a module.   </p>
+
+<p>3.For the first example, if using require, we can write it as the following:  </p>
+
+<p><code>pl
+require File::Find;
+File::Find::find(sub { print "$File::Find::name\n" if -s &gt; 1_024_000; }, '.');
+</code>  </p>
+
+<p>4.”use” happens during compile time, whereas “require” happens at runtime.    </p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Notes on Perlrun]]></title>
@@ -285,63 +312,6 @@ Cocoa::closeMain($cup); </p>
 
 <p>That’ all!</p>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Git Set Up]]></title>
-    <link href="http://isunix.github.io/blog/2014/08/28/git-set-up/"/>
-    <updated>2014-08-28T13:46:06+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/08/28/git-set-up</id>
-    <content type="html"><![CDATA[<p>I am writing this tool since I do not want to surf the internet and look for the steps to build git repo.  </p>
-
-<p>This problem I want to solve is: I want to build git repo in one server and clone it if I want to have it on another server.  </p>
-
-<p>On server A:</p>
-
-<p>```pl
-git config –global user.name “Steven Sun”<br />
-git config –global user.email “stsun@gmail.com” <br />
-git config –global –list<br />
-git config –global color.ui “auto”    </p>
-
-<p>mkdir mysite <br />
-cd mysite <br />
-git init<br />
-git add .<br />
-git commit -am “first comit”  <br />
-```</p>
-
-<p>For the address of your repo, refer to the following:  </p>
-
-<p><code>pl
-$ git clone http[s]://example.com/path/to/repo.git/
-$ git clone ssh://example.com/path/to/repo.git/
-$ git clone git://example.com/path/to/repo.git/
-$ git clone /opt/git/project.git 
-$ git clone file:///opt/git/project.git
-$ git clone ftp[s]://example.com/path/to/repo.git/
-$ git clone rsync://example.com/path/to/repo.git/  
-</code>  </p>
-
-<p>Thus in my working environment, I can issue the followin command to clone the repo in a server to another:  </p>
-
-<p><code>pl
-git clone ssh://example.com/path/to/repo.git/
-</code></p>
-
-<p>We can use “git pull” to pull the latest files. </p>
-
-<p>For the .gitignore file, we can create one in the repo dir and add to the .gitignore file something like this:  </p>
-
-<p><code>pl
-*.jpg
-*.jpeg
-*.png
-*.old
-</code>  </p>
-
-<p>For the details, please refer to online resources.  </p>
 ]]></content>
   </entry>
   

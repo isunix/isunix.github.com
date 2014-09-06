@@ -4,7 +4,7 @@
   <title><![CDATA[Steven's Blog]]></title>
   <link href="http://isunix.github.io/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-09-05T22:12:51+08:00</updated>
+  <updated>2014-09-06T14:37:34+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,35 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Fun Perl Code Snippets]]></title>
+    <link href="http://isunix.github.io/blog/2014/09/06/fun-perl-code-snippets/"/>
+    <updated>2014-09-06T10:02:29+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/09/06/fun-perl-code-snippets</id>
+    <content type="html"><![CDATA[<p>I collect some useful code snippets here for later usage or just keep a note of what I have read.  </p>
+
+<p>1.find files larger than a specifed size(in byte):   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="nn">File::</span><span class="n">Find</span><span class="p">;</span>
+</span><span class="line"><span class="n">find</span><span class="p">(</span><span class="k">sub </span><span class="p">{</span> <span class="k">print</span> <span class="s">&quot;$_\n&quot;</span> <span class="k">if</span> <span class="o">-</span><span class="n">s</span> <span class="nv">$_</span> <span class="o">&gt;</span> <span class="nv">$ARGV</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span> <span class="p">},</span> <span class="s">&quot;.&quot;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>2.we can use “man module::name” or “perldoc module::name” to check the detailed info of a module.   </p>
+
+<p>3.For the first example, if using require, we can write it as the following:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nb">require</span> <span class="nn">File::</span><span class="n">Find</span><span class="p">;</span>
+</span><span class="line"><span class="nn">File::Find::</span><span class="n">find</span><span class="p">(</span><span class="k">sub </span><span class="p">{</span> <span class="k">print</span> <span class="s">&quot;$File::Find::name\n&quot;</span> <span class="k">if</span> <span class="o">-</span><span class="n">s</span> <span class="o">&gt;</span> <span class="mi">1_024_000</span><span class="p">;</span> <span class="p">},</span> <span class="s">&#39;.&#39;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>4.”use” happens during compile time, whereas “require” happens at runtime.    </p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Notes on Perlrun]]></title>
@@ -2305,23 +2334,6 @@ exceptions occurred.</p>
 </span><span class="line">		<span class="n">BTreePrinter</span><span class="o">.</span><span class="na">printNode</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
 </span><span class="line">	<span class="o">}</span>
 </span><span class="line"><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Python Basics Snippets]]></title>
-    <link href="http://isunix.github.io/blog/2014/08/14/python-basics-snippets/"/>
-    <updated>2014-08-14T14:27:29+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/08/14/python-basics-snippets</id>
-    <content type="html"><![CDATA[<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="nb">open</span><span class="p">(</span><span class="s">&#39;file&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span> 							<span class="c"># read entire file into string</span>
-</span><span class="line"><span class="nb">open</span><span class="p">(</span><span class="s">&#39;file&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> 							<span class="c"># read next N bytes into string</span>
-</span><span class="line"><span class="nb">open</span><span class="p">(</span><span class="s">&#39;file&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>						<span class="c"># read entire file into line strings list</span>
-</span><span class="line"><span class="nb">open</span><span class="p">(</span><span class="s">&#39;file&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span> 						<span class="c"># read next line, through &#39;\n&#39;  </span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 ]]></content>
   </entry>

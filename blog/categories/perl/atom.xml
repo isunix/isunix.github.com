@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Perl | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/perl/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-09-07T01:27:12+08:00</updated>
+  <updated>2014-09-07T12:58:28+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,49 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Getter-setter Methods in Perl]]></title>
+    <link href="http://isunix.github.io/blog/2014/09/07/getter-setter-methods-in-perl/"/>
+    <updated>2014-09-07T12:49:26+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/09/07/getter-setter-methods-in-perl</id>
+    <content type="html"><![CDATA[<p>As well as getting the value of an attribute, you may well want to set or change it. The syntax you’ll use is as follows:   </p>
+
+<p><code>pl
+print "Old address: ", $object-&gt;address(), "\n";
+$object-&gt;address("Campus Mirabilis, Pisa, Italy");
+print "New address: ", $object-&gt;address(), "\n";
+</code>  </p>
+
+<p>This kind of accessor is called a get-set method because you can use it to both get and set the attribute. Turning your current read–only accessors into accessors that can also set the value is simple. Let’s create a get–set method for address():   </p>
+
+<p>```pl  </p>
+
+<p>sub address {
+	my $self = shift;
+	# Receive more data
+	my $data = shift;   </p>
+
+<pre><code># Set the address if there's any data there.
+$self-&gt;{address} = $data if defined $data;
+return $self-&gt;{address};
+</code></pre>
+
+<p>}
+```  </p>
+
+<p>If you don’t particularly want to trap calling the method as a class method (since it’ll generate an error when we try to access the hash entry anyway), you can write really miniature get–set methods like the following:   </p>
+
+<p>```pl
+sub address { $<em>[0]-&gt;{address } = $</em>[1] if defined $<em>[1]; $</em>[0]-&gt;{address } }    </p>
+
+<p>sub lastname { $<em>[0]-&gt;{lastname } = $</em>[1] if defined $<em>[1]; $</em>[0]-&gt;{lastname } }    </p>
+
+<p>sub firstname { $<em>[0]-&gt;{firstname} = $</em>[1] if defined $<em>[1]; $</em>[0]-&gt;{firstname} }
+```</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Some Perl Standard Modules]]></title>
@@ -104,22 +147,6 @@ File::Find::find(sub { print "$File::Find::name\n" if -s &gt; 1_024_000; }, '.')
 
 <p>4.”use” happens during compile time, whereas “require” happens at runtime.    </p>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Notes on Perlrun]]></title>
-    <link href="http://isunix.github.io/blog/2014/09/05/notes-on-perlrun/"/>
-    <updated>2014-09-05T19:24:02+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/09/05/notes-on-perlrun</id>
-    <content type="html"><![CDATA[<p>We keep notes on some of the useful notes on perl command line knowledge here.  </p>
-
-<p>1.-i[extension]:  </p>
-
-<p>specifies that files processed by the “&lt;&gt;” construct are to be edited in-place.  It does this by renaming the input file, opening the output file by the original name, and selecting that output file as the default for print() statements.   </p>
-
-<p>2.-p:
-causes Perl to assume the following loop around your program, which makes it iterate over filename arguments somewhat like sed.</p>
 ]]></content>
   </entry>
   

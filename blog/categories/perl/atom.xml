@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Perl | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/perl/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-09-10T15:51:54+08:00</updated>
+  <updated>2014-09-10T16:07:23+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,64 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Named Arguments]]></title>
+    <link href="http://isunix.github.io/blog/2014/09/10/named-arguments/"/>
+    <updated>2014-09-10T15:58:10+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/09/10/named-arguments</id>
+    <content type="html"><![CDATA[<p>For named argument, it many uses the trick of changing a list into a hash. Take a look at the following code.  </p>
+
+<p>```pl
+listdir(cols=&gt;4, page=&gt;1, hidden=&gt;1, sep_dirs=&gt;1);    </p>
+
+<p>sub listdir {
+	%arg = @_;# Convert argument list to hash</p>
+
+<pre><code>$arg{match} = "*" unless exists $arg{match}; 
+$arg{cols} = 1unless exists $arg{cols}; # etc. # Use arguments to control behaviour...
+@files = get_files( $arg{match} );
+push @files, get_hidden_files() if $arg{hidden}; # etc. } ```   
+</code></pre>
+
+<p>Apart from documenting the call better, this approach has another important advantage. Since the entries of a hash can be initialized in any convenient order, we no longer need to re- member the order of the nine potential arguments, as long as we remember their names. In addition, because hashes are flattened inside lists, if we have several calls that require the same subset of arguments, we can store that subset in a separate hash and reuse it:    </p>
+
+<p>```pl
+%std_listing = (cols=&gt;2, page=&gt;1, sort_by=&gt;”date”);   </p>
+
+<p>listdir(file=&gt;”*.txt”, %std_listing);     </p>
+
+<p>listdir(file=&gt;”*.log”, %std_listing);      </p>
+
+<p>listdir(file=&gt;”*.dat”, %std_listing);
+```    </p>
+
+<p>We can even override specific elements of the standard set of arguments, by placing an explicit version after the standard set. Then the explicit version will reinitialize (i.e., overwrite) the corresponding entry in the hash:      </p>
+
+<p><code>pl
+listdir(file=&gt;"*.exe", %std_listing, sort_by=&gt;"size");
+</code>    </p>
+
+<p>This idea of a standard argument set, overridden by explicitly specified arguments, can also be used within the subroutine to simplify the handling of default values. For example:   </p>
+
+<p><code>pl
+sub listdir {
+	%defaults = (match=&gt;"*", cols=&gt;1, sort_by=&gt;"name"); %arg = (%defaults, @_);
+	# Use arguments to control behaviour...	
+	# etc.
+}
+</code> <br />
+In this version, the default values are stored in the %defaults hash, and are then flat- tened into the list used to initialize the %arg hash. The default values appear first in the ini- tializer list. Any entry of the same name passed in via @_ will therefore overwrite the corresponding entry in %arg, replacing the default value with the user-specified one. As a final optimization, the default hash could be moved outside listdir, so that it need only be ini- tialized once, before the program runs, rather than each time listdir is called:    </p>
+
+<p><code>pl
+%defaults = (match=&gt;"*", cols=&gt;1, sort_by=&gt;"name");
+sub listdir {
+	%arg = (%defaults, @_);
+	# etc.
+}
+</code></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Polymorphism in Perl]]></title>
@@ -165,38 +223,6 @@ sub address { $<em>[0]-&gt;{address } = $</em>[1] if defined $<em>[1]; $</em>[0]
 <p>sub firstname { $<em>[0]-&gt;{firstname} = $</em>[1] if defined $<em>[1]; $</em>[0]-&gt;{firstname} }
 ```</p>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Some Perl Standard Modules]]></title>
-    <link href="http://isunix.github.io/blog/2014/09/07/some-perl-standard-modules/"/>
-    <updated>2014-09-07T01:10:52+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/09/07/some-perl-standard-modules</id>
-    <content type="html"><![CDATA[<p>Below are some pelr standard perl modules which deserves deep learning, using “perldoc perlmodlib” to see a complete list of all the modules in the Perl distribution.    </p>
-
-<p>```pl</p>
-
-<p>Data::Dumper <br />
-perldoc -f eval   <br />
-File::Find  <br />
-Getopt::Std<br />
-Getopt::Long  <br />
-File::Spec <br />
-Benchmark<br />
-File::Slurp <br />
-Bundle::LWP   <br />
-Bundle::libnet   <br />
-Text::Wrap<br />
-Text::Tabs<br />
-Pod::Autopod <br />
-HTML::Parser<br />
-Storable<br />
-```</p>
-
-<p>If you want to install a module in a certian path, use “perl Makefile.PL –PREFIX=/my/module/path”.   </p>
-
-<p>Also read “perldoc perlnewmod”.</p>
 ]]></content>
   </entry>
   

@@ -9,12 +9,22 @@ For more on extending Perl with C, refer to the following tutorial.
 
 ```
 perlxs  
-ExtUtils::ParseXS   
+ExtUtils::ParseXS     
+perlembed
 h2xs   
-perlxstut  
-```  
+perlxstut    
+perlcall   
+perlguts   
+perlapi   
+perlintern    
+perlreguts  
+perlreapi     
+illguts : http://search.cpan.org/dist/illguts/   
+http://search.cpan.org/dist/perl/ext/XS/Typemap/Typemap.xs  
 
-We can alse refer to these book, 
+``` 
+
+We can also refer to these books, 
 
 ```   
 extending and embedding perl    

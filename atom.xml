@@ -4,7 +4,7 @@
   <title><![CDATA[Steven's Blog]]></title>
   <link href="http://isunix.github.io/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-09-08T14:58:55+08:00</updated>
+  <updated>2014-09-10T15:51:54+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,76 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Polymorphism in Perl]]></title>
+    <link href="http://isunix.github.io/blog/2014/09/10/polymorphism-in-perl/"/>
+    <updated>2014-09-10T14:37:37+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/09/10/polymorphism-in-perl</id>
+    <content type="html"><![CDATA[<p>This is mainly a note from the book “object oriented perl programming” by Damian Conway.</p>
+
+<p>When a method is called on a particular object, the actual method that’s involved may depend on the class to which the object belongs. For instance, if we call an object’s ignite() method, its response will be different depending on whether it belongs to the Paper, Rocket, Passion, or FlameWar class.    </p>
+
+<p>1.inheritance polymorphism:</p>
+
+<p>the objects whose methods are called belong to a hierarchy of classes that are related by inheritance. The presence of the required method in the base class of the hierarchy ensures that objects of any derived class can always respond, if only generically, to a given method call. The ability to re- define individual methods in derived classes allows objects of those classes to respond more spe- cifically to a particular method call if they so wish.    </p>
+
+<p>2.interface polymorphism:  </p>
+
+<p>The alternative approach to polymorphism is to allow any object with a suitable method to respond to a call to that method. This is known as interface polymorphism, because the only requirement is that a particular object’s interface provides a method of the appropriate name. Consequently, languages that allow interface polymorphism must also provide a run-time mechanism for handling cases where an object is unable to provide a requested method. Typ- ically, this involves providing a means of specifying a fallback subroutine that is called when- ever an object cannot respond to a particular method invocation. Alternatively, such languages may have some form of exception system. In that case, the language will trigger a well-defined exception if the object cannot respond more appropriately.Inheritance polymorphism is a special case of interface polymorphism because a common base class guarantees that objects share a specific inherited method. Any language that supports interface polymorphism automatically supports inheritance polymorphism as well.</p>
+
+<p>3.abstract class:   </p>
+
+<p>A class hierarchy will contain some classes—typically near the top of the hierarchy—that were never intended to be used to build objects directly. In other words, these classes exist only to represent a shared category or provide a single source from which descendent classes can inherit shared methods. Such classes are called abstract base classes. There is one additional role that an abstract base class can fulfill. Any base class, abstract or not, can be used to ensure that every class derived from it has a specific polymorphic method. That’s a handy feature because we are then guaranteed that any derived class will be able to respond polymorphically to a specified set of method calls.    </p>
+
+<p>Abstract base classes are clearly useful, but in large object-oriented systems two problems can arise. The first is that they may accidentally be used as real classes when someone mistakenly creates an object of their type.   </p>
+
+<p>Although an abstract base class ensures that a derived class has a certain set of methods, it does not require that the derived class redefine any of those methods meaningfully. This can be a problem if many such polymorphic methods are inher- ited, and we accidentally forget to redefine one of them. The result is that a particular class uses the generic behavior for a polymorphic function, instead of its own appropriate class-specific behavior.  </p>
+
+<p>Many object-oriented programming languages solve these two problems by introducing the concept of an abstract method (which is also known as a pure virtual function, or a deferred feature). An abstract method is a method in an abstract base class that has no valid implementation and exists only to indicate a necessary part of each derived class’s interface. It is a kind of placeholder in the interface, indicating the need for a certain functionality, but not actually providing it.     </p>
+
+<p>Suppose, for example, the register() method of the Truck class had been declared as an abstract method (i.e., defined but not implemented). Now, because that ancestral regis- ter() method doesn’t provide a working implementation, whenever a Truck object is creat- ed, and its register() method is called, an error will be flagged. This immediately solves the general problem of incorrect use of objects belonging to an abstract base class.  </p>
+
+<p>Better still, it also solves the problem of forgetting to redefine a method in a derived class. For example, if the person coding the FireTruck class neglects to implement a suitable reg- istration method for that class, then the register() method inherited from Truck will be called instead. Rather than performing some inadequate default registration process, the in- herited abstract method will immediately signal an error, indicating that the implementation is incorrect.</p>
+
+<p>4.Objects can live beyond the program that creates them.   </p>
+
+<p>5.Object-oriented programming languages provide an important separa- tion between how data is used externally—the methods that can be called on an object—and how that data is represented and manipulated internally—the way its attribute values are stored, and its methods are coded. So long as the interface remains stable, the implementation can be changed as necessary—optimized, extended, parallelized, distributed, and so forth.   </p>
+
+<p>6.In object-oriented terms, persistence is the ability of objects to retain their attribute values, their association with a class, and their individual identity, between separate executions of a program. In other words, persistent objects are those that, next time you start running the program, are still there.   </p>
+
+<p>Persistence requires more than just dumping an object’s attribute values into a file or a database when the program terminates, and then creating a new object, and reloading the saved data next time the program executes. The essence of persistence is that when the program next executes, a persistent object will have been identifiably reconstructed, either with the same name, the same location in memory, or another way of accessing it that is consistent between executions.    </p>
+
+<p>Moreover, the reconstruction ought to be as fully automated as possible. Ideally, the pro- grammer should only have to somehow mark an object as persistent, and thereafter it will au- tomagically reappear every time the program executes. In practice, very few languages can achieve that level of transparency.    </p>
+
+<p>More often, to create a persistent object it is necessary to create a special-purpose class, perhaps by deriving it from the object’s original class. This, in turn, requires the programmer to create some custom code to translate internal representations of the object—the bit patterns representing it in the program—to external representations—the bit patterns in a file or database.   </p>
+
+<p>This translation process is called encoding or serialization and is difficult to implement in the general case. It’s particularly hard if some attributes of a persistent object store pointers or references to other data. In such cases, it may also be necessary to also encode the data being referred to, as well as the abstract relationship between the persistent objects involved. In an inherently persistent language, this requirement must be met for an arbitrary number of at- tributes storing arbitrary interrelationships between arbitrary objects of arbitrary classes. Not surprisingly, few languages fully support both object orientation and automatic persistence.     </p>
+
+<p>Another important issue is the granularity of the persistence conferred upon objects. Some languages, such as HyperTalk, offer fine-grained persistence, in which every change in the attributes of an object is immediately recorded externally. Most, however, offer only coarse- grained persistence, where the attributes of an object are recorded only at the very end of a pro- gram’s execution.   </p>
+
+<p>Coarse-grained persistence is almost always a more efficient alternative since it minimizes the amount of disk access a program performs. Fine-grained persistence, on the other hand, is clearly the safer alternative since it ensures that an object’s state can always be reconstructed in a subsequent execution of the program, even if a previous execution terminated prematurely.    </p>
+
+<p>Of course, in practice, not even the finest of fine-grained persistence offers any real guar- antee of data integrity. Even if an object is updated every time it is modified, the program might still crash in the middle of the update process itself, or, in crashing at some other point, it might somehow trash the file system on which the object was recorded. However, these prob- lems also apply to coarse-grained persistence, which is far more likely to lose data due to an inopportune termination since, in general, nothing at all will have been recorded prior to the crash.   </p>
+
+<p>6.In the literature on object-oriented programming, standard concepts pass by many strange aliases. It some- times seems that every object-oriented language designer deliberately invents a completely new set of names for the same fundamental ideas.</p>
+
+<p>(I strong agree with Dimian Conway, many concepts are so clear to clear to understand, yet people invent new new aliases to mask the concept thus makes other people hard to digest the essence under those concepts–by Steven)   </p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[XS Notes]]></title>
+    <link href="http://isunix.github.io/blog/2014/09/08/xs-notes/"/>
+    <updated>2014-09-08T22:07:02+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/09/08/xs-notes</id>
+    <content type="html"><![CDATA[<p>First we will keep notes of perlxstut. The reader is assumed to have access to perlguts, perlapi and perlxs.    </p>
+
+<p>&#8220;`pl</p>
+
+<p>&#8220;`</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[XS and Perl]]></title>
@@ -1090,252 +1160,6 @@ exceptions occurred.</p>
 <p>Thus if we want to use “jobs” to see process, we will not be able to see it. we can use the “ps a” command line to see the the process.  </p>
 
 <p>使用 fg %jobnumber　会将任务拿到前台执行，拿到前台后如果要关闭这个任务按Ctrl+c组合键即可，但如果要暂停这个任务可以按Ctrl+z组合键这时就会将任务置于暂停状态。</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[在读传习录注疏]]></title>
-    <link href="http://isunix.github.io/blog/2014/08/20/zai-du-chuan-xi-lu-zhu-shu/"/>
-    <updated>2014-08-20T17:40:20+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/08/20/zai-du-chuan-xi-lu-zhu-shu</id>
-    <content type="html"><![CDATA[<p>I am reading the book “传习录注疏”， I learnt that it is a very good book. </p>
-
-<p>很想知道给那么多人成为圣人的大家的思想言行是什么个样子。 </p>
-
-<p>Here below is the book I am reading now. </p>
-
-<p><img src="http://isunix.github.io/images/sun/chuanxi.jpg" />  </p>
-
-<p>It is a little difficult. But I am delving into it now.</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[CTCI-Q1.2]]></title>
-    <link href="http://isunix.github.io/blog/2014/08/20/ctci-q1-dot-2/"/>
-    <updated>2014-08-20T10:58:48+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/08/20/ctci-q1-dot-2</id>
-    <content type="html"><![CDATA[<p>The question is:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">Implement a function void reverse(char* str) in C or C++ which reverses a null-terminated string.</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>We have two solutions here, the first is to swap the i and n-i-1 element.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-<span class="line-number">28</span>
-</pre></td><td class="code"><pre><code class="cpp"><span class="line"><span class="cp">#include &lt;iostream&gt;</span>
-</span><span class="line"><span class="cp">#include &lt;cstring&gt;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line">
-</span><span class="line"><span class="kt">void</span> <span class="n">swap</span><span class="p">(</span><span class="kt">char</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">,</span> <span class="kt">char</span> <span class="o">&amp;</span><span class="n">b</span><span class="p">){</span>
-</span><span class="line">  <span class="n">a</span> <span class="o">=</span> <span class="n">a</span><span class="o">^</span><span class="n">b</span><span class="p">;</span>
-</span><span class="line">  <span class="n">b</span> <span class="o">=</span> <span class="n">a</span><span class="o">^</span><span class="n">b</span><span class="p">;</span>
-</span><span class="line">  <span class="n">a</span> <span class="o">=</span> <span class="n">a</span><span class="o">^</span><span class="n">b</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="kt">void</span> <span class="n">reverse</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">s</span><span class="p">){</span>
-</span><span class="line">  <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="n">strlen</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
-</span><span class="line">  <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
-</span><span class="line">  <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">    <span class="n">swap</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="n">n</span><span class="o">-</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]);</span>
-</span><span class="line">  <span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="kt">int</span> <span class="n">main</span><span class="p">(){</span>
-</span><span class="line">  <span class="kt">char</span> <span class="n">s1</span><span class="p">[]</span> <span class="o">=</span> <span class="s">&quot;123456789&quot;</span><span class="p">;</span>
-</span><span class="line">  <span class="kt">char</span> <span class="n">s2</span><span class="p">[]</span> <span class="o">=</span> <span class="s">&quot;abcdefg&quot;</span><span class="p">;</span>
-</span><span class="line">  <span class="n">reverse</span><span class="p">(</span><span class="n">s1</span><span class="p">);</span>
-</span><span class="line">  <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">s1</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
-</span><span class="line">  <span class="n">reverse</span><span class="p">(</span><span class="n">s2</span><span class="p">);</span>
-</span><span class="line">  <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">s2</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-<span class="line-number">28</span>
-<span class="line-number">29</span>
-<span class="line-number">30</span>
-</pre></td><td class="code"><pre><code class="cpp"><span class="line"><span class="cp">#include &lt;iostream&gt;</span>
-</span><span class="line"><span class="cp">#include &lt;cstring&gt;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="kt">void</span> <span class="n">reverse</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">str</span><span class="p">){</span>
-</span><span class="line">  <span class="kt">char</span><span class="o">*</span> <span class="n">end</span> <span class="o">=</span> <span class="n">str</span><span class="p">;</span>
-</span><span class="line">  <span class="kt">char</span> <span class="n">tmp</span><span class="p">;</span>
-</span><span class="line">  <span class="k">if</span><span class="p">(</span><span class="n">str</span><span class="p">){</span>
-</span><span class="line">    <span class="k">while</span><span class="p">(</span><span class="o">*</span><span class="n">end</span><span class="p">){</span>
-</span><span class="line">      <span class="o">++</span><span class="n">end</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">    <span class="o">--</span><span class="n">end</span><span class="p">;</span>
-</span><span class="line">    <span class="c1">//find the end of the string, since the last char is nul, we use --end to set one char back.</span>
-</span><span class="line">    <span class="k">while</span><span class="p">(</span><span class="n">str</span> <span class="o">&lt;</span> <span class="n">end</span><span class="p">){</span>
-</span><span class="line">      <span class="n">tmp</span> <span class="o">=</span> <span class="o">*</span><span class="n">str</span><span class="p">;</span>
-</span><span class="line">      <span class="o">*</span><span class="n">str</span><span class="o">++</span> <span class="o">=</span> <span class="o">*</span><span class="n">end</span><span class="p">;</span>
-</span><span class="line">      <span class="o">*</span><span class="n">end</span><span class="o">--</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">  <span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="kt">int</span> <span class="n">main</span><span class="p">(){</span>
-</span><span class="line">  <span class="kt">char</span> <span class="n">s1</span><span class="p">[]</span> <span class="o">=</span> <span class="s">&quot;123456789&quot;</span><span class="p">;</span>
-</span><span class="line">  <span class="kt">char</span> <span class="n">s2</span><span class="p">[]</span> <span class="o">=</span> <span class="s">&quot;abcdefg&quot;</span><span class="p">;</span>
-</span><span class="line">  <span class="n">reverse</span><span class="p">(</span><span class="n">s1</span><span class="p">);</span>
-</span><span class="line">  <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">s1</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
-</span><span class="line">  <span class="n">reverse</span><span class="p">(</span><span class="n">s2</span><span class="p">);</span>
-</span><span class="line">  <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">s2</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>For the python version, we use recursion to get the last char of the string first and then the second to last char by using the recursion method. </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="c">#!/usr/local/bin/python3</span>
-</span><span class="line"><span class="c"># -*- coding: utf-8 -*-</span>
-</span><span class="line">
-</span><span class="line">
-</span><span class="line"><span class="k">def</span> <span class="nf">reverseStringRecursive</span><span class="p">(</span><span class="nb">str</span><span class="p">):</span>
-</span><span class="line">    <span class="k">if</span> <span class="nb">str</span> <span class="o">!=</span> <span class="s">&quot;&quot;</span><span class="p">:</span>
-</span><span class="line">        <span class="k">return</span> <span class="nb">str</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">:]</span> <span class="o">+</span> <span class="n">reverseStringRecursive</span><span class="p">(</span><span class="nb">str</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-</span><span class="line">    <span class="k">else</span><span class="p">:</span>
-</span><span class="line">        <span class="k">return</span> <span class="s">&quot;&quot;</span>
-</span><span class="line">
-</span><span class="line">
-</span><span class="line">
-</span><span class="line"><span class="n">str1</span> <span class="o">=</span> <span class="s">&quot;abcdef&quot;</span>
-</span><span class="line"><span class="n">str2</span> <span class="o">=</span> <span class="s">&quot;123456&quot;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">print</span><span class="p">(</span><span class="n">reverseStringRecursive</span><span class="p">(</span><span class="n">str1</span><span class="p">))</span>
-</span><span class="line"><span class="k">print</span><span class="p">(</span><span class="n">reverseStringRecursive</span><span class="p">(</span><span class="n">str2</span><span class="p">))</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>This method is very elegant.  </p>
-
-<p>As to the java version, I have no idea how to implement it in java: so sad!</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-</pre></td><td class="code"><pre><code class="java"><span class="line"><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
-</span><span class="line">
-</span><span class="line"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Solution</span><span class="o">{</span>
-</span><span class="line">  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">swap</span><span class="o">(</span><span class="kt">char</span> <span class="n">a</span><span class="o">,</span> <span class="kt">char</span> <span class="n">b</span><span class="o">){</span>
-</span><span class="line">    <span class="kt">char</span> <span class="n">temp</span><span class="o">;</span>
-</span><span class="line">    <span class="n">temp</span> <span class="o">=</span> <span class="n">a</span><span class="o">;</span>
-</span><span class="line">    <span class="n">a</span> <span class="o">=</span> <span class="n">b</span><span class="o">;</span>
-</span><span class="line">    <span class="n">b</span> <span class="o">=</span> <span class="n">temp</span><span class="o">;</span>
-</span><span class="line">  <span class="o">}</span>
-</span><span class="line">
-</span><span class="line">  <span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">reverse</span><span class="o">(</span><span class="n">String</span> <span class="n">s</span><span class="o">){</span>
-</span><span class="line">    <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="na">length</span><span class="o">();</span>
-</span><span class="line">    <span class="kt">int</span> <span class="n">i</span><span class="o">;</span>
-</span><span class="line">    <span class="k">for</span> <span class="o">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">n</span><span class="o">/</span><span class="mi">2</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
-</span><span class="line">      <span class="n">swap</span><span class="o">(</span><span class="n">s</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">i</span><span class="o">),</span> <span class="n">s</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">n</span><span class="o">-</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="o">));</span>
-</span><span class="line">    <span class="o">}</span>
-</span><span class="line">    <span class="k">return</span> <span class="n">s</span><span class="o">;</span>
-</span><span class="line">  <span class="o">}</span>
-</span><span class="line">
-</span><span class="line">  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
-</span><span class="line">    <span class="n">String</span> <span class="n">str</span> <span class="o">=</span> <span class="s">&quot;abcdef&quot;</span><span class="o">;</span>
-</span><span class="line">    <span class="n">Solution</span> <span class="n">slt</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Solution</span><span class="o">();</span>
-</span><span class="line">    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;the original string is &quot;</span> <span class="o">+</span> <span class="n">str</span> <span class="o">+</span> <span class="s">&quot; and the reversed string is:\n&quot;</span> <span class="o">+</span> <span class="n">slt</span><span class="o">.</span><span class="na">reverse</span><span class="o">(</span><span class="n">str</span><span class="o">));</span>
-</span><span class="line">  <span class="o">}</span>
-</span><span class="line"><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 ]]></content>
   </entry>

@@ -9,7 +9,8 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="You see things, and you say why, but I dream things that never were, and I say why not. –Bernard Shaw To copy other is necessary，but to copy oneself &hellip;">
+  <meta name="description" content="慢工出细活， 得养成自己debug的习惯！
+">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -62,6 +63,122 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/02/wo-de-zi-ji-debug/">我得自己debug</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-02T19:10:07+08:00" pubdate data-updated="true">Jul 2<span>nd</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>慢工出细活， 得养成自己debug的习惯！</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/01/remove-the-m-chareacters-in-a-file/">Remove the ^M Chareacters in a File</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-01T13:45:23+08:00" pubdate data-updated="true">Jul 1<span>st</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In a file that have multiple “^M” characters in it , we can use vim to remove them.  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="p">:</span><span class="nv">%s</span><span class="sr">/^M/</span><span class="o">/</span><span class="n">g</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>the ^M character is made by typing ctrl + v first then hit enter.   </p>
+
+<p>Also I write a perl script to convert the from dos to unix and also delete chars in code followng the “//”.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nb">open</span><span class="p">(</span><span class="nv">$IN</span><span class="p">,</span> <span class="s">&quot;$ARGV[0]&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">die</span> <span class="s">&quot;in: $@&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="nb">open</span><span class="p">(</span><span class="nv">$OUT</span><span class="p">,</span> <span class="s">&quot;&gt;&quot;</span><span class="p">,</span> <span class="s">&quot;$ARGV[0].new&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">die</span> <span class="s">&quot;out: $@&quot;</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">while</span> <span class="p">(</span><span class="sr">&lt;$IN&gt;</span><span class="p">){</span>
+</span><span class="line">    <span class="k">my</span> <span class="nv">$line</span> <span class="o">=</span> <span class="nv">$_</span><span class="p">;</span>
+</span><span class="line">    <span class="nv">$line</span> <span class="o">=~</span> <span class="sr">s/(\/\/.*)//g</span><span class="p">;</span>
+</span><span class="line">    <span class="k">print</span> <span class="nv">$OUT</span> <span class="nv">$line</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="nv">$command</span> <span class="o">=</span> <span class="s">&quot;mv $ARGV[0].new $ARGV[0] &amp;&amp; chmod 777 $ARGV[0] &amp;&amp; dos2unix $ARGV[0]&quot;</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="nb">system</span><span class="p">(</span><span class="nv">$command</span><span class="p">);</span>
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;successfully deleted and converted!\n&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="nb">close</span><span class="p">(</span><span class="nv">$IN</span><span class="p">);</span>
+</span><span class="line"><span class="nb">close</span><span class="p">(</span><span class="nv">$OUT</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>The code just explains itself.  </p>
+
+<p>Bingo!</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -852,1000 +969,6 @@
 <p>Just add your pics in the above format. Note here I add a subdir in the source/images/ dir.  </p>
 
 <p>That is it. </p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/06/11/zhong-ji-perl-yin-yong-ru-men/">Intermediate Perl 第四章 引用入门</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-06-11T18:45:27+08:00" pubdate data-updated="true">Jun 11<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>引用是Perl的复杂的数据结构，面向对象编程还有花哨的子程序的基石。它们是在Perl4还有Perl5这段时间被添加进去的。    </p>
-
-<p>一个Perl的标量变量存有一个单一的值。一个数组存有一个或者多个标量的有序列表。一个哈希存有一组标量作为值， 然后以另外一组值作为键。尽管一个标量可以是一个任意的字符串，那样就允许复杂的数据被嵌入到数组或者哈希里面去，但是上面的三种数据类型没有一种是很合适复杂的数据间的相互关系的。这就是引用的活了。让我们以一个例子开头看下引用的重要性。  </p>
-
-<h2 id="section">在许多数组上面执行同样的任务</h2>
-
-<p>在Minnow开始一个短途旅途的(例如，一个3小时的观光), 我们应该检查每一个乘客还有全体乘务人员来确保他们都拥有必备的旅行用品。比如说， 为了还上航行的安全，Minnow穿上的每个人都得有个救生圈，一些遮光剂，一个水壶还有一个雨衣。我们可以写一些代码来检查Skipper的储备。   </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">@required</span> <span class="o">=</span> <span class="sx">qw(preserver sunscreen water_bottle jacket)</span><span class="p">;</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">@skipper</span> <span class="o">=</span> <span class="sx">qw(blue_shirt hat jacket preserver sunscreen)</span><span class="p">;</span>
-</span><span class="line"><span class="k">for</span> <span class="k">my</span> <span class="nv">$item</span> <span class="p">(</span><span class="nv">@required</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">	<span class="k">unless</span> <span class="p">(</span><span class="nb">grep</span> <span class="nv">$item</span> <span class="ow">eq</span> <span class="nv">$_</span><span class="p">,</span> <span class="nv">@skipper</span><span class="p">)</span> <span class="p">{</span> <span class="c1"># not found in list?</span>
-</span><span class="line">	<span class="k">print</span> <span class="s">&quot;skipper is missing $item.\n&quot;</span><span class="p">;</span>
-</span><span class="line">	<span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>grep在标量上下文中返回表达式 $item eq $_ 返回 true 的次数，当这件东西在清单里的时候就是1，不在的话就是0. 如果值是0的话，就是假,这个时候我们就把信息给打印出来。   </p>
-
-<p>当然如果我们想要检查Gilligan还有Professor的话，我们可能会写如下的代码:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">@gilligan</span> <span class="o">=</span> <span class="sx">qw(red_shirt hat lucky_socks water_bottle)</span><span class="p">;</span>
-</span><span class="line"><span class="k">for</span> <span class="k">my</span> <span class="nv">$item</span> <span class="p">(</span><span class="nv">@required</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">	<span class="k">unless</span> <span class="p">(</span><span class="nb">grep</span> <span class="nv">$item</span> <span class="ow">eq</span> <span class="nv">$_</span><span class="p">,</span> <span class="nv">@gilligan</span><span class="p">)</span> <span class="p">{</span> <span class="c1"># not found in list?</span>
-</span><span class="line">	<span class="k">print</span> <span class="s">&quot;gilligan is missing $item.\n&quot;</span><span class="p">;</span>
-</span><span class="line">	<span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="k">my</span> <span class="nv">@professor</span> <span class="o">=</span> <span class="sx">qw(sunscreen water_bottle slide_rule batteries radio)</span><span class="p">;</span>
-</span><span class="line"><span class="k">for</span> <span class="k">my</span> <span class="nv">$item</span> <span class="p">(</span><span class="nv">@required</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">	<span class="k">unless</span> <span class="p">(</span><span class="nb">grep</span> <span class="nv">$item</span> <span class="ow">eq</span> <span class="nv">$_</span><span class="p">,</span> <span class="nv">@professor</span><span class="p">)</span> <span class="p">{</span> <span class="c1"># not found in list?</span>
-</span><span class="line">	<span class="k">print</span> <span class="s">&quot;professor is missing $item.\n&quot;</span><span class="p">;</span>
-</span><span class="line">	<span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>你可能开始注意到这里有很多的冗余的代码，并且想到我们应该把它重构到一个可以重用的通用的子程序中(你是正确的):   </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">sub </span><span class="nf">check_required_items</span> <span class="p">{</span>
-</span><span class="line">	<span class="k">my</span> <span class="nv">$who</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
-</span><span class="line">	<span class="k">my</span> <span class="nv">@required</span> <span class="o">=</span> <span class="sx">qw(preserver sunscreen water_bottle jacket)</span><span class="p">;</span>
-</span><span class="line">	<span class="k">for</span> <span class="k">my</span> <span class="nv">$item</span> <span class="p">(</span><span class="nv">@required</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">		<span class="k">unless</span> <span class="p">(</span><span class="nb">grep</span> <span class="nv">$item</span> <span class="ow">eq</span> <span class="nv">$_</span><span class="p">,</span> <span class="nv">@_</span><span class="p">)</span> <span class="p">{</span> <span class="c1"># not found in list?</span>
-</span><span class="line">			<span class="k">print</span> <span class="s">&quot;$who is missing $item.\n&quot;</span><span class="p">;</span>
-</span><span class="line">		<span class="p">}</span>
-</span><span class="line">	<span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="k">my</span> <span class="nv">@gilligan</span> <span class="o">=</span> <span class="sx">qw(red_shirt hat lucky_socks water_bottle)</span><span class="p">;</span>
-</span><span class="line"><span class="n">check_required_items</span><span class="p">(</span><span class="s">&#39;gilligan&#39;</span><span class="p">,</span> <span class="nv">@gilligan</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>Perl一开始通过它的@_数组给了子程序5个条款：名字gilligan还有属于Gilligan的4个东西。在shift操作之后，@_就只有4个东西了。因此grep通过和清单比对来检查每个所必备的东西。   </p>
-
-<p>到目前为止，一切都很好。我们可以同过一点多余的代码来检查Skipper还有Professor的：  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">@skipper</span> <span class="o">=</span> <span class="sx">qw(blue_shirt hat jacket preserver sunscreen)</span><span class="p">;</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">@professor</span> <span class="o">=</span> <span class="sx">qw(sunscreen water_bottle slide_rule batteries radio)</span><span class="p">;</span>
-</span><span class="line"><span class="n">check_required_items</span><span class="p">(</span><span class="s">&#39;skipper&#39;</span><span class="p">,</span> <span class="nv">@skipper</span><span class="p">);</span>
-</span><span class="line"><span class="n">check_required_items</span><span class="p">(</span><span class="s">&#39;professor&#39;</span><span class="p">,</span> <span class="nv">@professor</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>对于其他的乘客，我们在需要的地方重复下就行了。尽管这个代码符合一开始的要求，我们有两个问题得处理: </p>
-
-<p>*为了创建@_, Perl把数组的整个内容都拷下下来扫描。对于一个元素的话这没什么问题，但是如果数组很大的话，把数据拷贝然后仅仅就是为了传给子程序的话就显得有点浪费了。   </p>
-
-<p>*假如我们想要修改原先的数组来迫使供应清单包括一些必备的东西，因为我们在子程序中有一个副本(传值),对@_做的任何的修改都不会自动地反映到对应的供应清单数组中去。   </p>
-
-<p>为了解决一个或者两个问题，我们需要的是引用传递而非值传递。这就是doctor(或者Professor)所要求的。  </p>
-
-<h2 id="section-1">对一个数组做引用</h2>
-
-<p>在反斜线()的很多的其他的意思当中，它还是”对某项东西进行引用”的操作符。当我们把它用在一个数组名的前面的时候，比如， \@skipper， 他的结果就是对那个数组的引用。对数组的引用就像是指针: 它指向数组，但是它不是数组本身。  </p>
-
-<p>任何变量适宜地方都是适用于引用。它可以作用于一个数组或者哈希的元素，或者一个普通的标量变量， 像下面这样:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">$reference_to_skipper</span> <span class="o">=</span> <span class="o">\</span><span class="nv">@skipper</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>引用可以被拷贝:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">$second_reference_to_skipper</span> <span class="o">=</span> <span class="nv">$reference_to_skipper</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>甚至于：  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">$third_reference_to_skipper</span> <span class="o">=</span> <span class="o">\</span><span class="nv">@skipper</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>我们可以相互交换这3个引用。我们甚至可以说它们是相同的，因为事实上，它们就是相同的东西:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">if</span> <span class="p">(</span><span class="nv">$reference_to_skipper</span> <span class="o">=</span> <span class="o">=</span> <span class="nv">$second_reference_to_skipper</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">	<span class="k">print</span> <span class="s">&quot;They are identical references.\n&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>这个等式比较两个引用的数值形式。这里引用的数值形式是@skipper内部数据结构的唯一的内存地址, 它在变量的生命周期里是不会改变的。如果我们使用eq或者print来查看它的字符串形式，我们会得到调试出来的字符串:   </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">ARRAY</span><span class="p">(</span><span class="mh">0x1a2b3c</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>对于这个数组它也是唯一的，因为它包含了数组的唯一地址的16进制表示。调试出来的字符串同样也表示了这是个数组引用。当然要是我们在我们的代码中看到类似的输出，那就基本上表示了有bug。使用我们代码的用户是对16进制的存储地址块没有兴趣的。  </p>
-
-<p>因为我们可以拷贝一个引用，向一个子程序传递一个参数事实上就是拷贝，我们可以使用下面的代码来向子程序中的数组传递一个引用:   </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">@skipper</span> <span class="o">=</span> <span class="sx">qw(blue_shirt hat jacket preserver sunscreen)</span><span class="p">;</span>
-</span><span class="line"><span class="n">check_required_items</span><span class="p">(</span><span class="s">&quot;The Skipper&quot;</span><span class="p">,</span> <span class="o">\</span><span class="nv">@skipper</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="k">sub </span><span class="nf">check_required_items</span> <span class="p">{</span>
-</span><span class="line">	<span class="k">my</span> <span class="nv">$who</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
-</span><span class="line">	<span class="k">my</span> <span class="nv">$items</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
-</span><span class="line">	<span class="k">my</span> <span class="nv">@required</span> <span class="o">=</span> <span class="sx">qw(preserver sunscreen water_bottle jacket)</span><span class="p">;</span>
-</span><span class="line">	<span class="o">...</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>现在子程序中的$items是对数组@skipper的一个引用。但是我么怎么能够从一个引用得到我们原先的数组呢? 那当然是我们对引用进行解引用了。</p>
-
-<h2 id="section-2">对数组引用进行解引用</h2>
-
-<p>如果你看一下@skipper的话，你会发现他包含了两部分：@符号以及数组的名字。类似的， 语法$syntax[1]包含了中间部分的数组名以及在外围部分的一些语法来得到数组的第二个元素(指标值1是第二个元素因为指标值从0开始).    </p>
-
-<p>下面有个小的技巧: 我们可以向数组中放置任何一个包含在大括号中的引用，来代替数组名，这样就得到了一个获得原先数组的方法。也就是说，任何我们用skipper来命令数组的地方，我们都可以使用大括号中包含引用的形式.：{$items}。例如， 下面的这两行都表示整个的数组。  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">@</span> <span class="nv">skipper</span>
-</span><span class="line">
-</span><span class="line"><span class="nv">@</span><span class="p">{</span> <span class="nv">$items</span> <span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>而下面的这两行都表示了数组的第二个元素:   </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">$skipper</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-</span><span class="line">
-</span><span class="line"><span class="nv">$</span><span class="p">{</span><span class="nv">$items</span><span class="p">}[</span><span class="mi">1</span><span class="p">]</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>通过使用引用过的形式，我们把代码还有获取数组的方法从实际的数组分离开了。让我们看一下这是怎样改变了这个子程序的其余的部分的。   </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">sub </span><span class="nf">check_required_items</span> <span class="p">{</span>
-</span><span class="line">	<span class="k">my</span> <span class="nv">$who</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
-</span><span class="line">	<span class="k">my</span> <span class="nv">$items</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
-</span><span class="line">	<span class="k">my</span> <span class="nv">@required</span> <span class="o">=</span> <span class="sx">qw(preserver sunscreen water_bottle jacket)</span><span class="p">;</span>
-</span><span class="line">	<span class="k">for</span> <span class="k">my</span> <span class="nv">$item</span> <span class="p">(</span><span class="nv">@required</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">		<span class="k">unless</span> <span class="p">(</span><span class="nb">grep</span> <span class="nv">$item</span> <span class="ow">eq</span> <span class="nv">$_</span><span class="p">,</span> <span class="nv">@</span><span class="p">{</span><span class="nv">$items</span><span class="p">})</span> <span class="p">{</span> <span class="c1"># not found in list?</span>
-</span><span class="line">		<span class="k">print</span> <span class="s">&quot;$who is missing $item.\n&quot;</span><span class="p">;</span>
-</span><span class="line">		<span class="p">}</span>
-</span><span class="line">	<span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>我们所做的就是把@_(供应清单的副本)替换成@{$items},一个对原先供应清单的引用的解引用. 现在我们就可以像之前那样，对子程序调用几次了:   </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">@skipper</span> <span class="o">=</span> <span class="sx">qw(blue_shirt hat jacket preserver sunscreen)</span><span class="p">;</span>
-</span><span class="line"><span class="n">check_required_items</span><span class="p">(</span><span class="s">&#39;The Skipper&#39;</span><span class="p">,</span> <span class="o">\</span><span class="nv">@skipper</span><span class="p">);</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">@professor</span> <span class="o">=</span> <span class="sx">qw(sunscreen water_bottle slide_rule batteries radio)</span><span class="p">;</span>
-</span><span class="line"><span class="n">check_required_items</span><span class="p">(</span><span class="s">&#39;Professor&#39;</span><span class="p">,</span> <span class="o">\</span><span class="nv">@professor</span><span class="p">);</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">@gilligan</span> <span class="o">=</span> <span class="sx">qw(red_shirt hat lucky_socks water_bottle)</span><span class="p">;</span>
-</span><span class="line"><span class="n">check_required_items</span><span class="p">(</span><span class="s">&#39;Gilligan&#39;</span><span class="p">,</span> <span class="o">\</span><span class="nv">@gilligan</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>在每一种情况下，$items都指向一个不同的数组，所以每次我们调用的时候，同样的代码都指向不同的数组。只是引用的最重要的用法之一: 把代码从它所作用的数据结构上面分离开来，那样我们就可以更方便地重用代码了。  </p>
-
-<p>通过引用传递数组解决了我们之前提到的两个问题中的第一个问题. 现在，我们得到了一个指向供应清单的单一的引用引用， 而不是把整个的供应清单都拷贝到@_数组中去.   </p>
-
-<p>我们可以把子程序开头的两个shift给去掉吗? 当然， 但是那样会牺牲掉清晰性的.   </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">sub </span><span class="nf">check_required_items</span> <span class="p">{</span>
-</span><span class="line">	<span class="k">my</span> <span class="nv">@required</span> <span class="o">=</span> <span class="sx">qw(preserver sunscreen water_bottle jacket)</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line">	<span class="k">for</span> <span class="k">my</span> <span class="nv">$item</span> <span class="p">(</span><span class="nv">@required</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">		<span class="k">unless</span> <span class="p">(</span><span class="nb">grep</span> <span class="nv">$item</span> <span class="ow">eq</span> <span class="nv">$_</span><span class="p">,</span> <span class="nv">@</span><span class="p">{</span><span class="nv">$_</span><span class="p">[</span><span class="mi">1</span><span class="p">]})</span> <span class="p">{</span> <span class="c1"># not found in list?</span>
-</span><span class="line">		<span class="k">print</span> <span class="s">&quot;$_[0] is missing $item.\n&quot;</span><span class="p">;</span>
-</span><span class="line">		<span class="p">}</span>
-</span><span class="line">	<span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>在@_中仍然有两个元素, 第一个元素是乘客或者乘务人员的名字， 我们将在错误信息中使用到。第二个元素是对正确的供应清单的引用，我们在grep表达式中会使用到.   </p>
-
-<h2 id="section-3">把括号去掉</h2>
-
-<p>绝大多数时候，我们想要解引用的那个引用都是简单的标量变量, 如 @{$items} 或者 ${$items}[1]. 在那些情况下去掉大括号，而毫不含糊地就形成了 @$items或者 $$items[1].  </p>
-
-<p>然而， 要是大括号中的值不是一个简单的标量变量的时候, 我们就不可以把括号个去掉了. 例如, 对于来自上个自程序中的重写@{$_[1]}, 我们就不可以把括号给去掉了, 那是对数组的单一元素的访问，不是一个标量。  </p>
-
-<p>这个规则也表示了我们将很容易看到”缺失”的括号得放到什么地方去. 当我们看到 $$items[1]这个听讨厌的语法的时候，我们可以知道大括号肯定属于简单的表量变量$items的周围。因此，$items肯定是数组的一个引用.  </p>
-
-<p>因此， 上面那个子程序的一个看起来更加舒服的版本就是:    </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">sub </span><span class="nf">check_required_items</span> <span class="p">{</span>
-</span><span class="line">	<span class="k">my</span> <span class="nv">$who</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
-</span><span class="line">	<span class="k">my</span> <span class="nv">$items</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
-</span><span class="line">	<span class="k">my</span> <span class="nv">@required</span> <span class="o">=</span> <span class="sx">qw(preserver sunscreen water_bottle jacket)</span><span class="p">;</span>
-</span><span class="line">	<span class="k">for</span> <span class="k">my</span> <span class="nv">$item</span> <span class="p">(</span><span class="nv">@required</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">		<span class="k">unless</span> <span class="p">(</span><span class="nb">grep</span> <span class="nv">$item</span> <span class="ow">eq</span> <span class="nv">$_</span><span class="p">,</span> <span class="nv">@$items</span><span class="p">)</span> <span class="p">{</span> <span class="c1"># not found in list?</span>
-</span><span class="line">		<span class="k">print</span> <span class="s">&quot;$who is missing $item.\n&quot;</span><span class="p">;</span>
-</span><span class="line">		<span class="p">}</span>
-</span><span class="line">	<span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>唯一的区别就是我们把@$items周围的括号给去掉了.  </p>
-
-<h2 id="section-4">修改数组</h2>
-
-<p>你已经看到了怎样通过一个数组的引用来解决过度的复制的问题. 现在让我们看下怎样修改原先的数组.  </p>
-
-<p>对于每一个缺失的供应品，我们把它push到一个数组里面去， 强迫乘客考虑这个条款:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">sub </span><span class="nf">check_required_items</span> <span class="p">{</span>
-</span><span class="line">	<span class="k">my</span> <span class="nv">$who</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
-</span><span class="line">	<span class="k">my</span> <span class="nv">$items</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
-</span><span class="line">	<span class="k">my</span> <span class="nv">@required</span> <span class="o">=</span> <span class="sx">qw(preserver sunscreen water_bottle jacket)</span><span class="p">;</span>
-</span><span class="line">	<span class="k">my</span> <span class="nv">@missing</span> <span class="o">=</span> <span class="p">(</span> <span class="p">);</span>
-</span><span class="line">	<span class="k">for</span> <span class="k">my</span> <span class="nv">$item</span> <span class="p">(</span><span class="nv">@required</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">		<span class="k">unless</span> <span class="p">(</span><span class="nb">grep</span> <span class="nv">$item</span> <span class="ow">eq</span> <span class="nv">$_</span><span class="p">,</span> <span class="nv">@$items</span><span class="p">)</span> <span class="p">{</span> <span class="c1"># not found in list?</span>
-</span><span class="line">		<span class="k">print</span> <span class="s">&quot;$who is missing $item.\n&quot;</span><span class="p">;</span>
-</span><span class="line">		<span class="nb">push</span> <span class="nv">@missing</span><span class="p">,</span> <span class="nv">$item</span><span class="p">;</span>
-</span><span class="line">	    <span class="p">}</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">
-</span><span class="line">
-</span><span class="line">	<span class="k">if</span> <span class="p">(</span><span class="nv">@missing</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">		<span class="k">print</span> <span class="s">&quot;Adding @missing to @$items for $who.\n&quot;</span><span class="p">;</span>
-</span><span class="line">	    <span class="nb">push</span> <span class="nv">@$items</span><span class="p">,</span> <span class="nv">@missing</span><span class="p">;</span>
-</span><span class="line">	<span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>注意下添加的@missing数组。如果我们在扫描的过程中发现了任何物品缺失了， 我们可以把它push到@missing中去。如果在扫描完了之后这个数组中有东西的话，我们就把它添加到原先的供应清单中去。  </p>
-
-<p>关键点就是这个子程序中的最后一行。我们对$items数组引用进行解引用，访问原先的数组，然后把@missing中元素添加进去。要是没有引用传值的话，我们将只能修改数据的一个本地的拷贝，那样将对原先的数组没有任何的影响。  </p>
-
-<p>同样的, @items(以及它的更加常见的形式@{$items})可以在双引号引起来的字符串中运作。我们不可以在@和接下来的任何的字符之间包含空格，尽管我们可以在大括号中包含任意数量的空格， 就好像那是正常的Perl代码一样。  </p>
-
-<h2 id="section-5">嵌套的数据结构</h2>
-
-<p>在下面的例子中，数组@_包含了两个元素, 其中之一仍然是数组. 如果我们对一个数组进行引用，而这个数组又包含了一个一个对数组的引用, 那将会怎么样呢？ 我们得到的将是一个复杂的数据结构, 这将是非常有用的。  </p>
-
-<p>例如, 我们可以先构建一个更大的数据结构，它包含了整个的供应清单, 通过来对数据进行递归，我们将得到Skipper, Gilligan还有Professor的信息:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">@skipper</span> <span class="o">=</span> <span class="sx">qw(blue_shirt hat jacket preserver sunscreen)</span><span class="p">;</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">@skipper_with_name</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;Skipper&#39;</span><span class="p">,</span> <span class="o">\</span><span class="nv">@skipper</span><span class="p">);</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">@professor</span> <span class="o">=</span> <span class="sx">qw(sunscreen water_bottle slide_rule batteries radio)</span><span class="p">;</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">@professor_with_name</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;Professor&#39;</span><span class="p">,</span> <span class="o">\</span><span class="nv">@professor</span><span class="p">);</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">@gilligan</span> <span class="o">=</span> <span class="sx">qw(red_shirt hat lucky_socks water_bottle)</span><span class="p">;</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">@gilligan_with_name</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;Gilligan&#39;</span><span class="p">,</span> <span class="o">\</span><span class="nv">@gilligan</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>现在@skipper_with_name就有两个元素了, 第二个元素是数组的引用，同我们之前传递给子程序的是相似的。现在我们把这些都组合起来:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">@all_with_names</span> <span class="o">=</span> <span class="p">(</span>
-</span><span class="line"><span class="o">\</span><span class="nv">@skipper_with_name</span><span class="p">,</span>
-</span><span class="line"><span class="o">\</span><span class="nv">@professor_with_name</span><span class="p">,</span>
-</span><span class="line"><span class="o">\</span><span class="nv">@gilligan_with_name</span><span class="p">,</span>
-</span><span class="line"><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>注意我们只有3个元素，其中的每一个都是一个对一个数组的引用，这个数组有两个元素: 名字还有对应的初始供应列表。图4-1是它的一个图片:  </p>
-
-<p><img src="/images/sun/perl_4.1.png" />   </p>
-
-<p>因此，$all_with_names[2]将会是对于Gilligan的数据的数组引用。如果你把它解引用的话@{$all_with_names[2]}，你将得到一个两个元素的数组，”Gilligan”还有另一个数组引用。     </p>
-
-<p>我们该怎么访问那个数组引用呢？ 得再次使用我们的规则了， 也就是${$all_with_names[2]}[1]. 换句话说， 在有了$all_tiwh_names[2]之后， 我们会把它解引用到一个像是普通的数组$DUMMY[1]一样的表达式中去， 所以我们将用{$all_with_names[2]}来替换DUMMY.  </p>
-
-<p>我们该如何使用这种数据结构来调用已经存在的 check_required_itesm()例程呢？ 下面的代码是足够简单的了:   </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">for</span> <span class="k">my</span> <span class="nv">$person</span> <span class="p">(</span><span class="nv">@all_with_names</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">	<span class="k">my</span> <span class="nv">$who</span> <span class="o">=</span> <span class="nv">$$person</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
-</span><span class="line">	<span class="k">my</span> <span class="nv">$provisions_reference</span> <span class="o">=</span> <span class="nv">$$person</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
-</span><span class="line">	<span class="n">check_required_items</span><span class="p">(</span><span class="nv">$who</span><span class="p">,</span> <span class="nv">$provisions_reference</span><span class="p">);</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>这并不要求对子程序做任何的改变。随着循环的推进， 控制变量$person将会依次是$all_with_names[0], $all_with_names[1], $all_with_names[2]中的一个。当我们解引用<script type="math/tex">person[0]之后， 我们会依次得到 “Skipper”， “Professor”，还有“Gilligan”。</script>person[1]是某个人对应的供应清单的数组引用。  </p>
-
-<p>当然， 由于整个的被解引用的数组精确地匹配了参数列表，我们也可以把这个过程简化的。   </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">for</span> <span class="k">my</span> <span class="nv">$person</span> <span class="p">(</span><span class="nv">@all_with_names</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">	<span class="n">check_required_items</span><span class="p">(</span><span class="nv">@$person</span><span class="p">);</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>甚至是:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">check_required_items</span><span class="p">(</span><span class="nv">@$_</span><span class="p">)</span> <span class="k">for</span> <span class="nv">@all_with_names</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>正如你所看到的， 多层次的优化会导致困惑的。请确定你考虑到当一个月之后你得再次读你的代码的时候， 你是否能明白。 如果那还不够的话，请考虑下当你离职之后那个接手你的工作的人。   </p>
-
-<h2 id="section-6">通过箭头来简化嵌套的元素引用</h2>
-
-<p>再次看下大括号形式的解引用。正如在我们之前的例子中一样， 对于Gilligan的清单的数组引用是${$all_with_names[2]}[1]. 现在如果我们想知道Gilligan的第一个供应清单该怎么办呢？我们得对这个条款再进一步的解引用， 所以又是另外的一层大括号了: ${${$all_with_names[2]}[1]}[0]. 这真的令人讨厌的语法啊。我们能够简化它吗？ 当然可以！  </p>
-
-<p>每当我们要写${DUMMY}[$y]的时候，我们可以写DUMMY-&gt;[$y]来代替。换句话说，我们可以这样来解引用一个数组的引用， 找出这个数组中的一个特定的元素，这可以简单地通过在定义这个数组的表达式的后面跟上一个箭头还有中括号引起来的下标。   </p>
-
-<p>对于这个例子，这意味着我们可以用$all_with_names[2]-&gt;[1]来挑出针对Gilligan的数组引用，以及$all_with_names[2]-&gt;[1]-&gt;[0]来表示Gilligan的第一个物品清单。哇， 那看起来真的舒服多了。   </p>
-
-<p>如果那还不够简单的话，还有一条规则可循: 如果箭头处在像方括号这样的可以包含下标的东西之间，我们可以把箭头个去掉。$all_with_names[2]-&gt;[1]-&gt;[0]就变成了$all_with_names[2][1][0]。 现在看起来就更加地舒服了。   </p>
-
-<p>(以下省略一段不翻译了)。  </p>
-
-<h2 id="section-7">对哈希的引用</h2>
-
-<p>正如我们可以对数组进行引用，我们也可以对哈希进行引用。再一次地，我们使用反斜杠来作为引用的操作符.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">%gilligan_info</span> <span class="o">=</span> <span class="p">(</span>
-</span><span class="line">	<span class="n">name</span> <span class="o">=&gt;</span> <span class="s">&#39;Gilligan&#39;</span><span class="p">,</span>
-</span><span class="line">	<span class="n">hat</span> <span class="o">=&gt;</span> <span class="s">&#39;White&#39;</span><span class="p">,</span>
-</span><span class="line">	<span class="n">shirt</span> <span class="o">=&gt;</span> <span class="s">&#39;Red&#39;</span><span class="p">,</span>
-</span><span class="line">	<span class="n">position</span> <span class="o">=&gt;</span> <span class="s">&#39;First Mate&#39;</span><span class="p">,</span>
-</span><span class="line"><span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="k">my</span> <span class="nv">$hash_ref</span> <span class="o">=</span> <span class="o">\</span><span class="nv">%gilligan_info</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>我们可以对一个哈希引用进行解引用来得到原先的数据。这个策略同对一个数组引用进行解引用是类似的。  </p>
-
-<p>我们像在没有引用的情况下一样写出哈希的语法，然后在包含引用的那个东西的周围使用大括号括起来， 这样子来替换掉原先的哈希名字。例如，为了超出某个键的特定的值，我们可以这样来做:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">$name</span> <span class="o">=</span> <span class="nv">$</span> <span class="nv">gilligan_info</span> <span class="p">{</span> <span class="s">&#39;name&#39;</span> <span class="p">};</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">$name</span> <span class="o">=</span> <span class="nv">$</span> <span class="p">{</span> <span class="nv">$hash_ref</span> <span class="p">}</span> <span class="p">{</span> <span class="s">&#39;name&#39;</span> <span class="p">};</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>在这个例子中，大括号是有着两种不同的意思的. 第一对大括号代表的表达式返回一个引用，而第二个大括号是作为代表哈希键的表达式的界定符.  </p>
-
-<p>如同数组的引用一样，我们可以在有些情况下使用快捷方式来替换复杂的大括号的这种形式. 例如， 如果在大括号中只有一个简单的标量变量的话，我们就可以把大括号个去掉的.   </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">$name</span> <span class="o">=</span> <span class="nv">$$hash_ref</span><span class="p">{</span><span class="s">&#39;name&#39;</span><span class="p">};</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">@keys</span> <span class="o">=</span> <span class="nb">keys</span> <span class="nv">%$hash_ref</span><span class="p">;</span>
-</span><span class="line">
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>像数组的引用一样， 当指向某个具体的哈希元素的时候，我们可以使用箭头的形式:   </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">$name</span> <span class="o">=</span> <span class="nv">$hash_ref</span><span class="o">-&gt;</span><span class="p">{</span><span class="s">&#39;name&#39;</span><span class="p">};</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>由于凡是标量变量可以存在的地方, 哈希的引用都可以存在, 所以我们可以创建一个哈希引用的数组,   </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">%gilligan_info</span> <span class="o">=</span> <span class="p">(</span>
-</span><span class="line">	<span class="n">name</span> <span class="o">=&gt;</span> <span class="s">&#39;Gilligan&#39;</span><span class="p">,</span>
-</span><span class="line">	<span class="n">hat</span> <span class="o">=&gt;</span> <span class="s">&#39;White&#39;</span><span class="p">,</span>
-</span><span class="line">	<span class="n">shirt</span> <span class="o">=&gt;</span> <span class="s">&#39;Red&#39;</span><span class="p">,</span>
-</span><span class="line">	<span class="n">position</span> <span class="o">=&gt;</span> <span class="s">&#39;First Mate&#39;</span><span class="p">,</span>
-</span><span class="line"><span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="k">my</span> <span class="nv">%skipper_info</span> <span class="o">=</span> <span class="p">(</span>
-</span><span class="line">	<span class="n">name</span> <span class="o">=&gt;</span> <span class="s">&#39;Skipper&#39;</span><span class="p">,</span>
-</span><span class="line">	<span class="n">hat</span> <span class="o">=&gt;</span> <span class="s">&#39;Black&#39;</span><span class="p">,</span>
-</span><span class="line">	<span class="n">shirt</span> <span class="o">=&gt;</span> <span class="s">&#39;Blue&#39;</span><span class="p">,</span>
-</span><span class="line">	<span class="n">position</span> <span class="o">=&gt;</span> <span class="s">&#39;Captain&#39;</span><span class="p">,</span>
-</span><span class="line"><span class="p">);</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">@crew</span> <span class="o">=</span> <span class="p">(</span><span class="o">\</span><span class="nv">%gilligan_info</span><span class="p">,</span> <span class="o">\</span><span class="nv">%skipper_info</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>因此, $crew[0]是一个指向关于Gilligan的信息的哈希引用。我们可以通过下面的其中之一来得到Gilligan的名字:    </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">$</span><span class="p">{</span> <span class="nv">$crew</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">}</span> <span class="p">{</span> <span class="s">&#39;name&#39;</span> <span class="p">}</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">$ref</span> <span class="o">=</span> <span class="nv">$crew</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span> <span class="nv">$$ref</span><span class="p">{</span><span class="s">&#39;name&#39;</span><span class="p">}</span>
-</span><span class="line"><span class="nv">$crew</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="p">{</span><span class="s">&#39;name&#39;</span><span class="p">}</span>
-</span><span class="line"><span class="nv">$crew</span><span class="p">[</span><span class="mi">0</span><span class="p">]{</span><span class="s">&#39;name&#39;</span><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>让我们来打印出一个员工的花名册, </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line">
-</span><span class="line"><span class="k">my</span> <span class="nv">%gilligan_info</span> <span class="o">=</span> <span class="p">(</span>
-</span><span class="line">	<span class="n">name</span> <span class="o">=&gt;</span> <span class="s">&#39;Gilligan&#39;</span><span class="p">,</span>
-</span><span class="line">	<span class="n">hat</span> <span class="o">=&gt;</span> <span class="s">&#39;White&#39;</span><span class="p">,</span>
-</span><span class="line">	<span class="n">shirt</span> <span class="o">=&gt;</span> <span class="s">&#39;Red&#39;</span><span class="p">,</span>
-</span><span class="line">	<span class="n">position</span> <span class="o">=&gt;</span> <span class="s">&#39;First Mate&#39;</span><span class="p">,</span>
-</span><span class="line"><span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="k">my</span> <span class="nv">%skipper_info</span> <span class="o">=</span> <span class="p">(</span>
-</span><span class="line">	<span class="n">name</span> <span class="o">=&gt;</span> <span class="s">&#39;Skipper&#39;</span><span class="p">,</span>
-</span><span class="line">	<span class="n">hat</span> <span class="o">=&gt;</span> <span class="s">&#39;Black&#39;</span><span class="p">,</span>
-</span><span class="line">	<span class="n">shirt</span> <span class="o">=&gt;</span> <span class="s">&#39;Blue&#39;</span><span class="p">,</span>
-</span><span class="line">	<span class="n">position</span> <span class="o">=&gt;</span> <span class="s">&#39;Captain&#39;</span><span class="p">,</span>
-</span><span class="line"><span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="k">my</span> <span class="nv">@crew</span> <span class="o">=</span> <span class="p">(</span><span class="o">\</span><span class="nv">%gilligan_info</span><span class="p">,</span> <span class="o">\</span><span class="nv">%skipper_info</span><span class="p">);</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">$format</span> <span class="o">=</span> <span class="s">&quot;%-15s %-7s %-7s %-15s\n&quot;</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="nb">printf</span> <span class="nv">$format</span><span class="p">,</span> <span class="sx">qw(Name Shirt Hat Position)</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">for</span> <span class="k">my</span> <span class="nv">$crewmember</span> <span class="p">(</span><span class="nv">@crew</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">	<span class="nb">printf</span> <span class="nv">$format</span><span class="p">,</span>
-</span><span class="line">	<span class="nv">$crewmember</span><span class="o">-&gt;</span><span class="p">{</span><span class="s">&#39;name&#39;</span><span class="p">},</span>
-</span><span class="line">	<span class="nv">$crewmember</span><span class="o">-&gt;</span><span class="p">{</span><span class="s">&#39;shirt&#39;</span><span class="p">},</span>
-</span><span class="line">	<span class="nv">$crewmember</span><span class="o">-&gt;</span><span class="p">{</span><span class="s">&#39;hat&#39;</span><span class="p">},</span>
-</span><span class="line">	<span class="nv">$crewmember</span><span class="o">-&gt;</span><span class="p">{</span><span class="s">&#39;position&#39;</span><span class="p">};</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>最后的这部分看起来很冗余，我们可以使用哈希切割来简化它。如果原先的语法是: </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">@</span> <span class="nv">gilligan_info</span> <span class="p">{</span> <span class="sx">qw(name position)</span> <span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>从引用得来的哈希切割的表示方法如下:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">@</span> <span class="p">{</span> <span class="nv">$hash_ref</span> <span class="p">}</span> <span class="p">{</span> <span class="sx">qw(name position)</span> <span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>我们可以把第一对大括号给去掉，因为里面唯一的东西是一个简单的标量变量值。  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">@</span> <span class="err">$</span><span class="nv">hash_ref</span> <span class="p">{</span> <span class="sx">qw(name position)</span> <span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>这样我们就可以把那个最后的循环替换成:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">for</span> <span class="k">my</span> <span class="nv">$crewmember</span> <span class="p">(</span><span class="nv">@crew</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">	<span class="nb">printf</span> <span class="nv">$format</span><span class="p">,</span> <span class="nv">@$crewmember</span><span class="p">{</span><span class="sx">qw(name shirt hat position)</span><span class="p">};</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>对于数组切割或者哈希切割没有使用箭头形式的简化表示， 正如对于整个的数组后者哈希也没有简化表示一样。</p>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/06/08/intermediate-perl-di-san-zhang-shi-yong-mo-kuai/">Intermediate Perl 第三章 使用模块</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-06-08T01:16:53+08:00" pubdate data-updated="true">Jun 8<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>模块是我们的程序的基础部分。他们提供可重用的子程序，变量，甚至面向对象的类。在我们建造自己的模块的过程中， 我们会向你展现一些你可能会感兴趣的。我们同样会看一些别人已经写好的模块的用法。   </p>
-
-<h2 id="section">标准发布版本</h2>
-
-<p>Perl本身已经自带了很多的流行的模块。事实上， 最新进的50+MB的发布版本中的绝大部分都是来自于模块。在1996年10月， Perl 5.003_07版本中有98个模块。今天， 在2006年年初， Perl5.8.8有359个模块。事实上这是Perl的一个优势之一:它已经自带了很多的你在写有用的还有复杂的程序的时候所需要的东西， 那样就省了你的很多的工作了。   </p>
-
-<p>在整本书中， 我们都会试着识别出哪些模块是Perl自带的(在大部分情况下， 识别出它们是自哪一版开始进入Perl的)。我们将称呼这些为”核心模块” 或者强调它们是在”标准发布版本”中。如果你安装了Perl, 你应该就有了这些模块。由于当我们在写作本书的时候， 我们使用的是Perl 5.8.7, 我们将假定这就是当前的Perl的版本。    </p>
-
-<p>当你在开发自己的代码的时候， 你可能会考虑自己是否想要只使用核心模块，那样你就可以确信任何其他只要是和你的Perl版本是一样的人， 都将会有那些模块。我们将会避开这个争论， 主要是因为我们太爱CPAN了， 简直离不开它了。   </p>
-
-<h2 id="section-1">使用模块</h2>
-<p>几乎每一个Perl模块都跟有文档，即使我们可能不知道所有的幕后的魔术是怎么运作的，当我们知道如何使用接口的时候我们真的没必要担心那些。毕竟那就是接口存在的原因: 隐藏细节。   </p>
-
-<p>在我们的本地机器上， 我们可以使用perldoc命令来阅读模块的文档。我们把感兴趣的模块的名称给它，它就会帮我们输出模块的文档。   </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">NAME</span>
-</span><span class="line">	<span class="n">fileparse</span> <span class="err">−</span> <span class="nb">split</span> <span class="n">a</span> <span class="n">pathname</span> <span class="n">into</span> <span class="n">pieces</span>
-</span><span class="line">
-</span><span class="line">	<span class="n">basename</span> <span class="err">−</span> <span class="n">extract</span> <span class="n">just</span> <span class="n">the</span> <span class="n">filename</span> <span class="n">from</span> <span class="n">a</span> <span class="n">path</span>
-</span><span class="line">
-</span><span class="line">	<span class="n">dirname</span> <span class="err">−</span> <span class="n">extract</span> <span class="n">just</span> <span class="n">the</span> <span class="n">directory</span> <span class="n">from</span> <span class="n">a</span> <span class="n">path</span>
-</span><span class="line">	
-</span><span class="line"><span class="n">SYNOPSIS</span>
-</span><span class="line">	<span class="k">use</span> <span class="nn">File::</span><span class="n">Basename</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line">	<span class="p">(</span><span class="nv">$name</span><span class="p">,</span><span class="nv">$path</span><span class="p">,</span><span class="nv">$suffix</span><span class="p">)</span> <span class="o">=</span> <span class="n">fileparse</span><span class="p">(</span><span class="nv">$fullname</span><span class="p">,</span><span class="nv">@suffixlist</span><span class="p">)</span>
-</span><span class="line">	<span class="n">fileparse_set_fstype</span><span class="p">(</span><span class="nv">$os_string</span><span class="p">);</span>
-</span><span class="line">	<span class="nv">$basename</span> <span class="o">=</span> <span class="n">basename</span><span class="p">(</span><span class="nv">$fullname</span><span class="p">,</span><span class="nv">@suffixlist</span><span class="p">);</span>
-</span><span class="line">	<span class="nv">$dirname</span> <span class="o">=</span> <span class="n">dirname</span><span class="p">(</span><span class="nv">$fullname</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>我们把文档的顶部的那段包含了进来是为了向你展示最重要的部分(至少是在你刚开始的时候是最重要的)。模块的文档一般都会遵循过去的unix主页的格式， 也就是以NAME还有SYNOPSIS部分开始。   </p>
-
-<p>大纲部分给出了模块使用的例子。如果我们能够停止一会儿理解， 然后跟着例子来， 我们就可以使用某个模块了。也就是说，可能你还不是很熟悉大纲中的某些Perl的技巧和语法，但是你可以仅仅是跟着例子来然后让一切运行完好。   </p>
-
-<p>现在由于Perl是过程式，函数式，面向对象以及其它的语言类型的综合体， Perl的模块也有着不同接口。我们将会以稍微有点不同的方式来使用这些模块，但是只要我们能够去查阅文档，就应该不会有问题的。   </p>
-
-<h2 id="section-2">功能性接口</h2>
-<p>为了加载一个模块，我们使用Perl内建的use。我们在这里不会进入所有具体的细节，但是在第10章还有第15章我们会的。现在我们只是想使用模块。让我们以File::Basename这个核心发布版本中的模块来开始。为了把它加载到我们的脚本中去， 我们来：</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="nn">File::</span><span class="n">Basename</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>当我们这么做的时候， File::Basename向我们的脚本中引进三个子例程，fileparse, basename 以及 dirname， 从此刻起， 我们可以这么来:   </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">$basename</span> <span class="o">=</span> <span class="n">basename</span><span class="p">(</span> <span class="nv">$some_full_path</span> <span class="p">);</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">$dirname</span> <span class="o">=</span> <span class="n">dirname</span><span class="p">(</span> <span class="nv">$some_full_path</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>这就好像是我们自己写了basename还有dirname这两个子例程， 或者它们像是(接近是)内建的Perl函数一样。 这些子程序会把路径名中的文件名还有目录名找出来。例如， 如果 $some_full_path 是 D:\Projects\IsIandRescue\plan7.rtf(假定程序是在windows机器上运行的), 那么$basename将会是plan7.rtf, $dirname将会是D:\Projects\IsIandRescue。    </p>
-
-<p>File::Basename这个模块自己会知道它是在何种机器上运行的, 因此它的函数能够明白怎么正确地针对我们可能遇到的分隔符来解析字符串。   </p>
-
-<p>然而，假定我们已经有了一个叫dirname的子程序， 现在我们就会用File::Basename中的定义把它覆盖掉了. 如果我们已经开启了warnings，我们将会看到一个消息声明。否则的话，Perl就完全地不关心了。   </p>
-
-<h2 id="section-3">选择引入什么</h2>
-
-<p>幸运的是， 我们可以告诉use操作通过在模块名的后面明确一组子程序的名字，也叫做引入列表， 来限制它的行为:   </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="nn">File::</span><span class="n">Basename</span><span class="p">(</span><span class="s">&#39;fileparse&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">basename</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>现在这个模块仅仅给我们提供了两个子程序， 不会干扰我们自己的dirname子程序了。当然，那样输入起来很别扭, 所以更经常的我们看到的是用引用字操作符写出来的形:   </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="nn">File::</span><span class="n">Basename</span> <span class="sx">qw(fileparse basename)</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>事实上，即使只有一个条款，为了连贯还有维护我们也倾向于用qw()列表来写出来；经常地我们会返回去说”在这了再给我加一条”, 这个时候如果已经是个qw()列表的话会更容易的。   </p>
-
-<p>我们已经保护了本地的dirname子程序，但是如果我们依然想要File::Basename提供的功能呢？没问题，我们只要用它的完整的包的指定形式写出来就可以了：  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">$dirname</span> <span class="o">=</span> <span class="nn">File::Basename::</span><span class="n">dirname</span><span class="p">(</span><span class="nv">$some_path</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>use后面的一组名字不会改变到底有哪些子程序在模块的包中定义好了(在我们的情况下是File::Basename)。 我们总是可以使用完整的包的名字的形式而不用管引用列表， 就如同下面一样:   </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">$basename</span> <span class="o">=</span> <span class="nn">File::Basename::</span><span class="n">basename</span><span class="p">(</span><span class="nv">$some_path</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>在极端的情况下(但是极其的有用)，我们可以指定为引用列表制定一个空的列表， 如下： </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="nn">File::</span><span class="n">Basename</span><span class="p">();</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">$base</span> <span class="o">=</span> <span class="nn">File::Basename::</span><span class="n">basename</span><span class="p">(</span><span class="nv">$some_path</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>一个空的列表和一个缺失的列表是有所不同的。 一个空的列表意味着”不要给我任何的东西”, 而一个缺失的列表意味着给我默认的”。如果模块的作者做的很好的话，默认的情况就是我们所需要的。  </p>
-
-<h2 id="section-4">面向对象接口</h2>
-
-<p>通过看下File::Spec模块， 我们来比较下File::Basename引入的子程序和其之间的区别。File::Spec模块是设计来支持通常作用在文件指定上的操作的。(一个文件指定通常是一个文件或者一个路径名，但它可能是一个不存在的文件-在这种情况下，它就不是一个真正的文件名，对不对？) </p>
-
-<p>同File::Basename模块不同的是，File::Spec有着一个主要的面向对象接口。如同我们之前的那样， 我们也用use来加载模块:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="nn">File::</span><span class="n">Spec</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>然而，由于这个模块有着面向对象的接口，它不支持任何的子程序。作为替代，这个接口告诉我们使用它的类方法来获取它的模块的功能。catfile方法把一组字符串用合适的目录分割符来连接起来:    </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">$filespec</span> <span class="o">=</span> <span class="nn">File::</span><span class="n">Spec</span><span class="o">-&gt;</span><span class="n">catfile</span><span class="p">(</span> <span class="nv">$homedir</span><span class="p">{</span><span class="n">gilligan</span><span class="p">},</span> <span class="s">&#39;web_docs&#39;</span><span class="p">,</span> <span class="s">&#39;photos&#39;</span><span class="p">,</span>           	<span class="s">&#39;USS_Minnow.gif&#39;</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>这样就会调用File::Spec类中的catfile类方法， 它会构造一个适合于本地的操作系统的路径然后返回一个单一的字符串。 在语法上这同File::Spec所提供的将近两打的其他的操作是相似的。  </p>
-
-<p>File::Spec模块以一种可移植的方式为处理文件路径提供了好几个其他的方式。 你可以在perlport文档中阅读更多的关于可移植性的问题。   </p>
-
-<h2 id="mathbigint">一个更典型的面向对象模块:Math::BigInt</h2>
-
-<p>由于File::Spec模块没有对象，为了不被它看起来非面向对象的特征所失望，让我们看一下另外的一个核心的模块，Math::BigInt, 他可以在Perl的一般能力范围之外处理整数。   </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="nn">Math::</span><span class="n">BigInt</span><span class="p">;</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">$value</span> <span class="o">=</span> <span class="nn">Math::</span><span class="n">BigInt</span><span class="o">-&gt;</span><span class="k">new</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span> <span class="c1">#以2开始；</span>
-</span><span class="line"><span class="nv">$value</span><span class="o">-&gt;</span><span class="n">bpow</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>   			   <span class="c1">#2**100-</span>
-</span><span class="line"><span class="k">print</span> <span class="nv">$value</span><span class="o">-&gt;</span><span class="n">bstr</span><span class="p">(),</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span> 	   <span class="c1">#打印出来</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>同之前的一样，这个模块什么都没有引入。它的完整的接口使用类方法，诸如new, 接在类名后面来生成实例，然后接在这些实例之后调用实例方法，像bpow还有bstr。   </p>
-
-<h2 id="perlcpan">详尽的Perl存档网络(CPAN)</h2>
-
-<p>(未翻!)   </p>
-
-<h2 id="cpan">从CPAN来安装模块</h2>
-
-<p>从CPAN来安装一个简单的模块可以是很直接的：我们下载模块发布版本的存档，解压出来，切换到它的目录中去。 我们在这儿使用wget，但其实你使用哪个工具是无关紧要的。</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">%</span> <span class="nv">wget</span> <span class="n">http:</span><span class="sr">//</span><span class="n">www</span><span class="o">.</span><span class="n">cpan</span><span class="o">.</span><span class="n">org</span><span class="sr">/.../</span><span class="n">HTTP</span><span class="err">−</span><span class="n">Cookies</span><span class="err">−</span><span class="n">Safari</span><span class="err">−</span><span class="mf">1.10</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
-</span><span class="line"><span class="nv">%</span> <span class="nv">tar</span> <span class="err">−</span><span class="n">xzf</span> <span class="n">HTTP</span><span class="err">−</span><span class="n">Cookies</span><span class="err">−</span><span class="n">Safari</span><span class="err">−</span><span class="mf">1.10</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
-</span><span class="line"><span class="nv">%</span> <span class="nv">cd</span> <span class="n">HTTP</span><span class="err">−</span><span class="n">Cookies</span><span class="err">−</span><span class="n">Safari</span><span class="err">−</span><span class="mf">1.10</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>从那儿起我们可以走两条路中的一种。如果我们找到一个叫Makefile.PL的文件，我们可以运行下面的命令来build, test还有最终的安装这个源码:   </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">%</span> <span class="nv">perl</span> <span class="n">Makefile</span><span class="o">.</span><span class="n">PL</span> <span class="nv">%</span> <span class="nv">make</span>
-</span><span class="line"><span class="nv">%</span> <span class="nv">make</span> <span class="n">test</span>
-</span><span class="line"><span class="nv">%</span> <span class="nv">make</span> <span class="n">install</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>如果你没有权限在系统范围的目录中安装模块，我们可以通过使用PREFIX参数来告诉Perl在别的路径下安装：  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">%</span> <span class="nv">perl</span> <span class="n">Makefile</span><span class="o">.</span><span class="n">PL</span> <span class="n">INSTALL_BASE</span><span class="o">=</span><span class="sr">/Users/</span><span class="n">home</span><span class="o">/</span><span class="n">Ginger</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>为了让Perl在那个目录中寻找模块，我们可以设置PERL5LIB环境变量。Perl会把那些目录添加到它的模块搜获列表中去。</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">%</span> <span class="nv">export</span> <span class="n">PERL5LIB</span><span class="o">=</span><span class="sr">/Users/</span><span class="n">home</span><span class="o">/</span><span class="n">Ginger</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>我们也可以使用lib指令来添加到模块搜索路径中去，尽管这看起来不是很友好，因为我们得改变代码，但也因为可能它不是我们在其他的我们想要代码跑起来的机器上的路径:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="c1">#!/usr/bin/perl</span>
-</span><span class="line"><span class="k">use</span> <span class="n">lib</span> <span class="sx">qw(/Users/home/Ginger)</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>先后退一小会儿，如果我们找到的是Build.PL这个文件而不是Makefile.Pl这个文件，过程将会是一样的。 这些发布版本使用Module::Build来build还有install代码。由于Module::Build不是核心的Perl模块，我们得在我们能够安装使用它的发布版本之前安装它:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">%</span> <span class="nv">perl</span> <span class="n">Build</span><span class="o">.</span><span class="n">PL</span>
-</span><span class="line"><span class="nv">%</span> <span class="nv">perl</span> <span class="n">Build</span>
-</span><span class="line"><span class="nv">%</span> <span class="nv">perl</span> <span class="n">Build</span> <span class="n">test</span>
-</span><span class="line"><span class="nv">%</span> <span class="nv">perl</span> <span class="n">Build</span> <span class="n">install</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>为了用Module::Build安装到我们的私有的目录，我们添加 –install_base 参数。我们以和前面的同样的方式告诉Perl如何来找到模块:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">%</span> <span class="nv">perl</span> <span class="n">Build</span><span class="o">.</span><span class="n">PL</span> <span class="err">−−</span><span class="n">install_base</span> <span class="sr">/Users/</span><span class="n">home</span><span class="o">/</span><span class="n">Ginger</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>有的时候我们会在一个发布版本中看到Makefile.PL还有Build.PL这两个文件。那个时候我们该怎么做呢？我们可以使用任意一个。选择你最喜欢的来玩！  </p>
-
-<h2 id="section-5">在合适的时间来设定路径</h2>
-
-<p>Perl通过在特殊的Perl数组@INC中定义的路径来查找模块。use声明在编译时执行，所以它会在编译时查看模块搜索路径@INC。除非我们把@INC考虑在内，否则那会以一种很难理解的方式让我们的程序崩溃掉。   </p>
-
-<p>例如，假设我们有自己的目录/home/giliigan/lib, 我们把自己的模块Navigation::SeatOfPants放在/home/gilligan/lib/Navigation/SeatOfPants.pm里。当我们加载自己的模块的时候，Perl就找不到了。 </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="nn">Navigation::</span><span class="n">SeatOfPants</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>Perl会向我们抱怨它在@INC中找不到模块， 并且会展现给我们看在那个数组里的所有的路径:    </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">Can</span><span class="err">&#39;</span><span class="n">t</span> <span class="n">locate</span> <span class="n">Navigation</span><span class="o">/</span><span class="n">SeatofPants</span><span class="o">.</span><span class="n">pm</span> <span class="n">in</span> <span class="nv">@INC</span> <span class="p">(</span><span class="nv">@INC</span> <span class="n">contains:</span> <span class="o">...</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>你可能会想我们应该仅仅在调用use之前把我们的模块的路径添加到@INC中去。然而，即使添加如下的东西:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nb">unshift</span> <span class="nv">@INC</span><span class="p">,</span> <span class="s">&#39;/Users/gilligan/lib&#39;</span><span class="p">;</span> <span class="c1"># 崩溃</span>
-</span><span class="line"><span class="k">use</span> <span class="nn">Navigation::</span><span class="n">SeatOfPants</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>也不会起作用的。为什么呢？因为unshift在运行时才起作用，这是use在编译之后的很长时间才发生的。这两个声明在词法上很接近， 但是在时间上并不接近。仅仅因为我们把它们写在了一块并不表示它们是以那样的顺序来执行的。我们想在use执行前改变@INC。一种处理这个的方式是在unshift周围添加一个BEGIN块:    </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">BEGIN</span> <span class="p">{</span> <span class="nb">unshift</span> <span class="nv">@INC</span><span class="p">,</span> <span class="s">&#39;/Users/gilligan/lib&#39;</span><span class="p">;</span> <span class="p">}</span>
-</span><span class="line"><span class="k">use</span> <span class="nn">Navigation::</span><span class="n">SeatOfPants</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>现在这个BEGIN块就会在编译时编译还有运行了, 会接下来的use设置合适的路径。   </p>
-
-<p>然而，这很烦人而且需要的解释可能超出了你觉得舒服的范围了，尤其是对于那些后来的可能需要维护修改你的代码的人。让我们以一种我们之前用过的一种简单的声明来代替那一团东西:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="n">lib</span> <span class="s">&#39;/Users/gilligan/lib&#39;</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="nn">Navigation::</span><span class="n">SeatOfPants</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>这里， lib声明会接收一个或者多个参数然后把它们添加到@INC数组的开头，就如同之前的unshift所做的。这是行得通是因为它是在编译时执行的，而不是在运行时。因此它对紧接着的use是适时的。 </p>
-
-<p>一个use lib声明通常总是有一个地址依赖的路径名，一般情况下我们鼓励大家把它放到文件的开头的部分。这样当我们得移动文件到一个新的系统或者lib的路径有变化的时候，我们在找的时候还有更新的时候会方便点的。(当然，如果我们能够在标准的@INC地址中安装我们的模块的话，我们就可以避免使用use lib了， 但那并不总是实际的.)    </p>
-
-<p>要把use lib想成是“使用这个路径来找到我的库(还有模块)” 而不是使用这个目录。很经常的，我们会看到如下的代码:     </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="n">lib</span> <span class="s">&#39;/Users/gilligan/lib/Navigation/SeatOfPants.pm&#39;</span><span class="p">;</span> <span class="c1"># 错误</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>然后这个程序要会想为什么没有把定义给加载进来. 要注意use lib事实上是在编译时运行的，所以下面的也是不会起作用的:   </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">$LIB_DIR</span> <span class="o">=</span> <span class="s">&#39;/Users/gilligan/lib&#39;</span><span class="p">;</span>
-</span><span class="line"><span class="o">...</span>
-</span><span class="line"><span class="k">use</span> <span class="n">lib</span> <span class="nv">$LIB_DIR</span><span class="p">;</span> <span class="c1"># 崩溃</span>
-</span><span class="line"><span class="k">use</span> <span class="nn">Navigation::</span><span class="n">SeatOfPants</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>当然，Perl在编译时就会建立起$LIB_DIR的声明（所以用use strict的时候我们是不会得到错误警告的，尽管真正的use lib是会抱怨的)， 但是真正的/home/gilligan/lib的值是直到运行时才会赋值的。呀，又太迟了。  </p>
-
-<p>此时此刻，我们得在BEGIN块里放进一些东西，或者依靠另一个编译时操作:用use constant来设置一个常数:    </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="n">constant</span> <span class="n">LIB_DIR</span> <span class="o">=&gt;</span> <span class="s">&#39;/Users/gilligan/lib&#39;</span><span class="p">;</span>
-</span><span class="line"><span class="o">...</span>
-</span><span class="line"><span class="k">use</span> <span class="n">lib</span> <span class="n">LIB_DIR</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="nn">Navigation::</span><span class="n">SeatOfPants</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>啊哈，又解决了。就是这个样子了，除非我们需要模块依赖一个计算的结果。(啥时该休止啊，快来人让这个疯狂的行为停止掉吧!)这应该会解决99%我们的需要了。  </p>
-
-<h2 id="section-6">解决模块的依赖性</h2>
-
-<p>我们刚刚看到如果我们想要安装一个需要使用Module::Build的模块，我们得先安装Module::Build。那只是令我们头疼的依赖性问题中的很小的一个例子了。 我们可能得安装好几个其他的模块，它们当中的每一个又都反过来得依赖更多的模块。   </p>
-
-<p>幸运的是， 我们有工具来帮助我们。CPAM.pm模块自从Perl5.004就是核心发布版本的一个部分了。它给了我们一个交互的安装shell.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">$</span> <span class="nv">perl</span> <span class="o">-</span><span class="n">MCPAN</span> <span class="o">-</span><span class="n">e</span> <span class="n">shell</span>
-</span><span class="line"><span class="n">cpan</span> <span class="n">shell</span> <span class="o">--</span><span class="n">CPAN</span> <span class="n">exploration</span> <span class="o">....</span>
-</span><span class="line"><span class="n">Readline</span> <span class="n">support</span>
-</span><span class="line">
-</span><span class="line"><span class="n">cpan</span><span class="o">&gt;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>为了安装一个模块还有它的依赖，我们使用命令install然后跟着模块的名字.现在CPAN.pm处理所有的下载，解压，building, 测试嗨哟安装模块的过程， 而且它会递归地处理那些依赖:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">cpan</span><span class="o">&gt;</span> <span class="n">install</span> <span class="nn">CGI::</span><span class="n">Prototype</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>只是那也太多了，所以Brian创建了一个脚本cpan，它也是跟着Perl发行版本的。我们只要把我们想要安装的模块列出来，它就会帮我们处理接下来的情况了:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">cpan</span> <span class="nn">CGI::</span><span class="n">Prototype</span> <span class="nn">HTTP::Cookies::</span><span class="n">Safari</span> <span class="nn">Test::</span><span class="n">Pod</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>另一个很酷的工具是CPANPLUS，是CPAN.pm的完全的重写，但是在我么写作本书的时候它还不是核心发布版本中的一部分.   </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">$</span> <span class="nv">perl</span> <span class="o">-</span><span class="n">MCPANPLUS</span> <span class="o">-</span><span class="n">e</span> <span class="n">shell</span>
-</span><span class="line"><span class="n">CPAN</span> <span class="n">Terminal</span><span class="o">&gt;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>为了安装一个模块，我们使用i命令.  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">CPAN</span> <span class="n">Terminal</span><span class="o">&gt;</span> <span class="n">i</span> <span class="nn">CGI::</span><span class="n">Prototype</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>CPANPLUS模块带了一个很方便的脚本，叫cpanp。我们我们给它i开关还有一组模块，它就会像之前那样安装它们了    </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">cpan</span> <span class="n">i</span> <span class="nn">CGI::</span><span class="n">Prototype</span> <span class="nn">HTTP::Cookies::</span><span class="n">Safari</span> <span class="nn">Test::</span><span class="n">Pod</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<h2 id="section-7">练习</h2>
-<p>(未翻)</p>
-
 </div>
   
   

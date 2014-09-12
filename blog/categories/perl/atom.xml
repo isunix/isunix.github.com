@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Perl | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/perl/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-09-10T22:04:57+08:00</updated>
+  <updated>2014-09-12T15:33:34+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,53 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[About Not Using MIME::Lite]]></title>
+    <link href="http://isunix.github.io/blog/2014/09/12/about-not-using-mime-lite/"/>
+    <updated>2014-09-12T14:40:15+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/09/12/about-not-using-mime-lite</id>
+    <content type="html"><![CDATA[<p>when you use “perldoc MIME::Lite”, you will see the folliwng info:  </p>
+
+<p><code>
+MIME::Lite is not recommended by its current maintainer.  There are a number of alternatives, like Email::MIME or MIME::Entity and Email::Sender, which you should probably use instead.  MIME::Lite continues to accrue weird bug reports, and it is not receiving a large amount of refactoring due to the availability of better alternatives. Please consider using something else.
+</code></p>
+
+<p>Thus I decided not use MIME::Lite any more. </p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Constructor and Destructor in Perl]]></title>
+    <link href="http://isunix.github.io/blog/2014/09/11/constructor-and-destructor-in-perl/"/>
+    <updated>2014-09-11T13:46:23+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/09/11/constructor-and-destructor-in-perl</id>
+    <content type="html"><![CDATA[<p>For Perl constructor, we can seperate the process of object creation from the process of initialization.  </p>
+
+<p><code>pl
+package CD::Music;
+use strict;
+sub new {
+	my $self = {};
+	bless $self, shift;
+	$self-&gt;_incr_count();
+	$self-&gt;_init(@_);
+	return $self;
+}
+{
+	my @_init_mems =
+	qw( _name _artist _publisher _ISBN _tracks _room _shelf _rating );
+	sub _init {
+		my ($self,@args) = @_;
+		my %inits;
+		@inits{@_init_mems} = @args;
+		%$self = %inits;
+	}
+}
+</code>  </p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Method Calling in Perl]]></title>
@@ -138,61 +185,6 @@ sub listdir {
 <p>6.In the literature on object-oriented programming, standard concepts pass by many strange aliases. It some- times seems that every object-oriented language designer deliberately invents a completely new set of names for the same fundamental ideas.</p>
 
 <p>(I strong agree with Dimian Conway, many concepts are so clear to clear to understand, yet people invent new new aliases to mask the concept thus makes other people hard to digest the essence under those concepts–by Steven)   </p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[XS Notes]]></title>
-    <link href="http://isunix.github.io/blog/2014/09/08/xs-notes/"/>
-    <updated>2014-09-08T22:07:02+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/09/08/xs-notes</id>
-    <content type="html"><![CDATA[<p>First we will keep notes of perlxstut. The reader is assumed to have access to perlguts, perlapi and perlxs.    </p>
-
-<p>```pl</p>
-
-<p>```</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[XS and Perl]]></title>
-    <link href="http://isunix.github.io/blog/2014/09/08/xs-and-perl/"/>
-    <updated>2014-09-08T10:55:29+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/09/08/xs-and-perl</id>
-    <content type="html"><![CDATA[<p>For more on extending Perl with C, refer to the following tutorial. </p>
-
-<p>```
-perlxs<br />
-ExtUtils::ParseXS   <br />
-perlembed
-h2xs <br />
-perlxstut  <br />
-perlcall <br />
-perlguts <br />
-perlapi <br />
-perlintern  <br />
-perlreguts<br />
-perlreapi   <br />
-illguts : http://search.cpan.org/dist/illguts/ <br />
-http://search.cpan.org/dist/perl/ext/XS/Typemap/Typemap.xs  </p>
-
-<p>``` </p>
-
-<p>We can also refer to these books, </p>
-
-<p><code>  
-extending and embedding perl    
-Programming the Perl DBI   
-Data Munging with Perl  
-Vincent Pit's "XS Recipes"
-</code>  </p>
-
-<p>I like Perl and I also hope to use C to make somethings.   </p>
-
-<p>Combining C and Perl together is a wonderful thing for me to try.  </p>
-
-<p>Working on it.  </p>
-
 ]]></content>
   </entry>
   

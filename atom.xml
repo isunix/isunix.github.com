@@ -4,7 +4,7 @@
   <title><![CDATA[Steven's Blog]]></title>
   <link href="http://isunix.github.io/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-09-10T22:04:57+08:00</updated>
+  <updated>2014-09-12T15:32:57+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,70 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[About Not Using MIME::Lite]]></title>
+    <link href="http://isunix.github.io/blog/2014/09/12/about-not-using-mime-lite/"/>
+    <updated>2014-09-12T14:40:15+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/09/12/about-not-using-mime-lite</id>
+    <content type="html"><![CDATA[<p>when you use “perldoc MIME::Lite”, you will see the folliwng info:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">MIME::Lite is not recommended by its current maintainer.  There are a number of alternatives, like Email::MIME or MIME::Entity and Email::Sender, which you should probably use instead.  MIME::Lite continues to accrue weird bug reports, and it is not receiving a large amount of refactoring due to the availability of better alternatives. Please consider using something else.</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Thus I decided not use MIME::Lite any more. </p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Constructor and Destructor in Perl]]></title>
+    <link href="http://isunix.github.io/blog/2014/09/11/constructor-and-destructor-in-perl/"/>
+    <updated>2014-09-11T13:46:23+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/09/11/constructor-and-destructor-in-perl</id>
+    <content type="html"><![CDATA[<p>For Perl constructor, we can seperate the process of object creation from the process of initialization.  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nb">package</span> <span class="nn">CD::</span><span class="n">Music</span><span class="p">;</span>
+</span><span class="line"><span class="k">use</span> <span class="n">strict</span><span class="p">;</span>
+</span><span class="line"><span class="k">sub </span><span class="nf">new</span> <span class="p">{</span>
+</span><span class="line">	<span class="k">my</span> <span class="nv">$self</span> <span class="o">=</span> <span class="p">{};</span>
+</span><span class="line">	<span class="nb">bless</span> <span class="nv">$self</span><span class="p">,</span> <span class="nb">shift</span><span class="p">;</span>
+</span><span class="line">	<span class="nv">$self</span><span class="o">-&gt;</span><span class="n">_incr_count</span><span class="p">();</span>
+</span><span class="line">	<span class="nv">$self</span><span class="o">-&gt;</span><span class="n">_init</span><span class="p">(</span><span class="nv">@_</span><span class="p">);</span>
+</span><span class="line">	<span class="k">return</span> <span class="nv">$self</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">	<span class="k">my</span> <span class="nv">@_init_mems</span> <span class="o">=</span>
+</span><span class="line">	<span class="sx">qw( _name _artist _publisher _ISBN _tracks _room _shelf _rating )</span><span class="p">;</span>
+</span><span class="line">	<span class="k">sub </span><span class="nf">_init</span> <span class="p">{</span>
+</span><span class="line">		<span class="k">my</span> <span class="p">(</span><span class="nv">$self</span><span class="p">,</span><span class="nv">@args</span><span class="p">)</span> <span class="o">=</span> <span class="nv">@_</span><span class="p">;</span>
+</span><span class="line">		<span class="k">my</span> <span class="nv">%inits</span><span class="p">;</span>
+</span><span class="line">		<span class="nv">@inits</span><span class="p">{</span><span class="nv">@_init_mems</span><span class="p">}</span> <span class="o">=</span> <span class="nv">@args</span><span class="p">;</span>
+</span><span class="line">		<span class="nv">%$self</span> <span class="o">=</span> <span class="nv">%inits</span><span class="p">;</span>
+</span><span class="line">	<span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Method Calling in Perl]]></title>
@@ -1160,40 +1224,6 @@ handled.  </p>
 
 <p>6.teardown_request: Register a function to run after each request, even if unhandled
 exceptions occurred.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Boyer-Moore 算法实现]]></title>
-    <link href="http://isunix.github.io/blog/2014/08/26/boyer-moore-suan-fa-shi-xian/"/>
-    <updated>2014-08-26T11:52:34+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/08/26/boyer-moore-suan-fa-shi-xian</id>
-    <content type="html"><![CDATA[
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[世事无常]]></title>
-    <link href="http://isunix.github.io/blog/2014/08/25/shi-shi-wu-chang/"/>
-    <updated>2014-08-25T23:49:06+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/08/25/shi-shi-wu-chang</id>
-    <content type="html"><![CDATA[<p>昨天(2014/08/24, 周日)从芝姐哪里得知四姑那边出事了， 于是立马打电话回家给爸，爸说确实是的。本来他是想等事情快有个结果的时候再跟我说的。    </p>
-
-<p>发生这样的事情，我除了痛心就是为命运的残忍感到无奈了。  </p>
-
-<p>想起四姑的命运，想起四姑父的不幸，想起杰弟因为这个事情所可能受到的影响，我不禁内心感到万分的悲凉。</p>
-
-<p>杰弟刚出生没多久的时候，我暑假放假的时候是常去四姑家待着的。杰弟小的时候非常非常的可爱，也很乖。几个表兄弟我是对他有着不一样的感情的， 源于小的时候带过她。  </p>
-
-<p>那个时候四姑也是很活泼的人，自己小的时候不怎么愿意到亲戚家走动的，但是记得有次在四姑家待到了很长的时间。记得小的时候自己挺喜欢四姑的，事实上家里的几个姑姑我都挺喜欢的，自小的感觉就是她们都很和蔼，对我还有几个姊妹都是很关怀的。  </p>
-
-<p>没记错的话，四姑是在我初三升高中那年的时候出事的，也就是说到现在已经有十年了，这十年我都不记得见过几次面了。时间过得实在是太快了。还记得上次见面的时候应该快是3年前了， 那次四姑给我的感觉是挺正常的了，我一直以为或许她已经快恢复了，至少没有太大的问题的。以至于去年回家春节的时候都没有去四姑家了。只因为当时觉得时间短促，再加上没必要刻意去了。一想到这里，内心就会及其的自责。  </p>
-
-<p>老天为什么会这么的不公平啊。一个好好的人，为什么要让她遭受那样的折磨啊。    </p>
-
-<p>四姑本无心，却伤害了别人。也伤害了自己，老天是有多么的残忍才允许发生这样的事情啊！</p>
-
-<p>Could god bless us? Could god bless my aunt?</p>
 ]]></content>
   </entry>
   

@@ -9,8 +9,16 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="Of course you can google about it, but I just keep it down so that every time I do it, I do not need to google again. It is pretty easy. 1
-{\% img [ &hellip;">
+  <meta name="description" content="get the length of a variable: 1
+length=${#var} arguments: 1
+2
+3
+4
+5
+6
+$1 is the first argument
+$2 is the second argument
+$n is the nth argument &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -63,6 +71,545 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/19/linux-shell-scripting-cookbook-2nd-notes/">Linux Shell Scripting Cookbook 2nd Notes</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-06-19T09:39:37+08:00" pubdate data-updated="true">Jun 19<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><ol>
+  <li>get the length of a variable:   </li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">length</span><span class="o">=</span><span class="k">${#</span><span class="nv">var</span><span class="k">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<ol>
+  <li>arguments:   </li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$1</span> is the first argument
+</span><span class="line"><span class="nv">$2</span> is the second argument
+</span><span class="line"><span class="nv">$n</span> is the nth argument
+</span><span class="line"><span class="s2">&quot;$@&quot;</span>expands as <span class="s2">&quot;$1&quot;</span> <span class="s2">&quot;$2&quot;</span> <span class="s2">&quot;$3&quot;</span> and so on
+</span><span class="line"><span class="s2">&quot;$*&quot;</span> expands as <span class="s2">&quot;$1c$2c$3&quot;</span>, where c is the first character of IFS
+</span><span class="line"><span class="s2">&quot;$@&quot;</span> is used more often than <span class="s2">&quot;$*&quot;</span>since the former provides all arguments as a single string
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/16/practical-vim-notes/">Practical Vim Notes</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-06-16T00:24:14+08:00" pubdate data-updated="true">Jun 16<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>接触VIM的日子已经颇长了， 自己现在的VIM的配置已经是非常的强大了，可惜是clone别人的。 只是在一些配置上稍稍做了些改动, 然后添加了一些自己喜欢的package。使用VIM的技艺还是得经常磨练的， 要不然很快就会手生还有遗忘的。 这片文章记录自己再学习«Practical VIM»这本书的时候做的一些笔记， 这些都是自己估计会在coding的时候经常遇到的， 记录下来可以经常查阅。</p>
+
+<h2 id="read-the-forgotten-manual">Read the Forgotten Manual</h2>
+
+<ol>
+  <li>
+    <p>The Normal mode cw command deletes to the end of the current word and switches to Insert mode.  </p>
+  </li>
+  <li>
+    <p>如果有这么一段：        </p>
+  </li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line"><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;http://pragprog.com/dnvim/&quot;</span><span class="nt">&gt;</span>Practical Vim<span class="nt">&lt;/a&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>在normal模式下， 按下vit会选择Practical Vim。</p>
+
+<h2 id="chapter-1--the-vim-way">Chapter 1–The Vim Way</h2>
+
+<ol>
+  <li>
+    <p>The dot command lets us repeat the last change.   </p>
+  </li>
+  <li>
+    <p>Press A in normal mode will put the cursor at the end of a file and go into insert mode.</p>
+  </li>
+  <li>
+    <p>The s command compounds two steps into one: it deletes the character under the cursor and then enters Insert mode.</p>
+  </li>
+  <li>
+    <p>The f{char} command tells Vim to look ahead for the next occurrence of the specified character and then move the cursor directly to it if a match is found.</p>
+  </li>
+  <li>
+    <p>By pressing the , key, it will repeat the last f{char} search in the reverse direction</p>
+  </li>
+  <li>
+    <p>The * command will executes a search for the word under the cursor at that moment.    </p>
+  </li>
+</ol>
+
+<h2 id="chapter-2--normal-mode">Chapter 2–Normal Mode</h2>
+
+<ol>
+  <li>
+    <p>Pressing db deletes from the cursor’s starting position to the beginning of the word.</p>
+  </li>
+  <li>
+    <p>Pressing b will go to the beginning of a word backwordly, while w will do it forwardly.</p>
+  </li>
+  <li>
+    <p>The daw command is easily remembered by the mnemonic delete a word.  </p>
+  </li>
+  <li>
+    <p>The <c-a> and <c-x> commands perform addition and subtraction on numbers.  </c-x></c-a></p>
+  </li>
+  <li>
+    <p>yyp will copy the current line and paste it to the next line.</p>
+  </li>
+  <li>
+    <p>c3w will change 3 words after the cursor. </p>
+  </li>
+  <li>
+    <p>The d{motion} command can operate on a single character ( dl), a complete word ( daw), or an entire paragraph ( dap). Its reach is defined by the motion. The same goes for c{motion}, y{motion}, and a handful of others. Collectively, these commands are called operators. You can find the complete list by looking up :h operator</p>
+  </li>
+  <li>
+    <p>&gt; will shilt right, = will do auto-indent;</p>
+  </li>
+  <li>
+    <p>&#92;&#92;\ will comment the current line.  (I tested&#92;\ will be enough.)</p>
+  </li>
+  <li>
+    <p>If we wanted to autoindent the entire file using the = command, we could run gg=G (that is, gg to jump to the top of the file and then =G to autoindent everything from the cursor position to the end of the file). </p>
+  </li>
+</ol>
+
+<h2 id="chapter-3--insert-mode">Chapter 3–Insert Mode</h2>
+
+<ol>
+  <li>
+    <p>In insert mode, <c-h> Delete back one character (backspace), <c-w> Delete back one word, <c-u> Delete back to start of line.   </c-u></c-w></c-h></p>
+  </li>
+  <li>
+    <p>In normal node, yt{char} will copy till the char(not including).   </p>
+  </li>
+  <li>
+    <p>From Normal mode, we can engage Replace mode with the R command.   </p>
+  </li>
+</ol>
+
+<h2 id="chapter-4--visual-mode">Chapter 4–Visual Mode</h2>
+
+<ol>
+  <li>
+    <c-v> Enable block-wise Visual mode, gv Reselect the last visual selection, o Go to other end of highlighted text.
+
+</c-v>
+  </li>
+  <li>
+    <p>gU{motion} will make {motion} text uppercase. (In visual mode).</p>
+  </li>
+  <li>
+    <p>In normal mode, vit, which can be read as: visually select inside the tag. </p>
+  </li>
+  <li>e in normal mode will forward to the end of word (inclusively).   </li>
+</ol>
+
+<p>For more about how to use visual mode to append and substitute text, please refer to the book.</p>
+
+<h2 id="chapter-5--command-line-mode">Chapter 5–Command-Line Mode</h2>
+
+<p>基本上跳过了这一章， 只学会：</p>
+
+<ol>
+  <li>
+    <p>:%s///g;来进行替换。</p>
+  </li>
+  <li>
+    <p>Note the difference between :!ls and :ls—the former calls the ls command in the shell, whereas :ls calls Vim’s built-in command, which shows the contents of the buffer list.</p>
+  </li>
+  <li>
+    <p>On Vim’s command line, the % symbol is shorthand for the current file name. So :!ruby % will run the current file.</p>
+  </li>
+</ol>
+
+<h2 id="chapter-6--manage-multiple-files">Chapter 6–Manage Multiple Files</h2>
+
+<ol>
+  <li>
+    <p>In vim, we’re editing an in-memory representation of a file, which is called a buffer in Vim’s terminology. Files are stored on the disk, whereas buffers exist in memory. When we open a file in Vim, its contents are read into a buffer, which takes the same name as the file. Initially, the contents of the buffer will be identical to those of the file, but the two will diverge as we make changes to the buffer. If we decide that we want to keep our changes, we can write the contents of the buffer back into the file.   </p>
+  </li>
+  <li>
+    <p>We can divide this window horizontally with the <c-w>s command, which creates two windows of equal height. Or we can use the <c-w>v command to split the window vertically, producing two windows of equal width.</c-w></c-w></p>
+  </li>
+  <li>
+    <c-w>c Close the active window, <c-w>o Keep only the active window, closing all others.  
+
+</c-w></c-w>
+  </li>
+  <li>
+    <c-w>= Equalize width and height of all windows, <c-w>_ Maximize height of the active window.   
+
+</c-w></c-w>
+  </li>
+  <li>
+    <p>Alternatively, if the current tab page contains more than one window, we can use the <c-w>T command, which moves the current window into a new tab page (see :h CTRL-W_T ).   </c-w></p>
+  </li>
+  <li>
+    <p>:tabc[lose] Close the current tab page and all of its windows, :tabo[nly] Keep the active tab page, closing all others. </p>
+  </li>
+  <li>:tabn[ext], also gt Switch to the next tab page, :tabp[revious], also gT Switch to the previous tab page.</li>
+</ol>
+
+<h2 id="chapter-7--open-files-and-save-them-to-disk">Chapter 7–Open Files and Save Them to Disk</h2>
+
+<p>Just skipped over this chapter.</p>
+
+<h2 id="chapter-8--navigate-inside-files-with-motions">Chapter 8–Navigate Inside Files with Motions</h2>
+
+<ol>
+  <li>
+    <p>ge Backward to end of previous word.</p>
+  </li>
+  <li>
+    <p>Taken together, the ea commands can be read as “Append at the end of the current word” . The gea command can be read as “append at the end of the previous word”.</p>
+  </li>
+  <li>
+    <p>Vim keeps track of the most recent f{char} search, and we can repeat it using the ; command.</p>
+  </li>
+  <li>
+    <p>The , command repeats the last f{char} search but in the opposite direction.</p>
+  </li>
+  <li>
+    <p>t{char} Forward to the character before the next occurrence of {char}, T{char} Backward to the character after the previous occurrence of {char}.</p>
+  </li>
+  <li>
+    <p>dt. will delete till . </p>
+  </li>
+  <li>
+    <p>We can read the ci” command as “change inside the double quotes.” The cit command can be read as “change inside the tag.” We could just as easily use the yit command to yank the text from inside the tag, or dit to delete it.</p>
+  </li>
+  <li>
+    <p>Keystrokes Buffer Contents      </p>
+  </li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line">iw         Current word
+</span><span class="line">aw         Current word plus one space
+</span><span class="line">iW         Current WORD
+</span><span class="line">aW         Current WORD plus one space
+</span><span class="line">is         Current sentence
+</span><span class="line">as         Current sentence plus one space
+</span><span class="line">ip         Current paragraph
+</span><span class="line">ap         Current paragraph plus one blank line
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<ol>
+  <li>
+    <p>As a general rule, we could say that the d{motion} command tends to work well with aw, as, and ap, whereas the c{motion} command works better with iw and similar.  </p>
+  </li>
+  <li>
+    <p>Learn more about surround.vim;</p>
+  </li>
+</ol>
+
+<h2 id="chapter-9--navigate-between-files-with-jumps">Chapter 9–Navigate Between Files with Jumps</h2>
+
+<ol>
+  <li>gf command means go to file (:h gf ).</li>
+</ol>
+
+<h2 id="chapter-10--copy-and-paste">Chapter 10–Copy and Paste</h2>
+
+<ol>
+  <li>
+    <p>The p command pastes the contents of the unnamed register after the cursor position.</p>
+  </li>
+  <li>
+    <p>Taken together, the xp commands can be considered as “Transpose the next two characters.”</p>
+  </li>
+  <li>
+    <p>The ddp sequence could be considered to stand for “Transpose the order of this line and its successor.”</p>
+  </li>
+  <li>
+    <p>Rather than using a single clipboard for all cut, copy, and paste operations, Vim provides multiple registers. When we use the delete, yank, and put commands, we can specify which register we want to interact with.</p>
+  </li>
+  <li>
+    <p>We can specify which register we want to use by prefixing the command with “{register}. If we don’t specify a register, then Vim will use the unnamedregister.</p>
+  </li>
+  <li>
+    <p>For example, if we wanted to yank the current word into register a, we could run “ayiw. Or if we wanted to cut the current line into register b, we could run “bdd. Then we could paste the word from register a by typing “ap, or we could paste the line from register b by typing “bp.</p>
+  </li>
+</ol>
+
+<h2 id="chapter-11--macros">Chapter 11–Macros</h2>
+
+<ol>
+  <li>
+    <p>Macros allow us to record a sequence of changes and then play them back.</p>
+  </li>
+  <li>
+    <p>The q key functions both as the “record” button and the “stop” button. To begin recording our keystrokes, we type q{register}, giving the address of the register where we want to save the macro. We can tell that we’ve done it right if the word “recording” appears in the status line. Every command that we execute will be captured, right up until we press q again to stop recording.</p>
+  </li>
+  <li>
+    <p>The @{register} command executes the contents of the specified register (see :h @ ). We can also use @@, which repeats the macro that was invoked most recently. </p>
+  </li>
+</ol>
+
+<p>(I have to say I did not finish this chapter!)</p>
+
+<h2 id="chapter-12--matching-patterns-and-literals">Chapter 12–Matching Patterns and Literals</h2>
+
+<ol>
+  <li>
+    <p>We can override Vim’s default case sensitivity using the \c and \C items. Lowercase \c causes the search pattern to ignore case, while the uppercase \C item forces case sensitivity. If either of these items is used in a search pattern, the value of ‘ignorecase’ is overridden for that search.</p>
+  </li>
+  <li>
+    <p>For using regex in vim, The \v switch at the start causes all subsequent characters to take on a special meaning.</p>
+  </li>
+</ol>
+
+<p>Miscelleneous</p>
+
+<ol>
+  <li>
+    <p>Tag navigation and tag autocompletion won’t work unless Vim knows where to look for an up-to-date index file.</p>
+  </li>
+  <li>
+    <p>Command Type of Completion         </p>
+  </li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line"><span class="nt">&lt;C</span><span class="na">-n</span><span class="nt">&gt;</span> Generic keywords
+</span><span class="line">
+</span><span class="line"><span class="nt">&lt;C</span><span class="na">-x</span><span class="nt">&gt;&lt;C</span><span class="na">-n</span><span class="nt">&gt;</span> Current buffer keywords
+</span><span class="line">
+</span><span class="line"><span class="nt">&lt;C</span><span class="na">-x</span><span class="nt">&gt;&lt;C</span><span class="na">-i</span><span class="nt">&gt;</span> Included file keywords
+</span><span class="line">
+</span><span class="line"><span class="nt">&lt;C</span><span class="na">-x</span><span class="nt">&gt;&lt;C</span><span class="na">-</span><span class="err">]</span><span class="nt">&gt;</span> tags file keywords
+</span><span class="line">
+</span><span class="line"><span class="nt">&lt;C</span><span class="na">-x</span><span class="nt">&gt;&lt;C</span><span class="na">-k</span><span class="nt">&gt;</span> Dictionary lookup
+</span><span class="line">
+</span><span class="line"><span class="nt">&lt;C</span><span class="na">-x</span><span class="nt">&gt;&lt;C</span><span class="na">-l</span><span class="nt">&gt;</span> Whole line completion
+</span><span class="line">
+</span><span class="line"><span class="nt">&lt;C</span><span class="na">-x</span><span class="nt">&gt;&lt;C</span><span class="na">-f</span><span class="nt">&gt;</span> Filename completion
+</span><span class="line">
+</span><span class="line"><span class="nt">&lt;C</span><span class="na">-x</span><span class="nt">&gt;&lt;C</span><span class="na">-o</span><span class="nt">&gt;</span> Omni-completion
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/16/dancer-introduction-notes/">Dancer::Introduction Notes</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-06-16T00:05:17+08:00" pubdate data-updated="true">Jun 16<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>1.A route pattern can contain one or more tokens, and tokens can be optional.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">get</span> <span class="s">&#39;/hello/:name?&#39;</span> <span class="o">=&gt;</span> <span class="k">sub </span><span class="p">{</span>
+</span><span class="line">    <span class="s">&quot;Hello there &quot;</span> <span class="o">.</span> <span class="p">(</span><span class="n">param</span><span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">)</span> <span class="o">||</span> <span class="s">&quot;whoever you are!&quot;</span><span class="p">);</span>
+</span><span class="line"><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>2.A route can contain a wildcard (represented by a ‘*’). Each wildcard match will be returned in an arrayref, accessible via the `splat’ keyword:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">get</span> <span class="s">&#39;/download/*.*&#39;</span> <span class="o">=&gt;</span> <span class="k">sub </span><span class="p">{</span>
+</span><span class="line">    <span class="k">my</span> <span class="p">(</span><span class="nv">$file</span><span class="p">,</span> <span class="nv">$ext</span><span class="p">)</span> <span class="o">=</span> <span class="n">splat</span><span class="p">;</span>
+</span><span class="line">    <span class="c1"># do something with $file.$ext here</span>
+</span><span class="line"><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>3.A route can be defined with a Perl regular expression. In order to tell Dancer to consider the route as a real regexp, the route must be defined explicitly with qr{}, like the following:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">get</span> <span class="sx">qr{/hello/([\w]+)}</span> <span class="o">=&gt;</span> <span class="k">sub </span><span class="p">{</span>
+</span><span class="line">    <span class="k">my</span> <span class="p">(</span><span class="nv">$name</span><span class="p">)</span> <span class="o">=</span> <span class="n">splat</span><span class="p">;</span>
+</span><span class="line">    <span class="k">return</span> <span class="s">&quot;Hello $name&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>4.Routes may include some matching conditions (on the useragent and the hostname at the moment):     </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">get</span> <span class="s">&#39;/foo&#39;</span><span class="p">,</span> <span class="p">{</span><span class="n">agent</span> <span class="o">=&gt;</span> <span class="s">&#39;Songbird (\d\.\d)[\d\/]*?&#39;</span><span class="p">}</span> <span class="o">=&gt;</span> <span class="k">sub </span><span class="p">{</span>
+</span><span class="line">  <span class="s">&#39;foo method for songbird&#39;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="n">get</span> <span class="s">&#39;/foo&#39;</span> <span class="o">=&gt;</span> <span class="k">sub </span><span class="p">{</span>
+</span><span class="line">  <span class="s">&#39;all browsers except songbird&#39;</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>5.An action can choose not to serve the current request and ask Dancer to process the request with the next matching route. This is done with the pass keyword, like in the following example:    </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">get</span> <span class="s">&#39;/say/:word&#39;</span> <span class="o">=&gt;</span> <span class="k">sub </span><span class="p">{</span>
+</span><span class="line">    <span class="k">return</span> <span class="n">pass</span> <span class="k">if</span> <span class="p">(</span><span class="n">params</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">word</span><span class="p">}</span> <span class="o">=~</span><span class="sr"> /^\d+$/</span><span class="p">);</span>
+</span><span class="line">    <span class="s">&quot;I say a word: &quot;</span><span class="o">.</span><span class="n">params</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">word</span><span class="p">};</span>
+</span><span class="line"><span class="p">};</span>
+</span><span class="line">
+</span><span class="line"><span class="n">get</span> <span class="s">&#39;/say/:number&#39;</span> <span class="o">=&gt;</span> <span class="k">sub </span><span class="p">{</span>
+</span><span class="line">    <span class="s">&quot;I say a number: &quot;</span><span class="o">.</span><span class="n">params</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">number</span><span class="p">};</span>
+</span><span class="line"><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>6.Before hooks, after hooks, before_template_render hooks. </p>
+
+<p>7.You can use the load method to include additional routes into your application.</p>
+
+<p>8.A Dancer application can access the information from its config file easily with the config keyword:    </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">get</span> <span class="s">&#39;/appname&#39;</span> <span class="o">=&gt;</span> <span class="k">sub </span><span class="p">{</span>
+</span><span class="line">    <span class="k">return</span> <span class="s">&quot;This is &quot;</span> <span class="o">.</span> <span class="n">config</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">appname</span><span class="p">};</span>
+</span><span class="line"><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>9.In order to enable the logging system for your application, you first have to start the logger engine in your config.yml:   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">logger:</span> <span class="s">&#39;file&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>10.Dancer configures the Template::Toolkit engine to use &lt;% %&gt; brackets instead of its default [% %] brackets, although you can change this in your config file. Of course you have to import the “Template” module.  </p>
+
+<p>11.A layout is a special view, located in the ‘layouts’ directory (inside the views directory) which must have a token named `content’. That token marks the place where to render the action view. This lets you define a global layout for your actions. Any tokens that you defined when you called the ‘template’ keyword are available in the layouts, as well as the standard session, request, and params tokens. This allows you to insert per-page content into the HTML boilerplate, such as page titles, current-page tags for navigation, etc. (refer to the standard document for more details).</p>
+
+<p>12.Through  “set serializer =&gt; ‘JSON’;”  we can do data serializer;</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1565,203 +2112,6 @@
 </pre></td><td class="code"><pre><code class="bash"><span class="line">cat <span class="nv">$HOME</span>/.purple/accounts.xml | grep pass
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 <p>and it works. </p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/06/02/intermediate-perl-di-%5B%3F%5D-zhang-xu-yan/">Intermediate Perl 第一章 序言</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-06-02T23:53:36+08:00" pubdate data-updated="true">Jun 2<span>nd</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>欢迎来到理解Perl的下一个阶段。 你来到这里可能是因为你想学写超过100行的Perl程序，又或者是因为你的老板让你学的。  </p>
-
-<p>看， 我们的Learning Perl一书是很了不起的， 因为它介绍了如何在短的到中等长度的程序中使用Perl（用Perl所做的绝大多数编程都是如比）。但是为了避免“美洲驼书”（Learning Perl）变得太大让人恐惧， 我们刻意地小心地省略掉了很多地内容。   </p>
-
-<p>在接下来的内容里， 你可以得到“故事的剩下的部分”， 它是同我们的好朋友“Learning Perl”中同样的风格的。它涵盖了你写100到1000行长的程序所需要的知识。   </p>
-
-<p>例如， 你将学习到怎样和许多程序员在同一个项目上工作。这是很棒的， 因为除非你每天工作35个小时， 你在大的项目上是需要帮助的。你同样得确保当你在你的代码上进展到最终的应用的时候， 你的代码和别人的代码是能够一致的。    </p>
-
-<p>这本书同样向你展示了如何处理更大的更加复杂的数据结构， 比如像我们或许会称作的“哈希的哈希” 或者“array of arrays of hashes of arrays”. 一旦你知道了点references(引用)， 你就开始进入到了任意复杂的数据结构的领域了。   </p>
-
-<p>接着就是面向对象编程这个时髦的观念了， 它允许同一个项目里， 在有着微小或者重大变动的情况下， 可以部分重用你的代码（如果运气好的话，别人的代码）。    </p>
-
-<p>团队合作的一个很重要的一方面是有着发布周期以及单元测试还有整合测试。你将学习到基础的把你的代码打包成一个distribution(发布版本)以及为这个distribution提供单元测试。这既是为了开发， 也是为了验证你的代码在最终的环境里是行得通的。   </p>
-
-<p>正如我们在Learning Perl中承诺以及递交的那样， 我们将会以有趣的例子和坏坏的双关语来一路娱乐你。(我们们已经将Fred, Barney, Betty, 还有wilma遣送回家了。一组新的面孔将会扮演主要的角色。)   </p>
-
-<h2 id="section">你应该已经知道的</h2>
-
-<p>我们将假设你读过了Learning Perl, 或者至少假装你读过了。并且你使用Perl有足够的经验了， 达到了把那些基本的东西消化吸收的程度了。比如你将不会在本书中看到解释如何去获取一个数组的元素或者从subroutine中返回一个值。   </p>
-
-<p>请确认你知道以下的事情：   </p>
-
-<ul>
-  <li>怎样在你的系统中运行一个Perl程序。</li>
-  <li>三个基本的Pelr的变量类型：标量， 数组，还有哈希。</li>
-  <li>控制结构， 诸如while, if, for 以及 foreach。</li>
-  <li>Subroutines(子程序)。</li>
-  <li>Perl操作符， 诸如grep, map, sort, 还有 print。</li>
-  <li>文件操作， 诸如open, file reading, 还有 -X(文件测试)。</li>
-</ul>
-
-<p>你可能会在本书中获取到关于这些话题的更深的见解，但是我们将假设你知道这些基础知识了。  </p>
-
-<h2 id="section-1">关于那些脚注</h2>
-<p>像在Learning Perl中一样， 这本书把一些初次阅读时会感到生僻的内容降级到脚注里去。你应该在初次阅读的时候跳过那些内容，然后在重读的时候再拾起来。你将不会在脚注中发现在接下来的章节中的内容需要的知识。  </p>
-
-<h2 id="section-2">关于练习</h2>
-
-<p>实际动手操作的训练会让你更好的完成这件工作。最好的提供这种培训的方式就是在半个到一个小时的内容展示之后， 提供一系列的练习题。当然如果你是个快速阅读的人的话， 你结束一章的阅读可能并不需要半个小时。 放慢速度， 深呼吸， 然后做练习。  </p>
-
-<p>每一个练习题都有一个“多少分钟能完成”的评级。我们是想用这个评级来表示完成这个联系所需要的最长的时间， 知识如果你花的时间比所示的时间长或者短很多的话， 请不要感觉糟糕。有的时候只是你在你的学习或者工作当中遇到了多少次同样的编程任务的问题而已。   </p>
-
-<p>每个问题在附录中都有答案。请不要偷看哦， 要不要你就毁了这些习题的价值了。   </p>
-
-<h2 id="perl">如果我是一个Perl的授课老师怎么办？</h2>
-
-<p>如果你是一个决定使用本书来作为你的教材的授课老师， 你应该知道每一组问题， 都是足够的短到了让一个学生在45分钟到一个小时内完成， 而且还会有点时间留下来休息。有的章节的练习题会很快的得到解决， 有的可能得花更长的时间。那是因为一旦那些在中括号中的数字被写好了， 我们发现自己已经不知道该如何往上加了。  </p>
-
-<p>那么就让我们开始吧。在你翻开此页之后课程就开始了。。。 </p>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/06/02/intermediate-perl-qian-yan/">Intermediate Perl 前言</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-06-02T23:06:08+08:00" pubdate data-updated="true">Jun 2<span>nd</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Perl的面向对象的机制是经典的变戏法。它接收一些Perl中存在的非面向对象特征，诸如packages, references, hashes,arrays, subroutines 以及 modules， 然后（并没有什么锦囊妙计）不知道从什么地方变出来完整的功能性的objects， classes 以及 methods。   </p>
-
-<p>那是很大的一个技巧。这意味着你可以在不用首先掌握很多新的语法或者知晓大量的新的技巧的情况下， 在你已有的Perl知识的基础上继续发展， 轻松地进入面向对象的Perl发展进程中。这也同样意味着你可以通过选择最适合你的任务的已经存在的结构来对面向对象Perl进行微调， 以符合你自己的需要。  </p>
-
-<p>但是这里有个问题。 由于Perl选择packages， references, hashes,arrays, subroutines 以及 modules 作为它的面向对象机制的基石， 为了使用面向对象Perl， 你得已经理解了packages，references, hashes,arrays, subroutines 以及 modules。   </p>
-
-<p>接下来就是所谓的困难了。这里学习的曲线并没有被消除， 而只是被向后推延了几步而已。    </p>
-
-<p>那么接下来你该如何学习一切你应该知道的关于非面向对象的知识，然后你就可以学习一切你因该知道的关于面向对象的知识呢？   </p>
-
-<p>这本书就是答案。在接下来的每页里， Randal会利用他20多年使用Perl的经历， 以及40多年看Gilligan与Ed先生的经验来解释共同支撑着Perl的面向对象特性的每一个组成部分。 更棒的是， 他接着展示了如何联合那些组成的部分来创造有用的classes（类）以及objects（对象）。   </p>
-
-<p>所以当涉及到Perl的objects，references, 以及 modules的时候， 你仍然感觉像是Gilligan， 那么这本书就是Professor要求的。  </p>
-
-<p>以上都是真实的消息哦！   </p>
-
-<p>–Damian Conway, 2003年5月。                                                             </p>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/06/01/brew-update-errors-fixed/">Brew Update Errors Fixed</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-06-01T16:12:00+08:00" pubdate data-updated="true">Jun 1<span>st</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I met several errors while updating my homebrew, one is:  </p>
-
-<p><img src="/images/sun/first.png" />    </p>
-
-<p>the solution is:   </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">cd `brew --prefix`    
-</span><span class="line">git remote add origin https://github.com/mxcl/homebrew.git   
-</span><span class="line">git fetch origin    
-</span><span class="line">git reset --hard origin/master 
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>the other is:   </p>
-
-<p><img src="/images/sun/second.png" />    </p>
-
-<p>To address this this error, we just have have to change the permissions on the folder to a certain user:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">chown -R sun .git  </span></code></pre></td></tr></table></div></figure></notextile></div>
 </div>
   
   

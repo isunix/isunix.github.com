@@ -4,7 +4,7 @@
   <title><![CDATA[Steven's Blog]]></title>
   <link href="http://isunix.github.io/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-09-19T10:13:35+08:00</updated>
+  <updated>2014-09-19T20:59:14+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,161 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Map and Grep in Perl]]></title>
+    <link href="http://isunix.github.io/blog/2014/09/19/map-and-grep-in-perl/"/>
+    <updated>2014-09-19T12:27:58+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/09/19/map-and-grep-in-perl</id>
+    <content type="html"><![CDATA[<p>I ran across some usage of grep and map in perl in some of the scripts I am reading. just to keep a note here. </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">@line</span> <span class="o">=</span> <span class="nb">grep</span> <span class="p">{</span><span class="ow">not</span> <span class="sr">/^\s*$/</span><span class="p">}</span> <span class="nb">map</span> <span class="p">{</span><span class="nb">chomp</span><span class="p">;</span><span class="nv">$_</span><span class="p">}</span> <span class="sr">&lt;FILEIN&gt;</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="nv">@keyorder</span> <span class="o">=</span> <span class="nb">grep</span> <span class="p">{</span><span class="ow">not</span> <span class="sr">/^\s*$/</span><span class="p">}</span> <span class="nv">@column</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="nv">$rh_meta</span><span class="o">-&gt;</span><span class="p">{</span><span class="nv">$meta_name</span><span class="p">}</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class="line">	<span class="nb">map</span> <span class="p">{</span>
+</span><span class="line">		<span class="p">(</span><span class="nv">$_</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</span><span class="line">	<span class="p">}</span> <span class="nb">grep</span> <span class="p">{</span>
+</span><span class="line">		<span class="ow">not</span> <span class="sr">/^\d+$/</span><span class="p">;</span>
+</span><span class="line">	<span class="p">}</span> <span class="p">(</span><span class="nv">$meta_body</span> <span class="o">=~</span><span class="sr"> /(\w+)/g</span><span class="p">)</span>
+</span><span class="line">	
+</span><span class="line"><span class="nv">$str</span> <span class="o">=~</span> <span class="nb">tr</span><span class="sr">/a-z/</span><span class="n">A</span><span class="o">-</span><span class="n">Z</span><span class="o">/</span><span class="p">;</span>
+</span><span class="line"><span class="c1">##how to use tr</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>I also come across some usage of redo and labeled loop, please see the following examples.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="c1">#!/usr/bin/perl</span>
+</span><span class="line"><span class="k">for</span> <span class="nv">$i</span> <span class="p">(</span><span class="mi">0</span><span class="o">..</span><span class="mi">9</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">    <span class="k">for</span> <span class="nv">$j</span> <span class="p">(</span><span class="mi">0</span><span class="o">..</span><span class="mi">9</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">        <span class="k">print</span> <span class="s">&quot;$i x $j\n&quot;</span><span class="p">;</span>
+</span><span class="line">        <span class="k">last</span> <span class="k">if</span> <span class="nv">$i</span> <span class="o">==</span><span class="mi">3</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line"><span class="c1">#the one without labeled loop, the &quot;last&quot; will only act on the inner loop.</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>if we want the “last” to act on the “outer” loop, we can do the following:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="c1">#!/usr/bin/perl</span>
+</span><span class="line"><span class="n">LO:</span> <span class="k">for</span> <span class="nv">$i</span> <span class="p">(</span><span class="mi">0</span><span class="o">..</span><span class="mi">9</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">        <span class="k">for</span> <span class="nv">$j</span> <span class="p">(</span><span class="mi">0</span><span class="o">..</span><span class="mi">9</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">            <span class="k">print</span> <span class="s">&quot;$i x $j\n&quot;</span><span class="p">;</span>
+</span><span class="line">            <span class="k">last</span> <span class="n">LO</span> <span class="k">if</span> <span class="nv">$i</span> <span class="o">==</span><span class="mi">3</span><span class="p">;</span>
+</span><span class="line">        <span class="p">}</span>
+</span><span class="line">    <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>namely we can use “labeled loop” to control the outer loop from the inner loop.</p>
+
+<p>for the redo function, the difference it has to “next” is “next” will go to the next loop, while “redo” will just “redo” the current loop, this is partilarly useful if we want to ask the user to re-enter the password if they get the password wrong:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="n">utf8</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">my</span> <span class="nv">@words</span> <span class="o">=</span> <span class="sx">qw{ fred barney pebbles dino }</span><span class="p">;</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">$errors</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">foreach</span> <span class="p">(</span><span class="nv">@words</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">    <span class="k">print</span> <span class="s">&quot;type the word &#39;$_&#39;: &quot;</span><span class="p">;</span>
+</span><span class="line">    <span class="nb">chomp</span><span class="p">(</span><span class="k">my</span> <span class="nv">$try</span> <span class="o">=</span> <span class="sr">&lt;STDIN&gt;</span><span class="p">);</span>
+</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="nv">$try</span> <span class="ow">ne</span> <span class="nv">$_</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">      <span class="k">print</span> <span class="s">&quot;sorry, it is not right\n&quot;</span><span class="p">;</span>
+</span><span class="line">      <span class="nv">$errors</span><span class="o">++</span><span class="p">;</span>
+</span><span class="line">      <span class="k">redo</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line"><span class="c1">##if you did not enter the right item, you will be asked and again!</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Study of Hash Function]]></title>
+    <link href="http://isunix.github.io/blog/2014/09/19/study-of-hash-function/"/>
+    <updated>2014-09-19T10:26:02+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/09/19/study-of-hash-function</id>
+    <content type="html"><![CDATA[<p>Recently I come across an algorithm, and I am sure I have no idea what it is doing, when I ask my colleague, he said it is hash algorithm.  Thus comes out this article talking about hash algorithms.  </p>
+
+<p>First I will list some of the sites I visited while I am learning what is hash function, how to create it and how to use it.  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">http://isthe.com/chongo/tech/comp/fnv/#fnv-prime
+</span><span class="line">I did not spend any time on this post yet.     
+</span><span class="line">
+</span><span class="line">http://www.azillionmonkeys.com/qed/hash.html
+</span><span class="line">This is said to be a very good article on hash function.
+</span><span class="line">
+</span><span class="line">http://burtleburtle.net/bob/hash/doobs.html
+</span><span class="line">This is also a very good article.
+</span><span class="line">
+</span><span class="line">http://en.wikipedia.org/wiki/Hash_function
+</span><span class="line">http://www.benfrederickson.com/heap-visualization/
+</span><span class="line">http://blog.csdn.net/wuliming_sc/article/details/1365962
+</span><span class="line">and difinitely http://www.benfrederickson.com/ is a very good site for learning some knowledge of algorithms.
+</span><span class="line">
+</span><span class="line">http://blog.163.com/clevertanglei900@126/blog/static/111352259201171111938208/
+</span><span class="line">this post gives a very clear explanation of what hash function is</span></code></pre></td></tr></table></div></figure></notextile></div>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Color Bash Prompt]]></title>
@@ -801,129 +956,6 @@ It will give out the number of matched items.</p>
 
 <p>4.”use” happens during compile time, whereas “require” happens at runtime.    </p>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Notes on Perlrun]]></title>
-    <link href="http://isunix.github.io/blog/2014/09/05/notes-on-perlrun/"/>
-    <updated>2014-09-05T19:24:02+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/09/05/notes-on-perlrun</id>
-    <content type="html"><![CDATA[<p>We keep notes on some of the useful notes on perl command line knowledge here.  </p>
-
-<p>1.-i[extension]:  </p>
-
-<p>specifies that files processed by the “&lt;&gt;” construct are to be edited in-place.  It does this by renaming the input file, opening the output file by the original name, and selecting that output file as the default for print() statements.   </p>
-
-<p>2.-p:
-causes Perl to assume the following loop around your program, which makes it iterate over filename arguments somewhat like sed.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Useful Perl Man Page]]></title>
-    <link href="http://isunix.github.io/blog/2014/09/05/useful-perl-man-page/"/>
-    <updated>2014-09-05T18:14:03+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/09/05/useful-perl-man-page</id>
-    <content type="html"><![CDATA[<p>We can check them like “perl perlre”. These useful perl manuals are:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-<span class="line-number">28</span>
-<span class="line-number">29</span>
-<span class="line-number">30</span>
-<span class="line-number">31</span>
-<span class="line-number">32</span>
-<span class="line-number">33</span>
-<span class="line-number">34</span>
-<span class="line-number">35</span>
-<span class="line-number">36</span>
-<span class="line-number">37</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">perlre</span>
-</span><span class="line">
-</span><span class="line"><span class="n">perlobj</span>
-</span><span class="line">
-</span><span class="line"><span class="n">perlootut</span>
-</span><span class="line">
-</span><span class="line"><span class="n">perlmodlib</span>
-</span><span class="line">
-</span><span class="line"><span class="n">perlintro</span>
-</span><span class="line">
-</span><span class="line"><span class="n">perlsyn</span>
-</span><span class="line">
-</span><span class="line"><span class="n">perlop</span>
-</span><span class="line">
-</span><span class="line"><span class="n">perlsub</span>
-</span><span class="line">
-</span><span class="line"><span class="n">perlrequick</span>
-</span><span class="line">
-</span><span class="line"><span class="n">perlretut</span>
-</span><span class="line">
-</span><span class="line"><span class="n">perlfunc</span>
-</span><span class="line">
-</span><span class="line"><span class="n">perlref</span>
-</span><span class="line">
-</span><span class="line"><span class="n">perlreftut</span>
-</span><span class="line">
-</span><span class="line"><span class="n">perldsc</span>
-</span><span class="line">
-</span><span class="line"><span class="n">perllol</span>
-</span><span class="line">
-</span><span class="line"><span class="n">perlrun</span>
-</span><span class="line">
-</span><span class="line"><span class="n">perldebug</span>
-</span><span class="line">
-</span><span class="line"><span class="n">perlnewmod</span>
-</span><span class="line">
-</span><span class="line"><span class="n">perlfaq3</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>And below are some modules we may find useful:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nn">Moose::</span><span class="n">Manual</span>
-</span><span class="line">
-</span><span class="line"><span class="n">Mouse</span>
-</span><span class="line">
-</span><span class="line"><span class="nn">Mouse::</span><span class="n">Tiny</span>
-</span><span class="line">
-</span><span class="line"><span class="nn">Class::</span><span class="n">Accessor</span>
-</span><span class="line">
-</span><span class="line"><span class="nn">Role::</span><span class="n">Tiny</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
 ]]></content>
   </entry>
   

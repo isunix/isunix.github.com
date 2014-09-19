@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Algorithms | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/algorithms/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-09-19T10:13:35+08:00</updated>
+  <updated>2014-09-19T20:59:14+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,36 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Study of Hash Function]]></title>
+    <link href="http://isunix.github.io/blog/2014/09/19/study-of-hash-function/"/>
+    <updated>2014-09-19T10:26:02+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/09/19/study-of-hash-function</id>
+    <content type="html"><![CDATA[<p>Recently I come across an algorithm, and I am sure I have no idea what it is doing, when I ask my colleague, he said it is hash algorithm.  Thus comes out this article talking about hash algorithms.  </p>
+
+<p>First I will list some of the sites I visited while I am learning what is hash function, how to create it and how to use it.  </p>
+
+<p>```
+http://isthe.com/chongo/tech/comp/fnv/#fnv-prime
+I did not spend any time on this post yet.     </p>
+
+<p>http://www.azillionmonkeys.com/qed/hash.html
+This is said to be a very good article on hash function.</p>
+
+<p>http://burtleburtle.net/bob/hash/doobs.html
+This is also a very good article.</p>
+
+<p>http://en.wikipedia.org/wiki/Hash_function
+http://www.benfrederickson.com/heap-visualization/
+http://blog.csdn.net/wuliming_sc/article/details/1365962
+and difinitely http://www.benfrederickson.com/ is a very good site for learning some knowledge of algorithms.</p>
+
+<p>http://blog.163.com/clevertanglei900@126/blog/static/111352259201171111938208/
+this post gives a very clear explanation of what hash function is
+``` </p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Boyer-Moore 算法实现]]></title>
@@ -505,101 +535,6 @@ ans1 = is_unique(test_str1)
 ans2 = is_unique(test_str2)
 print(ans1)
 print(ans2)
-```</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Remove Duplicates From an Unsorted Linked List]]></title>
-    <link href="http://isunix.github.io/blog/2014/08/18/remove-duplicates-from-an-unsorted-linked-list/"/>
-    <updated>2014-08-18T15:12:52+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/08/18/remove-duplicates-from-an-unsorted-linked-list</id>
-    <content type="html"><![CDATA[<p>Write code to remove duplicates from an unsorted linked list.</p>
-
-<p>FOLLOW UP</p>
-
-<p>How would you solve this problem if a temporary buffer is not allowed?  </p>
-
-<p>```cpp
-#include <iostream>
-#include <cstring>
-using namespace std;</cstring></iostream></p>
-
-<p>typedef struct node{
-    int data;
-    node *next;
-}node;
-bool myhash[100];</p>
-
-<p>node* init(int a[], int n){
-    node *head, *p;
-    for(int i=0; i&lt;n; ++i){
-        node *nd = new node();
-        nd-&gt;data = a[i];
-        if(i==0){
-            head = p = nd;
-            continue;
-        }
-        p-&gt;next = nd;
-        p = nd;
-    }
-    return head;
-}
-void removedulicate(node *head){
-    if(head==NULL) return;
-    node *p=head, *q=head-&gt;next;
-    myhash[head-&gt;data] = true;
-    while(q){
-        if(myhash[q-&gt;data]){
-            node *t = q;
-            p-&gt;next = q-&gt;next;
-            q = p-&gt;next;
-            delete t;
-        }
-        else{
-            myhash[q-&gt;data] = true;
-            p = q; q = q-&gt;next;
-        }
-    }
-}
-void removedulicate1(node *head){
-    if(head==NULL) return;
-    node *p, *q, *c=head;
-    while(c){
-        p=c; q=c-&gt;next;
-        int d = c-&gt;data;
-        while(q){
-            if(q-&gt;data==d){
-                node *t = q;
-                p-&gt;next = q-&gt;next;
-                q = p-&gt;next;
-                delete t;
-            }
-            else{
-                p = q; q = q-&gt;next;
-            }
-        }
-        c = c-&gt;next;
-    }
-}
-void print(node *head){
-    while(head){
-        cout«head-&gt;data«” ”;
-        head = head-&gt;next;
-    }
-    cout«endl;
-}
-int main(){
-    int n = 10;
-    int a[] = {
-        3, 2, 1, 3, 5, 6, 2, 6, 3, 1
-    };
-    memset(myhash, false, sizeof(myhash));
-    node *head = init(a, n);
-    removedulicate1(head);
-    print(head);
-    return 0;
-}
 ```</p>
 ]]></content>
   </entry>

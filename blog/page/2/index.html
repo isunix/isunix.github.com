@@ -9,8 +9,7 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="First we will keep notes of perlxstut. The reader is assumed to have access to perlguts, perlapi and perlxs. &#8220;`pl &#8220;`
-">
+  <meta name="description" content="This is mainly a note from the book “object oriented perl programming” by Damian Conway. When a method is called on a particular object, the actual &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -63,6 +62,90 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/10/polymorphism-in-perl/">Polymorphism in Perl</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-10T14:37:37+08:00" pubdate data-updated="true">Sep 10<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>This is mainly a note from the book “object oriented perl programming” by Damian Conway.</p>
+
+<p>When a method is called on a particular object, the actual method that’s involved may depend on the class to which the object belongs. For instance, if we call an object’s ignite() method, its response will be different depending on whether it belongs to the Paper, Rocket, Passion, or FlameWar class.    </p>
+
+<p>1.inheritance polymorphism:</p>
+
+<p>the objects whose methods are called belong to a hierarchy of classes that are related by inheritance. The presence of the required method in the base class of the hierarchy ensures that objects of any derived class can always respond, if only generically, to a given method call. The ability to re- define individual methods in derived classes allows objects of those classes to respond more spe- cifically to a particular method call if they so wish.    </p>
+
+<p>2.interface polymorphism:  </p>
+
+<p>The alternative approach to polymorphism is to allow any object with a suitable method to respond to a call to that method. This is known as interface polymorphism, because the only requirement is that a particular object’s interface provides a method of the appropriate name. Consequently, languages that allow interface polymorphism must also provide a run-time mechanism for handling cases where an object is unable to provide a requested method. Typ- ically, this involves providing a means of specifying a fallback subroutine that is called when- ever an object cannot respond to a particular method invocation. Alternatively, such languages may have some form of exception system. In that case, the language will trigger a well-defined exception if the object cannot respond more appropriately.Inheritance polymorphism is a special case of interface polymorphism because a common base class guarantees that objects share a specific inherited method. Any language that supports interface polymorphism automatically supports inheritance polymorphism as well.</p>
+
+<p>3.abstract class:   </p>
+
+<p>A class hierarchy will contain some classes—typically near the top of the hierarchy—that were never intended to be used to build objects directly. In other words, these classes exist only to represent a shared category or provide a single source from which descendent classes can inherit shared methods. Such classes are called abstract base classes. There is one additional role that an abstract base class can fulfill. Any base class, abstract or not, can be used to ensure that every class derived from it has a specific polymorphic method. That’s a handy feature because we are then guaranteed that any derived class will be able to respond polymorphically to a specified set of method calls.    </p>
+
+<p>Abstract base classes are clearly useful, but in large object-oriented systems two problems can arise. The first is that they may accidentally be used as real classes when someone mistakenly creates an object of their type.   </p>
+
+<p>Although an abstract base class ensures that a derived class has a certain set of methods, it does not require that the derived class redefine any of those methods meaningfully. This can be a problem if many such polymorphic methods are inher- ited, and we accidentally forget to redefine one of them. The result is that a particular class uses the generic behavior for a polymorphic function, instead of its own appropriate class-specific behavior.  </p>
+
+<p>Many object-oriented programming languages solve these two problems by introducing the concept of an abstract method (which is also known as a pure virtual function, or a deferred feature). An abstract method is a method in an abstract base class that has no valid implementation and exists only to indicate a necessary part of each derived class’s interface. It is a kind of placeholder in the interface, indicating the need for a certain functionality, but not actually providing it.     </p>
+
+<p>Suppose, for example, the register() method of the Truck class had been declared as an abstract method (i.e., defined but not implemented). Now, because that ancestral regis- ter() method doesn’t provide a working implementation, whenever a Truck object is creat- ed, and its register() method is called, an error will be flagged. This immediately solves the general problem of incorrect use of objects belonging to an abstract base class.  </p>
+
+<p>Better still, it also solves the problem of forgetting to redefine a method in a derived class. For example, if the person coding the FireTruck class neglects to implement a suitable reg- istration method for that class, then the register() method inherited from Truck will be called instead. Rather than performing some inadequate default registration process, the in- herited abstract method will immediately signal an error, indicating that the implementation is incorrect.</p>
+
+<p>4.Objects can live beyond the program that creates them.   </p>
+
+<p>5.Object-oriented programming languages provide an important separa- tion between how data is used externally—the methods that can be called on an object—and how that data is represented and manipulated internally—the way its attribute values are stored, and its methods are coded. So long as the interface remains stable, the implementation can be changed as necessary—optimized, extended, parallelized, distributed, and so forth.   </p>
+
+<p>6.In object-oriented terms, persistence is the ability of objects to retain their attribute values, their association with a class, and their individual identity, between separate executions of a program. In other words, persistent objects are those that, next time you start running the program, are still there.   </p>
+
+<p>Persistence requires more than just dumping an object’s attribute values into a file or a database when the program terminates, and then creating a new object, and reloading the saved data next time the program executes. The essence of persistence is that when the program next executes, a persistent object will have been identifiably reconstructed, either with the same name, the same location in memory, or another way of accessing it that is consistent between executions.    </p>
+
+<p>Moreover, the reconstruction ought to be as fully automated as possible. Ideally, the pro- grammer should only have to somehow mark an object as persistent, and thereafter it will au- tomagically reappear every time the program executes. In practice, very few languages can achieve that level of transparency.    </p>
+
+<p>More often, to create a persistent object it is necessary to create a special-purpose class, perhaps by deriving it from the object’s original class. This, in turn, requires the programmer to create some custom code to translate internal representations of the object—the bit patterns representing it in the program—to external representations—the bit patterns in a file or database.   </p>
+
+<p>This translation process is called encoding or serialization and is difficult to implement in the general case. It’s particularly hard if some attributes of a persistent object store pointers or references to other data. In such cases, it may also be necessary to also encode the data being referred to, as well as the abstract relationship between the persistent objects involved. In an inherently persistent language, this requirement must be met for an arbitrary number of at- tributes storing arbitrary interrelationships between arbitrary objects of arbitrary classes. Not surprisingly, few languages fully support both object orientation and automatic persistence.     </p>
+
+<p>Another important issue is the granularity of the persistence conferred upon objects. Some languages, such as HyperTalk, offer fine-grained persistence, in which every change in the attributes of an object is immediately recorded externally. Most, however, offer only coarse- grained persistence, where the attributes of an object are recorded only at the very end of a pro- gram’s execution.   </p>
+
+<p>Coarse-grained persistence is almost always a more efficient alternative since it minimizes the amount of disk access a program performs. Fine-grained persistence, on the other hand, is clearly the safer alternative since it ensures that an object’s state can always be reconstructed in a subsequent execution of the program, even if a previous execution terminated prematurely.    </p>
+
+<p>Of course, in practice, not even the finest of fine-grained persistence offers any real guar- antee of data integrity. Even if an object is updated every time it is modified, the program might still crash in the middle of the update process itself, or, in crashing at some other point, it might somehow trash the file system on which the object was recorded. However, these prob- lems also apply to coarse-grained persistence, which is far more likely to lose data due to an inopportune termination since, in general, nothing at all will have been recorded prior to the crash.   </p>
+
+<p>6.In the literature on object-oriented programming, standard concepts pass by many strange aliases. It some- times seems that every object-oriented language designer deliberately invents a completely new set of names for the same fundamental ideas.</p>
+
+<p>(I strong agree with Dimian Conway, many concepts are so clear to clear to understand, yet people invent new new aliases to mask the concept thus makes other people hard to digest the essence under those concepts–by Steven)   </p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -658,241 +741,6 @@ causes Perl to assume the following loop around your program, which makes it ite
 </span><span class="line">
 </span><span class="line"><span class="nn">Role::</span><span class="n">Tiny</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/05/object-oriented-perl/">Object Oriented Perl</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-09-05T15:46:51+08:00" pubdate data-updated="true">Sep 5<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>We can find details about the info list below by issuing “perldoc perlobj”, or “perldoc perlootut”</p>
-
-<p>1.When we bless something, we are not blessing the variable which contains a reference to that thing, nor are we blessing the reference that the variable stores; we are blessing the thing that the variable refers to (sometimes known as the referent).  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="nn">Scalar::</span><span class="n">Util</span> <span class="s">&#39;blessed&#39;</span><span class="p">;</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">$foo</span> <span class="o">=</span> <span class="p">{};</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">$bar</span> <span class="o">=</span> <span class="nv">$foo</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="nb">bless</span> <span class="nv">$foo</span><span class="p">,</span> <span class="s">&#39;Class&#39;</span><span class="p">;</span>
-</span><span class="line"><span class="k">print</span> <span class="n">blessed</span><span class="p">(</span> <span class="nv">$bar</span> <span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="nv">$bar</span> <span class="o">=</span> <span class="s">&quot;some other value&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="k">print</span> <span class="n">blessed</span><span class="p">(</span> <span class="nv">$bar</span> <span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>The first will print out “Class” and second undef(of course you can see it).</p>
-
-<p>When we call “bless” on a variable, we are actually blessing the underlying data structure that the variable refers to. We are not blessing the reference itself, nor the variable that contains that reference. That’s why the second call to “blessed( $bar )” returns false. At that point $bar is no longer storing a reference to an
-object. You will sometimes see older books or documentation mention “blessing a reference” or describe an object as a “blessed reference”, but this is incorrect. It isn’t the reference that is blessed as an object; it’s the thing the reference refers to (i.e. the referent).   </p>
-
-<p>2.Objects are merely Perl data structures (hashes, arrays, scalars, filehandles, etc.) that have been explicitly associated with a particular class. That explicit association is created by the built-in “bless” function.</p>
-
-<p>3.An object is simply a data structure that knows to which class it belongs.A class is simply a package. A class provides methods that expect to operate on objects. A method is simply a subroutine that expects a reference to an object (or a package name, for class methods) as the first argument. </p>
-
-<p>4.Each package contains a special array called @ISA. The @ISA array contains a list of that class’s parent classes, if any. This array is examined when Perl does method resolution. It is possible to manually set @ISA. and you may see this in older Perl code. Much older code also uses the base pragma. For new code, we recommend that you use the parent pragma to declare your parents.  This pragma will take care of setting @ISA.  It will also load the parent classes and make sure that the package doesn’t inherit from itself.  </p>
-
-<p>5.However the parent classes are set, the package’s @ISA variable will contain a list of those parents. This is simply a list of scalars, each of which is a string that corresponds to a package name.   </p>
-
-<p>6.All classes inherit from the UNIVERSAL class implicitly. The UNIVERSAL class is implemented by the Perl core, and provides several default methods, such as “isa()”, “can()”, and “VERSION()”.  The “UNIVERSAL” class will never appear in a package’s @ISA variable.  </p>
-
-<p>7.Perl provides no special constructor syntax. This means that a class must implement its own constructor. A constructor is simply a class method that returns a reference to a new object.    </p>
-
-<p>8.A simple read-only accessor simply gets the value of a single attribute:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">sub </span><span class="nf">path</span> <span class="p">{</span>
-</span><span class="line">	<span class="k">my</span> <span class="nv">$self</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
-</span><span class="line">	<span class="k">return</span> <span class="nv">$self</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">path</span><span class="p">};</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>A read-write accessor will allow the caller to set the value as well as get it:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">sub </span><span class="nf">path</span> <span class="p">{</span>
-</span><span class="line">	<span class="k">my</span> <span class="nv">$self</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="nv">@_</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">    	<span class="nv">$self</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">path</span><span class="p">}</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">
-</span><span class="line">    <span class="k">return</span> <span class="nv">$self</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">path</span><span class="p">};</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>9.More on bless. </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">$object</span> <span class="o">=</span> <span class="nb">bless</span> <span class="p">{},</span> <span class="nv">$class</span><span class="p">;</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">$object</span> <span class="o">=</span> <span class="nb">bless</span> <span class="p">{};</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>In the first form, the anonymous hash is being blessed into the class
-in $class. In the second form, the anonymous hash is blessed into the
-current package. The second form is strongly discouraged, because it breaks the ability of a subclass to reuse the parent’s constructor, but you may still run across it in existing code.   </p>
-
-<p>10.If you simply want to check that a variable contains an object reference, we recommend that you use “defined blessed($object)”, since “ref” returns true values for all references, not just objects.  </p>
-
-<p>11.If you call a method that doesn’t exist in a class, Perl will throw an error. However, if that class or any of its parent classes defines an “AUTOLOAD” method, that “AUTOLOAD” method is called instead.   </p>
-
-<p>12.All the examples so far have shown objects based on a blessed hash. However, it’s possible to bless any type of data structure or referent, including scalars, globs, and subroutines. You may see this sort of thing when looking at code in the wild.  </p>
-
-<p>13.You should also check out perlmodlib for some style guides on constructing both modules and classes.  </p>
-
-<p>14.As we said earlier, most Perl objects are hashes, but an object can be an instance of any Perl data type (scalar, array, etc.). Turning a plain data structure into an object is done by blessing that data structure using Perl’s “bless” function.  </p>
-
-<p>15.Once a referent has been blessed, the “blessed” function from the Scalar::Util core module can tell us its class name. This subroutine returns an object’s class when passed an object, and false otherwise.  </p>
-
-<p>16.A constructor creates a new object. In Perl, a class’s constructor is just another method, unlike some other languages, which provide syntax for constructors. Most Perl classes use “new” as the name for their constructor: my $file = File-&gt;new(…);   </p>
-
-<p>17.What makes a method special is how it’s called. The arrow operator (“-&gt;”) tells Perl that we are calling a method.   </p>
-
-<p>18.When we make a method call, Perl arranges for the method’s invocant to be passed as the first argument. Invocant is a fancy name for the thing on the left side of the arrow. The invocant can either be a class name
-or an object. We can also pass additional arguments to the method:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">sub </span><span class="nf">print_info</span> <span class="p">{</span>
-</span><span class="line">	<span class="k">my</span> <span class="nv">$self</span>   <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
-</span><span class="line">    <span class="k">my</span> <span class="nv">$prefix</span> <span class="o">=</span> <span class="nb">shift</span> <span class="sr">//</span> <span class="s">&quot;This file is at &quot;</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line">   	<span class="k">print</span> <span class="nv">$prefix</span><span class="p">,</span> <span class="s">&quot;, &quot;</span><span class="p">,</span> <span class="nv">$self</span><span class="o">-&gt;</span><span class="n">path</span><span class="p">,</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="nv">$file</span><span class="o">-&gt;</span><span class="n">print_info</span><span class="p">(</span><span class="s">&quot;The file is located at &quot;</span><span class="p">);</span>
-</span><span class="line"><span class="c1"># The file is located at /etc/hostname</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>19.Each class can define its attributes. Attributes are sometimes called properties.  </p>
-
-<p>20.Perl has no special syntax for attributes. Under the hood, attributes are often stored as keys in the object’s underlying hash, but don’t worry about this.   </p>
-
-<p>21.You might also see the terms getter and setter. These are two types of accessors. A getter gets the attribute’s value, while a setter sets it. Another term for a setter is mutator. We recommend that you only access attributes via accessor methods.   </p>
-
-<p>22.Attributes are typically defined as read-only or read-write. Read-only attributes can only be set when the object is first created, while read-write attributes can be altered at any time.  </p>
-
-<p>23.We often refer to inheritance relationships as parent-child or “superclass/subclass” relationships. Sometimes we say that the child has an is-a relationship with its parent class.   </p>
-
-<p>24.The process of determining what method should be used is called method resolution. What Perl does is look at the object’s class first (“File::MP3” in this case). If that class defines the method, then that class’s version of the method is called. If not, Perl looks at each parent class in turn. For “File::MP3”, its only parent is “File”. If “File::MP3” does not define the method, but “File” does, then Perl calls the method in “File”.  </p>
-
-<p>25.It is possible to explicitly call a parent method from a child:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nb">package</span> <span class="nn">File::</span><span class="n">MP3</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">use</span> <span class="n">parent</span> <span class="s">&#39;File&#39;</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">sub </span><span class="nf">print_info</span> <span class="p">{</span>
-</span><span class="line">	<span class="k">my</span> <span class="nv">$self</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
-</span><span class="line">	<span class="nv">$self</span><span class="o">-&gt;</span><span class="nn">SUPER::</span><span class="n">print_info</span><span class="p">();</span>
-</span><span class="line">	<span class="k">print</span> <span class="s">&quot;Its title is &quot;</span><span class="p">,</span> <span class="nv">$self</span><span class="o">-&gt;</span><span class="n">title</span><span class="p">,</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>26.The “has()” subroutine declares an attribute, and “Moose” automatically creates accessors for these attributes. It also takes care of creating a “new()” method for you. This constructor knows about the attributes you declared.     </p>
-
-<p>27.与@INC数组类似，@INC包含文件的寻找路径, @ISA数组含有类(包)名，当一个方法在当前包中未找到的时就到@ISA中中的包去寻找。@ISA中还含有当前类继承的基类名。  </p>
-
-<p>28.oo中的new可以有如下的几种写法的: 注意这两种写法的区别  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="c1">#!/usr/bin/perl</span>
-</span><span class="line"><span class="k">use</span> <span class="n">Cocoa</span><span class="p">;</span>
-</span><span class="line"><span class="nv">$cup</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Cocoa</span><span class="p">;</span>
-</span><span class="line"><span class="nv">$cup</span><span class="o">-&gt;</span><span class="n">setImports</span><span class="p">(</span> <span class="s">&#39;java.io.InputStream&#39;</span><span class="p">,</span> <span class="s">&#39;java.net.*&#39;</span><span class="p">);</span>
-</span><span class="line"><span class="nv">$cup</span><span class="o">-&gt;</span><span class="n">declareMain</span><span class="p">(</span> <span class="s">&quot;Msg&quot;</span> <span class="p">,</span> <span class="s">&quot;java.applet.Applet&quot;</span><span class="p">,</span> <span class="s">&quot;Runnable&quot;</span><span class="p">);</span>
-</span><span class="line"><span class="nv">$cup</span><span class="o">-&gt;</span><span class="n">closeMain</span><span class="p">();</span>
-</span><span class="line">
-</span><span class="line"><span class="ow">or</span>
-</span><span class="line">
-</span><span class="line"><span class="c1">#!/usr/bin/perl</span>
-</span><span class="line"><span class="k">use</span> <span class="n">Cocoa</span><span class="p">;</span>
-</span><span class="line"><span class="nv">$cup</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Cocoa</span><span class="p">;</span>
-</span><span class="line"><span class="nn">Cocoa::</span><span class="n">setImports</span><span class="p">(</span><span class="nv">$cup</span><span class="p">,</span> <span class="s">&#39;java.io.InputStream&#39;</span><span class="p">,</span> <span class="s">&#39;java.net.*&#39;</span><span class="p">);</span>
-</span><span class="line"><span class="nn">Cocoa::</span><span class="n">declareMain</span><span class="p">(</span><span class="nv">$cup</span><span class="p">,</span> <span class="s">&quot;Msg&quot;</span> <span class="p">,</span> <span class="s">&quot;java.applet.Applet&quot;</span><span class="p">,</span> <span class="s">&quot;Runnable&quot;</span><span class="p">);</span>
-</span><span class="line"><span class="nn">Cocoa::</span><span class="n">closeMain</span><span class="p">(</span><span class="nv">$cup</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>29.类方法通过@ISA数组继承.</p>
-
 </div>
   
   

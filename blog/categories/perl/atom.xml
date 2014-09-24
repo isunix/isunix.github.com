@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Perl | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/perl/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-09-19T20:59:14+08:00</updated>
+  <updated>2014-09-24T13:01:05+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,39 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Dynamicly Adding a Method to a Module]]></title>
+    <link href="http://isunix.github.io/blog/2014/09/24/dynamicly-adding-a-method-to-a-module/"/>
+    <updated>2014-09-24T12:57:20+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/09/24/dynamicly-adding-a-method-to-a-module</id>
+    <content type="html"><![CDATA[<p>We can follow the following steps to add/change a method in a module dynamicly.  </p>
+
+<p>```pl
+use strict;
+use warnings;
+use utf8;
+{</p>
+
+<pre><code>package Data::Dumper;
+
+sub test {
+    print "test to add a new method to Data::Dumper\n";
+} }
+</code></pre>
+
+<p>use Data::Dumper;
+Data::Dumper::test;
+print Dumper \%Data::Dumper::
+```</p>
+
+<p>we can also use the following one liner to check the methods defined in a module:  </p>
+
+<p><code>pl
+perl -e "use File::Find; use Data::Dumper; print Dumper \%File::Find::"
+</code></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Map and Grep in Perl]]></title>
@@ -146,38 +179,6 @@ MIME::Lite is not recommended by its current maintainer.  There are a number of 
 </code></p>
 
 <p>Thus I decided not use MIME::Lite any more. </p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Constructor and Destructor in Perl]]></title>
-    <link href="http://isunix.github.io/blog/2014/09/11/constructor-and-destructor-in-perl/"/>
-    <updated>2014-09-11T13:46:23+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/09/11/constructor-and-destructor-in-perl</id>
-    <content type="html"><![CDATA[<p>For Perl constructor, we can seperate the process of object creation from the process of initialization.  </p>
-
-<p><code>pl
-package CD::Music;
-use strict;
-sub new {
-	my $self = {};
-	bless $self, shift;
-	$self-&gt;_incr_count();
-	$self-&gt;_init(@_);
-	return $self;
-}
-{
-	my @_init_mems =
-	qw( _name _artist _publisher _ISBN _tracks _room _shelf _rating );
-	sub _init {
-		my ($self,@args) = @_;
-		my %inits;
-		@inits{@_init_mems} = @args;
-		%$self = %inits;
-	}
-}
-</code>  </p>
-
 ]]></content>
   </entry>
   

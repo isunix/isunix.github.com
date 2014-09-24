@@ -4,7 +4,7 @@
   <title><![CDATA[Steven's Blog]]></title>
   <link href="http://isunix.github.io/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-09-19T20:59:14+08:00</updated>
+  <updated>2014-09-24T13:01:05+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,53 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Dynamicly Adding a Method to a Module]]></title>
+    <link href="http://isunix.github.io/blog/2014/09/24/dynamicly-adding-a-method-to-a-module/"/>
+    <updated>2014-09-24T12:57:20+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/09/24/dynamicly-adding-a-method-to-a-module</id>
+    <content type="html"><![CDATA[<p>We can follow the following steps to add/change a method in a module dynamicly.  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="n">strict</span><span class="p">;</span>
+</span><span class="line"><span class="k">use</span> <span class="n">warnings</span><span class="p">;</span>
+</span><span class="line"><span class="k">use</span> <span class="n">utf8</span><span class="p">;</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">
+</span><span class="line">    <span class="nb">package</span> <span class="nn">Data::</span><span class="n">Dumper</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">sub </span><span class="nf">test</span> <span class="p">{</span>
+</span><span class="line">        <span class="k">print</span> <span class="s">&quot;test to add a new method to Data::Dumper\n&quot;</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="k">use</span> <span class="nn">Data::</span><span class="n">Dumper</span><span class="p">;</span>
+</span><span class="line"><span class="nn">Data::Dumper::</span><span class="n">test</span><span class="p">;</span>
+</span><span class="line"><span class="k">print</span> <span class="n">Dumper</span> <span class="o">\</span><span class="nv">%</span><span class="nn">Data::Dumper::</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>we can also use the following one liner to check the methods defined in a module:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">perl</span> <span class="o">-</span><span class="n">e</span> <span class="s">&quot;use File::Find; use Data::Dumper; print Dumper \%File::Find::&quot;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Map and Grep in Perl]]></title>
@@ -927,35 +974,6 @@ The purpose of computing is insight, not pictures.
 It will give out the number of matched items.</p>
 
 <p>3.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Fun Perl Code Snippets]]></title>
-    <link href="http://isunix.github.io/blog/2014/09/06/fun-perl-code-snippets/"/>
-    <updated>2014-09-06T10:02:29+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/09/06/fun-perl-code-snippets</id>
-    <content type="html"><![CDATA[<p>I collect some useful code snippets here for later usage or just keep a note of what I have read.  </p>
-
-<p>1.find files larger than a specifed size(in byte):   </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="nn">File::</span><span class="n">Find</span><span class="p">;</span>
-</span><span class="line"><span class="n">find</span><span class="p">(</span><span class="k">sub </span><span class="p">{</span> <span class="k">print</span> <span class="s">&quot;$_\n&quot;</span> <span class="k">if</span> <span class="o">-</span><span class="n">s</span> <span class="nv">$_</span> <span class="o">&gt;</span> <span class="nv">$ARGV</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span> <span class="p">},</span> <span class="s">&quot;.&quot;</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>2.we can use “man module::name” or “perldoc module::name” to check the detailed info of a module.   </p>
-
-<p>3.For the first example, if using require, we can write it as the following:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nb">require</span> <span class="nn">File::</span><span class="n">Find</span><span class="p">;</span>
-</span><span class="line"><span class="nn">File::Find::</span><span class="n">find</span><span class="p">(</span><span class="k">sub </span><span class="p">{</span> <span class="k">print</span> <span class="s">&quot;$File::Find::name\n&quot;</span> <span class="k">if</span> <span class="o">-</span><span class="n">s</span> <span class="o">&gt;</span> <span class="mi">1_024_000</span><span class="p">;</span> <span class="p">},</span> <span class="s">&#39;.&#39;</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>4.”use” happens during compile time, whereas “require” happens at runtime.    </p>
-
 ]]></content>
   </entry>
   

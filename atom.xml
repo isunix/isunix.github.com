@@ -4,7 +4,7 @@
   <title><![CDATA[Steven's Blog]]></title>
   <link href="http://isunix.github.io/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-10-08T10:13:32+08:00</updated>
+  <updated>2014-10-09T18:11:44+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,58 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Regexp::Debugger使用示例]]></title>
+    <link href="http://isunix.github.io/blog/2014/10/09/regexp-debuggershi-yong-shi-li/"/>
+    <updated>2014-10-09T14:09:52+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/10/09/regexp-debuggershi-yong-shi-li</id>
+    <content type="html"><![CDATA[<p>This post shows how to use the perl module, Regexp::Debugger. Used skillfully, this module can do us a lot of favor.  </p>
+
+<p>1.”rxrx prog.pl” is a shorthand for “perl -MRegexp::Debugger prog.pl”.  </p>
+
+<p>2.print out if matched</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">perl</span> <span class="o">-</span><span class="n">E</span> <span class="s">&quot;say &#39;matched&#39; if &#39;ababc&#39; =~ /(a|b)b+c/x&quot;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>3.print out if matched and which part matched</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">perl</span> <span class="o">-</span><span class="n">E</span> <span class="s">&quot;say &#39;matched: &#39;, $&amp; if &#39;ababc&#39; =~ /(a|b)b+c/x&quot;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>4.use “re” module</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">perl</span> <span class="o">-</span><span class="n">E</span> <span class="s">&quot;use re &#39;debug&#39;; &#39;ababc&#39; =~ /(a|b)b+c/x&quot;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>5.use Regexp::Debugger module</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">perl</span> <span class="o">-</span><span class="n">E</span> <span class="s">&quot;use Regexp::Debugger; &#39;ababc&#39; =~ /(a|b)b+c/x&quot;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>6.any regex</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="p">(?</span><span class="n">i</span><span class="p">)</span> <span class="p">(?</span><span class="sr">&lt;AB&gt;</span> <span class="p">(?</span><span class="o">&amp;</span><span class="n">ABs</span><span class="p">))</span> <span class="p">(?</span><span class="sr">&lt;AA&gt;</span><span class="p">(??{</span><span class="s">&#39;aa&#39;</span><span class="p">}))</span> <span class="p">(?(</span><span class="n">DEFINE</span><span class="p">)(?</span><span class="sr">&lt;ABs&gt;</span><span class="p">[</span><span class="n">ab</span><span class="p">]{</span><span class="mi">2</span><span class="p">,</span><span class="mi">7</span><span class="p">}</span><span class="o">+</span><span class="p">))</span><span class="o">/</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>7.for the Regexp::Debugger, we have a cmd-line tool named “rxrx”, we typr “rxrx”, then</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="sr">/(a|b)b+c/</span>
+</span><span class="line"><span class="s">&quot;ababc&quot;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Then hit “enter” key or “tab” key to see how and if the string matches the regex.</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[哥德尔、艾舍尔、 巴赫:集异璧之大成]]></title>
@@ -764,92 +816,6 @@ The purpose of computing is insight, not pictures.
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 </pre></td><td class="code"><pre><code class="html"><span class="line">http://www.cnblogs.com/sun1030/p/3965246.html
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Named Arguments]]></title>
-    <link href="http://isunix.github.io/blog/2014/09/10/named-arguments/"/>
-    <updated>2014-09-10T15:58:10+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/09/10/named-arguments</id>
-    <content type="html"><![CDATA[<p>For named argument, it many uses the trick of changing a list into a hash. Take a look at the following code.  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">listdir</span><span class="p">(</span><span class="n">cols</span><span class="o">=&gt;</span><span class="mi">4</span><span class="p">,</span> <span class="n">page</span><span class="o">=&gt;</span><span class="mi">1</span><span class="p">,</span> <span class="n">hidden</span><span class="o">=&gt;</span><span class="mi">1</span><span class="p">,</span> <span class="n">sep_dirs</span><span class="o">=&gt;</span><span class="mi">1</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="k">sub </span><span class="nf">listdir</span> <span class="p">{</span>
-</span><span class="line">	<span class="nv">%arg</span> <span class="o">=</span> <span class="nv">@_</span><span class="p">;</span><span class="c1"># Convert argument list to hash</span>
-</span><span class="line">
-</span><span class="line">	<span class="nv">$arg</span><span class="p">{</span><span class="n">match</span><span class="p">}</span> <span class="o">=</span> <span class="s">&quot;*&quot;</span> <span class="k">unless</span> <span class="nb">exists</span> <span class="nv">$arg</span><span class="p">{</span><span class="n">match</span><span class="p">};</span>
-</span><span class="line">	<span class="nv">$arg</span><span class="p">{</span><span class="n">cols</span><span class="p">}</span> <span class="o">=</span> <span class="mi">1</span><span class="k">unless</span> <span class="nb">exists</span> <span class="nv">$arg</span><span class="p">{</span><span class="n">cols</span><span class="p">};</span>
-</span><span class="line"><span class="c1"># etc.</span>
-</span><span class="line"><span class="c1"># Use arguments to control behaviour...</span>
-</span><span class="line">	<span class="nv">@files</span> <span class="o">=</span> <span class="n">get_files</span><span class="p">(</span> <span class="nv">$arg</span><span class="p">{</span><span class="n">match</span><span class="p">}</span> <span class="p">);</span>
-</span><span class="line">	<span class="nb">push</span> <span class="nv">@files</span><span class="p">,</span> <span class="n">get_hidden_files</span><span class="p">()</span> <span class="k">if</span> <span class="nv">$arg</span><span class="p">{</span><span class="n">hidden</span><span class="p">};</span> <span class="c1"># etc.</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>Apart from documenting the call better, this approach has another important advantage. Since the entries of a hash can be initialized in any convenient order, we no longer need to re- member the order of the nine potential arguments, as long as we remember their names. In addition, because hashes are flattened inside lists, if we have several calls that require the same subset of arguments, we can store that subset in a separate hash and reuse it:    </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">%std_listing</span> <span class="o">=</span> <span class="p">(</span><span class="n">cols</span><span class="o">=&gt;</span><span class="mi">2</span><span class="p">,</span> <span class="n">page</span><span class="o">=&gt;</span><span class="mi">1</span><span class="p">,</span> <span class="n">sort_by</span><span class="o">=&gt;</span><span class="s">&quot;date&quot;</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="n">listdir</span><span class="p">(</span><span class="n">file</span><span class="o">=&gt;</span><span class="s">&quot;*.txt&quot;</span><span class="p">,</span> <span class="nv">%std_listing</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="n">listdir</span><span class="p">(</span><span class="n">file</span><span class="o">=&gt;</span><span class="s">&quot;*.log&quot;</span><span class="p">,</span> <span class="nv">%std_listing</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="n">listdir</span><span class="p">(</span><span class="n">file</span><span class="o">=&gt;</span><span class="s">&quot;*.dat&quot;</span><span class="p">,</span> <span class="nv">%std_listing</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>We can even override specific elements of the standard set of arguments, by placing an explicit version after the standard set. Then the explicit version will reinitialize (i.e., overwrite) the corresponding entry in the hash:      </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">listdir</span><span class="p">(</span><span class="n">file</span><span class="o">=&gt;</span><span class="s">&quot;*.exe&quot;</span><span class="p">,</span> <span class="nv">%std_listing</span><span class="p">,</span> <span class="n">sort_by</span><span class="o">=&gt;</span><span class="s">&quot;size&quot;</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>This idea of a standard argument set, overridden by explicitly specified arguments, can also be used within the subroutine to simplify the handling of default values. For example:   </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">sub </span><span class="nf">listdir</span> <span class="p">{</span>
-</span><span class="line">	<span class="nv">%defaults</span> <span class="o">=</span> <span class="p">(</span><span class="n">match</span><span class="o">=&gt;</span><span class="s">&quot;*&quot;</span><span class="p">,</span> <span class="n">cols</span><span class="o">=&gt;</span><span class="mi">1</span><span class="p">,</span> <span class="n">sort_by</span><span class="o">=&gt;</span><span class="s">&quot;name&quot;</span><span class="p">);</span> <span class="nv">%arg</span> <span class="o">=</span> <span class="p">(</span><span class="nv">%defaults</span><span class="p">,</span> <span class="nv">@_</span><span class="p">);</span>
-</span><span class="line">	<span class="c1"># Use arguments to control behaviour...	</span>
-</span><span class="line">	<span class="c1"># etc.</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>In this version, the default values are stored in the %defaults hash, and are then flat- tened into the list used to initialize the %arg hash. The default values appear first in the ini- tializer list. Any entry of the same name passed in via @_ will therefore overwrite the corresponding entry in %arg, replacing the default value with the user-specified one. As a final optimization, the default hash could be moved outside listdir, so that it need only be ini- tialized once, before the program runs, rather than each time listdir is called:    </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">%defaults</span> <span class="o">=</span> <span class="p">(</span><span class="n">match</span><span class="o">=&gt;</span><span class="s">&quot;*&quot;</span><span class="p">,</span> <span class="n">cols</span><span class="o">=&gt;</span><span class="mi">1</span><span class="p">,</span> <span class="n">sort_by</span><span class="o">=&gt;</span><span class="s">&quot;name&quot;</span><span class="p">);</span>
-</span><span class="line"><span class="k">sub </span><span class="nf">listdir</span> <span class="p">{</span>
-</span><span class="line">	<span class="nv">%arg</span> <span class="o">=</span> <span class="p">(</span><span class="nv">%defaults</span><span class="p">,</span> <span class="nv">@_</span><span class="p">);</span>
-</span><span class="line">	<span class="c1"># etc.</span>
-</span><span class="line"><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 ]]></content>
   </entry>

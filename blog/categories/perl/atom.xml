@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Perl | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/perl/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-10-08T10:13:32+08:00</updated>
+  <updated>2014-10-09T18:12:03+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,57 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Regexp::Debugger使用示例]]></title>
+    <link href="http://isunix.github.io/blog/2014/10/09/regexp-debuggershi-yong-shi-li/"/>
+    <updated>2014-10-09T14:09:52+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/10/09/regexp-debuggershi-yong-shi-li</id>
+    <content type="html"><![CDATA[<p>This post shows how to use the perl module, Regexp::Debugger. Used skillfully, this module can do us a lot of favor.  </p>
+
+<p>1.”rxrx prog.pl” is a shorthand for “perl -MRegexp::Debugger prog.pl”.  </p>
+
+<p>2.print out if matched</p>
+
+<p><code>pl
+perl -E "say 'matched' if 'ababc' =~ /(a|b)b+c/x"
+</code>  </p>
+
+<p>3.print out if matched and which part matched</p>
+
+<p><code>pl
+perl -E "say 'matched: ', $&amp; if 'ababc' =~ /(a|b)b+c/x"
+</code></p>
+
+<p>4.use “re” module</p>
+
+<p><code>pl
+perl -E "use re 'debug'; 'ababc' =~ /(a|b)b+c/x"
+</code>  </p>
+
+<p>5.use Regexp::Debugger module</p>
+
+<p><code>pl
+perl -E "use Regexp::Debugger; 'ababc' =~ /(a|b)b+c/x"
+</code>  </p>
+
+<p>6.any regex</p>
+
+<p><code>pl
+(?i) (?&lt;AB&gt; (?&amp;ABs)) (?&lt;AA&gt;(??{'aa'})) (?(DEFINE)(?&lt;ABs&gt;[ab]{2,7}+))/
+</code></p>
+
+<p>7.for the Regexp::Debugger, we have a cmd-line tool named “rxrx”, we typr “rxrx”, then</p>
+
+<p><code>pl
+/(a|b)b+c/
+"ababc"
+</code></p>
+
+<p>Then hit “enter” key or “tab” key to see how and if the string matches the regex.</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Perl Testing程序高手秘笈]]></title>
@@ -151,32 +202,6 @@ my $errors = 0;</p>
 }
 ##if you did not enter the right item, you will be asked and again!
 ```</stdin></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Install Gnuplot From the Source Code]]></title>
-    <link href="http://isunix.github.io/blog/2014/09/17/install-gnuplot-from-the-source-code/"/>
-    <updated>2014-09-17T10:38:15+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/09/17/install-gnuplot-from-the-source-code</id>
-    <content type="html"><![CDATA[<p>On the centos server, I want to install gnuplot in my local dir, here are the steps:  </p>
-
-<ol>
-  <li>
-    <p>download the source code and cd into the dir.</p>
-  </li>
-  <li>
-    <p>./configure –prefix=$HOME/local –with-readline=gnu</p>
-  </li>
-  <li>
-    <p>make</p>
-  </li>
-  <li>
-    <p>make install</p>
-  </li>
-</ol>
-
-<p>That is all. </p>
 ]]></content>
   </entry>
   

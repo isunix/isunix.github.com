@@ -28,5 +28,11 @@ print Dumper \%Data::Dumper::
 we can also use the following one liner to check the methods defined in a module:  
 
 ```pl
-perl -e "use File::Find; use Data::Dumper; print Dumper \%File::Find::"
+perl -e "use File::Find; use Data::Dumper; print Dumper \%File::Find::"  
+```  
+
+or we can use JSON to print out its format:  
+
+```pl
+perl -e "use File::Find; use JSON; print to_json(\%File::Find::)"  
 ```

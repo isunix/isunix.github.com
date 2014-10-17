@@ -13,6 +13,4 @@ I am trying to grasp how to use gnuplot because one of our project used gnuplot,
 The purpose of computing is insight, not numbers.	—R. W. HammingThe purpose of computing is insight, not pictures.	—L. N. Trefethen
 ``` 
 
-2.According to research in cognitive science, the things people remember are things they discover during self-motivated exploration. (Personally I think this is true)    
-
-3.
+2.According to research in cognitive science, the things people remember are things they discover during self-motivated exploration. (Personally I think this is true).

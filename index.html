@@ -9,7 +9,8 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="This post shows how to use the perl module, Regexp::Debugger. Used skillfully, this module can do us a lot of favor. 1.”rxrx prog.pl” is a shorthand &hellip;">
+  <meta name="description" content="I have some files with file name quite weird in the format, “[Alex_Holmes]_Hadoop_in_Practice(BookZZ.org).pdf
+“. What I want to achieve is removing &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -62,6 +63,300 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/10/17/a-perl-script-to-rename-file-names/">A Perl Script to Rename File Names</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-10-17T16:15:19+08:00" pubdate data-updated="true">Oct 17<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I have some files with file name quite weird in the format, “[Alex_Holmes]_Hadoop_in_Practice(BookZZ.org).pdf
+“. What I want to achieve is removing the parts in the [] or ().  Here below is the perl script I wrote. </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="n">strict</span><span class="p">;</span>
+</span><span class="line"><span class="k">use</span> <span class="n">warnings</span><span class="p">;</span>
+</span><span class="line"><span class="k">use</span> <span class="nn">Data::</span><span class="n">Dumper</span><span class="p">;</span>
+</span><span class="line"><span class="k">use</span> <span class="n">Cwd</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">my</span> <span class="nv">$target_dir</span> <span class="o">=</span> <span class="n">getcwd</span><span class="p">();</span>
+</span><span class="line">
+</span><span class="line"><span class="nb">opendir</span><span class="p">(</span><span class="k">my</span> <span class="nv">$dh</span><span class="p">,</span> <span class="nv">$target_dir</span><span class="p">)</span> <span class="o">||</span> <span class="nb">die</span> <span class="s">&quot;can&#39;t opendir $target_dir: $!&quot;</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">my</span> <span class="nv">@files</span> <span class="o">=</span> <span class="nb">grep</span> <span class="p">{</span> <span class="sr">/\w/</span> <span class="o">&amp;&amp;</span> <span class="o">-</span><span class="n">f</span> <span class="s">&quot;$_&quot;</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="sr">/^\./</span><span class="p">}</span> <span class="nb">readdir</span><span class="p">(</span><span class="nv">$dh</span><span class="p">);</span>
+</span><span class="line"><span class="c1"># [Alex_Holmes]_Hadoop_in_Practice(BookZZ.org).pdf</span>
+</span><span class="line"><span class="c1">#files not staring with &quot;.&quot; and contains char, thus (., .., .DS_STORE) will be ignored.</span>
+</span><span class="line"><span class="c1">#print Dumper @files;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">for</span><span class="p">(</span><span class="nv">@files</span><span class="p">){</span>
+</span><span class="line">    <span class="k">my</span> <span class="nv">$file</span> <span class="o">=</span> <span class="nv">$_</span><span class="p">;</span>
+</span><span class="line">    <span class="k">if</span><span class="p">(</span><span class="sr">/^(?:\[[\S\s]+\])([\S\s]+)(?:\([\S\s]+\))\.pdf$/</span><span class="p">){</span>
+</span><span class="line">        <span class="k">my</span> <span class="nv">$new_name</span> <span class="o">=</span> <span class="nv">$1</span><span class="o">.</span><span class="s">&quot;.pdf&quot;</span><span class="p">;</span>
+</span><span class="line">        <span class="nb">rename</span><span class="p">(</span><span class="s">&quot;$file&quot;</span><span class="p">,</span> <span class="s">&quot;$new_name&quot;</span><span class="p">)</span> <span class="o">||</span> <span class="nb">die</span><span class="p">(</span><span class="s">&quot;error in renaming: $!&quot;</span><span class="p">);</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/10/16/perl-bebugger-tips/">Perl Bebugger Tips</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-10-16T15:31:54+08:00" pubdate data-updated="true">Oct 16<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Knowing how to debug a perl program is really important. I am saying this not simply because it is supposed to be so, but also because I have encountered several occasions where I am stucked because I do not know how to debug and I have to ask for help from others. </p>
+
+<p>I am writing this post currently based on two perl pods, one is “perldebug”, the other is “perldebtut”. There is book named “perl debugged” which focuses on how to debug a perl program. Also google it to find post and materials as to how to debug a perl program. I am preparing to stuff all tips and knowledges regrading to perl debugging in this post.  </p>
+
+<p>1.if we want to do a syntax check, we can use the following way:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">perl</span> <span class="o">-</span><span class="n">c</span> <span class="n">hello</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>2.The line shown is the one that is about to be executed next, it hasn’t happened yet. So while we can print a variable with the letter ‘p’, at this point all we’d get is an empty (undefined) value back. What we need to do is to step through the next executable statement with an ‘s’. Then you can see the previous shown variable using the “p varname” format.  </p>
+
+<p>3.type something like “x keys %data” will print out the data in a pretty format. </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">Evals</span> <span class="n">expr</span> <span class="n">in</span> <span class="n">list</span> <span class="n">context</span><span class="p">,</span> <span class="n">dumps</span> <span class="n">the</span> <span class="n">result</span> <span class="ow">or</span> <span class="n">lists</span> <span class="n">methods</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>4.using the “x” operator on a hash is not quite useful here. since a couple of welcomes in there, but no indication of which are keys, and which are values, it’s just a listed array dump and, in this case, not particularly helpful. The trick here, is to use a reference to the data structure:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">x</span> <span class="o">\</span><span class="nv">%data</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>5.Know the differences between “qw” and “q”: qw// is simply q// followed by a split on whitespace. No way to conserve blanks. Thus if the quoted words have blank spaces, and you want to treat them as a whole, use q rather than qw.  </p>
+
+<p>5.perl -w script-name will execute the script and give out the warning messages.  </p>
+
+<p>6.Take a closer look at the ‘x’ command, it’s really useful and will merrily dump out nested references, complete objects, partial objects - just about whatever you throw at it.   </p>
+
+<p>7.If we want to start the debugger and want some form of input from STDIN, we give it something non-committal, a zero: </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">perl</span> <span class="o">-</span><span class="n">de</span> <span class="mi">0</span>	
+</span><span class="line"><span class="ow">or</span>
+</span><span class="line"><span class="n">perl</span> <span class="o">-</span><span class="n">de0</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>8.typing “perl -de 0” into the terminal, build an on-the-fly object over a couple of lines (note the backslash):  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">DB</span><span class="sr">&lt;1&gt;</span> <span class="nv">$obj</span> <span class="o">=</span> <span class="nb">bless</span><span class="p">({</span><span class="s">&#39;unique_id&#39;</span><span class="o">=&gt;</span><span class="s">&#39;123&#39;</span><span class="p">,</span> <span class="s">&#39;attr&#39;</span><span class="o">=&gt;</span> <span class="o">\</span>
+</span><span class="line"><span class="n">cont:</span> 	<span class="p">{</span><span class="s">&#39;col&#39;</span> <span class="o">=&gt;</span> <span class="s">&#39;black&#39;</span><span class="p">,</span> <span class="s">&#39;things&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="sx">qw(this that etc)</span><span class="p">]}},</span> <span class="s">&#39;MY_class&#39;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>9.use the “x” command to see the internals of the obj. </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">DB</span><span class="sr">&lt;2&gt;</span> <span class="n">x</span> <span class="nv">$obj</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>10.To give more examples on using the “perl -de 0” command, I will just copy the code from the “perldebtut” pod page.  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">DB</span><span class="sr">&lt;3&gt;</span> <span class="nv">@data</span> <span class="o">=</span> <span class="sx">qw(this that the other atheism leather theory scythe)</span>
+</span><span class="line"><span class="n">DB</span><span class="sr">&lt;4&gt;</span> <span class="n">p</span> <span class="s">&#39;saw -&gt; &#39;</span><span class="o">.</span><span class="p">(</span><span class="nv">$cnt</span> <span class="o">+=</span> <span class="nb">map</span> <span class="p">{</span> <span class="k">print</span> <span class="s">&quot;\t:\t$_\n&quot;</span> <span class="p">}</span> <span class="nb">grep</span><span class="p">(</span><span class="sr">/the/</span><span class="p">,</span> <span class="nb">sort</span> <span class="nv">@data</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>11.If you want to see the command History, type an ‘H’:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">DB</span><span class="sr">&lt;5&gt;</span> <span class="n">H</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>12.And if you want to repeat any previous command, use the exclamation: ‘!’:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">DB</span><span class="sr">&lt;5&gt;</span> <span class="o">!</span><span class="mi">4</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>13.If we want to put a breakpoint on a line, we can use this:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">b</span> <span class="n">linenum</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>14.We can see what breakpoints are set by using the list ‘L’ command:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">DB</span><span class="sr">&lt;3&gt;</span> <span class="n">L</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>15.To delete a break point on a line, we use the “B” command. </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">DB</span><span class="sr">&lt;3&gt;</span> <span class="n">B</span> <span class="mi">16</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>16.At the end of the tutorial, its recommended to refer to the following tutorials:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">perldebug</span><span class="p">,</span> <span class="n">perldebguts</span><span class="p">,</span> <span class="n">perldiag</span><span class="p">,</span> <span class="n">perlrun</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>17.Option s and n does step by step execution of each statements. Option s steps into the subroutine. Option n executes the subroutine in a single step (stepping over it).</p>
+
+<p>The s option does stepping into the subroutine while n option which would execute the subroutine(stepping over it).</p>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/10/14/pi-pei-zui-chang-lian-xu-shu-zi-chuan/">匹配最长连续数字串</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-10-14T13:11:06+08:00" pubdate data-updated="true">Oct 14<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Say if we are given a string, like “ab1c123def3456h259887”, we want to get the longest consecutive string which consists of only data.  </p>
+
+<p>we are using perl to realize this function. (Actually this is much harder than I thought!)</p>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/10/10/notes-on-mastering-algorithms-with-perl-chap01/">Notes on Mastering Algorithms With Perl Chap01</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-10-10T14:24:33+08:00" pubdate data-updated="true">Oct 10<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>This is the opening post of a series of articles on the book “mastering algorithms with perl”. Using Perl to realize some of the classical data structures and algorithms is a very good channel both for learning Algorithms and for learning Perl.  </p>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -366,318 +661,6 @@
 
   <div class="entry-content"><p>This post gives a little detailed info on how to use curl. Of course we can use “man curl” to get the listed info, what makes this post different is, we will give more examples as to how to use curl.   </p>
 
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/25/bash-script-to-list-all-methods-in-a-perl-module/">Bash Script to List All Methods in a Perl Module</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-09-25T16:21:52+08:00" pubdate data-updated="true">Sep 25<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>In the post “Dynamicly Adding a Method to a Module”, I showed how to use a perl one-liner to list all the methods in a module.  </p>
-
-<p>I will show how to do it in a shell script thus we can accept the module on the command line, </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="c">#!/bin/bash</span>
-</span><span class="line">perl -e <span class="s2">&quot;use Data::Dumper; use $1; print Dumper \%$1::&quot;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/24/how-to-install-ruby-on-centos/">How to Install Ruby on Centos</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-09-24T16:19:16+08:00" pubdate data-updated="true">Sep 24<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>This post keeps notes of how to install ruby on centos server: </p>
-
-<p>1.use rvm
-2.use rbenv</p>
-
-<p>3.use src, the </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="rb"><span class="line"><span class="o">.</span><span class="n">/configure</span> <span class="o">--</span><span class="n">prefix</span><span class="o">=</span><span class="sr">/home/s</span><span class="n">tsun</span><span class="o">/</span><span class="n">local</span>
-</span><span class="line"><span class="n">make</span>
-</span><span class="line"><span class="n">make</span> <span class="n">install</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/24/dynamicly-adding-a-method-to-a-module/">Dynamicly Adding a Method to a Module</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-09-24T12:57:20+08:00" pubdate data-updated="true">Sep 24<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>We can follow the following steps to add/change a method in a module dynamicly.  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="n">strict</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="n">warnings</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="n">utf8</span><span class="p">;</span>
-</span><span class="line"><span class="p">{</span>
-</span><span class="line">
-</span><span class="line">    <span class="nb">package</span> <span class="nn">Data::</span><span class="n">Dumper</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line">    <span class="k">sub </span><span class="nf">test</span> <span class="p">{</span>
-</span><span class="line">        <span class="k">print</span> <span class="s">&quot;test to add a new method to Data::Dumper\n&quot;</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="k">use</span> <span class="nn">Data::</span><span class="n">Dumper</span><span class="p">;</span>
-</span><span class="line"><span class="nn">Data::Dumper::</span><span class="n">test</span><span class="p">;</span>
-</span><span class="line"><span class="k">print</span> <span class="n">Dumper</span> <span class="o">\</span><span class="nv">%</span><span class="nn">Data::Dumper::</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>we can also use the following one liner to check the methods defined in a module:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">perl</span> <span class="o">-</span><span class="n">e</span> <span class="s">&quot;use File::Find; use Data::Dumper; print Dumper \%File::Find::&quot;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>or we can use JSON to print out its format:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">perl</span> <span class="o">-</span><span class="n">e</span> <span class="s">&quot;use File::Find; use JSON; print to_json(\%File::Find::)&quot;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/19/map-and-grep-in-perl/">Map and Grep in Perl</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-09-19T12:27:58+08:00" pubdate data-updated="true">Sep 19<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I ran across some usage of grep and map in perl in some of the scripts I am reading. just to keep a note here. </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">@line</span> <span class="o">=</span> <span class="nb">grep</span> <span class="p">{</span><span class="ow">not</span> <span class="sr">/^\s*$/</span><span class="p">}</span> <span class="nb">map</span> <span class="p">{</span><span class="nb">chomp</span><span class="p">;</span><span class="nv">$_</span><span class="p">}</span> <span class="sr">&lt;FILEIN&gt;</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="nv">@keyorder</span> <span class="o">=</span> <span class="nb">grep</span> <span class="p">{</span><span class="ow">not</span> <span class="sr">/^\s*$/</span><span class="p">}</span> <span class="nv">@column</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="nv">$rh_meta</span><span class="o">-&gt;</span><span class="p">{</span><span class="nv">$meta_name</span><span class="p">}</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class="line">	<span class="nb">map</span> <span class="p">{</span>
-</span><span class="line">		<span class="p">(</span><span class="nv">$_</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-</span><span class="line">	<span class="p">}</span> <span class="nb">grep</span> <span class="p">{</span>
-</span><span class="line">		<span class="ow">not</span> <span class="sr">/^\d+$/</span><span class="p">;</span>
-</span><span class="line">	<span class="p">}</span> <span class="p">(</span><span class="nv">$meta_body</span> <span class="o">=~</span><span class="sr"> /(\w+)/g</span><span class="p">)</span>
-</span><span class="line">	
-</span><span class="line"><span class="nv">$str</span> <span class="o">=~</span> <span class="nb">tr</span><span class="sr">/a-z/</span><span class="n">A</span><span class="o">-</span><span class="n">Z</span><span class="o">/</span><span class="p">;</span>
-</span><span class="line"><span class="c1">##how to use tr</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>I also come across some usage of redo and labeled loop, please see the following examples.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="c1">#!/usr/bin/perl</span>
-</span><span class="line"><span class="k">for</span> <span class="nv">$i</span> <span class="p">(</span><span class="mi">0</span><span class="o">..</span><span class="mi">9</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">    <span class="k">for</span> <span class="nv">$j</span> <span class="p">(</span><span class="mi">0</span><span class="o">..</span><span class="mi">9</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">        <span class="k">print</span> <span class="s">&quot;$i x $j\n&quot;</span><span class="p">;</span>
-</span><span class="line">        <span class="k">last</span> <span class="k">if</span> <span class="nv">$i</span> <span class="o">==</span><span class="mi">3</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line"><span class="c1">#the one without labeled loop, the &quot;last&quot; will only act on the inner loop.</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>if we want the “last” to act on the “outer” loop, we can do the following:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="c1">#!/usr/bin/perl</span>
-</span><span class="line"><span class="n">LO:</span> <span class="k">for</span> <span class="nv">$i</span> <span class="p">(</span><span class="mi">0</span><span class="o">..</span><span class="mi">9</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">        <span class="k">for</span> <span class="nv">$j</span> <span class="p">(</span><span class="mi">0</span><span class="o">..</span><span class="mi">9</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">            <span class="k">print</span> <span class="s">&quot;$i x $j\n&quot;</span><span class="p">;</span>
-</span><span class="line">            <span class="k">last</span> <span class="n">LO</span> <span class="k">if</span> <span class="nv">$i</span> <span class="o">==</span><span class="mi">3</span><span class="p">;</span>
-</span><span class="line">        <span class="p">}</span>
-</span><span class="line">    <span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>namely we can use “labeled loop” to control the outer loop from the inner loop.</p>
-
-<p>for the redo function, the difference it has to “next” is “next” will go to the next loop, while “redo” will just “redo” the current loop, this is partilarly useful if we want to ask the user to re-enter the password if they get the password wrong:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="n">utf8</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">my</span> <span class="nv">@words</span> <span class="o">=</span> <span class="sx">qw{ fred barney pebbles dino }</span><span class="p">;</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">$errors</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">foreach</span> <span class="p">(</span><span class="nv">@words</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">    <span class="k">print</span> <span class="s">&quot;type the word &#39;$_&#39;: &quot;</span><span class="p">;</span>
-</span><span class="line">    <span class="nb">chomp</span><span class="p">(</span><span class="k">my</span> <span class="nv">$try</span> <span class="o">=</span> <span class="sr">&lt;STDIN&gt;</span><span class="p">);</span>
-</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="nv">$try</span> <span class="ow">ne</span> <span class="nv">$_</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">      <span class="k">print</span> <span class="s">&quot;sorry, it is not right\n&quot;</span><span class="p">;</span>
-</span><span class="line">      <span class="nv">$errors</span><span class="o">++</span><span class="p">;</span>
-</span><span class="line">      <span class="k">redo</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line"><span class="c1">##if you did not enter the right item, you will be asked and again!</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
 </div>
   
   

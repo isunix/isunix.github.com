@@ -9,17 +9,10 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="This is a note about chap02 in “Object oriented perl”. For a hash, we have two ways to get the key-value pair. 1
+  <meta name="description" content="This is a note about chap03 in “Object oriented perl”. 1.In object oriented perl, there are three rules, 1
 2
 3
-4
-5
-6
-7
-8
-9
-10
-my %hash = ( &hellip;">
+1. rule1: To create a class, build a &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -78,6 +71,138 @@ my %hash = ( &hellip;">
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2014/10/28/object-oriented-perl-chap03/">Object Oriented Perl Chap03</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-10-28T16:58:25+08:00" pubdate data-updated="true">Oct 28<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>This is a note about chap03 in “Object oriented perl”.  </p>
+
+<p>1.In object oriented perl, there are three rules,</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="mi">1</span><span class="o">.</span> <span class="n">rule1:</span> <span class="n">To</span> <span class="n">create</span> <span class="n">a</span> <span class="n">class</span><span class="p">,</span> <span class="n">build</span> <span class="n">a</span> <span class="nb">package</span><span class="o">.</span>
+</span><span class="line"><span class="mi">2</span><span class="o">.</span> <span class="n">rule2:</span> <span class="n">To</span> <span class="n">create</span> <span class="n">a</span> <span class="n">method</span><span class="p">,</span> <span class="nb">write</span> <span class="n">a</span> <span class="n">subroutine</span><span class="o">.</span>
+</span><span class="line"><span class="mi">3</span><span class="o">.</span> <span class="n">rule3:</span> <span class="n">To</span> <span class="n">create</span> <span class="n">an</span> <span class="n">object</span><span class="p">,</span> <span class="nb">bless</span> <span class="n">a</span> <span class="n">referent</span><span class="o">.</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>2.Some cases while calling a method through an arrow:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">$hsh_ref</span><span class="o">-&gt;</span><span class="p">{</span><span class="s">&quot;key&quot;</span><span class="p">};</span><span class="c1"># Access the hash referred to by $hashref</span>
+</span><span class="line"><span class="nv">$arr_ref</span><span class="o">-&gt;</span><span class="p">[</span><span class="nv">$index</span><span class="p">];</span><span class="c1"># Access the array referred to by $arrayref</span>
+</span><span class="line"><span class="nv">$sub_ref</span><span class="o">-&gt;</span><span class="p">(</span><span class="nv">@args</span><span class="p">);</span><span class="c1"># Access the sub referred to by $subref</span>
+</span><span class="line"><span class="nv">$obj_ref</span><span class="o">-&gt;</span><span class="n">method</span><span class="p">(</span><span class="nv">@args</span><span class="p">);</span><span class="c1"># Access the object referred to by $objref</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>3.Let’s say we have a “Bug” module, and subroutine named “print_me” in it, Perl doesn’t actually require that we hard-code the method name in the call. It is also possible to specify the method name as a scalar variable containing a string matching the name (i.e., a symbolic reference) or as a scalar variable containing a real
+reference to the subroutine in question. For example, instead of:  </p>
+
+<p><code>pl
+$nextbug-&gt;print_me();
+&lt;div class='bogus-wrapper'&gt;&lt;notextile&gt;&lt;figure class='code'&gt;&lt;figcaption&gt;&lt;span&gt;&lt;/span&gt;&lt;/figcaption&gt;&lt;div class="highlight"&gt;&lt;table&gt;&lt;tr&gt;&lt;td class="gutter"&gt;&lt;pre class="line-numbers"&gt;&lt;span class='line-number'&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class='code'&gt;&lt;pre&gt;&lt;code class='perl'&gt;&lt;span class='line'&gt;&lt;span class="n"&gt;We&lt;/span&gt; &lt;span class="n"&gt;would&lt;/span&gt; &lt;span class="nb"&gt;write&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/notextile&gt;&lt;/div&gt;pl
+$method_name = "print_me";# i.e. "symbolic reference" to some &amp;print_me
+$nextbug-&gt;$method_name();# Method call via symbolic reference
+&lt;div class='bogus-wrapper'&gt;&lt;notextile&gt;&lt;figure class='code'&gt;&lt;figcaption&gt;&lt;span&gt;&lt;/span&gt;&lt;/figcaption&gt;&lt;div class="highlight"&gt;&lt;table&gt;&lt;tr&gt;&lt;td class="gutter"&gt;&lt;pre class="line-numbers"&gt;&lt;span class='line-number'&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class='code'&gt;&lt;pre&gt;&lt;code class='perl'&gt;&lt;span class='line'&gt;&lt;span class="ow"&gt;or&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/notextile&gt;&lt;/div&gt;pl
+$method_ref = \&amp;Bug::print_me;# i.e. reference to &amp;Bug::print_me
+$nextbug-&gt;$method_ref();# Method call via hard reference
+&lt;div class='bogus-wrapper'&gt;&lt;notextile&gt;&lt;figure class='code'&gt;&lt;figcaption&gt;&lt;span&gt;&lt;/span&gt;&lt;/figcaption&gt;&lt;div class="highlight"&gt;&lt;table&gt;&lt;tr&gt;&lt;td class="gutter"&gt;&lt;pre class="line-numbers"&gt;&lt;span class='line-number'&gt;1&lt;/span&gt;
+&lt;span class='line-number'&gt;2&lt;/span&gt;
+&lt;span class='line-number'&gt;3&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class='code'&gt;&lt;pre&gt;&lt;code class='perl'&gt;&lt;span class='line'&gt;&lt;span class="n"&gt;The&lt;/span&gt; &lt;span class="n"&gt;thing&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;be&lt;/span&gt; &lt;span class="n"&gt;noted&lt;/span&gt; &lt;span class="n"&gt;here&lt;/span&gt; &lt;span class="n"&gt;is&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt; &lt;span class="n"&gt;practice&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;method&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="n"&gt;is&lt;/span&gt; &lt;span class="n"&gt;almost&lt;/span&gt; &lt;span class="n"&gt;always&lt;/span&gt; &lt;span class="n"&gt;hard&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;coded&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt; &lt;span class="n"&gt;So&lt;/span&gt; &lt;span class="n"&gt;even&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;we&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="n"&gt;know&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="n"&gt;of&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;symbolic reference&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;it&lt;/span&gt; &lt;span class="n"&gt;almost&lt;/span&gt; &lt;span class="n"&gt;does&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="n"&gt;matter&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;/span&gt;&lt;span class='line'&gt;
+&lt;/span&gt;&lt;span class='line'&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;When&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="n"&gt;method&lt;/span&gt; &lt;span class="n"&gt;like&lt;/span&gt; &lt;span class="sb"&gt;</code>Bug::print_me<code>&lt;/span&gt; &lt;span class="n"&gt;is&lt;/span&gt; &lt;span class="n"&gt;called&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;argument&lt;/span&gt; &lt;span class="n"&gt;list&lt;/span&gt; &lt;span class="n"&gt;that&lt;/span&gt; &lt;span class="n"&gt;it&lt;/span&gt; &lt;span class="n"&gt;receives&lt;/span&gt; &lt;span class="n"&gt;begins&lt;/span&gt; &lt;span class="n"&gt;with&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;object&lt;/span&gt; &lt;span class="n"&gt;reference&lt;/span&gt; &lt;span class="n"&gt;through&lt;/span&gt; &lt;span class="n"&gt;which&lt;/span&gt; &lt;span class="n"&gt;it&lt;/span&gt; &lt;span class="n"&gt;was&lt;/span&gt; &lt;span class="n"&gt;called&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;followed&lt;/span&gt; &lt;span class="n"&gt;by&lt;/span&gt; &lt;span class="n"&gt;any&lt;/span&gt; &lt;span class="n"&gt;arguments&lt;/span&gt; &lt;span class="n"&gt;that&lt;/span&gt; &lt;span class="n"&gt;were&lt;/span&gt; &lt;span class="n"&gt;explicitly&lt;/span&gt; &lt;span class="n"&gt;given&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;method&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt; &lt;span class="n"&gt;That&lt;/span&gt; &lt;span class="n"&gt;means&lt;/span&gt; &lt;span class="n"&gt;that&lt;/span&gt; &lt;span class="n"&gt;calling&lt;/span&gt; &lt;span class="sb"&gt;</code>Bug::print_me(&quot;logfile&quot;)<code>&lt;/span&gt; &lt;span class="n"&gt;is&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;same&lt;/span&gt; &lt;span class="n"&gt;as&lt;/span&gt; &lt;span class="n"&gt;calling&lt;/span&gt; &lt;span class="sb"&gt;</code>$nextbug-&gt;print_me(&quot;logfile&quot;)<code>&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt; &lt;span class="n"&gt;In&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;first&lt;/span&gt; &lt;span class="k"&gt;case&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;print_me&lt;/span&gt; &lt;span class="n"&gt;is&lt;/span&gt; &lt;span class="n"&gt;treated&lt;/span&gt; &lt;span class="n"&gt;as&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="n"&gt;regular&lt;/span&gt; &lt;span class="n"&gt;subroutine&lt;/span&gt; &lt;span class="n"&gt;so&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;argument&lt;/span&gt; &lt;span class="n"&gt;list&lt;/span&gt; &lt;span class="n"&gt;passed&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="sb"&gt;</code>Bug::print_me<code>&lt;/span&gt; &lt;span class="n"&gt;is&lt;/span&gt; &lt;span class="n"&gt;equivalent&lt;/span&gt; &lt;span class="n"&gt;to:&lt;/span&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/notextile&gt;&lt;/div&gt;pl
+( "logfile" )
+&lt;div class='bogus-wrapper'&gt;&lt;notextile&gt;&lt;figure class='code'&gt;&lt;figcaption&gt;&lt;span&gt;&lt;/span&gt;&lt;/figcaption&gt;&lt;div class="highlight"&gt;&lt;table&gt;&lt;tr&gt;&lt;td class="gutter"&gt;&lt;pre class="line-numbers"&gt;&lt;span class='line-number'&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class='code'&gt;&lt;pre&gt;&lt;code class='perl'&gt;&lt;span class='line'&gt;&lt;span class="n"&gt;In&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;second&lt;/span&gt; &lt;span class="k"&gt;case&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sb"&gt;</code>print_me&#8220;`&lt;/span&gt; <span class="n">is</span> <span class="n">treated</span> <span class="n">as</span> <span class="n">a</span> <span class="n">method</span> <span class="n">so</span> <span class="n">the</span> <span class="n">argument</span> <span class="n">list</span> <span class="n">is</span> <span class="n">equivalent</span> <span class="n">to:</span>
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/notextile&gt;&lt;/div&gt;pl
+( $objref, “logfile” )
+&lt;div class=&#8217;bogus-wrapper&#8217;&gt;<notextile><figure class="code">&lt;figcaption&gt;<span></span>&lt;/figcaption&gt;&lt;div class=&#8221;highlight&#8221;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#8221;gutter&#8221;&gt;&lt;pre class=&#8221;line-numbers&#8221;&gt;<span class="line-number">1</span>
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217;&gt;&lt;pre&gt;<code class="perl"><span class="line"><span class="n">Having</span> <span class="n">a</span> <span class="n">reference</span> <span class="n">to</span> <span class="n">the</span> <span class="n">object</span> <span class="n">passed</span> <span class="n">as</span> <span class="n">the</span> <span class="n">first</span> <span class="n">parameter</span> <span class="n">is</span> <span class="n">vital</span><span class="p">,</span> <span class="n">because</span> <span class="n">it</span> <span class="n">means</span> <span class="n">that</span> <span class="n">the</span> <span class="n">method</span> <span class="k">then</span> <span class="n">has</span> <span class="n">access</span> <span class="n">to</span> <span class="n">the</span> <span class="n">object</span> <span class="n">on</span> <span class="n">which</span> <span class="n">it</span><span class="err">’</span><span class="n">s</span> <span class="n">supposed</span> <span class="n">to</span> <span class="n">operate</span><span class="o">.</span> <span class="n">Hence</span> <span class="n">you</span><span class="err">’</span><span class="n">ll</span> <span class="n">find</span> <span class="n">that</span> <span class="n">most</span> <span class="n">methods</span> <span class="n">in</span> <span class="n">Perl</span> <span class="n">start</span> <span class="n">with</span> <span class="n">something</span> <span class="n">equivalent</span> <span class="n">to</span> <span class="n">this:</span>
+</span></code>&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</figure></notextile>&lt;/div&gt;pl
+package Bug;</p>
+
+<p>sub print_me{
+	my ($self) = shift;
+}
+&lt;div class=&#8217;bogus-wrapper&#8217;&gt;<notextile><figure class="code">&lt;figcaption&gt;<span></span>&lt;/figcaption&gt;&lt;div class=&#8221;highlight&#8221;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#8221;gutter&#8221;&gt;&lt;pre class=&#8221;line-numbers&#8221;&gt;<span class="line-number">1</span>
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217;&gt;&lt;pre&gt;<code class="perl"><span class="line"><span class="ow">or</span> <span class="n">better</span> <span class="n">still:</span>
+</span></code>&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</figure></notextile>&lt;/div&gt;pl
+package Bug;
+sub print_me{
+	my ($self, @args) = @_;
+}
+&lt;div class=&#8217;bogus-wrapper&#8217;&gt;<notextile><figure class="code">&lt;figcaption&gt;<span></span>&lt;/figcaption&gt;&lt;div class=&#8221;highlight&#8221;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#8221;gutter&#8221;&gt;&lt;pre class=&#8221;line-numbers&#8221;&gt;<span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217;&gt;&lt;pre&gt;<code class="perl"><span class="line"><span class="n">This</span> <span class="n">second</span> <span class="n">version</span> <span class="n">is</span> <span class="n">better</span> <span class="n">because</span> <span class="n">it</span> <span class="n">provides</span> <span class="n">a</span> <span class="n">lexically</span> <span class="n">scoped</span> <span class="n">copy</span> <span class="n">of</span> <span class="n">the</span> <span class="n">argument</span> <span class="n">list</span> <span class="sb">```(@args)```</span><span class="o">.</span>
+</span><span class="line">
+</span><span class="line"><span class="mi">5</span><span class="o">.</span><span class="n">Unlike</span> <span class="n">other</span> <span class="n">object</span><span class="o">-</span><span class="n">oriented</span> <span class="n">languages</span><span class="p">,</span> <span class="n">Perl</span> <span class="n">doesn</span><span class="err">’</span><span class="n">t</span> <span class="nb">require</span> <span class="n">that</span> <span class="n">an</span> <span class="n">object</span> <span class="n">be</span> <span class="n">a</span> <span class="n">special</span> <span class="n">kind</span> <span class="n">of</span> <span class="n">recordlike</span> <span class="n">data</span> <span class="n">structure</span><span class="o">.</span> <span class="n">In</span> <span class="n">fact</span><span class="p">,</span> <span class="n">you</span> <span class="n">can</span> <span class="k">use</span> <span class="n">any</span> <span class="n">existing</span> <span class="n">type</span> <span class="n">of</span> <span class="n">Perl</span> <span class="n">variable</span><span class="err">—</span><span class="n">a</span> <span class="nb">scalar</span><span class="p">,</span> <span class="n">an</span> <span class="n">array</span><span class="p">,</span> <span class="n">a</span> <span class="n">hash</span><span class="err">—</span><span class="n">as</span> <span class="n">an</span> <span class="n">object</span> <span class="n">in</span> <span class="n">Perl</span><span class="o">.</span>
+</span><span class="line">
+</span><span class="line"><span class="mi">6</span><span class="o">.</span><span class="n">The</span> <span class="sb">```bless```</span> <span class="n">function</span> <span class="n">takes</span> <span class="n">two</span> <span class="n">arguments:</span> <span class="n">a</span> <span class="n">reference</span> <span class="n">to</span> <span class="n">the</span> <span class="n">variable</span> <span class="n">to</span> <span class="n">be</span> <span class="n">marked</span> <span class="ow">and</span> <span class="n">a</span> <span class="n">string</span> <span class="n">containing</span> <span class="n">the</span> <span class="n">name</span> <span class="n">of</span> <span class="n">the</span> <span class="n">class</span><span class="o">.</span> <span class="n">It</span> <span class="k">then</span> <span class="n">sets</span> <span class="n">an</span> <span class="n">internal</span> <span class="n">flag</span> <span class="n">on</span> <span class="n">the</span> <span class="n">variable</span><span class="p">,</span> <span class="n">indicating</span> <span class="n">that</span> <span class="n">it</span> <span class="n">now</span> <span class="n">belongs</span> <span class="n">to</span> <span class="n">the</span> <span class="n">class</span><span class="o">.</span>
+</span><span class="line">
+</span><span class="line"><span class="mi">7</span><span class="o">.</span><span class="n">We</span> <span class="n">didn</span><span class="err">’</span><span class="n">t</span> <span class="nb">bless</span> <span class="n">the</span> <span class="n">reference</span><span class="p">;</span> <span class="n">we</span> <span class="n">blessed</span> <span class="n">the</span> <span class="n">referent</span><span class="o">.</span> <span class="n">The</span> <span class="nb">scalar</span> <span class="n">didn</span><span class="err">’</span><span class="n">t</span> <span class="n">change</span><span class="err">—</span><span class="n">only</span> <span class="n">the</span> <span class="n">nameless</span> <span class="n">hash</span> <span class="n">it</span> <span class="n">refers</span> <span class="n">to</span> <span class="n">has</span> <span class="n">been</span> <span class="n">marked</span><span class="o">.</span>
+</span><span class="line">
+</span><span class="line"><span class="mi">8</span><span class="o">.</span><span class="n">You</span> <span class="n">can</span> <span class="n">check</span> <span class="n">that</span> <span class="n">the</span> <span class="n">blessing</span> <span class="n">succeeded</span> <span class="n">by</span> <span class="n">applying</span> <span class="n">the</span> <span class="n">built</span><span class="o">-</span><span class="n">in</span> <span class="nb">ref</span> <span class="n">function</span> <span class="n">to</span> <span class="nv">$nextbug</span><span class="o">.</span> <span class="n">Normally</span><span class="p">,</span> <span class="n">when</span> <span class="sb">```ref```</span> <span class="n">is</span> <span class="n">applied</span> <span class="n">to</span> <span class="n">a</span> <span class="n">reference</span><span class="p">,</span> <span class="n">it</span> <span class="n">returns</span> <span class="n">the</span> <span class="n">type</span> <span class="n">of</span> <span class="n">that</span> <span class="n">reference</span><span class="o">.</span>
+</span></code>&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</figure></notextile>&lt;/div&gt;pl
+my $nextbug = {
+    _id =&gt; “00001”,
+    _type =&gt; “fatal”,
+    _descr =&gt; “application does not compile”
+};</p>
+
+<p>bless $nextbug, “Bug”;
+print ref($nextbug);
+&#8220;`</p>
+
+<p>THe above code gives out the result, <code>Bug</code>.  </p>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2014/10/28/object-oriented-perl-chap02/">Object Oriented Perl Chap02</a></h1>
     
     
@@ -103,9 +228,7 @@ my %hash = ( &hellip;">
 
   <div class="entry-content"><p>This is a note about chap02 in “Object oriented perl”.  </p>
 
-<ol>
-  <li>For a hash, we have two ways to get the key-value pair.  </li>
-</ol>
+<p>1.For a hash, we have two ways to get the key-value pair.  </p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
@@ -149,9 +272,7 @@ my %hash = ( &hellip;">
 </span><span class="line"><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<ol>
-  <li>Subroutines can also be declared with a prototype, which is a series of specifiers that tells the compiler to restrict the type and number of arguments with which the subroutine may be invoked. For example, in the subroutine definition:  </li>
-</ol>
+<p>2.Subroutines can also be declared with a prototype, which is a series of specifiers that tells the compiler to restrict the type and number of arguments with which the subroutine may be invoked. For example, in the subroutine definition:  </p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
@@ -165,9 +286,7 @@ my %hash = ( &hellip;">
 
 <p>Prototypes are only enforced when a subroutine is called using the name(args) syntax. Prototypes are not enforced when a subroutine is called with a leading &amp; or through a subroutine reference.   </p>
 
-<ol>
-  <li>Here is a clear illustration of how to use reference in Perl:  </li>
-</ol>
+<p>3.Here is a clear illustration of how to use reference in Perl:  </p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
@@ -187,9 +306,7 @@ my %hash = ( &hellip;">
 </span><span class="line"><span class="k">print</span> <span class="s">&quot;2 x 3 is &quot;</span><span class="p">,</span> <span class="nv">$table</span><span class="o">-&gt;</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-&gt;</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<ol>
-  <li>Here is a script to realize the function of skipping along an array by a fixed step size. It uses anynymous soubroutine and closure.  </li>
-</ol>
+<p>4.Here is a script to realize the function of skipping along an array by a fixed step size. It uses anynymous soubroutine and closure.  </p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
@@ -833,68 +950,6 @@ need to write a lot of data to a particular file, you could use code like this: 
 
 <p>Then hit “enter” key or “tab” key to see how and if the string matches the regex.</p>
 
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/10/03/ge-de-er-%2C-ai-she-er-%2C-ba-he-ji-yi-bi-zhi-da-cheng/">哥德尔、艾舍尔、 巴赫:集异璧之大成</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-10-03T10:26:03+08:00" pubdate data-updated="true">Oct 3<span>rd</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>其实老早就知道这本书了。但是之前甚至连找个电子版的书看完前言的努力都没有的。  </p>
-
-<p>这个国庆是在加班中度过的。在网上看到有人解释函数式编程中的Y Combinator，然后用到了递归的知识，并且提到了图灵机，丘奇以及本文title中的这本《哥德尔、艾舍尔、 巴赫:集异璧之大成》。这里面提到的这几个知识点几乎都是自己比较感兴趣的，只可惜之前一直都没有努力去弄明白。现在对于有这样的一本书可以同时提供这几个方面的知识，那自然是极好的事情了。  </p>
-
-<p>在购买了《哥德尔、艾舍尔、 巴赫:集异璧之大成》这本书的同时，自己也有在看以下的视频:  </p>
-
-<p>1.MIT courseware, 哥德尔、艾舍尔、 巴赫, 一次心灵太空漫游 , </p>
-
-<p>在这个系列的视频中，我们会看到有用到以下的知识点的, 本人是数学系的学生，有的概念尚且很模糊，非数学或者计算机专业的学生想要搞明白里面的一些内容恐怕是难上加难了。不过有不知道的东西或者能认识到自己有哪些的不足其实是很好的事情的。 先列出prerequisites吧： </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">Isomorphisms
-</span><span class="line">Recursion
-</span><span class="line">Paradox
-</span><span class="line">Infinity
-</span><span class="line">Formal System</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>这些都是”道”方面的内容的。 我看过不少的人，他们没有把时间和精力花在研究道上面，而是热衷于玩弄所谓的新技术，新名词。满足于能够使用的基础上，却很少去问几个why. 其实他们可以想想：同样的知识自己如果可以掌握的话，别人难道就不可以很快的掌握了吗？若是有哪怕丝毫的谦虚自省的精神，也不至于狂悖傲慢了。   </p>
-
-<p>这些话既是对自己看到的现象的反省，也是对自己的鞭策吧！</p>
-
-<p>2.BBC, Dangerous Knowledge  </p>
-
-<p>后续的话会有关于这方面的学习笔记的。</p>
 </div>
   
   

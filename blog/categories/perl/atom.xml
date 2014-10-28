@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Perl | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/perl/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-10-28T20:21:26+08:00</updated>
+  <updated>2014-10-28T21:18:42+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -37,8 +37,7 @@ $sub_ref-&gt;(@args);# Access the sub referred to by $subref
 $obj_ref-&gt;method(@args);# Access the object referred to by $objref
 </code>  </p>
 
-<p>3.Let’s say we have a “Bug” module, and subroutine named “print_me” in it, Perl doesn’t actually require that we hard-code the method name in the call. It is also possible to specify the method name as a scalar variable containing a string matching the name (i.e., a symbolic reference) or as a scalar variable containing a real
-reference to the subroutine in question. For example, instead of:  </p>
+<p>3.Let’s say we have a “Bug” module, and subroutine named “print_me” in it, Perl doesn’t actually require that we hard-code the method name in the call. It is also possible to specify the method name as a scalar variable containing a string matching the name (i.e., a symbolic reference) or as a scalar variable containing a real reference to the subroutine in question. For example, instead of:  </p>
 
 <p><code>pl
 $nextbug-&gt;print_me();
@@ -48,9 +47,8 @@ We would write:  </p>
 <p><code>pl
 $method_name = "print_me";# i.e. "symbolic reference" to some &amp;print_me
 $nextbug-&gt;$method_name();# Method call via symbolic reference
-</code>   </p>
-
-<p>or:   </p>
+</code> <br />
+or:   </p>
 
 <p><code>pl
 $method_ref = \&amp;Bug::print_me;# i.e. reference to &amp;Bug::print_me
@@ -67,17 +65,15 @@ In the second case, <code>print_me</code> is treated as a method so the argument
 
 <p><code>pl
 ( $objref, "logfile" )
-</code> </p>
+</code> 
+Having a reference to the object passed as the first parameter is vital, because it means that the method then has access to the object on which it’s supposed to operate. Hence you’ll find that most methods in Perl start with something equivalent to this:   </p>
 
-<p>Having a reference to the object passed as the first parameter is vital, because it means that the method then has access to the object on which it’s supposed to operate. Hence you’ll find that most methods in Perl start with something equivalent to this:   </p>
-
-<p>```pl
-package Bug;</p>
-
-<p>sub print_me{
+<p><code>pl
+package Bug;
+sub print_me{
 	my ($self) = shift;
 }
-```  </p>
+</code>  </p>
 
 <p>or better still:  </p>
 
@@ -97,16 +93,15 @@ This second version is better because it provides a lexically scoped copy of the
 
 <p>8.You can check that the blessing succeeded by applying the built-in ref function to $nextbug. Normally, when <code>ref</code> is applied to a reference, it returns the type of that reference.  </p>
 
-<p>```pl
+<p><code>pl
 my $nextbug = {
-    _id =&gt; “00001”,
-    _type =&gt; “fatal”,
-    _descr =&gt; “application does not compile”
-};</p>
-
-<p>bless $nextbug, “Bug”;
+    _id =&gt; "00001",
+    _type =&gt; "fatal",
+    _descr =&gt; "application does not compile"
+};
+bless $nextbug, "Bug";
 print ref($nextbug);
-```</p>
+</code></p>
 
 <p>THe above code gives out the result, <code>Bug</code>.  </p>
 

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Perl | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/perl/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-10-28T21:22:37+08:00</updated>
+  <updated>2014-10-28T21:28:37+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -39,23 +39,22 @@ $obj_ref-&gt;method(@args);# Access the object referred to by $objref
 
 <p>3.Let’s say we have a <code>Bug</code> module, and subroutine named <code>print_me</code> in it, Perl doesn’t actually require that we hard-code the method name in the call. It is also possible to specify the method name as a scalar variable containing a string matching the name (i.e., a symbolic reference) or as a scalar variable containing a real reference to the subroutine in question. For example, instead of:  </p>
 
-<p><code>pl
+<p><code>
 $nextbug-&gt;print_me();
 </code><br />
 We would write:  </p>
 
-<p><code>pl
-$method_name = "print_me";# i.e. "symbolic reference" to some &amp;print_me
-$nextbug-&gt;$method_name();# Method call via symbolic reference
+<p><code>
+$method_name = "print_me";   # i.e. "symbolic reference" to some &amp;print_me
+$nextbug-&gt;$method_name();    # Method call via symbolic reference
 </code> <br />
 or:   </p>
 
-<p><code>pl
+<p><code>
 $method_ref = \&amp;Bug::print_me;# i.e. reference to &amp;Bug::print_me
 $nextbug-&gt;$method_ref();# Method call via hard reference
-</code>  </p>
-
-<p>The thing to be noted here is, in practice, the method name is almost always hard-coded. So even if we do not know the case of <code>symbolic reference</code>, it almost does not matter.</p>
+</code><br />
+The thing to be noted here is, in practice, the method name is almost always hard-coded. So even if we do not know the case of <code>symbolic reference</code>, it almost does not matter.</p>
 
 <p>4.When a method like <code>Bug::print_me</code> is called, the argument list that it receives begins with the object reference through which it was called, followed by any arguments that were explicitly given to the method. That means that calling <code>Bug::print_me("logfile")</code> is not the same as calling 
 <code>$nextbug-&gt;print_me("logfile")</code>. In the first case, print_me is treated as a regular subroutine so the argument list passed to <code>Bug::print_me</code> is equivalent to:  </p>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Perl | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/perl/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-10-24T18:15:35+08:00</updated>
+  <updated>2014-10-28T16:56:27+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,99 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Object Oriented Perl Chap02]]></title>
+    <link href="http://isunix.github.io/blog/2014/10/28/object-oriented-perl-chap02/"/>
+    <updated>2014-10-28T14:08:34+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/10/28/object-oriented-perl-chap02</id>
+    <content type="html"><![CDATA[<p>This is a note about chap02 in “Object oriented perl”.  </p>
+
+<ol>
+  <li>For a hash, we have two ways to get the key-value pair.  </li>
+</ol>
+
+<p>```pl
+my %hash = (
+    steven =&gt; “good”,
+    sun    =&gt; “bad”,
+);</p>
+
+<p>my $nextkey;</p>
+
+<p>while (defined($nextkey = each %hash)){
+    print “the key $nextkey has the value $hash{$nextkey}\n”;
+}
+```   </p>
+
+<p>The other way is:  </p>
+
+<p>```pl
+my %hash = (
+    steven =&gt; “good”,
+    sun    =&gt; “bad”,
+);</p>
+
+<p>while (($nextkey, $nextval) = each %hash){
+    print “the key $nextkey has value $nextval\n”;
+}
+```   </p>
+
+<ol>
+  <li>Subroutines can also be declared with a prototype, which is a series of specifiers that tells the compiler to restrict the type and number of arguments with which the subroutine may be invoked. For example, in the subroutine definition:  </li>
+</ol>
+
+<p><code>pl
+sub insensitive_less_than ($$) {
+	return lc($_[0]) lt lc($_[1]);
+}
+</code>  </p>
+
+<p>The prototype is <code>($$)</code> and specifies that the subroutine insensitive_less_than can only be called with exactly two arguments, each of which will be treated as a scalar—even if it’s actually an array!  </p>
+
+<p>Prototypes are only enforced when a subroutine is called using the name(args) syntax. Prototypes are not enforced when a subroutine is called with a leading &amp; or through a subroutine reference.   </p>
+
+<ol>
+  <li>Here is a clear illustration of how to use reference in Perl:  </li>
+</ol>
+
+<p>```pl
+my @row1 = (1, 2, 3);
+my @row2 = (4, 5, 6);
+my @row3 = (7, 8, 9);</p>
+
+<p>my @cols = (\@row1, \@row2, \@row3);
+my $table = \@cols;</p>
+
+<p>print “2 x 3 is “, $table-&gt;[1]-&gt;[2];
+```  </p>
+
+<ol>
+  <li>Here is a script to realize the function of skipping along an array by a fixed step size. It uses anynymous soubroutine and closure.  </li>
+</ol>
+
+<p>```pl
+sub hop_along{
+    my ($from, $to, $step) = @<em>;
+    my $next = $from - $step;
+    my $closure_ref = sub{
+        $next += $step;
+        return if $next &gt; $to;
+        $</em>[0] = $next;
+        return 1;
+    };
+    return $closure_ref;
+}</p>
+
+<p>$iterator = hop_along(1, 100, 7);
+while($iterator-&gt;($next)){
+    print $next.” “;
+}
+``` </p>
+
+<p>The sad thing is, I am not sure if this is the best way to achieve the function.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Use of Select in Perl]]></title>
@@ -237,57 +330,6 @@ perldebug, perldebguts, perldiag, perlrun
     <updated>2014-10-10T14:24:33+08:00</updated>
     <id>http://isunix.github.io/blog/2014/10/10/notes-on-mastering-algorithms-with-perl-chap01</id>
     <content type="html"><![CDATA[<p>This is the opening post of a series of articles on the book “mastering algorithms with perl”. Using Perl to realize some of the classical data structures and algorithms is a very good channel both for learning Algorithms and for learning Perl.  </p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Regexp::Debugger使用示例]]></title>
-    <link href="http://isunix.github.io/blog/2014/10/09/regexp-debuggershi-yong-shi-li/"/>
-    <updated>2014-10-09T14:09:52+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/10/09/regexp-debuggershi-yong-shi-li</id>
-    <content type="html"><![CDATA[<p>This post shows how to use the perl module, Regexp::Debugger. Used skillfully, this module can do us a lot of favor.  </p>
-
-<p>1.”rxrx prog.pl” is a shorthand for “perl -MRegexp::Debugger prog.pl”.  </p>
-
-<p>2.print out if matched</p>
-
-<p><code>pl
-perl -E "say 'matched' if 'ababc' =~ /(a|b)b+c/x"
-</code>  </p>
-
-<p>3.print out if matched and which part matched</p>
-
-<p><code>pl
-perl -E "say 'matched: ', $&amp; if 'ababc' =~ /(a|b)b+c/x"
-</code></p>
-
-<p>4.use “re” module</p>
-
-<p><code>pl
-perl -E "use re 'debug'; 'ababc' =~ /(a|b)b+c/x"
-</code>  </p>
-
-<p>5.use Regexp::Debugger module</p>
-
-<p><code>pl
-perl -E "use Regexp::Debugger; 'ababc' =~ /(a|b)b+c/x"
-</code>  </p>
-
-<p>6.any regex</p>
-
-<p><code>pl
-(?i) (?&lt;AB&gt; (?&amp;ABs)) (?&lt;AA&gt;(??{'aa'})) (?(DEFINE)(?&lt;ABs&gt;[ab]{2,7}+))/
-</code></p>
-
-<p>7.for the Regexp::Debugger, we have a cmd-line tool named “rxrx”, we typr “rxrx”, then</p>
-
-<p><code>pl
-/(a|b)b+c/
-"ababc"
-</code></p>
-
-<p>Then hit “enter” key or “tab” key to see how and if the string matches the regex.</p>
 
 ]]></content>
   </entry>

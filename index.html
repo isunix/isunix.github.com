@@ -190,7 +190,95 @@
 </span><span class="line"><span class="k">print</span> <span class="nb">ref</span><span class="p">(</span><span class="nv">$nextbug</span><span class="p">);</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>THe above code gives out the result, <code>Bug</code>.  </p>
+<p>THe above code gives out the result, <code>Bug</code>.   </p>
+
+<p>8.Lastly we will show a piece of code to demonstrate how to get and set attributes in perl.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+<span class="line-number">35</span>
+<span class="line-number">36</span>
+<span class="line-number">37</span>
+<span class="line-number">38</span>
+<span class="line-number">39</span>
+<span class="line-number">40</span>
+<span class="line-number">41</span>
+<span class="line-number">42</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nb">package</span> <span class="nn">CD::</span><span class="n">Music</span><span class="p">;</span>
+</span><span class="line"><span class="k">use</span> <span class="n">strict</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">    <span class="k">my</span> <span class="nv">$_count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line">    <span class="k">sub </span><span class="nf">get_count</span><span class="p">{</span><span class="nv">$_count</span><span class="p">}</span>
+</span><span class="line">    <span class="k">sub </span><span class="nf">_incr_count</span><span class="p">{</span><span class="o">++</span><span class="nv">$_count</span><span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="k">sub </span><span class="nf">new</span> <span class="p">{</span>
+</span><span class="line">    <span class="k">my</span> <span class="p">(</span><span class="nv">$class</span><span class="p">,</span> <span class="nv">@arg</span><span class="p">)</span> <span class="o">=</span> <span class="nv">@_</span><span class="p">;</span>
+</span><span class="line">    <span class="nv">$class</span><span class="o">-&gt;</span><span class="n">_incr_count</span><span class="p">();</span>
+</span><span class="line">    <span class="nb">bless</span><span class="p">{</span>
+</span><span class="line">        <span class="n">name</span> <span class="o">=&gt;</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+</span><span class="line">        <span class="n">singer</span> <span class="o">=&gt;</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+</span><span class="line">        <span class="n">album</span> <span class="o">=&gt;</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>
+</span><span class="line">        <span class="n">rating</span> <span class="o">=&gt;</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span>
+</span><span class="line">    <span class="p">},</span> <span class="nv">$class</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="k">sub </span><span class="nf">name</span><span class="p">{</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="p">{</span><span class="n">name</span><span class="p">}</span> <span class="p">}</span>
+</span><span class="line"><span class="k">sub </span><span class="nf">singer</span><span class="p">{</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="p">{</span><span class="n">singer</span><span class="p">}</span> <span class="p">}</span>
+</span><span class="line"><span class="k">sub </span><span class="nf">album</span><span class="p">{</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="p">{</span><span class="n">album</span><span class="p">}</span> <span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="k">sub </span><span class="nf">rating</span> <span class="p">{</span>
+</span><span class="line">    <span class="k">my</span> <span class="p">(</span><span class="nv">$self</span><span class="p">,</span> <span class="nv">$rating</span><span class="p">)</span> <span class="o">=</span> <span class="nv">@_</span><span class="p">;</span>
+</span><span class="line">    <span class="nv">$self</span> <span class="o">-&gt;</span> <span class="p">{</span><span class="n">rating</span><span class="p">}</span> <span class="o">=</span> <span class="nv">$rating</span> <span class="k">if</span> <span class="nv">$rating</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="nb">package</span> <span class="n">main</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">my</span> <span class="nv">$cd</span> <span class="o">=</span> <span class="nn">CD::</span><span class="n">Music</span><span class="o">-&gt;</span><span class="k">new</span><span class="p">(</span><span class="s">&quot;谁的眼泪在飞&quot;</span><span class="p">,</span> <span class="s">&quot;孟庭苇&quot;</span><span class="p">,</span> <span class="s">&quot;谁的眼泪在飞&quot;</span><span class="p">,</span> <span class="mi">7</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="k">print</span> <span class="nv">$cd</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">,</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">print</span> <span class="nv">$cd</span><span class="o">-&gt;</span><span class="n">singer</span><span class="o">.</span><span class="s">&quot;\n&quot;</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">print</span> <span class="nv">$cd</span><span class="o">-&gt;</span><span class="n">album</span><span class="p">,</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">print</span> <span class="nv">$cd</span><span class="o">-&gt;</span><span class="n">rating</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="o">.</span><span class="s">&quot;\n&quot;</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;There have been &quot;</span><span class="p">,</span> <span class="nn">CD::</span><span class="n">Music</span><span class="o">-&gt;</span><span class="n">get_count</span><span class="p">(),</span> <span class="s">&quot; CD[s] created\n&quot;</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 </div>
   

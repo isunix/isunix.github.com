@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Perl | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/perl/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-10-29T14:31:38+08:00</updated>
+  <updated>2014-10-29T15:33:43+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -97,7 +97,54 @@ bless $nextbug, "Bug";
 print ref($nextbug);
 </code></p>
 
-<p>THe above code gives out the result, <code>Bug</code>.  </p>
+<p>THe above code gives out the result, <code>Bug</code>.   </p>
+
+<p>8.Lastly we will show a piece of code to demonstrate how to get and set attributes in perl.</p>
+
+<p>```pl
+package CD::Music;
+use strict;</p>
+
+<p>{
+    my $_count = 0;
+    sub get_count{$_count}
+    sub _incr_count{++$_count}
+}</p>
+
+<p>sub new {
+    my ($class, @arg) = @<em>;
+    $class-&gt;_incr_count();
+    bless{
+        name =&gt; $</em>[1],
+        singer =&gt; $<em>[2],
+        album =&gt; $</em>[3],
+        rating =&gt; $_[4],
+    }, $class;
+}</p>
+
+<p>sub name{ $<em>[0] -&gt; {name} }
+sub singer{ $</em>[0] -&gt; {singer} }
+sub album{ $_[0] -&gt; {album} }</p>
+
+<p>sub rating {
+    my ($self, $rating) = @_;
+    $self -&gt; {rating} = $rating if $rating;
+}</p>
+
+<p>package main;</p>
+
+<p>my $cd = CD::Music-&gt;new(“谁的眼泪在飞”, “孟庭苇”, “谁的眼泪在飞”, 7);</p>
+
+<p>print $cd-&gt;name, “\n”;</p>
+
+<p>print $cd-&gt;singer.”\n”;</p>
+
+<p>print $cd-&gt;album, “\n”;</p>
+
+<p>print $cd-&gt;rating(8).”\n”;</p>
+
+<p>print “There have been “, CD::Music-&gt;get_count(), “ CD[s] created\n”;
+```</p>
 
 ]]></content>
   </entry>

@@ -118,82 +118,75 @@
 </span><span class="line"><span class="nv">$obj_ref</span><span class="o">-&gt;</span><span class="n">method</span><span class="p">(</span><span class="nv">@args</span><span class="p">);</span><span class="c1"># Access the object referred to by $objref</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>3.Let’s say we have a <code>Bug</code> module, and subroutine named <code>print_me</code> in it, Perl doesn’t actually require that we hard-code the method name in the call. It is also possible to specify the method name as a scalar variable containing a string matching the name (i.e., a symbolic reference) or as a scalar variable containing a real reference to the subroutine in question. For example, instead of:</p>
+<p>4.When a method like <code>Bug::print_me</code> is called, the argument list that it receives begins with the object reference through which it was called, followed by any arguments that were explicitly given to the method. That means that calling </p>
 
-<p><code>pl
-$nextbug-&gt;print_me();
-&lt;div class='bogus-wrapper'&gt;&lt;notextile&gt;&lt;figure class='code'&gt;&lt;figcaption&gt;&lt;span&gt;&lt;/span&gt;&lt;/figcaption&gt;&lt;div class="highlight"&gt;&lt;table&gt;&lt;tr&gt;&lt;td class="gutter"&gt;&lt;pre class="line-numbers"&gt;&lt;span class='line-number'&gt;1&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;td class='code'&gt;&lt;pre&gt;&lt;code class='perl'&gt;&lt;span class='line'&gt;&lt;span class="n"&gt;We&lt;/span&gt; &lt;span class="n"&gt;would&lt;/span&gt; &lt;span class="nb"&gt;write&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/notextile&gt;&lt;/div&gt;pl
-$method_name = "print_me";   # i.e. "symbolic reference" to some &amp;print_me
-$nextbug-&gt;$method_name();    # Method call via symbolic reference
-&lt;div class='bogus-wrapper'&gt;&lt;notextile&gt;&lt;figure class='code'&gt;&lt;figcaption&gt;&lt;span&gt;&lt;/span&gt;&lt;/figcaption&gt;&lt;div class="highlight"&gt;&lt;table&gt;&lt;tr&gt;&lt;td class="gutter"&gt;&lt;pre class="line-numbers"&gt;&lt;span class='line-number'&gt;1&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;td class='code'&gt;&lt;pre&gt;&lt;code class='perl'&gt;&lt;span class='line'&gt;&lt;span class="ow"&gt;or&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/notextile&gt;&lt;/div&gt;
-$method_ref = \&amp;Bug::print_me;# i.e. reference to &amp;Bug::print_me
-$nextbug-&gt;$method_ref();# Method call via hard reference
-&lt;div class='bogus-wrapper'&gt;&lt;notextile&gt;&lt;figure class='code'&gt;&lt;figcaption&gt;&lt;span&gt;&lt;/span&gt;&lt;/figcaption&gt;&lt;div class="highlight"&gt;&lt;table&gt;&lt;tr&gt;&lt;td class="gutter"&gt;&lt;pre class="line-numbers"&gt;&lt;span class='line-number'&gt;1&lt;/span&gt;
-&lt;span class='line-number'&gt;2&lt;/span&gt;
-&lt;span class='line-number'&gt;3&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;td class='code'&gt;&lt;pre&gt;&lt;code class='perl'&gt;&lt;span class='line'&gt;&lt;span class="n"&gt;The&lt;/span&gt; &lt;span class="n"&gt;thing&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;be&lt;/span&gt; &lt;span class="n"&gt;noted&lt;/span&gt; &lt;span class="n"&gt;here&lt;/span&gt; &lt;span class="n"&gt;is&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt; &lt;span class="n"&gt;practice&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;method&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="n"&gt;is&lt;/span&gt; &lt;span class="n"&gt;almost&lt;/span&gt; &lt;span class="n"&gt;always&lt;/span&gt; &lt;span class="n"&gt;hard&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;coded&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt; &lt;span class="n"&gt;So&lt;/span&gt; &lt;span class="n"&gt;even&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;we&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="n"&gt;know&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="n"&gt;of&lt;/span&gt; &lt;span class="sb"&gt;</code>symbolic reference<code>&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;it&lt;/span&gt; &lt;span class="n"&gt;almost&lt;/span&gt; &lt;span class="n"&gt;does&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="n"&gt;matter&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
-&lt;/span&gt;&lt;span class='line'&gt;
-&lt;/span&gt;&lt;span class='line'&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;When&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="n"&gt;method&lt;/span&gt; &lt;span class="n"&gt;like&lt;/span&gt; &lt;span class="sb"&gt;</code>Bug::print_me<code>&lt;/span&gt; &lt;span class="n"&gt;is&lt;/span&gt; &lt;span class="n"&gt;called&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;argument&lt;/span&gt; &lt;span class="n"&gt;list&lt;/span&gt; &lt;span class="n"&gt;that&lt;/span&gt; &lt;span class="n"&gt;it&lt;/span&gt; &lt;span class="n"&gt;receives&lt;/span&gt; &lt;span class="n"&gt;begins&lt;/span&gt; &lt;span class="n"&gt;with&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;object&lt;/span&gt; &lt;span class="n"&gt;reference&lt;/span&gt; &lt;span class="n"&gt;through&lt;/span&gt; &lt;span class="n"&gt;which&lt;/span&gt; &lt;span class="n"&gt;it&lt;/span&gt; &lt;span class="n"&gt;was&lt;/span&gt; &lt;span class="n"&gt;called&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;followed&lt;/span&gt; &lt;span class="n"&gt;by&lt;/span&gt; &lt;span class="n"&gt;any&lt;/span&gt; &lt;span class="n"&gt;arguments&lt;/span&gt; &lt;span class="n"&gt;that&lt;/span&gt; &lt;span class="n"&gt;were&lt;/span&gt; &lt;span class="n"&gt;explicitly&lt;/span&gt; &lt;span class="n"&gt;given&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;method&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt; &lt;span class="n"&gt;That&lt;/span&gt; &lt;span class="n"&gt;means&lt;/span&gt; &lt;span class="n"&gt;that&lt;/span&gt; &lt;span class="n"&gt;calling&lt;/span&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/notextile&gt;&lt;/div&gt;pl
-Bug::print_me("logfile")
-&lt;div class='bogus-wrapper'&gt;&lt;notextile&gt;&lt;figure class='code'&gt;&lt;figcaption&gt;&lt;span&gt;&lt;/span&gt;&lt;/figcaption&gt;&lt;div class="highlight"&gt;&lt;table&gt;&lt;tr&gt;&lt;td class="gutter"&gt;&lt;pre class="line-numbers"&gt;&lt;span class='line-number'&gt;1&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;td class='code'&gt;&lt;pre&gt;&lt;code class='perl'&gt;&lt;span class='line'&gt;&lt;span class="n"&gt;is&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;same&lt;/span&gt; &lt;span class="n"&gt;as&lt;/span&gt; &lt;span class="n"&gt;calling&lt;/span&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/notextile&gt;&lt;/div&gt;pl
-$nextbug-&gt;print_me("logfile")
-&lt;div class='bogus-wrapper'&gt;&lt;notextile&gt;&lt;figure class='code'&gt;&lt;figcaption&gt;&lt;span&gt;&lt;/span&gt;&lt;/figcaption&gt;&lt;div class="highlight"&gt;&lt;table&gt;&lt;tr&gt;&lt;td class="gutter"&gt;&lt;pre class="line-numbers"&gt;&lt;span class='line-number'&gt;1&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;td class='code'&gt;&lt;pre&gt;&lt;code class='perl'&gt;&lt;span class='line'&gt;&lt;span class="n"&gt;In&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;first&lt;/span&gt; &lt;span class="k"&gt;case&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;print_me&lt;/span&gt; &lt;span class="n"&gt;is&lt;/span&gt; &lt;span class="n"&gt;treated&lt;/span&gt; &lt;span class="n"&gt;as&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="n"&gt;regular&lt;/span&gt; &lt;span class="n"&gt;subroutine&lt;/span&gt; &lt;span class="n"&gt;so&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;argument&lt;/span&gt; &lt;span class="n"&gt;list&lt;/span&gt; &lt;span class="n"&gt;passed&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="sb"&gt;</code>Bug::print_me<code>&lt;/span&gt; &lt;span class="n"&gt;is&lt;/span&gt; &lt;span class="n"&gt;equivalent&lt;/span&gt; &lt;span class="n"&gt;to:&lt;/span&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/notextile&gt;&lt;/div&gt;pl
-( "logfile" )
-&lt;div class='bogus-wrapper'&gt;&lt;notextile&gt;&lt;figure class='code'&gt;&lt;figcaption&gt;&lt;span&gt;&lt;/span&gt;&lt;/figcaption&gt;&lt;div class="highlight"&gt;&lt;table&gt;&lt;tr&gt;&lt;td class="gutter"&gt;&lt;pre class="line-numbers"&gt;&lt;span class='line-number'&gt;1&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;td class='code'&gt;&lt;pre&gt;&lt;code class='perl'&gt;&lt;span class='line'&gt;&lt;span class="n"&gt;In&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;second&lt;/span&gt; &lt;span class="k"&gt;case&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sb"&gt;</code>print_me<code>&lt;/span&gt; &lt;span class="n"&gt;is&lt;/span&gt; &lt;span class="n"&gt;treated&lt;/span&gt; &lt;span class="n"&gt;as&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="n"&gt;method&lt;/span&gt; &lt;span class="n"&gt;so&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;argument&lt;/span&gt; &lt;span class="n"&gt;list&lt;/span&gt; &lt;span class="n"&gt;is&lt;/span&gt; &lt;span class="n"&gt;equivalent&lt;/span&gt; &lt;span class="n"&gt;to:&lt;/span&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/notextile&gt;&lt;/div&gt;pl
-( $objref, "logfile" )
-&lt;div class='bogus-wrapper'&gt;&lt;notextile&gt;&lt;figure class='code'&gt;&lt;figcaption&gt;&lt;span&gt;&lt;/span&gt;&lt;/figcaption&gt;&lt;div class="highlight"&gt;&lt;table&gt;&lt;tr&gt;&lt;td class="gutter"&gt;&lt;pre class="line-numbers"&gt;&lt;span class='line-number'&gt;1&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;td class='code'&gt;&lt;pre&gt;&lt;code class='perl'&gt;&lt;span class='line'&gt;&lt;span class="n"&gt;Having&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="n"&gt;reference&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;object&lt;/span&gt; &lt;span class="n"&gt;passed&lt;/span&gt; &lt;span class="n"&gt;as&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;first&lt;/span&gt; &lt;span class="n"&gt;parameter&lt;/span&gt; &lt;span class="n"&gt;is&lt;/span&gt; &lt;span class="n"&gt;vital&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;because&lt;/span&gt; &lt;span class="n"&gt;it&lt;/span&gt; &lt;span class="n"&gt;means&lt;/span&gt; &lt;span class="n"&gt;that&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;method&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt; &lt;span class="n"&gt;has&lt;/span&gt; &lt;span class="n"&gt;access&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;object&lt;/span&gt; &lt;span class="n"&gt;on&lt;/span&gt; &lt;span class="n"&gt;which&lt;/span&gt; &lt;span class="n"&gt;it&lt;/span&gt;&lt;span class="err"&gt;’&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="n"&gt;supposed&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;operate&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt; &lt;span class="n"&gt;Hence&lt;/span&gt; &lt;span class="n"&gt;you&lt;/span&gt;&lt;span class="err"&gt;’&lt;/span&gt;&lt;span class="n"&gt;ll&lt;/span&gt; &lt;span class="n"&gt;find&lt;/span&gt; &lt;span class="n"&gt;that&lt;/span&gt; &lt;span class="n"&gt;most&lt;/span&gt; &lt;span class="n"&gt;methods&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt; &lt;span class="n"&gt;Perl&lt;/span&gt; &lt;span class="n"&gt;start&lt;/span&gt; &lt;span class="n"&gt;with&lt;/span&gt; &lt;span class="n"&gt;something&lt;/span&gt; &lt;span class="n"&gt;equivalent&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;this:&lt;/span&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/notextile&gt;&lt;/div&gt;pl
-package Bug;
-sub print_me{
-	my ($self) = shift;
-}
-&lt;div class='bogus-wrapper'&gt;&lt;notextile&gt;&lt;figure class='code'&gt;&lt;figcaption&gt;&lt;span&gt;&lt;/span&gt;&lt;/figcaption&gt;&lt;div class="highlight"&gt;&lt;table&gt;&lt;tr&gt;&lt;td class="gutter"&gt;&lt;pre class="line-numbers"&gt;&lt;span class='line-number'&gt;1&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;td class='code'&gt;&lt;pre&gt;&lt;code class='perl'&gt;&lt;span class='line'&gt;&lt;span class="ow"&gt;or&lt;/span&gt; &lt;span class="n"&gt;better&lt;/span&gt; &lt;span class="n"&gt;still:&lt;/span&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/notextile&gt;&lt;/div&gt;pl
-package Bug;
-sub print_me{
-	my ($self, @args) = @_;
-}
-&lt;div class='bogus-wrapper'&gt;&lt;notextile&gt;&lt;figure class='code'&gt;&lt;figcaption&gt;&lt;span&gt;&lt;/span&gt;&lt;/figcaption&gt;&lt;div class="highlight"&gt;&lt;table&gt;&lt;tr&gt;&lt;td class="gutter"&gt;&lt;pre class="line-numbers"&gt;&lt;span class='line-number'&gt;1&lt;/span&gt;
-&lt;span class='line-number'&gt;2&lt;/span&gt;
-&lt;span class='line-number'&gt;3&lt;/span&gt;
-&lt;span class='line-number'&gt;4&lt;/span&gt;
-&lt;span class='line-number'&gt;5&lt;/span&gt;
-&lt;span class='line-number'&gt;6&lt;/span&gt;
-&lt;span class='line-number'&gt;7&lt;/span&gt;
-&lt;span class='line-number'&gt;8&lt;/span&gt;
-&lt;span class='line-number'&gt;9&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;td class='code'&gt;&lt;pre&gt;&lt;code class='perl'&gt;&lt;span class='line'&gt;&lt;span class="n"&gt;This&lt;/span&gt; &lt;span class="n"&gt;second&lt;/span&gt; &lt;span class="n"&gt;version&lt;/span&gt; &lt;span class="n"&gt;is&lt;/span&gt; &lt;span class="n"&gt;better&lt;/span&gt; &lt;span class="n"&gt;because&lt;/span&gt; &lt;span class="n"&gt;it&lt;/span&gt; &lt;span class="n"&gt;provides&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="n"&gt;lexically&lt;/span&gt; &lt;span class="n"&gt;scoped&lt;/span&gt; &lt;span class="n"&gt;copy&lt;/span&gt; &lt;span class="n"&gt;of&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;argument&lt;/span&gt; &lt;span class="n"&gt;list&lt;/span&gt; &lt;span class="sb"&gt;</code>(@args)<code>&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
-&lt;/span&gt;&lt;span class='line'&gt;
-&lt;/span&gt;&lt;span class='line'&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Unlike&lt;/span&gt; &lt;span class="n"&gt;other&lt;/span&gt; &lt;span class="n"&gt;object&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;oriented&lt;/span&gt; &lt;span class="n"&gt;languages&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Perl&lt;/span&gt; &lt;span class="n"&gt;doesn&lt;/span&gt;&lt;span class="err"&gt;’&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt; &lt;span class="nb"&gt;require&lt;/span&gt; &lt;span class="n"&gt;that&lt;/span&gt; &lt;span class="n"&gt;an&lt;/span&gt; &lt;span class="n"&gt;object&lt;/span&gt; &lt;span class="n"&gt;be&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="n"&gt;special&lt;/span&gt; &lt;span class="n"&gt;kind&lt;/span&gt; &lt;span class="n"&gt;of&lt;/span&gt; &lt;span class="n"&gt;recordlike&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt; &lt;span class="n"&gt;structure&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt; &lt;span class="n"&gt;In&lt;/span&gt; &lt;span class="n"&gt;fact&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;you&lt;/span&gt; &lt;span class="n"&gt;can&lt;/span&gt; &lt;span class="k"&gt;use&lt;/span&gt; &lt;span class="n"&gt;any&lt;/span&gt; &lt;span class="n"&gt;existing&lt;/span&gt; &lt;span class="n"&gt;type&lt;/span&gt; &lt;span class="n"&gt;of&lt;/span&gt; &lt;span class="n"&gt;Perl&lt;/span&gt; &lt;span class="n"&gt;variable&lt;/span&gt;&lt;span class="err"&gt;—&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="nb"&gt;scalar&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;an&lt;/span&gt; &lt;span class="n"&gt;array&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="n"&gt;hash&lt;/span&gt;&lt;span class="err"&gt;—&lt;/span&gt;&lt;span class="n"&gt;as&lt;/span&gt; &lt;span class="n"&gt;an&lt;/span&gt; &lt;span class="n"&gt;object&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt; &lt;span class="n"&gt;Perl&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
-&lt;/span&gt;&lt;span class='line'&gt;
-&lt;/span&gt;&lt;span class='line'&gt;&lt;span class="mi"&gt;6&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;The&lt;/span&gt; &lt;span class="sb"&gt;</code>bless<code>&lt;/span&gt; &lt;span class="n"&gt;function&lt;/span&gt; &lt;span class="n"&gt;takes&lt;/span&gt; &lt;span class="n"&gt;two&lt;/span&gt; &lt;span class="n"&gt;arguments:&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="n"&gt;reference&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;variable&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;be&lt;/span&gt; &lt;span class="n"&gt;marked&lt;/span&gt; &lt;span class="ow"&gt;and&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="n"&gt;string&lt;/span&gt; &lt;span class="n"&gt;containing&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="n"&gt;of&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;class&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt; &lt;span class="n"&gt;It&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt; &lt;span class="n"&gt;sets&lt;/span&gt; &lt;span class="n"&gt;an&lt;/span&gt; &lt;span class="n"&gt;internal&lt;/span&gt; &lt;span class="n"&gt;flag&lt;/span&gt; &lt;span class="n"&gt;on&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;variable&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;indicating&lt;/span&gt; &lt;span class="n"&gt;that&lt;/span&gt; &lt;span class="n"&gt;it&lt;/span&gt; &lt;span class="n"&gt;now&lt;/span&gt; &lt;span class="n"&gt;belongs&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;class&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
-&lt;/span&gt;&lt;span class='line'&gt;
-&lt;/span&gt;&lt;span class='line'&gt;&lt;span class="mi"&gt;7&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;We&lt;/span&gt; &lt;span class="n"&gt;didn&lt;/span&gt;&lt;span class="err"&gt;’&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt; &lt;span class="nb"&gt;bless&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;reference&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="n"&gt;we&lt;/span&gt; &lt;span class="n"&gt;blessed&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;referent&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt; &lt;span class="n"&gt;The&lt;/span&gt; &lt;span class="nb"&gt;scalar&lt;/span&gt; &lt;span class="n"&gt;didn&lt;/span&gt;&lt;span class="err"&gt;’&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt; &lt;span class="n"&gt;change&lt;/span&gt;&lt;span class="err"&gt;—&lt;/span&gt;&lt;span class="n"&gt;only&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;nameless&lt;/span&gt; &lt;span class="n"&gt;hash&lt;/span&gt; &lt;span class="n"&gt;it&lt;/span&gt; &lt;span class="n"&gt;refers&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;has&lt;/span&gt; &lt;span class="n"&gt;been&lt;/span&gt; &lt;span class="n"&gt;marked&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
-&lt;/span&gt;&lt;span class='line'&gt;
-&lt;/span&gt;&lt;span class='line'&gt;&lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;You&lt;/span&gt; &lt;span class="n"&gt;can&lt;/span&gt; &lt;span class="n"&gt;check&lt;/span&gt; &lt;span class="n"&gt;that&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;blessing&lt;/span&gt; &lt;span class="n"&gt;succeeded&lt;/span&gt; &lt;span class="n"&gt;by&lt;/span&gt; &lt;span class="n"&gt;applying&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;built&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;ref&lt;/span&gt; &lt;span class="n"&gt;function&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="nv"&gt;$nextbug&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt; &lt;span class="n"&gt;Normally&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;when&lt;/span&gt; &lt;span class="sb"&gt;</code>ref<code>&lt;/span&gt; &lt;span class="n"&gt;is&lt;/span&gt; &lt;span class="n"&gt;applied&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="n"&gt;reference&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;it&lt;/span&gt; &lt;span class="n"&gt;returns&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;type&lt;/span&gt; &lt;span class="n"&gt;of&lt;/span&gt; &lt;span class="n"&gt;that&lt;/span&gt; &lt;span class="n"&gt;reference&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/notextile&gt;&lt;/div&gt;pl
-my $nextbug = {
-    _id =&gt; "00001",
-    _type =&gt; "fatal",
-    _descr =&gt; "application does not compile"
-};
-bless $nextbug, "Bug";
-print ref($nextbug);
-</code>
-THe above code gives out the result, <code>Bug</code>.  </p>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nn">Bug::</span><span class="n">print_me</span><span class="p">(</span><span class="s">&quot;logfile&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>is not the same as calling </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">$nextbug</span><span class="o">-&gt;</span><span class="n">print_me</span><span class="p">(</span><span class="s">&quot;logfile&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>In the first case, print_me is treated as a regular subroutine so the argument list passed to <code>Bug::print_me</code> is equivalent to:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="p">(</span> <span class="s">&quot;logfile&quot;</span> <span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>In the second case, <code>print_me</code> is treated as a method so the argument list is equivalent to:   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="p">(</span> <span class="nv">$objref</span><span class="p">,</span> <span class="s">&quot;logfile&quot;</span> <span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>Having a reference to the object passed as the first parameter is vital, because it means that the method then has access to the object on which it’s supposed to operate. Hence you’ll find that most methods in Perl start with something equivalent to this:   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nb">package</span> <span class="n">Bug</span><span class="p">;</span>
+</span><span class="line"><span class="k">sub </span><span class="nf">print_me</span><span class="p">{</span>
+</span><span class="line">	<span class="k">my</span> <span class="p">(</span><span class="nv">$self</span><span class="p">)</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>or better still:<br />
+&lt;div class=&#8217;bogus-wrapper&#8217;&gt;<notextile><figure class="code">&lt;figcaption&gt;<span></span>&lt;/figcaption&gt;&lt;div class=&#8221;highlight&#8221;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#8221;gutter&#8221;&gt;&lt;pre class=&#8221;line-numbers&#8221;&gt;<span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217;&gt;&lt;pre&gt;<code class="perl"><span class="line"><span class="nb">package</span> <span class="n">Bug</span><span class="p">;</span>
+</span><span class="line"><span class="k">sub </span><span class="nf">print_me</span><span class="p">{</span>
+</span><span class="line">	<span class="k">my</span> <span class="p">(</span><span class="nv">$self</span><span class="p">,</span> <span class="nv">@args</span><span class="p">)</span> <span class="o">=</span> <span class="nv">@_</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span></code>&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</figure></notextile>&lt;/div&gt;<br />
+This second version is better because it provides a lexically scoped copy of the argument list <code>(@args)</code>.   </p>
+
+<p>5.Unlike other object-oriented languages, Perl doesn’t require that an object be a special kind of recordlike data structure. In fact, you can use any existing type of Perl variable—a scalar, an array, a hash—as an object in Perl.   </p>
+
+<p>6.The <code>bless</code> function takes two arguments: a reference to the variable to be marked and a string containing the name of the class. It then sets an internal flag on the variable, indicating that it now belongs to the class.  </p>
+
+<p>7.We didn’t bless the reference; we blessed the referent. The scalar didn’t change—only the nameless hash it refers to has been marked.   </p>
+
+<p>8.You can check that the blessing succeeded by applying the built-in ref function to $nextbug. Normally, when <code>ref</code> is applied to a reference, it returns the type of that reference.  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">$nextbug</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class="line">    <span class="n">_id</span> <span class="o">=&gt;</span> <span class="s">&quot;00001&quot;</span><span class="p">,</span>
+</span><span class="line">    <span class="n">_type</span> <span class="o">=&gt;</span> <span class="s">&quot;fatal&quot;</span><span class="p">,</span>
+</span><span class="line">    <span class="n">_descr</span> <span class="o">=&gt;</span> <span class="s">&quot;application does not compile&quot;</span>
+</span><span class="line"><span class="p">};</span>
+</span><span class="line"><span class="nb">bless</span> <span class="nv">$nextbug</span><span class="p">,</span> <span class="s">&quot;Bug&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="k">print</span> <span class="nb">ref</span><span class="p">(</span><span class="nv">$nextbug</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>THe above code gives out the result, <code>Bug</code>.  </p>
 
 </div>
   

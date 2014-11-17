@@ -4,7 +4,7 @@
   <title><![CDATA[Steven's Blog]]></title>
   <link href="http://isunix.github.io/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-11-06T17:11:02+08:00</updated>
+  <updated>2014-11-17T17:35:22+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,88 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Hadoop Installation and Setup]]></title>
+    <link href="http://isunix.github.io/blog/2014/11/17/hadoop-installation-and-setup/"/>
+    <updated>2014-11-17T17:23:12+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/11/17/hadoop-installation-and-setup</id>
+    <content type="html"><![CDATA[<p>This is for setting  up hadoop on ubuntu. I am using hadoop version 2.5.1, so when I search on the internet, the result I get may not apply to the version I am using, thus I keep a note of the installation process in the hope that later reference will be easier.  </p>
+
+<ol>
+  <li>install java and set java home env variable. </li>
+</ol>
+
+<p>In the /etc/lib/jvm dir, make a soft link to the jdk dir their and renaming it ot “jdk” for short nanme.  and write to my .zshrc file the JAVA_HOME path variable. </p>
+
+<ol>
+  <li>
+    <p>edit the hadoop-env.sh file in hadoop/etc/hadoop dir by setting the java home var.</p>
+  </li>
+  <li>
+    <p>edit the core-site.xml file in hadoop/etc/hadoop dir by setting the default hadoop config which you can search by yourself.</p>
+  </li>
+  <li>
+    <p>edit the hdfs-site.xml file in hadoop/etc/hadoop dir by setting the default fs config which you can search by yourself.</p>
+  </li>
+  <li>
+    <p>edit the map-red.site.xml file in hadoop/etc/hadoop dir by setting the default fs config which you can search by yourself.  </p>
+  </li>
+  <li>
+    <p>format hdfs by issuing the following command:  </p>
+  </li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">./bin/hadoop namenode -format
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<ol>
+  <li>start services by executing the scripts in the sbin dir.</li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">./start-yarn.sh
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>(It is not in the bin dir as is shown in most blogs.)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Notes on Shell Scripts]]></title>
+    <link href="http://isunix.github.io/blog/2014/11/10/notes-on-shell-scripts/"/>
+    <updated>2014-11-10T16:40:55+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/11/10/notes-on-shell-scripts</id>
+    <content type="html"><![CDATA[<p>While reading some of the scripts written by my colleagus, I found some usages to be quite tricky. Thus I keep a note of the usage here.</p>
+
+<p>1.filename and extension parts</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nb">echo</span> <span class="sb">`</span>basename <span class="nv">$PWD</span><span class="sb">`</span> <span class="c"># Basename of current working directory.</span>
+</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;${PWD##*/}&quot;</span> <span class="c"># Basename of current working directory.</span>
+</span><span class="line"><span class="nb">echo</span>
+</span><span class="line"><span class="nb">echo</span> <span class="sb">`</span>basename <span class="nv">$0</span><span class="sb">`</span> <span class="c"># Name of script.</span>
+</span><span class="line"><span class="nb">echo</span> <span class="nv">$0</span> <span class="c"># Name of script.</span>
+</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;${0##*/}&quot;</span> <span class="c"># Name of script.</span>
+</span><span class="line"><span class="nb">echo</span>
+</span><span class="line"><span class="nv">filename</span><span class="o">=</span>test.data
+</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;${filename##*.}&quot;</span> <span class="c"># data</span>
+</span><span class="line"><span class="c"># Extension of filename.</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>2.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Install Perl on Centos Locally]]></title>
@@ -1009,81 +1091,6 @@ need to write a lot of data to a particular file, you could use code like this: 
 </span><span class="line">perl -e <span class="s2">&quot;use Data::Dumper; use $1; print Dumper \%$1::&quot;</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[How to Install Ruby on Centos]]></title>
-    <link href="http://isunix.github.io/blog/2014/09/24/how-to-install-ruby-on-centos/"/>
-    <updated>2014-09-24T16:19:16+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/09/24/how-to-install-ruby-on-centos</id>
-    <content type="html"><![CDATA[<p>This post keeps notes of how to install ruby on centos server: </p>
-
-<p>1.use rvm
-2.use rbenv</p>
-
-<p>3.use src, the </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="rb"><span class="line"><span class="o">.</span><span class="n">/configure</span> <span class="o">--</span><span class="n">prefix</span><span class="o">=</span><span class="sr">/home/s</span><span class="n">tsun</span><span class="o">/</span><span class="n">local</span>
-</span><span class="line"><span class="n">make</span>
-</span><span class="line"><span class="n">make</span> <span class="n">install</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Dynamicly Adding a Method to a Module]]></title>
-    <link href="http://isunix.github.io/blog/2014/09/24/dynamicly-adding-a-method-to-a-module/"/>
-    <updated>2014-09-24T12:57:20+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/09/24/dynamicly-adding-a-method-to-a-module</id>
-    <content type="html"><![CDATA[<p>We can follow the following steps to add/change a method in a module dynamicly.  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="n">strict</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="n">warnings</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="n">utf8</span><span class="p">;</span>
-</span><span class="line"><span class="p">{</span>
-</span><span class="line">
-</span><span class="line">    <span class="nb">package</span> <span class="nn">Data::</span><span class="n">Dumper</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line">    <span class="k">sub </span><span class="nf">test</span> <span class="p">{</span>
-</span><span class="line">        <span class="k">print</span> <span class="s">&quot;test to add a new method to Data::Dumper\n&quot;</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="k">use</span> <span class="nn">Data::</span><span class="n">Dumper</span><span class="p">;</span>
-</span><span class="line"><span class="nn">Data::Dumper::</span><span class="n">test</span><span class="p">;</span>
-</span><span class="line"><span class="k">print</span> <span class="n">Dumper</span> <span class="o">\</span><span class="nv">%</span><span class="nn">Data::Dumper::</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>we can also use the following one liner to check the methods defined in a module:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">perl</span> <span class="o">-</span><span class="n">e</span> <span class="s">&quot;use File::Find; use Data::Dumper; print Dumper \%File::Find::&quot;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>or we can use JSON to print out its format:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">perl</span> <span class="o">-</span><span class="n">e</span> <span class="s">&quot;use File::Find; use JSON; print to_json(\%File::Find::)&quot;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
 ]]></content>
   </entry>
   

@@ -4,7 +4,7 @@
   <title><![CDATA[Steven's Blog]]></title>
   <link href="http://isunix.github.io/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-11-17T20:13:04+08:00</updated>
+  <updated>2014-11-18T13:52:25+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,51 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Include and Require in PHP]]></title>
+    <link href="http://isunix.github.io/blog/2014/11/18/include-and-require-in-php/"/>
+    <updated>2014-11-18T13:42:05+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/11/18/include-and-require-in-php</id>
+    <content type="html"><![CDATA[<p>For a person who has experience in programming PHP, he should have heard the concept of “include”, “include_once”, “require”, “require_once”. We will give a little deailed info here.</p>
+
+<ol>
+  <li>include_once</li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">The include_once statement includes and evaluates the specified file during the execution of the script. This is a behavior similar to the include statement, with the only difference being that if the code from a file has already been included, it will not be included again. As the name suggests, it will be included just once.
+</span><span class="line">
+</span><span class="line">include_once may be used in cases where the same file might be included and evaluated more than once during a particular execution of a script, so in this case it may help avoid problems such as function redefinitions, variable value reassignments, etc.</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<ol>
+  <li>require and include</li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">the differences between require and include are:  
+</span><span class="line">
+</span><span class="line">当要包含的文件不存在时,include产生一个警告(Warning)该语句后面的程序会继续执行；而require则导致一个致命错误（Fatal error),程序就此终止。
+</span><span class="line">
+</span><span class="line">include_once和require_once
+</span><span class="line">应该用于在脚本执行期间同一个文件有可能被包含超过一次的情况下, 想确保它只被包含一次以避免函数重定义, 变量重新赋值等问题.
+</span><span class="line">  
+</span><span class="line">*.incluce在用到时加载，这个函式一般是放在流程控制的处理区段中
+</span><span class="line">*.require在一开始就加载，这个函式通常放在PHP程式的最前面
+</span><span class="line">*._once后缀表示已加载的不加载</span></code></pre></td></tr></table></div></figure></notextile></div>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Hadoop Installation and Setup]]></title>
@@ -1059,24 +1104,6 @@ need to write a lot of data to a particular file, you could use code like this: 
     <updated>2014-09-26T18:03:17+08:00</updated>
     <id>http://isunix.github.io/blog/2014/09/26/notes-on-using-curl</id>
     <content type="html"><![CDATA[<p>This post gives a little detailed info on how to use curl. Of course we can use “man curl” to get the listed info, what makes this post different is, we will give more examples as to how to use curl.   </p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Bash Script to List All Methods in a Perl Module]]></title>
-    <link href="http://isunix.github.io/blog/2014/09/25/bash-script-to-list-all-methods-in-a-perl-module/"/>
-    <updated>2014-09-25T16:21:52+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/09/25/bash-script-to-list-all-methods-in-a-perl-module</id>
-    <content type="html"><![CDATA[<p>In the post “Dynamicly Adding a Method to a Module”, I showed how to use a perl one-liner to list all the methods in a module.  </p>
-
-<p>I will show how to do it in a shell script thus we can accept the module on the command line, </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="c">#!/bin/bash</span>
-</span><span class="line">perl -e <span class="s2">&quot;use Data::Dumper; use $1; print Dumper \%$1::&quot;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 ]]></content>
   </entry>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Perl | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/perl/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-11-18T13:56:21+08:00</updated>
+  <updated>2014-11-18T16:56:00+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,19 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Print Stderr in Perl]]></title>
+    <link href="http://isunix.github.io/blog/2014/11/18/print-stderr-in-perl/"/>
+    <updated>2014-11-18T16:52:16+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/11/18/print-stderr-in-perl</id>
+    <content type="html"><![CDATA[<p>I better not write one by myself, there is a very good article on this:  </p>
+
+<p><code>html
+http://perlmaven.com/stdout-stderr-and-redirection
+</code></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Install Perl on Centos Locally]]></title>
@@ -319,48 +332,6 @@ print $second;
 </code>  </p>
 
 <p>If you understand how “select” works, the output for this piece of code is quite obvious.  </p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[A Perl Script to Rename File Names]]></title>
-    <link href="http://isunix.github.io/blog/2014/10/17/a-perl-script-to-rename-file-names/"/>
-    <updated>2014-10-17T16:15:19+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/10/17/a-perl-script-to-rename-file-names</id>
-    <content type="html"><![CDATA[<p>I have some files with file name quite weird in the format, “[Alex_Holmes]_Hadoop_in_Practice(BookZZ.org).pdf
-“. What I want to achieve is removing the parts in the [] or ().  Here below is the perl script I wrote. </p>
-
-<p>```pl
-use strict;
-use warnings;
-use Data::Dumper;
-use Cwd;</p>
-
-<p>my $target_dir = getcwd();</p>
-
-<table>
-  <tbody>
-    <tr>
-      <td>opendir(my $dh, $target_dir)</td>
-      <td> </td>
-      <td>die “can’t opendir $target_dir: $!”;</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>my @files = grep { /\w/ &amp;&amp; -f “$_” &amp;&amp; !/^./} readdir($dh);
-# [Alex_Holmes]_Hadoop_in_Practice(BookZZ.org).pdf
-#files not staring with “.” and contains char, thus (., .., .DS_STORE) will be ignored.
-#print Dumper @files;</p>
-
-<p>for(@files){
-    my $file = $_;
-    if(/^(?:[[\S\s]+])([\S\s]+)(?:([\S\s]+)).pdf$/){
-        my $new_name = $1.”.pdf”;
-        rename(“$file”, “$new_name”) || die(“error in renaming: $!”);
-    }
-}
-```</p>
 ]]></content>
   </entry>
   

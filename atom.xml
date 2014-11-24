@@ -4,7 +4,7 @@
   <title><![CDATA[Steven's Blog]]></title>
   <link href="http://isunix.github.io/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-11-18T16:56:00+08:00</updated>
+  <updated>2014-11-24T15:40:00+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,46 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Apache Setup to Redirect a Site]]></title>
+    <link href="http://isunix.github.io/blog/2014/11/24/apache-setup-to-redict-a-site/"/>
+    <updated>2014-11-24T14:31:59+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/11/24/apache-setup-to-redict-a-site</id>
+    <content type="html"><![CDATA[<p>While I was developing a dancer application, I usually open a new port, like goople.com:4001. Actually there is a better way to do this. </p>
+
+<p>On our CentOS server, in the httpd.conf file, we include the following piece to it:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line">Include etc/apache22/Includes/*.conf
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>If it is not already there.  </p>
+
+<p>Then in the dir,  /usr/local/etc/apache22/Includes, we will write our own configuration file. </p>
+
+<p>Then we can make a file named sun.conf in the Includes dir and write to it something like this:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line">Alias /~stsun /home/stsun/public_html
+</span><span class="line">
+</span><span class="line"><span class="nt">&lt;Directory</span> <span class="err">&quot;/</span><span class="na">home</span><span class="err">/</span><span class="na">stsun</span><span class="err">/</span><span class="na">public_html</span><span class="err">&quot;</span><span class="nt">&gt;</span>
+</span><span class="line">	Options +Indexes FollowSymLinks
+</span><span class="line">	AllowOverride All
+</span><span class="line">	Order allow,deny
+</span><span class="line">	Allow from all
+</span><span class="line"><span class="nt">&lt;/Directory&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Print Stderr in Perl]]></title>
@@ -1084,26 +1124,6 @@ need to write a lot of data to a particular file, you could use code like this: 
 
 <p>you may need to change the permission of the script to “755” if needed.</p>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[学习任务规划]]></title>
-    <link href="http://isunix.github.io/blog/2014/09/29/xue-xi-ren-wu-gui-hua/"/>
-    <updated>2014-09-29T21:44:40+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/09/29/xue-xi-ren-wu-gui-hua</id>
-    <content type="html"><![CDATA[<p>自己无论是在知识的广度还是深度上都还是有着很大的不足的。   </p>
-
-<p>所以为了能够更好地督促自己的学习，现在规定自己在一下这些方面要做到要求:  </p>
-
-<ol>
-  <li>写10篇关于正则表达式的博客。涵盖从最基础的用法到高级的用法。  </li>
-  <li>每天一篇关于perl的文章。如果遇到节假日或者特殊情况，归来的时候也得补上。  </li>
-  <li>关于php，python， ruby至少保证每周都有一个脚本产生，不至于生疏。</li>
-  <li>关于算法，不管有没有兴趣，至少保证初级水准，别连一个快速排序都记不得。</li>
-</ol>
-
-<p>如果还有其他的，以后想到了再补上吧！</p>
 ]]></content>
   </entry>
   

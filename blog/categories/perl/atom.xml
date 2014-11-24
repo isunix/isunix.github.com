@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Perl | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/perl/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-11-18T16:56:00+08:00</updated>
+  <updated>2014-11-24T15:40:00+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,39 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Apache Setup to Redirect a Site]]></title>
+    <link href="http://isunix.github.io/blog/2014/11/24/apache-setup-to-redict-a-site/"/>
+    <updated>2014-11-24T14:31:59+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/11/24/apache-setup-to-redict-a-site</id>
+    <content type="html"><![CDATA[<p>While I was developing a dancer application, I usually open a new port, like goople.com:4001. Actually there is a better way to do this. </p>
+
+<p>On our CentOS server, in the httpd.conf file, we include the following piece to it:</p>
+
+<p><code>html
+Include etc/apache22/Includes/*.conf
+</code>  </p>
+
+<p>If it is not already there.  </p>
+
+<p>Then in the dir,  /usr/local/etc/apache22/Includes, we will write our own configuration file. </p>
+
+<p>Then we can make a file named sun.conf in the Includes dir and write to it something like this:  </p>
+
+<p>```html
+Alias /~stsun /home/stsun/public_html</p>
+
+<p>&lt;Directory “/home/stsun/public_html”&gt;
+	Options +Indexes FollowSymLinks
+	AllowOverride All
+	Order allow,deny
+	Allow from all
+&lt;/Directory&gt;
+```</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Print Stderr in Perl]]></title>
@@ -262,76 +295,6 @@ while($iterator-&gt;($next)){
 ``` </p>
 
 <p>The sad thing is, I am not sure if this is the best way to achieve the function.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Use of Select in Perl]]></title>
-    <link href="http://isunix.github.io/blog/2014/10/24/use-of-select-in-perl/"/>
-    <updated>2014-10-24T13:34:51+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/10/24/use-of-select-in-perl</id>
-    <content type="html"><![CDATA[<p>One of the best illustration of the use of select I read maybe from the book “data munging with perl”.   </p>
-
-<p>Look at the the differences between the following 3 ones.  </p>
-
-<p><code>pl
-print;    
-print LIST;
-print FILEHANDLE LIST;
-</code></p>
-
-<p>For the first one “print”, since on target is specified, the contents of <code>$_</code> are printed to the default output file handle(usually STDOUT).    </p>
-
-<p>For the second one “print LIST”, the contents of LIST are printed to the default output file handle.  </p>
-
-<p>For the third one “print FILEHANDLE LIST”, the contents of LIST are printed to the specified file handle, “FILEHANDLE”.  </p>
-
-<p>If you call select with no parameters, it will return the name of the currently selected output file handle, so </p>
-
-<p><code>pl
-print select; 
-</code><br />
-will normally print main::STDOUT.   </p>
-
-<p>If you call select with the name of a file handle, it will replace the current default output file handle with the new one. It returns the previously selected file handle so that you can store it and reset it later. If you
-need to write a lot of data to a particular file, you could use code like this:   </p>
-
-<p><code>pl
-open FILE, '&gt;out.txt' or die "Can't open out.txt: $!";
-my $old = select FILE;
-foreach (@data) {
-	print;
-}
-select $old;
-</code>    </p>
-
-<p>Another variable that is useful when writing data is <code>$|</code>. Setting this variable to a nonzero value will force the output buffer to be flushed immediately after every print (or write) statement. This has the effect of making the output stream look as if it were unbuffered. This variable acts on the currently selected output file handle. If you want to unbuffer any other file handle, you will need to select it, change the value of <code>$|</code>, and then reselect the previous file handle using code like this:   </p>
-
-<p><code>pl
-my $file = select FILE;
-$| = 1;
-select $file;
-</code>  </p>
-
-<p>In its compact form, it can be written as:  </p>
-
-<p><code>pl
-select((select(FILE), $| = 1)[0]);
-</code>   </p>
-
-<p>Finally we will take a look at an example,  </p>
-
-<p><code>pl
-open(FILE,"&gt;./test.out");
-$oldHandle = select(FILE);
-print select;
-print "This is sent to test.out.\n";
-$second = select($oldHandle);
-print "to default stdout!\n";
-print $second;
-</code>  </p>
-
-<p>If you understand how “select” works, the output for this piece of code is quite obvious.  </p>
 ]]></content>
   </entry>
   

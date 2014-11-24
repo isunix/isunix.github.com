@@ -9,8 +9,7 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="I better not write one by myself, there is a very good article on this: 1
-http://perlmaven.com/stdout-stderr-and-redirection ">
+  <meta name="description" content="While I was developing a dancer application, I usually open a new port, like goople.com:4001. Actually there is a better way to do this. On our &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -63,6 +62,73 @@ http://perlmaven.com/stdout-stderr-and-redirection ">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/11/24/apache-setup-to-redict-a-site/">Apache Setup to Redirect a Site</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-11-24T14:31:59+08:00" pubdate data-updated="true">Nov 24<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>While I was developing a dancer application, I usually open a new port, like goople.com:4001. Actually there is a better way to do this. </p>
+
+<p>On our CentOS server, in the httpd.conf file, we include the following piece to it:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line">Include etc/apache22/Includes/*.conf
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>If it is not already there.  </p>
+
+<p>Then in the dir,  /usr/local/etc/apache22/Includes, we will write our own configuration file. </p>
+
+<p>Then we can make a file named sun.conf in the Includes dir and write to it something like this:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line">Alias /~stsun /home/stsun/public_html
+</span><span class="line">
+</span><span class="line"><span class="nt">&lt;Directory</span> <span class="err">&quot;/</span><span class="na">home</span><span class="err">/</span><span class="na">stsun</span><span class="err">/</span><span class="na">public_html</span><span class="err">&quot;</span><span class="nt">&gt;</span>
+</span><span class="line">	Options +Indexes FollowSymLinks
+</span><span class="line">	AllowOverride All
+</span><span class="line">	Order allow,deny
+</span><span class="line">	Allow from all
+</span><span class="line"><span class="nt">&lt;/Directory&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1002,63 +1068,6 @@ need to write a lot of data to a particular file, you could use code like this: 
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>If you understand how “select” works, the output for this piece of code is quite obvious.  </p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/10/20/nlpp-preface/">NLPP Preface</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-10-20T14:01:10+08:00" pubdate data-updated="true">Oct 20<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I am going to write a series of notes regarding “natural language processing with python”. The first article will be about the preface of the book.  </p>
-
-<p>The following are the tool that are listed to be installed for this book, some are necessary and some are optional.  </p>
-
-<ol>
-  <li>
-    <p>NLTK</p>
-  </li>
-  <li>
-    <p>NLTK-Data  </p>
-  </li>
-  <li>
-    <p>NumPy (recommended) </p>
-  </li>
-  <li>
-    <p>Matplotlib (recommended)  </p>
-  </li>
-  <li>
-    <p>NetworkX (optional)</p>
-  </li>
-</ol>
-
 </div>
   
   

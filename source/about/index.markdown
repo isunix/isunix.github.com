@@ -15,9 +15,7 @@ I am a database production analyst there. I acquired the basic knowledge of SQL,
 
 I won the "one team" award in Merkle, which is given to employees who do contribute to their team.
 
-The second company I joined is "Anjuke", in Chinese "安居客"，from 2012/07 ~ 2012/10. I am a BI developer there. BI stands for Business Intelligence.
-
-The current company(3rd) I joined is "Sonata", in Chinese "自协软件"， from 2012/10 ~ now. I am a threat operations analyst now. I am using perl Regex to write regular expression. I am also using PHP to develop internal web tools and using perl to develop handy perl scripts to aid my work on writing rules against spam message.
+The current company I am in is "Sonata", in Chinese "自协软件"， from 2012/10 ~ now. I am a threat operations analyst here. I am using perl Regex to write regular expression. I am also using PHP to develop internal web tools and using perl to develop handy perl scripts and using Perl Dancer web frame work to develop web tools to aid my work on writing rules against spam message.
 
 I majored in Computer science and Math when I was in university.
 
@@ -29,9 +27,9 @@ I am the number one student for three semesters among those non-English major st
 
 I am a MacOS and Ubuntu user.
 
-As a summary I am interested in C, Perl, PHP, Python, Shell script, Bootstrap, jQuery, Machine Learning, C, Java. I am also learning Objective-c now.  
+As a summary I am interested in C, Perl, PHP, Python, Shell script, Bootstrap, jQuery, Machine Learning, C, Java. I am also learning Objective-c now.
 
-For more info about me, please refer to my resume which I put in github: 
+For more info about me, please refer to my resume which I put in github:
 
 ```
 https://github.com/isunix/resume

@@ -4,7 +4,7 @@
   <title><![CDATA[Steven's Blog]]></title>
   <link href="http://isunix.github.io/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-11-24T15:40:00+08:00</updated>
+  <updated>2014-11-26T17:20:23+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,82 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Siting Css in Cgi Script]]></title>
+    <link href="http://isunix.github.io/blog/2014/11/26/siting-css-in-cgi-script/"/>
+    <updated>2014-11-26T17:09:55+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/11/26/siting-css-in-cgi-script</id>
+    <content type="html"><![CDATA[<p>While writing perl cgi scripts, when we need to add css or js files, there are two ways to add the file, one using absolute path, one using relative path. </p>
+
+<p>First we want to check the document root of our file, we cat get it using the following way. </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="c1">#!/usr/bin/env perl</span>
+</span><span class="line">
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;Content-type: text/plain; charset=utf-8\n\n&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="k">print</span> <span class="nv">$ENV</span><span class="p">{</span><span class="n">DOCUMENT_ROOT</span><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>For example, in my case, it gives out the following result:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="s">&quot;/usr/local/www/apache22/data&quot;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>We assume that our server name is gopid.com, in the /usr/local/www/apache22/ dir, there are the data dir, cgi-bin dir, we make a sub-dir named steven in the data dir, then we can using the following two ways to site the css and js files.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line"><span class="nt">&lt;link</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span> <span class="na">href=</span><span class="s">&quot;/stsun/js/bootstrap/css/bootstrap.min.css&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span><span class="nt">&gt;</span>
+</span><span class="line"><span class="nt">&lt;link</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span> <span class="na">href=</span><span class="s">&quot;/stsun/css/margin.css&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span><span class="nt">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Or using the absolute path: </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line"><span class="nt">&lt;link</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span> <span class="na">href=</span><span class="s">&quot;https://goopig.com/steven/js/bootstrap/css/bootstrap.min.css&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span><span class="nt">&gt;</span>
+</span><span class="line"><span class="nt">&lt;link</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span> <span class="na">href=</span><span class="s">&quot;https://goopig.com/steven/css/margin.css&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span><span class="nt">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>PS, if we want to print out the whole env infomation using cgi, we can using the following script:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="c1">#!/usr/local/bin/perl</span>
+</span><span class="line">
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;Content-type: text/plain; charset=utf-8\n\n&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="k">foreach</span> <span class="nv">$var</span> <span class="p">(</span><span class="nb">sort</span><span class="p">(</span><span class="nb">keys</span><span class="p">(</span><span class="nv">%ENV</span><span class="p">)))</span> <span class="p">{</span>
+</span><span class="line">    <span class="nv">$val</span> <span class="o">=</span> <span class="nv">$ENV</span><span class="p">{</span><span class="nv">$var</span><span class="p">};</span>
+</span><span class="line">    <span class="nv">$val</span> <span class="o">=~</span> <span class="n">s</span><span class="o">|\</span><span class="n">n</span><span class="o">|\\</span><span class="n">n</span><span class="o">|</span><span class="n">g</span><span class="p">;</span>
+</span><span class="line">    <span class="nv">$val</span> <span class="o">=~</span> <span class="n">s</span><span class="o">|</span><span class="s">&quot;|\\&quot;</span><span class="o">|</span><span class="n">g</span><span class="p">;</span>
+</span><span class="line">    <span class="k">print</span> <span class="s">&quot;${var}=\&quot;${val}\&quot;\n&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Install Oddmuse on Macos]]></title>
+    <link href="http://isunix.github.io/blog/2014/11/24/install-oddmuse-on-macos/"/>
+    <updated>2014-11-24T20:45:59+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/11/24/install-oddmuse-on-macos</id>
+    <content type="html"><![CDATA[<p>I come across this tool thought one of my colleagues. And I fell in love with it very soon. Here below are the steps I am using to set up the installation.</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Apache Setup to Redirect a Site]]></title>
@@ -1093,37 +1169,6 @@ need to write a lot of data to a particular file, you could use code like this: 
 <p>2.BBC, Dangerous Knowledge  </p>
 
 <p>后续的话会有关于这方面的学习笔记的。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Perl Testing程序高手秘笈]]></title>
-    <link href="http://isunix.github.io/blog/2014/10/02/perl-testingcheng-xu-gao-shou-mi-ji/"/>
-    <updated>2014-10-02T14:16:01+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/10/02/perl-testingcheng-xu-gao-shou-mi-ji</id>
-    <content type="html"><![CDATA[<p>This post is for the book “perl testing: 程序高手秘笈”.  </p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Cgi Set Up on Macos]]></title>
-    <link href="http://isunix.github.io/blog/2014/09/30/cgi-set-up-on-macos/"/>
-    <updated>2014-09-30T16:57:08+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/09/30/cgi-set-up-on-macos</id>
-    <content type="html"><![CDATA[<p>There are multiple guidelines as to how to set up cgi for perl on macos or linux. </p>
-
-<p>This post keeps notes of how to set up cgi on MACOS.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="sr">/Library/</span><span class="n">WebServer</span><span class="sr">/CGI-Executables ~/</span><span class="n">www</span><span class="o">/</span><span class="n">cgi</span><span class="o">-</span><span class="n">bin</span>
-</span><span class="line"><span class="n">cd</span> <span class="o">~</span><span class="sr">/www/cgi</span><span class="o">-</span><span class="n">bin</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>put scripts in this dir and access it using the link “localhost/cgi-bin/filename” </p>
-
-<p>you may need to change the permission of the script to “755” if needed.</p>
-
 ]]></content>
   </entry>
   

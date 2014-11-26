@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Perl | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/perl/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-11-24T15:40:00+08:00</updated>
+  <updated>2014-11-26T17:20:23+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,69 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Siting Css in Cgi Script]]></title>
+    <link href="http://isunix.github.io/blog/2014/11/26/siting-css-in-cgi-script/"/>
+    <updated>2014-11-26T17:09:55+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/11/26/siting-css-in-cgi-script</id>
+    <content type="html"><![CDATA[<p>While writing perl cgi scripts, when we need to add css or js files, there are two ways to add the file, one using absolute path, one using relative path. </p>
+
+<p>First we want to check the document root of our file, we cat get it using the following way. </p>
+
+<p>```pl
+#!/usr/bin/env perl</p>
+
+<p>print “Content-type: text/plain; charset=utf-8\n\n”;
+print $ENV{DOCUMENT_ROOT};
+```</p>
+
+<p>For example, in my case, it gives out the following result:  </p>
+
+<p><code>pl
+"/usr/local/www/apache22/data"
+</code></p>
+
+<p>We assume that our server name is gopid.com, in the /usr/local/www/apache22/ dir, there are the data dir, cgi-bin dir, we make a sub-dir named steven in the data dir, then we can using the following two ways to site the css and js files.</p>
+
+<p><code>html
+&lt;link type="text/css" href="http://isunix.github.io/stsun/js/bootstrap/css/bootstrap.min.css" rel="stylesheet"&gt;
+&lt;link type="text/css" href="http://isunix.github.io/stsun/css/margin.css" rel="stylesheet"&gt;
+</code></p>
+
+<p>Or using the absolute path: </p>
+
+<p><code>html
+&lt;link type="text/css" href="https://goopig.com/steven/js/bootstrap/css/bootstrap.min.css" rel="stylesheet"&gt;
+&lt;link type="text/css" href="https://goopig.com/steven/css/margin.css" rel="stylesheet"&gt;
+</code></p>
+
+<p>PS, if we want to print out the whole env infomation using cgi, we can using the following script:  </p>
+
+<p>```pl
+#!/usr/local/bin/perl</p>
+
+<p>print “Content-type: text/plain; charset=utf-8\n\n”;
+foreach $var (sort(keys(%ENV))) {
+    $val = $ENV{$var};
+    $val =~ s|\n|\n|g;
+    $val =~ s|”|\“|g;
+    print “${var}="${val}"\n”;
+}
+```</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Install Oddmuse on Macos]]></title>
+    <link href="http://isunix.github.io/blog/2014/11/24/install-oddmuse-on-macos/"/>
+    <updated>2014-11-24T20:45:59+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/11/24/install-oddmuse-on-macos</id>
+    <content type="html"><![CDATA[<p>I come across this tool thought one of my colleagues. And I fell in love with it very soon. Here below are the steps I am using to set up the installation.</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Apache Setup to Redirect a Site]]></title>
@@ -74,227 +137,6 @@ make
 make test
 make install
 </code></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Object Oriented Perl Chap03]]></title>
-    <link href="http://isunix.github.io/blog/2014/10/28/object-oriented-perl-chap03/"/>
-    <updated>2014-10-28T16:58:25+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/10/28/object-oriented-perl-chap03</id>
-    <content type="html"><![CDATA[<p>This is a note about chap03 in “Object oriented perl”.  </p>
-
-<p>1.In object oriented perl, there are three rules,</p>
-
-<p><code>pl
-1. rule1: To create a class, build a package.   
-2. rule2: To create a method, write a subroutine.
-3. rule3: To create an object, bless a referent.
-</code>    </p>
-
-<p>2.Some cases while calling a method through an arrow:  </p>
-
-<p><code>pl
-$hsh_ref-&gt;{"key"};# Access the hash referred to by $hashref
-$arr_ref-&gt;[$index];# Access the array referred to by $arrayref
-$sub_ref-&gt;(@args);# Access the sub referred to by $subref
-$obj_ref-&gt;method(@args);# Access the object referred to by $objref
-</code>  </p>
-
-<p>3.When a method like <code>Bug::print_me</code> is called, the argument list that it receives begins with the object reference through which it was called, followed by any arguments that were explicitly given to the method. That means that calling </p>
-
-<p><code>pl
-Bug::print_me("logfile")
-</code> </p>
-
-<p>is not the same as calling </p>
-
-<p><code>pl
-$nextbug-&gt;print_me("logfile")
-</code></p>
-
-<p>In the first case, print_me is treated as a regular subroutine so the argument list passed to <code>Bug::print_me</code> is equivalent to:</p>
-
-<p><code>pl
-( "logfile" )
-</code>
-In the second case, <code>print_me</code> is treated as a method so the argument list is equivalent to:   </p>
-
-<p><code>pl
-( $objref, "logfile" )
-</code> </p>
-
-<p>Having a reference to the object passed as the first parameter is vital, because it means that the method then has access to the object on which it’s supposed to operate. Hence you’ll find that most methods in Perl start with something equivalent to this:   </p>
-
-<p><code>pl
-package Bug;
-sub print_me{
-	my ($self) = shift;
-}
-</code>  </p>
-
-<p>or better still:  </p>
-
-<p><code>pl
-package Bug;
-sub print_me{
-	my ($self, @args) = @_;
-}
-</code><br />
-This second version is better because it provides a lexically scoped copy of the argument list <code>(@args)</code>.   </p>
-
-<p>4.Unlike other object-oriented languages, Perl doesn’t require that an object be a special kind of recordlike data structure. In fact, you can use any existing type of Perl variable—a scalar, an array, a hash—as an object in Perl.   </p>
-
-<p>5.The <code>bless</code> function takes two arguments: a reference to the variable to be marked and a string containing the name of the class. It then sets an internal flag on the variable, indicating that it now belongs to the class.  </p>
-
-<p>6.We didn’t bless the reference; we blessed the referent. The scalar didn’t change—only the nameless hash it refers to has been marked.   </p>
-
-<p>7.You can check that the blessing succeeded by applying the built-in ref function to <code>$nextbug</code>. Normally, when <code>ref</code> is applied to a reference, it returns the type of that reference.  </p>
-
-<p><code>pl
-my $nextbug = {
-    _id =&gt; "00001",
-    _type =&gt; "fatal",
-    _descr =&gt; "application does not compile"
-};
-bless $nextbug, "Bug";
-print ref($nextbug);
-</code></p>
-
-<p>THe above code gives out the result, <code>Bug</code>.   </p>
-
-<p>8.Based on the things we said above, we will show a piece of code to demonstrate how to get and set attributes in perl.</p>
-
-<p>```pl
-package CD::Music;
-use strict;</p>
-
-<p>{
-    my $_count = 0;
-    sub get_count{$_count}
-    sub _incr_count{++$_count}
-}</p>
-
-<p>sub new {
-    my ($class, @arg) = @<em>;
-    $class-&gt;_incr_count();
-    bless{
-        name =&gt; $</em>[1],
-        singer =&gt; $<em>[2],
-        album =&gt; $</em>[3],
-        rating =&gt; $_[4],
-    }, $class;
-}</p>
-
-<p>sub name{ $<em>[0] -&gt; {name} }
-sub singer{ $</em>[0] -&gt; {singer} }
-sub album{ $_[0] -&gt; {album} }</p>
-
-<p>sub rating {
-    my ($self, $rating) = @_;
-    $self -&gt; {rating} = $rating if $rating;
-}</p>
-
-<p>package main;</p>
-
-<p>my $cd = CD::Music-&gt;new(“谁的眼泪在飞”, “孟庭苇”, “谁的眼泪在飞”, 7);</p>
-
-<p>print $cd-&gt;name, “\n”;</p>
-
-<p>print $cd-&gt;singer.”\n”;</p>
-
-<p>print $cd-&gt;album, “\n”;</p>
-
-<p>print $cd-&gt;rating(8).”\n”;</p>
-
-<p>print “There have been “, CD::Music-&gt;get_count(), “ CD[s] created\n”;
-```</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Object Oriented Perl Chap02]]></title>
-    <link href="http://isunix.github.io/blog/2014/10/28/object-oriented-perl-chap02/"/>
-    <updated>2014-10-28T14:08:34+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/10/28/object-oriented-perl-chap02</id>
-    <content type="html"><![CDATA[<p>This is a note about chap02 in “Object oriented perl”.  </p>
-
-<p>1.For a hash, we have two ways to get the key-value pair.  </p>
-
-<p>```pl
-my %hash = (
-    steven =&gt; “good”,
-    sun    =&gt; “bad”,
-);</p>
-
-<p>my $nextkey;</p>
-
-<p>while (defined($nextkey = each %hash)){
-    print “the key $nextkey has the value $hash{$nextkey}\n”;
-}
-```   </p>
-
-<p>The other way is:  </p>
-
-<p>```pl
-my %hash = (
-    steven =&gt; “good”,
-    sun    =&gt; “bad”,
-);</p>
-
-<p>while (($nextkey, $nextval) = each %hash){
-    print “the key $nextkey has value $nextval\n”;
-}
-```   </p>
-
-<p>2.Subroutines can also be declared with a prototype, which is a series of specifiers that tells the compiler to restrict the type and number of arguments with which the subroutine may be invoked. For example, in the subroutine definition:  </p>
-
-<p><code>pl
-sub insensitive_less_than ($$) {
-	return lc($_[0]) lt lc($_[1]);
-}
-</code>  </p>
-
-<p>The prototype is <code>($$)</code> and specifies that the subroutine insensitive_less_than can only be called with exactly two arguments, each of which will be treated as a scalar—even if it’s actually an array!  </p>
-
-<p>Prototypes are only enforced when a subroutine is called using the name(args) syntax. Prototypes are not enforced when a subroutine is called with a leading &amp; or through a subroutine reference.   </p>
-
-<p>3.Here is a clear illustration of how to use reference in Perl:  </p>
-
-<p>```pl
-my @row1 = (1, 2, 3);
-my @row2 = (4, 5, 6);
-my @row3 = (7, 8, 9);</p>
-
-<p>my @cols = (\@row1, \@row2, \@row3);
-my $table = \@cols;</p>
-
-<p>print “2 x 3 is “, $table-&gt;[1]-&gt;[2];
-```  </p>
-
-<p>4.Here is a script to realize the function of skipping along an array by a fixed step size. It uses anynymous soubroutine and closure.  </p>
-
-<p>```pl
-sub hop_along{
-    my ($from, $to, $step) = @<em>;
-    my $next = $from - $step;
-    my $closure_ref = sub{
-        $next += $step;
-        return if $next &gt; $to;
-        $</em>[0] = $next;
-        return 1;
-    };
-    return $closure_ref;
-}</p>
-
-<p>$iterator = hop_along(1, 100, 7);
-while($iterator-&gt;($next)){
-    print $next.” “;
-}
-``` </p>
-
-<p>The sad thing is, I am not sure if this is the best way to achieve the function.</p>
 ]]></content>
   </entry>
   

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Perl | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/perl/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-12-18T16:04:59+08:00</updated>
+  <updated>2014-12-23T20:22:25+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,37 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Notes to Be Take While Using Ssh-keygen]]></title>
+    <link href="http://isunix.github.io/blog/2014/12/23/notes-to-be-take-while-using-ssh-keygen/"/>
+    <updated>2014-12-23T20:18:10+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/12/23/notes-to-be-take-while-using-ssh-keygen</id>
+    <content type="html"><![CDATA[<p>I encoutered some problems while I was using ssh-keygen, it turns out to be originating from privileges setting up.</p>
+
+<p>The following way turns out to be working.</p>
+
+<p>1.Do not set up your home directory to be “777”, it will not work. I set it to be “755”</p>
+
+<p><code>sh
+chmod 755 /home/stsun
+</code></p>
+
+<p>2.</p>
+
+<p><code>sh
+chmod 600 authorized_keys 
+</code></p>
+
+<p>3.</p>
+
+<p><code>sh
+chmod 700 .ssh
+</code></p>
+
+<p>And then it works well.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Study of Bloom Filters and Bloom::Filter Perl Module]]></title>
@@ -92,59 +123,6 @@ select * from table where column in $nums_in_str
 </code></p>
 
 <p>That’s it!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Siting Css in Cgi Script]]></title>
-    <link href="http://isunix.github.io/blog/2014/11/26/siting-css-in-cgi-script/"/>
-    <updated>2014-11-26T17:09:55+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/11/26/siting-css-in-cgi-script</id>
-    <content type="html"><![CDATA[<p>While writing perl cgi scripts, when we need to add css or js files, there are two ways to add the file, one using absolute path, one using relative path. </p>
-
-<p>First we want to check the document root of our file, we cat get it using the following way. </p>
-
-<p>```pl
-#!/usr/bin/env perl</p>
-
-<p>print “Content-type: text/plain; charset=utf-8\n\n”;
-print $ENV{DOCUMENT_ROOT};
-```</p>
-
-<p>For example, in my case, it gives out the following result:  </p>
-
-<p><code>pl
-"/usr/local/www/apache22/data"
-</code></p>
-
-<p>We assume that our server name is gopid.com, in the /usr/local/www/apache22/ dir, there are the data dir, cgi-bin dir, we make a sub-dir named steven in the data dir, then we can using the following two ways to site the css and js files.</p>
-
-<p><code>html
-&lt;link type="text/css" href="http://isunix.github.io/steven/js/bootstrap/css/bootstrap.min.css" rel="stylesheet"&gt;
-&lt;link type="text/css" href="http://isunix.github.io/steven/css/margin.css" rel="stylesheet"&gt;
-</code></p>
-
-<p>Or using the absolute path: </p>
-
-<p><code>html
-&lt;link type="text/css" href="https://goopig.com/steven/js/bootstrap/css/bootstrap.min.css" rel="stylesheet"&gt;
-&lt;link type="text/css" href="https://goopig.com/steven/css/margin.css" rel="stylesheet"&gt;
-</code></p>
-
-<p>PS, if we want to print out the whole env infomation using cgi, we can using the following script:  </p>
-
-<p>```pl
-#!/usr/local/bin/perl</p>
-
-<p>print “Content-type: text/plain; charset=utf-8\n\n”;
-foreach $var (sort(keys(%ENV))) {
-    $val = $ENV{$var};
-    $val =~ s|\n|\n|g;
-    $val =~ s|”|\“|g;
-    print “${var}="${val}"\n”;
-}
-```</p>
-
 ]]></content>
   </entry>
   

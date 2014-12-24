@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>How to Make Zsh the Default Shell Without Root Access - Steven's Blog</title>
+  <title>Libevent Not Found Error While Install Tmux - Steven's Blog</title>
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="As depicted by the title, this post keeps notes on how to make zsh the default shell without root access. BTW, I am using oh-my-zsh configuration &hellip;">
+  <meta name="description" content="While I was installing tmux on cent-os, I met the error saying that “libevent not found”, something like this. Then I download libevent and install &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://isunix.github.io/blog/2014/12/24/how-to-make-zsh-the-default-shell-without-root-access">
+  <link rel="canonical" href="http://isunix.github.io/blog/2014/12/24/libevent-not-found-error-while-install-tmux">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Steven's Blog" type="application/atom+xml">
@@ -54,7 +54,7 @@
   
   <header>
     
-      <h1 class="entry-title">How to Make Zsh the Default Shell Without Root Access</h1>
+      <h1 class="entry-title">Libevent Not Found Error While Install Tmux</h1>
     
     
       <p class="meta">
@@ -70,24 +70,24 @@
   
 
 
-<time datetime="2014-12-24T19:01:06+08:00" pubdate data-updated="true">Dec 24<span>th</span>, 2014</time>
+<time datetime="2014-12-24T21:13:11+08:00" pubdate data-updated="true">Dec 24<span>th</span>, 2014</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>As depicted by the title, this post keeps notes on how to make zsh the default shell without root access. BTW, I am using oh-my-zsh configuration files.</p>
+<div class="entry-content"><p>While I was installing tmux on cent-os, I met the error saying that “libevent not found”, something like this. Then I download libevent and install it into the location ‘/home/stsun/local’ dir.</p>
 
-<p>In the .bash_profile, add the following lines,</p>
+<p>Still I get the error saying that “libevent not found”. I solved the problem by the following way.</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nb">export </span><span class="nv">SHELL</span><span class="o">=</span>/bin/zsh
-</span><span class="line"><span class="nb">exec</span> /bin/zsh -l
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nv">DIR</span><span class="o">=</span><span class="s2">&quot;$HOME/local&quot;</span>
+</span><span class="line">./configure --prefix<span class="o">=</span><span class="nv">$DIR</span> <span class="nv">CFLAGS</span><span class="o">=</span><span class="s2">&quot;-I$DIR/include&quot;</span> <span class="nv">LDFLAGS</span><span class="o">=</span><span class="s2">&quot;-L$DIR/lib&quot;</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>Where zsh will be your own location of your zsh file.</p>
+<p>Since I install libevent with the option, “–prefix=$HOME/local”.</p>
 </div>
 
 
@@ -110,7 +110,7 @@
   
 
 
-<time datetime="2014-12-24T19:01:06+08:00" pubdate data-updated="true">Dec 24<span>th</span>, 2014</time>
+<time datetime="2014-12-24T21:13:11+08:00" pubdate data-updated="true">Dec 24<span>th</span>, 2014</time>
       
 
 <span class="categories">
@@ -131,10 +131,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2014/12/23/notes-to-be-take-while-using-ssh-keygen/" title="Previous Post: notes to be take while using ssh-keygen">&laquo; notes to be take while using ssh-keygen</a>
+        <a class="basic-alignment left" href="/blog/2014/12/24/learning-shell-scripting-with-zsh/" title="Previous Post: Learning Shell Scripting With Zsh">&laquo; Learning Shell Scripting With Zsh</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2014/12/24/learning-shell-scripting-with-zsh/" title="Next Post: Learning Shell Scripting With Zsh">Learning Shell Scripting With Zsh &raquo;</a>
       
     </p>
   </footer>

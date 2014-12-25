@@ -9,7 +9,7 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="Zsh is more convenient than bash. I use this post to keep notes while I am studying the book “Learning Shell Scripting With Zsh”. ">
+  <meta name="description" content="Zsh is more convenient than bash. I use this post to keep notes while I am studying the book “Learning Shell Scripting With Zsh”. 1.You can tell zsh &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -79,6 +79,163 @@
 
 <div class="entry-content"><p>Zsh is more convenient than bash. I use this post to keep notes while I am studying the book “Learning Shell Scripting With Zsh”. </p>
 
+<p>1.You can tell zsh to look for your configuration files in another folder by setting the parameter ZDOTDIR
+to a directory of your choice in your .zshenv file under <code>$HOME</code>:</p>
+
+<p><code>sh
+ZDOTDIR=/etc/my_kewl_folder/.zshrc
+&lt;div class='bogus-wrapper'&gt;&lt;notextile&gt;&lt;figure class='code'&gt;&lt;div class="highlight"&gt;&lt;table&gt;&lt;tr&gt;&lt;td class="gutter"&gt;&lt;pre class="line-numbers"&gt;&lt;span class='line-number'&gt;1&lt;/span&gt;
+&lt;span class='line-number'&gt;2&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class='code'&gt;&lt;pre&gt;&lt;code class=''&gt;&lt;span class='line'&gt;
+&lt;/span&gt;&lt;span class='line'&gt;2.Try to keep in mind the following order when setting preferences on your files:
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/notextile&gt;&lt;/div&gt;sh
+zshenv, zsh_profile, zshrc, zlogin
+&lt;div class='bogus-wrapper'&gt;&lt;notextile&gt;&lt;figure class='code'&gt;&lt;div class="highlight"&gt;&lt;table&gt;&lt;tr&gt;&lt;td class="gutter"&gt;&lt;pre class="line-numbers"&gt;&lt;span class='line-number'&gt;1&lt;/span&gt;
+&lt;span class='line-number'&gt;2&lt;/span&gt;
+&lt;span class='line-number'&gt;3&lt;/span&gt;
+&lt;span class='line-number'&gt;4&lt;/span&gt;
+&lt;span class='line-number'&gt;5&lt;/span&gt;
+&lt;span class='line-number'&gt;6&lt;/span&gt;
+&lt;span class='line-number'&gt;7&lt;/span&gt;
+&lt;span class='line-number'&gt;8&lt;/span&gt;
+&lt;span class='line-number'&gt;9&lt;/span&gt;
+&lt;span class='line-number'&gt;10&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class='code'&gt;&lt;pre&gt;&lt;code class=''&gt;&lt;span class='line'&gt;
+&lt;/span&gt;&lt;span class='line'&gt;3.If zsh is not called as an interactive shell, zprofile and zshrc together with their counterparts in</code>(~/.zprofile and ~/.zshrc)<code>will not be sourced. In addition, if zsh is not called as a login shell, zlogin and</code>$HOME/.zlogin<code>will also be skipped.
+&lt;/span&gt;&lt;span class='line'&gt;
+&lt;/span&gt;&lt;span class='line'&gt;4.</code>~/.zsh_profile<code>: This is the companion to</code>/etc/zsh_profile<code>and kind of the boring guy out of the startup files bunch. You should put here any scripts you want executed before</code>~/.zshrc<code>.  
+&lt;/span&gt;&lt;span class='line'&gt;
+&lt;/span&gt;&lt;span class='line'&gt;5.</code>~/.zshrc<code>: This is your workhorse. Most of your user settings and shell preferences end up here. Keep in mind it'll only be taken into account for interactive shells. As we'll see later on, you can declutter and expand its reach by sourcing multiple files.  
+&lt;/span&gt;&lt;span class='line'&gt;
+&lt;/span&gt;&lt;span class='line'&gt;6.</code>~/.zlogin<code>: This will be executed right after</code>~/.zshrc<code>and works pretty much like</code>~/.zsh_profile<code>, so you should put the scripts that you want called after your main startup file here.  
+&lt;/span&gt;&lt;span class='line'&gt;
+&lt;/span&gt;&lt;span class='line'&gt;7.Parameter expansion&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/notextile&gt;&lt;/div&gt;sh
+% foo=Hello
+% echo "${foo}, world!"
+&lt;div class='bogus-wrapper'&gt;&lt;notextile&gt;&lt;figure class='code'&gt;&lt;div class="highlight"&gt;&lt;table&gt;&lt;tr&gt;&lt;td class="gutter"&gt;&lt;pre class="line-numbers"&gt;&lt;span class='line-number'&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class='code'&gt;&lt;pre&gt;&lt;code class=''&gt;&lt;span class='line'&gt;8.command substitution&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/notextile&gt;&lt;/div&gt;sh
+print $(which zsh)
+print `which zsh`
+&lt;div class='bogus-wrapper'&gt;&lt;notextile&gt;&lt;figure class='code'&gt;&lt;div class="highlight"&gt;&lt;table&gt;&lt;tr&gt;&lt;td class="gutter"&gt;&lt;pre class="line-numbers"&gt;&lt;span class='line-number'&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class='code'&gt;&lt;pre&gt;&lt;code class=''&gt;&lt;span class='line'&gt;9.arithmetic expansion&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/notextile&gt;&lt;/div&gt;sh
+% echo $(( 5 + 4 ))
+&lt;div class='bogus-wrapper'&gt;&lt;notextile&gt;&lt;figure class='code'&gt;&lt;div class="highlight"&gt;&lt;table&gt;&lt;tr&gt;&lt;td class="gutter"&gt;&lt;pre class="line-numbers"&gt;&lt;span class='line-number'&gt;1&lt;/span&gt;
+&lt;span class='line-number'&gt;2&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class='code'&gt;&lt;pre&gt;&lt;code class=''&gt;&lt;span class='line'&gt;
+&lt;/span&gt;&lt;span class='line'&gt;10.brace expansion&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/notextile&gt;&lt;/div&gt;sh
+echo picture.jp{eg,g}
+touch log_00{1,2,3}.txt
+touch log_{007..011}.nfo
+&lt;div class='bogus-wrapper'&gt;&lt;notextile&gt;&lt;figure class='code'&gt;&lt;div class="highlight"&gt;&lt;table&gt;&lt;tr&gt;&lt;td class="gutter"&gt;&lt;pre class="line-numbers"&gt;&lt;span class='line-number'&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class='code'&gt;&lt;pre&gt;&lt;code class=''&gt;&lt;span class='line'&gt;or 
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/notextile&gt;&lt;/div&gt;sh
+% foo=(A B C)
+% bar=(1 2 3)
+% echo $^foo-$^bar
+&lt;div class='bogus-wrapper'&gt;&lt;notextile&gt;&lt;figure class='code'&gt;&lt;div class="highlight"&gt;&lt;table&gt;&lt;tr&gt;&lt;td class="gutter"&gt;&lt;pre class="line-numbers"&gt;&lt;span class='line-number'&gt;1&lt;/span&gt;
+&lt;span class='line-number'&gt;2&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class='code'&gt;&lt;pre&gt;&lt;code class=''&gt;&lt;span class='line'&gt;
+&lt;/span&gt;&lt;span class='line'&gt;11.One of the ways zsh provides for you to access your history is via the so-called history expansion. This works whenever your input begins with the bang</code>!<code>special character. Like, &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/notextile&gt;&lt;/div&gt;sh
+!cat
+&lt;div class='bogus-wrapper'&gt;&lt;notextile&gt;&lt;figure class='code'&gt;&lt;div class="highlight"&gt;&lt;table&gt;&lt;tr&gt;&lt;td class="gutter"&gt;&lt;pre class="line-numbers"&gt;&lt;span class='line-number'&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class='code'&gt;&lt;pre&gt;&lt;code class=''&gt;&lt;span class='line'&gt;12.The star works as a wildcard, allowing you to match any filenames, even if you provide no pattern at all:
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/notextile&gt;&lt;/div&gt;sh
+% echo *
+&lt;div class='bogus-wrapper'&gt;&lt;notextile&gt;&lt;figure class='code'&gt;&lt;div class="highlight"&gt;&lt;table&gt;&lt;tr&gt;&lt;td class="gutter"&gt;&lt;pre class="line-numbers"&gt;&lt;span class='line-number'&gt;1&lt;/span&gt;
+&lt;span class='line-number'&gt;2&lt;/span&gt;
+&lt;span class='line-number'&gt;3&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class='code'&gt;&lt;pre&gt;&lt;code class=''&gt;&lt;span class='line'&gt;This will list all file names in the current directory.
+&lt;/span&gt;&lt;span class='line'&gt;
+&lt;/span&gt;&lt;span class='line'&gt;13.The question mark symbol works pretty much like the star, except it matches a single character instead of many.  &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/notextile&gt;&lt;/div&gt;sh
+% echo *.??
+script.sh
+% echo main.?*
+main.c main.o main.tmp
+&lt;div class='bogus-wrapper'&gt;&lt;notextile&gt;&lt;figure class='code'&gt;&lt;div class="highlight"&gt;&lt;table&gt;&lt;tr&gt;&lt;td class="gutter"&gt;&lt;pre class="line-numbers"&gt;&lt;span class='line-number'&gt;1&lt;/span&gt;
+&lt;span class='line-number'&gt;2&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class='code'&gt;&lt;pre&gt;&lt;code class=''&gt;&lt;span class='line'&gt;
+&lt;/span&gt;&lt;span class='line'&gt;14.You can use the square brackets construct to match a group of characters within a pattern. For example, you can use</code>[ML]*<code>to match any filename that starts with either an uppercase letter M or L.
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/notextile&gt;&lt;/div&gt;sh
+% ls
+Log.log Main.rb README.md script.sh
+% echo [ML]*
+Log.log Main.rb
+&lt;div class='bogus-wrapper'&gt;&lt;notextile&gt;&lt;figure class='code'&gt;&lt;div class="highlight"&gt;&lt;table&gt;&lt;tr&gt;&lt;td class="gutter"&gt;&lt;pre class="line-numbers"&gt;&lt;span class='line-number'&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class='code'&gt;&lt;pre&gt;&lt;code class=''&gt;&lt;span class='line'&gt;or
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/notextile&gt;&lt;/div&gt;sh
+% echo *.log_[1-9]
+out.log_1 out.log_2 out.log_3
+% echo [1-5M]*.*
+Main.rb
+&lt;div class='bogus-wrapper'&gt;&lt;notextile&gt;&lt;figure class='code'&gt;&lt;div class="highlight"&gt;&lt;table&gt;&lt;tr&gt;&lt;td class="gutter"&gt;&lt;pre class="line-numbers"&gt;&lt;span class='line-number'&gt;1&lt;/span&gt;
+&lt;span class='line-number'&gt;2&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class='code'&gt;&lt;pre&gt;&lt;code class=''&gt;&lt;span class='line'&gt;
+&lt;/span&gt;&lt;span class='line'&gt;15.we can get the complement of a class via the caret</code>(^)<code>operator:&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/notextile&gt;&lt;/div&gt;sh
+% echo *.[^o]
+bindings.c bindings.h main.c
+&lt;div class='bogus-wrapper'&gt;&lt;notextile&gt;&lt;figure class='code'&gt;&lt;div class="highlight"&gt;&lt;table&gt;&lt;tr&gt;&lt;td class="gutter"&gt;&lt;pre class="line-numbers"&gt;&lt;span class='line-number'&gt;1&lt;/span&gt;
+&lt;span class='line-number'&gt;2&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class='code'&gt;&lt;pre&gt;&lt;code class=''&gt;&lt;span class='line'&gt;
+&lt;/span&gt;&lt;span class='line'&gt;16.Arguably, the most popular pattern out there is recursive searching. Accessible through the</code>**/<code>combination, this pattern tells zsh to perform a recursive search, starting from the current directory and working its way inwards along the directory tree.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/notextile&gt;&lt;/div&gt;sh
+% echo **/*.md
+README.md brew/README.md git/README.md scripts/README.md zsh/README.md
+% find **/*.md | xargs echo
+&lt;div class='bogus-wrapper'&gt;&lt;notextile&gt;&lt;figure class='code'&gt;&lt;div class="highlight"&gt;&lt;table&gt;&lt;tr&gt;&lt;td class="gutter"&gt;&lt;pre class="line-numbers"&gt;&lt;span class='line-number'&gt;1&lt;/span&gt;
+&lt;span class='line-number'&gt;2&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class='code'&gt;&lt;pre&gt;&lt;code class=''&gt;&lt;span class='line'&gt;
+&lt;/span&gt;&lt;span class='line'&gt;17.You can make the shell match any series of digits it encounters with the</code>&lt;-&gt;<code>special pattern. What makes this construct great though, is that it can match any series of digits without a length restriction , this is because the shell processes each digit independently and not as a whole integer.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/notextile&gt;&lt;/div&gt;sh
+% echo log_&lt;-&gt;.txt
+&lt;div class='bogus-wrapper'&gt;&lt;notextile&gt;&lt;figure class='code'&gt;&lt;div class="highlight"&gt;&lt;table&gt;&lt;tr&gt;&lt;td class="gutter"&gt;&lt;pre class="line-numbers"&gt;&lt;span class='line-number'&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class='code'&gt;&lt;pre&gt;&lt;code class=''&gt;&lt;span class='line'&gt;What if we want those logfiles from 10 upwards? Zsh has you covered:
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/notextile&gt;&lt;/div&gt;sh
+% echo log_&lt;10-&gt;.txt
+log_010.txt log_030.txt log_031.txt
+&lt;div class='bogus-wrapper'&gt;&lt;notextile&gt;&lt;figure class='code'&gt;&lt;div class="highlight"&gt;&lt;table&gt;&lt;tr&gt;&lt;td class="gutter"&gt;&lt;pre class="line-numbers"&gt;&lt;span class='line-number'&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class='code'&gt;&lt;pre&gt;&lt;code class=''&gt;&lt;span class='line'&gt;As you can see, the</code>&lt;-&gt;<code>pattern can define a range with lower and upper bounds. Let's try again, this time for files between 10 and 20:&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/notextile&gt;&lt;/div&gt;sh
+% echo log_&lt;10-20&gt;.txt
+log_010.txt
+&lt;div class='bogus-wrapper'&gt;&lt;notextile&gt;&lt;figure class='code'&gt;&lt;div class="highlight"&gt;&lt;table&gt;&lt;tr&gt;&lt;td class="gutter"&gt;&lt;pre class="line-numbers"&gt;&lt;span class='line-number'&gt;1&lt;/span&gt;
+&lt;span class='line-number'&gt;2&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class='code'&gt;&lt;pre&gt;&lt;code class=''&gt;&lt;span class='line'&gt;
+&lt;/span&gt;&lt;span class='line'&gt;18.revisit the caret</code>(^)<code>operator:&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/notextile&gt;&lt;/div&gt;sh
+% echo b^*.o
+bindings.c bindings.h
+&lt;div class='bogus-wrapper'&gt;&lt;notextile&gt;&lt;figure class='code'&gt;&lt;div class="highlight"&gt;&lt;table&gt;&lt;tr&gt;&lt;td class="gutter"&gt;&lt;pre class="line-numbers"&gt;&lt;span class='line-number'&gt;1&lt;/span&gt;
+&lt;span class='line-number'&gt;2&lt;/span&gt;
+&lt;span class='line-number'&gt;3&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class='code'&gt;&lt;pre&gt;&lt;code class=''&gt;&lt;span class='line'&gt;So basically, we're telling the shell to expand that pattern so as to match the filenames that start with b but do not have an .o extension.
+&lt;/span&gt;&lt;span class='line'&gt;
+&lt;/span&gt;&lt;span class='line'&gt;19.Similar to the caret operator's second usage, the tilde</code>(~)<code>operator can be used to define a pattern that consists of a part that should match and a second part that shouldn't:
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/notextile&gt;&lt;/div&gt;sh
+% ls
+README.md README.txt bindings.c bindings.h bindings.o main.c main.o
+% echo b*~*.o
+bindings.c bindings.h
+&lt;div class='bogus-wrapper'&gt;&lt;notextile&gt;&lt;figure class='code'&gt;&lt;div class="highlight"&gt;&lt;table&gt;&lt;tr&gt;&lt;td class="gutter"&gt;&lt;pre class="line-numbers"&gt;&lt;span class='line-number'&gt;1&lt;/span&gt;
+&lt;span class='line-number'&gt;2&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class='code'&gt;&lt;pre&gt;&lt;code class=''&gt;&lt;span class='line'&gt;
+&lt;/span&gt;&lt;span class='line'&gt;20.add to the file</code>.zshrc<code>:&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/notextile&gt;&lt;/div&gt;sh
+autoload zmv
+&lt;div class='bogus-wrapper'&gt;&lt;notextile&gt;&lt;figure class='code'&gt;&lt;div class="highlight"&gt;&lt;table&gt;&lt;tr&gt;&lt;td class="gutter"&gt;&lt;pre class="line-numbers"&gt;&lt;span class='line-number'&gt;1&lt;/span&gt;
+&lt;span class='line-number'&gt;2&lt;/span&gt;
+&lt;span class='line-number'&gt;3&lt;/span&gt;
+&lt;span class='line-number'&gt;4&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class='code'&gt;&lt;pre&gt;&lt;code class=''&gt;&lt;span class='line'&gt;to load the function "zmv".
+&lt;/span&gt;&lt;span class='line'&gt;
+&lt;/span&gt;&lt;span class='line'&gt;21.Z shell will load anything that belongs to its function path or</code>$fpath<code>, a series of directories that
+&lt;/span&gt;&lt;span class='line'&gt;contain the files with the functions required for completion.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/notextile&gt;&lt;/div&gt;sh
+% print -l $fpath
+&lt;div class='bogus-wrapper'&gt;&lt;notextile&gt;&lt;figure class='code'&gt;&lt;div class="highlight"&gt;&lt;table&gt;&lt;tr&gt;&lt;td class="gutter"&gt;&lt;pre class="line-numbers"&gt;&lt;span class='line-number'&gt;1&lt;/span&gt;
+&lt;span class='line-number'&gt;2&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class='code'&gt;&lt;pre&gt;&lt;code class=''&gt;&lt;span class='line'&gt;
+&lt;/span&gt;&lt;span class='line'&gt;22.Resouces on learning zsh&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/notextile&gt;&lt;/div&gt;html
+http://zsh.sourceforge.net/Intro/intro_toc.html
+http://zshwiki.org/home/
+http://grml.org/zsh/zsh-lovers.html
+https://github.com/zsh-users
+https://github.com/sorin-ionescu/prezto
+http://explainshell.com/
+</code></p>
 </div>
 
 

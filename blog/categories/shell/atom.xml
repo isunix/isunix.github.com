@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Shell | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/shell/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2014-12-25T17:56:15+08:00</updated>
+  <updated>2014-12-25T18:06:02+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -41,13 +41,13 @@ DIR="$HOME/local"
 <p>1.You can tell zsh to look for your configuration files in another folder by setting the parameter ZDOTDIR
 to a directory of your choice in your .zshenv file under <code>$HOME</code>:</p>
 
-<p><code>sh
+<p><code>perl
 ZDOTDIR=/etc/my_kewl_folder/.zshrc
 </code></p>
 
 <p>2.Try to keep in mind the following order when setting preferences on your files:</p>
 
-<p><code>sh
+<p><code>perl
 zshenv, zsh_profile, zshrc, zlogin
 </code> </p>
 
@@ -60,47 +60,47 @@ zshenv, zsh_profile, zshrc, zlogin
 <p>6.<code>~/.zlogin</code>: This will be executed right after <code>~/.zshrc</code> and works pretty much like <code>~/.zsh_profile</code>, so you should put the scripts that you want called after your main startup file here.  </p>
 
 <p>7.Parameter expansion
-<code>sh
+<code>perl
 % foo=Hello
 % echo "${foo}, world!"
 </code>
 8.command substitution
-<code>sh
+<code>perl
 print $(which zsh)
 print `which zsh`
 </code>
 9.arithmetic expansion
-<code>sh
+<code>perl
 % echo $(( 5 + 4 ))
 </code></p>
 
 <p>10.brace expansion
-<code>sh
+<code>perl
 echo picture.jp{eg,g}
 touch log_00{1,2,3}.txt
 touch log_{007..011}.nfo
 </code><br />
 or </p>
 
-<p><code>sh
+<p><code>perl
 % foo=(A B C)
 % bar=(1 2 3)
 % echo $^foo-$^bar
 </code>	</p>
 
 <p>11.One of the ways zsh provides for you to access your history is via the so-called history expansion. This works whenever your input begins with the bang <code>!</code> special character. Like, 
-<code>sh
+<code>perl
 !cat
 </code>
 12.The star works as a wildcard, allowing you to match any filenames, even if you provide no pattern at all:</p>
 
-<p><code>sh
+<p><code>perl
 % echo *
 </code>
 This will list all file names in the current directory.</p>
 
 <p>13.The question mark symbol works pretty much like the star, except it matches a single character instead of many.<br />
-<code>sh
+<code>perl
 % echo *.??
 script.sh
 % echo main.?*
@@ -109,7 +109,7 @@ main.c main.o main.tmp
 
 <p>14.You can use the square brackets construct to match a group of characters within a pattern. For example, you can use <code>[ML]*</code> to match any filename that starts with either an uppercase letter M or L.</p>
 
-<p><code>sh
+<p><code>perl
 % ls
 Log.log Main.rb README.md script.sh
 % echo [ML]*
@@ -117,7 +117,7 @@ Log.log Main.rb
 </code>
 or</p>
 
-<p><code>sh
+<p><code>perl
 % echo *.log_[1-9]
 out.log_1 out.log_2 out.log_3
 % echo [1-5M]*.*
@@ -125,36 +125,36 @@ Main.rb
 </code></p>
 
 <p>15.we can get the complement of a class via the caret <code>(^)</code> operator:
-<code>sh
+<code>perl
 % echo *.[^o]
 bindings.c bindings.h main.c
 </code></p>
 
 <p>16.Arguably, the most popular pattern out there is recursive searching. Accessible through the <code>**/</code> combination, this pattern tells zsh to perform a recursive search, starting from the current directory and working its way inwards along the directory tree.
-<code>sh
+<code>perl
 % echo **/*.md
 README.md brew/README.md git/README.md scripts/README.md zsh/README.md
 % find **/*.md | xargs echo
 </code></p>
 
 <p>17.You can make the shell match any series of digits it encounters with the <code>&lt;-&gt;</code> special pattern. What makes this construct great though, is that it can match any series of digits without a length restriction , this is because the shell processes each digit independently and not as a whole integer.
-<code>sh
+<code>perl
 % echo log_&lt;-&gt;.txt
 </code>
 What if we want those logfiles from 10 upwards? Zsh has you covered:</p>
 
-<p><code>sh
+<p><code>perl
 % echo log_&lt;10-&gt;.txt
 log_010.txt log_030.txt log_031.txt
 </code>
 As you can see, the <code>&lt;-&gt;</code> pattern can define a range with lower and upper bounds. Let’s try again, this time for files between 10 and 20:
-<code>sh
+<code>perl
 % echo log_&lt;10-20&gt;.txt
 log_010.txt
 </code></p>
 
 <p>18.revisit the caret <code>(^)</code> operator:
-<code>sh
+<code>perl
 % echo b^*.o
 bindings.c bindings.h
 </code>
@@ -162,7 +162,7 @@ So basically, we’re telling the shell to expand that pattern so as to match th
 
 <p>19.Similar to the caret operator’s second usage, the tilde <code>(~)</code> operator can be used to define a pattern that consists of a part that should match and a second part that shouldn’t:</p>
 
-<p><code>sh
+<p><code>perl
 % ls
 README.md README.txt bindings.c bindings.h bindings.o main.c main.o
 % echo b*~*.o
@@ -170,19 +170,19 @@ bindings.c bindings.h
 </code></p>
 
 <p>20.add to the file <code>.zshrc</code>:
-<code>sh
+<code>perl
 autoload zmv
 </code>
 to load the function “zmv”.</p>
 
 <p>21.Z shell will load anything that belongs to its function path or <code>$fpath</code>, a series of directories that
 contain the files with the functions required for completion.
-<code>sh
+<code>perl
 % print -l $fpath
 </code></p>
 
 <p>22.Resouces on learning zsh
-<code>html
+<code>perl
 http://zsh.sourceforge.net/Intro/intro_toc.html
 http://zshwiki.org/home/
 http://grml.org/zsh/zsh-lovers.html

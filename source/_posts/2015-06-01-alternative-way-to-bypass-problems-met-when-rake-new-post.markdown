@@ -13,6 +13,6 @@ bundle exec rake "new_post[alternative way to bypass problems met when rake new_
 
 and then we can use the "Mou" app to open the page:
 
-```markdown
+```ruby
 open -a Mou source/_posts/2015-06-01-alternative-way-to-bypass-problems-met-when-rake-new-post.markdown
 ```

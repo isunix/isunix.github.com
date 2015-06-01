@@ -4,7 +4,7 @@
   <title><![CDATA[Steven's Blog]]></title>
   <link href="http://isunix.github.io/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2015-06-01T11:18:55+08:00</updated>
+  <updated>2015-06-01T13:27:46+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,26 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Reconfigure Partially Installed Packages in Ubuntu]]></title>
+    <link href="http://isunix.github.io/blog/2015/06/01/reconfigure-partially-installed-packages-in-ubuntu/"/>
+    <updated>2015-06-01T13:22:30+08:00</updated>
+    <id>http://isunix.github.io/blog/2015/06/01/reconfigure-partially-installed-packages-in-ubuntu</id>
+    <content type="html"><![CDATA[<p>When I try to upgrade my ubuntu version from 14.04 to 14.10, the system rebooted during the upgrade. When I try to login to the gnu desktop, it goes back to the login screen again and again. </p>
+
+<p>So I have to login in using the “tty” terminal by “ctrl+alt+F3”, and then issue the following command:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">sudo dpkg --configure -a
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>There maybe something wrong logging in using the mosted updated kernal, so we can choose to log in using an previous version of kernal(provided if is not removed yet]).</p>
+
+<p>Then if we still want to upgrade, we can do it when we successfully log in to the system. </p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Alternative Way to Bypass Problems Met When Rake New_post]]></title>
@@ -560,40 +580,6 @@
 </span><span class="line">*.incluce在用到时加载，这个函式一般是放在流程控制的处理区段中
 </span><span class="line">*.require在一开始就加载，这个函式通常放在PHP程式的最前面
 </span><span class="line">*._once后缀表示已加载的不加载</span></code></pre></td></tr></table></div></figure></notextile></div>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Hadoop Installation and Setup]]></title>
-    <link href="http://isunix.github.io/blog/2014/11/17/hadoop-installation-and-setup/"/>
-    <updated>2014-11-17T17:23:12+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/11/17/hadoop-installation-and-setup</id>
-    <content type="html"><![CDATA[<p>This is for setting  up hadoop on ubuntu. I am using hadoop version 2.5.1, so when I search on the internet, the result I get may not apply to the version I am using, thus I keep a note of the installation process in the hope that later reference will be easier.  </p>
-
-<p>1.install java and set java home env variable. </p>
-
-<p>In the /etc/lib/jvm dir, make a soft link to the jdk dir their and renaming it ot “jdk” for short nanme.  and write to my .zshrc file the JAVA_HOME path variable. </p>
-
-<p>2.edit the hadoop-env.sh file in hadoop/etc/hadoop dir by setting the java home var.</p>
-
-<p>3.edit the core-site.xml file in hadoop/etc/hadoop dir by setting the default hadoop config which you can search by yourself.</p>
-
-<p>4.edit the hdfs-site.xml file in hadoop/etc/hadoop dir by setting the default fs config which you can search by yourself.</p>
-
-<p>5.edit the map-red.site.xml file in hadoop/etc/hadoop dir by setting the default fs config which you can search by yourself.  </p>
-
-<p>6.format hdfs by issuing the following command:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">./bin/hadoop namenode -format
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>7.start services by executing the scripts in the sbin dir.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">./start-yarn.sh
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>(It is not in the bin dir as is shown in most blogs.)</p>
 ]]></content>
   </entry>
   

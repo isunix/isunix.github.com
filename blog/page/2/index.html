@@ -9,7 +9,7 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="I will keep notes of some of the useful Linux commands here. 1.say you want to find something, we can use the “find” command or the convenient “ack” &hellip;">
+  <meta name="description" content="I encoutered some problems while I was using ssh-keygen, it turns out to be originating from privileges setting up. The following way turns out to be &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -62,6 +62,64 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/12/23/notes-to-be-take-while-using-ssh-keygen/">Notes to Be Take While Using Ssh-keygen</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-12-23T20:18:10+08:00" pubdate data-updated="true">Dec 23<span>rd</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I encoutered some problems while I was using ssh-keygen, it turns out to be originating from privileges setting up.</p>
+
+<p>The following way turns out to be working.</p>
+
+<p>1.Do not set up your home directory to be “777”, it will not work. I set it to be “755”</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">chmod 755 /home/stsun
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>2.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">chmod 600 authorized_keys
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>3.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">chmod 700 .ssh
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>And then it works well.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -617,73 +675,6 @@
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>This installation process is very trivial. I will write more about how to use oddmuse later. </p>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/11/24/apache-setup-to-redict-a-site/">Apache Setup to Redirect a Site</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-11-24T14:31:59+08:00" pubdate data-updated="true">Nov 24<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>While I was developing a dancer application, I usually open a new port, like goople.com:4001. Actually there is a better way to do this. </p>
-
-<p>On our CentOS server, in the httpd.conf file, we include the following piece to it:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line">Include etc/apache22/Includes/*.conf
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>If it is not already there.  </p>
-
-<p>Then in the dir,  /usr/local/etc/apache22/Includes, we will write our own configuration file. </p>
-
-<p>Then we can make a file named sun.conf in the Includes dir and write to it something like this:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line">Alias /~stsun /home/stsun/public_html
-</span><span class="line">
-</span><span class="line"><span class="nt">&lt;Directory</span> <span class="err">&quot;/</span><span class="na">home</span><span class="err">/</span><span class="na">stsun</span><span class="err">/</span><span class="na">public_html</span><span class="err">&quot;</span><span class="nt">&gt;</span>
-</span><span class="line">	Options +Indexes FollowSymLinks
-</span><span class="line">	AllowOverride All
-</span><span class="line">	Order allow,deny
-</span><span class="line">	Allow from all
-</span><span class="line"><span class="nt">&lt;/Directory&gt;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 </div>
   

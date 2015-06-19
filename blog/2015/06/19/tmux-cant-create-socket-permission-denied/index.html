@@ -5,13 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Find Cgi-bin Dir on a Linux Server - Steven's Blog</title>
+  <title>Tmux:can't Create Socket: Permission Denied - Steven's Blog</title>
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="1
-ps -ef | grep cgi On my server, this will give out the cgi-bin dir.
-">
+  <meta name="description" content="my tmux’s sockets are output to the dir “~/tmp”, however today I encountered the problem saying “can’t create socket: Permission denied” while I &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -20,7 +18,7 @@ ps -ef | grep cgi On my server, this will give out the cgi-bin dir.
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://isunix.github.io/blog/2015/06/09/find-cgi-bin-dir-on-a-linux-server">
+  <link rel="canonical" href="http://isunix.github.io/blog/2015/06/19/tmux-cant-create-socket-permission-denied">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Steven's Blog" type="application/atom+xml">
@@ -56,7 +54,7 @@ ps -ef | grep cgi On my server, this will give out the cgi-bin dir.
   
   <header>
     
-      <h1 class="entry-title">Find Cgi-bin Dir on a Linux Server</h1>
+      <h1 class="entry-title">Tmux:can't Create Socket: Permission Denied</h1>
     
     
       <p class="meta">
@@ -72,18 +70,22 @@ ps -ef | grep cgi On my server, this will give out the cgi-bin dir.
   
 
 
-<time datetime="2015-06-09T18:49:22+08:00" pubdate data-updated="true">Jun 9<span>th</span>, 2015</time>
+<time datetime="2015-06-19T13:04:00+08:00" pubdate data-updated="true">Jun 19<span>th</span>, 2015</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line">ps -ef | grep cgi
+<div class="entry-content"><p>my tmux’s sockets are output to the dir “~/tmp”, however today I encountered the problem saying “can’t create socket: Permission denied” while I start tmux.</p>
+
+<p>The reason is I have changed the rights on the folder ~/tmp/tmux* , so after the following command:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">chmod 700 -R tmux*
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>On my server, this will give out the cgi-bin dir.</p>
+<p>It is back to normal.</p>
 </div>
 
 
@@ -106,12 +108,12 @@ ps -ef | grep cgi On my server, this will give out the cgi-bin dir.
   
 
 
-<time datetime="2015-06-09T18:49:22+08:00" pubdate data-updated="true">Jun 9<span>th</span>, 2015</time>
+<time datetime="2015-06-19T13:04:00+08:00" pubdate data-updated="true">Jun 19<span>th</span>, 2015</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/perl/'>Perl</a>
+    <a class='category' href='/blog/categories/linux/'>linux</a>
   
 </span>
 
@@ -127,10 +129,8 @@ ps -ef | grep cgi On my server, this will give out the cgi-bin dir.
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2015/06/08/kill-a-tmux-window/" title="Previous Post: kill a tmux window">&laquo; kill a tmux window</a>
+        <a class="basic-alignment left" href="/blog/2015/06/09/find-cgi-bin-dir-on-a-linux-server/" title="Previous Post: find cgi-bin dir on a linux server">&laquo; find cgi-bin dir on a linux server</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2015/06/19/tmux-cant-create-socket-permission-denied/" title="Next Post: tmux:can't create socket: Permission denied">tmux:can't create socket: Permission denied &raquo;</a>
       
     </p>
   </footer>

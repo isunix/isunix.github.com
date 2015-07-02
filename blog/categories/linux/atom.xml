@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Linux | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2015-06-19T13:07:17+08:00</updated>
+  <updated>2015-07-02T15:35:20+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -14,19 +14,44 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Tmux:can't Create Socket: Permission Denied]]></title>
-    <link href="http://isunix.github.io/blog/2015/06/19/tmux-cant-create-socket-permission-denied/"/>
-    <updated>2015-06-19T13:04:00+08:00</updated>
-    <id>http://isunix.github.io/blog/2015/06/19/tmux-cant-create-socket-permission-denied</id>
-    <content type="html"><![CDATA[<p>my tmux’s sockets are output to the dir “~/tmp”, however today I encountered the problem saying “can’t create socket: Permission denied” while I start tmux.</p>
-
-<p>The reason is I have changed the rights on the folder ~/tmp/tmux* , so after the following command:</p>
+    <title type="html"><![CDATA[Minutes on Setting Up Emacs on Macos]]></title>
+    <link href="http://isunix.github.io/blog/2015/07/02/minutes-on-setting-up-emacs-on-macos/"/>
+    <updated>2015-07-02T15:29:18+08:00</updated>
+    <id>http://isunix.github.io/blog/2015/07/02/minutes-on-setting-up-emacs-on-macos</id>
+    <content type="html"><![CDATA[<ol>
+  <li>I am am using gui emacs and I want to it to be started from the command line, then I have to do this:</li>
+</ol>
 
 <p><code>sh
-chmod 700 -R tmux*
+alias emacs='open -a /Applications/Emacs.app $1'
 </code></p>
 
-<p>It is back to normal.</p>
+<ol>
+  <li>I want to change the default font and font size:</li>
+</ol>
+
+<p><code>sh
+(set-default-font "Monaco 28")
+</code></p>
+
+<ol>
+  <li>I want to use evil, after putting it into ~/.emacs.d, also I need to put the folliwng things in to ~/.emacs.d/init.el</li>
+</ol>
+
+<p><code>
+(add-to-list 'load-path "~/.emacs.d/evil")
+(require 'evil)
+(evil-mode 1)
+</code></p>
+
+<ol>
+  <li>I am using slime, so I have to put the following things into my ~/.emacs.d/init.el</li>
+</ol>
+
+<p><code>
+(setq inferior-lisp-program "/usr/local/bin/sbcl")
+(setq slime-contribs '(slime-fancy))
+</code></p>
 ]]></content>
   </entry>
   

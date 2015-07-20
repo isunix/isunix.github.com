@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ruby | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2015-07-02T15:35:20+08:00</updated>
+  <updated>2015-07-20T15:38:14+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,49 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Tap Method in Ruby]]></title>
+    <link href="http://isunix.github.io/blog/2015/07/20/tap-method-in-ruby/"/>
+    <updated>2015-07-20T15:31:51+08:00</updated>
+    <id>http://isunix.github.io/blog/2015/07/20/tap-method-in-ruby</id>
+    <content type="html"><![CDATA[<p>There is a “tap” method in Ruby and I find it is very useful.</p>
+
+<p>The definitionof “tap” in ruby documentaion is:</p>
+
+<p><code>
+Yields self to the block, and then returns self. The primary purpose of this method is to “tap into” a method chain, in order to perform operations on intermediate results within the chain.
+</code></p>
+
+<p>Put it anonther way:</p>
+
+<p><code>
+It’s a helper for call chaining. It passes its object into the given block and, after the block finishes, returns the object:
+</code></p>
+
+<p><code>ruby
+an_object.tap do |o|
+  # do stuff with an_object, which is in o
+end # ===&gt; an_object
+</code></p>
+
+<p>Another example:</p>
+
+<p><code>ruby
+def hash_table(numbers, target)
+    [].tap do |result|
+      hash = {}
+      numbers.each_with_index do | n, i |
+        if j = hash[target - n]
+          return result &lt;&lt; j + 1 &lt;&lt; i + 1
+        end
+        hash[n] = i
+      end
+    end
+  end
+</code></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[How to Install Ruby on Centos]]></title>

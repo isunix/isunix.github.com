@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Python | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/python/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2015-07-20T15:38:14+08:00</updated>
+  <updated>2015-07-27T17:11:37+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,107 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Python Linked List Example]]></title>
+    <link href="http://isunix.github.io/blog/2015/07/27/python-linked-list-example/"/>
+    <updated>2015-07-27T16:21:27+08:00</updated>
+    <id>http://isunix.github.io/blog/2015/07/27/python-linked-list-example</id>
+    <content type="html"><![CDATA[<p>Will use python linked list to solve the following problem:</p>
+
+<p>```md
+You are given two linked lists representing two non-negative numbers. The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.</p>
+
+<p>Input: (2 -&gt; 4 -&gt; 3) + (5 -&gt; 6 -&gt; 4)
+Output: 7 -&gt; 0 -&gt; 8
+```</p>
+
+<p>First we will build the LinkedList module.</p>
+
+<p>```py
+class Node:
+    def <strong>init</strong>(self, value):
+        self.value = value
+        self.next = None</p>
+
+<pre><code>def __str__(self):
+    return str(self.value)
+</code></pre>
+
+<p>class LinkedList:
+    def <strong>init</strong>(self):
+        self.head = None
+        self.tail = None</p>
+
+<pre><code>def addNode(self, value):
+    node = Node(value)
+    if self.head == None:
+        self.head = node
+        self.tail = node
+    else:
+        self.tail.next = node
+        self.tail = node
+
+def __str__(self):
+    if self.head != None:
+        index = self.head
+        nodeStore = [str(index.value)]
+        while index.next != None:
+            index = index.next
+            nodeStore.append(str(index.value))
+        return "LinkedList  [ " + "-&gt;".join(nodeStore) + " ]"
+    return "LinkedList  []"
+</code></pre>
+
+<p>def generatedLinkedList(numArray):
+    linkedlist = LinkedList()
+    for i in range(len(numArray)):
+        linkedlist.addNode(numArray[i])
+    return linkedlist</p>
+
+<p>```</p>
+
+<p>Then we will start to solve the problem:</p>
+
+<p>```py
+#!/usr/bin/env python3
+# -<em>- coding: utf-8 -</em>-</p>
+
+<p>from LinkedList import *</p>
+
+<h1 id="digits-in-the-given-linked-lists-are-in-reverse-order">digits in the given linked-lists are in reverse order</h1>
+<p>class ListsSum:
+    def addLists(self, l1, l2):
+        p1 = l1.head
+        p2 = l2.head
+        carry = 0
+        linkedlist_sum = LinkedList()
+        while (p1 != None) or (p2 != None) or (carry != 0):
+            dig_sum = carry
+            if p1 != None:
+                dig_sum += p1.value
+                p1 = p1.next
+            if p2 != None:
+                dig_sum += p2.value
+                p2 = p2.next</p>
+
+<pre><code>        linkedlist_sum.addNode(dig_sum%10)
+        carry = dig_sum/10
+    return linkedlist_sum
+</code></pre>
+
+<p>if <strong>name</strong> == ‘<strong>main</strong>’:
+    solution = ListsSum()
+    list1 = generatedLinkedList([2,4,3])
+    list2 = generatedLinkedList([5,6,4])
+    print(list1)
+    print(list2)
+    print(solution.addLists(list1,list2))
+```</p>
+
+<p>The code above are modified based upon “https://github.com/gaylemcd/ctci/tree/master/python/Chapter%202”.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Notes on Flask]]></title>
@@ -119,50 +220,6 @@ open(‘file’).readlines()						# read entire file into line strings list
 open(‘file’).readline() 						# read next line, through ‘\n’  </p>
 
 <p>```</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Install Python on Centos Locally]]></title>
-    <link href="http://isunix.github.io/blog/2014/08/14/install-python-on-centos-locally/"/>
-    <updated>2014-08-14T12:25:15+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/08/14/install-python-on-centos-locally</id>
-    <content type="html"><![CDATA[<p>This post depicts how to install Python on the CentOS in your local dir.  </p>
-
-<p>1.First show the python2.x version.</p>
-
-<p>```py
-wget http://python.org/ftp/python/2.7.6/Python-2.7.6.tar.xz <br />
-tar -zxvf Python-2.7.6.tar.xz<br />
-cd Python-2.7.6<br />
-./configure –prefix=/home/sun/local –enable-unicode=ucs4 –enable-shared LDFLAGS=”-Wl,-rpath /home/sun/local/lib”<br />
-make &amp;&amp; make altinstall</p>
-
-<p>wget https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py<br />
-python ez_setup.py
-easy_install-2.7 pip
-pip2.7 install [packagename] <br />
-(pip defaults to pip2.7)
-```</p>
-
-<p>2.Now the python3.x version</p>
-
-<p>```py
-wget http://python.org/ftp/python/3.4.1/Python-3.4.1.tar.xz
-tar xf Python-3.4.1.tar.xz
-cd Python-3.4.1
-./configure –prefix=/hom/sun/local –enable-shared LDFLAGS=”-Wl,-rpath /home/sun/local/lib”
-make &amp;&amp; make altinstall  </p>
-
-<p>wget https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py<br />
-mv python3.4 python3
-python3 ez_setup.py
-easy_install-3.4 pip
-pip3 install [packagename]   </p>
-
-<p>```  </p>
-
-<p>If you want to install the package used by python3, you need to using the command “pip3 install [packagename]”, otherwise just “pip install [packagename]”</p>
 ]]></content>
   </entry>
   

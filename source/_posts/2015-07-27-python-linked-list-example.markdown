@@ -7,16 +7,8 @@ categories: Python
 ---
 Will use python linked list to solve the following problem:
 
-```md
-You are given two linked lists representing two non-negative numbers. The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.
 
-Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)
-Output: 7 -> 0 -> 8
-```
-
-First we will build the LinkedList module.
-
-```py
+```python
 class Node:
     def __init__(self, value):
         self.value = value
@@ -59,13 +51,9 @@ def generatedLinkedList(numArray):
 
 Then we will start to solve the problem:
 
-```py
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
+```python
 from LinkedList import *
 
-#digits in the given linked-lists are in reverse order
 class ListsSum:
     def addLists(self, l1, l2):
         p1 = l1.head
@@ -92,6 +80,5 @@ if __name__ == '__main__':
     print(list1)
     print(list2)
     print(solution.addLists(list1,list2))
-```
 
-The code above are modified based upon "https://github.com/gaylemcd/ctci/tree/master/python/Chapter%202".
+```

@@ -9,7 +9,7 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="This post keeps notes of some useful bash scripts or one liners. find files with txt ext in the current dir and print out those files to be deleted &hellip;">
+  <meta name="description" content="This post keeps notes of some useful bash scripts or one liners. 1.find files with txt ext in the current dir and print out those files to be deleted &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -93,33 +93,25 @@
 
   <div class="entry-content"><p>This post keeps notes of some useful bash scripts or one liners.</p>
 
-<ol>
-  <li>find files with txt ext in the current dir and print out those files to be deleted and then delete those files.</li>
-</ol>
+<p>1.find files with txt ext in the current dir and print out those files to be deleted and then delete those files.</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 </pre></td><td class="code"><pre><code class="sh"><span class="line">find . -type f -name <span class="s2">&quot;*.txt&quot;</span> -print |xargs -I <span class="o">{}</span> sh -c <span class="s2">&quot;echo deleting {}; rm {}&quot;</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<ol>
-  <li>find files with txt ext in the current dir and mv those files to another dir with amount of files limited to a certain number:</li>
-</ol>
+<p>2.find files with txt ext in the current dir and mv those files to another dir with amount of files limited to a certain number:</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 </pre></td><td class="code"><pre><code class="sh"><span class="line">find ./ -type f -name <span class="s2">&quot;*.txt&quot;</span>| xargs -L56 -I <span class="o">{}</span> mv -f <span class="o">{}</span> ./old/
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<ol>
-  <li>Almost same with step 2, but also print out the steps taken in the command line:</li>
-</ol>
+<p>3.Almost same with step 2, but also print out the steps taken in the command line:</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 </pre></td><td class="code"><pre><code class="sh"><span class="line">find ./ -type f -name <span class="s2">&quot;*.txt&quot;</span>| xargs -L56 -I <span class="o">{}</span> -t mv <span class="o">{}</span> ./old/
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<ol>
-  <li>find if a dir is a subdir of another dir:</li>
-</ol>
+<p>4.find if a dir is a subdir of another dir:</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
@@ -134,8 +126,11 @@
 <span class="line-number">11</span>
 <span class="line-number">12</span>
 <span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
 </pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nv">dir_a</span><span class="o">=</span><span class="s2">&quot;/home/stsun&quot;</span>
 </span><span class="line"><span class="nv">dir_b</span><span class="o">=</span><span class="s2">&quot;/home/stsun/work/spam&quot;</span>
+</span><span class="line">
 </span><span class="line"><span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;${dir_b}&quot;</span> <span class="o">==</span> <span class="s2">&quot;${dir_a}&quot;</span>* <span class="o">]]</span>
 </span><span class="line"><span class="k">then</span>
 </span><span class="line">    <span class="c"># Get the subdirectory only</span>
@@ -143,6 +138,7 @@
 </span><span class="line">    <span class="nb">printf</span> <span class="s2">&quot;SUBDIR is $SUBDIR\n&quot;</span>
 </span><span class="line">    <span class="nv">BASE</span><span class="o">=</span><span class="k">${</span><span class="nv">dir_a</span><span class="k">}</span>/<span class="k">${</span><span class="nv">SUBDIR</span><span class="p">%%/*</span><span class="k">}</span>
 </span><span class="line">    <span class="nb">printf</span> <span class="s2">&quot;BASE is ${BASE}\n&quot;</span>
+</span><span class="line">
 </span><span class="line"><span class="k">else</span>
 </span><span class="line"><span class="k">    </span><span class="nb">printf</span> <span class="s2">&quot;Error: ${dir_b} is not in ${dir_a}\n&quot;</span>
 </span><span class="line">    <span class="nb">exit </span>1

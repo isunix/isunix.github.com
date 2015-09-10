@@ -4,7 +4,7 @@
   <title><![CDATA[Steven's Blog]]></title>
   <link href="http://isunix.github.io/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2015-09-07T12:40:04+08:00</updated>
+  <updated>2015-09-10T12:29:41+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,72 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Useful Bash Scripts]]></title>
+    <link href="http://isunix.github.io/blog/2015/09/10/useful-bash-scripts/"/>
+    <updated>2015-09-10T11:31:53+08:00</updated>
+    <id>http://isunix.github.io/blog/2015/09/10/useful-bash-scripts</id>
+    <content type="html"><![CDATA[<p>This post keeps notes of some useful bash scripts or one liners.</p>
+
+<ol>
+  <li>find files with txt ext in the current dir and print out those files to be deleted and then delete those files.</li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">find . -type f -name <span class="s2">&quot;*.txt&quot;</span> -print |xargs -I <span class="o">{}</span> sh -c <span class="s2">&quot;echo deleting {}; rm {}&quot;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<ol>
+  <li>find files with txt ext in the current dir and mv those files to another dir with amount of files limited to a certain number:</li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">find ./ -type f -name <span class="s2">&quot;*.txt&quot;</span>| xargs -L56 -I <span class="o">{}</span> mv -f <span class="o">{}</span> ./old/
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<ol>
+  <li>Almost same with step 2, but also print out the steps taken in the command line:</li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">find ./ -type f -name <span class="s2">&quot;*.txt&quot;</span>| xargs -L56 -I <span class="o">{}</span> -t mv <span class="o">{}</span> ./old/
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<ol>
+  <li>find if a dir is a subdir of another dir:</li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nv">dir_a</span><span class="o">=</span><span class="s2">&quot;/home/stsun&quot;</span>
+</span><span class="line"><span class="nv">dir_b</span><span class="o">=</span><span class="s2">&quot;/home/stsun/work/spam&quot;</span>
+</span><span class="line"><span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;${dir_b}&quot;</span> <span class="o">==</span> <span class="s2">&quot;${dir_a}&quot;</span>* <span class="o">]]</span>
+</span><span class="line"><span class="k">then</span>
+</span><span class="line">    <span class="c"># Get the subdirectory only</span>
+</span><span class="line">    <span class="nv">SUBDIR</span><span class="o">=</span><span class="k">${</span><span class="nv">dir_b</span><span class="p">#</span><span class="k">${</span><span class="nv">dir_a</span><span class="k">}</span><span class="p">/</span><span class="k">}</span>
+</span><span class="line">    <span class="nb">printf</span> <span class="s2">&quot;SUBDIR is $SUBDIR\n&quot;</span>
+</span><span class="line">    <span class="nv">BASE</span><span class="o">=</span><span class="k">${</span><span class="nv">dir_a</span><span class="k">}</span>/<span class="k">${</span><span class="nv">SUBDIR</span><span class="p">%%/*</span><span class="k">}</span>
+</span><span class="line">    <span class="nb">printf</span> <span class="s2">&quot;BASE is ${BASE}\n&quot;</span>
+</span><span class="line"><span class="k">else</span>
+</span><span class="line"><span class="k">    </span><span class="nb">printf</span> <span class="s2">&quot;Error: ${dir_b} is not in ${dir_a}\n&quot;</span>
+</span><span class="line">    <span class="nb">exit </span>1
+</span><span class="line"><span class="k">fi</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Linked List in Perl]]></title>
@@ -724,37 +790,6 @@
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>Where zsh will be your own location of your zsh file.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Notes to Be Take While Using Ssh-keygen]]></title>
-    <link href="http://isunix.github.io/blog/2014/12/23/notes-to-be-take-while-using-ssh-keygen/"/>
-    <updated>2014-12-23T20:18:10+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/12/23/notes-to-be-take-while-using-ssh-keygen</id>
-    <content type="html"><![CDATA[<p>I encoutered some problems while I was using ssh-keygen, it turns out to be originating from privileges setting up.</p>
-
-<p>The following way turns out to be working.</p>
-
-<p>1.Do not set up your home directory to be “777”, it will not work. I set it to be “755”</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">chmod 755 /home/stsun
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>2.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">chmod 600 authorized_keys
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>3.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">chmod 700 .ssh
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>And then it works well.</p>
 ]]></content>
   </entry>
   

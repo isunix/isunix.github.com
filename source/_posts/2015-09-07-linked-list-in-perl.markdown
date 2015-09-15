@@ -6,7 +6,8 @@ comments: true
 categories: perl
 ---
 We will use linked list to output words in a file in alphabetical order. This example is in:
-```
+
+```html
 http://man.ddvip.com/web/perl/perl9.htm#10.1
 ```
 

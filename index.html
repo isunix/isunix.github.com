@@ -9,10 +9,7 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="We will show how to reverse a linked list in place using both python and javascript(actually converted from coffeescript). 1.python version: 1
-2
-3
-4 &hellip;">
+  <meta name="description" content="Say we want to install modules from multiple requirement files. We will put the requirement files in the directory “requirements”. First the base.txt &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +62,71 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/09/21/installing-from-multiple-requirements-files/">Installing From Multiple Requirements Files</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-09-21T16:18:23+08:00" pubdate data-updated="true">Sep 21<span>st</span>, 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Say we want to install modules from multiple requirement files. We will put the requirement files in the directory “requirements”.</p>
+
+<p>First the base.txt file.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">Django==1.7.10
+</span><span class="line">psycopg2==2.4.5</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Then the file local.txt</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">-r base.txt
+</span><span class="line">django-discover-runner==0.2.2</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>and production.txt(production installaions should be close to what is used in other locations, so production.txt commonly just calls base.txt)</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">-r base.txt</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>The for local and production env, we can issue the following commands:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">pip install -r requirements/local.txt
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">pip install -r requirements/production.txt
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1193,78 +1255,6 @@
 </span><span class="line">      <span class="k">end</span>
 </span><span class="line">    <span class="k">end</span>
 </span><span class="line">  <span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/07/02/minutes-on-setting-up-emacs-on-macos/">Minutes on Setting Up Emacs on Macos</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-07-02T15:29:18+08:00" pubdate data-updated="true">Jul 2<span>nd</span>, 2015</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><ol>
-  <li>I am am using gui emacs and I want to it to be started from the command line, then I have to do this:</li>
-</ol>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nb">alias </span><span class="nv">emacs</span><span class="o">=</span><span class="s1">&#39;open -a /Applications/Emacs.app $1&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ol>
-  <li>I want to change the default font and font size:</li>
-</ol>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="o">(</span><span class="nb">set</span>-default-font <span class="s2">&quot;Monaco 28&quot;</span><span class="o">)</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ol>
-  <li>I want to use evil, after putting it into ~/.emacs.d, also I need to put the folliwng things in to ~/.emacs.d/init.el</li>
-</ol>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="o">(</span>add-to-list <span class="s1">&#39;load-path &quot;~/.emacs.d/evil&quot;)</span>
-</span><span class="line"><span class="s1">(require &#39;</span>evil<span class="o">)</span>
-</span><span class="line"><span class="o">(</span>evil-mode 1<span class="o">)</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ol>
-  <li>I am using slime, so I have to put the following things into my ~/.emacs.d/init.el</li>
-</ol>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="o">(</span>setq inferior-lisp-program <span class="s2">&quot;/usr/local/bin/sbcl&quot;</span><span class="o">)</span>
-</span><span class="line"><span class="o">(</span>setq slime-contribs <span class="err">&#39;</span><span class="o">(</span>slime-fancy<span class="o">))</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 </div>
   

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Python | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/python/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2015-09-15T13:45:29+08:00</updated>
+  <updated>2015-09-21T16:24:19+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -14,199 +14,41 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Enable Multiple Versions of Python in Pyenv]]></title>
-    <link href="http://isunix.github.io/blog/2015/07/28/enable-multiple-versions-of-python-in-pyenv/"/>
-    <updated>2015-07-28T15:12:47+08:00</updated>
-    <id>http://isunix.github.io/blog/2015/07/28/enable-multiple-versions-of-python-in-pyenv</id>
-    <content type="html"><![CDATA[<p>When I am using python installed from pyenv, we can enable different python versions by issuing the following command:</p>
+    <title type="html"><![CDATA[Installing From Multiple Requirements Files]]></title>
+    <link href="http://isunix.github.io/blog/2015/09/21/installing-from-multiple-requirements-files/"/>
+    <updated>2015-09-21T16:18:23+08:00</updated>
+    <id>http://isunix.github.io/blog/2015/09/21/installing-from-multiple-requirements-files</id>
+    <content type="html"><![CDATA[<p>Say we want to install modules from multiple requirement files. We will put the requirement files in the directory “requirements”.</p>
 
-<p><code>python
-pyenv global 2.7.10 3.4.3
+<p>First the base.txt file.</p>
+
+<p><code>
+Django==1.7.10
+psycopg2==2.4.5
 </code></p>
 
-<p>This way we can use python2 and python3.</p>
+<p>Then the file local.txt</p>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Python Linked List Example]]></title>
-    <link href="http://isunix.github.io/blog/2015/07/27/python-linked-list-example/"/>
-    <updated>2015-07-27T16:21:27+08:00</updated>
-    <id>http://isunix.github.io/blog/2015/07/27/python-linked-list-example</id>
-    <content type="html"><![CDATA[<p>Will use python linked list to solve the following problem:</p>
+<p><code>
+-r base.txt
+django-discover-runner==0.2.2
+</code></p>
 
-<p>```python
-class Node:
-    def <strong>init</strong>(self, value):
-        self.value = value
-        self.next = None</p>
+<p>and production.txt(production installaions should be close to what is used in other locations, so production.txt commonly just calls base.txt)</p>
 
-<pre><code>def __str__(self):
-    return str(self.value)
-</code></pre>
+<p><code>
+-r base.txt
+</code></p>
 
-<p>class LinkedList:
-    def <strong>init</strong>(self):
-        self.head = None
-        self.tail = None</p>
-
-<pre><code>def addNode(self, value):
-    node = Node(value)
-    if self.head == None:
-        self.head = node
-        self.tail = node
-    else:
-        self.tail.next = node
-        self.tail = node
-
-def __str__(self):
-    if self.head != None:
-        index = self.head
-        nodeStore = [str(index.value)]
-        while index.next != None:
-            index = index.next
-            nodeStore.append(str(index.value))
-        return "LinkedList  [ " + "-&gt;".join(nodeStore) + " ]"
-    return "LinkedList  []"
-</code></pre>
-
-<p>def generatedLinkedList(numArray):
-    linkedlist = LinkedList()
-    for i in range(len(numArray)):
-        linkedlist.addNode(numArray[i])
-    return linkedlist</p>
-
-<p>```</p>
-
-<p>Then we will start to solve the problem:</p>
-
-<p>```python
-from LinkedList import *</p>
-
-<p>class ListsSum:
-    def addLists(self, l1, l2):
-        p1 = l1.head
-        p2 = l2.head
-        carry = 0
-        linkedlist_sum = LinkedList()
-        while (p1 != None) or (p2 != None) or (carry != 0):
-            dig_sum = carry
-            if p1 != None:
-                dig_sum += p1.value
-                p1 = p1.next
-            if p2 != None:
-                dig_sum += p2.value
-                p2 = p2.next</p>
-
-<pre><code>        linkedlist_sum.addNode(dig_sum%10)
-        carry = dig_sum/10
-    return linkedlist_sum
-</code></pre>
-
-<p>if <strong>name</strong> == ‘<strong>main</strong>’:
-    solution = ListsSum()
-    list1 = generatedLinkedList([2,4,3])
-    list2 = generatedLinkedList([5,6,4])
-    print(list1)
-    print(list2)
-    print(solution.addLists(list1,list2))</p>
-
-<p>```</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Notes on Flask]]></title>
-    <link href="http://isunix.github.io/blog/2014/08/27/notes-on-flask/"/>
-    <updated>2014-08-27T12:10:36+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/08/27/notes-on-flask</id>
-    <content type="html"><![CDATA[<p>I have been learning Flask for quite a while. This is a note to keep down of all those snippets and notes I have learnt and hope to keep it as a reminder.  </p>
-
-<p>1.if you want to get the browser info, use the following code:  </p>
-
-<p><code>py
-from flask import request
-@app.route('/')
-def index():
-	user_agent = request.headers.get('User-Agent')
-	return '&lt;p&gt;Your browser is %s&lt;/p&gt;' % user_agent
-</code>  </p>
-
-<p>2.There are two contexts in Flask: the application context and the request context.  </p>
-
-<p>3.before_first_request: Register a function to run before the first request is
-handled.  </p>
-
-<p>4.before_request: Register a function to run before each request.  </p>
-
-<p>5.after_request: Register a function to run after each request, if no unhandled exceptions occurred.  </p>
-
-<p>6.teardown_request: Register a function to run after each request, even if unhandled
-exceptions occurred.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Nohup简介]]></title>
-    <link href="http://isunix.github.io/blog/2014/08/21/nohupjian-jie/"/>
-    <updated>2014-08-21T15:45:34+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/08/21/nohupjian-jie</id>
-    <content type="html"><![CDATA[<p>我把这个东西放到Python的category里来，是因为我在写Flask的web应用的时候，遇到部署的问题，需要用到一个工具， 可以一直让这个web进程去运行。土鳖的我还以为这得用到cronjob， 其实用个工具可以帮我们完成这样的一个任务的， 这就是这篇post所要介绍的”nohup”</p>
-
-<p>比如说我现在在一个叫server.sh的文件中写入了如下的内容来run一个web server:  </p>
+<p>The for local and production env, we can issue the following commands:</p>
 
 <p><code>sh
-gunicorn -w 4 -b 0.0.0.0:1234 myapp:app
-</code>  </p>
-
-<p>首先这个Flask web apppication, 不同的框架使用gunicorn大同小异。然后使用的是gunicorn这个http server. 具体的关于gunicorn的知识可以自己去查下。只是有点是：你得先安装下的:  </p>
-
-<p><code>py
-pip install gunicorn
-</code>  </p>
-
-<p>Here the “-w” args means worker, namely 4 processes here.   </p>
-
-<p>For my application, if I want to use nohup, I will have to issue the following command. </p>
+pip install -r requirements/local.txt
+</code></p>
 
 <p><code>sh
-nohup ./server.sh &amp;
+pip install -r requirements/production.txt
 </code></p>
-
-<p>Nohuo will create a nohup.out file in the directory where you run the command. </p>
-
-<p>nohup 只不过是让进程脱离父进程, 这样即使父进程死掉，它也还在运行。</p>
-
-<p>Thus if we want to use “jobs” to see process, we will not be able to see it. we can use the “ps a” command line to see the the process.  </p>
-
-<p>使用 fg %jobnumber　会将任务拿到前台执行，拿到前台后如果要关闭这个任务按Ctrl+c组合键即可，但如果要暂停这个任务可以按Ctrl+z组合键这时就会将任务置于暂停状态。</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Check File Encoding and Convert a File to a Certain Encoding]]></title>
-    <link href="http://isunix.github.io/blog/2014/08/19/check-file-encoding-and-convert-a-file-to-a-certain-encoding/"/>
-    <updated>2014-08-19T13:58:55+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/08/19/check-file-encoding-and-convert-a-file-to-a-certain-encoding</id>
-    <content type="html"><![CDATA[<p>The case scenario is: I have namy source files of codes and the commoents there and some print messages are in English, of course I can open the file in vim and issue the following command to make them to utf-8 encoding:  </p>
-
-<p><code>vim
-:set fileencoding=utf8
-</code> <br />
-The question here is I have many files thus I do not want to do this repeatedly. So a script to ease the pain is needed.   </p>
-
-<p>If we want to know the file’s encoding, we can issue the following command:  </p>
-
-<p><code>pl
-file filename  
-or
-file -mime filename  
-</code></p>
-
-<p>Ok, I am stucked here, I have no idea how to do this ritht now. mabe later.   </p>
-
 ]]></content>
   </entry>
   

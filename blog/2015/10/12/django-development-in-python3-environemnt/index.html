@@ -5,11 +5,16 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Installing From Multiple Requirements Files - Steven's Blog</title>
+  <title>Django Development in Python3 Environemnt - Steven's Blog</title>
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="Say we want to install modules from multiple requirement files. We will put the requirement files in the directory “requirements”. First the base.txt &hellip;">
+  <meta name="description" content="What if I want to development a django app in python3 environement. Using vitualenv 1
+2
+3
+python3 -m venv sbenv
+source sbenv/bin/activate
+pip install &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +23,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://isunix.github.io/blog/2015/09/21/installing-from-multiple-requirements-files">
+  <link rel="canonical" href="http://isunix.github.io/blog/2015/10/12/django-development-in-python3-environemnt">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Steven's Blog" type="application/atom+xml">
@@ -54,7 +59,7 @@
   
   <header>
     
-      <h1 class="entry-title">Installing From Multiple Requirements Files</h1>
+      <h1 class="entry-title">Django Development in Python3 Environemnt</h1>
     
     
       <p class="meta">
@@ -70,42 +75,33 @@
   
 
 
-<time datetime="2015-09-21T16:18:23+08:00" pubdate data-updated="true">Sep 21<span>st</span>, 2015</time>
+<time datetime="2015-10-12T14:55:22+08:00" pubdate data-updated="true">Oct 12<span>th</span>, 2015</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>Say we want to install modules from multiple requirement files. We will put the requirement files in the directory “requirements”.</p>
+<div class="entry-content"><p>What if I want to development a django app in python3 environement.</p>
 
-<p>First the base.txt file.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">Django==1.7.10
-</span><span class="line">psycopg2==2.4.5</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>Then the file local.txt</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">-r base.txt
-</span><span class="line">django-discover-runner==0.2.2</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>and production.txt(production installaions should be close to what is used in other locations, so production.txt commonly just calls base.txt)</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">-r base.txt</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>The for local and production env, we can issue the following commands:</p>
+<p>Using vitualenv</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">pip install -r requirements/local.txt
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">python3 -m venv sbenv
+</span><span class="line"><span class="nb">source </span>sbenv/bin/activate
+</span><span class="line">pip install -r requirements.txt
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
+<p>Using virtualenvwrapper</p>
+
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">pip install -r requirements/production.txt
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">which python3   --to get the location of python3 interpreter
+</span><span class="line">mkvirtualenv --python<span class="o">=</span>/usr/local/bin/python3 django_dev
+</span><span class="line">workon django_dev
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 </div>
 
@@ -129,12 +125,12 @@
   
 
 
-<time datetime="2015-09-21T16:18:23+08:00" pubdate data-updated="true">Sep 21<span>st</span>, 2015</time>
+<time datetime="2015-10-12T14:55:22+08:00" pubdate data-updated="true">Oct 12<span>th</span>, 2015</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/python/'>python</a>
+    <a class='category' href='/blog/categories/django/'>Django</a>
   
 </span>
 
@@ -150,10 +146,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2015/09/15/reverse-a-linked-list-in-place/" title="Previous Post: reverse a linked list in place">&laquo; reverse a linked list in place</a>
+        <a class="basic-alignment left" href="/blog/2015/09/21/installing-from-multiple-requirements-files/" title="Previous Post: installing from multiple requirements files">&laquo; installing from multiple requirements files</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2015/10/12/django-development-in-python3-environemnt/" title="Next Post: django development in python3 environemnt">django development in python3 environemnt &raquo;</a>
       
     </p>
   </footer>

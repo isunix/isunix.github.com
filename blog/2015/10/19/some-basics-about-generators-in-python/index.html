@@ -205,6 +205,56 @@ http:// &hellip;">
 </span><span class="line"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">countdown</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
 </span><span class="line">    <span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>About how to use non-generator methods, generator methods, awk to calculate the sum of a columns of numbs.</p>
+
+<p>The records in the log file looks like this:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="mf">156.63</span><span class="o">.</span><span class="mf">68.202</span> <span class="o">-</span> <span class="o">-</span> <span class="p">[</span><span class="mi">29</span><span class="o">/</span><span class="n">Feb</span><span class="o">/</span><span class="mi">2008</span><span class="p">:</span><span class="mo">07</span><span class="p">:</span><span class="mi">49</span><span class="p">:</span><span class="mi">28</span> <span class="o">-</span><span class="mo">0600</span><span class="p">]</span> <span class="s">&quot;GET /favicon.ico HTTP/1.1&quot;</span> <span class="mi">404</span> <span class="mi">133</span>
+</span><span class="line"><span class="mf">80.161</span><span class="o">.</span><span class="mf">85.77</span> <span class="o">-</span> <span class="o">-</span> <span class="p">[</span><span class="mi">29</span><span class="o">/</span><span class="n">Feb</span><span class="o">/</span><span class="mi">2008</span><span class="p">:</span><span class="mo">07</span><span class="p">:</span><span class="mi">52</span><span class="p">:</span><span class="mi">46</span> <span class="o">-</span><span class="mo">0600</span><span class="p">]</span> <span class="s">&quot;GET /ply/ply.html HTTP/1.1&quot;</span> <span class="mi">200</span> <span class="mi">97238</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>First the non-generator method:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">wwwlog</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&quot;access-log&quot;</span><span class="p">)</span>
+</span><span class="line"><span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class="line"><span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">wwwlog</span><span class="p">:</span>
+</span><span class="line">    <span class="n">bytestr</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+</span><span class="line">    <span class="k">if</span> <span class="n">bytestr</span> <span class="o">!=</span> <span class="s">&#39;-&#39;</span><span class="p">:</span>
+</span><span class="line">        <span class="n">total</span> <span class="o">+=</span> <span class="nb">int</span><span class="p">(</span><span class="n">bytestr</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;Total&quot;</span><span class="p">,</span> <span class="n">total</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>and the generator method:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">wwwlog</span>     <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&quot;access-log&quot;</span><span class="p">)</span>
+</span><span class="line"><span class="n">bytecolumn</span> <span class="o">=</span> <span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">wwwlog</span><span class="p">)</span>
+</span><span class="line"><span class="nb">bytes</span>      <span class="o">=</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">bytecolumn</span> <span class="k">if</span> <span class="n">x</span> <span class="o">!=</span> <span class="s">&#39;-&#39;</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;Total&quot;</span><span class="p">,</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">bytes</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>and then the awk method:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="awk"><span class="line"><span class="nx">awk</span> <span class="s1">&#39;{ total += $NF } END { print total }&#39;</span> <span class="nx">access</span><span class="o">-</span><span class="kr">log</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 </div>
 
 

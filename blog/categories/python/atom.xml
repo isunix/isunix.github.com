@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Python | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/python/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2015-10-19T09:33:21+08:00</updated>
+  <updated>2015-10-19T09:42:16+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -99,6 +99,44 @@ def countdown(n):
     print(i)</p>
 
 <p>```</p>
+
+<p>About how to use non-generator methods, generator methods, awk to calculate the sum of a columns of numbs.</p>
+
+<p>The records in the log file looks like this:</p>
+
+<p><code>
+156.63.68.202 - - [29/Feb/2008:07:49:28 -0600] "GET /favicon.ico HTTP/1.1" 404 133
+80.161.85.77 - - [29/Feb/2008:07:52:46 -0600] "GET /ply/ply.html HTTP/1.1" 200 97238
+</code></p>
+
+<p>First the non-generator method:</p>
+
+<p>```py
+wwwlog = open(“access-log”)
+total = 0
+for line in wwwlog:
+    bytestr = line.rsplit(None,1)[1]
+    if bytestr != ‘-‘:
+        total += int(bytestr)</p>
+
+<p>print “Total”, total
+```</p>
+
+<p>and the generator method:</p>
+
+<p>```py
+wwwlog     = open(“access-log”)
+bytecolumn = (line.rsplit(None,1)[1] for line in wwwlog)
+bytes      = (int(x) for x in bytecolumn if x != ‘-‘)</p>
+
+<p>print “Total”, sum(bytes)
+```</p>
+
+<p>and then the awk method:</p>
+
+<p><code>awk
+awk '{ total += $NF } END { print total }' access-log
+</code></p>
 ]]></content>
   </entry>
   

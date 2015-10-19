@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Python | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/python/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2015-10-19T08:10:55+08:00</updated>
+  <updated>2015-10-19T09:11:14+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,82 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Some Basics About Generators in Python]]></title>
+    <link href="http://isunix.github.io/blog/2015/10/19/some-basics-about-generators-in-python/"/>
+    <updated>2015-10-19T08:46:43+08:00</updated>
+    <id>http://isunix.github.io/blog/2015/10/19/some-basics-about-generators-in-python</id>
+    <content type="html"><![CDATA[<p>Here below is a reference for learning python generators:</p>
+
+<p><code>html
+http://www.dabeaz.com/generators/
+http://www.dabeaz.com/finalgenerator/
+http://stackoverflow.com/questions/231767/what-does-the-yield-keyword-do-in-python/231855#231855
+</code></p>
+
+<p>A basic explanation about the “for” statement in python:</p>
+
+<p><code>py
+for x in obj:
+	#statements
+</code></p>
+
+<p>and how it is realized:</p>
+
+<p><code>py
+_iter = iter(obj)
+while 1:
+	try:
+		x = _iter.next()
+	except StopIteration:
+		break
+	#statements
+</code></p>
+
+<p>and why the “StopIteration” in the above code? It happens in iterables:</p>
+
+<p><code>py
+&gt;&gt;&gt; items = [1,2,3]
+&gt;&gt;&gt; it = iter(items)
+&gt;&gt;&gt; it.next()
+1
+&gt;&gt;&gt; it.next()
+2
+&gt;&gt;&gt; it.next()
+3
+&gt;&gt;&gt; it.next()
+Traceback (most recent call last):
+  File "&lt;input&gt;", line 1, in &lt;module&gt;
+StopIteration
+&gt;&gt;&gt;
+</code></p>
+
+<p>and now will implement a user defined object that supports iterable:</p>
+
+<p>```py
+class countdown(object):
+    def <strong>init</strong>(self, start):
+        self.count = start</p>
+
+<pre><code>def __iter__(self):
+    return self
+
+def next(self):
+    if self.count &lt;= 0:
+        raise StopIteration
+    r = self.count
+    self.count -= 1
+    return r
+</code></pre>
+
+<p>if <strong>name</strong> == ‘<strong>main</strong>’:
+    c = countdown(3)
+    for i in c:
+        print(i)
+```</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Some Python Resources to Be Referenced]]></title>
@@ -52,7 +128,10 @@ https://github.com/vinta/awesome-python
 (tools to help django develop)</p>
 
 <p>http://jessenoller.com/good-to-great-python-reads/
-(some good resources on python knowledges)
+(some good resources on python knowledges)</p>
+
+<p>http://stackoverflow.com/questions/231767/what-does-the-yield-keyword-do-in-python/231855#231855
+(about the yield keyword)
 ```</p>
 ]]></content>
   </entry>

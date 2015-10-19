@@ -4,7 +4,7 @@
   <title><![CDATA[Steven's Blog]]></title>
   <link href="http://isunix.github.io/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2015-10-19T08:10:55+08:00</updated>
+  <updated>2015-10-19T09:11:14+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,119 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Some Basics About Generators in Python]]></title>
+    <link href="http://isunix.github.io/blog/2015/10/19/some-basics-about-generators-in-python/"/>
+    <updated>2015-10-19T08:46:43+08:00</updated>
+    <id>http://isunix.github.io/blog/2015/10/19/some-basics-about-generators-in-python</id>
+    <content type="html"><![CDATA[<p>Here below is a reference for learning python generators:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line">http://www.dabeaz.com/generators/
+</span><span class="line">http://www.dabeaz.com/finalgenerator/
+</span><span class="line">http://stackoverflow.com/questions/231767/what-does-the-yield-keyword-do-in-python/231855#231855
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>A basic explanation about the “for” statement in python:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">:</span>
+</span><span class="line">	<span class="c">#statements</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>and how it is realized:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">_iter</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+</span><span class="line"><span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
+</span><span class="line">	<span class="k">try</span><span class="p">:</span>
+</span><span class="line">		<span class="n">x</span> <span class="o">=</span> <span class="n">_iter</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+</span><span class="line">	<span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
+</span><span class="line">		<span class="k">break</span>
+</span><span class="line">	<span class="c">#statements</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>and why the “StopIteration” in the above code? It happens in iterables:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="o">&gt;&gt;&gt;</span> <span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+</span><span class="line"><span class="o">&gt;&gt;&gt;</span> <span class="n">it</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>
+</span><span class="line"><span class="o">&gt;&gt;&gt;</span> <span class="n">it</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+</span><span class="line"><span class="mi">1</span>
+</span><span class="line"><span class="o">&gt;&gt;&gt;</span> <span class="n">it</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+</span><span class="line"><span class="mi">2</span>
+</span><span class="line"><span class="o">&gt;&gt;&gt;</span> <span class="n">it</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+</span><span class="line"><span class="mi">3</span>
+</span><span class="line"><span class="o">&gt;&gt;&gt;</span> <span class="n">it</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+</span><span class="line"><span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+</span><span class="line">  <span class="n">File</span> <span class="s">&quot;&lt;input&gt;&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">1</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+</span><span class="line"><span class="ne">StopIteration</span>
+</span><span class="line"><span class="o">&gt;&gt;&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>and now will implement a user defined object that supports iterable:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="k">class</span> <span class="nc">countdown</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+</span><span class="line">    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">):</span>
+</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">=</span> <span class="n">start</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class="line">        <span class="k">return</span> <span class="bp">self</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">def</span> <span class="nf">next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class="line">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+</span><span class="line">            <span class="k">raise</span> <span class="ne">StopIteration</span>
+</span><span class="line">        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">count</span>
+</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">-=</span> <span class="mi">1</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">r</span>
+</span><span class="line">
+</span><span class="line"><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+</span><span class="line">    <span class="n">c</span> <span class="o">=</span> <span class="n">countdown</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</span><span class="line">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">c</span><span class="p">:</span>
+</span><span class="line">        <span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Some Python Resources to Be Referenced]]></title>
@@ -52,6 +165,9 @@
 <span class="line-number">30</span>
 <span class="line-number">31</span>
 <span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+<span class="line-number">35</span>
 </pre></td><td class="code"><pre><code class="html"><span class="line">https://github.com/vinta/awesome-python
 </span><span class="line">(a collection of use python libraries)
 </span><span class="line">
@@ -84,6 +200,9 @@
 </span><span class="line">
 </span><span class="line">http://jessenoller.com/good-to-great-python-reads/
 </span><span class="line">(some good resources on python knowledges)
+</span><span class="line">
+</span><span class="line">http://stackoverflow.com/questions/231767/what-does-the-yield-keyword-do-in-python/231855#231855
+</span><span class="line">(about the yield keyword)
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 ]]></content>
   </entry>
@@ -1202,25 +1321,6 @@
 
 <p>Then if we still want to upgrade, we can do it when we successfully log in to the system. </p>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Alternative Way to Bypass Problems Met When Rake New_post]]></title>
-    <link href="http://isunix.github.io/blog/2015/06/01/alternative-way-to-bypass-problems-met-when-rake-new-post/"/>
-    <updated>2015-06-01T11:06:22+08:00</updated>
-    <id>http://isunix.github.io/blog/2015/06/01/alternative-way-to-bypass-problems-met-when-rake-new-post</id>
-    <content type="html"><![CDATA[<p>I met errors while I am issuing the command “rake new_post” add generate a new post. Here is an alternative way to generate new post:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="ruby"><span class="line"><span class="n">bundle</span> <span class="nb">exec</span> <span class="n">rake</span> <span class="s2">&quot;new_post[alternative way to bypass problems met when rake new_post]&quot;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>and then we can use the “Mou” app to open the page:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="ruby"><span class="line"><span class="nb">open</span> <span class="o">-</span><span class="n">a</span> <span class="no">Mou</span> <span class="n">source</span><span class="o">/</span><span class="n">_posts</span><span class="o">/</span><span class="mi">2015</span><span class="o">-</span><span class="mo">06</span><span class="o">-</span><span class="mo">01</span><span class="o">-</span><span class="n">alternative</span><span class="o">-</span><span class="n">way</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">bypass</span><span class="o">-</span><span class="n">problems</span><span class="o">-</span><span class="n">met</span><span class="o">-</span><span class="k">when</span><span class="o">-</span><span class="n">rake</span><span class="o">-</span><span class="kp">new</span><span class="o">-</span><span class="n">post</span><span class="o">.</span><span class="n">markdown</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
 ]]></content>
   </entry>
   

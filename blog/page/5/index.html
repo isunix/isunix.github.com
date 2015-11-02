@@ -68,7 +68,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/11/24/apache-setup-to-redict-a-site/">Apache Setup to Redirect a Site</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/11/24/apache-setup-to-redirect-a-site/">Apache Setup to Redirect a Site</a></h1>
     
     
       <p class="meta">
@@ -91,7 +91,7 @@
   </header>
 
 
-  <div class="entry-content"><p>While I was developing a dancer application, I usually open a new port, like goople.com:4001. Actually there is a better way to do this. </p>
+  <div class="entry-content"><p>While I was developing a dancer application, I usually open a new port, like goople.com:4001. Actually there is a better way to do this.</p>
 
 <p>On our CentOS server, in the httpd.conf file, we include the following piece to it:</p>
 
@@ -99,11 +99,11 @@
 </pre></td><td class="code"><pre><code class="html"><span class="line">Include etc/apache22/Includes/*.conf
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>If it is not already there.  </p>
+<p>If it is not already there.</p>
 
-<p>Then in the dir,  /usr/local/etc/apache22/Includes, we will write our own configuration file. </p>
+<p>Then in the dir,  /usr/local/etc/apache22/Includes, we will write our own configuration file.</p>
 
-<p>Then we can make a file named sun.conf in the Includes dir and write to it something like this:  </p>
+<p>Then we can make a file named sun.conf in the Includes dir and write to it something like this:</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
@@ -123,6 +123,35 @@
 </span><span class="line"><span class="nt">&lt;/Directory&gt;</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
+<p>Of course we have another way for this:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line">NameVirtualHost *:8080
+</span><span class="line"><span class="nt">&lt;VirtualHost</span> <span class="err">*</span><span class="na">:8080</span><span class="nt">&gt;</span>
+</span><span class="line">    DocumentRoot &quot;/Users/sun/w&quot;
+</span><span class="line">    <span class="nt">&lt;Directory</span> <span class="err">&quot;/</span><span class="na">Users</span><span class="err">/</span><span class="na">sun</span><span class="err">/</span><span class="na">w</span><span class="err">&quot;</span><span class="nt">&gt;</span>
+</span><span class="line">        DirectoryIndex index.html
+</span><span class="line">        AddHandler cgi-script .py .pl
+</span><span class="line">        AddType text/html .py .html .pl
+</span><span class="line">        Options ExecCGI
+</span><span class="line">        Order Allow,Deny
+</span><span class="line">        AllowOverride All
+</span><span class="line">        Allow from all
+</span><span class="line">    <span class="nt">&lt;/Directory&gt;</span>
+</span><span class="line"><span class="nt">&lt;/VirtualHost&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 </div>
   
   

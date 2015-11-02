@@ -5,18 +5,21 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Resources for Learning Wsgi - Steven's Blog</title>
+  <title>Trap Interrupts in Shell Scripts - Steven's Blog</title>
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="Here below are some resources I used to learn wsgi and tornado werkzeug. wsgi: 1
+  <meta name="description" content="Today I met some shell scirpts like the following: 1
+trap &quot;rm -f $file; exit&quot; INT TERM EXIT More code here: 1
 2
 3
 4
 5
 6
-https://brodie.io/journal/why-wsgi/
-http://wsgi. &hellip;">
+7
+8
+9
+cleanup() { &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -25,7 +28,7 @@ http://wsgi. &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://isunix.github.io/blog/2015/10/27/resources-for-learning-wsgi">
+  <link rel="canonical" href="http://isunix.github.io/blog/2015/11/02/trap-interrupts-in-shell-scripts">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Steven's Blog" type="application/atom+xml">
@@ -61,7 +64,7 @@ http://wsgi. &hellip;">
   
   <header>
     
-      <h1 class="entry-title">Resources for Learning Wsgi</h1>
+      <h1 class="entry-title">Trap Interrupts in Shell Scripts</h1>
     
     
       <p class="meta">
@@ -77,18 +80,19 @@ http://wsgi. &hellip;">
   
 
 
-<time datetime="2015-10-27T16:14:52+08:00" pubdate data-updated="true">Oct 27<span>th</span>, 2015</time>
+<time datetime="2015-11-02T14:45:18+08:00" pubdate data-updated="true">Nov 2<span>nd</span>, 2015</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>Here below are some resources I used to learn wsgi and tornado werkzeug.</p>
+<div class="entry-content"><p>Today I met some shell scirpts like the following:</p>
 
-<ol>
-  <li>wsgi:</li>
-</ol>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nb">trap</span> <span class="s2">&quot;rm -f $file; exit&quot;</span> INT TERM EXIT
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>More code here:</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
@@ -96,32 +100,28 @@ http://wsgi. &hellip;">
 <span class="line-number">4</span>
 <span class="line-number">5</span>
 <span class="line-number">6</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line">https://brodie.io/journal/why-wsgi/
-</span><span class="line">http://wsgi.readthedocs.org/en/latest/what.html
-</span><span class="line">https://www.python.org/dev/peps/pep-3333/
-</span><span class="line">http://wsgi.readthedocs.org/en/latest/learn.html
-</span><span class="line">http://wsgi.tutorial.codepoint.net/
-</span><span class="line">http://linuxgazette.net/115/orr.html
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cleanup<span class="o">()</span> <span class="o">{</span>
+</span><span class="line">    <span class="nb">echo</span> <span class="s2">&quot;Cleaning stuff up...&quot;</span>
+</span><span class="line">    <span class="nb">exit</span>
+</span><span class="line"><span class="o">}</span>
+</span><span class="line">
+</span><span class="line"><span class="nb">trap </span>cleanup INT TERM
+</span><span class="line"><span class="nb">echo</span> <span class="s1">&#39; --- press ENTER to close --- &#39;</span>
+</span><span class="line"><span class="nb">read </span>var
+</span><span class="line">cleanup
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<ol>
-  <li>werkzeug:</li>
-</ol>
+<p>change “trap cleanup INT TERM” above to “trap cleanup INT TERM EXIT” and then execute the script. Enter ‘exit’ and see what differences will happen.</p>
+
+<p>The following are references:</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line">http://werkzeug.pocoo.org/
-</span><span class="line">https://github.com/mitsuhiko/werkzeug
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ol>
-  <li>websocket:</li>
-</ol>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line">http://buildnewgames.com/websockets/
-</span><span class="line">http://rz.scale-it.pl/2013/01/25/tornado___the_best_web_framework.html
+</pre></td><td class="code"><pre><code class="html"><span class="line">http://unix.stackexchange.com/questions/57940/trap-int-term-exit-really-necessary
+</span><span class="line">http://kb.mit.edu/confluence/pages/viewpage.action?pageId=3907156
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 </div>
 
@@ -145,12 +145,12 @@ http://wsgi. &hellip;">
   
 
 
-<time datetime="2015-10-27T16:14:52+08:00" pubdate data-updated="true">Oct 27<span>th</span>, 2015</time>
+<time datetime="2015-11-02T14:45:18+08:00" pubdate data-updated="true">Nov 2<span>nd</span>, 2015</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/python/'>python</a>
+    <a class='category' href='/blog/categories/shell/'>shell</a>
   
 </span>
 
@@ -166,10 +166,8 @@ http://wsgi. &hellip;">
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2015/10/23/django-shell-usage/" title="Previous Post: django shell usage">&laquo; django shell usage</a>
+        <a class="basic-alignment left" href="/blog/2015/10/27/resources-for-learning-wsgi/" title="Previous Post: resources for learning wsgi">&laquo; resources for learning wsgi</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2015/11/02/trap-interrupts-in-shell-scripts/" title="Next Post: trap interrupts in shell scripts">trap interrupts in shell scripts &raquo;</a>
       
     </p>
   </footer>

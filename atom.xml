@@ -4,7 +4,7 @@
   <title><![CDATA[Steven's Blog]]></title>
   <link href="http://isunix.github.io/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2015-10-27T16:31:33+08:00</updated>
+  <updated>2015-11-02T15:05:44+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,50 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Trap Interrupts in Shell Scripts]]></title>
+    <link href="http://isunix.github.io/blog/2015/11/02/trap-interrupts-in-shell-scripts/"/>
+    <updated>2015-11-02T14:45:18+08:00</updated>
+    <id>http://isunix.github.io/blog/2015/11/02/trap-interrupts-in-shell-scripts</id>
+    <content type="html"><![CDATA[<p>Today I met some shell scirpts like the following:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nb">trap</span> <span class="s2">&quot;rm -f $file; exit&quot;</span> INT TERM EXIT
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>More code here:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cleanup<span class="o">()</span> <span class="o">{</span>
+</span><span class="line">    <span class="nb">echo</span> <span class="s2">&quot;Cleaning stuff up...&quot;</span>
+</span><span class="line">    <span class="nb">exit</span>
+</span><span class="line"><span class="o">}</span>
+</span><span class="line">
+</span><span class="line"><span class="nb">trap </span>cleanup INT TERM
+</span><span class="line"><span class="nb">echo</span> <span class="s1">&#39; --- press ENTER to close --- &#39;</span>
+</span><span class="line"><span class="nb">read </span>var
+</span><span class="line">cleanup
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>change “trap cleanup INT TERM” above to “trap cleanup INT TERM EXIT” and then execute the script. Enter ‘exit’ and see what differences will happen.</p>
+
+<p>The following are references:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line">http://unix.stackexchange.com/questions/57940/trap-int-term-exit-really-necessary
+</span><span class="line">http://kb.mit.edu/confluence/pages/viewpage.action?pageId=3907156
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Resources for Learning Wsgi]]></title>
@@ -1472,19 +1516,6 @@
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>It is back to normal.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Find Cgi-bin Dir on a Linux Server]]></title>
-    <link href="http://isunix.github.io/blog/2015/06/09/find-cgi-bin-dir-on-a-linux-server/"/>
-    <updated>2015-06-09T18:49:22+08:00</updated>
-    <id>http://isunix.github.io/blog/2015/06/09/find-cgi-bin-dir-on-a-linux-server</id>
-    <content type="html"><![CDATA[<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line">ps -ef | grep cgi
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>On my server, this will give out the cgi-bin dir.</p>
 ]]></content>
   </entry>
   

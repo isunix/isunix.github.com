@@ -9,7 +9,12 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="Say we want to install modules from multiple requirement files. We will put the requirement files in the directory “requirements”. First the base.txt &hellip;">
+  <meta name="description" content="What if I want to development a django app in python3 environement. Using vitualenv 1
+2
+3
+python3 -m venv sbenv
+source sbenv/bin/activate
+pip install &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -62,6 +67,62 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/10/12/django-development-in-python3-environemnt/">Django Development in Python3 Environemnt</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-10-12T14:55:22+08:00" pubdate data-updated="true">Oct 12<span>th</span>, 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>What if I want to development a django app in python3 environement.</p>
+
+<p>Using vitualenv</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">python3 -m venv sbenv
+</span><span class="line"><span class="nb">source </span>sbenv/bin/activate
+</span><span class="line">pip install -r requirements.txt
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Using virtualenvwrapper</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">which python3   --to get the location of python3 interpreter
+</span><span class="line">mkvirtualenv --python<span class="o">=</span>/usr/local/bin/python3 django_dev
+</span><span class="line">workon django_dev
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1175,86 +1236,6 @@
 </span><span class="line">    <span class="k">print</span><span class="p">(</span><span class="n">list1</span><span class="p">)</span>
 </span><span class="line">    <span class="k">print</span><span class="p">(</span><span class="n">list2</span><span class="p">)</span>
 </span><span class="line">    <span class="k">print</span><span class="p">(</span><span class="n">solution</span><span class="o">.</span><span class="n">addLists</span><span class="p">(</span><span class="n">list1</span><span class="p">,</span><span class="n">list2</span><span class="p">))</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/07/20/tap-method-in-ruby/">Tap Method in Ruby</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-07-20T15:31:51+08:00" pubdate data-updated="true">Jul 20<span>th</span>, 2015</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>There is a “tap” method in Ruby and I find it is very useful.</p>
-
-<p>The definitionof “tap” in ruby documentaion is:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">Yields self to the block, and then returns self. The primary purpose of this method is to “tap into” a method chain, in order to perform operations on intermediate results within the chain.</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>Put it anonther way:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">It’s a helper for call chaining. It passes its object into the given block and, after the block finishes, returns the object:</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="ruby"><span class="line"><span class="n">an_object</span><span class="o">.</span><span class="n">tap</span> <span class="k">do</span> <span class="o">|</span><span class="n">o</span><span class="o">|</span>
-</span><span class="line">  <span class="c1"># do stuff with an_object, which is in o</span>
-</span><span class="line"><span class="k">end</span> <span class="c1"># ===&gt; an_object</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>Another example:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-</pre></td><td class="code"><pre><code class="ruby"><span class="line"><span class="k">def</span> <span class="nf">hash_table</span><span class="p">(</span><span class="n">numbers</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
-</span><span class="line">    <span class="o">[].</span><span class="n">tap</span> <span class="k">do</span> <span class="o">|</span><span class="n">result</span><span class="o">|</span>
-</span><span class="line">      <span class="nb">hash</span> <span class="o">=</span> <span class="p">{}</span>
-</span><span class="line">      <span class="n">numbers</span><span class="o">.</span><span class="n">each_with_index</span> <span class="k">do</span> <span class="o">|</span> <span class="n">n</span><span class="p">,</span> <span class="n">i</span> <span class="o">|</span>
-</span><span class="line">        <span class="k">if</span> <span class="n">j</span> <span class="o">=</span> <span class="nb">hash</span><span class="o">[</span><span class="n">target</span> <span class="o">-</span> <span class="n">n</span><span class="o">]</span>
-</span><span class="line">          <span class="k">return</span> <span class="n">result</span> <span class="o">&lt;&lt;</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
-</span><span class="line">        <span class="k">end</span>
-</span><span class="line">        <span class="nb">hash</span><span class="o">[</span><span class="n">n</span><span class="o">]</span> <span class="o">=</span> <span class="n">i</span>
-</span><span class="line">      <span class="k">end</span>
-</span><span class="line">    <span class="k">end</span>
-</span><span class="line">  <span class="k">end</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 </div>
   

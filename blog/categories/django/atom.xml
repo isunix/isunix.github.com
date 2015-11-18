@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Django | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/django/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2015-11-18T11:25:19+08:00</updated>
+  <updated>2015-11-18T17:04:45+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,56 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Django Admin: Changing the Page Header]]></title>
+    <link href="http://isunix.github.io/blog/2015/11/18/django-admin-changing-the-page-header/"/>
+    <updated>2015-11-18T16:58:31+08:00</updated>
+    <id>http://isunix.github.io/blog/2015/11/18/django-admin-changing-the-page-header</id>
+    <content type="html"><![CDATA[<p>This post shows how to change the header of the django admin page.</p>
+
+<p>The blog for reference is:</p>
+
+<p><code>html
+http://www.mc706.com/tip_trick_snippets/42/django-admin-changing-the-page-header/
+</code>
+I will summarize its steps here:</p>
+
+<p>1.Make sure the “TEMPLATE_DIRS” setup is correct(under the project’s root directory):</p>
+
+<p><code>py
+TEMPLATE_DIRS = (os.path.join(os.path.dirname(__file__), '..', 'templates').replace('\\','/'),)
+</code></p>
+
+<p>2.create “admin” directory in the “templates” dir</p>
+
+<p>3.In “templates/admin” directory, create the file “base_site.html”.</p>
+
+<p>4.Put the following things to the file “templates/admin/base_site.html” and modify it to suit your own usage.</p>
+
+<p>```html
+{% extends “admin/base.html” %}
+{% load i18n %}</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>{% block title %}{{ title }}</td>
+      <td>{% trans ‘Your title here’ %}{% endblock %}</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>{% block branding %}
+&lt;h1 id="site-name"&gt;{% trans ‘New Header Here’ %}&lt;/h1&gt;
+{% endblock %}</p>
+
+<p>{% block nav-global %}{% endblock %}
+```</p>
+
+<p>Refresh the amdin page and now you will see what you have updated.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Resources on Python Web Frameworks]]></title>

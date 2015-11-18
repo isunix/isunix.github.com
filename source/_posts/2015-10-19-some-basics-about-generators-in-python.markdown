@@ -85,3 +85,48 @@ for i in countdown(5):
     print(i)
 
 ```
+
+
+About how to use non-generator methods, generator methods, awk to calculate the sum of a columns of numbs.
+
+The records in the log file looks like this:
+
+```
+156.63.68.202 - - [29/Feb/2008:07:49:28 -0600] "GET /favicon.ico HTTP/1.1" 404 133
+80.161.85.77 - - [29/Feb/2008:07:52:46 -0600] "GET /ply/ply.html HTTP/1.1" 200 97238
+```
+
+First the non-generator method:
+
+```py
+wwwlog = open("access-log")
+total = 0
+for line in wwwlog:
+    bytestr = line.rsplit(None,1)[1]
+    if bytestr != '-':
+        total += int(bytestr)
+
+print "Total", total
+```
+
+and the generator method:
+
+```py
+wwwlog     = open("access-log")
+bytecolumn = (line.rsplit(None,1)[1] for line in wwwlog)
+bytes      = (int(x) for x in bytecolumn if x != '-')
+
+print "Total", sum(bytes)
+```
+
+and then the awk method:
+
+```awk
+awk '{ total += $NF } END { print total }' access-log
+```
+
+PS: (a very useful shell script tutorial)
+
+```html
+http://www.grymoire.com/Unix/Sh.html
+```

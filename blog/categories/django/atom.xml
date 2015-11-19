@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Django | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/django/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2015-11-19T12:33:24+08:00</updated>
+  <updated>2015-11-19T16:46:52+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,34 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Css Files Not Function Well While Using Gunicorn]]></title>
+    <link href="http://isunix.github.io/blog/2015/11/19/css-files-not-function-well-while-using-gunicorn/"/>
+    <updated>2015-11-19T16:42:04+08:00</updated>
+    <id>http://isunix.github.io/blog/2015/11/19/css-files-not-function-well-while-using-gunicorn</id>
+    <content type="html"><![CDATA[<p>I find that my bootstap files not working well while I am using gunicorn to start the app.</p>
+
+<p><code>sh
+gunicorn --env DJANGO_SETTINGS_MODULE=myapp.settings myapp_management.wsgi --timeout 300 --workers=2 --pid gunicorn.pid -b 0:10000 --access-logfile=log/access_charts.log --error-logfile=log/error_charts.log --access-logformat '"%(h)s %(l)s %(u)s %(t)s "%(r)s" %(s)s %(b)s "%(f)s" "%(a)s" %(D)s %(p)s'
+</code></p>
+
+<p>I find a solution for this:</p>
+
+<p><code>html
+http://stackoverflow.com/questions/12800862/django-static-files-under-gunicorn
+</code></p>
+
+<p>To summarize it here, add the following contents to the urls.py file.</p>
+
+<p>```sh
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns</p>
+
+<p>urlpatterns += staticfiles_urlpatterns()
+```</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Django Admin: Changing the Page Header]]></title>

@@ -4,7 +4,7 @@
   <title><![CDATA[Steven's Blog]]></title>
   <link href="http://isunix.github.io/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2015-11-23T13:44:31+08:00</updated>
+  <updated>2015-11-23T17:25:40+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,46 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Find the Common Lines in Multiple Files]]></title>
+    <link href="http://isunix.github.io/blog/2015/11/23/find-the-common-lines-in-multiple-files/"/>
+    <updated>2015-11-23T17:22:11+08:00</updated>
+    <id>http://isunix.github.io/blog/2015/11/23/find-the-common-lines-in-multiple-files</id>
+    <content type="html"><![CDATA[<p>What if I want to find the lines exist in all the given files under linux. Of course I can write a small script but I do not want to do that, cause I am sure there are commands for this kind of task.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">grep -F -x -f file1 file2 ...
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>you can refer to the following page for more details.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line">http://unix.stackexchange.com/questions/28158/is-there-a-tool-to-get-the-lines-in-one-file-that-are-not-in-another
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Sort Then Uinq vs Uniq Then Sort]]></title>
+    <link href="http://isunix.github.io/blog/2015/11/23/sort-then-uinq-vs-uniq-then-sort/"/>
+    <updated>2015-11-23T17:19:54+08:00</updated>
+    <id>http://isunix.github.io/blog/2015/11/23/sort-then-uinq-vs-uniq-then-sort</id>
+    <content type="html"><![CDATA[<table>
+  <tbody>
+    <tr>
+      <td>In linux is there any difference between “sort</td>
+      <td>uniq” and “uniq</td>
+      <td>sort”? If you are not sure, try it first. If you are not sure why, think about it for a while or reference this post:</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line">http://stackoverflow.com/questions/1402223/calling-uniq-and-sort-in-different-orders-in-shell
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Underscore in Python's Variable Name]]></title>
@@ -1069,273 +1109,6 @@
 </span><span class="line"><span class="k">while</span> <span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
 </span><span class="line">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">val</span><span class="p">);</span>
 </span><span class="line">  <span class="nx">result</span> <span class="o">=</span> <span class="nx">result</span><span class="p">.</span><span class="nx">next</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Useful Bash Scripts]]></title>
-    <link href="http://isunix.github.io/blog/2015/09/10/useful-bash-scripts/"/>
-    <updated>2015-09-10T11:31:53+08:00</updated>
-    <id>http://isunix.github.io/blog/2015/09/10/useful-bash-scripts</id>
-    <content type="html"><![CDATA[<p>This post keeps notes of some useful bash scripts or one liners.</p>
-
-<p>1.find files with txt ext in the current dir and print out those files to be deleted and then delete those files.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">find . -type f -name <span class="s2">&quot;*.txt&quot;</span> -print |xargs -I <span class="o">{}</span> sh -c <span class="s2">&quot;echo deleting {}; rm {}&quot;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>2.find files with txt ext in the current dir and mv those files to another dir with amount of files limited to a certain number:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">find ./ -type f -name <span class="s2">&quot;*.txt&quot;</span>| xargs -L56 -I <span class="o">{}</span> mv -f <span class="o">{}</span> ./old/
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>3.Almost same with step 2, but also print out the steps taken in the command line:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">find ./ -type f -name <span class="s2">&quot;*.txt&quot;</span>| xargs -L56 -I <span class="o">{}</span> -t mv <span class="o">{}</span> ./old/
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>4.find if a dir is a subdir of another dir:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nv">dir_a</span><span class="o">=</span><span class="s2">&quot;/home/stsun&quot;</span>
-</span><span class="line"><span class="nv">dir_b</span><span class="o">=</span><span class="s2">&quot;/home/stsun/work/spam&quot;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;${dir_b}&quot;</span> <span class="o">==</span> <span class="s2">&quot;${dir_a}&quot;</span>* <span class="o">]]</span>
-</span><span class="line"><span class="k">then</span>
-</span><span class="line">    <span class="c"># Get the subdirectory only</span>
-</span><span class="line">    <span class="nv">SUBDIR</span><span class="o">=</span><span class="k">${</span><span class="nv">dir_b</span><span class="p">#</span><span class="k">${</span><span class="nv">dir_a</span><span class="k">}</span><span class="p">/</span><span class="k">}</span>
-</span><span class="line">    <span class="nb">printf</span> <span class="s2">&quot;SUBDIR is $SUBDIR\n&quot;</span>
-</span><span class="line">    <span class="nv">BASE</span><span class="o">=</span><span class="k">${</span><span class="nv">dir_a</span><span class="k">}</span>/<span class="k">${</span><span class="nv">SUBDIR</span><span class="p">%%/*</span><span class="k">}</span>
-</span><span class="line">    <span class="nb">printf</span> <span class="s2">&quot;BASE is ${BASE}\n&quot;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">else</span>
-</span><span class="line"><span class="k">    </span><span class="nb">printf</span> <span class="s2">&quot;Error: ${dir_b} is not in ${dir_a}\n&quot;</span>
-</span><span class="line">    <span class="nb">exit </span>1
-</span><span class="line"><span class="k">fi</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Linked List in Perl]]></title>
-    <link href="http://isunix.github.io/blog/2015/09/07/linked-list-in-perl/"/>
-    <updated>2015-09-07T12:30:05+08:00</updated>
-    <id>http://isunix.github.io/blog/2015/09/07/linked-list-in-perl</id>
-    <content type="html"><![CDATA[<p>We will use linked list to output words in a file in alphabetical order. This example is in:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line">http://man.ddvip.com/web/perl/perl9.htm#10.1
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-<span class="line-number">28</span>
-<span class="line-number">29</span>
-<span class="line-number">30</span>
-<span class="line-number">31</span>
-<span class="line-number">32</span>
-<span class="line-number">33</span>
-<span class="line-number">34</span>
-<span class="line-number">35</span>
-<span class="line-number">36</span>
-<span class="line-number">37</span>
-<span class="line-number">38</span>
-<span class="line-number">39</span>
-<span class="line-number">40</span>
-<span class="line-number">41</span>
-<span class="line-number">42</span>
-<span class="line-number">43</span>
-<span class="line-number">44</span>
-<span class="line-number">45</span>
-<span class="line-number">46</span>
-<span class="line-number">47</span>
-<span class="line-number">48</span>
-<span class="line-number">49</span>
-<span class="line-number">50</span>
-<span class="line-number">51</span>
-<span class="line-number">52</span>
-<span class="line-number">53</span>
-<span class="line-number">54</span>
-<span class="line-number">55</span>
-<span class="line-number">56</span>
-<span class="line-number">57</span>
-<span class="line-number">58</span>
-<span class="line-number">59</span>
-<span class="line-number">60</span>
-<span class="line-number">61</span>
-<span class="line-number">62</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="n">utf8</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="nv">$header</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="k">while</span> <span class="p">(</span> <span class="nv">$line</span> <span class="o">=</span> <span class="sr">&lt;STDIN&gt;</span> <span class="p">)</span> <span class="p">{</span>
-</span><span class="line">    <span class="nb">chomp</span><span class="p">;</span>
-</span><span class="line">    <span class="nv">@words</span> <span class="o">=</span> <span class="nb">split</span><span class="p">(</span><span class="sr"> /\s+/</span><span class="p">,</span> <span class="nv">$line</span> <span class="p">);</span>
-</span><span class="line">    <span class="k">foreach</span> <span class="k">my</span> <span class="nv">$word</span> <span class="p">(</span><span class="nv">@words</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">        <span class="c1">##remove punctuation and transform from uppercase to lower case.</span>
-</span><span class="line">
-</span><span class="line">        <span class="nv">$word</span> <span class="o">=~</span> <span class="sr">s/[,.:;-]//</span><span class="p">;</span>
-</span><span class="line">        <span class="nv">$word</span> <span class="o">=~</span> <span class="nb">tr</span><span class="sr">/A-Z/</span><span class="n">a</span><span class="o">-</span><span class="n">z</span><span class="o">/</span><span class="p">;</span>
-</span><span class="line">        <span class="o">&amp;</span><span class="n">add_word_to_list</span><span class="p">(</span><span class="nv">$word</span><span class="p">);</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="o">&amp;</span><span class="n">print_list</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">sub </span><span class="nf">add_word_to_list</span> <span class="p">{</span>
-</span><span class="line">
-</span><span class="line">    <span class="c1">#these two are lists.</span>
-</span><span class="line">    <span class="k">my</span> <span class="p">(</span><span class="nv">$word</span><span class="p">)</span> <span class="o">=</span> <span class="nv">@_</span><span class="p">;</span>
-</span><span class="line">    <span class="k">my</span> <span class="p">(</span><span class="nv">$pointer</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line">    <span class="c1"># if list is empty, add first item;</span>
-</span><span class="line">    <span class="k">if</span> <span class="p">(</span> <span class="nv">$header</span> <span class="ow">eq</span> <span class="s">&quot;&quot;</span> <span class="p">)</span> <span class="p">{</span>
-</span><span class="line">        <span class="nv">$header</span> <span class="o">=</span> <span class="nv">$word</span><span class="p">;</span>
-</span><span class="line">        <span class="nv">$wordlist</span><span class="p">{</span><span class="nv">$word</span><span class="p">}</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="p">;</span>
-</span><span class="line">        <span class="k">return</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">
-</span><span class="line">    <span class="c1"># if word identical to first element in list, do nothing</span>
-</span><span class="line">    <span class="k">return</span> <span class="k">if</span> <span class="p">(</span> <span class="nv">$header</span> <span class="ow">eq</span> <span class="nv">$word</span> <span class="p">);</span>
-</span><span class="line">
-</span><span class="line">    <span class="c1"># to see if word should be the new first word in the list.</span>
-</span><span class="line">
-</span><span class="line">    <span class="k">if</span> <span class="p">(</span> <span class="nv">$header</span> <span class="ow">gt</span> <span class="nv">$word</span> <span class="p">)</span> <span class="p">{</span>
-</span><span class="line">        <span class="nv">$wordlist</span><span class="p">{</span><span class="nv">$word</span><span class="p">}</span> <span class="o">=</span> <span class="nv">$header</span><span class="p">;</span>
-</span><span class="line">        <span class="nv">$header</span> <span class="o">=</span> <span class="nv">$word</span><span class="p">;</span>
-</span><span class="line">        <span class="k">return</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">
-</span><span class="line">    <span class="c1"># find place where the word belongs</span>
-</span><span class="line">    <span class="nv">$pointer</span> <span class="o">=</span> <span class="nv">$header</span><span class="p">;</span>
-</span><span class="line">    <span class="k">while</span> <span class="p">(</span> <span class="nv">$wordlist</span><span class="p">{</span><span class="nv">$pointer</span><span class="p">}</span> <span class="ow">ne</span> <span class="s">&quot;&quot;</span> <span class="o">&amp;&amp;</span> <span class="nv">$wordlist</span><span class="p">{</span><span class="nv">$pointer</span><span class="p">}</span> <span class="ow">lt</span> <span class="nv">$word</span> <span class="p">)</span> <span class="p">{</span>
-</span><span class="line">        <span class="nv">$pointer</span> <span class="o">=</span> <span class="nv">$wordlist</span><span class="p">{</span><span class="nv">$pointer</span><span class="p">};</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">
-</span><span class="line">    <span class="c1"># if the word seen already, do nothing</span>
-</span><span class="line">    <span class="k">return</span> <span class="k">if</span> <span class="p">(</span> <span class="nv">$word</span> <span class="ow">eq</span> <span class="nv">$wordlist</span><span class="p">{</span><span class="nv">$pointer</span><span class="p">}</span> <span class="p">);</span>
-</span><span class="line">    <span class="nv">$wordlist</span><span class="p">{</span><span class="nv">$word</span><span class="p">}</span>    <span class="o">=</span> <span class="nv">$wordlist</span><span class="p">{</span><span class="nv">$pointer</span><span class="p">};</span>
-</span><span class="line">    <span class="nv">$wordlist</span><span class="p">{</span><span class="nv">$pointer</span><span class="p">}</span> <span class="o">=</span> <span class="nv">$word</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="k">sub </span><span class="nf">print_list</span> <span class="p">{</span>
-</span><span class="line">    <span class="nb">local</span> <span class="p">(</span><span class="nv">$pointer</span><span class="p">);</span>
-</span><span class="line">    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Words in the input are:\n&quot;</span><span class="p">);</span>
-</span><span class="line">    <span class="nv">$pointer</span> <span class="o">=</span> <span class="nv">$header</span><span class="p">;</span>
-</span><span class="line">    <span class="k">while</span> <span class="p">(</span> <span class="nv">$pointer</span> <span class="ow">ne</span> <span class="s">&quot;&quot;</span> <span class="p">)</span> <span class="p">{</span>
-</span><span class="line">        <span class="k">print</span><span class="p">(</span><span class="s">&quot;$pointer\n&quot;</span><span class="p">);</span>
-</span><span class="line">        <span class="nv">$pointer</span> <span class="o">=</span> <span class="nv">$wordlist</span><span class="p">{</span><span class="nv">$pointer</span><span class="p">};</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>and for a tree structure:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-<span class="line-number">28</span>
-<span class="line-number">29</span>
-<span class="line-number">30</span>
-<span class="line-number">31</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="n">utf8</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">my</span> <span class="nv">$rootname</span> <span class="o">=</span> <span class="s">&quot;parent&quot;</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">my</span> <span class="nv">%tree</span> <span class="o">=</span> <span class="p">(</span>
-</span><span class="line">    <span class="s">&quot;parentleft&quot;</span><span class="p">,</span> <span class="s">&quot;child1&quot;</span><span class="p">,</span>      <span class="s">&quot;parentright&quot;</span><span class="p">,</span> <span class="s">&quot;child2&quot;</span><span class="p">,</span>
-</span><span class="line">    <span class="s">&quot;child1left&quot;</span><span class="p">,</span> <span class="s">&quot;grandchild1&quot;</span><span class="p">,</span> <span class="s">&quot;child1right&quot;</span><span class="p">,</span> <span class="s">&quot;grandchild2&quot;</span><span class="p">,</span>
-</span><span class="line">    <span class="s">&quot;child2left&quot;</span><span class="p">,</span> <span class="s">&quot;grandchild3&quot;</span><span class="p">,</span> <span class="s">&quot;child2right&quot;</span><span class="p">,</span> <span class="s">&quot;grandchild4&quot;</span>
-</span><span class="line"><span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="c1"># traverse tree, printing its elements</span>
-</span><span class="line"><span class="o">&amp;</span><span class="n">print_tree</span><span class="p">(</span><span class="nv">$rootname</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="k">sub </span><span class="nf">print_tree</span> <span class="p">{</span>
-</span><span class="line">    <span class="nb">local</span> <span class="p">(</span><span class="nv">$nodename</span><span class="p">)</span> <span class="o">=</span> <span class="nv">@_</span><span class="p">;</span>
-</span><span class="line">    <span class="nb">local</span> <span class="p">(</span> <span class="nv">$leftchildname</span><span class="p">,</span> <span class="nv">$rightchildname</span> <span class="p">);</span>
-</span><span class="line">
-</span><span class="line">    <span class="nv">$leftchildname</span>  <span class="o">=</span> <span class="nv">$nodename</span> <span class="o">.</span> <span class="s">&quot;left&quot;</span><span class="p">;</span>
-</span><span class="line">    <span class="nv">$rightchildname</span> <span class="o">=</span> <span class="nv">$nodename</span> <span class="o">.</span> <span class="s">&quot;right&quot;</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line">    <span class="c1"># this is a left-order traversal.</span>
-</span><span class="line">
-</span><span class="line">    <span class="k">if</span> <span class="p">(</span> <span class="nv">$tree</span><span class="p">{</span><span class="nv">$leftchildname</span><span class="p">}</span> <span class="ow">ne</span> <span class="s">&quot;&quot;</span> <span class="p">)</span> <span class="p">{</span>
-</span><span class="line">        <span class="o">&amp;</span><span class="n">print_tree</span><span class="p">(</span> <span class="nv">$tree</span><span class="p">{</span><span class="nv">$leftchildname</span><span class="p">}</span> <span class="p">);</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">    <span class="k">print</span><span class="p">(</span><span class="s">&quot;$nodename\n&quot;</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line">    <span class="k">if</span> <span class="p">(</span> <span class="nv">$tree</span><span class="p">{</span><span class="nv">$rightchildname</span><span class="p">}</span> <span class="ow">ne</span> <span class="s">&quot;&quot;</span> <span class="p">)</span> <span class="p">{</span>
-</span><span class="line">        <span class="o">&amp;</span><span class="n">print_tree</span><span class="p">(</span> <span class="nv">$tree</span><span class="p">{</span><span class="nv">$rightchildname</span><span class="p">}</span> <span class="p">);</span>
-</span><span class="line">    <span class="p">}</span>
 </span><span class="line"><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 ]]></content>

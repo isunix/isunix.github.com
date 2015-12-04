@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Python | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/python/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2015-12-02T17:27:04+08:00</updated>
+  <updated>2015-12-04T14:53:00+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,53 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Use Python Request to Download Movies]]></title>
+    <link href="http://isunix.github.io/blog/2015/12/04/use-python-request-to-download-movies/"/>
+    <updated>2015-12-04T14:50:25+08:00</updated>
+    <id>http://isunix.github.io/blog/2015/12/04/use-python-request-to-download-movies</id>
+    <content type="html"><![CDATA[<p>This post shows a working way to download movies using python requests module.</p>
+
+<p>```py
+import requests
+import re
+import sys</p>
+
+<p>class MovieDownload:
+    def <strong>init</strong>(self, url):
+        self.url = url
+        if self.url.<strong>contains</strong>(‘//’):
+            self.download_movie()
+        else:
+            print(“wrong url entered”)</p>
+
+<pre><code>def download_movie(self):
+    r = requests.get(self.url)
+    pattern_title = re.compile('&lt;h2 class="entry_title"&gt;(.*?)&lt;/h2&gt;')
+    title = re.findall(pattern_title, r.text)[0].split('/')[0]
+    pattern_to_download = re.compile('&lt;li&gt;&lt;a href="(.*?)"&gt;.*?1024\.mkv.*?&lt;/a&gt;')
+    movie_urls = re.findall(pattern_to_download, r.text)
+
+    with open('movie.txt', 'w') as f:
+        print("There are {} urls here!\n".format(len(movie_urls)))
+        f.write("There are {} urls here!\n\n".format(len(movie_urls)))
+        for movie_url in movie_urls:
+            print("{}\n".format(movie_url))
+            f.write("{}\n\n".format(movie_url))
+</code></pre>
+
+<p>url = “http://cn163.net/archives/3639/”
+MovieDownload(url)
+```</p>
+
+<p>and then execute the script as:</p>
+
+<p><code>sh
+python3 movie_download.py
+</code></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Underscore in Python's Variable Name]]></title>
@@ -97,20 +144,6 @@ https://github.com/mitsuhiko/werkzeug
 <p><code>html
 http://buildnewgames.com/websockets/
 http://rz.scale-it.pl/2013/01/25/tornado___the_best_web_framework.html
-</code></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[About Decorator and @app.route in Flask]]></title>
-    <link href="http://isunix.github.io/blog/2015/10/23/about-decorator-and-at-app-dot-route-in-flask/"/>
-    <updated>2015-10-23T14:09:30+08:00</updated>
-    <id>http://isunix.github.io/blog/2015/10/23/about-decorator-and-at-app-dot-route-in-flask</id>
-    <content type="html"><![CDATA[<p>About decorator and Flask’s @app.route internal mechanism, I found a good post:</p>
-
-<p><code>html
-http://ains.co/blog/things-which-arent-magic-flask-part-1.html
-http://ains.co/blog/things-which-arent-magic-flask-part-2.html
 </code></p>
 ]]></content>
   </entry>

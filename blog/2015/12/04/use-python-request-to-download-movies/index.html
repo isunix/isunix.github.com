@@ -1,0 +1,254 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Use Python Request to Download Movies - Steven's Blog</title>
+  <meta name="author" content="Steven Sun">
+
+  
+  <meta name="description" content="This post shows a working way to download movies using python requests module. 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://isunix.github.io/blog/2015/12/04/use-python-request-to-download-movies">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Steven's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=Open+Sans:400,700&subset=latin" rel="stylesheet" type="text/css" />
+<link href='http://fonts.googleapis.com/css?family=Noto+Serif:400,700' rel='stylesheet' type='text/css'>
+
+
+
+  
+
+</head>
+
+<body    class="collapse-sidebar sidebar-footer" >
+  <nav id="main-nav" role="navigation">
+<ul class="main-navigation">
+  <li><a href="/" class="nav-link">Blog</a></li>
+  <li><a href="/blog/archives" class="nav-link">Archives</a></li>
+  <li><a href="/atom.xml" class="nav-link">RSS</a></li>
+  <li><a href="/about" class="nav-link">About</a></li>
+</ul>
+
+</nav>
+  
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Use Python Request to Download Movies</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-12-04T14:50:25+08:00" pubdate data-updated="true">Dec 4<span>th</span>, 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>This post shows a working way to download movies using python requests module.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="kn">import</span> <span class="nn">requests</span>
+</span><span class="line"><span class="kn">import</span> <span class="nn">re</span>
+</span><span class="line"><span class="kn">import</span> <span class="nn">sys</span>
+</span><span class="line">
+</span><span class="line"><span class="k">class</span> <span class="nc">MovieDownload</span><span class="p">:</span>
+</span><span class="line">    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">url</span>
+</span><span class="line">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">__contains__</span><span class="p">(</span><span class="s">&#39;//&#39;</span><span class="p">):</span>
+</span><span class="line">            <span class="bp">self</span><span class="o">.</span><span class="n">download_movie</span><span class="p">()</span>
+</span><span class="line">        <span class="k">else</span><span class="p">:</span>
+</span><span class="line">            <span class="k">print</span><span class="p">(</span><span class="s">&quot;wrong url entered&quot;</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line">    <span class="k">def</span> <span class="nf">download_movie</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class="line">        <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+</span><span class="line">        <span class="n">pattern_title</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">&#39;&lt;h2 class=&quot;entry_title&quot;&gt;(.*?)&lt;/h2&gt;&#39;</span><span class="p">)</span>
+</span><span class="line">        <span class="n">title</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">pattern_title</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+</span><span class="line">        <span class="n">pattern_to_download</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">&#39;&lt;li&gt;&lt;a href=&quot;(.*?)&quot;&gt;.*?1024\.mkv.*?&lt;/a&gt;&#39;</span><span class="p">)</span>
+</span><span class="line">        <span class="n">movie_urls</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">pattern_to_download</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line">        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;movie.txt&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+</span><span class="line">            <span class="k">print</span><span class="p">(</span><span class="s">&quot;There are {} urls here!</span><span class="se">\n</span><span class="s">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">movie_urls</span><span class="p">)))</span>
+</span><span class="line">            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;There are {} urls here!</span><span class="se">\n\n</span><span class="s">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">movie_urls</span><span class="p">)))</span>
+</span><span class="line">            <span class="k">for</span> <span class="n">movie_url</span> <span class="ow">in</span> <span class="n">movie_urls</span><span class="p">:</span>
+</span><span class="line">                <span class="k">print</span><span class="p">(</span><span class="s">&quot;{}</span><span class="se">\n</span><span class="s">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">movie_url</span><span class="p">))</span>
+</span><span class="line">                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;{}</span><span class="se">\n\n</span><span class="s">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">movie_url</span><span class="p">))</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line"><span class="n">url</span> <span class="o">=</span> <span class="s">&quot;http://cn163.net/archives/3639/&quot;</span>
+</span><span class="line"><span class="n">MovieDownload</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>and then execute the script as:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">python3 movie_download.py
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Steven Sun</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-12-04T14:50:25+08:00" pubdate data-updated="true">Dec 4<span>th</span>, 2015</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/python/'>python</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/12/02/p4-add-new-executable-script/" title="Previous Post: p4 add new executable script">&laquo; p4 add new executable script</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Steven Sun -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

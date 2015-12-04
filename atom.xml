@@ -4,7 +4,7 @@
   <title><![CDATA[Steven's Blog]]></title>
   <link href="http://isunix.github.io/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2015-12-02T17:27:04+08:00</updated>
+  <updated>2015-12-04T14:53:00+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,83 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Use Python Request to Download Movies]]></title>
+    <link href="http://isunix.github.io/blog/2015/12/04/use-python-request-to-download-movies/"/>
+    <updated>2015-12-04T14:50:25+08:00</updated>
+    <id>http://isunix.github.io/blog/2015/12/04/use-python-request-to-download-movies</id>
+    <content type="html"><![CDATA[<p>This post shows a working way to download movies using python requests module.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="kn">import</span> <span class="nn">requests</span>
+</span><span class="line"><span class="kn">import</span> <span class="nn">re</span>
+</span><span class="line"><span class="kn">import</span> <span class="nn">sys</span>
+</span><span class="line">
+</span><span class="line"><span class="k">class</span> <span class="nc">MovieDownload</span><span class="p">:</span>
+</span><span class="line">    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">url</span>
+</span><span class="line">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">__contains__</span><span class="p">(</span><span class="s">&#39;//&#39;</span><span class="p">):</span>
+</span><span class="line">            <span class="bp">self</span><span class="o">.</span><span class="n">download_movie</span><span class="p">()</span>
+</span><span class="line">        <span class="k">else</span><span class="p">:</span>
+</span><span class="line">            <span class="k">print</span><span class="p">(</span><span class="s">&quot;wrong url entered&quot;</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line">    <span class="k">def</span> <span class="nf">download_movie</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class="line">        <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+</span><span class="line">        <span class="n">pattern_title</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">&#39;&lt;h2 class=&quot;entry_title&quot;&gt;(.*?)&lt;/h2&gt;&#39;</span><span class="p">)</span>
+</span><span class="line">        <span class="n">title</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">pattern_title</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+</span><span class="line">        <span class="n">pattern_to_download</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">&#39;&lt;li&gt;&lt;a href=&quot;(.*?)&quot;&gt;.*?1024\.mkv.*?&lt;/a&gt;&#39;</span><span class="p">)</span>
+</span><span class="line">        <span class="n">movie_urls</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">pattern_to_download</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line">        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;movie.txt&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+</span><span class="line">            <span class="k">print</span><span class="p">(</span><span class="s">&quot;There are {} urls here!</span><span class="se">\n</span><span class="s">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">movie_urls</span><span class="p">)))</span>
+</span><span class="line">            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;There are {} urls here!</span><span class="se">\n\n</span><span class="s">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">movie_urls</span><span class="p">)))</span>
+</span><span class="line">            <span class="k">for</span> <span class="n">movie_url</span> <span class="ow">in</span> <span class="n">movie_urls</span><span class="p">:</span>
+</span><span class="line">                <span class="k">print</span><span class="p">(</span><span class="s">&quot;{}</span><span class="se">\n</span><span class="s">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">movie_url</span><span class="p">))</span>
+</span><span class="line">                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;{}</span><span class="se">\n\n</span><span class="s">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">movie_url</span><span class="p">))</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line"><span class="n">url</span> <span class="o">=</span> <span class="s">&quot;http://cn163.net/archives/3639/&quot;</span>
+</span><span class="line"><span class="n">MovieDownload</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>and then execute the script as:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">python3 movie_download.py
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[P4 Add New Executable Script]]></title>
@@ -708,35 +785,6 @@
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 </pre></td><td class="code"><pre><code class="html"><span class="line">http://stackoverflow.com/questions/739654/how-can-i-make-a-chain-of-function-decorators-in-python/1594484#1594484
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Django Development in Python3 Environemnt]]></title>
-    <link href="http://isunix.github.io/blog/2015/10/12/django-development-in-python3-environemnt/"/>
-    <updated>2015-10-12T14:55:22+08:00</updated>
-    <id>http://isunix.github.io/blog/2015/10/12/django-development-in-python3-environemnt</id>
-    <content type="html"><![CDATA[<p>What if I want to development a django app in python3 environement.</p>
-
-<p>Using vitualenv</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">python3 -m venv sbenv
-</span><span class="line"><span class="nb">source </span>sbenv/bin/activate
-</span><span class="line">pip install -r requirements.txt
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>Using virtualenvwrapper</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">which python3   --to get the location of python3 interpreter
-</span><span class="line">mkvirtualenv --python<span class="o">=</span>/usr/local/bin/python3 django_dev
-</span><span class="line">workon django_dev
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 ]]></content>
   </entry>

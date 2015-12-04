@@ -38,6 +38,8 @@ class MovieDownload:
 
 url = "http://cn163.net/archives/3639/"
 MovieDownload(url)
+
+sys.exit(0)
 ```
 
 and then execute the script as:

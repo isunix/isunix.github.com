@@ -29,6 +29,8 @@ Try::Tiny
 use File::Basename
 List::Util
 List::MoreUtils
+File::Spec::Functions
+File::Spec
 ```
 
 Of course we can write a small script to loop through these modules and install these modules all together.

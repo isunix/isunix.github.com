@@ -31,6 +31,10 @@ List::Util
 List::MoreUtils
 File::Spec::Functions
 File::Spec
+Email::Simple
+Data::Printer
+DBD::mysql
+Sort::Fields
 ```
 
 Of course we can write a small script to loop through these modules and install these modules all together.

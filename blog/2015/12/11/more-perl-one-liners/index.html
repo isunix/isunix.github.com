@@ -1,0 +1,271 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>More Perl One-liners - Steven's Blog</title>
+  <meta name="author" content="Steven Sun">
+
+  
+  <meta name="description" content="Some maybe useful perl one-liners here for easy reference. Some of the tip are from the post: 1
+http://www.catonmat.net/blog/perl-one-liners- &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://isunix.github.io/blog/2015/12/11/more-perl-one-liners">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Steven's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=Open+Sans:400,700&subset=latin" rel="stylesheet" type="text/css" />
+<link href='http://fonts.googleapis.com/css?family=Noto+Serif:400,700' rel='stylesheet' type='text/css'>
+
+
+
+  
+
+</head>
+
+<body    class="collapse-sidebar sidebar-footer" >
+  <nav id="main-nav" role="navigation">
+<ul class="main-navigation">
+  <li><a href="/" class="nav-link">Blog</a></li>
+  <li><a href="/blog/archives" class="nav-link">Archives</a></li>
+  <li><a href="/atom.xml" class="nav-link">RSS</a></li>
+  <li><a href="/about" class="nav-link">About</a></li>
+</ul>
+
+</nav>
+  
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">More Perl One-liners</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-12-11T10:18:24+08:00" pubdate data-updated="true">Dec 11<span>th</span>, 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Some maybe useful perl one-liners here for easy reference.</p>
+
+<p>Some of the tip are from the post:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line">http://www.catonmat.net/blog/perl-one-liners-explained-part-one/
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Some are from my own daily usage.</p>
+
+<p>I also found there are posts about useful sed/awk/perl one-liners:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line">http://www.catonmat.net/blog/awk-one-liners-explained-part-one/
+</span><span class="line">http://www.catonmat.net/blog/sed-one-liners-explained-part-one/
+</span><span class="line">http://www.catonmat.net/blog/introduction-to-perl-one-liners/
+</span><span class="line">http://linux.gda.pl/spotkania/sp_13/perl-one-liners.pdf
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>1.Loop through a file for each line to find the lines matching certain pattern. Then grep those pattern against a file, and print those lines which has a column meets certain criteria.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file1.txt | perl -nle <span class="s1">&#39;print $1 if /\b(__[0-9a-z]\w+)\b/i;&#39;</span> | sort | uniq | xargs -I , grep , -w fileb.txt | awk <span class="s1">&#39;$2==0&#39;</span> | awk <span class="s1">&#39;{print $7}&#39;</span> | sort | uniq | xargs -I , grep , -w filec.txt | awk <span class="s1">&#39;$8==0&#39;</span> | awk <span class="s1">&#39;{print $8,&quot; &quot;,$13}&#39;</span> &gt; /tmp/<span class="sb">`</span>date +%Y%m%d<span class="sb">`</span>.txt
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>2.Add a blank line before every line.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">perl -pe <span class="s1">&#39;s//\n/&#39;</span> file.txt
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>3.Remove all blank lines</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file.txt | perl -ne <span class="s1">&#39;print unless /^$/&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>4.Remove all consecutive blank lines, leaving just one.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file.txt | perl -00 -pe <span class="s1">&#39;&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>5.Compress/expand all blank lines into N consecutive ones.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat 1.txt| perl -00 -pe <span class="s1">&#39;$_.=&quot;\n&quot;x4&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>6.substitute something in a file:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">perl -pi -e <span class="s1">&#39;s/good/bad/g&#39;</span> file.txt
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>7.same as item-6 but only on lines match something:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">perl -pi -e <span class="s1">&#39;s/good/bad/g if /matched/&#39;</span> file
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>8.Finding all repeated lines in a file:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">perl -ne <span class="s1">&#39;print if $a{$_}++&#39;</span> 1.txt
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>9.Numbering lines in a file:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">perl -ne <span class="s1">&#39;print &quot;$. $_&quot;&#39;</span> file.txt
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>or with the ‘-p’ argument:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">perl -pe <span class="s1">&#39;$_ = &quot;$. $_&quot;&#39;</span> file.txt
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>10.Sum up all the numbers on each line:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file.txt| perl -MList::Util<span class="o">=</span>sum -alne <span class="s1">&#39;print sum @F&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>11.TO see how the above one-liner works, use the Data::Dumper module to get a look at it:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file.txt| perl -MData::Dumper -alne <span class="s1">&#39;print  Dumper @F&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>12.Finding the date 10 days ago:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">perl -MPOSIX -le <span class="s1">&#39;@now = localtime; $now[3] -= 10; print scalar localtime mktime @now&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>13.Find the sum of the numbers in the first column:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file.txt| perl -lane <span class="s1">&#39;$sum += $F[0]; END { print $sum }&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>14.Getting a list of the names of all users on the system:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">perl -a -F: -lne <span class="s1">&#39;print $F[4]&#39;</span> /etc/passwd
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Steven Sun</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-12-11T10:18:24+08:00" pubdate data-updated="true">Dec 11<span>th</span>, 2015</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/perl/'>Perl</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/12/08/commen-perl-modules-i-use/" title="Previous Post: commen perl modules I use">&laquo; commen perl modules I use</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Steven Sun -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

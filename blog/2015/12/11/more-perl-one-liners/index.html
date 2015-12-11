@@ -88,106 +88,90 @@ http://www.catonmat.net/blog/perl-one-liners- &hellip;">
 
 <p>Some are from my own daily usage.</p>
 
-<p>I also found there are posts about useful sed/awk/perl one-liners:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<p>I also found there are posts about useful sed/awk/perl one-liners:
+&lt;div class=&#8217;bogus-wrapper&#8217;&gt;<notextile><figure class="code">&lt;figcaption&gt;<span></span>&lt;/figcaption&gt;&lt;div class=&#8221;highlight&#8221;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#8221;gutter&#8221;&gt;&lt;pre class=&#8221;line-numbers&#8221;&gt;<span class="line-number">1</span>
 <span class="line-number">2</span>
 <span class="line-number">3</span>
 <span class="line-number">4</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line">http://www.catonmat.net/blog/awk-one-liners-explained-part-one/
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217;&gt;&lt;pre&gt;<code class="html"><span class="line">http://www.catonmat.net/blog/awk-one-liners-explained-part-one/
 </span><span class="line">http://www.catonmat.net/blog/sed-one-liners-explained-part-one/
 </span><span class="line">http://www.catonmat.net/blog/introduction-to-perl-one-liners/
 </span><span class="line">http://linux.gda.pl/spotkania/sp_13/perl-one-liners.pdf
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span></code>&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</figure></notextile>&lt;/div&gt;</p>
 
-<p>1.Loop through a file for each line to find the lines matching certain pattern. Then grep those pattern against a file, and print those lines which has a column meets certain criteria.</p>
+<p>1.Loop through a file for each line to find the lines matching certain pattern. Then grep those pattern against a file, and print those lines which has a column meets certain criteria.
+&lt;div class=&#8217;bogus-wrapper&#8217;&gt;<notextile><figure class="code">&lt;figcaption&gt;<span></span>&lt;/figcaption&gt;&lt;div class=&#8221;highlight&#8221;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#8221;gutter&#8221;&gt;&lt;pre class=&#8221;line-numbers&#8221;&gt;<span class="line-number">1</span>
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217;&gt;&lt;pre&gt;<code class="sh"><span class="line">cat file1.txt | perl -nle <span class="s1">&#39;print $1 if /\b(__[0-9a-z]\w+)\b/i;&#39;</span> | sort | uniq | xargs -I , grep , -w fileb.txt | awk <span class="s1">&#39;$2==0&#39;</span> | awk <span class="s1">&#39;{print $7}&#39;</span> | sort | uniq | xargs -I , grep , -w filec.txt | awk <span class="s1">&#39;$8==0&#39;</span> | awk <span class="s1">&#39;{print $8,&quot; &quot;,$13}&#39;</span> &gt; /tmp/<span class="sb">`</span>date +%Y%m%d<span class="sb">`</span>.txt
+</span></code>&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</figure></notextile>&lt;/div&gt;</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file1.txt | perl -nle <span class="s1">&#39;print $1 if /\b(__[0-9a-z]\w+)\b/i;&#39;</span> | sort | uniq | xargs -I , grep , -w fileb.txt | awk <span class="s1">&#39;$2==0&#39;</span> | awk <span class="s1">&#39;{print $7}&#39;</span> | sort | uniq | xargs -I , grep , -w filec.txt | awk <span class="s1">&#39;$8==0&#39;</span> | awk <span class="s1">&#39;{print $8,&quot; &quot;,$13}&#39;</span> &gt; /tmp/<span class="sb">`</span>date +%Y%m%d<span class="sb">`</span>.txt
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>2.Add a blank line before every line.
+&lt;div class=&#8217;bogus-wrapper&#8217;&gt;<notextile><figure class="code">&lt;figcaption&gt;<span></span>&lt;/figcaption&gt;&lt;div class=&#8221;highlight&#8221;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#8221;gutter&#8221;&gt;&lt;pre class=&#8221;line-numbers&#8221;&gt;<span class="line-number">1</span>
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217;&gt;&lt;pre&gt;<code class="sh"><span class="line">perl -pe <span class="s1">&#39;s//\n/&#39;</span> file.txt
+</span></code>&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</figure></notextile>&lt;/div&gt;</p>
 
-<p>2.Add a blank line before every line.</p>
+<p>3.Remove all blank lines
+&lt;div class=&#8217;bogus-wrapper&#8217;&gt;<notextile><figure class="code">&lt;figcaption&gt;<span></span>&lt;/figcaption&gt;&lt;div class=&#8221;highlight&#8221;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#8221;gutter&#8221;&gt;&lt;pre class=&#8221;line-numbers&#8221;&gt;<span class="line-number">1</span>
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217;&gt;&lt;pre&gt;<code class="sh"><span class="line">cat file.txt | perl -ne <span class="s1">&#39;print unless /^$/&#39;</span>
+</span></code>&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</figure></notextile>&lt;/div&gt;</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">perl -pe <span class="s1">&#39;s//\n/&#39;</span> file.txt
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>4.Remove all consecutive blank lines, leaving just one.
+&lt;div class=&#8217;bogus-wrapper&#8217;&gt;<notextile><figure class="code">&lt;figcaption&gt;<span></span>&lt;/figcaption&gt;&lt;div class=&#8221;highlight&#8221;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#8221;gutter&#8221;&gt;&lt;pre class=&#8221;line-numbers&#8221;&gt;<span class="line-number">1</span>
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217;&gt;&lt;pre&gt;<code class="sh"><span class="line">cat file.txt | perl -00 -pe <span class="s1">&#39;&#39;</span>
+</span></code>&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</figure></notextile>&lt;/div&gt;</p>
 
-<p>3.Remove all blank lines</p>
+<p>5.Compress/expand all blank lines into N consecutive ones.
+&lt;div class=&#8217;bogus-wrapper&#8217;&gt;<notextile><figure class="code">&lt;figcaption&gt;<span></span>&lt;/figcaption&gt;&lt;div class=&#8221;highlight&#8221;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#8221;gutter&#8221;&gt;&lt;pre class=&#8221;line-numbers&#8221;&gt;<span class="line-number">1</span>
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217;&gt;&lt;pre&gt;<code class="sh"><span class="line">cat 1.txt| perl -00 -pe <span class="s1">&#39;$_.=&quot;\n&quot;x4&#39;</span>
+</span></code>&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</figure></notextile>&lt;/div&gt;</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file.txt | perl -ne <span class="s1">&#39;print unless /^$/&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>6.substitute something in a file:
+&lt;div class=&#8217;bogus-wrapper&#8217;&gt;<notextile><figure class="code">&lt;figcaption&gt;<span></span>&lt;/figcaption&gt;&lt;div class=&#8221;highlight&#8221;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#8221;gutter&#8221;&gt;&lt;pre class=&#8221;line-numbers&#8221;&gt;<span class="line-number">1</span>
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217;&gt;&lt;pre&gt;<code class="sh"><span class="line">perl -pi -e <span class="s1">&#39;s/good/bad/g&#39;</span> file.txt
+</span></code>&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</figure></notextile>&lt;/div&gt;</p>
 
-<p>4.Remove all consecutive blank lines, leaving just one.</p>
+<p>7.same as item-6 but only on lines match something:
+&lt;div class=&#8217;bogus-wrapper&#8217;&gt;<notextile><figure class="code">&lt;figcaption&gt;<span></span>&lt;/figcaption&gt;&lt;div class=&#8221;highlight&#8221;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#8221;gutter&#8221;&gt;&lt;pre class=&#8221;line-numbers&#8221;&gt;<span class="line-number">1</span>
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217;&gt;&lt;pre&gt;<code class="sh"><span class="line">perl -pi -e <span class="s1">&#39;s/good/bad/g if /matched/&#39;</span> file
+</span></code>&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</figure></notextile>&lt;/div&gt;</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file.txt | perl -00 -pe <span class="s1">&#39;&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>8.Finding all repeated lines in a file:
+&lt;div class=&#8217;bogus-wrapper&#8217;&gt;<notextile><figure class="code">&lt;figcaption&gt;<span></span>&lt;/figcaption&gt;&lt;div class=&#8221;highlight&#8221;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#8221;gutter&#8221;&gt;&lt;pre class=&#8221;line-numbers&#8221;&gt;<span class="line-number">1</span>
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217;&gt;&lt;pre&gt;<code class="sh"><span class="line">perl -ne <span class="s1">&#39;print if $a{$_}++&#39;</span> 1.txt
+</span></code>&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</figure></notextile>&lt;/div&gt;</p>
 
-<p>5.Compress/expand all blank lines into N consecutive ones.</p>
+<p>9.Numbering lines in a file:
+&lt;div class=&#8217;bogus-wrapper&#8217;&gt;<notextile><figure class="code">&lt;figcaption&gt;<span></span>&lt;/figcaption&gt;&lt;div class=&#8221;highlight&#8221;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#8221;gutter&#8221;&gt;&lt;pre class=&#8221;line-numbers&#8221;&gt;<span class="line-number">1</span>
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217;&gt;&lt;pre&gt;<code class="sh"><span class="line">perl -ne <span class="s1">&#39;print &quot;$. $_&quot;&#39;</span> file.txt
+</span></code>&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</figure></notextile>&lt;/div&gt;
+or with the ‘-p’ argument:
+&lt;div class=&#8217;bogus-wrapper&#8217;&gt;<notextile><figure class="code">&lt;figcaption&gt;<span></span>&lt;/figcaption&gt;&lt;div class=&#8221;highlight&#8221;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#8221;gutter&#8221;&gt;&lt;pre class=&#8221;line-numbers&#8221;&gt;<span class="line-number">1</span>
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217;&gt;&lt;pre&gt;<code class="sh"><span class="line">perl -pe <span class="s1">&#39;$_ = &quot;$. $_&quot;&#39;</span> file.txt
+</span></code>&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</figure></notextile>&lt;/div&gt;</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat 1.txt| perl -00 -pe <span class="s1">&#39;$_.=&quot;\n&quot;x4&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>10.Sum up all the numbers on each line:
+&lt;div class=&#8217;bogus-wrapper&#8217;&gt;<notextile><figure class="code">&lt;figcaption&gt;<span></span>&lt;/figcaption&gt;&lt;div class=&#8221;highlight&#8221;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#8221;gutter&#8221;&gt;&lt;pre class=&#8221;line-numbers&#8221;&gt;<span class="line-number">1</span>
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217;&gt;&lt;pre&gt;<code class="sh"><span class="line">cat file.txt| perl -MList::Util<span class="o">=</span>sum -alne <span class="s1">&#39;print sum @F&#39;</span>
+</span></code>&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</figure></notextile>&lt;/div&gt;</p>
 
-<p>6.substitute something in a file:</p>
+<p>11.TO see how the above one-liner works, use the Data::Dumper module to get a look at it:
+&lt;div class=&#8217;bogus-wrapper&#8217;&gt;<notextile><figure class="code">&lt;figcaption&gt;<span></span>&lt;/figcaption&gt;&lt;div class=&#8221;highlight&#8221;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#8221;gutter&#8221;&gt;&lt;pre class=&#8221;line-numbers&#8221;&gt;<span class="line-number">1</span>
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217;&gt;&lt;pre&gt;<code class="sh"><span class="line">cat file.txt| perl -MData::Dumper -alne <span class="s1">&#39;print  Dumper @F&#39;</span>
+</span></code>&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</figure></notextile>&lt;/div&gt;</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">perl -pi -e <span class="s1">&#39;s/good/bad/g&#39;</span> file.txt
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>12.Finding the date 10 days ago:
+&lt;div class=&#8217;bogus-wrapper&#8217;&gt;<notextile><figure class="code">&lt;figcaption&gt;<span></span>&lt;/figcaption&gt;&lt;div class=&#8221;highlight&#8221;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#8221;gutter&#8221;&gt;&lt;pre class=&#8221;line-numbers&#8221;&gt;<span class="line-number">1</span>
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217;&gt;&lt;pre&gt;<code class="sh"><span class="line">perl -MPOSIX -le <span class="s1">&#39;@now = localtime; $now[3] -= 10; print scalar localtime mktime @now&#39;</span>
+</span></code>&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</figure></notextile>&lt;/div&gt;</p>
 
-<p>7.same as item-6 but only on lines match something:</p>
+<p>13.Find the sum of the numbers in the first column:
+&lt;div class=&#8217;bogus-wrapper&#8217;&gt;<notextile><figure class="code">&lt;figcaption&gt;<span></span>&lt;/figcaption&gt;&lt;div class=&#8221;highlight&#8221;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#8221;gutter&#8221;&gt;&lt;pre class=&#8221;line-numbers&#8221;&gt;<span class="line-number">1</span>
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217;&gt;&lt;pre&gt;<code class="sh"><span class="line">cat file.txt| perl -lane <span class="s1">&#39;$sum += $F[0]; END { print $sum }&#39;</span>
+</span></code>&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</figure></notextile>&lt;/div&gt;</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">perl -pi -e <span class="s1">&#39;s/good/bad/g if /matched/&#39;</span> file
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>8.Finding all repeated lines in a file:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">perl -ne <span class="s1">&#39;print if $a{$_}++&#39;</span> 1.txt
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>9.Numbering lines in a file:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">perl -ne <span class="s1">&#39;print &quot;$. $_&quot;&#39;</span> file.txt
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>or with the ‘-p’ argument:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">perl -pe <span class="s1">&#39;$_ = &quot;$. $_&quot;&#39;</span> file.txt
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>10.Sum up all the numbers on each line:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file.txt| perl -MList::Util<span class="o">=</span>sum -alne <span class="s1">&#39;print sum @F&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>11.TO see how the above one-liner works, use the Data::Dumper module to get a look at it:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file.txt| perl -MData::Dumper -alne <span class="s1">&#39;print  Dumper @F&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>12.Finding the date 10 days ago:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">perl -MPOSIX -le <span class="s1">&#39;@now = localtime; $now[3] -= 10; print scalar localtime mktime @now&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>13.Find the sum of the numbers in the first column:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file.txt| perl -lane <span class="s1">&#39;$sum += $F[0]; END { print $sum }&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>14.Getting a list of the names of all users on the system:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">perl -a -F: -lne <span class="s1">&#39;print $F[4]&#39;</span> /etc/passwd
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>14.Getting a list of the names of all users on the system:
+&lt;div class=&#8217;bogus-wrapper&#8217;&gt;<notextile><figure class="code">&lt;figcaption&gt;<span></span>&lt;/figcaption&gt;&lt;div class=&#8221;highlight&#8221;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#8221;gutter&#8221;&gt;&lt;pre class=&#8221;line-numbers&#8221;&gt;<span class="line-number">1</span>
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217;&gt;&lt;pre&gt;<code class="sh"><span class="line">perl -a -F: -lne <span class="s1">&#39;print $F[4]&#39;</span> /etc/passwd
+</span></code>&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</figure></notextile>&lt;/div&gt;</p>
 </div>
 
 

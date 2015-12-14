@@ -400,3 +400,9 @@ cat file | perl -ne 'print if ++$a{$_} == 2'
 ```sh
 cat file | perl -ne 'print unless $a{$_}++'
 ```
+
+58.To remove blank lines:
+
+```sh
+cat file | perl -pi -e 's!^\s+?$!!'
+```

@@ -4,7 +4,7 @@
   <title><![CDATA[Steven's Blog]]></title>
   <link href="http://isunix.github.io/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2015-12-11T13:50:09+08:00</updated>
+  <updated>2015-12-14T14:54:12+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,53 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Grep Lines in One File and Not in the Other]]></title>
+    <link href="http://isunix.github.io/blog/2015/12/14/grep-lines-in-one-file-and-not-in-the-other/"/>
+    <updated>2015-12-14T14:46:10+08:00</updated>
+    <id>http://isunix.github.io/blog/2015/12/14/grep-lines-in-one-file-and-not-in-the-other</id>
+    <content type="html"><![CDATA[<p>Say we have a file a, which has the following contentL:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">a
+</span><span class="line">b
+</span><span class="line">c
+</span><span class="line">d
+</span><span class="line">e</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>and b,</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">c
+</span><span class="line">d</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>What if we want to get all those in file a and not in file b, in this case, a, b, e? </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">grep -F -x -v -f b.txt a.txt
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>To qutoe from the page </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line">http://unix.stackexchange.com/questions/28158/is-there-a-tool-to-get-the-lines-in-one-file-that-are-not-in-another
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>The above command is doing the following things:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line">This works by using each line in b.txt as a pattern (-f b.txt) and treating it as a plain string to match (not a regular regex) (-F). You force the match to happen on the whole line (-x) and print out only the lines that don&#39;t match (-v). Therefore you are printing out the lines in a.txt that don&#39;t contain the same data as any line in b.txt.
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>So remember the order of file a and b matters if you really understand what the command is doing.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[More Perl One-liners]]></title>
@@ -997,193 +1044,6 @@
 <span class="line-number">2</span>
 </pre></td><td class="code"><pre><code class="html"><span class="line">http://ains.co/blog/things-which-arent-magic-flask-part-1.html
 </span><span class="line">http://ains.co/blog/things-which-arent-magic-flask-part-2.html
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Some Basics About Generators in Python]]></title>
-    <link href="http://isunix.github.io/blog/2015/10/19/some-basics-about-generators-in-python/"/>
-    <updated>2015-10-19T08:46:43+08:00</updated>
-    <id>http://isunix.github.io/blog/2015/10/19/some-basics-about-generators-in-python</id>
-    <content type="html"><![CDATA[<p>Here below is a reference for learning python generators:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line">http://www.dabeaz.com/generators/
-</span><span class="line">http://www.dabeaz.com/finalgenerator/
-</span><span class="line">http://stackoverflow.com/questions/231767/what-does-the-yield-keyword-do-in-python/231855#231855
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>A basic explanation about the “for” statement in python:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">:</span>
-</span><span class="line">	<span class="c">#statements</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>and how it is realized:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">_iter</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
-</span><span class="line"><span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
-</span><span class="line">	<span class="k">try</span><span class="p">:</span>
-</span><span class="line">		<span class="n">x</span> <span class="o">=</span> <span class="n">_iter</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
-</span><span class="line">	<span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
-</span><span class="line">		<span class="k">break</span>
-</span><span class="line">	<span class="c">#statements</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>and why the “StopIteration” in the above code? It happens in iterables:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="o">&gt;&gt;&gt;</span> <span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
-</span><span class="line"><span class="o">&gt;&gt;&gt;</span> <span class="n">it</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>
-</span><span class="line"><span class="o">&gt;&gt;&gt;</span> <span class="n">it</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
-</span><span class="line"><span class="mi">1</span>
-</span><span class="line"><span class="o">&gt;&gt;&gt;</span> <span class="n">it</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
-</span><span class="line"><span class="mi">2</span>
-</span><span class="line"><span class="o">&gt;&gt;&gt;</span> <span class="n">it</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
-</span><span class="line"><span class="mi">3</span>
-</span><span class="line"><span class="o">&gt;&gt;&gt;</span> <span class="n">it</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
-</span><span class="line"><span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
-</span><span class="line">  <span class="n">File</span> <span class="s">&quot;&lt;input&gt;&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">1</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-</span><span class="line"><span class="ne">StopIteration</span>
-</span><span class="line"><span class="o">&gt;&gt;&gt;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>and now will implement a user defined object that supports iterable:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="k">class</span> <span class="nc">countdown</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-</span><span class="line">    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">):</span>
-</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">=</span> <span class="n">start</span>
-</span><span class="line">
-</span><span class="line">    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span class="line">        <span class="k">return</span> <span class="bp">self</span>
-</span><span class="line">
-</span><span class="line">    <span class="k">def</span> <span class="nf">next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span class="line">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-</span><span class="line">            <span class="k">raise</span> <span class="ne">StopIteration</span>
-</span><span class="line">        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">count</span>
-</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">-=</span> <span class="mi">1</span>
-</span><span class="line">        <span class="k">return</span> <span class="n">r</span>
-</span><span class="line">
-</span><span class="line"><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
-</span><span class="line">    <span class="n">c</span> <span class="o">=</span> <span class="n">countdown</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-</span><span class="line">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">c</span><span class="p">:</span>
-</span><span class="line">        <span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>countdown using generator:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="k">def</span> <span class="nf">countdown</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-</span><span class="line">    <span class="k">while</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-</span><span class="line">        <span class="k">yield</span> <span class="n">n</span>
-</span><span class="line">        <span class="n">n</span> <span class="o">-=</span> <span class="mi">1</span>
-</span><span class="line">
-</span><span class="line"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">countdown</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
-</span><span class="line">    <span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>About how to use non-generator methods, generator methods, awk to calculate the sum of a columns of numbs.</p>
-
-<p>The records in the log file looks like this:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="mf">156.63</span><span class="o">.</span><span class="mf">68.202</span> <span class="o">-</span> <span class="o">-</span> <span class="p">[</span><span class="mi">29</span><span class="o">/</span><span class="n">Feb</span><span class="o">/</span><span class="mi">2008</span><span class="p">:</span><span class="mo">07</span><span class="p">:</span><span class="mi">49</span><span class="p">:</span><span class="mi">28</span> <span class="o">-</span><span class="mo">0600</span><span class="p">]</span> <span class="s">&quot;GET /favicon.ico HTTP/1.1&quot;</span> <span class="mi">404</span> <span class="mi">133</span>
-</span><span class="line"><span class="mf">80.161</span><span class="o">.</span><span class="mf">85.77</span> <span class="o">-</span> <span class="o">-</span> <span class="p">[</span><span class="mi">29</span><span class="o">/</span><span class="n">Feb</span><span class="o">/</span><span class="mi">2008</span><span class="p">:</span><span class="mo">07</span><span class="p">:</span><span class="mi">52</span><span class="p">:</span><span class="mi">46</span> <span class="o">-</span><span class="mo">0600</span><span class="p">]</span> <span class="s">&quot;GET /ply/ply.html HTTP/1.1&quot;</span> <span class="mi">200</span> <span class="mi">97238</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>First the non-generator method:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">wwwlog</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&quot;access-log&quot;</span><span class="p">)</span>
-</span><span class="line"><span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span class="line"><span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">wwwlog</span><span class="p">:</span>
-</span><span class="line">    <span class="n">bytestr</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
-</span><span class="line">    <span class="k">if</span> <span class="n">bytestr</span> <span class="o">!=</span> <span class="s">&#39;-&#39;</span><span class="p">:</span>
-</span><span class="line">        <span class="n">total</span> <span class="o">+=</span> <span class="nb">int</span><span class="p">(</span><span class="n">bytestr</span><span class="p">)</span>
-</span><span class="line">
-</span><span class="line"><span class="k">print</span> <span class="s">&quot;Total&quot;</span><span class="p">,</span> <span class="n">total</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>and the generator method:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">wwwlog</span>     <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&quot;access-log&quot;</span><span class="p">)</span>
-</span><span class="line"><span class="n">bytecolumn</span> <span class="o">=</span> <span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">wwwlog</span><span class="p">)</span>
-</span><span class="line"><span class="nb">bytes</span>      <span class="o">=</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">bytecolumn</span> <span class="k">if</span> <span class="n">x</span> <span class="o">!=</span> <span class="s">&#39;-&#39;</span><span class="p">)</span>
-</span><span class="line">
-</span><span class="line"><span class="k">print</span> <span class="s">&quot;Total&quot;</span><span class="p">,</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">bytes</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>and then the awk method:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="awk"><span class="line"><span class="nx">awk</span> <span class="s1">&#39;{ total += $NF } END { print total }&#39;</span> <span class="nx">access</span><span class="o">-</span><span class="kr">log</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>PS: (a very useful shell script tutorial)</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line">http://www.grymoire.com/Unix/Sh.html
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 ]]></content>
   </entry>

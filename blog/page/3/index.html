@@ -9,41 +9,12 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="This post is a collection of useful python resources. 1
+  <meta name="description" content="Here below is a reference for learning python generators: 1
 2
 3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35 &hellip;">
+http://www.dabeaz.com/generators/
+http://www.dabeaz.com/finalgenerator/
+http:// &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -96,6 +67,220 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/10/19/some-basics-about-generators-in-python/">Some Basics About Generators in Python</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-10-19T08:46:43+08:00" pubdate data-updated="true">Oct 19<span>th</span>, 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Here below is a reference for learning python generators:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line">http://www.dabeaz.com/generators/
+</span><span class="line">http://www.dabeaz.com/finalgenerator/
+</span><span class="line">http://stackoverflow.com/questions/231767/what-does-the-yield-keyword-do-in-python/231855#231855
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>A basic explanation about the “for” statement in python:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">:</span>
+</span><span class="line">	<span class="c">#statements</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>and how it is realized:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">_iter</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+</span><span class="line"><span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
+</span><span class="line">	<span class="k">try</span><span class="p">:</span>
+</span><span class="line">		<span class="n">x</span> <span class="o">=</span> <span class="n">_iter</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+</span><span class="line">	<span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
+</span><span class="line">		<span class="k">break</span>
+</span><span class="line">	<span class="c">#statements</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>and why the “StopIteration” in the above code? It happens in iterables:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="o">&gt;&gt;&gt;</span> <span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+</span><span class="line"><span class="o">&gt;&gt;&gt;</span> <span class="n">it</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>
+</span><span class="line"><span class="o">&gt;&gt;&gt;</span> <span class="n">it</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+</span><span class="line"><span class="mi">1</span>
+</span><span class="line"><span class="o">&gt;&gt;&gt;</span> <span class="n">it</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+</span><span class="line"><span class="mi">2</span>
+</span><span class="line"><span class="o">&gt;&gt;&gt;</span> <span class="n">it</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+</span><span class="line"><span class="mi">3</span>
+</span><span class="line"><span class="o">&gt;&gt;&gt;</span> <span class="n">it</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+</span><span class="line"><span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+</span><span class="line">  <span class="n">File</span> <span class="s">&quot;&lt;input&gt;&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">1</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+</span><span class="line"><span class="ne">StopIteration</span>
+</span><span class="line"><span class="o">&gt;&gt;&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>and now will implement a user defined object that supports iterable:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="k">class</span> <span class="nc">countdown</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+</span><span class="line">    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">):</span>
+</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">=</span> <span class="n">start</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class="line">        <span class="k">return</span> <span class="bp">self</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">def</span> <span class="nf">next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class="line">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+</span><span class="line">            <span class="k">raise</span> <span class="ne">StopIteration</span>
+</span><span class="line">        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">count</span>
+</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">-=</span> <span class="mi">1</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">r</span>
+</span><span class="line">
+</span><span class="line"><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+</span><span class="line">    <span class="n">c</span> <span class="o">=</span> <span class="n">countdown</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</span><span class="line">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">c</span><span class="p">:</span>
+</span><span class="line">        <span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>countdown using generator:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="k">def</span> <span class="nf">countdown</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+</span><span class="line">    <span class="k">while</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+</span><span class="line">        <span class="k">yield</span> <span class="n">n</span>
+</span><span class="line">        <span class="n">n</span> <span class="o">-=</span> <span class="mi">1</span>
+</span><span class="line">
+</span><span class="line"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">countdown</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+</span><span class="line">    <span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>About how to use non-generator methods, generator methods, awk to calculate the sum of a columns of numbs.</p>
+
+<p>The records in the log file looks like this:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="mf">156.63</span><span class="o">.</span><span class="mf">68.202</span> <span class="o">-</span> <span class="o">-</span> <span class="p">[</span><span class="mi">29</span><span class="o">/</span><span class="n">Feb</span><span class="o">/</span><span class="mi">2008</span><span class="p">:</span><span class="mo">07</span><span class="p">:</span><span class="mi">49</span><span class="p">:</span><span class="mi">28</span> <span class="o">-</span><span class="mo">0600</span><span class="p">]</span> <span class="s">&quot;GET /favicon.ico HTTP/1.1&quot;</span> <span class="mi">404</span> <span class="mi">133</span>
+</span><span class="line"><span class="mf">80.161</span><span class="o">.</span><span class="mf">85.77</span> <span class="o">-</span> <span class="o">-</span> <span class="p">[</span><span class="mi">29</span><span class="o">/</span><span class="n">Feb</span><span class="o">/</span><span class="mi">2008</span><span class="p">:</span><span class="mo">07</span><span class="p">:</span><span class="mi">52</span><span class="p">:</span><span class="mi">46</span> <span class="o">-</span><span class="mo">0600</span><span class="p">]</span> <span class="s">&quot;GET /ply/ply.html HTTP/1.1&quot;</span> <span class="mi">200</span> <span class="mi">97238</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>First the non-generator method:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">wwwlog</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&quot;access-log&quot;</span><span class="p">)</span>
+</span><span class="line"><span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class="line"><span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">wwwlog</span><span class="p">:</span>
+</span><span class="line">    <span class="n">bytestr</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+</span><span class="line">    <span class="k">if</span> <span class="n">bytestr</span> <span class="o">!=</span> <span class="s">&#39;-&#39;</span><span class="p">:</span>
+</span><span class="line">        <span class="n">total</span> <span class="o">+=</span> <span class="nb">int</span><span class="p">(</span><span class="n">bytestr</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;Total&quot;</span><span class="p">,</span> <span class="n">total</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>and the generator method:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">wwwlog</span>     <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&quot;access-log&quot;</span><span class="p">)</span>
+</span><span class="line"><span class="n">bytecolumn</span> <span class="o">=</span> <span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">wwwlog</span><span class="p">)</span>
+</span><span class="line"><span class="nb">bytes</span>      <span class="o">=</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">bytecolumn</span> <span class="k">if</span> <span class="n">x</span> <span class="o">!=</span> <span class="s">&#39;-&#39;</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;Total&quot;</span><span class="p">,</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">bytes</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>and then the awk method:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="awk"><span class="line"><span class="nx">awk</span> <span class="s1">&#39;{ total += $NF } END { print total }&#39;</span> <span class="nx">access</span><span class="o">-</span><span class="kr">log</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>PS: (a very useful shell script tutorial)</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line">http://www.grymoire.com/Unix/Sh.html
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1160,45 +1345,6 @@
 
 <div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 </pre></td><td class="code"><pre><code class=""><span class="line">http://stackoverflow.com/questions/32414/how-can-i-force-clients-to-refresh-javascript-files</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/08/03/guan-yu-yi-chu-de-gu-shi/">关于溢出的故事</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-08-03T16:36:29+08:00" pubdate data-updated="true">Aug 3<span>rd</span>, 2015</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>这算是个简短的回忆了吧，记录下来，主要是怕忘记了。</p>
-
-<p>在自己刚工作没几个月的时候，有天早上到公司，冲咖啡，这个时候一个我刚来公司没几天就搭上话的姑娘也来冲咖啡。 她说她想到了一个计算机里的用语，我没回过神来，她说： 溢出。 我这才发现自己冲的咖啡正在溢出了。女生geek其实挺好的。后来的日子不断的发现这个女生挺聪明的，我是望尘莫及的。</p>
-
 </div>
   
   

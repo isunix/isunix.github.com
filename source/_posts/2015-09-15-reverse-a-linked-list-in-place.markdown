@@ -3,7 +3,7 @@ layout: post
 title: "reverse a linked list in place"
 date: 2015-09-15 09:33:40 +0800
 comments: true
-categories: algorithm
+categories: Algorithm
 ---
 We will show how to reverse a linked list in place using both python and javascript(actually converted from coffeescript).
 
@@ -77,7 +77,7 @@ while (result) {
   console.log(result.val);
   result = result.next;
 }
-``` 
+```
 
 3.to reverse a linked from position m to n:
 

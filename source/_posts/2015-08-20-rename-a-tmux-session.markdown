@@ -3,7 +3,7 @@ layout: post
 title: "rename a tmux session"
 date: 2015-08-20 08:53:39 +0800
 comments: true
-categories: linux
+categories: Linux
 ---
 This shows how to rename a tmux session:
 

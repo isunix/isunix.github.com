@@ -3,7 +3,7 @@ layout: post
 title: "about decorator and @app.route in Flask"
 date: 2015-10-23 14:09:30 +0800
 comments: true
-categories: python
+categories: Python
 ---
 About decorator and Flask's @app.route internal mechanism, I found a good post:
 

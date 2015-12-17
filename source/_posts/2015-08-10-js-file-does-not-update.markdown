@@ -3,7 +3,7 @@ layout: post
 title: "js file does not update"
 date: 2015-08-10 16:00:36 +0800
 comments: true
-categories: js
+categories: Javascript
 ---
 The problem is: I have to update a js file, say in the dir public_html/js/aa.js. also I have to upate it in another dir, like public_html2/js/aa.js
 

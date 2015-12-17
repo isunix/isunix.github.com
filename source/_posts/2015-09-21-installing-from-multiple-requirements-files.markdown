@@ -3,7 +3,7 @@ layout: post
 title: "installing from multiple requirements files"
 date: 2015-09-21 16:18:23 +0800
 comments: true
-categories: python	
+categories: Python
 ---
 Say we want to install modules from multiple requirement files. We will put the requirement files in the directory "requirements".
 

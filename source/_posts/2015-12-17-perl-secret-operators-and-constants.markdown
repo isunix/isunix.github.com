@@ -1,0 +1,20 @@
+---
+layout: post
+title: "perl secret operators and constants"
+date: 2015-12-17 10:37:47 +0800
+comments: true
+categories: Perl
+---
+Several days I met some perl one-liner like this:
+
+```sh
+cat $file | perl -Mautodie -MList::MoreUtils=none -ne 'chomp; push @re, $_ }{ open $fh, $ENV{CF}; @s = <$fh>; foreach $s (@s) { print $s if none { $s =~ qr/$_/ } @re };'
+```
+
+I have no idea what the "}{" here means, at first I thought it maybe some typo.
+
+Then my colleagues showed me the following page, which lists many weird perl operators.
+
+```html
+http://search.cpan.org/dist/perlsecret/lib/perlsecret.pod
+```

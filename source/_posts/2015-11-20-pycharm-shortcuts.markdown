@@ -3,7 +3,7 @@ layout: post
 title: "pycharm shortcuts"
 date: 2015-11-20 18:47:53 +0800
 comments: true
-categories: python	
+categories: Python
 ---
 The following are some notes on using pycharm.
 

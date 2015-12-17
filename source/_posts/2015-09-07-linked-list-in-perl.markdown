@@ -3,7 +3,7 @@ layout: post
 title: "Linked List in Perl"
 date: 2015-09-07 12:30:05 +0800
 comments: true
-categories: perl
+categories: Perl
 ---
 We will use linked list to output words in a file in alphabetical order. This example is in:
 

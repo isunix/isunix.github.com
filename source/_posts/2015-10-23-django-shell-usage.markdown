@@ -3,7 +3,7 @@ layout: post
 title: "django shell usage"
 date: 2015-10-23 16:50:03 +0800
 comments: true
-categories: django
+categories: Django
 ---
 
 Let's say we have an app named "people" and that in our models.py file, we have the following model:
@@ -31,10 +31,10 @@ python manage.py migrate
 For django's shell, we can enter it by issuing the following command:
 
 ```sh
-python manage.py shell 
+python manage.py shell
 ```
 
-and then 
+and then
 
 ```sh
 >>>from people.models import Person
@@ -48,12 +48,12 @@ There are several ways to create an object:
 a.  Person.objects.create(name="steven", age=24)
 b.  p = Person(name="steve", age=24)
     p.save()
-   
+
 c.  p = Person(name="steven")
 	p.age = 23
 	p.save()
-	
-d.  Person.objects.get_or_create(name="steven", age=24)   
+
+d.  Person.objects.get_or_create(name="steven", age=24)
 ```
 
 There are more ways to get an object:

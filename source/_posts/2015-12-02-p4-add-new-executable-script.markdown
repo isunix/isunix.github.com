@@ -3,7 +3,7 @@ layout: post
 title: "p4 add new executable script"
 date: 2015-12-02 13:38:57 +0800
 comments: true
-categories: linux
+categories: Linux
 ---
 This post shows how to add a script into p4 repo.
 

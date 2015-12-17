@@ -3,7 +3,7 @@ layout: post
 title: "tmux:can't create socket: Permission denied"
 date: 2015-06-19 13:04:00 +0800
 comments: true
-categories: linux
+categories: Linux
 ---
 
 my tmux's sockets are output to the dir "~/tmp", however today I encountered the problem saying "can't create socket: Permission denied" while I start tmux.

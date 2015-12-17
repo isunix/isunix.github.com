@@ -3,13 +3,13 @@ layout: post
 title: "use of surround.vim"
 date: 2014-09-19 09:56:45 +0800
 comments: true
-categories: vim
+categories: Vim
 ---
-I use the vim plugin, surround.vim, but I am familiar with it. Before I get to know it, I usually do those things which surround.vim can help us do in a very clumsy way. Thus I keep those notes down thus I can look up it later.   
+I use the vim plugin, surround.vim, but I am familiar with it. Before I get to know it, I usually do those things which surround.vim can help us do in a very clumsy way. Thus I keep those notes down thus I can look up it later.
 
-Two links are of use for this post, you can regard this post as an excerpt for the contents of those two links.  
+Two links are of use for this post, you can regard this post as an excerpt for the contents of those two links.
 
-http://www.catonmat.net/blog/vim-plugins-surround-vim/   
+http://www.catonmat.net/blog/vim-plugins-surround-vim/
 https://github.com/tpope/vim-surround
 
 
@@ -51,7 +51,7 @@ Finally, let's try out visual mode. Press a capital V (for linewise visual mode)
 </p>
 This plugin is very powerful for HTML and XML editing, a niche which currently seems underfilled in Vim land. (As opposed to HTML/XML inserting, for which many plugins are available). Adding, changing, and removing pairs of tags simultaneously is a breeze.
 
-The . command will work with ds, cs, and yss if you install repeat.vim.   
+The . command will work with ds, cs, and yss if you install repeat.vim.
 
 
 Text              Command      New Text

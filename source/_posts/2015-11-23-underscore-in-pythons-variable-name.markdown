@@ -3,7 +3,7 @@ layout: post
 title: "underscore in python's variable name"
 date: 2015-11-23 13:37:08 +0800
 comments: true
-categories: python
+categories: Python
 ---
 Found a very complete article about the "underscore" in python's usage.
 

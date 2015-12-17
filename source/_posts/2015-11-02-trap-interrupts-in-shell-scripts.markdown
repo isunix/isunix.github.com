@@ -3,7 +3,7 @@ layout: post
 title: "trap interrupts in shell scripts"
 date: 2015-11-02 14:45:18 +0800
 comments: true
-categories: shell
+categories: Shell
 ---
 Today I met some shell scirpts like the following:
 

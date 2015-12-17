@@ -3,7 +3,7 @@ layout: post
 title: "use python request to download movies"
 date: 2015-12-04 14:50:25 +0800
 comments: true
-categories: python
+categories: Python
 ---
 This post shows a working way to download movies using python requests module.
 

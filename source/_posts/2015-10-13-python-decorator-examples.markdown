@@ -3,7 +3,7 @@ layout: post
 title: "python decorator examples"
 date: 2015-10-13 16:54:03 +0800
 comments: true
-categories: python
+categories: Python
 ---
 
 Maybe I will just paste the link here,

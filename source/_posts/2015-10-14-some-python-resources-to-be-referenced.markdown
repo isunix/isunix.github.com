@@ -3,7 +3,7 @@ layout: post
 title: "some python resources to be referenced"
 date: 2015-10-14 16:24:06 +0800
 comments: true
-categories: python
+categories: Python
 ---
 This post is a collection of useful python resources.
 

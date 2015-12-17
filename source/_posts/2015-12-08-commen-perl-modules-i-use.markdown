@@ -3,9 +3,9 @@ layout: post
 title: "commen perl modules I use"
 date: 2015-12-08 16:07:21 +0800
 comments: true
-categories: perl
+categories: Perl
 ---
-I will list some of common perl modules I here. 
+I will list some of common perl modules I here.
 
 ```sh
 LWP::UserAgent

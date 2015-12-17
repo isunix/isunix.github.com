@@ -3,7 +3,7 @@ layout: post
 title: "resources for learning wsgi"
 date: 2015-10-27 16:14:52 +0800
 comments: true
-categories: python	
+categories: Python
 ---
 Here below are some resources I used to learn wsgi and tornado werkzeug.
 

@@ -3,7 +3,7 @@ layout: post
 title: "useful bash scripts"
 date: 2015-09-10 11:31:53 +0800
 comments: true
-categories: 
+categories: Shell
 ---
 This post keeps notes of some useful bash scripts or one liners.
 

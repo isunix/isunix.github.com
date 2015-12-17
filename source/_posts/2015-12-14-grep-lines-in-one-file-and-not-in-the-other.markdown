@@ -3,7 +3,7 @@ layout: post
 title: "grep lines in one file and not in the other"
 date: 2015-12-14 14:46:10 +0800
 comments: true
-categories: shell
+categories: Shell
 ---
 Say we have a file a, which has the following contentL:
 
@@ -22,13 +22,13 @@ c
 d
 ```
 
-What if we want to get all those in file a and not in file b, in this case, a, b, e? 
+What if we want to get all those in file a and not in file b, in this case, a, b, e?
 
 ```sh
 grep -F -x -v -f b.txt a.txt
 ```
 
-To qutoe from the page 
+To qutoe from the page
 
 ```html
 http://unix.stackexchange.com/questions/28158/is-there-a-tool-to-get-the-lines-in-one-file-that-are-not-in-another

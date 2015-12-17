@@ -3,7 +3,7 @@ layout: post
 title: "some basics about generators in python"
 date: 2015-10-19 08:46:43 +0800
 comments: true
-categories: python 
+categories: Python
 ---
 Here below is a reference for learning python generators:
 

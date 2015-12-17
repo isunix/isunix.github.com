@@ -105,6 +105,32 @@ cat $file | perl -Mautodie -MList::MoreUtils=none -ne &#39;chomp; push @re, $_ }
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 </pre></td><td class="code"><pre><code class="html"><span class="line">http://search.cpan.org/dist/perlsecret/lib/perlsecret.pod
 </span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>To have a look at how it is used in the backend:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nv">$ </span>perl -MO<span class="o">=</span>Deparse -lne <span class="s1">&#39;}{print$.&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>It will give the following code:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="o">-</span><span class="n">e</span> <span class="n">syntax</span> <span class="n">OK</span>
+</span><span class="line">    <span class="k">BEGIN</span> <span class="p">{</span> <span class="vg">$/</span> <span class="o">=</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span> <span class="vg">$\</span> <span class="o">=</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span> <span class="p">}</span>
+</span><span class="line">    <span class="n">LINE:</span> <span class="k">while</span> <span class="p">(</span><span class="nb">defined</span><span class="p">(</span><span class="nv">$_</span> <span class="o">=</span> <span class="sr">&lt;ARGV&gt;</span><span class="p">))</span> <span class="p">{</span>
+</span><span class="line">        <span class="nb">chomp</span> <span class="nv">$_</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">    <span class="p">{</span>
+</span><span class="line">        <span class="k">print</span> <span class="vg">$.</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 </div>
   
   

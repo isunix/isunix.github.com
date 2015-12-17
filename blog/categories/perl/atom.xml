@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Perl | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/perl/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2015-12-17T11:01:17+08:00</updated>
+  <updated>2015-12-17T15:01:54+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -30,6 +30,25 @@ cat $file | perl -Mautodie -MList::MoreUtils=none -ne 'chomp; push @re, $_ }{ op
 
 <p><code>html
 http://search.cpan.org/dist/perlsecret/lib/perlsecret.pod
+</code></p>
+
+<p>To have a look at how it is used in the backend:</p>
+
+<p><code>sh
+$ perl -MO=Deparse -lne '}{print$.'
+</code></p>
+
+<p>It will give the following code:</p>
+
+<p><code>perl
+-e syntax OK
+    BEGIN { $/ = "\n"; $\ = "\n"; }
+    LINE: while (defined($_ = &lt;ARGV&gt;)) {
+        chomp $_;
+    }
+    {
+        print $.;
+    }
 </code></p>
 ]]></content>
   </entry>

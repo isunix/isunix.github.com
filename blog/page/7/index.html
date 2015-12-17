@@ -9,7 +9,7 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="While reading some of the scripts written by my colleagus, I found some usages to be quite tricky. Thus I keep a note of the usage here. 1.filename &hellip;">
+  <meta name="description" content="This is for setting up hadoop on ubuntu. I am using hadoop version 2.5.1, so when I search on the internet, the result I get may not apply to the &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -62,6 +62,67 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/11/17/hadoop-installation-and-setup/">Hadoop Installation and Setup</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-11-17T17:23:12+08:00" pubdate data-updated="true">Nov 17<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>This is for setting  up hadoop on ubuntu. I am using hadoop version 2.5.1, so when I search on the internet, the result I get may not apply to the version I am using, thus I keep a note of the installation process in the hope that later reference will be easier.  </p>
+
+<p>1.install java and set java home env variable. </p>
+
+<p>In the /etc/lib/jvm dir, make a soft link to the jdk dir their and renaming it ot “jdk” for short nanme.  and write to my .zshrc file the JAVA_HOME path variable. </p>
+
+<p>2.edit the hadoop-env.sh file in hadoop/etc/hadoop dir by setting the java home var.</p>
+
+<p>3.edit the core-site.xml file in hadoop/etc/hadoop dir by setting the default hadoop config which you can search by yourself.</p>
+
+<p>4.edit the hdfs-site.xml file in hadoop/etc/hadoop dir by setting the default fs config which you can search by yourself.</p>
+
+<p>5.edit the map-red.site.xml file in hadoop/etc/hadoop dir by setting the default fs config which you can search by yourself.  </p>
+
+<p>6.format hdfs by issuing the following command:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">./bin/hadoop namenode -format
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>7.start services by executing the scripts in the sbin dir.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">./start-yarn.sh
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>(It is not in the bin dir as is shown in most blogs.)</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -924,7 +985,7 @@ need to write a lot of data to a particular file, you could use code like this: 
   </header>
 
 
-  <div class="entry-content"><p>I am taking notes of some of the advanced perl tricks used in perl.  </p>
+  <div class="entry-content"><p>I am taking notes of some of the advanced perl tricks used in perl.</p>
 
 <p>1.to get all the matched items using the /g flag,</p>
 
@@ -934,13 +995,13 @@ need to write a lot of data to a particular file, you could use code like this: 
 </span><span class="line"><span class="k">my</span> <span class="nv">@words</span> <span class="o">=</span> <span class="sr">/(\S+)/g</span><span class="p">;</span> <span class="c1"># &quot;Just&quot; &quot;another&quot; &quot;Perl&quot; &quot;hacker,&quot;</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>2.to get the word count, </p>
+<p>2.to get the word count,</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 </pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">$word_count</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=</span> <span class="sr">/(\S+)/g</span><span class="p">;</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>3.The built-in pos() operator returns the match position for the string we give it (or $_ by default).   </p>
+<p>3.The built-in pos() operator returns the match position for the string we give it (or $_ by default).</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
@@ -952,7 +1013,7 @@ need to write a lot of data to a particular file, you could use code like this: 
 </span><span class="line"><span class="k">print</span> <span class="s">&quot;[$1] ends at position $pos\n&quot;</span><span class="p">;</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>4.To anchor our next match exactly where we left off the last time, we can use the \G anchor. It’s just like the beginning of string anchor \A, except for where \G anchors at the current match position. If our match fails, Perl resets pos() and we start at the beginning of the string.  </p>
+<p>4.To anchor our next match exactly where we left off the last time, we can use the \G anchor. It’s just like the beginning of string anchor \A, except for where \G anchors at the current match position. If our match fails, Perl resets pos() and we start at the beginning of the string.</p>
 
 </div>
   
@@ -1035,143 +1096,6 @@ need to write a lot of data to a particular file, you could use code like this: 
 </span><span class="line">    <span class="p">}</span>
 </span><span class="line"><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/10/16/perl-bebugger-tips/">Perl Bebugger Tips</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-10-16T15:31:54+08:00" pubdate data-updated="true">Oct 16<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Knowing how to debug a perl program is really important. I am saying this not simply because it is supposed to be so, but also because I have encountered several occasions where I am stucked because I do not know how to debug and I have to ask for help from others. </p>
-
-<p>I am writing this post currently based on two perl pods, one is “perldebug”, the other is “perldebtut”. There is book named “perl debugged” which focuses on how to debug a perl program. Also google it to find post and materials as to how to debug a perl program. I am preparing to stuff all tips and knowledges regrading to perl debugging in this post.  </p>
-
-<p>1.if we want to do a syntax check, we can use the following way:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">perl</span> <span class="o">-</span><span class="n">c</span> <span class="n">hello</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>2.The line shown is the one that is about to be executed next, it hasn’t happened yet. So while we can print a variable with the letter ‘p’, at this point all we’d get is an empty (undefined) value back. What we need to do is to step through the next executable statement with an ‘s’. Then you can see the previous shown variable using the “p varname” format.  </p>
-
-<p>3.type something like “x keys %data” will print out the data in a pretty format. </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">Evals</span> <span class="n">expr</span> <span class="n">in</span> <span class="n">list</span> <span class="n">context</span><span class="p">,</span> <span class="n">dumps</span> <span class="n">the</span> <span class="n">result</span> <span class="ow">or</span> <span class="n">lists</span> <span class="n">methods</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>4.using the “x” operator on a hash is not quite useful here. since a couple of welcomes in there, but no indication of which are keys, and which are values, it’s just a listed array dump and, in this case, not particularly helpful. The trick here, is to use a reference to the data structure:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">x</span> <span class="o">\</span><span class="nv">%data</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>5.Know the differences between “qw” and “q”: qw// is simply q// followed by a split on whitespace. No way to conserve blanks. Thus if the quoted words have blank spaces, and you want to treat them as a whole, use q rather than qw.  </p>
-
-<p>5.perl -w script-name will execute the script and give out the warning messages.  </p>
-
-<p>6.Take a closer look at the ‘x’ command, it’s really useful and will merrily dump out nested references, complete objects, partial objects - just about whatever you throw at it.   </p>
-
-<p>7.If we want to start the debugger and want some form of input from STDIN, we give it something non-committal, a zero: </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">perl</span> <span class="o">-</span><span class="n">de</span> <span class="mi">0</span>	
-</span><span class="line"><span class="ow">or</span>
-</span><span class="line"><span class="n">perl</span> <span class="o">-</span><span class="n">de0</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>8.typing “perl -de 0” into the terminal, build an on-the-fly object over a couple of lines (note the backslash):  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">DB</span><span class="sr">&lt;1&gt;</span> <span class="nv">$obj</span> <span class="o">=</span> <span class="nb">bless</span><span class="p">({</span><span class="s">&#39;unique_id&#39;</span><span class="o">=&gt;</span><span class="s">&#39;123&#39;</span><span class="p">,</span> <span class="s">&#39;attr&#39;</span><span class="o">=&gt;</span> <span class="o">\</span>
-</span><span class="line"><span class="n">cont:</span> 	<span class="p">{</span><span class="s">&#39;col&#39;</span> <span class="o">=&gt;</span> <span class="s">&#39;black&#39;</span><span class="p">,</span> <span class="s">&#39;things&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="sx">qw(this that etc)</span><span class="p">]}},</span> <span class="s">&#39;MY_class&#39;</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>9.use the “x” command to see the internals of the obj. </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">DB</span><span class="sr">&lt;2&gt;</span> <span class="n">x</span> <span class="nv">$obj</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>10.To give more examples on using the “perl -de 0” command, I will just copy the code from the “perldebtut” pod page.  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">DB</span><span class="sr">&lt;3&gt;</span> <span class="nv">@data</span> <span class="o">=</span> <span class="sx">qw(this that the other atheism leather theory scythe)</span>
-</span><span class="line"><span class="n">DB</span><span class="sr">&lt;4&gt;</span> <span class="n">p</span> <span class="s">&#39;saw -&gt; &#39;</span><span class="o">.</span><span class="p">(</span><span class="nv">$cnt</span> <span class="o">+=</span> <span class="nb">map</span> <span class="p">{</span> <span class="k">print</span> <span class="s">&quot;\t:\t$_\n&quot;</span> <span class="p">}</span> <span class="nb">grep</span><span class="p">(</span><span class="sr">/the/</span><span class="p">,</span> <span class="nb">sort</span> <span class="nv">@data</span><span class="p">))</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>11.If you want to see the command History, type an ‘H’:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">DB</span><span class="sr">&lt;5&gt;</span> <span class="n">H</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>12.And if you want to repeat any previous command, use the exclamation: ‘!’:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">DB</span><span class="sr">&lt;5&gt;</span> <span class="o">!</span><span class="mi">4</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>13.If we want to put a breakpoint on a line, we can use this:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">b</span> <span class="n">linenum</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>14.We can see what breakpoints are set by using the list ‘L’ command:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">DB</span><span class="sr">&lt;3&gt;</span> <span class="n">L</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>15.To delete a break point on a line, we use the “B” command. </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">DB</span><span class="sr">&lt;3&gt;</span> <span class="n">B</span> <span class="mi">16</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>16.At the end of the tutorial, its recommended to refer to the following tutorials:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">perldebug</span><span class="p">,</span> <span class="n">perldebguts</span><span class="p">,</span> <span class="n">perldiag</span><span class="p">,</span> <span class="n">perlrun</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>17.Option s and n does step by step execution of each statements. Option s steps into the subroutine. Option n executes the subroutine in a single step (stepping over it).</p>
-
-<p>The s option does stepping into the subroutine while n option which would execute the subroutine(stepping over it).</p>
-
 </div>
   
   

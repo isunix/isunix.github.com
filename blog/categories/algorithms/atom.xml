@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Algorithms | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/algorithms/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2015-12-14T14:54:12+08:00</updated>
+  <updated>2015-12-17T11:01:17+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,18 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[匹配最长连续数字串]]></title>
+    <link href="http://isunix.github.io/blog/2014/10/14/pi-pei-zui-chang-lian-xu-shu-zi-chuan/"/>
+    <updated>2014-10-14T13:11:06+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/10/14/pi-pei-zui-chang-lian-xu-shu-zi-chuan</id>
+    <content type="html"><![CDATA[<p>Say if we are given a string, like “ab1c123def3456h259887”, we want to get the longest consecutive string which consists of only data.</p>
+
+<p>we are using perl to realize this function. (Actually this is much harder than I thought!)</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Study of Hash Function]]></title>
@@ -456,85 +468,6 @@ Status Pop(LinkStack *S,SElemType *e)
         printf(“清空栈后，栈空否：%d(1:空 0:否)\n”,StackEmpty(s));
         return 0;
 }
-```</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[CTCI-Q1.1]]></title>
-    <link href="http://isunix.github.io/blog/2014/08/19/ctci-q1-dot-1/"/>
-    <updated>2014-08-19T16:16:38+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/08/19/ctci-q1-dot-1</id>
-    <content type="html"><![CDATA[<p>The question is: </p>
-
-<p><code>yaml
-Implement an algorithm to determine if a string has all unique characters. What if you can not use additional data structures?
-</code></p>
-
-<p>We will try to solve this problem using four languages c++, java, python.</p>
-
-<p>In order to simplify this problem, we shorten the character set to ASCII.</p>
-
-<p>In this case, if the string is longer that 256, surely at least two will be the same. </p>
-
-<p>We can create an array char_set whose values are booleans. thus char_set[val] = true means that the char is in the array and char_set[val] = false means that the char is not in the array.  </p>
-
-<p>1.java version:</p>
-
-<p><code>java
-public static boolean isUnique(String str) {
-        if (str.length() &gt; 256) {
-            return false;
-        }
-        boolean[] acsii_set = new boolean[256];
-        for (int i = 0; i &lt; str.length(); i++) {
-            int val = str.charAt(i);
-            if (ascii_set[val]) return false;
-            ascii_set[val] = true;
-        }
-        return true;
-    }
-</code></p>
-
-<p>2.c++ version:</p>
-
-<p><code>cpp
-bool isUnique(string str){
-	if(str.length() &gt; 256){
-		return false;
-	}
-	bool ascii_set[256] = {false};
-	for (int i=0; i &lt; str.length(); i++){
-		int val = str[i];
-		if (ascii_set[val]){
-			return false;
-		}
-		ascii_set[value] = true;
-	}
-	reutrn true;
-}
-</code>  </p>
-
-<p>3.python version:</p>
-
-<p>```py
-#!/usr/local/bin/python3
-# -<em>- coding: utf-8 -</em>-</p>
-
-<p>def is_unique(str):
-    charsTable = set()
-    for c in str:
-        if c in charsTable:
-            return False
-        charsTable.add(c)
-    return True</p>
-
-<p>test_str1 = “hello”
-test_str2 = “abcdef”
-ans1 = is_unique(test_str1)
-ans2 = is_unique(test_str2)
-print(ans1)
-print(ans2)
 ```</p>
 ]]></content>
   </entry>

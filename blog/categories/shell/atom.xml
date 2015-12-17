@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Shell | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/shell/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2015-12-14T14:54:12+08:00</updated>
+  <updated>2015-12-17T11:01:17+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,146 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Grep Lines in One File and Not in the Other]]></title>
+    <link href="http://isunix.github.io/blog/2015/12/14/grep-lines-in-one-file-and-not-in-the-other/"/>
+    <updated>2015-12-14T14:46:10+08:00</updated>
+    <id>http://isunix.github.io/blog/2015/12/14/grep-lines-in-one-file-and-not-in-the-other</id>
+    <content type="html"><![CDATA[<p>Say we have a file a, which has the following contentL:</p>
+
+<p><code>
+a
+b
+c
+d
+e
+</code></p>
+
+<p>and b,</p>
+
+<p><code>
+c
+d
+</code></p>
+
+<p>What if we want to get all those in file a and not in file b, in this case, a, b, e?</p>
+
+<p><code>sh
+grep -F -x -v -f b.txt a.txt
+</code></p>
+
+<p>To qutoe from the page</p>
+
+<p><code>html
+http://unix.stackexchange.com/questions/28158/is-there-a-tool-to-get-the-lines-in-one-file-that-are-not-in-another
+</code></p>
+
+<p>The above command is doing the following things:</p>
+
+<p><code>
+This works by using each line in b.txt as a pattern (-f b.txt) and treating it as a plain string to match (not a regular regex) (-F). You force the match to happen on the whole line (-x) and print out only the lines that don't match (-v). Therefore you are printing out the lines in a.txt that don't contain the same data as any line in b.txt.
+</code></p>
+
+<p>So remember the order of file a and b matters if you really understand what the command is doing.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[The Most Used Shell Commands]]></title>
+    <link href="http://isunix.github.io/blog/2015/11/02/the-most-used-shell-commands/"/>
+    <updated>2015-11-02T16:21:57+08:00</updated>
+    <id>http://isunix.github.io/blog/2015/11/02/the-most-used-shell-commands</id>
+    <content type="html"><![CDATA[<p>We can use the following shell scripts to find the 10 most used shell commands for a user.</p>
+
+<p><code>sh
+history | awk '{a[$2]++} END {for(i in a) {print a[i]" "i}}'| sort -rn | head
+</code></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Trap Interrupts in Shell Scripts]]></title>
+    <link href="http://isunix.github.io/blog/2015/11/02/trap-interrupts-in-shell-scripts/"/>
+    <updated>2015-11-02T14:45:18+08:00</updated>
+    <id>http://isunix.github.io/blog/2015/11/02/trap-interrupts-in-shell-scripts</id>
+    <content type="html"><![CDATA[<p>Today I met some shell scirpts like the following:</p>
+
+<p><code>sh
+trap "rm -f $file; exit" INT TERM EXIT
+</code>
+More code here:</p>
+
+<p>```sh
+cleanup() {
+    echo “Cleaning stuff up…”
+    exit
+}</p>
+
+<p>trap cleanup INT TERM
+echo ‘ — press ENTER to close — ‘
+read var
+cleanup
+```</p>
+
+<p>change “trap cleanup INT TERM” above to “trap cleanup INT TERM EXIT” and then execute the script. Enter ‘exit’ and see what differences will happen.</p>
+
+<p>The following are references:</p>
+
+<p><code>html
+http://unix.stackexchange.com/questions/57940/trap-int-term-exit-really-necessary
+http://kb.mit.edu/confluence/pages/viewpage.action?pageId=3907156
+</code></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Useful Bash Scripts]]></title>
+    <link href="http://isunix.github.io/blog/2015/09/10/useful-bash-scripts/"/>
+    <updated>2015-09-10T11:31:53+08:00</updated>
+    <id>http://isunix.github.io/blog/2015/09/10/useful-bash-scripts</id>
+    <content type="html"><![CDATA[<p>This post keeps notes of some useful bash scripts or one liners.</p>
+
+<p>1.find files with txt ext in the current dir and print out those files to be deleted and then delete those files.</p>
+
+<p><code>sh
+find . -type f -name "*.txt" -print |xargs -I {} sh -c "echo deleting {}; rm {}"
+</code></p>
+
+<p>2.find files with txt ext in the current dir and mv those files to another dir with amount of files limited to a certain number:</p>
+
+<p><code>sh
+find ./ -type f -name "*.txt"| xargs -L56 -I {} mv -f {} ./old/
+</code></p>
+
+<p>3.Almost same with step 2, but also print out the steps taken in the command line:</p>
+
+<p><code>sh
+find ./ -type f -name "*.txt"| xargs -L56 -I {} -t mv {} ./old/
+</code></p>
+
+<p>4.find if a dir is a subdir of another dir:</p>
+
+<p>```sh
+dir_a=”/home/stsun”
+dir_b=”/home/stsun/work/spam”</p>
+
+<p>if [[ “${dir_b}” == “${dir_a}”* ]]
+then
+    # Get the subdirectory only
+    SUBDIR=${dir_b#${dir_a}/}
+    printf “SUBDIR is $SUBDIR\n”
+    BASE=${dir_a}/${SUBDIR%%/*}
+    printf “BASE is ${BASE}\n”</p>
+
+<p>else
+    printf “Error: ${dir_b} is not in ${dir_a}\n”
+    exit 1
+fi
+```</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Libevent Not Found Error While Install Tmux]]></title>
@@ -28,67 +168,6 @@ DIR="$HOME/local"
 </code></p>
 
 <p>Since I install libevent with the option, “–prefix=$HOME/local”.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[How to Make Zsh the Default Shell Without Root Access]]></title>
-    <link href="http://isunix.github.io/blog/2014/12/24/how-to-make-zsh-the-default-shell-without-root-access/"/>
-    <updated>2014-12-24T19:01:06+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/12/24/how-to-make-zsh-the-default-shell-without-root-access</id>
-    <content type="html"><![CDATA[<p>As depicted by the title, this post keeps notes on how to make zsh the default shell without root access. BTW, I am using oh-my-zsh configuration files.</p>
-
-<p>In the .bash_profile, add the following lines,</p>
-
-<p><code>sh
-export SHELL=/bin/zsh
-exec /bin/zsh -l
-</code></p>
-
-<p>Where zsh will be your own location of your zsh file.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Notes on Shell Scripts]]></title>
-    <link href="http://isunix.github.io/blog/2014/11/10/notes-on-shell-scripts/"/>
-    <updated>2014-11-10T16:40:55+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/11/10/notes-on-shell-scripts</id>
-    <content type="html"><![CDATA[<p>While reading some of the scripts written by my colleagus, I found some usages to be quite tricky. Thus I keep a note of the usage here.</p>
-
-<p>1.filename and extension parts</p>
-
-<p><code>sh
-echo `basename $PWD` # Basename of current working directory.
-echo "${PWD##*/}" # Basename of current working directory.
-echo
-echo `basename $0` # Name of script.
-echo $0 # Name of script.
-echo "${0##*/}" # Name of script.
-echo
-filename=test.data
-echo "${filename##*.}" # data
-# Extension of filename.
-</code>  </p>
-
-<p>2.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Bash Script to List All Methods in a Perl Module]]></title>
-    <link href="http://isunix.github.io/blog/2014/09/25/bash-script-to-list-all-methods-in-a-perl-module/"/>
-    <updated>2014-09-25T16:21:52+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/09/25/bash-script-to-list-all-methods-in-a-perl-module</id>
-    <content type="html"><![CDATA[<p>In the post “Dynamicly Adding a Method to a Module”, I showed how to use a perl one-liner to list all the methods in a module.  </p>
-
-<p>I will show how to do it in a shell script thus we can accept the module on the command line, </p>
-
-<p><code>sh
-#!/bin/bash
-perl -e "use Data::Dumper; use $1; print Dumper \%$1::"
-</code></p>
-
 ]]></content>
   </entry>
   

@@ -5,12 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>More Color Themes for Pycharm and Webstorm - Steven's Blog</title>
+  <title>Fun Shell Tricks - Steven's Blog</title>
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="We can follow the link below to get more color themes for pycharm and webstorm. 1
-https://github.com/d1ffuz0r/pycharm-themes Basically, For macos, it &hellip;">
+  <meta name="description" content="1.Print the 10 most frequent words in the input. 1
+cat * | tr -sc A-Za-z &#39;\n&#39; | sort | uniq -c | sort -n | tail Sadly this is not totally &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +19,7 @@ https://github.com/d1ffuz0r/pycharm-themes Basically, For macos, it &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://isunix.github.io/blog/2015/12/17/more-color-themes-for-pycharm-and-webstorm">
+  <link rel="canonical" href="http://isunix.github.io/blog/2015/12/21/fun-shell-tricks">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Steven's Blog" type="application/atom+xml">
@@ -55,7 +55,7 @@ https://github.com/d1ffuz0r/pycharm-themes Basically, For macos, it &hellip;">
   
   <header>
     
-      <h1 class="entry-title">More Color Themes for Pycharm and Webstorm</h1>
+      <h1 class="entry-title">Fun Shell Tricks</h1>
     
     
       <p class="meta">
@@ -71,40 +71,34 @@ https://github.com/d1ffuz0r/pycharm-themes Basically, For macos, it &hellip;">
   
 
 
-<time datetime="2015-12-17T18:44:44+08:00" pubdate data-updated="true">Dec 17<span>th</span>, 2015</time>
+<time datetime="2015-12-21T15:04:39+08:00" pubdate data-updated="true">Dec 21<span>st</span>, 2015</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>We can follow the link below to get more color themes for pycharm and webstorm.</p>
+<div class="entry-content"><p>1.Print the 10 most frequent words in the input.</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line">https://github.com/d1ffuz0r/pycharm-themes
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat * | tr -sc A-Za-z <span class="s1">&#39;\n&#39;</span> | sort | uniq -c | sort -n | tail
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>Basically, For macos, it is:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">git clone git://github.com/d1ffuz0r/pycharm-themes.git
-</span><span class="line"><span class="nb">cd </span>pycharm-themes/colors
-</span><span class="line">cp *.icls ~/Library/Preferences/PyCharm50/colors
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>For linux it is:</p>
+<p>Sadly this is not totally correct, it will give out something like:</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">git clone git://github.com/d1ffuz0r/pycharm-themes.git
-</span><span class="line"><span class="nb">cd </span>pycharm-themes/colors
-</span><span class="line">cp *.icls ~/.PyCharm50/config/colors/
+</pre></td><td class="code"><pre><code class="sh"><span class="line">22 pl
+</span><span class="line">38 d
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>I have tested this on macos and it works.</p>
+<p>which are not exactly words.</p>
+
+<p>2.use awk with substr:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">date | awk <span class="s1">&#39;{print substr($4, 1, 5)}&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 </div>
 
 
@@ -127,12 +121,12 @@ https://github.com/d1ffuz0r/pycharm-themes Basically, For macos, it &hellip;">
   
 
 
-<time datetime="2015-12-17T18:44:44+08:00" pubdate data-updated="true">Dec 17<span>th</span>, 2015</time>
+<time datetime="2015-12-21T15:04:39+08:00" pubdate data-updated="true">Dec 21<span>st</span>, 2015</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/tools/'>Tools</a>
+    <a class='category' href='/blog/categories/shell/'>Shell</a>
   
 </span>
 
@@ -148,10 +142,8 @@ https://github.com/d1ffuz0r/pycharm-themes Basically, For macos, it &hellip;">
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2015/12/17/perl-secret-operators-and-constants/" title="Previous Post: perl secret operators and constants">&laquo; perl secret operators and constants</a>
+        <a class="basic-alignment left" href="/blog/2015/12/18/sed-one-liners/" title="Previous Post: sed one-liners">&laquo; sed one-liners</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2015/12/18/sed-one-liners/" title="Next Post: sed one-liners">sed one-liners &raquo;</a>
       
     </p>
   </footer>

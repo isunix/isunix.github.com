@@ -9,8 +9,7 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="Found a very complete article about the “underscore” in python’s usage. 1
-http://my.oschina.net/leejun2005/blog/387136 ">
+  <meta name="description" content="What if I want to find the lines exist in all the given files under linux. Of course I can write a small script but I do not want to do that, cause I &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -63,6 +62,100 @@ http://my.oschina.net/leejun2005/blog/387136 ">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/11/23/find-the-common-lines-in-multiple-files/">Find the Common Lines in Multiple Files</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-11-23T17:22:11+08:00" pubdate data-updated="true">Nov 23<span>rd</span>, 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>What if I want to find the lines exist in all the given files under linux. Of course I can write a small script but I do not want to do that, cause I am sure there are commands for this kind of task.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">grep -F -x -f file1 file2 ...
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>you can refer to the following page for more details.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line">http://unix.stackexchange.com/questions/28158/is-there-a-tool-to-get-the-lines-in-one-file-that-are-not-in-another
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/11/23/sort-then-uinq-vs-uniq-then-sort/">Sort Then Uinq vs Uniq Then Sort</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-11-23T17:19:54+08:00" pubdate data-updated="true">Nov 23<span>rd</span>, 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><table>
+  <tbody>
+    <tr>
+      <td>In linux is there any difference between “sort</td>
+      <td>uniq” and “uniq</td>
+      <td>sort”? If you are not sure, try it first. If you are not sure why, think about it for a while or reference this post:</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line">http://stackoverflow.com/questions/1402223/calling-uniq-and-sort-in-different-orders-in-shell
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -414,151 +507,6 @@ http://my.oschina.net/leejun2005/blog/387136 ">
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 </pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nb">history</span> | awk <span class="s1">&#39;{a[$2]++} END {for(i in a) {print a[i]&quot; &quot;i}}&#39;</span>| sort -rn | head
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/11/02/trap-interrupts-in-shell-scripts/">Trap Interrupts in Shell Scripts</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-11-02T14:45:18+08:00" pubdate data-updated="true">Nov 2<span>nd</span>, 2015</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Today I met some shell scirpts like the following:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nb">trap</span> <span class="s2">&quot;rm -f $file; exit&quot;</span> INT TERM EXIT
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>More code here:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cleanup<span class="o">()</span> <span class="o">{</span>
-</span><span class="line">    <span class="nb">echo</span> <span class="s2">&quot;Cleaning stuff up...&quot;</span>
-</span><span class="line">    <span class="nb">exit</span>
-</span><span class="line"><span class="o">}</span>
-</span><span class="line">
-</span><span class="line"><span class="nb">trap </span>cleanup INT TERM
-</span><span class="line"><span class="nb">echo</span> <span class="s1">&#39; --- press ENTER to close --- &#39;</span>
-</span><span class="line"><span class="nb">read </span>var
-</span><span class="line">cleanup
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>change “trap cleanup INT TERM” above to “trap cleanup INT TERM EXIT” and then execute the script. Enter ‘exit’ and see what differences will happen.</p>
-
-<p>The following are references:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line">http://unix.stackexchange.com/questions/57940/trap-int-term-exit-really-necessary
-</span><span class="line">http://kb.mit.edu/confluence/pages/viewpage.action?pageId=3907156
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/10/27/resources-for-learning-wsgi/">Resources for Learning Wsgi</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-10-27T16:14:52+08:00" pubdate data-updated="true">Oct 27<span>th</span>, 2015</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Here below are some resources I used to learn wsgi and tornado werkzeug.</p>
-
-<ol>
-  <li>wsgi:</li>
-</ol>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line">https://brodie.io/journal/why-wsgi/
-</span><span class="line">http://wsgi.readthedocs.org/en/latest/what.html
-</span><span class="line">https://www.python.org/dev/peps/pep-3333/
-</span><span class="line">http://wsgi.readthedocs.org/en/latest/learn.html
-</span><span class="line">http://wsgi.tutorial.codepoint.net/
-</span><span class="line">http://linuxgazette.net/115/orr.html
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ol>
-  <li>werkzeug:</li>
-</ol>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line">http://werkzeug.pocoo.org/
-</span><span class="line">https://github.com/mitsuhiko/werkzeug
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ol>
-  <li>websocket:</li>
-</ol>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line">http://buildnewgames.com/websockets/
-</span><span class="line">http://rz.scale-it.pl/2013/01/25/tornado___the_best_web_framework.html
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 </div>
   

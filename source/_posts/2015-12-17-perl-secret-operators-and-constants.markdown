@@ -18,3 +18,22 @@ Then my colleagues showed me the following page, which lists many weird perl ope
 ```html
 http://search.cpan.org/dist/perlsecret/lib/perlsecret.pod
 ```
+
+To have a look at how it is used in the backend:
+
+```sh
+$ perl -MO=Deparse -lne '}{print$.'
+```
+
+It will give the following code:
+
+```perl
+-e syntax OK
+    BEGIN { $/ = "\n"; $\ = "\n"; }
+    LINE: while (defined($_ = <ARGV>)) {
+        chomp $_;
+    }
+    {
+        print $.;
+    }
+```

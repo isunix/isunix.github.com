@@ -9,8 +9,7 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="Here below is the one-liner I found to remove a blank line in a file. 1
-perl -pi -e &#39;s!^\s+?$!!&#39; file.txt ">
+  <meta name="description" content="Of courese there are many perl programms that can be claimed as “typical”, yet you can not what is truely “typical”. The one below is where I met in &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -63,6 +62,108 @@ perl -pi -e &#39;s!^\s+?$!!&#39; file.txt ">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/24/a-typical-perl-program/">A Typical Perl Program</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-24T15:17:20+08:00" pubdate data-updated="true">Jul 24<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Of courese there are many perl programms that can be claimed as “typical”, yet you can not what is truely “typical”. The one below is where I met in the book “perl for dummies”. Ok, show you the code now.   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">$TheFile</span> <span class="o">=</span> <span class="s">&quot;sample.txt&quot;</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="nb">open</span><span class="p">(</span><span class="n">INFILE</span><span class="p">,</span> <span class="nv">$TheFile</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">die</span> <span class="s">&quot;The file $TheFile could &quot;</span> <span class="o">.</span>  <span class="s">&quot;not be found.\n&quot;</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="nv">$CharCount</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line"><span class="nv">$WordCount</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line"><span class="nv">$LineCount</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">while</span><span class="p">(</span><span class="sr">&lt;INFILE&gt;</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">  <span class="nv">$TheLine</span> <span class="o">=</span> <span class="nv">$_</span><span class="p">;</span>
+</span><span class="line">  <span class="nb">chomp</span><span class="p">(</span><span class="nv">$TheLine</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line">  <span class="nv">$LineCount</span> <span class="o">=</span> <span class="nv">$LineCount</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class="line">  <span class="nv">$LineLen</span> <span class="o">=</span> <span class="nb">length</span><span class="p">(</span><span class="nv">$TheLine</span><span class="p">);</span>
+</span><span class="line">  <span class="nv">$CharCount</span> <span class="o">=</span> <span class="nv">$CharCount</span> <span class="o">+</span> <span class="nv">$LineLen</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">  <span class="k">if</span><span class="p">(</span><span class="nv">$TheLine</span> <span class="ow">eq</span> <span class="s">&quot;&quot;</span><span class="p">)</span> <span class="p">{</span> <span class="k">next</span> <span class="p">};</span> <span class="c1">##evaluate the next line;</span>
+</span><span class="line">  <span class="nv">$WordCount</span> <span class="o">=</span> <span class="nv">$WordCount</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class="line">  <span class="nv">$CharPos</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">  <span class="k">until</span><span class="p">(</span><span class="nv">$CharPos</span> <span class="o">==</span> <span class="nv">$LineLen</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">    <span class="k">if</span><span class="p">(</span><span class="nb">substr</span><span class="p">(</span><span class="nv">$TheLine</span><span class="p">,</span> <span class="nv">$CharPos</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="ow">eq</span> <span class="s">&quot; &quot;</span><span class="p">)</span>
+</span><span class="line">      <span class="p">{</span> <span class="nv">$WordCount</span> <span class="o">=</span> <span class="nv">$WordCount</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">}</span>
+</span><span class="line">    <span class="nv">$CharPos</span> <span class="o">=</span> <span class="nv">$CharPos</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;For the file $TheFile:\n&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;Number of characters $CharCount\n&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;Number of words    $WordCount\n&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;Number of lines    $LineCount\n&quot;</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>I list this program here, because We can learn how to use chomp, length, $_, &lt;&gt;, until, next, eq, ==, next, substr, FILEHANDLE, string concatenation, how to tell if it is a word and so on, all these import concepts in perl programming in one script. </p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -795,60 +896,6 @@ as well!</span></code></pre></td></tr></table></div></figure></notextile></div>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/07/18/zai-kan-de-shu/">在看的书</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-07-18T18:45:19+08:00" pubdate data-updated="true">Jul 18<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>最近要看的书很多很多， 现在这里列出来几本吧!   </p>
-
-<ol>
-  <li>我是一只IT小小鸟   </li>
-  <li>Python Standard Library   </li>
-  <li>Learning Perl  </li>
-  <li>啊哈算法</li>
-  <li>啊哈C</li>
-  <li>coffeescript程序设计（Programming In Coffeescript）</li>
-  <li>图解HTTP </li>
-  <li>征服C指针 </li>
-  <li>JS the good parts</li>
-  <li>javascript高级程序设计</li>
-</ol>
-
-<p>好像有点多了，我这样的资质很浅的人， 竟然同时看这么多的书， 实在是有点儿不自量力，所以感到非常非常地累。    </p>
-
-<p>很多其他的书还没有列出来呢， 改日再列出来。 之所以要这么做，是因为想要做个记录，而不是为了像别人展现我看了多少多少书。(我都不知道有谁会看我的这个博客, 哈哈！)</p>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/17/">&larr; Older</a>
@@ -868,7 +915,7 @@ as well!</span></code></pre></td></tr></table></div></figure></notextile></div>
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2015 - Steven Sun -
+  Copyright &copy; 2016 - Steven Sun -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

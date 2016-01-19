@@ -9,7 +9,8 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="We keep notes on some of the useful notes on perl command line knowledge here. 1.-i[extension]: specifies that files processed by the “&lt;&gt;” &hellip;">
+  <meta name="description" content="Use the following way to see the detailed info of perl debugger info. 1
+perldoc perldebguts ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -62,6 +63,153 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/06/perl-debug-tut/">Perl Debug Tut</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-06T21:48:04+08:00" pubdate data-updated="true">Sep 6<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Use the following way to see the detailed info of perl debugger info.  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">perldoc</span> <span class="n">perldebguts</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/06/mastering-perl-learning-notes/">Mastering Perl Learning Notes</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-06T18:03:53+08:00" pubdate data-updated="true">Sep 6<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>This is for the book “mastering perl”. There are some code snippets in this book which I think is quite useful, thus I keep a note of them below.  </p>
+
+<p>1.global matching:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">$_</span> <span class="o">=</span> <span class="s">&quot;Just another Perl hacker,&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">@words</span> <span class="o">=</span> <span class="sr">/(\S+)/g</span><span class="p">;</span> <span class="c1"># &quot;Just&quot; &quot;another&quot; &quot;Perl&quot; &quot;hacker,&quot;</span>
+</span><span class="line"><span class="k">print</span> <span class="nb">join</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="nb">split</span><span class="p">(</span><span class="nv">@words</span><span class="p">));</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>2.my $word_count = () = /(\S+)/g; <br />
+It will give out the number of matched items.</p>
+
+<p>3.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/06/fun-perl-code-snippets/">Fun Perl Code Snippets</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-06T10:02:29+08:00" pubdate data-updated="true">Sep 6<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I collect some useful code snippets here for later usage or just keep a note of what I have read.  </p>
+
+<p>1.find files larger than a specifed size(in byte):   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="nn">File::</span><span class="n">Find</span><span class="p">;</span>
+</span><span class="line"><span class="n">find</span><span class="p">(</span><span class="k">sub </span><span class="p">{</span> <span class="k">print</span> <span class="s">&quot;$_\n&quot;</span> <span class="k">if</span> <span class="o">-</span><span class="n">s</span> <span class="nv">$_</span> <span class="o">&gt;</span> <span class="nv">$ARGV</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span> <span class="p">},</span> <span class="s">&quot;.&quot;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>2.we can use “man module::name” or “perldoc module::name” to check the detailed info of a module.   </p>
+
+<p>3.For the first example, if using require, we can write it as the following:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nb">require</span> <span class="nn">File::</span><span class="n">Find</span><span class="p">;</span>
+</span><span class="line"><span class="nn">File::Find::</span><span class="n">find</span><span class="p">(</span><span class="k">sub </span><span class="p">{</span> <span class="k">print</span> <span class="s">&quot;$File::Find::name\n&quot;</span> <span class="k">if</span> <span class="o">-</span><span class="n">s</span> <span class="o">&gt;</span> <span class="mi">1_024_000</span><span class="p">;</span> <span class="p">},</span> <span class="s">&#39;.&#39;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>4.”use” happens during compile time, whereas “require” happens at runtime.    </p>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -969,156 +1117,6 @@ or an object. We can also pass additional arguments to the method:</p>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>For the details, please refer to online resources.  </p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/08/27/notes-on-flask/">Notes on Flask</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-08-27T12:10:36+08:00" pubdate data-updated="true">Aug 27<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I have been learning Flask for quite a while. This is a note to keep down of all those snippets and notes I have learnt and hope to keep it as a reminder.  </p>
-
-<p>1.if you want to get the browser info, use the following code:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">request</span>
-</span><span class="line"><span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span>
-</span><span class="line"><span class="k">def</span> <span class="nf">index</span><span class="p">():</span>
-</span><span class="line">	<span class="n">user_agent</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;User-Agent&#39;</span><span class="p">)</span>
-</span><span class="line">	<span class="k">return</span> <span class="s">&#39;&lt;p&gt;Your browser is </span><span class="si">%s</span><span class="s">&lt;/p&gt;&#39;</span> <span class="o">%</span> <span class="n">user_agent</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>2.There are two contexts in Flask: the application context and the request context.  </p>
-
-<p>3.before_first_request: Register a function to run before the first request is
-handled.  </p>
-
-<p>4.before_request: Register a function to run before each request.  </p>
-
-<p>5.after_request: Register a function to run after each request, if no unhandled exceptions occurred.  </p>
-
-<p>6.teardown_request: Register a function to run after each request, even if unhandled
-exceptions occurred.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/08/26/boyer-moore-suan-fa-shi-xian/">Boyer-Moore 算法实现</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-08-26T11:52:34+08:00" pubdate data-updated="true">Aug 26<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content">
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/08/25/shi-shi-wu-chang/">世事无常</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-08-25T23:49:06+08:00" pubdate data-updated="true">Aug 25<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>昨天(2014/08/24, 周日)从芝姐哪里得知四姑那边出事了， 于是立马打电话回家给爸，爸说确实是的。本来他是想等事情快有个结果的时候再跟我说的。    </p>
-
-<p>发生这样的事情，我除了痛心就是为命运的残忍感到无奈了。  </p>
-
-<p>想起四姑的命运，想起四姑父的不幸，想起杰弟因为这个事情所可能受到的影响，我不禁内心感到万分的悲凉。</p>
-
-<p>杰弟刚出生没多久的时候，我暑假放假的时候是常去四姑家待着的。杰弟小的时候非常非常的可爱，也很乖。几个表兄弟我是对他有着不一样的感情的， 源于小的时候带过她。  </p>
-
-<p>那个时候四姑也是很活泼的人，自己小的时候不怎么愿意到亲戚家走动的，但是记得有次在四姑家待到了很长的时间。记得小的时候自己挺喜欢四姑的，事实上家里的几个姑姑我都挺喜欢的，自小的感觉就是她们都很和蔼，对我还有几个姊妹都是很关怀的。  </p>
-
-<p>没记错的话，四姑是在我初三升高中那年的时候出事的，也就是说到现在已经有十年了，这十年我都不记得见过几次面了。时间过得实在是太快了。还记得上次见面的时候应该快是3年前了， 那次四姑给我的感觉是挺正常的了，我一直以为或许她已经快恢复了，至少没有太大的问题的。以至于去年回家春节的时候都没有去四姑家了。只因为当时觉得时间短促，再加上没必要刻意去了。一想到这里，内心就会及其的自责。  </p>
-
-<p>老天为什么会这么的不公平啊。一个好好的人，为什么要让她遭受那样的折磨啊。    </p>
-
-<p>四姑本无心，却伤害了别人。也伤害了自己，老天是有多么的残忍才允许发生这样的事情啊！</p>
-
-<p>Could god bless us? Could god bless my aunt?</p>
 </div>
   
   

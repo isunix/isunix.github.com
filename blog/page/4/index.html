@@ -9,12 +9,9 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="Let’s say we have an app named “people” and that in our models.py file, we have the following model: 1
+  <meta name="description" content="About decorator and Flask’s @app.route internal mechanism, I found a good post: 1
 2
-3
-4
-from django.db import models
-class &hellip;">
+http://ains.co/blog/things-which-arent-magic-flask-part-1.html &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -67,131 +64,6 @@ class &hellip;">
     <div id="content">
       <div class="blog-index">
   
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/10/23/django-shell-usage/">Django Shell Usage</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-10-23T16:50:03+08:00" pubdate data-updated="true">Oct 23<span>rd</span>, 2015</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Let’s say we have an app named “people” and that in our models.py file, we have the following model:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
-</span><span class="line"><span class="k">class</span> <span class="nc">Person</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
-</span><span class="line">	<span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
-</span><span class="line">	<span class="n">age</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">()</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>After synchronizing the db, before django 1.7, we issue:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">python manage.py syncdb
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>After django1.7:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">python manage.py makemigrations
-</span><span class="line">python manage.py migrate
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>For django’s shell, we can enter it by issuing the following command:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">python manage.py shell
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>and then</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">&gt;&gt;&gt;from people.models import Person
-</span><span class="line">&gt;&gt;&gt;Person.objects.create<span class="o">(</span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;steven&quot;</span>, <span class="nv">age</span><span class="o">=</span><span class="s2">&quot;24&quot;</span><span class="o">)</span>
-</span><span class="line">&gt;&gt;&gt;Person.objects.get<span class="o">(</span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;steven&quot;</span><span class="o">)</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>There are several ways to create an object:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">a.  Person.objects.create<span class="o">(</span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;steven&quot;</span>, <span class="nv">age</span><span class="o">=</span>24<span class="o">)</span>
-</span><span class="line">b.  <span class="nv">p</span> <span class="o">=</span> Person<span class="o">(</span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;steve&quot;</span>, <span class="nv">age</span><span class="o">=</span>24<span class="o">)</span>
-</span><span class="line">    p.save<span class="o">()</span>
-</span><span class="line">
-</span><span class="line">c.  <span class="nv">p</span> <span class="o">=</span> Person<span class="o">(</span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;steven&quot;</span><span class="o">)</span>
-</span><span class="line">	p.age <span class="o">=</span> 23
-</span><span class="line">	p.save<span class="o">()</span>
-</span><span class="line">
-</span><span class="line">d.  Person.objects.get_or_create<span class="o">(</span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;steven&quot;</span>, <span class="nv">age</span><span class="o">=</span>24<span class="o">)</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>There are more ways to get an object:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">a.	Person.objects.all<span class="o">()</span>
-</span><span class="line">b.	Person.objects.all<span class="o">()[</span>:10<span class="o">]</span> <span class="c">#切片操作，获取10个人，不支持负索引，切片可以节约内存</span>
-</span><span class="line">c.	Person.objects.get<span class="o">(</span><span class="nv">name</span><span class="o">=</span>name<span class="o">)</span> <span class="c">#{get是用来获取一个对象的，如果需要获取满足条件的一些人，就要用到filter}</span>
-</span><span class="line">d.	Person.objects.filter<span class="o">(</span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;abc&quot;</span><span class="o">)</span> <span class="c"># 等于Person.objects.filter(name__exact=&quot;abc&quot;)</span>
-</span><span class="line">e.	Person.objects.filter<span class="o">(</span><span class="nv">name__iexact</span><span class="o">=</span><span class="s2">&quot;abc&quot;</span><span class="o">)</span> <span class="c">#{不区分大小写}</span>
-</span><span class="line">f.	Person.objects.filter<span class="o">(</span><span class="nv">name__contains</span><span class="o">=</span><span class="s2">&quot;abc&quot;</span><span class="o">)</span> <span class="c"># 名称中包含 &quot;abc&quot;的人</span>
-</span><span class="line">g.	Person.objects.filter<span class="o">(</span><span class="nv">name__icontains</span><span class="o">=</span><span class="s2">&quot;abc&quot;</span><span class="o">)</span> <span class="c">#名称中包含 &quot;abc&quot;，且abc不区分大小写</span>
-</span><span class="line">h.	Person.objects.filter<span class="o">(</span><span class="nv">name__regex</span><span class="o">=</span><span class="s2">&quot;^abc&quot;</span><span class="o">)</span> <span class="c"># 正则表达式查询</span>
-</span><span class="line">i.	Person.objects.filter<span class="o">(</span><span class="nv">name__iregex</span><span class="o">=</span><span class="s2">&quot;^abc&quot;</span><span class="o">)</span><span class="c"># 正则表达式不区分大小写</span>
-</span><span class="line">j.	Person.objects.exclude<span class="o">(</span><span class="nv">name__contains</span><span class="o">=</span><span class="s2">&quot;WZ&quot;</span><span class="o">)</span> <span class="c"># 排除包含 WZ 的Person对象</span>
-</span><span class="line">k.	Person.objects.filter<span class="o">(</span><span class="nv">name__contains</span><span class="o">=</span><span class="s2">&quot;abc&quot;</span><span class="o">)</span>.exclude<span class="o">(</span><span class="nv">age</span><span class="o">=</span>23<span class="o">)</span> <span class="c"># 找出名称含有abc, 但是排除年龄是23岁的</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-</div>
-  
-  
-
-
-    </article>
   
   
     <article>
@@ -1426,6 +1298,47 @@ class &hellip;">
 </span><span class="line">    <span class="p">}</span>
 </span><span class="line"><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/08/20/rename-a-tmux-session/">Rename a Tmux Session</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-08-20T08:53:39+08:00" pubdate data-updated="true">Aug 20<span>th</span>, 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>This shows how to rename a tmux session:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">tmux rename-session -t rules dev</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Here “rules” is the old session name, “dev” is the one you want to change to.</p>
 </div>
   
   

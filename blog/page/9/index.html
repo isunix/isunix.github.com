@@ -9,8 +9,7 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="I have some files with file name quite weird in the format, “[Alex_Holmes]_Hadoop_in_Practice(BookZZ.org).pdf
-“. What I want to achieve is removing &hellip;">
+  <meta name="description" content="Knowing how to debug a perl program is really important. I am saying this not simply because it is supposed to be so, but also because I have &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -63,87 +62,6 @@
     <div id="content">
       <div class="blog-index">
   
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/10/17/a-perl-script-to-rename-file-names/">A Perl Script to Rename File Names</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-10-17T16:15:19+08:00" pubdate data-updated="true">Oct 17<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I have some files with file name quite weird in the format, “[Alex_Holmes]_Hadoop_in_Practice(BookZZ.org).pdf
-“. What I want to achieve is removing the parts in the [] or ().  Here below is the perl script I wrote. </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="n">strict</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="n">warnings</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="nn">Data::</span><span class="n">Dumper</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="n">Cwd</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">my</span> <span class="nv">$target_dir</span> <span class="o">=</span> <span class="n">getcwd</span><span class="p">();</span>
-</span><span class="line">
-</span><span class="line"><span class="nb">opendir</span><span class="p">(</span><span class="k">my</span> <span class="nv">$dh</span><span class="p">,</span> <span class="nv">$target_dir</span><span class="p">)</span> <span class="o">||</span> <span class="nb">die</span> <span class="s">&quot;can&#39;t opendir $target_dir: $!&quot;</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">my</span> <span class="nv">@files</span> <span class="o">=</span> <span class="nb">grep</span> <span class="p">{</span> <span class="sr">/\w/</span> <span class="o">&amp;&amp;</span> <span class="o">-</span><span class="n">f</span> <span class="s">&quot;$_&quot;</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="sr">/^\./</span><span class="p">}</span> <span class="nb">readdir</span><span class="p">(</span><span class="nv">$dh</span><span class="p">);</span>
-</span><span class="line"><span class="c1"># [Alex_Holmes]_Hadoop_in_Practice(BookZZ.org).pdf</span>
-</span><span class="line"><span class="c1">#files not staring with &quot;.&quot; and contains char, thus (., .., .DS_STORE) will be ignored.</span>
-</span><span class="line"><span class="c1">#print Dumper @files;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">for</span><span class="p">(</span><span class="nv">@files</span><span class="p">){</span>
-</span><span class="line">    <span class="k">my</span> <span class="nv">$file</span> <span class="o">=</span> <span class="nv">$_</span><span class="p">;</span>
-</span><span class="line">    <span class="k">if</span><span class="p">(</span><span class="sr">/^(?:\[[\S\s]+\])([\S\s]+)(?:\([\S\s]+\))\.pdf$/</span><span class="p">){</span>
-</span><span class="line">        <span class="k">my</span> <span class="nv">$new_name</span> <span class="o">=</span> <span class="nv">$1</span><span class="o">.</span><span class="s">&quot;.pdf&quot;</span><span class="p">;</span>
-</span><span class="line">        <span class="nb">rename</span><span class="p">(</span><span class="s">&quot;$file&quot;</span><span class="p">,</span> <span class="s">&quot;$new_name&quot;</span><span class="p">)</span> <span class="o">||</span> <span class="nb">die</span><span class="p">(</span><span class="s">&quot;error in renaming: $!&quot;</span><span class="p">);</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
   
   
     <article>
@@ -660,6 +578,51 @@
 
 
   <div class="entry-content"><p>This post gives a little detailed info on how to use curl. Of course we can use “man curl” to get the listed info, what makes this post different is, we will give more examples as to how to use curl.   </p>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/25/bash-script-to-list-all-methods-in-a-perl-module/">Bash Script to List All Methods in a Perl Module</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-25T16:21:52+08:00" pubdate data-updated="true">Sep 25<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In the post “Dynamicly Adding a Method to a Module”, I showed how to use a perl one-liner to list all the methods in a module.  </p>
+
+<p>I will show how to do it in a shell script thus we can accept the module on the command line, </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="c">#!/bin/bash</span>
+</span><span class="line">perl -e <span class="s2">&quot;use Data::Dumper; use $1; print Dumper \%$1::&quot;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 </div>
   

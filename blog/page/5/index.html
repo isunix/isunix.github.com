@@ -9,8 +9,7 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="This shows how to rename a tmux session: 1
-tmux rename-session -t rules dev Here “rules” is the old session name, “dev” is the one you want to change &hellip;">
+  <meta name="description" content="The problem is: I have to update a js file, say in the dir public_html/js/aa.js. also I have to upate it in another dir, like public_html2/js/aa.js &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -63,47 +62,6 @@ tmux rename-session -t rules dev Here “rules” is the old session name, “de
     <div id="content">
       <div class="blog-index">
   
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/08/20/rename-a-tmux-session/">Rename a Tmux Session</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-08-20T08:53:39+08:00" pubdate data-updated="true">Aug 20<span>th</span>, 2015</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>This shows how to rename a tmux session:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">tmux rename-session -t rules dev</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>Here “rules” is the old session name, “dev” is the one you want to change to.</p>
-</div>
-  
-  
-
-
-    </article>
   
   
     <article>
@@ -676,6 +634,67 @@ tmux rename-session -t rules dev Here “rules” is the old session name, “de
 </span><span class="line">tmux <span class="nb">kill</span>-window -t <span class="nv">$window_number</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/06/02/remove-obsolete-packages-on-ubuntu/">Remove Obsolete Packages on Ubuntu</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-06-02T10:03:32+08:00" pubdate data-updated="true">Jun 2<span>nd</span>, 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>After upgrading ubuntu to a new version, there will be many obsolete packages. To see these packages, you can </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">sudo apt-get upgrade
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>It will list all those obsolete packages.</p>
+
+<p>To autoremove them one by one will be will tedious, we can first copy those packages into a file, like aa.txt, then use the following perl script to do it once:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="nn">File::</span><span class="n">Slurp</span><span class="p">;</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">@modules</span><span class="p">;</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">$text</span> <span class="o">=</span> <span class="n">read_file</span><span class="p">(</span><span class="s">&#39;aa.txt&#39;</span><span class="p">,</span> <span class="n">text_ref</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">);</span>
+</span><span class="line"><span class="nv">@modules</span> <span class="o">=</span> <span class="nb">grep</span> <span class="p">{</span><span class="ow">not</span> <span class="sr">/\s+/</span><span class="p">}</span> <span class="nb">split</span><span class="p">(</span><span class="s">&#39;[\s+]&#39;</span><span class="p">,</span> <span class="nv">$text</span><span class="p">);</span>
+</span><span class="line"><span class="k">foreach</span> <span class="k">my</span> <span class="nv">$module</span> <span class="p">(</span><span class="nv">@modules</span><span class="p">){</span>
+</span><span class="line">	<span class="nb">system</span><span class="p">(</span><span class="s">&quot;sudo apt-get autoremove $module&quot;</span><span class="p">);</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Done!</p>
 </div>
   
   

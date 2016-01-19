@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Shell | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/shell/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2016-01-19T17:58:41+08:00</updated>
+  <updated>2016-01-19T18:03:46+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -32,39 +32,6 @@ http://www.jstorimer.com/blogs/workingwithcode/7766119-when-to-use-stderr-instea
 
 <p><code>html
 https://github.com/herrbischoff/awesome-osx-command-line
-</code></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[From Bash to Zshell]]></title>
-    <link href="http://isunix.github.io/blog/2016/01/05/from-bash-to-zshell/"/>
-    <updated>2016-01-05T11:39:52+08:00</updated>
-    <id>http://isunix.github.io/blog/2016/01/05/from-bash-to-zshell</id>
-    <content type="html"><![CDATA[<p>Some useful shell commands gathered here.</p>
-
-<p>1.Nested for loop,</p>
-
-<p><code>
-for dir in `echo "$PATH" | tr ':' ' '`
-do
-cd "$dir"
-  for file in *
-  do
-    ...test each $file in this $dir and
-    output its name if it's a program...
-  done
-done | sort &gt; proglist
-</code></p>
-
-<p>2.Just learned that “ctrl-z” will terminate a process, then we can use “fg” command to restart the process.</p>
-
-<p>3.To restart a stopped job and put it into the background, use the shell’s bg command; the arguments are job numbers. We can use the “jobs” command to show the jobs.</p>
-
-<p>4.We can use the “run-help” command to find the help page for commands, like</p>
-
-<p><code>
-run-help set
 </code></p>
 ]]></content>
   </entry>
@@ -363,6 +330,288 @@ cat * | tr -sc A-Za-z '\n' | sort | uniq -c | sort -n | tail
 
 <p><code>sh
 date | awk '{print substr($4, 1, 5)}'
+</code></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Sed One-liners]]></title>
+    <link href="http://isunix.github.io/blog/2015/12/18/sed-one-liners/"/>
+    <updated>2015-12-18T14:48:18+08:00</updated>
+    <id>http://isunix.github.io/blog/2015/12/18/sed-one-liners</id>
+    <content type="html"><![CDATA[<p>The following is a collection of sed. They are from the following blogs.</p>
+
+<p>```html
+http://www.catonmat.net/blog/sed-one-liners-explained-part-one/
+http://www.catonmat.net/blog/sed-one-liners-explained-part-two/
+http://www.catonmat.net/blog/sed-one-liners-explained-part-three/</p>
+
+<p>http://www.grymoire.com/Unix/Sed.html
+http://www.catonmat.net/blog/wp-content/uploads/2008/09/sed1line.txt
+```</p>
+
+<p>I will pick some I that I think might be useful for me and listed them here.</p>
+
+<p>1.Insert a blank line above every line that matches “regex”.</p>
+
+<p><code>sh
+cat file | sed '/regex/{x;p;x;}'
+</code></p>
+
+<p>2.Insert a blank line below every line that matches “regex”.</p>
+
+<p><code>sh
+cat file | sed '/regex/G'
+</code></p>
+
+<p>3.Insert a blank line above and below every line that matches “regex”.</p>
+
+<p><code>sh
+cat file | sed '/regex/{x;p;x;G;}'
+</code></p>
+
+<p>4.Number each line of a file (named filename). Left align the number.</p>
+
+<p><code>sh
+sed = filename | sed 'N;s/\n/\t/'
+</code></p>
+
+<p>5.Convert DOS/Windows newlines (CRLF) to Unix newlines (LF). (All 3 have not been tested!)</p>
+
+<p><code>sh
+cat file | sed 's/.$//'
+cat file | sed 's/^M$//'
+cat file | sed 's/\x0D$//'
+</code></p>
+
+<p>6.Convert Unix newlines (LF) to DOS/Windows newlines (CRLF). (All 3 have not been tested!)</p>
+
+<p><code>sh
+sed 's/$/\r/'
+sed "s/$//"
+sed "s/$/`echo -e \\\r`/"
+</code></p>
+
+<p>7.Delete leading whitespace (tabs and spaces) from each line.</p>
+
+<p><code>sh
+cat file | sed 's/^[ \t]*//'
+</code></p>
+
+<p>8.Delete trailing whitespace (tabs and spaces) from each line.</p>
+
+<p><code>sh
+cat file | sed 's/[ \t]*$//'
+</code></p>
+
+<p>9.Delete both leading and trailing whitespace from each line.</p>
+
+<p><code>sh
+cat file | sed 's/^[ \t]*//;s/[ \t]*$//'
+</code></p>
+
+<p>10.Insert five blank spaces at the beginning of each line.</p>
+
+<p><code>sh
+cat file | sed 's/^/     /'
+</code></p>
+
+<p>11.Substitute (find and replace) the fourth occurrence of “foo” with “bar” on each line.</p>
+
+<p><code>sh
+cat file | sed 's/foo/bar/4'
+</code></p>
+
+<p>12.Substitute (find and replace) the first occurrence of a repeated occurrence of “foo” with “bar”.</p>
+
+<p><code>sh
+cat file | sed 's/\(.*\)foo\(.*foo\)/\1bar\2/'
+</code></p>
+
+<p>13.Substitute all occurrences of “foo” with “bar” on all lines that contain “baz”.</p>
+
+<p><code>sh
+cat file | sed '/baz/s/foo/bar/g'
+</code></p>
+
+<p>14.Substitute all occurrences of “foo” with “bar” on all lines that DO NOT contain “baz”.</p>
+
+<p><code>sh
+cat file | sed '/baz/!s/foo/bar/g'
+</code></p>
+
+<p>15.Change text “scarlet”, “ruby” or “puce” to “red”.</p>
+
+<p><code>sh
+cat file | sed 's/scarlet/red/g;s/ruby/red/g;s/puce/red/g'
+</code></p>
+
+<p>16.Add a blank line after every five lines.</p>
+
+<p><code>sh
+cat file | sed 'n;n;n;n;G;'
+</code></p>
+
+<p>17.Print the first 10 lines of a file (emulates “head -10”).</p>
+
+<p><code>sh
+cat file | sed 10q
+</code></p>
+
+<p>18.Print only the lines that match a regular expression (emulates “grep”).</p>
+
+<p><code>sh
+cat file | sed -n '/regexp/p'
+</code></p>
+
+<p>19.Print only the lines that do not match a regular expression (emulates “grep -v”).</p>
+
+<p><code>sh
+cat file | sed -n '/regexp/!p'
+</code></p>
+
+<p>20.Print the line immediately before regexp, but not the line containing the regexp.</p>
+
+<p><code>sh
+cat file | sed -n '/regexp/{g;1!p;};h'
+</code></p>
+
+<p>21.Print the line immediately after regexp, but not the line containing the regexp.</p>
+
+<p><code>sh
+cat file | sed -n '/regexp/{n;p;}'
+</code></p>
+
+<p>22.Print one line before and after regexp. Also print the line matching regexp and its line number. (emulates “grep -A1 -B1”).</p>
+
+<p><code>sh
+cat file | sed -n -e '/regexp/{=;x;1!p;g;$!N;p;D;}' -e h
+</code></p>
+
+<p>23.Grep for “AAA” and “BBB” and “CCC” in any order.</p>
+
+<p><code>sh
+cat file | sed '/AAA/!d; /BBB/!d; /CCC/!d'
+</code></p>
+
+<p>24.Grep for “AAA” and “BBB” and “CCC” in that order.</p>
+
+<p><code>sh
+cat file | sed '/AAA.*BBB.*CCC/!d'
+</code></p>
+
+<p>25.Grep for “AAA” or “BBB”, or “CCC”.</p>
+
+<p><code>sh
+cat file | sed -e '/AAA/b' -e '/BBB/b' -e '/CCC/b' -e d
+</code></p>
+
+<p>26.Print only the lines that are 65 characters in length or more.</p>
+
+<p><code>sh
+cat file | sed -n '/^.\{65\}/p'
+</code></p>
+
+<p>27.Print only the lines that are less than 65 chars.</p>
+
+<p><code>sh
+cat file | sed '/^.\{65\}/d'
+</code></p>
+
+<p>28.Print section of a file from a regex to end of file.</p>
+
+<p><code>sh
+cat file | sed -n '/regexp/,$p'
+</code></p>
+
+<p>29.Print lines 8-12 (inclusive) of a file.</p>
+
+<p><code>sh
+cat file | sed -n '8,12p'
+</code></p>
+
+<p>30.Print line number 52.</p>
+
+<p><code>sh
+cat file | sed -n '52p'
+</code></p>
+
+<p>31.Beginning at line 3, print every 7th line.</p>
+
+<p><code>sh
+cat file | sed -n '3,${p;n;n;n;n;n;n;}'
+</code></p>
+
+<p>32.Print section of lines between two regular expressions (inclusive).</p>
+
+<p><code>sh
+cat file | sed -n '/Iowa/,/Montana/p'
+</code></p>
+
+<p>33.Print all lines in the file except a section between two regular expressions.</p>
+
+<p><code>sh
+cat file | sed '/Iowa/,/Montana/d'
+</code></p>
+
+<p>34.Delete duplicate, consecutive lines from a file (emulates “uniq”).</p>
+
+<p><code>sh
+cat file | sed '$!N; /^\(.*\)\n\1$/!P; D'
+</code></p>
+
+<p>35.Delete all lines except duplicate consecutive lines (emulates “uniq -d”).</p>
+
+<p><code>sh
+cat file | sed '$!N; s/^\(.*\)\n\1$/\1/; t; D'
+</code></p>
+
+<p>36.Delete the first 10 lines of a file.</p>
+
+<p><code>sh
+cat file | sed '1,10d'
+</code></p>
+
+<p>37.Delete the last line of a file.</p>
+
+<p><code>sh
+cat file | sed '$d'
+</code></p>
+
+<p>38.Delete the last 2 lines of a file.</p>
+
+<p><code>sh
+cat file | sed 'N;$!P;$!D;$d'
+</code></p>
+
+<p>39.Delete lines that match regular expression pattern.</p>
+
+<p><code>sh
+cat file | sed '/pattern/d'
+</code></p>
+
+<p>40.Delete all blank lines in a file (emulates “grep ‘.’”.</p>
+
+<p><code>sh
+cat file | sed '/^$/d'
+</code></p>
+
+<p>41.Delete all consecutive blank lines from a file (emulates “cat -s”).</p>
+
+<p><code>sh
+cat file | sed '/./,/^$/!d'
+</code></p>
+
+<p>42.Delete all leading blank lines at the top of a file.</p>
+
+<p><code>sh
+cat file | sed '/./,$!d'
+</code></p>
+
+<p>43.Delete all trailing blank lines at the end of a file.</p>
+
+<p><code>sh
+cat file | sed -e :a -e '/^\n*$/{$d;N;ba' -e '}'
 </code></p>
 ]]></content>
   </entry>

@@ -9,10 +9,8 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="When we are using tmux and stuck there, we can then follow the following steps to kill the window. 1
-2
-tmux list-windows
-tmux kill-window -t $ &hellip;">
+  <meta name="description" content="After upgrading ubuntu to a new version, there will be many obsolete packages. To see these packages, you can 1
+sudo apt-get upgrade It will list all &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,49 +63,6 @@ tmux kill-window -t $ &hellip;">
     <div id="content">
       <div class="blog-index">
   
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/06/08/kill-a-tmux-window/">Kill a Tmux Window</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-06-08T12:54:07+08:00" pubdate data-updated="true">Jun 8<span>th</span>, 2015</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>When we are using tmux and stuck there, we can then follow the following steps to kill the window.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line">tmux list-windows
-</span><span class="line">tmux <span class="nb">kill</span>-window -t <span class="nv">$window_number</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-</div>
-  
-  
-
-
-    </article>
   
   
     <article>
@@ -536,6 +491,83 @@ tmux kill-window -t $ &hellip;">
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>And then it works well.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/12/18/some-useful-linux-commands/">Some Useful Linux Commands</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-12-18T12:33:58+08:00" pubdate data-updated="true">Dec 18<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I will keep notes of some of the useful Linux commands here.  </p>
+
+<p>1.say you want to find something, we can use the “find” command or the convenient “ack” script.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">find . -iname <span class="s2">&quot;*stsun*&quot;</span> -delete
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>This will find all files containing ‘stsun’ and then execute the delete command.</p>
+
+<p>2.awk ‘{print $2 $1}’ text.txt</p>
+
+<p>3.tr ‘[A-Z]’ ‘[a-z]’ &lt; test.txt</p>
+
+<p>4.sed ‘125!d’ text.txt</p>
+
+<p>5.awk ‘NR==125’ text.txt</p>
+
+<p>6.to print out the shebang, do the following:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"> <span class="k">my</span> <span class="nv">$interpretr</span> <span class="o">=</span> <span class="nv">$ENV</span><span class="p">{</span><span class="n">_</span><span class="p">};</span>
+</span><span class="line"> <span class="k">print</span> <span class="nv">$interpreter</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>It will print out the interpreter that runs the script.</p>
+
+<p>7.to cat a file and open it to a filehandle, </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nb">open</span> <span class="p">(</span><span class="n">FH</span><span class="p">,</span> <span class="s">&quot;cat $file |&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">die</span> <span class="s">&quot;can&#39;t open the given file&quot;</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Pay attention to the “</td>
+      <td>” here, because in normal file opening, it is not needed.</td>
+    </tr>
+  </tbody>
+</table>
+
 </div>
   
   

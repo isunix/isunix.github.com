@@ -9,7 +9,11 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="这是一篇同人于野的«智识分子»第一篇”世界观祛魅”的读书笔记。 模仿的雪崩效应: 说的是许多人的行动， 其实是为了模仿而模仿。所以对于一些不好的事件，为了防止事情的方法，一个很好的方法是抓带头人。 这让我想起自己所在公司的一些事情。比如最近很多同事开始在上班的时间开始吃瓜子，其他人也开始跟着吃了， &hellip;">
+  <meta name="description" content="I have something like the following, 1
+2
+3
+var sophos = {name: &quot;aa&quot;, time:&quot;2016/03/02 01:12&quot;};
+var mcafee = {name: &quot;bb&quot &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -68,7 +72,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2016/01/21/shi-jie-guan-qu-mei/">Shi Jie Guan Qu Mei</a></h1>
+      <h1 class="entry-title"><a href="/blog/2016/03/09/sort-an-object-by-one-key-using-js/">Sort an Object by One Key Using Js</a></h1>
     
     
       <p class="meta">
@@ -84,7 +88,187 @@
   
 
 
-<time datetime="2016-01-21T00:00:00+08:00" pubdate data-updated="true"></time>
+<time datetime="2016-03-09T09:41:03+08:00" pubdate data-updated="true">Mar 9<span>th</span>, 2016</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I have something like the following,</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="kd">var</span> <span class="nx">sophos</span> <span class="o">=</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;aa&quot;</span><span class="p">,</span> <span class="nx">time</span><span class="o">:</span><span class="s2">&quot;2016/03/02 01:12&quot;</span><span class="p">};</span>
+</span><span class="line"><span class="kd">var</span> <span class="nx">mcafee</span> <span class="o">=</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;bb&quot;</span><span class="p">,</span> <span class="nx">time</span><span class="o">:</span><span class="s2">&quot;2016/03/03 01:12&quot;</span><span class="p">};</span>
+</span><span class="line"><span class="kd">var</span> <span class="nx">trend</span> <span class="o">=</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;cc&quot;</span><span class="p">,</span> <span class="nx">time</span><span class="o">:</span><span class="s2">&quot;2016/03/04 01:12&quot;</span><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>and I want to find out the one with the earliest time, in the above code, it is “2016/03/02 01:12”, and the corresponding item is “sophos”, here is the realization is js code.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="kd">var</span> <span class="nx">sophos</span> <span class="o">=</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;aa&quot;</span><span class="p">,</span> <span class="nx">time</span><span class="o">:</span><span class="s2">&quot;2016/03/02 01:12&quot;</span><span class="p">};</span>
+</span><span class="line"><span class="kd">var</span> <span class="nx">mcafee</span> <span class="o">=</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;bb&quot;</span><span class="p">,</span> <span class="nx">time</span><span class="o">:</span><span class="s2">&quot;2016/03/03 01:12&quot;</span><span class="p">};</span>
+</span><span class="line"><span class="kd">var</span> <span class="nx">trend</span> <span class="o">=</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;cc&quot;</span><span class="p">,</span> <span class="nx">time</span><span class="o">:</span><span class="s2">&quot;2016/03/04 01:12&quot;</span><span class="p">};</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">[</span><span class="nx">sophos</span><span class="p">,</span> <span class="nx">mcafee</span><span class="p">,</span> <span class="nx">trend</span><span class="p">];</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">function</span> <span class="nx">compare</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">){</span>
+</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="nx">a</span><span class="p">.</span><span class="nx">time</span> <span class="o">&lt;</span> <span class="nx">b</span><span class="p">.</span><span class="nx">time</span><span class="p">){</span>
+</span><span class="line">        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">a</span><span class="p">.</span><span class="nx">time</span> <span class="o">&gt;</span> <span class="nx">b</span><span class="p">.</span><span class="nx">time</span><span class="p">){</span>
+</span><span class="line">        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">    <span class="k">else</span> <span class="p">{</span>
+</span><span class="line">        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">sort</span><span class="p">(</span><span class="nx">compare</span><span class="p">);</span>
+</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2016/02/19/open-source-terminal-applications/">Open Source Terminal Applications</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2016-02-19T09:44:15+08:00" pubdate data-updated="true">Feb 19<span>th</span>, 2016</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Found some interesting posts about tools available on linux, will collect them here.</p>
+
+<p>1.15 Greatest Open Source Terminal Applications Of 2012</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line">http://www.cyberciti.biz/open-source/best-terminal-applications-for-linux-unix-macosx/
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>2.nixCraft (a site which has interesting posts on linux/unix):</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line">http://www.cyberciti.biz/
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>3.How to use awk in bash scripting.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line">http://www.cyberciti.biz/faq/bash-scripting-using-awk/
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>4.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2016/02/19/shi-jie-guan-qu-mei/">世界观祛魅</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2016-02-19T09:43:44+08:00" pubdate data-updated="true">Feb 19<span>th</span>, 2016</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2016/01/21/shi-jie-guan-qu-mei/">世界观祛魅</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2016-01-21T15:00:05+08:00" pubdate data-updated="true">Jan 21<span>st</span>, 2016</time>
         
       </p>
     
@@ -109,9 +293,13 @@
   <li>国家不是家庭:</li>
 </ol>
 
-<p>要求对富人持续性的加税， 乃至产生均贫富的思想， 这都是用家庭的眼光去看国家。考虑此类问题的正确出发点不应该是”都是一个国家的人，贫富差距这么大是否道德”, 而应该是”什么样的税收制度有利于经济增长”. </p>
+<p>要求对富人持续性的加税， 乃至产生均贫富的思想， 这都是用家庭的眼光去看国家。考虑此类问题的正确出发点不应该是”都是一个国家的人，贫富差距这么大是否道德”, 而应该是”什么样的税收制度有利于经济增长”.</p>
 
 <p>以上是作者的原话， 其实我的想法是，有的时候一个社会普遍施行的某些措施，并不一定就是有道理的，活着就是对国家的发展有利的， 但是有的时候就得照顾到某些特定人群的利益， 给某些特定人群以特定的关怀。</p>
+
+<ol>
+  <li>要啥有啥其实很没意思。</li>
+</ol>
 </div>
   
   
@@ -140,7 +328,7 @@
   
 
 
-<time datetime="2016-01-20T00:00:00+08:00" pubdate data-updated="true"></time>
+<time datetime="2016-01-20T10:14:15+08:00" pubdate data-updated="true">Jan 20<span>th</span>, 2016</time>
         
       </p>
     
@@ -201,46 +389,6 @@
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 </pre></td><td class="code"><pre><code class="html"><span class="line">https://github.com/herrbischoff/awesome-osx-command-line
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2016/01/04/machine-learning-resources/">Machine Learning Resources</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2016-01-04T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I will list some links for machine learning here below.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line">http://blog.pluskid.org/?cat=4
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 </div>
   
@@ -334,152 +482,6 @@
 
 <p>Here I will re-write the game using Perl and Python.</p>
 
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/12/28/spacemacs-tips/">Spacemacs Tips</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-12-28T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>1.comment out line/lines:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">Shift-V to select the line/lines to comment
-</span><span class="line">Space-; to comment out the selected line/lines</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>2.switch to another buffer.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">ctrl-x o</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>3.when we start emacs, we can press “q” to get rid of the welcome page.</p>
-
-<p>4.We can use “ctrl-x ctrl-e” to execute a piece of code.</p>
-
-<p>5.”ctrl-h v var” for more info on the variable, “ctrl-h f function” for more info on the function. “ctrl-h i m elisp” for more info on lisp, For spacemace, “space h i” for more info.</p>
-
-<p>6.select some text, and “space-: indent-region” to indent the text you selected.</p>
-
-<p>7.”M-x ielm” or “space-: ielm” will get you into the interactive elisp interface.</p>
-
-<p>8.”ctrl-x b” to switch to a buffer.</p>
-
-<p>9.For spacemacs, “SPC f e h” will give comprehensive documentation for each layer.</p>
-
-<p>10.For spacemacs, go to the dir “~/.emacs.d/layers/+distribution/spacemacs/packages.el” for packages defaultly installed and enabled.</p>
-
-<p>11.spacemacs quick guide:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">https://github.com/syl20bnr/spacemacs/blob/master/doc/QUICK_START.org</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>12.To open a dot file:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">&lt;SPC&gt; f e d</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>13.to get the spacemacs version you are using:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">SPC f e v</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>14.when we open a .py file, press “space + m” for more commands on short cuts. Like “space m s i” for “python-start-or-switch-repl”</p>
-
-<p>15.For org-mode, press “shift+tab” to expand or fold the lists.</p>
-
-<p>16.”ctrl-s” “ctrl-w” to search the word under cursor, we can then press “ctrl-w” more times to expand the search region.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/12/28/resources-on-lisp-and-scheme/">Resources on Lisp and Scheme</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-12-28T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Here below are some resource on lisp and scheme programming languages.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">http://deathking.github.io/
-</span><span class="line">https://github.com/justjavac/free-programming-books-zh_CN
-</span><span class="line">https://github.com/tyrchen/racket-book
-</span><span class="line">http://deathking.github.io/yast-cn/
-</span><span class="line">http://www.shido.info/lisp/idx_scm_e.html
-</span><span class="line">http://acl.readthedocs.org/en/latest/
-</span><span class="line">http://songjinghe.github.io/TYS-zh-translation/
-</span><span class="line">http://ds26gte.github.io/tyscheme/index-Z-H-1.html
-</span><span class="line">https://github.com/songjinghe/TYS-zh-translation
-</span><span class="line">http://emacs-doctor.com/learn-emacs-lisp-in-15-minutes.html
-</span><span class="line">https://yoo2080.wordpress.com/2014/07/20/it-is-not-hard-to-edit-lisp-code/
-</span><span class="line">https://yoo2080.wordpress.com/2014/07/04/it-is-not-hard-to-read-lisp-code/
-</span><span class="line">https://yoo2080.wordpress.com/2013/08/18/how-to-install-common-lisp-and-slime-on-ms-windows/</span></code></pre></td></tr></table></div></figure></notextile></div>
 </div>
   
   

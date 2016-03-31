@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Perl | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/perl/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2016-03-31T16:34:17+08:00</updated>
+  <updated>2016-03-31T16:56:19+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,21 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Update All Perl Modules Through Cpanm]]></title>
+    <link href="http://isunix.github.io/blog/2016/03/31/update-all-perl-modules-through-cpanm/"/>
+    <updated>2016-03-31T16:54:00+08:00</updated>
+    <id>http://isunix.github.io/blog/2016/03/31/update-all-perl-modules-through-cpanm</id>
+    <content type="html"><![CDATA[<p>I want to update all the installed Perl modules using cpanm. Here is a method I found.</p>
+
+<p><code>sh
+cpan-outdated -p | cpanm
+</code></p>
+
+<p>We have to first download the module “http://search.cpan.org/CPAN/authors/id/T/TO/TOKUHIROM/App-cpanoutdated-0.24.tar.gz” and then issue the command to update the modules.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Scheme Mastermind Game Re-write Using Python and Perl]]></title>
@@ -516,119 +531,6 @@ Sort::Fields
 </code></p>
 
 <p>Of course we can write a small script to loop through these modules and install these modules all together.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Linked List in Perl]]></title>
-    <link href="http://isunix.github.io/blog/2015/09/07/linked-list-in-perl/"/>
-    <updated>2015-09-07T12:30:05+08:00</updated>
-    <id>http://isunix.github.io/blog/2015/09/07/linked-list-in-perl</id>
-    <content type="html"><![CDATA[<p>We will use linked list to output words in a file in alphabetical order. This example is in:</p>
-
-<p><code>html
-http://man.ddvip.com/web/perl/perl9.htm#10.1
-</code></p>
-
-<p>```pl
-use utf8;</p>
-
-<p>$header = “”;
-while ( $line = <stdin> ) {
-    chomp;
-    @words = split( /\s+/, $line );
-    foreach my $word (@words) {
-        ##remove punctuation and transform from uppercase to lower case.</stdin></p>
-
-<pre><code>    $word =~ s/[,.:;-]//;
-    $word =~ tr/A-Z/a-z/;
-    &amp;add_word_to_list($word);
-} }
-</code></pre>
-
-<p>&amp;print_list;</p>
-
-<p>sub add_word_to_list {</p>
-
-<pre><code>#these two are lists.
-my ($word) = @_;
-my ($pointer);
-
-# if list is empty, add first item;
-if ( $header eq "" ) {
-    $header = $word;
-    $wordlist{$word} = "";
-    return;
-}
-
-# if word identical to first element in list, do nothing
-return if ( $header eq $word );
-
-# to see if word should be the new first word in the list.
-
-if ( $header gt $word ) {
-    $wordlist{$word} = $header;
-    $header = $word;
-    return;
-}
-
-# find place where the word belongs
-$pointer = $header;
-while ( $wordlist{$pointer} ne "" &amp;&amp; $wordlist{$pointer} lt $word ) {
-    $pointer = $wordlist{$pointer};
-}
-
-# if the word seen already, do nothing
-return if ( $word eq $wordlist{$pointer} );
-$wordlist{$word}    = $wordlist{$pointer};
-$wordlist{$pointer} = $word; }
-</code></pre>
-
-<p>sub print_list {
-    local ($pointer);
-    print(“Words in the input are:\n”);
-    $pointer = $header;
-    while ( $pointer ne “” ) {
-        print(“$pointer\n”);
-        $pointer = $wordlist{$pointer};
-    }
-}
-```</p>
-
-<p>and for a tree structure:</p>
-
-<p>```pl
-use utf8;</p>
-
-<p>my $rootname = “parent”;</p>
-
-<p>my %tree = (
-    “parentleft”, “child1”,      “parentright”, “child2”,
-    “child1left”, “grandchild1”, “child1right”, “grandchild2”,
-    “child2left”, “grandchild3”, “child2right”, “grandchild4”
-);</p>
-
-<h1 id="traverse-tree-printing-its-elements">traverse tree, printing its elements</h1>
-<p>&amp;print_tree($rootname);</p>
-
-<p>sub print_tree {
-    local ($nodename) = @_;
-    local ( $leftchildname, $rightchildname );</p>
-
-<pre><code>$leftchildname  = $nodename . "left";
-$rightchildname = $nodename . "right";
-
-# this is a left-order traversal.
-
-if ( $tree{$leftchildname} ne "" ) {
-    &amp;print_tree( $tree{$leftchildname} );
-}
-print("$nodename\n");
-
-if ( $tree{$rightchildname} ne "" ) {
-    &amp;print_tree( $tree{$rightchildname} );
-} } ```
-</code></pre>
 ]]></content>
   </entry>
   

@@ -9,9 +9,7 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="1
-ps -ef | grep cgi On my server, this will give out the cgi-bin dir.
-">
+  <meta name="description" content="my tmux’s sockets are output to the dir “~/tmp”, however today I encountered the problem saying “can’t create socket: Permission denied” while I &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -64,6 +62,50 @@ ps -ef | grep cgi On my server, this will give out the cgi-bin dir.
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/06/19/tmux-cant-create-socket-permission-denied/">Tmux:can&#8217;t Create Socket: Permission Denied</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-06-19T13:04:00+08:00" pubdate data-updated="true">Jun 19<span>th</span>, 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>my tmux’s sockets are output to the dir “~/tmp”, however today I encountered the problem saying “can’t create socket: Permission denied” while I start tmux.</p>
+
+<p>The reason is I have changed the rights on the folder ~/tmp/tmux* , so after the following command:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">chmod 700 -R tmux*
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>It is back to normal.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -471,52 +513,6 @@ ps -ef | grep cgi On my server, this will give out the cgi-bin dir.
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>Since I install libevent with the option, “–prefix=$HOME/local”.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/12/24/how-to-make-zsh-the-default-shell-without-root-access/">How to Make Zsh the Default Shell Without Root Access</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-12-24T19:01:06+08:00" pubdate data-updated="true">Dec 24<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>As depicted by the title, this post keeps notes on how to make zsh the default shell without root access. BTW, I am using oh-my-zsh configuration files.</p>
-
-<p>In the .bash_profile, add the following lines,</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nb">export </span><span class="nv">SHELL</span><span class="o">=</span>/bin/zsh
-</span><span class="line"><span class="nb">exec</span> /bin/zsh -l
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>Where zsh will be your own location of your zsh file.</p>
 </div>
   
   

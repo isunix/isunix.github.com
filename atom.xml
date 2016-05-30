@@ -4,7 +4,7 @@
   <title><![CDATA[Steven's Blog]]></title>
   <link href="http://isunix.github.io/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2016-05-26T14:59:35+08:00</updated>
+  <updated>2016-05-30T16:18:15+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,66 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Useful Shell Commands]]></title>
+    <link href="http://isunix.github.io/blog/2016/05/30/useful-shell-commands/"/>
+    <updated>2016-05-30T16:13:41+08:00</updated>
+    <id>http://isunix.github.io/blog/2016/05/30/useful-shell-commands</id>
+    <content type="html"><![CDATA[<p>In bash shell, it provides us with two options to make debugging very much easier. “-v” and “-x”.</p>
+
+<p>Take the following small script for an example.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="c">#!/bin/bash</span>
+</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;You are using $0&quot;</span>
+</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;Hello $*&quot;</span>
+</span><span class="line"><span class="nb">exit </span>0
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>If run with the follwoing “-v” option, </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">bash -v aa.sh steven
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>We will get the following result,</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="c">#!/bin/bash</span>
+</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;You are using $0&quot;</span>
+</span><span class="line">You are using aa.sh
+</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;Hello $*&quot;</span>
+</span><span class="line">Hello steven
+</span><span class="line"><span class="nb">exit </span>0
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>If run with the “-x” option, we will get the following result.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">+ <span class="nb">echo</span> <span class="s1">&#39;You are using aa.sh&#39;</span>
+</span><span class="line">You are using aa.sh
+</span><span class="line">+ <span class="nb">echo</span> <span class="s1">&#39;Hello steven&#39;</span>
+</span><span class="line">Hello steven
+</span><span class="line">+ <span class="nb">exit </span>0
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>As we can see, “-x” might be more helpful to us.</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Basics of Linux Screen]]></title>
@@ -1544,23 +1604,6 @@
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 </pre></td><td class="code"><pre><code class="sh"><span class="line">python3 movie_download.py
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[P4 Add New Executable Script]]></title>
-    <link href="http://isunix.github.io/blog/2015/12/02/p4-add-new-executable-script/"/>
-    <updated>2015-12-02T13:38:57+08:00</updated>
-    <id>http://isunix.github.io/blog/2015/12/02/p4-add-new-executable-script</id>
-    <content type="html"><![CDATA[<p>This post shows how to add a script into p4 repo.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">p4 add cross-rules-freqs.pl
-</span><span class="line">p4 edit -t text+x cross-rules-freqs.pl
-</span><span class="line">p4 submit
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 ]]></content>
   </entry>

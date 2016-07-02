@@ -4,7 +4,7 @@
   <title><![CDATA[Steven's Blog]]></title>
   <link href="http://isunix.github.io/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2016-06-28T08:01:53+08:00</updated>
+  <updated>2016-07-02T16:25:42+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,30 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Install Hadoop on Mac]]></title>
+    <link href="http://isunix.github.io/blog/2016/07/02/install-hadoop-on-mac/"/>
+    <updated>2016-07-02T16:16:15+08:00</updated>
+    <id>http://isunix.github.io/blog/2016/07/02/install-hadoop-on-mac</id>
+    <content type="html"><![CDATA[<p>这篇blog是关于如何在mac上安装hadoop的。 参考书目是《hadoop 核心技术》 by 翟周伟， 还有这篇博文， http://dongfeiwww.com/hadoop/2014/09/05/hadoop-on-mac/。</p>
+
+<p>要要注意的点是， 如果是安装hadoop在／usr/local这种路径下， 最后跑start-dfs.sh这种脚本的时候， 是需要sudo权限的， 所以可以按照“核心技术”这本书来， 把hadoop解压到本地一个不需要sudo权限去访问执行的地方。</p>
+
+<p>第二点就是start-all.sh这个脚本被deprecated的了， 推荐使用的是，start-dfs.sh and start-yarn.sh这种单独的脚本。</p>
+
+<p>第三就是运行下ssh localhost看能不能连上。</p>
+
+<p>最后， 配置成功后能从web页面访问到的端口有</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line">http://localhost:50090/status.html      (Secondary NameNode status)
+</span><span class="line">http://localhost:50070/dfshealth.html#tab-overview    (hdfs status)
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[SQL Query Sequence]]></title>
@@ -1510,73 +1534,6 @@
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 </pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | perl -pi -e <span class="s1">&#39;s!^\s+?$!!&#39;</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Commen Perl Modules I Use]]></title>
-    <link href="http://isunix.github.io/blog/2015/12/08/commen-perl-modules-i-use/"/>
-    <updated>2015-12-08T16:07:21+08:00</updated>
-    <id>http://isunix.github.io/blog/2015/12/08/commen-perl-modules-i-use</id>
-    <content type="html"><![CDATA[<p>I will list some of common perl modules I here.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">LWP::UserAgent
-</span><span class="line">Mojolicious
-</span><span class="line">Dancer
-</span><span class="line">Dancer2
-</span><span class="line">DBI
-</span><span class="line">File::Slurp
-</span><span class="line">Path::Tiny
-</span><span class="line">IO::All
-</span><span class="line">File::Slurp::Tiny
-</span><span class="line">File::Slurper
-</span><span class="line">DBD::SQLite
-</span><span class="line">Data::Dumper
-</span><span class="line">FindBin
-</span><span class="line">Getopt::Long
-</span><span class="line">Class::Date
-</span><span class="line">POSIX
-</span><span class="line">JSON
-</span><span class="line">Try::Tiny
-</span><span class="line">use File::Basename
-</span><span class="line">List::Util
-</span><span class="line">List::MoreUtils
-</span><span class="line">File::Spec::Functions
-</span><span class="line">File::Spec
-</span><span class="line">Email::Simple
-</span><span class="line">Data::Printer
-</span><span class="line">DBD::mysql
-</span><span class="line">Sort::Fields
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>Of course we can write a small script to loop through these modules and install these modules all together.</p>
 ]]></content>
   </entry>
   

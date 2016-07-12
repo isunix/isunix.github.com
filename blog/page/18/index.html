@@ -9,7 +9,7 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="还是先上一段递归的c代码吧: 1
+  <meta name="description" content="1.要求用户输入人名， 打印出对应的item. 1
 2
 3
 4
@@ -18,12 +18,8 @@
 7
 8
 9
-10
-11
-12
-13
-#include &lt;stdlib.h&gt;
-#include &lt;stdio.h&gt; int FibonacciRecursive(int n){ if(n &lt; 2){ return n &hellip;">
+my %last_name = qw{ fred flintstone barney rubble wilma flintstone
+}; print &quot;please enter a first name &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +72,149 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/18/use-examples-regarding-hash-in-perl/">Use Examples Regarding Hash in Perl</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-18T19:18:44+08:00" pubdate data-updated="true">Jul 18<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>1.要求用户输入人名， 打印出对应的item.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">%last_name</span> <span class="o">=</span> <span class="sx">qw{</span>
+</span><span class="line"><span class="sx">    fred flintstone</span>
+</span><span class="line"><span class="sx">    barney rubble</span>
+</span><span class="line"><span class="sx">    wilma flintstone</span>
+</span><span class="line"><span class="sx">}</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;please enter a first name: &quot;</span><span class="p">;</span>
+</span><span class="line"><span class="nb">chomp</span><span class="p">(</span><span class="k">my</span> <span class="nv">$name</span> <span class="o">=</span> <span class="sr">&lt;STDIN&gt;</span><span class="p">);</span>
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;that&#39;s $name $last_name{$name}.\n&quot;</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>这是一个很典型的标准用法了。  </p>
+
+<p>2.要求用户进行几行输入，然后统计频数.   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="n">strict</span><span class="p">;</span>
+</span><span class="line"><span class="k">use</span> <span class="n">warnings</span><span class="p">;</span>
+</span><span class="line"><span class="k">use</span> <span class="n">utf8</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">my</span> <span class="p">(</span><span class="nv">@words</span><span class="p">,</span> <span class="nv">%count</span><span class="p">,</span> <span class="nv">$word</span><span class="p">);</span>
+</span><span class="line"><span class="nb">chomp</span><span class="p">(</span><span class="nv">@words</span> <span class="o">=</span> <span class="sr">&lt;STDIN&gt;</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="k">foreach</span> <span class="nv">$word</span> <span class="p">(</span><span class="nv">@words</span><span class="p">){</span>
+</span><span class="line">    <span class="nv">$count</span><span class="p">{</span><span class="nv">$word</span><span class="p">}</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="k">foreach</span> <span class="nv">$word</span> <span class="p">(</span><span class="nb">keys</span> <span class="nv">%count</span><span class="p">){</span>
+</span><span class="line">    <span class="k">print</span> <span class="s">&quot;$word was seen $count{$word} times.\n&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/18/zai-kan-de-shu/">在看的书</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-18T18:45:19+08:00" pubdate data-updated="true">Jul 18<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>最近要看的书很多很多， 现在这里列出来几本吧!   </p>
+
+<ol>
+  <li>我是一只IT小小鸟   </li>
+  <li>Python Standard Library   </li>
+  <li>Learning Perl  </li>
+  <li>啊哈算法</li>
+  <li>啊哈C</li>
+  <li>coffeescript程序设计（Programming In Coffeescript）</li>
+  <li>图解HTTP </li>
+  <li>征服C指针 </li>
+  <li>JS the good parts</li>
+  <li>javascript高级程序设计</li>
+</ol>
+
+<p>好像有点多了，我这样的资质很浅的人， 竟然同时看这么多的书， 实在是有点儿不自量力，所以感到非常非常地累。    </p>
+
+<p>很多其他的书还没有列出来呢， 改日再列出来。 之所以要这么做，是因为想要做个记录，而不是为了像别人展现我看了多少多少书。(我都不知道有谁会看我的这个博客, 哈哈！)</p>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -845,136 +984,6 @@
 
 
   <div class="entry-content"><p>慢工出细活， 得养成自己debug的习惯！</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/07/01/remove-the-m-chareacters-in-a-file/">Remove the ^M Chareacters in a File</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-07-01T13:45:23+08:00" pubdate data-updated="true">Jul 1<span>st</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>In a file that have multiple “^M” characters in it , we can use vim to remove them.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="p">:</span><span class="nv">%s</span><span class="sr">/^M/</span><span class="o">/</span><span class="n">g</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>the ^M character is made by typing ctrl + v first then hit enter.</p>
-
-<p>Also I write a perl script to convert the from dos to unix and also delete chars in code followng the “//”.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nb">open</span><span class="p">(</span><span class="nv">$IN</span><span class="p">,</span> <span class="s">&quot;$ARGV[0]&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">die</span> <span class="s">&quot;in: $@&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="nb">open</span><span class="p">(</span><span class="nv">$OUT</span><span class="p">,</span> <span class="s">&quot;&gt;&quot;</span><span class="p">,</span> <span class="s">&quot;$ARGV[0].new&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">die</span> <span class="s">&quot;out: $@&quot;</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">while</span> <span class="p">(</span><span class="sr">&lt;$IN&gt;</span><span class="p">){</span>
-</span><span class="line">    <span class="k">my</span> <span class="nv">$line</span> <span class="o">=</span> <span class="nv">$_</span><span class="p">;</span>
-</span><span class="line">    <span class="nv">$line</span> <span class="o">=~</span> <span class="sr">s/(\/\/.*)//g</span><span class="p">;</span>
-</span><span class="line">    <span class="k">print</span> <span class="nv">$OUT</span> <span class="nv">$line</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="nv">$command</span> <span class="o">=</span> <span class="s">&quot;mv $ARGV[0].new $ARGV[0] &amp;&amp; chmod 777 $ARGV[0] &amp;&amp; dos2unix $ARGV[0]&quot;</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="nb">system</span><span class="p">(</span><span class="nv">$command</span><span class="p">);</span>
-</span><span class="line"><span class="k">print</span> <span class="s">&quot;successfully deleted and converted!\n&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="nb">close</span><span class="p">(</span><span class="nv">$IN</span><span class="p">);</span>
-</span><span class="line"><span class="nb">close</span><span class="p">(</span><span class="nv">$OUT</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>The code just explains itself.</p>
-
-<p>Bingo!</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/06/30/ming-yan/">名言</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-06-30T21:58:31+08:00" pubdate data-updated="true">Jun 30<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>You see things, and you say why, but I dream things that never were, and I say why not.  </p>
-
-<p>–Bernard Shaw  </p>
-
-<p>To copy other is necessary，but to copy oneself is pathetic.   </p>
-
-<p>–Pablo Picasso   </p>
-
-<p>It’s nice to be there fighting, trying to go to the limit, bring your body to the limit of his chances,” Nadal said. “Something I really enjoy, and I always said is good to enjoy suffering, no?  So when you are fit, with passion for the game, when you are ready to compete, you are able to suffer and enjoy suffering.  So today I had this feeling, and is a really good one.  I suffered during the match, but I enjoyed all the troubles that I had during the match.  I tried to be there, to find solutions all the time.  I played a lot with my heart.  I played a lot with my mind, and is something that is nice to be around and not just play tennis.   </p>
-
-<p>–Nadal  </p>
-
-<p>作为一个初学者或者进阶者，这并没有什么错。当一个有能力的程序员而不是领导者，这也没有什么错。真正的错误是，当你知道应该如何去提高时仍然选择做一名初学者.   </p>
-
-<p>–代码大全</p>
 </div>
   
   

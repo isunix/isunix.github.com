@@ -9,7 +9,8 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="这篇blog是关于如何在mac上安装hadoop的。 参考书目是《hadoop 核心技术》 by 翟周伟， 还有这篇博文， http://dongfeiwww.com/hadoop/2014/09/05/hadoop-on-mac/。 要要注意的点是， 如果是安装hadoop在／usr/ &hellip;">
+  <meta name="description" content="I have kept a blog on tmux installation which is about missing module libevent, and the post is on: 1
+http://isunix.github.io/blog/2014/12/24/ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -62,6 +63,118 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2016/07/12/tmux-error-while-loading-shared-libraries-libevent-2-dot-0-so-dot-5/">Tmux: Error While Loading Shared Libraries: libevent-2.0.so.5</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2016-07-12T10:34:50+08:00" pubdate data-updated="true">Jul 12<span>th</span>, 2016</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I have kept a blog on tmux installation which is about missing module libevent, and the post is on:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line">http://isunix.github.io/blog/2014/12/24/libevent-not-found-error-while-install-tmux/
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Recently even after I install the livevent module, I still get the following errors after installing tmux and then running tmux:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line"> ./tmux: error while loading shared libraries: libevent-2.0.so.5: cannot open shared object file: No such file or
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>I installed the libevent lib in $HOME/local/lib, and tmux says it can not find the library, Weird. With the help of one of my colleague, this problem is solved.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nb">export </span><span class="nv">DIR</span><span class="o">=</span><span class="s2">&quot;$HOME/local&quot;</span>
+</span><span class="line"><span class="nb">export </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="nv">$LD_LIBRARY_PATH</span>:<span class="nv">$DIR</span>/lib
+</span><span class="line">./configure --prefix<span class="o">=</span><span class="nv">$DIR</span> <span class="nv">CFLAGS</span><span class="o">=</span><span class="s2">&quot;-I$DIR/include&quot;</span> <span class="nv">LDFLAGS</span><span class="o">=</span><span class="s2">&quot;-L$DIR/lib&quot;</span>
+</span><span class="line">make
+</span><span class="line">make install
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>As we can see, the point here is setting the “LD_LIBRARY_PATH” variable.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2016/07/02/configure-hive-on-mac/">Configure Hive on Mac</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2016-07-02T18:14:13+08:00" pubdate data-updated="true">Jul 2<span>nd</span>, 2016</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>花了很长的时间在hive的安装和配置上， 先把有用的链接记下来， 等有空了再详细的写下安装过程。</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line">http://stackoverflow.com/questions/5016505/mysql-grant-all-privileges-on-database
+</span><span class="line">https://cwiki.apache.org/confluence/display/Hive/AdminManual+Configuration
+</span><span class="line">http://stackoverflow.com/questions/27099898/java-net-urisyntaxexception-when-starting-hive
+</span><span class="line">https://noobergeek.wordpress.com/2013/11/09/simplest-way-to-install-and-configure-hive-for-mac-osx-lion/
+</span><span class="line">https://cwiki.apache.org/confluence/display/Hive/GettingStarted
+</span><span class="line">https://amodernstory.com/2015/03/29/installing-hive-on-mac/
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -572,100 +685,6 @@
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 </pre></td><td class="code"><pre><code class="html"><span class="line">http://www.cyberciti.biz/faq/bash-scripting-using-awk/
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2016/01/21/shi-jie-guan-qu-mei/">世界观祛魅</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2016-01-21T15:00:05+08:00" pubdate data-updated="true">Jan 21<span>st</span>, 2016</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>这是一篇同人于野的«智识分子»第一篇”世界观祛魅”的读书笔记。</p>
-
-<p>1.模仿的雪崩效应:</p>
-
-<p>说的是许多人的行动， 其实是为了模仿而模仿。所以对于一些不好的事件，为了防止事情的方法，一个很好的方法是抓带头人。</p>
-
-<p>这让我想起自己所在公司的一些事情。比如最近很多同事开始在上班的时间开始吃瓜子，其他人也开始跟着吃了，于是整个office一篇吃瓜子的声音还有瓜子的味道。</p>
-
-<p>如果一开始就禁止这种事情，或者稍微警告下带头的人， 我想整个办公室的秩序会好很多。</p>
-
-<p>就如作者所说， “长治久安的上策当然是创造条件让人从一开始就不会犯罪， 如果做不到这一点，那么就得维稳， 而维稳不关心有没有第一个，只关心有没有第二个”.</p>
-
-<p>2.国家不是家庭:</p>
-
-<p>要求对富人持续性的加税， 乃至产生均贫富的思想， 这都是用家庭的眼光去看国家。考虑此类问题的正确出发点不应该是”都是一个国家的人，贫富差距这么大是否道德”, 而应该是”什么样的税收制度有利于经济增长”.</p>
-
-<p>以上是作者的原话， 其实我的想法是，有的时候一个社会普遍施行的某些措施，并不一定就是有道理的，活着就是对国家的发展有利的， 但是有的时候就得照顾到某些特定人群的利益， 给某些特定人群以特定的关怀。</p>
-
-<p>3.要啥有啥其实很没意思。</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2016/01/20/sort-lines-by-length/">Sort Lines by Length</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2016-01-20T10:14:15+08:00" pubdate data-updated="true">Jan 20<span>th</span>, 2016</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I have a file containing quite many lines of strings and I want to sort them by line length. Here is how.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat <span class="nv">$file</span> | awk <span class="s1">&#39;{ print length($0) &quot; &quot; $0; }&#39;</span> | sort -r -n | cut -d <span class="s1">&#39; &#39;</span> -f 2- | less
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 </div>
   

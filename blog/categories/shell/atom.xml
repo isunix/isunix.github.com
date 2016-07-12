@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Shell | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/shell/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2016-07-02T16:25:42+08:00</updated>
+  <updated>2016-07-12T10:41:54+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,37 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Tmux: Error While Loading Shared Libraries: libevent-2.0.so.5]]></title>
+    <link href="http://isunix.github.io/blog/2016/07/12/tmux-error-while-loading-shared-libraries-libevent-2-dot-0-so-dot-5/"/>
+    <updated>2016-07-12T10:34:50+08:00</updated>
+    <id>http://isunix.github.io/blog/2016/07/12/tmux-error-while-loading-shared-libraries-libevent-2-dot-0-so-dot-5</id>
+    <content type="html"><![CDATA[<p>I have kept a blog on tmux installation which is about missing module libevent, and the post is on:</p>
+
+<p><code>html
+http://isunix.github.io/blog/2014/12/24/libevent-not-found-error-while-install-tmux/
+</code></p>
+
+<p>Recently even after I install the livevent module, I still get the following errors after installing tmux and then running tmux:</p>
+
+<p><code>
+ ./tmux: error while loading shared libraries: libevent-2.0.so.5: cannot open shared object file: No such file or 
+</code></p>
+
+<p>I installed the libevent lib in $HOME/local/lib, and tmux says it can not find the library, Weird. With the help of one of my colleague, this problem is solved.</p>
+
+<p><code>sh
+export DIR="$HOME/local"
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$DIR/lib
+./configure --prefix=$DIR CFLAGS="-I$DIR/include" LDFLAGS="-L$DIR/lib"
+make
+make install
+</code></p>
+
+<p>As we can see, the point here is setting the “LD_LIBRARY_PATH” variable.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Useful Shell Commands]]></title>
@@ -135,254 +166,6 @@ wget http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-00
 </code></p>
 
 <p>The sad thing is not all the sequences are consecutive.</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Useful Awk Commands]]></title>
-    <link href="http://isunix.github.io/blog/2015/12/21/useful-awk-commands/"/>
-    <updated>2015-12-21T16:51:15+08:00</updated>
-    <id>http://isunix.github.io/blog/2015/12/21/useful-awk-commands</id>
-    <content type="html"><![CDATA[<p>The following blogs are referenced, </p>
-
-<p><code>html
-http://www.catonmat.net/blog/awk-one-liners-explained-part-one/
-http://www.grymoire.com/Unix/Awk.html
-</code></p>
-
-<p>And I will list some of the commands I think might be useful for later usage here.</p>
-
-<p>1.Print the total number of lines containing word “Regex”.</p>
-
-<p><code>sh
-cat file | awk '/Regex/ { n++ }; END { print n+0 }'
-</code></p>
-
-<p>2.Print every line with more than 4 fields.</p>
-
-<p><code>sh
-cat file | awk 'NF &gt; 4'
-</code></p>
-
-<p>3.Print every line where the value of the last field is greater than 4.</p>
-
-<p><code>sh
-cat file | awk '$NF &gt; 4'
-</code></p>
-
-<p>4.Convert Windows/DOS newlines (CRLF) to Unix newlines (LF) from Unix.</p>
-
-<p><code>sh
-cat file | awk '{ sub(/\r$/,""); print }'
-</code></p>
-
-<p>5.Convert Unix newlines (LF) to Windows/DOS newlines (CRLF) from Unix.</p>
-
-<p><code>sh
-cat file | awk '{ sub(/$/,"\r"); print }'
-</code></p>
-
-<p>6.Delete leading whitespace (spaces and tabs) from the beginning of each line (ltrim).</p>
-
-<p><code>sh
-cat file | awk '{ sub(/^[ \t]+/, ""); print }'
-</code></p>
-
-<p>7.Delete trailing whitespace (spaces and tabs) from the end of each line (rtrim).</p>
-
-<p><code>sh
-cat file | awk '{ sub(/[ \t]+$/, ""); print }'
-</code></p>
-
-<p>8.Delete both leading and trailing whitespaces from each line (trim).</p>
-
-<p><code>sh
-cat file | awk '{ gsub(/^[ \t]+|[ \t]+$/, ""); print }'
-</code></p>
-
-<p>9.Insert 5 blank spaces at beginning of each line.</p>
-
-<p><code>sh
-cat file | awk '{ sub(/^/, "     "); print }'
-</code></p>
-
-<p>10.Center all text on a 79-character width.</p>
-
-<p><code>sh
-cat file | awk '{ l=length(); s=int((79-l)/2); printf "%"(s+l)"s\n", $0 }'
-</code></p>
-
-<p>11.Substitute (find and replace) “foo” with “bar” on each line.</p>
-
-<p><code>sh
-cat file | awk '{ sub(/foo/,"bar"); print }'
-</code></p>
-
-<p>12.Substitute “foo” with “bar” only on lines that contain “baz”.</p>
-
-<p><code>sh
-cat file | awk '/baz/ { gsub(/foo/, "bar") }; { print }'
-</code></p>
-
-<p>13.Substitute “foo” with “bar” only on lines that do not contain “baz”.</p>
-
-<p><code>sh
-cat file | awk '!/baz/ { gsub(/foo/, "bar") }; { print }'
-</code></p>
-
-<p>14.Change “scarlet” or “ruby” or “puce” to “red”.</p>
-
-<p><code>sh
-cat file | awk '{ gsub(/scarlet|ruby|puce/, "red"); print}'
-</code></p>
-
-<p>15.Reverse order of lines (emulate “tac”).</p>
-
-<p><code>sh
-cat file | awk '{ a[i++] = $0 } END { for (j=i-1; j&gt;=0;) print a[j--] }'
-</code></p>
-
-<p>16.Swap first field with second on every line.</p>
-
-<p><code>sh
-cat file | awk '{ temp = $1; $1 = $2; $2 = temp; print }'
-</code></p>
-
-<p>17.Delete the second field on each line.</p>
-
-<p><code>sh
-cat file | awk '{ $2 = ""; print }'
-</code></p>
-
-<p>18.Print the fields in reverse order on every line.</p>
-
-<p><code>sh
-cat file | awk '{ for (i=NF; i&gt;0; i--) printf("%s ", $i); printf ("\n") }'
-</code></p>
-
-<p>19.Remove duplicate, consecutive lines (emulate “uniq”)</p>
-
-<p><code>sh
-cat file | awk 'a !~ $0; { a = $0 }'
-</code></p>
-
-<p>20.Remove duplicate, nonconsecutive lines.</p>
-
-<p><code>sh
-cat file | awk '!a[$0]++'
-</code></p>
-
-<p>21.Concatenate every 5 lines of input with a comma.</p>
-
-<p><code>sh
-cat file | awk 'ORS=NR%5?",":"\n"'
-</code></p>
-
-<p>22.Print only the lines that match a regular expression “/regex/” (emulates “grep”).</p>
-
-<p><code>sh
-cat file | awk '/regex/'
-</code></p>
-
-<p>23.Print only the lines that do not match a regular expression “/regex/” (emulates “grep -v”).</p>
-
-<p><code>sh
-cat file | awk '!/regex/'
-</code></p>
-
-<p>24.Print the line immediately before a line that matches “/regex/” (but not the line that matches itself).</p>
-
-<p><code>sh
-cat file | awk '/regex/ { print x }; { x=$0 }'
-</code></p>
-
-<p>25.Print the line immediately after a line that matches “/regex/” (but not the line that matches itself).</p>
-
-<p><code>sh
-cat file | awk '/regex/ { getline; print }'
-</code></p>
-
-<p>26.Print lines that match any of “AAA” or “BBB”, or “CCC”.</p>
-
-<p><code>sh
-cat file | awk '/AAA|BBB|CCC/'
-</code></p>
-
-<p>27.Print lines that contain “AAA” and “BBB”, and “CCC” in this order.</p>
-
-<p><code>sh
-cat file | awk '/AAA.*BBB.*CCC/'
-</code></p>
-
-<p>28.Print only the lines that are 65 characters in length or longer.</p>
-
-<p><code>sh
-cat file | awk 'length &gt; 64'
-</code></p>
-
-<p>29.Print a section of file from regular expression to end of file.</p>
-
-<p><code>sh
-cat file | awk '/regex/,0'
-</code></p>
-
-<p>30.Print lines 8 to 12 (inclusive).</p>
-
-<p><code>sh
-cat file | awk 'NR==8,NR==12'
-</code></p>
-
-<p>31.Print line number 52.</p>
-
-<p><code>sh
-cat file | awk 'NR==52'
-</code></p>
-
-<p>32.Print section of a file between two regular expressions (inclusive).</p>
-
-<p><code>sh
-cat file | awk '/Iowa/,/Montana/'
-</code></p>
-
-<p>33.Delete all blank lines from a file.</p>
-
-<p><code>sh
-cat file | awk NF
-</code> </p>
-
-<p>This one-liner uses the special NF variable that contains number of fields on the line. For empty lines, NF is 0, that evaluates to false, and false statements do not get the line printed.</p>
-
-<p>34.Create a string of a specific length (generate a string of x’s of length 513).</p>
-
-<p><code>sh
-awk 'BEGIN { while (a++&lt;513) s=s "x"; print s }'
-</code></p>
-
-<p>35.Insert a string of specific length at a certain character position (insert 49 x’s after 6th char).</p>
-
-<p><code>sh
-gawk --re-interval 'BEGIN{ while(a++&lt;49) s=s "x" }; { sub(/^.{6}/,"&amp;" s) }; 1'
-</code></p>
-
-<p>36.Print all lines where 5th field is equal to “abc123”.
-<code>sh
-cat file | awk '$5 == "abc123"'
-</code></p>
-
-<p>37.Print any line where field #5 is not equal to “abc123”.</p>
-
-<p><code>sh
-cat file | awk '$5 != "abc123"'
-</code></p>
-
-<p>38.Print all lines whose 7th field matches a regular expression.</p>
-
-<p><code>sh
-cat file | awk '$7  ~ /^[a-f]/'
-or 
-cat file | awk '$7 !~ /^[a-f]/'
-</code></p>
 
 ]]></content>
   </entry>

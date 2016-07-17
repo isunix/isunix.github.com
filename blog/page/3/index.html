@@ -9,19 +9,8 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="Say we have a file a, which has the following contentL: 1
-2
-3
-4
-5
-a
-b
-c
-d
-e and b, 1
-2
-c
-d What if we want to get all those in file a and not in file &hellip;">
+  <meta name="description" content="Several days I met some perl one-liner like this: 1
+cat $file | perl -Mautodie -MList::MoreUtils=none -ne &#39;chomp; push @re, $_ }{ open $fh, $ENV{ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -74,6 +63,80 @@ d What if we want to get all those in file a and not in file &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/12/17/perl-secret-operators-and-constants/">Perl Secret Operators and Constants</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-12-17T10:37:47+08:00" pubdate data-updated="true">Dec 17<span>th</span>, 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Several days I met some perl one-liner like this:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat <span class="nv">$file</span> | perl -Mautodie -MList::MoreUtils<span class="o">=</span>none -ne <span class="s1">&#39;chomp; push @re, $_ }{ open $fh, $ENV{CF}; @s = &lt;$fh&gt;; foreach $s (@s) { print $s if none { $s =~ qr/$_/ } @re };&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>I have no idea what the “}{“ here means, at first I thought it maybe some typo.</p>
+
+<p>Then my colleagues showed me the following page, which lists many weird perl operators.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line">http://search.cpan.org/dist/perlsecret/lib/perlsecret.pod
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>To have a look at how it is used in the backend:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nv">$ </span>perl -MO<span class="o">=</span>Deparse -lne <span class="s1">&#39;}{print$.&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>It will give the following code:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="o">-</span><span class="n">e</span> <span class="n">syntax</span> <span class="n">OK</span>
+</span><span class="line">    <span class="k">BEGIN</span> <span class="p">{</span> <span class="vg">$/</span> <span class="o">=</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span> <span class="vg">$\</span> <span class="o">=</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span> <span class="p">}</span>
+</span><span class="line">    <span class="n">LINE:</span> <span class="k">while</span> <span class="p">(</span><span class="nb">defined</span><span class="p">(</span><span class="nv">$_</span> <span class="o">=</span> <span class="sr">&lt;ARGV&gt;</span><span class="p">))</span> <span class="p">{</span>
+</span><span class="line">        <span class="nb">chomp</span> <span class="nv">$_</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">    <span class="p">{</span>
+</span><span class="line">        <span class="k">print</span> <span class="vg">$.</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1014,58 +1077,6 @@ d What if we want to get all those in file a and not in file &hellip;">
 </pre></td><td class="code"><pre><code class="html"><span class="line">http://my.oschina.net/leejun2005/blog/387136
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/11/20/pycharm-shortcuts/">Pycharm Shortcuts</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-11-20T18:47:53+08:00" pubdate data-updated="true">Nov 20<span>th</span>, 2015</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>The following are some notes on using pycharm.</p>
-
-<p>1.shortcuts</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cmd+O           <span class="o">(</span>search class<span class="o">)</span>
-</span><span class="line">cmd+shift+O     <span class="o">(</span>search file name<span class="o">)</span>
-</span><span class="line">cmd+alt+O       <span class="o">(</span>go to symbol<span class="o">)</span>, <span class="k">then </span>hit cmd+y to get a preview, hit enter will jump to the code.
-</span><span class="line">by ctrl+clicking a method name, you will be redirected to its definition.
-</span><span class="line"><span class="k">for </span>a html file, <span class="nb">type</span> <span class="s2">&quot;!&quot;</span> <span class="k">then </span><span class="nb">type</span> <span class="s2">&quot;tab&quot;</span> key will give a basic html5 template.
-</span><span class="line"><span class="k">for </span>flask project, in the .py file, <span class="nb">type</span> <span class="s1">&#39;flaskp&#39;</span> and hit <span class="s2">&quot;tab&quot;</span>, will give you the definition of post method.
-</span></code></pre></td></tr></table></div></figure></notextile></div>
 </div>
   
   

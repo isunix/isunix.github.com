@@ -9,7 +9,8 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="We can use the following two methods to get rid of the “^M” character in a file which was edited on windows using vim. :%s/\r//g :%s/ctrl-v ctrl-m//g &hellip;">
+  <meta name="description" content="
+">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -68,6 +69,114 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2016/07/19/weird-things-happen-when-scripts-executing-with-and-passing-args-with-getopts/">Weird Things Happen When Scripts Executing With . And Passing Args With Getopts</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2016-07-19T17:43:32+08:00" pubdate data-updated="true">Jul 19<span>th</span>, 2016</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2016/07/19/some-useful-shell-scripts/">Some Useful Shell Scripts</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2016-07-19T09:31:05+08:00" pubdate data-updated="true">Jul 19<span>th</span>, 2016</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Here is a collection of those *sh commands I used that I think might be useful for later usage.</p>
+
+<p>1.compare two directories and see if the differences between them.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">diff -urNa <span class="nb">test </span>test1
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>2.find all files with “old” in their filename, and then romove them</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">find ./ -name <span class="s2">&quot;*old*&quot;</span> -exec rm -i <span class="o">{}</span> <span class="se">\;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>3.grep</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">ll | grep <span class="s2">&quot;Jul 20&quot;</span> | awk <span class="s1">&#39;{print $NF}&#39;</span> | xargs -I , grep -i <span class="s2">&quot;Successfully&quot;</span> , | wc -l
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>4.substitute string in multiple files and backup the orignal files with “~”</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">find . | xargs grep <span class="s2">&quot;good&quot;</span> -sl | uniq | xargs perl -pi~ -e <span class="s1">&#39;s/good/bad/g&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>5.substitute string in multiple files and backup the orignal files with extension “bak”</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">find . | xargs grep <span class="s2">&quot;bad&quot;</span> -sl | uniq | xargs perl -i.bak -p -e <span class="s1">&#39;s/bad/excellent/g&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>After checking that everything is ok, we can then remove those “bak” files</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">find ./ -name <span class="s2">&quot;*bak*&quot;</span> -exec rm -i <span class="o">{}</span> <span class="se">\;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2016/07/18/zen-yao-qu-chu-windowsbian-ji-guo-de-wen-jian-zhong-de-mzi-fu/">怎么去除windows编辑过的文件中的^M字符</a></h1>
     
     
@@ -93,10 +202,17 @@
 
   <div class="entry-content"><p>We can use the following two methods to get rid of the “^M” character in a file which was edited on windows using vim.</p>
 
-<ol>
-  <li>:%s/\r//g</li>
-  <li>:%s/ctrl-v ctrl-m//g</li>
-</ol>
+<p>1.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">:%s/<span class="se">\r</span>//g
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>2.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">:%s/ctrl-v ctrl-m//g
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>The second one means pressing ctrl-v, then ctrl-m first.</p>
 </div>
@@ -611,97 +727,6 @@
 <p>7.Type “Ctrl-A” and “?” without quotes. Then you will see all commands or parameters on screen.</p>
 
 <p>8.Type “Ctrl-A” and “:” without quotes, then enter “sessionname NAME” to rename an existing sessioin.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2016/03/31/update-all-perl-modules-through-cpanm/">Update All Perl Modules Through Cpanm</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2016-03-31T16:54:00+08:00" pubdate data-updated="true">Mar 31<span>st</span>, 2016</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I want to update all the installed Perl modules using cpanm. Here is a method I found.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cpan-outdated -p | cpanm
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>We have to first download the module “http://search.cpan.org/CPAN/authors/id/T/TO/TOKUHIROM/App-cpanoutdated-0.24.tar.gz” and then issue the command to update the modules.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2016/03/31/update-all-python-modules-through-pip/">Update All Python Modules Through Pip</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2016-03-31T16:32:49+08:00" pubdate data-updated="true">Mar 31<span>st</span>, 2016</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I want to update all the installed python modules through pip. Here below is one recipe I found.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="kn">import</span> <span class="nn">pip</span>
-</span><span class="line"><span class="kn">from</span> <span class="nn">subprocess</span> <span class="kn">import</span> <span class="n">call</span>
-</span><span class="line">
-</span><span class="line"><span class="k">for</span> <span class="n">dist</span> <span class="ow">in</span> <span class="n">pip</span><span class="o">.</span><span class="n">get_installed_distributions</span><span class="p">():</span>
-</span><span class="line">    <span class="n">call</span><span class="p">(</span><span class="s">&quot;pip install --upgrade &quot;</span> <span class="o">+</span> <span class="n">dist</span><span class="o">.</span><span class="n">project_name</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
 </div>
   
   

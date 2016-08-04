@@ -9,20 +9,8 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="I have met the following scripts, say aa.sh 1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-echo &quot;OPTIND for aa.sh before calling is: &quot; $OPTIND
-while getopts & &hellip;">
+  <meta name="description" content="最近经常需要把空格作为delimiter的文本粘贴到excel里。之前的做法是 1
+cat aa.log | awk &#39;{print $1}&#39; | pbcopy 来一列一列地copy到excel里。甚是繁琐。 excel不会用的啊。 今天发现了原来还可以这么来操作。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -75,6 +63,137 @@ while getopts & &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2016/08/04/copy-and-paste-spaces-separated-text-into-excel/">Copy and Paste Spaces Separated Text Into Excel</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2016-08-04T16:06:03+08:00" pubdate data-updated="true">Aug 4<span>th</span>, 2016</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>最近经常需要把空格作为delimiter的文本粘贴到excel里。之前的做法是</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat aa.log | awk <span class="s1">&#39;{print $1}&#39;</span> | pbcopy
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>来一列一列地copy到excel里。甚是繁琐。 excel不会用的啊。</p>
+
+<p>今天发现了原来还可以这么来操作。</p>
+
+<ol>
+  <li>把整个文件的内容粘贴到excel里去</li>
+  <li>在excel中选中文件内容， 然后点击 Data-&gt;Text to Columns, 然后选择合适的delimiter去把文本内容给搞到excel中去。 </li>
+</ol>
+
+<p>Bingo！</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2016/07/29/notes-on-reading-the-paper-by-matei-zaharia-and-so-on/">Notes on Reading the Paper by Matei Zaharia and So On</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2016-07-29T11:52:31+08:00" pubdate data-updated="true">Jul 29<span>th</span>, 2016</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>This post keeps note for the paper “Resilient Distributed Datasets: A Fault-Tolerant Abstraction for In-Memory Cluster Computing” by Matei Zaharia and so on.</p>
+
+<p>1.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">Spark exposes RDDs through a language-integrated API where each dataset is represented as an object and transformations are invoked using methods on these objects.</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>2.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">Programmers start by defining one or more RDDs through transformations on data in stable storage (e.g., map and filter). They can then use these RDDs in actions, which are operations that return a value to the application or export data to a storage system. Examples of actions include count (which returns the number of elements in the dataset), collect (which returns the elements themselves), and save (which outputs the dataset to a storage system)</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>3.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">Spark computes RDDs lazily the first time they are used in an action, so that it can pipeline transformations</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>4.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">In addition, programmers can call a persist method to indicate which RDDs they want to reuse in future operations. Spark keeps persistent RDDs in memory by default, but it can spill them to disk if there is not enough RAM.</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>5.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">RDDs themselves are statically typed objects parametrized by an element type. For example, RDD[Int] is an RDD of integers.</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>6.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">Transformations are lazy operations that define a new RDD, while actions launch a computation to return a value to the program or write data to external storage.</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>7.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">map is a one-to-one mapping, while flatMap maps each input value to one or more outputs (similar to the map in MapReduce).</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>8.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">Operations such as groupByKey, reduceByKey and sort automatically result in a hash or range partitioned RDD</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>9.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">We found it both sufficient and useful to classify dependencies into two types: narrow dependencies, where each partition of the parent RDD is used by at most one partition of the child RDD, wide dependencies, where multiple child partitions may depend on it. For example, map leads to a narrow dependency, while join leads to to wide dependencies (unless the parents are hash-partitioned).</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -360,6 +479,18 @@ while getopts & &hellip;">
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 </pre></td><td class="code"><pre><code class="sh"><span class="line">find ./ -name <span class="s2">&quot;*bak*&quot;</span> -exec rm -i <span class="o">{}</span> <span class="se">\;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>6.grep lines before and aftern certain matching line</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">grep -C 4 <span class="s1">&#39;. $kpi_shell $load_date&#39;</span> orig_cron_kpi.sh  | grep <span class="s2">&quot;\.sh&quot;</span> | less
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>7.grep lines in one file while not in the other.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">grep -F -x -v -f bb.txt aa.txt | grep <span class="s2">&quot;\.sh&quot;</span> | less
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 </div>
   
@@ -749,180 +880,6 @@ while getopts & &hellip;">
   <li>ORDER BY</li>
   <li>LIMIT</li>
 </ol>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2016/05/30/useful-shell-commands/">Useful Shell Commands</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2016-05-30T16:13:41+08:00" pubdate data-updated="true">May 30<span>th</span>, 2016</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>1.In bash shell, it provides us with two options to make debugging very much easier. “-v” and “-x”.</p>
-
-<p>Take the following small script for an example.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="c">#!/bin/bash</span>
-</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;You are using $0&quot;</span>
-</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;Hello $*&quot;</span>
-</span><span class="line"><span class="nb">exit </span>0
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>If run with the follwoing “-v” option, </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">bash -v aa.sh steven
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>We will get the following result,</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="c">#!/bin/bash</span>
-</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;You are using $0&quot;</span>
-</span><span class="line">You are using aa.sh
-</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;Hello $*&quot;</span>
-</span><span class="line">Hello steven
-</span><span class="line"><span class="nb">exit </span>0
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>If run with the “-x” option, we will get the following result.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">+ <span class="nb">echo</span> <span class="s1">&#39;You are using aa.sh&#39;</span>
-</span><span class="line">You are using aa.sh
-</span><span class="line">+ <span class="nb">echo</span> <span class="s1">&#39;Hello steven&#39;</span>
-</span><span class="line">Hello steven
-</span><span class="line">+ <span class="nb">exit </span>0
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>As we can see, “-x” might be more helpful to us.</p>
-
-<p>2.We can use “read -p” to read from the user input and store the input into an variable. Like this:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nb">read</span> -p <span class="s2">&quot;Enter your name: &quot;</span> name
-</span><span class="line"><span class="nb">echo</span> <span class="nv">$name</span>
-</span><span class="line"><span class="nb">exit </span>0
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>3.use the “-s” option with “read” to control the visibility of the entered text.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="c">#!/bin/bash</span>
-</span><span class="line"><span class="nb">read</span> -p <span class="s2">&quot;May I ask your name: &quot;</span> name
-</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;Hello $name&quot;</span>
-</span><span class="line"><span class="nb">read</span> -sn1 -p <span class="s2">&quot;Press any key to exit&quot;</span>
-</span><span class="line"><span class="nb">echo</span>
-</span><span class="line"><span class="nb">exit </span>0
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>4.Grep with “-c” option to list the number of items grepped.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2016/05/26/basics-of-linux-screen/">Basics of Linux Screen</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2016-05-26T14:52:24+08:00" pubdate data-updated="true">May 26<span>th</span>, 2016</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>A basic of introduction of linux screen.</p>
-
-<p>1.To create a new screen session without the name specified, just type </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">screen
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>2.To create a new screen session with the name specified, just type</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">screen -S sessionname
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>3.To detach from a session, type “Ctrl-A” and “d“</p>
-
-<p>4.To list all the sessions , type “screen -ls”</p>
-
-<p>5.To re-attach to a session, type “screen -r sessionname”</p>
-
-<p>6.To switch between windows, type “Ctrl-A” then then enter the window number. Or just “Ctrl-A” followed by pressing “p” or “n”.</p>
-
-<p>7.Type “Ctrl-A” and “?” without quotes. Then you will see all commands or parameters on screen.</p>
-
-<p>8.Type “Ctrl-A” and “:” without quotes, then enter “sessionname NAME” to rename an existing sessioin.</p>
 </div>
   
   

@@ -1,0 +1,208 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Notes on Reading the Paper by Matei Zaharia and So On - Steven's Blog</title>
+  <meta name="author" content="Steven Sun">
+
+  
+  <meta name="description" content="This post keeps note for the paper “Resilient Distributed Datasets: A Fault-Tolerant Abstraction for In-Memory Cluster Computing” by Matei Zaharia &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://isunix.github.io/blog/2016/07/29/notes-on-reading-the-paper-by-matei-zaharia-and-so-on">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Steven's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=Open+Sans:400,700&subset=latin" rel="stylesheet" type="text/css" />
+<link href='http://fonts.googleapis.com/css?family=Noto+Serif:400,700' rel='stylesheet' type='text/css'>
+
+
+
+  
+
+</head>
+
+<body    class="collapse-sidebar sidebar-footer" >
+  <nav id="main-nav" role="navigation">
+<ul class="main-navigation">
+  <li><a href="/" class="nav-link">Blog</a></li>
+  <li><a href="/blog/archives" class="nav-link">Archives</a></li>
+  <li><a href="/atom.xml" class="nav-link">RSS</a></li>
+  <li><a href="/about" class="nav-link">About</a></li>
+</ul>
+
+</nav>
+  
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Notes on Reading the Paper by Matei Zaharia and So On</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2016-07-29T11:52:31+08:00" pubdate data-updated="true">Jul 29<span>th</span>, 2016</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>This post keeps note for the paper “Resilient Distributed Datasets: A Fault-Tolerant Abstraction for In-Memory Cluster Computing” by Matei Zaharia and so on.</p>
+
+<p>1.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">Spark exposes RDDs through a language-integrated API where each dataset is represented as an object and transformations are invoked using methods on these objects.</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>2.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">Programmers start by defining one or more RDDs through transformations on data in stable storage (e.g., map and filter). They can then use these RDDs in actions, which are operations that return a value to the application or export data to a storage system. Examples of actions include count (which returns the number of elements in the dataset), collect (which returns the elements themselves), and save (which outputs the dataset to a storage system)</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>3.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">Spark computes RDDs lazily the first time they are used in an action, so that it can pipeline transformations</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>4.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">In addition, programmers can call a persist method to indicate which RDDs they want to reuse in future operations. Spark keeps persistent RDDs in memory by default, but it can spill them to disk if there is not enough RAM.</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>5.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">RDDs themselves are statically typed objects parametrized by an element type. For example, RDD[Int] is an RDD of integers.</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>6.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">Transformations are lazy operations that define a new RDD, while actions launch a computation to return a value to the program or write data to external storage.</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>7.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">map is a one-to-one mapping, while flatMap maps each input value to one or more outputs (similar to the map in MapReduce).</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>8.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">Operations such as groupByKey, reduceByKey and sort automatically result in a hash or range partitioned RDD</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>9.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">We found it both sufficient and useful to classify dependencies into two types: narrow dependencies, where each partition of the parent RDD is used by at most one partition of the child RDD, wide dependencies, where multiple child partitions may depend on it. For example, map leads to a narrow dependency, while join leads to to wide dependencies (unless the parents are hash-partitioned).</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Steven Sun</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2016-07-29T11:52:31+08:00" pubdate data-updated="true">Jul 29<span>th</span>, 2016</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/spark/'>Spark</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2016/07/19/weird-things-happen-when-scripts-executing-with-and-passing-args-with-getopts/" title="Previous Post: weird things happen when scripts executing with . and passing args with getopts">&laquo; weird things happen when scripts executing with . and passing args with getopts</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2016/08/04/copy-and-paste-spaces-separated-text-into-excel/" title="Next Post: copy and paste spaces separated text into excel">copy and paste spaces separated text into excel &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Steven Sun -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

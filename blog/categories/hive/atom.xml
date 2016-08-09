@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Hive | Steven's Blog]]></title>
+  <link href="http://isunix.github.io/blog/categories/hive/atom.xml" rel="self"/>
+  <link href="http://isunix.github.io/"/>
+  <updated>2016-08-09T09:42:16+08:00</updated>
+  <id>http://isunix.github.io/</id>
+  <author>
+    <name><![CDATA[Steven Sun]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Hive Insert Using Select *]]></title>
+    <link href="http://isunix.github.io/blog/2016/08/09/hive-insert-using-select-star/"/>
+    <updated>2016-08-09T09:34:49+08:00</updated>
+    <id>http://isunix.github.io/blog/2016/08/09/hive-insert-using-select-star</id>
+    <content type="html"><![CDATA[<p>I want to insert into a table with values from another table. and I want to use the follwing statements,</p>
+
+<p><code>sql
+insert into table table_a select * from table_b;
+</code></p>
+
+<p>Both table_a and table_b have the followig 3 fields, “name”, “age”, and the “load_day” field which is used to partition.</p>
+
+<p>If using the above syntax, we will get errors saying table has just 2 fields and table_b has 3.</p>
+
+<p>So one right way to insert the data is:</p>
+
+<p><code>sql
+insert into table table_a(partition="2016-08-01") select name, age from table_b where load_day = "2016-08-01"
+</code></p>
+
+<p>What if there are many fields, thus we will need to list them one by one after select which is very tedious.</p>
+
+<p>Here is the solution,</p>
+
+<p><code>sql
+set hive.exec.dynamic.partition.mode=nonstrict;
+insert into table table_a partition(load_day) select * from table_b;
+</code></p>
+]]></content>
+  </entry>
+  
+</feed>

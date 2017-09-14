@@ -9,10 +9,7 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="This is a note about chap03 in “Object oriented perl”. 1.In object oriented perl, there are three rules, 1
-2
-3
-1. rule1: To create a class, build a &hellip;">
+  <meta name="description" content="I have written some code in PHP, but I almost never use the object oriented way. Here below is some excerpts from the book “Pro PHP and Jquery”. 1. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +62,185 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/10/30/pro-php-and-jquery-chap03-object-oriented-programming/">Pro PHP and Jquery Chap03: Object Oriented Programming</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-10-30T14:03:48+08:00" pubdate data-updated="true">Oct 30<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I have written some code in PHP, but I almost never use the object oriented way. Here below is some excerpts from the book “Pro PHP and Jquery”.  </p>
+
+<p>1.How to build a class and instantiate it.   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class="php"><span class="line"><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class="line">  <span class="k">class</span> <span class="nc">MyClass</span><span class="p">{</span>
+</span><span class="line">    <span class="c1">//class properties and methods go here</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line">  <span class="nv">$obj</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyClass</span><span class="p">;</span>
+</span><span class="line">  <span class="nb">var_dump</span><span class="p">(</span><span class="nv">$obj</span><span class="p">);</span>
+</span><span class="line"><span class="cp">?&gt;</span><span class="x"></span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>It gives out something like </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="php"><span class="line"><span class="nx">object</span><span class="p">(</span><span class="nx">MyClass</span><span class="p">)</span><span class="c1">#1 (0) { }</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>2.The following code shows how to set and read out a class property.  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class="php"><span class="line"><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class="line">  <span class="k">class</span> <span class="nc">MyClass</span><span class="p">{</span>
+</span><span class="line">    <span class="c1">//class properties and methods go here</span>
+</span><span class="line">    <span class="k">public</span> <span class="nv">$prop1</span> <span class="o">=</span> <span class="s2">&quot;I&#39;m a class property!&quot;</span><span class="p">;</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">  <span class="nv">$obj</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyClass</span><span class="p">;</span>
+</span><span class="line">  <span class="k">echo</span> <span class="nv">$obj</span><span class="o">-&gt;</span><span class="na">prop1</span><span class="p">;</span>
+</span><span class="line"><span class="cp">?&gt;</span><span class="x"></span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>3.THe following code shows how to define methods in php. Methods are class-specific functions:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+</pre></td><td class="code"><pre><code class="php"><span class="line"><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class="line"><span class="k">class</span> <span class="nc">MyClass</span> <span class="p">{</span>
+</span><span class="line">  <span class="k">public</span> <span class="nv">$prop1</span> <span class="o">=</span> <span class="s2">&quot;I&#39;m a class property!&quot;</span><span class="p">;</span>
+</span><span class="line">  <span class="k">public</span> <span class="k">function</span> <span class="nf">setProperty</span><span class="p">(</span><span class="nv">$newval</span><span class="p">){</span>
+</span><span class="line">    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">prop1</span> <span class="o">=</span> <span class="nv">$newval</span><span class="p">;</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">  <span class="k">public</span> <span class="k">function</span> <span class="nf">getProperty</span><span class="p">(){</span>
+</span><span class="line">    <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">prop1</span> <span class="o">.</span> <span class="s2">&quot;&lt;br /&gt;&quot;</span><span class="p">;</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="nv">$obj</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyClass</span><span class="p">;</span>
+</span><span class="line"><span class="k">echo</span> <span class="nv">$obj</span><span class="o">-&gt;</span><span class="na">prop1</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="cp">?&gt;</span><span class="x"></span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>4.Use of contructor methods:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+</pre></td><td class="code"><pre><code class="php"><span class="line"><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class="line"><span class="k">class</span> <span class="nc">MyClass</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">  <span class="k">public</span> <span class="nv">$prop1</span> <span class="o">=</span> <span class="s2">&quot;I&#39;m a class property!&quot;</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">  <span class="k">public</span> <span class="k">function</span> <span class="nf">__construct</span><span class="p">()</span>
+</span><span class="line">  <span class="p">{</span>
+</span><span class="line">    <span class="k">echo</span> <span class="s1">&#39;The class &quot;&#39;</span><span class="p">,</span> <span class="nx">__CLASS__</span><span class="p">,</span> <span class="s1">&#39;&quot; was initiated!&lt;br /&gt;&#39;</span><span class="p">;</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">  <span class="k">public</span> <span class="k">function</span> <span class="nf">setProperty</span><span class="p">(</span><span class="nv">$newval</span><span class="p">)</span>
+</span><span class="line">  <span class="p">{</span>
+</span><span class="line">    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">prop1</span> <span class="o">=</span> <span class="nv">$newval</span><span class="p">;</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">  <span class="k">public</span> <span class="k">function</span> <span class="nf">getProperty</span><span class="p">()</span>
+</span><span class="line">  <span class="p">{</span>
+</span><span class="line">    <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">prop1</span> <span class="o">.</span> <span class="s2">&quot;&lt;br /&gt;&quot;</span><span class="p">;</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="c1">// Create a new object</span>
+</span><span class="line"><span class="nv">$obj</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyClass</span><span class="p">;</span>
+</span><span class="line"><span class="c1">// Get the value of $prop1</span>
+</span><span class="line"><span class="k">echo</span> <span class="nv">$obj</span><span class="o">-&gt;</span><span class="na">getProperty</span><span class="p">();</span>
+</span><span class="line"><span class="c1">// Output a message at the end of the file</span>
+</span><span class="line"><span class="k">echo</span> <span class="s2">&quot;End of file.&lt;br /&gt;&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="cp">?&gt;</span><span class="x"></span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -967,85 +1143,6 @@ need to write a lot of data to a particular file, you could use code like this: 
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/10/09/regexp-debuggershi-yong-shi-li/">Regexp::Debugger使用示例</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-10-09T14:09:52+08:00" pubdate data-updated="true">Oct 9<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>This post shows how to use the perl module, Regexp::Debugger. Used skillfully, this module can do us a lot of favor.  </p>
-
-<p>1.”rxrx prog.pl” is a shorthand for “perl -MRegexp::Debugger prog.pl”.  </p>
-
-<p>2.print out if matched</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">perl</span> <span class="o">-</span><span class="n">E</span> <span class="s">&quot;say &#39;matched&#39; if &#39;ababc&#39; =~ /(a|b)b+c/x&quot;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>3.print out if matched and which part matched</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">perl</span> <span class="o">-</span><span class="n">E</span> <span class="s">&quot;say &#39;matched: &#39;, $&amp; if &#39;ababc&#39; =~ /(a|b)b+c/x&quot;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>4.use “re” module</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">perl</span> <span class="o">-</span><span class="n">E</span> <span class="s">&quot;use re &#39;debug&#39;; &#39;ababc&#39; =~ /(a|b)b+c/x&quot;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>5.use Regexp::Debugger module</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">perl</span> <span class="o">-</span><span class="n">E</span> <span class="s">&quot;use Regexp::Debugger; &#39;ababc&#39; =~ /(a|b)b+c/x&quot;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>6.any regex</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="p">(?</span><span class="n">i</span><span class="p">)</span> <span class="p">(?</span><span class="sr">&lt;AB&gt;</span> <span class="p">(?</span><span class="o">&amp;</span><span class="n">ABs</span><span class="p">))</span> <span class="p">(?</span><span class="sr">&lt;AA&gt;</span><span class="p">(??{</span><span class="s">&#39;aa&#39;</span><span class="p">}))</span> <span class="p">(?(</span><span class="n">DEFINE</span><span class="p">)(?</span><span class="sr">&lt;ABs&gt;</span><span class="p">[</span><span class="n">ab</span><span class="p">]{</span><span class="mi">2</span><span class="p">,</span><span class="mi">7</span><span class="p">}</span><span class="o">+</span><span class="p">))</span><span class="o">/</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>7.for the Regexp::Debugger, we have a cmd-line tool named “rxrx”, we typr “rxrx”, then</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="sr">/(a|b)b+c/</span>
-</span><span class="line"><span class="s">&quot;ababc&quot;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>Then hit “enter” key or “tab” key to see how and if the string matches the regex.</p>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/11/">&larr; Older</a>
@@ -1065,7 +1162,7 @@ need to write a lot of data to a particular file, you could use code like this: 
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2016 - Steven Sun -
+  Copyright &copy; 2017 - Steven Sun -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

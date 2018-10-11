@@ -273,87 +273,6 @@ Steven Sun’s Blog You may find the following pages in Steven Sun’s Blog migh
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2016/07/29/notes-on-reading-the-paper-by-matei-zaharia-and-so-on/">Notes on Reading the Paper by Matei Zaharia and So On</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2016-07-29T11:52:31+08:00" pubdate data-updated="true">Jul 29<span>th</span>, 2016</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>This post keeps note for the paper “Resilient Distributed Datasets: A Fault-Tolerant Abstraction for In-Memory Cluster Computing” by Matei Zaharia and so on.</p>
-
-<p>1.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">Spark exposes RDDs through a language-integrated API where each dataset is represented as an object and transformations are invoked using methods on these objects.</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>2.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">Programmers start by defining one or more RDDs through transformations on data in stable storage (e.g., map and filter). They can then use these RDDs in actions, which are operations that return a value to the application or export data to a storage system. Examples of actions include count (which returns the number of elements in the dataset), collect (which returns the elements themselves), and save (which outputs the dataset to a storage system)</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>3.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">Spark computes RDDs lazily the first time they are used in an action, so that it can pipeline transformations</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>4.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">In addition, programmers can call a persist method to indicate which RDDs they want to reuse in future operations. Spark keeps persistent RDDs in memory by default, but it can spill them to disk if there is not enough RAM.</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>5.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">RDDs themselves are statically typed objects parametrized by an element type. For example, RDD[Int] is an RDD of integers.</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>6.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">Transformations are lazy operations that define a new RDD, while actions launch a computation to return a value to the program or write data to external storage.</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>7.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">map is a one-to-one mapping, while flatMap maps each input value to one or more outputs (similar to the map in MapReduce).</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>8.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">Operations such as groupByKey, reduceByKey and sort automatically result in a hash or range partitioned RDD</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>9.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">We found it both sufficient and useful to classify dependencies into two types: narrow dependencies, where each partition of the parent RDD is used by at most one partition of the child RDD, wide dependencies, where multiple child partitions may depend on it. For example, map leads to a narrow dependency, while join leads to to wide dependencies (unless the parents are hash-partitioned).</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
       <h1 class="entry-title"><a href="/blog/2016/07/19/weird-things-happen-when-scripts-executing-with-and-passing-args-with-getopts/">Weird Things Happen When Scripts Executing With . And Passing Args With Getopts</a></h1>
     
     
@@ -924,6 +843,57 @@ Steven Sun’s Blog You may find the following pages in Steven Sun’s Blog migh
 </span><span class="line">https://cwiki.apache.org/confluence/display/Hive/GettingStarted
 </span><span class="line">https://amodernstory.com/2015/03/29/installing-hive-on-mac/
 </span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2016/07/02/install-hadoop-on-mac/">Install Hadoop on Mac</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2016-07-02T16:16:15+08:00" pubdate data-updated="true">Jul 2<span>nd</span>, 2016</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>这篇blog是关于如何在mac上安装hadoop的。 参考书目是《hadoop 核心技术》 by 翟周伟， 还有这篇博文， http://dongfeiwww.com/hadoop/2014/09/05/hadoop-on-mac/。</p>
+
+<p>要要注意的点是， 如果是安装hadoop在／usr/local这种路径下， 最后跑start-dfs.sh这种脚本的时候， 是需要sudo权限的， 所以可以按照“核心技术”这本书来， 把hadoop解压到本地一个不需要sudo权限去访问执行的地方。</p>
+
+<p>第二点就是start-all.sh这个脚本被deprecated的了， 推荐使用的是，start-dfs.sh and start-yarn.sh这种单独的脚本。</p>
+
+<p>第三就是运行下ssh localhost看能不能连上。</p>
+
+<p>最后， 配置成功后能从web页面访问到的端口有</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line">http://localhost:50090/status.html      (Secondary NameNode status)
+</span><span class="line">http://localhost:50070/dfshealth.html#tab-overview    (hdfs status)
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
 </div>
   
   

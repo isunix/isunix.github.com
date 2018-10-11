@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Python | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/python/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2018-10-11T16:35:41+08:00</updated>
+  <updated>2018-10-11T17:16:21+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -81,20 +81,6 @@ python3 movie_download.py
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Underscore in Python's Variable Name]]></title>
-    <link href="http://isunix.github.io/blog/2015/11/23/underscore-in-pythons-variable-name/"/>
-    <updated>2015-11-23T13:37:08+08:00</updated>
-    <id>http://isunix.github.io/blog/2015/11/23/underscore-in-pythons-variable-name</id>
-    <content type="html"><![CDATA[<p>Found a very complete article about the “underscore” in python’s usage.</p>
-
-<p><code>html
-http://my.oschina.net/leejun2005/blog/387136
-</code></p>
-
-]]></content>
-  </entry>
-  
-  <entry>
     <title type="html"><![CDATA[Pycharm Shortcuts]]></title>
     <link href="http://isunix.github.io/blog/2015/11/20/pycharm-shortcuts/"/>
     <updated>2015-11-20T18:47:53+08:00</updated>
@@ -124,6 +110,139 @@ for flask project, in the .py file, type 'flaskp' and hit "tab", will give you t
 <p><code>sh
 pip3 install ptpython
 python3 -m ptpython
+</code></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Some Basics About Generators in Python]]></title>
+    <link href="http://isunix.github.io/blog/2015/10/19/some-basics-about-generators-in-python/"/>
+    <updated>2015-10-19T08:46:43+08:00</updated>
+    <id>http://isunix.github.io/blog/2015/10/19/some-basics-about-generators-in-python</id>
+    <content type="html"><![CDATA[<p>Here below is a reference for learning python generators:</p>
+
+<p><code>html
+http://www.dabeaz.com/generators/
+http://www.dabeaz.com/finalgenerator/
+http://stackoverflow.com/questions/231767/what-does-the-yield-keyword-do-in-python/231855#231855
+</code></p>
+
+<p>A basic explanation about the “for” statement in python:</p>
+
+<p><code>py
+for x in obj:
+	#statements
+</code></p>
+
+<p>and how it is realized:</p>
+
+<p><code>py
+_iter = iter(obj)
+while 1:
+	try:
+		x = _iter.next()
+	except StopIteration:
+		break
+	#statements
+</code></p>
+
+<p>and why the “StopIteration” in the above code? It happens in iterables:</p>
+
+<p><code>py
+&gt;&gt;&gt; items = [1,2,3]
+&gt;&gt;&gt; it = iter(items)
+&gt;&gt;&gt; it.next()
+1
+&gt;&gt;&gt; it.next()
+2
+&gt;&gt;&gt; it.next()
+3
+&gt;&gt;&gt; it.next()
+Traceback (most recent call last):
+  File "&lt;input&gt;", line 1, in &lt;module&gt;
+StopIteration
+&gt;&gt;&gt;
+</code></p>
+
+<p>and now will implement a user defined object that supports iterable:</p>
+
+<p>```py
+class countdown(object):
+    def <strong>init</strong>(self, start):
+        self.count = start</p>
+
+<pre><code>def __iter__(self):
+    return self
+
+def next(self):
+    if self.count &lt;= 0:
+        raise StopIteration
+    r = self.count
+    self.count -= 1
+    return r
+</code></pre>
+
+<p>if <strong>name</strong> == ‘<strong>main</strong>’:
+    c = countdown(3)
+    for i in c:
+        print(i)
+```</p>
+
+<p>countdown using generator:</p>
+
+<p>```py
+def countdown(n):
+    while n &gt; 0:
+        yield n
+        n -= 1</p>
+
+<p>for i in countdown(5):
+    print(i)</p>
+
+<p>```</p>
+
+<p>About how to use non-generator methods, generator methods, awk to calculate the sum of a columns of numbs.</p>
+
+<p>The records in the log file looks like this:</p>
+
+<p><code>
+156.63.68.202 - - [29/Feb/2008:07:49:28 -0600] "GET /favicon.ico HTTP/1.1" 404 133
+80.161.85.77 - - [29/Feb/2008:07:52:46 -0600] "GET /ply/ply.html HTTP/1.1" 200 97238
+</code></p>
+
+<p>First the non-generator method:</p>
+
+<p>```py
+wwwlog = open(“access-log”)
+total = 0
+for line in wwwlog:
+    bytestr = line.rsplit(None,1)[1]
+    if bytestr != ‘-‘:
+        total += int(bytestr)</p>
+
+<p>print “Total”, total
+```</p>
+
+<p>and the generator method:</p>
+
+<p>```py
+wwwlog     = open(“access-log”)
+bytecolumn = (line.rsplit(None,1)[1] for line in wwwlog)
+bytes      = (int(x) for x in bytecolumn if x != ‘-‘)</p>
+
+<p>print “Total”, sum(bytes)
+```</p>
+
+<p>and then the awk method:</p>
+
+<p><code>awk
+awk '{ total += $NF } END { print total }' access-log
+</code></p>
+
+<p>PS: (a very useful shell script tutorial)</p>
+
+<p><code>html
+http://www.grymoire.com/Unix/Sh.html
 </code></p>
 ]]></content>
   </entry>

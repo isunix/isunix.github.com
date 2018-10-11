@@ -9,7 +9,7 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="Recently I come across an algorithm, and I am sure I have no idea what it is doing, when I ask my colleague, he said it is hash algorithm. Thus comes &hellip;">
+  <meta name="description" content="Say I am on a server named “stsun1” and every time I want to login to a server named “stsun2”, I have to enter my password, by using ssh-keygen we &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -68,7 +68,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/09/19/study-of-hash-function/">Study of Hash Function</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/09/05/ssh-keygen-usage/">Ssh-keygen Usage</a></h1>
     
     
       <p class="meta">
@@ -84,18 +84,93 @@
   
 
 
-<time datetime="2014-09-19T10:26:02+08:00" pubdate data-updated="true">Sep 19<span>th</span>, 2014</time>
+<time datetime="2014-09-05T13:57:20+08:00" pubdate data-updated="true">Sep 5<span>th</span>, 2014</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>Recently I come across an algorithm, and I am sure I have no idea what it is doing, when I ask my colleague, he said it is hash algorithm.  Thus comes out this article talking about hash algorithms.  </p>
-
-<p>First I will list some of the sites I visited while I am learning what is hash function, how to create it and how to use it.  </p>
+  <div class="entry-content"><p>Say I am on a server named “stsun1” and every time I want to login to a server named “stsun2”, I have to enter my password, by using ssh-keygen we can avoid this.  </p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">
+</span><span class="line">1. login to stsun1     
+</span><span class="line">
+</span><span class="line">2. cd ~/.ssh and check if you have 'id_rsa',  'id_rsa.pub' files, if not, go to step 3, if you already have one, go to step 4.    
+</span><span class="line">
+</span><span class="line">3. ssh-keygen -t rsa, and you will see 'id_rsa',  'id_rsa.pub' files.    
+</span><span class="line">
+</span><span class="line">4. copy the .pub file to the .ssh dir on server stsun2, then "cat id_rsa.pub &gt;&gt; ~/.ssh/authorized_keys"
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>That’ all!</p>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/31/useful-js-code-snippets/">Useful Js Code Snippets</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-31T17:47:03+08:00" pubdate data-updated="true">Aug 31<span>st</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>1.To sort an array from small to big nums, we can use the following method.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="kd">function</span> <span class="nx">compare</span><span class="p">(</span><span class="nx">num1</span><span class="p">,</span> <span class="nx">num2</span><span class="p">){</span>
+</span><span class="line">  <span class="k">return</span> <span class="nx">num1</span> <span class="o">-</span> <span class="nx">num2</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">var</span> <span class="nx">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">200</span><span class="p">];</span>
+</span><span class="line"><span class="nx">nums</span><span class="p">.</span><span class="nx">sort</span><span class="p">(</span><span class="nx">compare</span><span class="p">);</span>
+</span><span class="line"><span class="nx">print</span><span class="p">(</span><span class="nx">nums</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>2.reduce, every, some, forEach迭代器方法</p>
+
+<p>3.map will give out a new array:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
 <span class="line-number">3</span>
 <span class="line-number">4</span>
@@ -106,110 +181,51 @@
 <span class="line-number">9</span>
 <span class="line-number">10</span>
 <span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">http://isthe.com/chongo/tech/comp/fnv/#fnv-prime
-</span><span class="line">I did not spend any time on this post yet.     
+</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="kd">function</span> <span class="nx">first</span><span class="p">(</span><span class="nx">word</span><span class="p">){</span>
+</span><span class="line">  <span class="k">return</span> <span class="nx">word</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+</span><span class="line"><span class="p">}</span>
 </span><span class="line">
-</span><span class="line">http://www.azillionmonkeys.com/qed/hash.html
-</span><span class="line">This is said to be a very good article on hash function.
+</span><span class="line"><span class="kd">var</span> <span class="nx">words</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;for&quot;</span><span class="p">,</span> <span class="s2">&quot;your&quot;</span><span class="p">,</span> <span class="s2">&quot;info&quot;</span><span class="p">];</span>
+</span><span class="line"><span class="kd">var</span> <span class="nx">acronym</span> <span class="o">=</span> <span class="nx">words</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">first</span><span class="p">);</span>
+</span><span class="line"><span class="nx">print</span><span class="p">(</span><span class="nx">acronym</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">));</span>
+</span><span class="line"><span class="c1">//fyi</span>
 </span><span class="line">
-</span><span class="line">http://burtleburtle.net/bob/hash/doobs.html
-</span><span class="line">This is also a very good article.
+</span><span class="line"><span class="c1">//print(acronym);</span>
+</span><span class="line"><span class="c1">//f,y,i</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>note how we used join to avoid the “,”</p>
+
+<p>4.filter</p>
+
+<p>Filter is quite similar to “every”, it accept a function whose return value is boolean. In contrast to “every”, when filter(func) evaluated to true, it does not retrun “true”, it returns a new array, whose item is the those items in the original way after beed passed to the funcition.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="kd">function</span> <span class="nx">passing</span><span class="p">(</span><span class="nx">num</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">   <span class="k">return</span> <span class="nx">num</span> <span class="o">&gt;=</span> <span class="mi">60</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
 </span><span class="line">
-</span><span class="line">http://en.wikipedia.org/wiki/Hash_function
-</span><span class="line">http://www.benfrederickson.com/heap-visualization/
-</span><span class="line">http://blog.csdn.net/wuliming_sc/article/details/1365962
-</span><span class="line">and difinitely http://www.benfrederickson.com/ is a very good site for learning some knowledge of algorithms.
-</span><span class="line">
-</span><span class="line">http://blog.163.com/clevertanglei900@126/blog/static/111352259201171111938208/
-</span><span class="line">this post gives a very clear explanation of what hash function is</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
+</span><span class="line"><span class="kd">var</span> <span class="nx">grades</span> <span class="o">=</span> <span class="p">[];</span>
+</span><span class="line"><span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">;</span> <span class="o">++</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">   <span class="nx">grades</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span> <span class="o">*</span> <span class="mi">101</span><span class="p">);</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line"><span class="kd">var</span> <span class="nx">passGrades</span> <span class="o">=</span> <span class="nx">grades</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nx">passing</span><span class="p">);</span>
+</span><span class="line"><span class="nx">print</span><span class="p">(</span><span class="nx">grades</span><span class="p">);</span>
+</span><span class="line"><span class="nx">print</span><span class="p">(</span><span class="nx">passGrades</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
+<p>5.the following code shows how to get a studetnt’s average score and how to get a discipline’s averge score.</p>
 
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/19/color-bash-prompt/">Color Bash Prompt</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-09-19T10:12:06+08:00" pubdate data-updated="true">Sep 19<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Refer to the link below for colorful bash prompt.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">https://wiki.archlinux.org/index.php/Color_Bash_Prompt</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/19/use-of-surround-dot-vim/">Use of surround.vim</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-09-19T09:56:45+08:00" pubdate data-updated="true">Sep 19<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I use the vim plugin, surround.vim, but I am familiar with it. Before I get to know it, I usually do those things which surround.vim can help us do in a very clumsy way. Thus I keep those notes down thus I can look up it later.</p>
-
-<p>Two links are of use for this post, you can regard this post as an excerpt for the contents of those two links.</p>
-
-<p>http://www.catonmat.net/blog/vim-plugins-surround-vim/
-https://github.com/tpope/vim-surround</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
 <span class="line-number">3</span>
 <span class="line-number">4</span>
@@ -242,75 +258,39 @@ https://github.com/tpope/vim-surround</p>
 <span class="line-number">31</span>
 <span class="line-number">32</span>
 <span class="line-number">33</span>
-<span class="line-number">34</span>
-<span class="line-number">35</span>
-<span class="line-number">36</span>
-<span class="line-number">37</span>
-<span class="line-number">38</span>
-<span class="line-number">39</span>
-<span class="line-number">40</span>
-<span class="line-number">41</span>
-<span class="line-number">42</span>
-<span class="line-number">43</span>
-<span class="line-number">44</span>
-<span class="line-number">45</span>
-<span class="line-number">46</span>
-<span class="line-number">47</span>
-<span class="line-number">48</span>
-<span class="line-number">49</span>
-<span class="line-number">50</span>
-<span class="line-number">51</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">it's easiest to explain with examples. Press cs"' inside
+</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="c1">//discipline&#39;s average score</span>
 </span><span class="line">
-</span><span class="line">"Hello world!"
-</span><span class="line">to change it to
-</span><span class="line">
-</span><span class="line">'Hello world!'
-</span><span class="line">Now press cs'&lt;q&gt; to change it to
-</span><span class="line">
-</span><span class="line">&lt;q&gt;Hello world!&lt;/q&gt;
-</span><span class="line">To go full circle, press cst" to get
-</span><span class="line">
-</span><span class="line">"Hello world!"
-</span><span class="line">To remove the delimiters entirely, press ds".
-</span><span class="line">
-</span><span class="line">Hello world!
-</span><span class="line">Now with the cursor on "Hello", press ysiw] (iw is a text object).
-</span><span class="line">
-</span><span class="line">[Hello] world!
-</span><span class="line">Let's make that braces and add some space (use } instead of { for no space): cs]{
-</span><span class="line">
-</span><span class="line">{ Hello } world!
-</span><span class="line">Now wrap the entire line in parentheses with yssb or yss).
-</span><span class="line">
-</span><span class="line">({ Hello } world!)
-</span><span class="line">Revert to the original text: ds{ds)
-</span><span class="line">
-</span><span class="line">Hello world!
-</span><span class="line">Emphasize hello: ysiw&lt;em&gt;
-</span><span class="line">
-</span><span class="line">&lt;em&gt;Hello&lt;/em&gt; world!
-</span><span class="line">Finally, let's try out visual mode. Press a capital V (for linewise visual mode) followed by S&lt;p class="important"&gt;.
-</span><span class="line">
-</span><span class="line">&lt;p class="important"&gt;
-</span><span class="line">  &lt;em&gt;Hello&lt;/em&gt; world!
-</span><span class="line">&lt;/p&gt;
-</span><span class="line">This plugin is very powerful for HTML and XML editing, a niche which currently seems underfilled in Vim land. (As opposed to HTML/XML inserting, for which many plugins are available). Adding, changing, and removing pairs of tags simultaneously is a breeze.
-</span><span class="line">
-</span><span class="line">The . command will work with ds, cs, and yss if you install repeat.vim.
+</span><span class="line"><span class="kd">var</span> <span class="nx">grades</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">89</span><span class="p">,</span> <span class="mi">77</span><span class="p">,</span> <span class="mi">78</span><span class="p">],[</span><span class="mi">76</span><span class="p">,</span> <span class="mi">82</span><span class="p">,</span> <span class="mi">81</span><span class="p">],[</span><span class="mi">91</span><span class="p">,</span> <span class="mi">94</span><span class="p">,</span> <span class="mi">89</span><span class="p">]];</span>
+</span><span class="line"><span class="kd">var</span> <span class="nx">total</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line"><span class="kd">var</span> <span class="nx">average</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
+</span><span class="line"><span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">col</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">col</span> <span class="o">&lt;</span> <span class="nx">grades</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="o">++</span><span class="nx">col</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">   <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">row</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">row</span> <span class="o">&lt;</span> <span class="nx">grades</span><span class="p">[</span><span class="nx">col</span><span class="p">].</span><span class="nx">length</span><span class="p">;</span> <span class="o">++</span><span class="nx">row</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">      <span class="nx">total</span> <span class="o">+=</span> <span class="nx">grades</span><span class="p">[</span><span class="nx">row</span><span class="p">][</span><span class="nx">col</span><span class="p">];</span>
+</span><span class="line">   <span class="p">}</span>
 </span><span class="line">
 </span><span class="line">
-</span><span class="line">Text              Command      New Text
-</span><span class="line">---------------   -------      -----------
-</span><span class="line">Hello w|orld!     ysiw)        Hello (world)!
-</span><span class="line">Hello w|orld!     csw)         Hello (world)!
-</span><span class="line">fo|o              ysiwt&lt;html&gt;  &lt;html&gt;foo&lt;/html&gt;
-</span><span class="line">foo quu|x baz     yss"         "foo quux baz"
-</span><span class="line">foo quu|x baz     ySS"         "
-</span><span class="line">                                   foo quux baz
-</span><span class="line">                               "
+</span><span class="line">   <span class="nx">average</span> <span class="o">=</span> <span class="nx">total</span> <span class="o">/</span> <span class="nx">grades</span><span class="p">[</span><span class="nx">col</span><span class="p">].</span><span class="nx">length</span><span class="p">;</span>
+</span><span class="line">   <span class="nx">print</span><span class="p">(</span><span class="s2">&quot;Test &quot;</span> <span class="o">+</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">col</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; average: &quot;</span> <span class="o">+</span>
+</span><span class="line">         <span class="nx">average</span><span class="p">.</span><span class="nx">toFixed</span><span class="p">(</span><span class="mi">2</span><span class="p">));</span>
+</span><span class="line">   <span class="nx">total</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line">   <span class="nx">average</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
 </span><span class="line">
-</span><span class="line">(| is the position of cursor in these examples)
+</span><span class="line"><span class="c1">//a student&#39;s average score</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">var</span> <span class="nx">grades</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">89</span><span class="p">,</span> <span class="mi">77</span><span class="p">,</span> <span class="mi">78</span><span class="p">],[</span><span class="mi">76</span><span class="p">,</span> <span class="mi">82</span><span class="p">,</span> <span class="mi">81</span><span class="p">],[</span><span class="mi">91</span><span class="p">,</span> <span class="mi">94</span><span class="p">,</span> <span class="mi">89</span><span class="p">]];</span>
+</span><span class="line"><span class="kd">var</span> <span class="nx">total</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line"><span class="kd">var</span> <span class="nx">average</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
+</span><span class="line"><span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">row</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">row</span> <span class="o">&lt;</span> <span class="nx">grades</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="o">++</span><span class="nx">row</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">   <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">col</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">col</span> <span class="o">&lt;</span> <span class="nx">grades</span><span class="p">[</span><span class="nx">row</span><span class="p">].</span><span class="nx">length</span><span class="p">;</span> <span class="o">++</span><span class="nx">col</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">      <span class="nx">total</span> <span class="o">+=</span> <span class="nx">grades</span><span class="p">[</span><span class="nx">row</span><span class="p">][</span><span class="nx">col</span><span class="p">];</span>
+</span><span class="line">   <span class="p">}</span>
+</span><span class="line">   <span class="nx">average</span> <span class="o">=</span> <span class="nx">total</span> <span class="o">/</span> <span class="nx">grades</span><span class="p">[</span><span class="nx">row</span><span class="p">].</span><span class="nx">length</span><span class="p">;</span>
+</span><span class="line">   <span class="nx">print</span><span class="p">(</span><span class="s2">&quot;Student &quot;</span> <span class="o">+</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">row</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; average: &quot;</span> <span class="o">+</span>
+</span><span class="line">         <span class="nx">average</span><span class="p">.</span><span class="nx">toFixed</span><span class="p">(</span><span class="mi">2</span><span class="p">));</span>
+</span><span class="line">   <span class="nx">total</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line">   <span class="nx">average</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 </div>
   
@@ -324,7 +304,7 @@ https://github.com/tpope/vim-surround</p>
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/09/17/install-gnuplot-from-the-source-code/">Install Gnuplot From the Source Code</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/08/31/cheng-xu-de-shu-ru-shu-chu/">程序的输入输出</a></h1>
     
     
       <p class="meta">
@@ -340,116 +320,94 @@ https://github.com/tpope/vim-surround</p>
   
 
 
-<time datetime="2014-09-17T10:38:15+08:00" pubdate data-updated="true">Sep 17<span>th</span>, 2014</time>
+<time datetime="2014-08-31T10:45:18+08:00" pubdate data-updated="true">Aug 31<span>st</span>, 2014</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>On the centos server, I want to install gnuplot in my local dir, here are the steps:  </p>
+  <div class="entry-content"><p>介绍三种程序的输入输出方法。   </p>
 
-<ol>
-  <li>
-    <p>download the source code and cd into the dir.</p>
-  </li>
-  <li>
-    <p>./configure –prefix=$HOME/local –with-readline=gnu</p>
-  </li>
-  <li>
-    <p>make</p>
-  </li>
-  <li>
-    <p>make install</p>
-  </li>
-</ol>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="cp">#include &lt;stdlib.h&gt;</span>
+</span><span class="line"><span class="cp">#include &lt;stdio.h&gt;</span>
+</span><span class="line"><span class="cp">#define INF 100000</span>
+</span><span class="line">
+</span><span class="line"><span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+</span><span class="line">
+</span><span class="line">  <span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">min</span><span class="o">=</span><span class="n">INF</span><span class="p">,</span> <span class="n">max</span><span class="o">=-</span><span class="n">INF</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+</span><span class="line">  <span class="k">while</span><span class="p">(</span><span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%d&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">x</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">){</span>
+</span><span class="line">    <span class="n">s</span> <span class="o">+=</span> <span class="n">x</span><span class="p">;</span>
+</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">&lt;</span> <span class="n">min</span><span class="p">)</span> <span class="n">min</span><span class="o">=</span><span class="n">x</span><span class="p">;</span>
+</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="n">max</span><span class="p">)</span> <span class="n">max</span><span class="o">=</span><span class="n">x</span><span class="p">;</span>
+</span><span class="line">    <span class="n">n</span><span class="o">++</span><span class="p">;</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line">  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d %d %.3f</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">min</span><span class="p">,</span> <span class="n">max</span><span class="p">,</span> <span class="p">(</span><span class="kt">double</span><span class="p">)</span><span class="n">s</span><span class="o">/</span><span class="n">n</span><span class="p">);</span>
+</span><span class="line">  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>That is all. </p>
-</div>
-  
-  
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="cp">#define LOCAL</span>
+</span><span class="line"><span class="cp">#include &lt;stdlib.h&gt;</span>
+</span><span class="line"><span class="cp">#include &lt;stdio.h&gt;</span>
+</span><span class="line"><span class="cp">#define INF 10000000</span>
+</span><span class="line">
+</span><span class="line"><span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+</span><span class="line">  <span class="err">#</span><span class="n">ifdef</span> <span class="n">LOCAL</span>
+</span><span class="line">    <span class="n">freopen</span><span class="p">(</span><span class="s">&quot;data.in&quot;</span><span class="p">,</span> <span class="s">&quot;r&quot;</span><span class="p">,</span> <span class="n">stdin</span><span class="p">);</span>
+</span><span class="line">    <span class="n">freopen</span><span class="p">(</span><span class="s">&quot;data.out&quot;</span><span class="p">,</span> <span class="s">&quot;w&quot;</span><span class="p">,</span> <span class="n">stdout</span><span class="p">);</span>
+</span><span class="line">  <span class="err">#</span><span class="n">endif</span>
+</span><span class="line">
+</span><span class="line">  <span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">min</span><span class="o">=</span><span class="n">INF</span><span class="p">,</span> <span class="n">max</span><span class="o">=-</span><span class="n">INF</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+</span><span class="line">  <span class="k">while</span><span class="p">(</span><span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%d&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">x</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">){</span>
+</span><span class="line">    <span class="n">s</span> <span class="o">+=</span> <span class="n">x</span><span class="p">;</span>
+</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">&lt;</span> <span class="n">min</span><span class="p">)</span> <span class="n">min</span><span class="o">=</span><span class="n">x</span><span class="p">;</span>
+</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="n">max</span><span class="p">)</span> <span class="n">max</span><span class="o">=</span><span class="n">x</span><span class="p">;</span>
+</span><span class="line">    <span class="n">n</span><span class="o">++</span><span class="p">;</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line">  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d %d %.3f</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">min</span><span class="p">,</span> <span class="n">max</span><span class="p">,</span> <span class="p">(</span><span class="kt">double</span><span class="p">)</span><span class="n">s</span><span class="o">/</span><span class="n">n</span><span class="p">);</span>
+</span><span class="line">  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/17/gnuplot-in-action/">Gnuplot in Action</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-09-17T10:15:15+08:00" pubdate data-updated="true">Sep 17<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I am trying to grasp how to use gnuplot because one of our project used gnuplot, and I am deeply attracted by the power it shows. Although I have taken courses in Matlab SAS, and I know how to use those software to draw all those kinds of beautiful curves, the one using gnuplot still astonished me for it flexibility. That’s how this article comes out.  </p>
-
-<p>1.first let us quote some words,</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">The purpose of computing is insight, not numbers.
-	—R. W. Hamming
-
-The purpose of computing is insight, not pictures.
-	—L. N. Trefethen</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>2.According to research in cognitive science, the things people remember are things they discover during self-motivated exploration. (Personally I think this is true).</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/15/useful-links-for-learning-ml-and-spamassassin/">Useful Links for Learning ML and SpamAssassin</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-09-15T10:32:36+08:00" pubdate data-updated="true">Sep 15<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Below are some links I used while I am learning SpamAssassin and machine learning, of course including Bayes.   </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
 <span class="line-number">3</span>
 <span class="line-number">4</span>
@@ -471,273 +429,29 @@ The purpose of computing is insight, not pictures.
 <span class="line-number">20</span>
 <span class="line-number">21</span>
 <span class="line-number">22</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">http://blog.sina.com.cn/s/blog_77dc7b520100pzwd.html
-</span><span class="line">http://spamassassin.apache.org/full/3.4.x/doc/Mail_SpamAssassin.html
-</span><span class="line">http://www.jb51.net/article/6214.htm
+<span class="line-number">23</span>
+</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="cp">#include &lt;stdlib.h&gt;</span>
+</span><span class="line"><span class="cp">#include &lt;stdio.h&gt;</span>
+</span><span class="line"><span class="cp">#define INF 10000000</span>
 </span><span class="line">
-</span><span class="line">http://www.baidu.com/index.php?wd=%E8%B4%9D%E5%8F%B6%E6%96%AF&amp;rsv_spt=1&amp;issp=1&amp;rsv_bp=0&amp;ie=utf-8&amp;tn=monline_5_dg&amp;rsv_sug3=7&amp;rsv_sug4=171&amp;rsv_sug1=8&amp;oq=beiyes&amp;rsv_sug2=0&amp;f=3&amp;rsp=0&amp;inputT=6003   
+</span><span class="line"><span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+</span><span class="line">  <span class="kt">FILE</span> <span class="o">*</span><span class="n">fin</span><span class="p">,</span> <span class="o">*</span><span class="n">fout</span><span class="p">;</span>
+</span><span class="line">  <span class="n">fin</span> <span class="o">=</span> <span class="n">fopen</span><span class="p">(</span><span class="s">&quot;data.in&quot;</span><span class="p">,</span> <span class="s">&quot;rb&quot;</span><span class="p">);</span>
+</span><span class="line">  <span class="n">fout</span> <span class="o">=</span> <span class="n">fopen</span><span class="p">(</span><span class="s">&quot;data.out&quot;</span><span class="p">,</span> <span class="s">&quot;wb&quot;</span><span class="p">);</span>
 </span><span class="line">
-</span><span class="line">http://www.ruanyifeng.com/blog/2011/08/bayesian_inference_part_one.html
-</span><span class="line">http://mindhacks.cn/2008/09/21/the-magical-bayesian-method/
-</span><span class="line">http://mindhacks.cn/2008/09/11/machine-learning-and-ai-resources/
-</span><span class="line">http://en.wikipedia.org/wiki/Herbert_A._Simon
-</span><span class="line">http://en.wikipedia.org/wiki/Machine_learning
-</span><span class="line">http://en.wikipedia.org/wiki/Artificial_intelligence
-</span><span class="line">http://en.wikipedia.org/wiki/History_of_artificial_intelligence
-</span><span class="line">http://en.wikipedia.org/wiki/Unsupervised_learning
-</span><span class="line">http://www.yeeyan.org/articles/view/sylviaangel/9995
-</span><span class="line">http://blog.youxu.info/spell-correct.html
-</span><span class="line">http://en.wikipedia.org/wiki/Thomas_Bayes
-</span><span class="line">http://mindhacks.cn/2008/07/07/the-importance-of-knowing-why/
-</span><span class="line">http://blog.csdn.net/g9yuayon/article/details/2574781
-</span><span class="line">http://blog.csdn.net/pongba/article/details/2544933
-</span><span class="line">http://www.chinaunix.net/old_jh/14/412857.html
-</span><span class="line">http://blog.chinaunix.net/uid-10182882-id-2969692.html</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/12/static-variable-in-c/">Static Variable in C</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-09-12T18:18:08+08:00" pubdate data-updated="true">Sep 12<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Static variables are the final type of variable available; these variables keep their value between calls to a function. About their effects, we will take a look at them through the following examples.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="cp">#include &lt;stdio.h&gt;</span>
 </span><span class="line">
-</span><span class="line"><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
-</span><span class="line">    <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+</span><span class="line">  <span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">min</span><span class="o">=</span><span class="n">INF</span><span class="p">,</span> <span class="n">max</span><span class="o">=-</span><span class="n">INF</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+</span><span class="line">  <span class="k">while</span><span class="p">(</span><span class="n">fscanf</span><span class="p">(</span><span class="n">fin</span><span class="p">,</span> <span class="s">&quot;%d&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">x</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">){</span>
+</span><span class="line">    <span class="n">s</span> <span class="o">+=</span> <span class="n">x</span><span class="p">;</span>
+</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">&lt;</span> <span class="n">min</span><span class="p">)</span> <span class="n">min</span><span class="o">=</span><span class="n">x</span><span class="p">;</span>
+</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="n">max</span><span class="p">)</span> <span class="n">max</span><span class="o">=</span><span class="n">x</span><span class="p">;</span>
+</span><span class="line">    <span class="n">n</span><span class="o">++</span><span class="p">;</span>
+</span><span class="line">  <span class="p">}</span>
 </span><span class="line">
-</span><span class="line">    <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;=</span><span class="mi">10</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-</span><span class="line">      <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line">    <span class="k">return</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>We all know it will print out 1, 2, till 10.  </p>
-
-<p>If we change it a little bit, like thhis:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="cp">#include &lt;stdio.h&gt;</span>
-</span><span class="line">
-</span><span class="line"><span class="kt">int</span> <span class="nf">foo</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">    <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class="line">    <span class="k">return</span> <span class="o">++</span><span class="n">x</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
-</span><span class="line">    <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line">    <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;=</span><span class="mi">10</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-</span><span class="line">        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">foo</span><span class="p">());</span>
-</span><span class="line">
-</span><span class="line">    <span class="k">return</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>This program will print out 1, all 1.  </p>
-
-<p>What if we want to print out the “i” incrementally, we will use the static keyword.  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="cp">#include &lt;stdio.h&gt;</span>
-</span><span class="line">
-</span><span class="line"><span class="kt">int</span> <span class="nf">foo</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">    <span class="k">static</span> <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class="line">    <span class="k">return</span> <span class="o">++</span><span class="n">x</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
-</span><span class="line">    <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line">    <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;=</span><span class="mi">10</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-</span><span class="line">        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">foo</span><span class="p">());</span>
-</span><span class="line">    <span class="k">return</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>This example is excerpted from the book “extending and embedding perl”.  </p>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/12/about-not-using-mime-lite/">About Not Using MIME::Lite</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-09-12T14:40:15+08:00" pubdate data-updated="true">Sep 12<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>when you use “perldoc MIME::Lite”, you will see the folliwng info:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">MIME::Lite is not recommended by its current maintainer.  There are a number of alternatives, like Email::MIME or MIME::Entity and Email::Sender, which you should probably use instead.  MIME::Lite continues to accrue weird bug reports, and it is not receiving a large amount of refactoring due to the availability of better alternatives. Please consider using something else.</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>Thus I decided not use MIME::Lite any more. </p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/11/constructor-and-destructor-in-perl/">Constructor and Destructor in Perl</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-09-11T13:46:23+08:00" pubdate data-updated="true">Sep 11<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>For Perl constructor, we can seperate the process of object creation from the process of initialization.  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nb">package</span> <span class="nn">CD::</span><span class="n">Music</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="n">strict</span><span class="p">;</span>
-</span><span class="line"><span class="k">sub </span><span class="nf">new</span> <span class="p">{</span>
-</span><span class="line">	<span class="k">my</span> <span class="nv">$self</span> <span class="o">=</span> <span class="p">{};</span>
-</span><span class="line">	<span class="nb">bless</span> <span class="nv">$self</span><span class="p">,</span> <span class="nb">shift</span><span class="p">;</span>
-</span><span class="line">	<span class="nv">$self</span><span class="o">-&gt;</span><span class="n">_incr_count</span><span class="p">();</span>
-</span><span class="line">	<span class="nv">$self</span><span class="o">-&gt;</span><span class="n">_init</span><span class="p">(</span><span class="nv">@_</span><span class="p">);</span>
-</span><span class="line">	<span class="k">return</span> <span class="nv">$self</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line"><span class="p">{</span>
-</span><span class="line">	<span class="k">my</span> <span class="nv">@_init_mems</span> <span class="o">=</span>
-</span><span class="line">	<span class="sx">qw( _name _artist _publisher _ISBN _tracks _room _shelf _rating )</span><span class="p">;</span>
-</span><span class="line">	<span class="k">sub </span><span class="nf">_init</span> <span class="p">{</span>
-</span><span class="line">		<span class="k">my</span> <span class="p">(</span><span class="nv">$self</span><span class="p">,</span><span class="nv">@args</span><span class="p">)</span> <span class="o">=</span> <span class="nv">@_</span><span class="p">;</span>
-</span><span class="line">		<span class="k">my</span> <span class="nv">%inits</span><span class="p">;</span>
-</span><span class="line">		<span class="nv">@inits</span><span class="p">{</span><span class="nv">@_init_mems</span><span class="p">}</span> <span class="o">=</span> <span class="nv">@args</span><span class="p">;</span>
-</span><span class="line">		<span class="nv">%$self</span> <span class="o">=</span> <span class="nv">%inits</span><span class="p">;</span>
-</span><span class="line">	<span class="p">}</span>
+</span><span class="line">  <span class="n">fprintf</span><span class="p">(</span><span class="n">fout</span><span class="p">,</span> <span class="s">&quot;%d %d %.3f</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">min</span><span class="p">,</span> <span class="n">max</span><span class="p">,</span> <span class="p">(</span><span class="kt">double</span><span class="p">)</span><span class="n">s</span><span class="o">/</span><span class="n">n</span><span class="p">);</span>
+</span><span class="line">  <span class="n">fclose</span><span class="p">(</span><span class="n">fin</span><span class="p">);</span>
+</span><span class="line">  <span class="n">fclose</span><span class="p">(</span><span class="n">fout</span><span class="p">);</span>
+</span><span class="line">  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 </span><span class="line"><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
@@ -753,7 +467,7 @@ The purpose of computing is insight, not pictures.
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/09/10/method-calling-in-perl/">Method Calling in Perl</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/08/28/git-set-up/">Git Set Up</a></h1>
     
     
       <p class="meta">
@@ -769,18 +483,395 @@ The purpose of computing is insight, not pictures.
   
 
 
-<time datetime="2014-09-10T22:02:49+08:00" pubdate data-updated="true">Sep 10<span>th</span>, 2014</time>
+<time datetime="2014-08-28T13:46:06+08:00" pubdate data-updated="true">Aug 28<span>th</span>, 2014</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>Please refer to the folliwng to see the detailed info on method calling in perl:  </p>
+  <div class="entry-content"><p>I am writing this tool since I do not want to surf the internet and look for the steps to build git repo.  </p>
+
+<p>This problem I want to solve is: I want to build git repo in one server and clone it if I want to have it on another server.  </p>
+
+<p>On server A:</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line">http://www.cnblogs.com/sun1030/p/3965246.html
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">git</span> <span class="n">config</span> <span class="o">--</span><span class="n">global</span> <span class="n">user</span><span class="o">.</span><span class="n">name</span> <span class="s">&quot;Steven Sun&quot;</span>
+</span><span class="line"><span class="n">git</span> <span class="n">config</span> <span class="o">--</span><span class="n">global</span> <span class="n">user</span><span class="o">.</span><span class="n">email</span> <span class="s">&quot;stsun@gmail.com&quot;</span>
+</span><span class="line"><span class="n">git</span> <span class="n">config</span> <span class="o">--</span><span class="n">global</span> <span class="o">--</span><span class="n">list</span>
+</span><span class="line"><span class="n">git</span> <span class="n">config</span> <span class="o">--</span><span class="n">global</span> <span class="n">color</span><span class="o">.</span><span class="n">ui</span> <span class="s">&quot;auto&quot;</span>
+</span><span class="line">
+</span><span class="line"><span class="nb">mkdir</span> <span class="n">mysite</span>
+</span><span class="line"><span class="n">cd</span> <span class="n">mysite</span>
+</span><span class="line"><span class="n">git</span> <span class="n">init</span>
+</span><span class="line"><span class="n">git</span> <span class="n">add</span> <span class="o">.</span>
+</span><span class="line"><span class="n">git</span> <span class="n">commit</span> <span class="o">-</span><span class="n">am</span> <span class="s">&quot;first comit&quot;</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>For the address of your repo, refer to the following:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">$</span> <span class="nv">git</span> <span class="n">clone</span> <span class="n">http</span><span class="p">[</span><span class="n">s</span><span class="p">]:</span><span class="sr">//</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="sr">/path/</span><span class="n">to</span><span class="sr">/repo.git/</span>
+</span><span class="line"><span class="nv">$</span> <span class="nv">git</span> <span class="n">clone</span> <span class="n">ssh:</span><span class="sr">//</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="sr">/path/</span><span class="n">to</span><span class="sr">/repo.git/</span>
+</span><span class="line"><span class="nv">$</span> <span class="nv">git</span> <span class="n">clone</span> <span class="n">git:</span><span class="sr">//</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="sr">/path/</span><span class="n">to</span><span class="sr">/repo.git/</span>
+</span><span class="line"><span class="nv">$</span> <span class="nv">git</span> <span class="n">clone</span> <span class="sr">/opt/gi</span><span class="n">t</span><span class="o">/</span><span class="n">project</span><span class="o">.</span><span class="n">git</span>
+</span><span class="line"><span class="nv">$</span> <span class="nv">git</span> <span class="n">clone</span> <span class="n">file:</span><span class="sr">///opt/gi</span><span class="n">t</span><span class="o">/</span><span class="n">project</span><span class="o">.</span><span class="n">git</span>
+</span><span class="line"><span class="nv">$</span> <span class="nv">git</span> <span class="n">clone</span> <span class="n">ftp</span><span class="p">[</span><span class="n">s</span><span class="p">]:</span><span class="sr">//</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="sr">/path/</span><span class="n">to</span><span class="sr">/repo.git/</span>
+</span><span class="line"><span class="nv">$</span> <span class="nv">git</span> <span class="n">clone</span> <span class="n">rsync:</span><span class="sr">//</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="sr">/path/</span><span class="n">to</span><span class="sr">/repo.git/</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Thus in my working environment, I can issue the followin command to clone the repo in a server to another:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">git</span> <span class="n">clone</span> <span class="n">ssh:</span><span class="sr">//</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="sr">/path/</span><span class="n">to</span><span class="sr">/repo.git/</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>We can use “git pull” to pull the latest files. </p>
+
+<p>For the .gitignore file, we can create one in the repo dir and add to the .gitignore file something like this:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="o">*.</span><span class="n">jpg</span>
+</span><span class="line"><span class="o">*.</span><span class="n">jpeg</span>
+</span><span class="line"><span class="o">*.</span><span class="n">png</span>
+</span><span class="line"><span class="o">*.</span><span class="n">old</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>For the details, please refer to online resources.  </p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/27/notes-on-flask/">Notes on Flask</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-27T12:10:36+08:00" pubdate data-updated="true">Aug 27<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I have been learning Flask for quite a while. This is a note to keep down of all those snippets and notes I have learnt and hope to keep it as a reminder.  </p>
+
+<p>1.if you want to get the browser info, use the following code:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">request</span>
+</span><span class="line"><span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span>
+</span><span class="line"><span class="k">def</span> <span class="nf">index</span><span class="p">():</span>
+</span><span class="line">	<span class="n">user_agent</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;User-Agent&#39;</span><span class="p">)</span>
+</span><span class="line">	<span class="k">return</span> <span class="s">&#39;&lt;p&gt;Your browser is </span><span class="si">%s</span><span class="s">&lt;/p&gt;&#39;</span> <span class="o">%</span> <span class="n">user_agent</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>2.There are two contexts in Flask: the application context and the request context.  </p>
+
+<p>3.before_first_request: Register a function to run before the first request is
+handled.  </p>
+
+<p>4.before_request: Register a function to run before each request.  </p>
+
+<p>5.after_request: Register a function to run after each request, if no unhandled exceptions occurred.  </p>
+
+<p>6.teardown_request: Register a function to run after each request, even if unhandled
+exceptions occurred.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/26/boyer-moore-suan-fa-shi-xian/">Boyer-Moore 算法实现</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-26T11:52:34+08:00" pubdate data-updated="true">Aug 26<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/25/shi-shi-wu-chang/">世事无常</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-25T23:49:06+08:00" pubdate data-updated="true">Aug 25<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>昨天(2014/08/24, 周日)从芝姐哪里得知四姑那边出事了， 于是立马打电话回家给爸，爸说确实是的。本来他是想等事情快有个结果的时候再跟我说的。    </p>
+
+<p>发生这样的事情，我除了痛心就是为命运的残忍感到无奈了。  </p>
+
+<p>想起四姑的命运，想起四姑父的不幸，想起杰弟因为这个事情所可能受到的影响，我不禁内心感到万分的悲凉。</p>
+
+<p>杰弟刚出生没多久的时候，我暑假放假的时候是常去四姑家待着的。杰弟小的时候非常非常的可爱，也很乖。几个表兄弟我是对他有着不一样的感情的， 源于小的时候带过她。  </p>
+
+<p>那个时候四姑也是很活泼的人，自己小的时候不怎么愿意到亲戚家走动的，但是记得有次在四姑家待到了很长的时间。记得小的时候自己挺喜欢四姑的，事实上家里的几个姑姑我都挺喜欢的，自小的感觉就是她们都很和蔼，对我还有几个姊妹都是很关怀的。  </p>
+
+<p>没记错的话，四姑是在我初三升高中那年的时候出事的，也就是说到现在已经有十年了，这十年我都不记得见过几次面了。时间过得实在是太快了。还记得上次见面的时候应该快是3年前了， 那次四姑给我的感觉是挺正常的了，我一直以为或许她已经快恢复了，至少没有太大的问题的。以至于去年回家春节的时候都没有去四姑家了。只因为当时觉得时间短促，再加上没必要刻意去了。一想到这里，内心就会及其的自责。  </p>
+
+<p>老天为什么会这么的不公平啊。一个好好的人，为什么要让她遭受那样的折磨啊。    </p>
+
+<p>四姑本无心，却伤害了别人。也伤害了自己，老天是有多么的残忍才允许发生这样的事情啊！</p>
+
+<p>Could god bless us? Could god bless my aunt?</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/22/jin-qi-ji-wei-lai-%5B%3F%5D-duan-shi-jian-xue-xi-zong-jie-he-gui-hua/">近期及未来一段时间学习总结和规划</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-22T13:54:42+08:00" pubdate data-updated="true">Aug 22<span>nd</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>前段时间看到有个人的文章说，他即使是在旅途中也会去跟MOOC的网上课程。而且都是花费很大精力认真去完成的那种。这实在是很让自己感到汗颜的。因为我自己也在coursera还有Udacity上面follow了好几门的课程，但是到目前为止，竟然没有一门课是认认真真学习完了的。虽然这些日子自己也没有哪怕是一天停止过学习，但是从过去这几个月的情况来看，自己实在是太没有恒心还有毅力了。</p>
+
+<p>自从2011年毕业到现在已经有3年了，3年的时间对于一个有志于某一方面的知识的人来说，应该可以达到一个熟手或者高手的程度了。可是自己到现在都处于半吊子的水平。技术方面从一开始的SQL， shell script， 到现在的Perl，Python， PHP， java， c， c++，jQuery， javascript， html， css没有一个精通的。甚至都算不上特别的熟悉。</p>
+
+<p>下面就把最近自己在看的书，跟的课程以及未来一段时间准备看的书还有跟的课程列出来。</p>
+
+<h1 id="books">Books:</h1>
+<p>1.Intermediate Perl
+2.Data structures and algorithms using Python, in Python(2 books)
+3.Algorithms design manual.
+4.Pointers on C
+5.DS related books.</p>
+
+<h1 id="coureses">Coureses:</h1>
+<p>1.Scala函数式编程原理
+2.普林斯顿大学算法（一，二）
+3.斯坦福大学算法课
+4.软硬件接口
+5.普林斯顿大学算法分析
+6.清华大学数据结构与算法</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/21/nohupjian-jie/">Nohup简介</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-21T15:45:34+08:00" pubdate data-updated="true">Aug 21<span>st</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>我把这个东西放到Python的category里来，是因为我在写Flask的web应用的时候，遇到部署的问题，需要用到一个工具， 可以一直让这个web进程去运行。土鳖的我还以为这得用到cronjob， 其实用个工具可以帮我们完成这样的一个任务的， 这就是这篇post所要介绍的”nohup”</p>
+
+<p>比如说我现在在一个叫server.sh的文件中写入了如下的内容来run一个web server:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">gunicorn -w 4 -b 0.0.0.0:1234 myapp:app
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>首先这个Flask web apppication, 不同的框架使用gunicorn大同小异。然后使用的是gunicorn这个http server. 具体的关于gunicorn的知识可以自己去查下。只是有点是：你得先安装下的:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">pip</span> <span class="n">install</span> <span class="n">gunicorn</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Here the “-w” args means worker, namely 4 processes here.   </p>
+
+<p>For my application, if I want to use nohup, I will have to issue the following command. </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">nohup ./server.sh &amp;
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Nohuo will create a nohup.out file in the directory where you run the command. </p>
+
+<p>nohup 只不过是让进程脱离父进程, 这样即使父进程死掉，它也还在运行。</p>
+
+<p>Thus if we want to use “jobs” to see process, we will not be able to see it. we can use the “ps a” command line to see the the process.  </p>
+
+<p>使用 fg %jobnumber　会将任务拿到前台执行，拿到前台后如果要关闭这个任务按Ctrl+c组合键即可，但如果要暂停这个任务可以按Ctrl+z组合键这时就会将任务置于暂停状态。</p>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/20/zai-du-chuan-xi-lu-zhu-shu/">在读传习录注疏</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-20T17:40:20+08:00" pubdate data-updated="true">Aug 20<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I am reading the book “传习录注疏”， I learnt that it is a very good book. </p>
+
+<p>很想知道给那么多人成为圣人的大家的思想言行是什么个样子。 </p>
+
+<p>Here below is the book I am reading now. </p>
+
+<p><img src="/images/sun/chuanxi.jpg" />  </p>
+
+<p>It is a little difficult. But I am delving into it now.</p>
+
 </div>
   
   

@@ -9,7 +9,8 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="This post shows how to use the perl module, Regexp::Debugger. Used skillfully, this module can do us a lot of favor. 1.”rxrx prog.pl” is a shorthand &hellip;">
+  <meta name="description" content="First we will keep notes of perlxstut. The reader is assumed to have access to perlguts, perlapi and perlxs. &#8220;`pl &#8220;`
+">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -68,7 +69,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/10/09/regexp-debuggershi-yong-shi-li/">Regexp::Debugger使用示例</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/09/08/xs-notes/">XS Notes</a></h1>
     
     
       <p class="meta">
@@ -84,57 +85,18 @@
   
 
 
-<time datetime="2014-10-09T14:09:52+08:00" pubdate data-updated="true">Oct 9<span>th</span>, 2014</time>
+<time datetime="2014-09-08T22:07:02+08:00" pubdate data-updated="true">Sep 8<span>th</span>, 2014</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>This post shows how to use the perl module, Regexp::Debugger. Used skillfully, this module can do us a lot of favor.  </p>
+  <div class="entry-content"><p>First we will keep notes of perlxstut. The reader is assumed to have access to perlguts, perlapi and perlxs.    </p>
 
-<p>1.”rxrx prog.pl” is a shorthand for “perl -MRegexp::Debugger prog.pl”.  </p>
+<p>&#8220;`pl</p>
 
-<p>2.print out if matched</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">perl</span> <span class="o">-</span><span class="n">E</span> <span class="s">&quot;say &#39;matched&#39; if &#39;ababc&#39; =~ /(a|b)b+c/x&quot;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>3.print out if matched and which part matched</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">perl</span> <span class="o">-</span><span class="n">E</span> <span class="s">&quot;say &#39;matched: &#39;, $&amp; if &#39;ababc&#39; =~ /(a|b)b+c/x&quot;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>4.use “re” module</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">perl</span> <span class="o">-</span><span class="n">E</span> <span class="s">&quot;use re &#39;debug&#39;; &#39;ababc&#39; =~ /(a|b)b+c/x&quot;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>5.use Regexp::Debugger module</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">perl</span> <span class="o">-</span><span class="n">E</span> <span class="s">&quot;use Regexp::Debugger; &#39;ababc&#39; =~ /(a|b)b+c/x&quot;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>6.any regex</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="p">(?</span><span class="n">i</span><span class="p">)</span> <span class="p">(?</span><span class="sr">&lt;AB&gt;</span> <span class="p">(?</span><span class="o">&amp;</span><span class="n">ABs</span><span class="p">))</span> <span class="p">(?</span><span class="sr">&lt;AA&gt;</span><span class="p">(??{</span><span class="s">&#39;aa&#39;</span><span class="p">}))</span> <span class="p">(?(</span><span class="n">DEFINE</span><span class="p">)(?</span><span class="sr">&lt;ABs&gt;</span><span class="p">[</span><span class="n">ab</span><span class="p">]{</span><span class="mi">2</span><span class="p">,</span><span class="mi">7</span><span class="p">}</span><span class="o">+</span><span class="p">))</span><span class="o">/</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>7.for the Regexp::Debugger, we have a cmd-line tool named “rxrx”, we typr “rxrx”, then</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="sr">/(a|b)b+c/</span>
-</span><span class="line"><span class="s">&quot;ababc&quot;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>Then hit “enter” key or “tab” key to see how and if the string matches the regex.</p>
-
+<p>&#8220;`</p>
 </div>
   
   
@@ -147,7 +109,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/10/03/ge-de-er-%2C-ai-she-er-%2C-ba-he-ji-yi-bi-zhi-da-cheng/">哥德尔、艾舍尔、 巴赫:集异璧之大成</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/09/08/xs-and-perl/">XS and Perl</a></h1>
     
     
       <p class="meta">
@@ -163,254 +125,60 @@
   
 
 
-<time datetime="2014-10-03T10:26:03+08:00" pubdate data-updated="true">Oct 3<span>rd</span>, 2014</time>
+<time datetime="2014-09-08T10:55:29+08:00" pubdate data-updated="true">Sep 8<span>th</span>, 2014</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>其实老早就知道这本书了。但是之前甚至连找个电子版的书看完前言的努力都没有的。</p>
-
-<p>这个国庆是在加班中度过的。在网上看到有人解释函数式编程中的Y Combinator，然后用到了递归的知识，并且提到了图灵机，丘奇以及本文title中的这本《哥德尔、艾舍尔、 巴赫:集异璧之大成》。这里面提到的这几个知识点几乎都是自己比较感兴趣的，只可惜之前一直都没有努力去弄明白。现在对于有这样的一本书可以同时提供这几个方面的知识，那自然是极好的事情了。</p>
-
-<p>在购买了《哥德尔、艾舍尔、 巴赫:集异璧之大成》这本书的同时，自己也有在看以下的视频:</p>
-
-<p>1.MIT courseware, 哥德尔、艾舍尔、 巴赫, 一次心灵太空漫游 ,</p>
-
-<p>在这个系列的视频中，我们会看到有用到以下的知识点的, 本人是数学系的学生，有的概念尚且很模糊，非数学或者计算机专业的学生想要搞明白里面的一些内容恐怕是难上加难了。不过有不知道的东西或者能认识到自己有哪些的不足其实是很好的事情的。 先列出prerequisites吧：</p>
+  <div class="entry-content"><p>For more on extending Perl with C, refer to the following tutorial. </p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
 <span class="line-number">3</span>
 <span class="line-number">4</span>
 <span class="line-number">5</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">Isomorphisms
-</span><span class="line">Recursion
-</span><span class="line">Paradox
-</span><span class="line">Infinity
-</span><span class="line">Formal System</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>这些都是”道”方面的内容的。 我看过不少的人，他们没有把时间和精力花在研究道上面，而是热衷于玩弄所谓的新技术，新名词。满足于能够使用的基础上，却很少去问几个why. 其实他们可以想想：同样的知识自己如果可以掌握的话，别人难道就不可以很快的掌握了吗？若是有哪怕丝毫的谦虚自省的精神，也不至于狂悖傲慢了。</p>
-
-<p>这些话既是对自己看到的现象的反省，也是对自己的鞭策吧！</p>
-
-<p>2.BBC, Dangerous Knowledge</p>
-
-<p>后续的话会有关于这方面的学习笔记的。</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/10/02/perl-testingcheng-xu-gao-shou-mi-ji/">Perl Testing程序高手秘笈</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-10-02T14:16:01+08:00" pubdate data-updated="true">Oct 2<span>nd</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>This post is for the book “perl testing: 程序高手秘笈”.  </p>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/30/cgi-set-up-on-macos/">Cgi Set Up on Macos</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-09-30T16:57:08+08:00" pubdate data-updated="true">Sep 30<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>There are multiple guidelines as to how to set up cgi for perl on macos or linux. </p>
-
-<p>This post keeps notes of how to set up cgi on MACOS.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="sr">/Library/</span><span class="n">WebServer</span><span class="sr">/CGI-Executables ~/</span><span class="n">www</span><span class="o">/</span><span class="n">cgi</span><span class="o">-</span><span class="n">bin</span>
-</span><span class="line"><span class="n">cd</span> <span class="o">~</span><span class="sr">/www/cgi</span><span class="o">-</span><span class="n">bin</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>put scripts in this dir and access it using the link “localhost/cgi-bin/filename” </p>
-
-<p>you may need to change the permission of the script to “755” if needed.</p>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/29/xue-xi-ren-wu-gui-hua/">学习任务规划</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-09-29T21:44:40+08:00" pubdate data-updated="true">Sep 29<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>自己无论是在知识的广度还是深度上都还是有着很大的不足的。   </p>
-
-<p>所以为了能够更好地督促自己的学习，现在规定自己在一下这些方面要做到要求:  </p>
-
-<ol>
-  <li>写10篇关于正则表达式的博客。涵盖从最基础的用法到高级的用法。  </li>
-  <li>每天一篇关于perl的文章。如果遇到节假日或者特殊情况，归来的时候也得补上。  </li>
-  <li>关于php，python， ruby至少保证每周都有一个脚本产生，不至于生疏。</li>
-  <li>关于算法，不管有没有兴趣，至少保证初级水准，别连一个快速排序都记不得。</li>
-</ol>
-
-<p>如果还有其他的，以后想到了再补上吧！</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/26/notes-on-using-curl/">Notes on Using Curl</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-09-26T18:03:17+08:00" pubdate data-updated="true">Sep 26<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>This post gives a little detailed info on how to use curl. Of course we can use “man curl” to get the listed info, what makes this post different is, we will give more examples as to how to use curl.   </p>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/25/bash-script-to-list-all-methods-in-a-perl-module/">Bash Script to List All Methods in a Perl Module</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-09-25T16:21:52+08:00" pubdate data-updated="true">Sep 25<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>In the post “Dynamicly Adding a Method to a Module”, I showed how to use a perl one-liner to list all the methods in a module.  </p>
-
-<p>I will show how to do it in a shell script thus we can accept the module on the command line, </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="c">#!/bin/bash</span>
-</span><span class="line">perl -e <span class="s2">&quot;use Data::Dumper; use $1; print Dumper \%$1::&quot;</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">perlxs  
+</span><span class="line">ExtUtils::ParseXS     
+</span><span class="line">perlembed
+</span><span class="line">h2xs   
+</span><span class="line">perlxstut    
+</span><span class="line">perlcall   
+</span><span class="line">perlguts   
+</span><span class="line">perlapi   
+</span><span class="line">perlintern    
+</span><span class="line">perlreguts  
+</span><span class="line">perlreapi     
+</span><span class="line">illguts : http://search.cpan.org/dist/illguts/   
+</span><span class="line">http://search.cpan.org/dist/perl/ext/XS/Typemap/Typemap.xs  
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
+<p>We can also refer to these books, </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">extending and embedding perl    
+</span><span class="line">Programming the Perl DBI   
+</span><span class="line">Data Munging with Perl  
+</span><span class="line">Vincent Pit's "XS Recipes"</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>I like Perl and I also hope to use C to make somethings.   </p>
+
+<p>Combining C and Perl together is a wonderful thing for me to try.  </p>
+
+<p>Working on it.  </p>
+
 </div>
   
   
@@ -423,7 +191,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/09/24/how-to-install-ruby-on-centos/">How to Install Ruby on Centos</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/09/07/getter-setter-methods-in-perl/">Getter-setter Methods in Perl</a></h1>
     
     
       <p class="meta">
@@ -439,27 +207,61 @@
   
 
 
-<time datetime="2014-09-24T16:19:16+08:00" pubdate data-updated="true">Sep 24<span>th</span>, 2014</time>
+<time datetime="2014-09-07T12:49:26+08:00" pubdate data-updated="true">Sep 7<span>th</span>, 2014</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>This post keeps notes of how to install ruby on centos server: </p>
-
-<p>1.use rvm
-2.use rbenv</p>
-
-<p>3.use src, the </p>
+  <div class="entry-content"><p>As well as getting the value of an attribute, you may well want to set or change it. The syntax you’ll use is as follows:   </p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
 <span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="rb"><span class="line"><span class="o">.</span><span class="n">/configure</span> <span class="o">--</span><span class="n">prefix</span><span class="o">=</span><span class="sr">/home/s</span><span class="n">tsun</span><span class="o">/</span><span class="n">local</span>
-</span><span class="line"><span class="n">make</span>
-</span><span class="line"><span class="n">make</span> <span class="n">install</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">print</span> <span class="s">&quot;Old address: &quot;</span><span class="p">,</span> <span class="nv">$object</span><span class="o">-&gt;</span><span class="n">address</span><span class="p">(),</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="nv">$object</span><span class="o">-&gt;</span><span class="n">address</span><span class="p">(</span><span class="s">&quot;Campus Mirabilis, Pisa, Italy&quot;</span><span class="p">);</span>
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;New address: &quot;</span><span class="p">,</span> <span class="nv">$object</span><span class="o">-&gt;</span><span class="n">address</span><span class="p">(),</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>This kind of accessor is called a get-set method because you can use it to both get and set the attribute. Turning your current read–only accessors into accessors that can also set the value is simple. Let’s create a get–set method for address():   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">sub </span><span class="nf">address</span> <span class="p">{</span>
+</span><span class="line">	<span class="k">my</span> <span class="nv">$self</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
+</span><span class="line">	<span class="c1"># Receive more data</span>
+</span><span class="line">	<span class="k">my</span> <span class="nv">$data</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">	<span class="c1"># Set the address if there&#39;s any data there.</span>
+</span><span class="line">	<span class="nv">$self</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">address</span><span class="p">}</span> <span class="o">=</span> <span class="nv">$data</span> <span class="k">if</span> <span class="nb">defined</span> <span class="nv">$data</span><span class="p">;</span>
+</span><span class="line">	<span class="k">return</span> <span class="nv">$self</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">address</span><span class="p">};</span>
+</span><span class="line">
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>If you don’t particularly want to trap calling the method as a class method (since it’ll generate an error when we try to access the hash entry anyway), you can write really miniature get–set methods like the following:   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">sub </span><span class="nf">address</span> <span class="p">{</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">address</span> <span class="p">}</span> <span class="o">=</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="nb">defined</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">address</span> <span class="p">}</span> <span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="k">sub </span><span class="nf">lastname</span> <span class="p">{</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">lastname</span> <span class="p">}</span> <span class="o">=</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="nb">defined</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">lastname</span> <span class="p">}</span> <span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="k">sub </span><span class="nf">firstname</span> <span class="p">{</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">firstname</span><span class="p">}</span> <span class="o">=</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="nb">defined</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">firstname</span><span class="p">}</span> <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
 </div>
   
   
@@ -472,7 +274,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/09/24/dynamicly-adding-a-method-to-a-module/">Dynamicly Adding a Method to a Module</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/09/07/some-perl-standard-modules/">Some Perl Standard Modules</a></h1>
     
     
       <p class="meta">
@@ -488,14 +290,14 @@
   
 
 
-<time datetime="2014-09-24T12:57:20+08:00" pubdate data-updated="true">Sep 24<span>th</span>, 2014</time>
+<time datetime="2014-09-07T01:10:52+08:00" pubdate data-updated="true">Sep 7<span>th</span>, 2014</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>We can follow the following steps to add/change a method in a module dynamicly.  </p>
+  <div class="entry-content"><p>Below are some pelr standard perl modules which deserves deep learning, using “perldoc perlmodlib” to see a complete list of all the modules in the Perl distribution.    </p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
@@ -512,34 +314,26 @@
 <span class="line-number">13</span>
 <span class="line-number">14</span>
 <span class="line-number">15</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="n">strict</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="n">warnings</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="n">utf8</span><span class="p">;</span>
-</span><span class="line"><span class="p">{</span>
-</span><span class="line">
-</span><span class="line">    <span class="nb">package</span> <span class="nn">Data::</span><span class="n">Dumper</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line">    <span class="k">sub </span><span class="nf">test</span> <span class="p">{</span>
-</span><span class="line">        <span class="k">print</span> <span class="s">&quot;test to add a new method to Data::Dumper\n&quot;</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="k">use</span> <span class="nn">Data::</span><span class="n">Dumper</span><span class="p">;</span>
-</span><span class="line"><span class="nn">Data::Dumper::</span><span class="n">test</span><span class="p">;</span>
-</span><span class="line"><span class="k">print</span> <span class="n">Dumper</span> <span class="o">\</span><span class="nv">%</span><span class="nn">Data::Dumper::</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nn">Data::</span><span class="n">Dumper</span>
+</span><span class="line"><span class="n">perldoc</span> <span class="o">-</span><span class="n">f</span> <span class="nb">eval</span>
+</span><span class="line"><span class="nn">File::</span><span class="n">Find</span>
+</span><span class="line"><span class="nn">Getopt::</span><span class="n">Std</span>
+</span><span class="line"><span class="nn">Getopt::</span><span class="n">Long</span>
+</span><span class="line"><span class="nn">File::</span><span class="n">Spec</span>
+</span><span class="line"><span class="n">Benchmark</span>
+</span><span class="line"><span class="nn">File::</span><span class="n">Slurp</span>
+</span><span class="line"><span class="nn">Bundle::</span><span class="n">LWP</span>
+</span><span class="line"><span class="nn">Bundle::</span><span class="n">libnet</span>
+</span><span class="line"><span class="nn">Text::</span><span class="n">Wrap</span>
+</span><span class="line"><span class="nn">Text::</span><span class="n">Tabs</span>
+</span><span class="line"><span class="nn">Pod::</span><span class="n">Autopod</span>
+</span><span class="line"><span class="nn">HTML::</span><span class="n">Parser</span>
+</span><span class="line"><span class="n">Storable</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>we can also use the following one liner to check the methods defined in a module:  </p>
+<p>If you want to install a module in a certian path, use “perl Makefile.PL –PREFIX=/my/module/path”.   </p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">perl</span> <span class="o">-</span><span class="n">e</span> <span class="s">&quot;use File::Find; use Data::Dumper; print Dumper \%File::Find::&quot;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>or we can use JSON to print out its format:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">perl</span> <span class="o">-</span><span class="n">e</span> <span class="s">&quot;use File::Find; use JSON; print to_json(\%File::Find::)&quot;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>Also read “perldoc perlnewmod”.</p>
 </div>
   
   
@@ -552,7 +346,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/09/19/map-and-grep-in-perl/">Map and Grep in Perl</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/09/06/perl-debug-tut/">Perl Debug Tut</a></h1>
     
     
       <p class="meta">
@@ -568,84 +362,204 @@
   
 
 
-<time datetime="2014-09-19T12:27:58+08:00" pubdate data-updated="true">Sep 19<span>th</span>, 2014</time>
+<time datetime="2014-09-06T21:48:04+08:00" pubdate data-updated="true">Sep 6<span>th</span>, 2014</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>I ran across some usage of grep and map in perl in some of the scripts I am reading. just to keep a note here. </p>
+  <div class="entry-content"><p>Use the following way to see the detailed info of perl debugger info.  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">perldoc</span> <span class="n">perldebguts</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/06/mastering-perl-learning-notes/">Mastering Perl Learning Notes</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-06T18:03:53+08:00" pubdate data-updated="true">Sep 6<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>This is for the book “mastering perl”. There are some code snippets in this book which I think is quite useful, thus I keep a note of them below.  </p>
+
+<p>1.global matching:  </p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
 <span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">@line</span> <span class="o">=</span> <span class="nb">grep</span> <span class="p">{</span><span class="ow">not</span> <span class="sr">/^\s*$/</span><span class="p">}</span> <span class="nb">map</span> <span class="p">{</span><span class="nb">chomp</span><span class="p">;</span><span class="nv">$_</span><span class="p">}</span> <span class="sr">&lt;FILEIN&gt;</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="nv">@keyorder</span> <span class="o">=</span> <span class="nb">grep</span> <span class="p">{</span><span class="ow">not</span> <span class="sr">/^\s*$/</span><span class="p">}</span> <span class="nv">@column</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="nv">$rh_meta</span><span class="o">-&gt;</span><span class="p">{</span><span class="nv">$meta_name</span><span class="p">}</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class="line">	<span class="nb">map</span> <span class="p">{</span>
-</span><span class="line">		<span class="p">(</span><span class="nv">$_</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-</span><span class="line">	<span class="p">}</span> <span class="nb">grep</span> <span class="p">{</span>
-</span><span class="line">		<span class="ow">not</span> <span class="sr">/^\d+$/</span><span class="p">;</span>
-</span><span class="line">	<span class="p">}</span> <span class="p">(</span><span class="nv">$meta_body</span> <span class="o">=~</span><span class="sr"> /(\w+)/g</span><span class="p">)</span>
-</span><span class="line">	
-</span><span class="line"><span class="nv">$str</span> <span class="o">=~</span> <span class="nb">tr</span><span class="sr">/a-z/</span><span class="n">A</span><span class="o">-</span><span class="n">Z</span><span class="o">/</span><span class="p">;</span>
-</span><span class="line"><span class="c1">##how to use tr</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">$_</span> <span class="o">=</span> <span class="s">&quot;Just another Perl hacker,&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">@words</span> <span class="o">=</span> <span class="sr">/(\S+)/g</span><span class="p">;</span> <span class="c1"># &quot;Just&quot; &quot;another&quot; &quot;Perl&quot; &quot;hacker,&quot;</span>
+</span><span class="line"><span class="k">print</span> <span class="nb">join</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="nb">split</span><span class="p">(</span><span class="nv">@words</span><span class="p">));</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>I also come across some usage of redo and labeled loop, please see the following examples.</p>
+<p>2.my $word_count = () = /(\S+)/g; <br />
+It will give out the number of matched items.</p>
+
+<p>3.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/06/fun-perl-code-snippets/">Fun Perl Code Snippets</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-06T10:02:29+08:00" pubdate data-updated="true">Sep 6<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I collect some useful code snippets here for later usage or just keep a note of what I have read.  </p>
+
+<p>1.find files larger than a specifed size(in byte):   </p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="c1">#!/usr/bin/perl</span>
-</span><span class="line"><span class="k">for</span> <span class="nv">$i</span> <span class="p">(</span><span class="mi">0</span><span class="o">..</span><span class="mi">9</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">    <span class="k">for</span> <span class="nv">$j</span> <span class="p">(</span><span class="mi">0</span><span class="o">..</span><span class="mi">9</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">        <span class="k">print</span> <span class="s">&quot;$i x $j\n&quot;</span><span class="p">;</span>
-</span><span class="line">        <span class="k">last</span> <span class="k">if</span> <span class="nv">$i</span> <span class="o">==</span><span class="mi">3</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line"><span class="c1">#the one without labeled loop, the &quot;last&quot; will only act on the inner loop.</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="nn">File::</span><span class="n">Find</span><span class="p">;</span>
+</span><span class="line"><span class="n">find</span><span class="p">(</span><span class="k">sub </span><span class="p">{</span> <span class="k">print</span> <span class="s">&quot;$_\n&quot;</span> <span class="k">if</span> <span class="o">-</span><span class="n">s</span> <span class="nv">$_</span> <span class="o">&gt;</span> <span class="nv">$ARGV</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span> <span class="p">},</span> <span class="s">&quot;.&quot;</span><span class="p">);</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>2.we can use “man module::name” or “perldoc module::name” to check the detailed info of a module.   </p>
 
-<p>if we want the “last” to act on the “outer” loop, we can do the following:  </p>
+<p>3.For the first example, if using require, we can write it as the following:  </p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="c1">#!/usr/bin/perl</span>
-</span><span class="line"><span class="n">LO:</span> <span class="k">for</span> <span class="nv">$i</span> <span class="p">(</span><span class="mi">0</span><span class="o">..</span><span class="mi">9</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">        <span class="k">for</span> <span class="nv">$j</span> <span class="p">(</span><span class="mi">0</span><span class="o">..</span><span class="mi">9</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">            <span class="k">print</span> <span class="s">&quot;$i x $j\n&quot;</span><span class="p">;</span>
-</span><span class="line">            <span class="k">last</span> <span class="n">LO</span> <span class="k">if</span> <span class="nv">$i</span> <span class="o">==</span><span class="mi">3</span><span class="p">;</span>
-</span><span class="line">        <span class="p">}</span>
-</span><span class="line">    <span class="p">}</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nb">require</span> <span class="nn">File::</span><span class="n">Find</span><span class="p">;</span>
+</span><span class="line"><span class="nn">File::Find::</span><span class="n">find</span><span class="p">(</span><span class="k">sub </span><span class="p">{</span> <span class="k">print</span> <span class="s">&quot;$File::Find::name\n&quot;</span> <span class="k">if</span> <span class="o">-</span><span class="n">s</span> <span class="o">&gt;</span> <span class="mi">1_024_000</span><span class="p">;</span> <span class="p">},</span> <span class="s">&#39;.&#39;</span><span class="p">);</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>namely we can use “labeled loop” to control the outer loop from the inner loop.</p>
+<p>4.”use” happens during compile time, whereas “require” happens at runtime.    </p>
 
-<p>for the redo function, the difference it has to “next” is “next” will go to the next loop, while “redo” will just “redo” the current loop, this is partilarly useful if we want to ask the user to re-enter the password if they get the password wrong:  </p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/05/notes-on-perlrun/">Notes on Perlrun</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-05T19:24:02+08:00" pubdate data-updated="true">Sep 5<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>We keep notes on some of the useful notes on perl command line knowledge here.  </p>
+
+<p>1.-i[extension]:  </p>
+
+<p>specifies that files processed by the “&lt;&gt;” construct are to be edited in-place.  It does this by renaming the input file, opening the output file by the original name, and selecting that output file as the default for print() statements.   </p>
+
+<p>2.-p:
+causes Perl to assume the following loop around your program, which makes it iterate over filename arguments somewhat like sed.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/05/useful-perl-man-page/">Useful Perl Man Page</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-05T18:14:03+08:00" pubdate data-updated="true">Sep 5<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>We can check them like “perl perlre”. These useful perl manuals are:</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
@@ -662,22 +576,323 @@
 <span class="line-number">13</span>
 <span class="line-number">14</span>
 <span class="line-number">15</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="n">utf8</span><span class="p">;</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+<span class="line-number">35</span>
+<span class="line-number">36</span>
+<span class="line-number">37</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">perlre</span>
 </span><span class="line">
-</span><span class="line"><span class="k">my</span> <span class="nv">@words</span> <span class="o">=</span> <span class="sx">qw{ fred barney pebbles dino }</span><span class="p">;</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">$errors</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line"><span class="n">perlobj</span>
 </span><span class="line">
-</span><span class="line"><span class="k">foreach</span> <span class="p">(</span><span class="nv">@words</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">    <span class="k">print</span> <span class="s">&quot;type the word &#39;$_&#39;: &quot;</span><span class="p">;</span>
-</span><span class="line">    <span class="nb">chomp</span><span class="p">(</span><span class="k">my</span> <span class="nv">$try</span> <span class="o">=</span> <span class="sr">&lt;STDIN&gt;</span><span class="p">);</span>
-</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="nv">$try</span> <span class="ow">ne</span> <span class="nv">$_</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">      <span class="k">print</span> <span class="s">&quot;sorry, it is not right\n&quot;</span><span class="p">;</span>
-</span><span class="line">      <span class="nv">$errors</span><span class="o">++</span><span class="p">;</span>
-</span><span class="line">      <span class="k">redo</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line"><span class="c1">##if you did not enter the right item, you will be asked and again!</span>
+</span><span class="line"><span class="n">perlootut</span>
+</span><span class="line">
+</span><span class="line"><span class="n">perlmodlib</span>
+</span><span class="line">
+</span><span class="line"><span class="n">perlintro</span>
+</span><span class="line">
+</span><span class="line"><span class="n">perlsyn</span>
+</span><span class="line">
+</span><span class="line"><span class="n">perlop</span>
+</span><span class="line">
+</span><span class="line"><span class="n">perlsub</span>
+</span><span class="line">
+</span><span class="line"><span class="n">perlrequick</span>
+</span><span class="line">
+</span><span class="line"><span class="n">perlretut</span>
+</span><span class="line">
+</span><span class="line"><span class="n">perlfunc</span>
+</span><span class="line">
+</span><span class="line"><span class="n">perlref</span>
+</span><span class="line">
+</span><span class="line"><span class="n">perlreftut</span>
+</span><span class="line">
+</span><span class="line"><span class="n">perldsc</span>
+</span><span class="line">
+</span><span class="line"><span class="n">perllol</span>
+</span><span class="line">
+</span><span class="line"><span class="n">perlrun</span>
+</span><span class="line">
+</span><span class="line"><span class="n">perldebug</span>
+</span><span class="line">
+</span><span class="line"><span class="n">perlnewmod</span>
+</span><span class="line">
+</span><span class="line"><span class="n">perlfaq3</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>And below are some modules we may find useful:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nn">Moose::</span><span class="n">Manual</span>
+</span><span class="line">
+</span><span class="line"><span class="n">Mouse</span>
+</span><span class="line">
+</span><span class="line"><span class="nn">Mouse::</span><span class="n">Tiny</span>
+</span><span class="line">
+</span><span class="line"><span class="nn">Class::</span><span class="n">Accessor</span>
+</span><span class="line">
+</span><span class="line"><span class="nn">Role::</span><span class="n">Tiny</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/05/object-oriented-perl/">Object Oriented Perl</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-05T15:46:51+08:00" pubdate data-updated="true">Sep 5<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>We can find details about the info list below by issuing “perldoc perlobj”, or “perldoc perlootut”</p>
+
+<p>1.When we bless something, we are not blessing the variable which contains a reference to that thing, nor are we blessing the reference that the variable stores; we are blessing the thing that the variable refers to (sometimes known as the referent).  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="nn">Scalar::</span><span class="n">Util</span> <span class="s">&#39;blessed&#39;</span><span class="p">;</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">$foo</span> <span class="o">=</span> <span class="p">{};</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">$bar</span> <span class="o">=</span> <span class="nv">$foo</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="nb">bless</span> <span class="nv">$foo</span><span class="p">,</span> <span class="s">&#39;Class&#39;</span><span class="p">;</span>
+</span><span class="line"><span class="k">print</span> <span class="n">blessed</span><span class="p">(</span> <span class="nv">$bar</span> <span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="nv">$bar</span> <span class="o">=</span> <span class="s">&quot;some other value&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="k">print</span> <span class="n">blessed</span><span class="p">(</span> <span class="nv">$bar</span> <span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>The first will print out “Class” and second undef(of course you can see it).</p>
+
+<p>When we call “bless” on a variable, we are actually blessing the underlying data structure that the variable refers to. We are not blessing the reference itself, nor the variable that contains that reference. That’s why the second call to “blessed( $bar )” returns false. At that point $bar is no longer storing a reference to an
+object. You will sometimes see older books or documentation mention “blessing a reference” or describe an object as a “blessed reference”, but this is incorrect. It isn’t the reference that is blessed as an object; it’s the thing the reference refers to (i.e. the referent).   </p>
+
+<p>2.Objects are merely Perl data structures (hashes, arrays, scalars, filehandles, etc.) that have been explicitly associated with a particular class. That explicit association is created by the built-in “bless” function.</p>
+
+<p>3.An object is simply a data structure that knows to which class it belongs.A class is simply a package. A class provides methods that expect to operate on objects. A method is simply a subroutine that expects a reference to an object (or a package name, for class methods) as the first argument. </p>
+
+<p>4.Each package contains a special array called @ISA. The @ISA array contains a list of that class’s parent classes, if any. This array is examined when Perl does method resolution. It is possible to manually set @ISA. and you may see this in older Perl code. Much older code also uses the base pragma. For new code, we recommend that you use the parent pragma to declare your parents.  This pragma will take care of setting @ISA.  It will also load the parent classes and make sure that the package doesn’t inherit from itself.  </p>
+
+<p>5.However the parent classes are set, the package’s @ISA variable will contain a list of those parents. This is simply a list of scalars, each of which is a string that corresponds to a package name.   </p>
+
+<p>6.All classes inherit from the UNIVERSAL class implicitly. The UNIVERSAL class is implemented by the Perl core, and provides several default methods, such as “isa()”, “can()”, and “VERSION()”.  The “UNIVERSAL” class will never appear in a package’s @ISA variable.  </p>
+
+<p>7.Perl provides no special constructor syntax. This means that a class must implement its own constructor. A constructor is simply a class method that returns a reference to a new object.    </p>
+
+<p>8.A simple read-only accessor simply gets the value of a single attribute:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">sub </span><span class="nf">path</span> <span class="p">{</span>
+</span><span class="line">	<span class="k">my</span> <span class="nv">$self</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
+</span><span class="line">	<span class="k">return</span> <span class="nv">$self</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">path</span><span class="p">};</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>A read-write accessor will allow the caller to set the value as well as get it:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">sub </span><span class="nf">path</span> <span class="p">{</span>
+</span><span class="line">	<span class="k">my</span> <span class="nv">$self</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="nv">@_</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">    	<span class="nv">$self</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">path</span><span class="p">}</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">return</span> <span class="nv">$self</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">path</span><span class="p">};</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>9.More on bless. </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">$object</span> <span class="o">=</span> <span class="nb">bless</span> <span class="p">{},</span> <span class="nv">$class</span><span class="p">;</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">$object</span> <span class="o">=</span> <span class="nb">bless</span> <span class="p">{};</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>In the first form, the anonymous hash is being blessed into the class
+in $class. In the second form, the anonymous hash is blessed into the
+current package. The second form is strongly discouraged, because it breaks the ability of a subclass to reuse the parent’s constructor, but you may still run across it in existing code.   </p>
+
+<p>10.If you simply want to check that a variable contains an object reference, we recommend that you use “defined blessed($object)”, since “ref” returns true values for all references, not just objects.  </p>
+
+<p>11.If you call a method that doesn’t exist in a class, Perl will throw an error. However, if that class or any of its parent classes defines an “AUTOLOAD” method, that “AUTOLOAD” method is called instead.   </p>
+
+<p>12.All the examples so far have shown objects based on a blessed hash. However, it’s possible to bless any type of data structure or referent, including scalars, globs, and subroutines. You may see this sort of thing when looking at code in the wild.  </p>
+
+<p>13.You should also check out perlmodlib for some style guides on constructing both modules and classes.  </p>
+
+<p>14.As we said earlier, most Perl objects are hashes, but an object can be an instance of any Perl data type (scalar, array, etc.). Turning a plain data structure into an object is done by blessing that data structure using Perl’s “bless” function.  </p>
+
+<p>15.Once a referent has been blessed, the “blessed” function from the Scalar::Util core module can tell us its class name. This subroutine returns an object’s class when passed an object, and false otherwise.  </p>
+
+<p>16.A constructor creates a new object. In Perl, a class’s constructor is just another method, unlike some other languages, which provide syntax for constructors. Most Perl classes use “new” as the name for their constructor: my $file = File-&gt;new(…);   </p>
+
+<p>17.What makes a method special is how it’s called. The arrow operator (“-&gt;”) tells Perl that we are calling a method.   </p>
+
+<p>18.When we make a method call, Perl arranges for the method’s invocant to be passed as the first argument. Invocant is a fancy name for the thing on the left side of the arrow. The invocant can either be a class name
+or an object. We can also pass additional arguments to the method:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">sub </span><span class="nf">print_info</span> <span class="p">{</span>
+</span><span class="line">	<span class="k">my</span> <span class="nv">$self</span>   <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
+</span><span class="line">    <span class="k">my</span> <span class="nv">$prefix</span> <span class="o">=</span> <span class="nb">shift</span> <span class="sr">//</span> <span class="s">&quot;This file is at &quot;</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">   	<span class="k">print</span> <span class="nv">$prefix</span><span class="p">,</span> <span class="s">&quot;, &quot;</span><span class="p">,</span> <span class="nv">$self</span><span class="o">-&gt;</span><span class="n">path</span><span class="p">,</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="nv">$file</span><span class="o">-&gt;</span><span class="n">print_info</span><span class="p">(</span><span class="s">&quot;The file is located at &quot;</span><span class="p">);</span>
+</span><span class="line"><span class="c1"># The file is located at /etc/hostname</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>19.Each class can define its attributes. Attributes are sometimes called properties.  </p>
+
+<p>20.Perl has no special syntax for attributes. Under the hood, attributes are often stored as keys in the object’s underlying hash, but don’t worry about this.   </p>
+
+<p>21.You might also see the terms getter and setter. These are two types of accessors. A getter gets the attribute’s value, while a setter sets it. Another term for a setter is mutator. We recommend that you only access attributes via accessor methods.   </p>
+
+<p>22.Attributes are typically defined as read-only or read-write. Read-only attributes can only be set when the object is first created, while read-write attributes can be altered at any time.  </p>
+
+<p>23.We often refer to inheritance relationships as parent-child or “superclass/subclass” relationships. Sometimes we say that the child has an is-a relationship with its parent class.   </p>
+
+<p>24.The process of determining what method should be used is called method resolution. What Perl does is look at the object’s class first (“File::MP3” in this case). If that class defines the method, then that class’s version of the method is called. If not, Perl looks at each parent class in turn. For “File::MP3”, its only parent is “File”. If “File::MP3” does not define the method, but “File” does, then Perl calls the method in “File”.  </p>
+
+<p>25.It is possible to explicitly call a parent method from a child:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nb">package</span> <span class="nn">File::</span><span class="n">MP3</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">use</span> <span class="n">parent</span> <span class="s">&#39;File&#39;</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">sub </span><span class="nf">print_info</span> <span class="p">{</span>
+</span><span class="line">	<span class="k">my</span> <span class="nv">$self</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
+</span><span class="line">	<span class="nv">$self</span><span class="o">-&gt;</span><span class="nn">SUPER::</span><span class="n">print_info</span><span class="p">();</span>
+</span><span class="line">	<span class="k">print</span> <span class="s">&quot;Its title is &quot;</span><span class="p">,</span> <span class="nv">$self</span><span class="o">-&gt;</span><span class="n">title</span><span class="p">,</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>26.The “has()” subroutine declares an attribute, and “Moose” automatically creates accessors for these attributes. It also takes care of creating a “new()” method for you. This constructor knows about the attributes you declared.     </p>
+
+<p>27.与@INC数组类似，@INC包含文件的寻找路径, @ISA数组含有类(包)名，当一个方法在当前包中未找到的时就到@ISA中中的包去寻找。@ISA中还含有当前类继承的基类名。  </p>
+
+<p>28.oo中的new可以有如下的几种写法的: 注意这两种写法的区别  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="c1">#!/usr/bin/perl</span>
+</span><span class="line"><span class="k">use</span> <span class="n">Cocoa</span><span class="p">;</span>
+</span><span class="line"><span class="nv">$cup</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Cocoa</span><span class="p">;</span>
+</span><span class="line"><span class="nv">$cup</span><span class="o">-&gt;</span><span class="n">setImports</span><span class="p">(</span> <span class="s">&#39;java.io.InputStream&#39;</span><span class="p">,</span> <span class="s">&#39;java.net.*&#39;</span><span class="p">);</span>
+</span><span class="line"><span class="nv">$cup</span><span class="o">-&gt;</span><span class="n">declareMain</span><span class="p">(</span> <span class="s">&quot;Msg&quot;</span> <span class="p">,</span> <span class="s">&quot;java.applet.Applet&quot;</span><span class="p">,</span> <span class="s">&quot;Runnable&quot;</span><span class="p">);</span>
+</span><span class="line"><span class="nv">$cup</span><span class="o">-&gt;</span><span class="n">closeMain</span><span class="p">();</span>
+</span><span class="line">
+</span><span class="line"><span class="ow">or</span>
+</span><span class="line">
+</span><span class="line"><span class="c1">#!/usr/bin/perl</span>
+</span><span class="line"><span class="k">use</span> <span class="n">Cocoa</span><span class="p">;</span>
+</span><span class="line"><span class="nv">$cup</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Cocoa</span><span class="p">;</span>
+</span><span class="line"><span class="nn">Cocoa::</span><span class="n">setImports</span><span class="p">(</span><span class="nv">$cup</span><span class="p">,</span> <span class="s">&#39;java.io.InputStream&#39;</span><span class="p">,</span> <span class="s">&#39;java.net.*&#39;</span><span class="p">);</span>
+</span><span class="line"><span class="nn">Cocoa::</span><span class="n">declareMain</span><span class="p">(</span><span class="nv">$cup</span><span class="p">,</span> <span class="s">&quot;Msg&quot;</span> <span class="p">,</span> <span class="s">&quot;java.applet.Applet&quot;</span><span class="p">,</span> <span class="s">&quot;Runnable&quot;</span><span class="p">);</span>
+</span><span class="line"><span class="nn">Cocoa::</span><span class="n">closeMain</span><span class="p">(</span><span class="nv">$cup</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>29.类方法通过@ISA数组继承.</p>
+
 </div>
   
   

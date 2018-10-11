@@ -263,60 +263,6 @@ sudo apt-get upgrade It will list all &hellip;">
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/12/26/django-tips/">Django Tips</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-12-26T15:43:22+08:00" pubdate data-updated="true">Dec 26<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>The following knowledge tips of Django need to be paid attention to.</p>
-
-<p>1.parse_command_line</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">DATABASE_ROUTERS</span>
-</span><span class="line"><span class="kn">from</span> <span class="nn">tornado.options</span> <span class="kn">import</span> <span class="n">parse_command_line</span>
-</span><span class="line"><span class="n">parse_command_line</span><span class="p">()</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>2.declare a class at runtime</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">DynamicClass</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="s">&#39;DynamicClass&#39;</span><span class="p">,</span> <span class="p">(),</span> <span class="p">{</span><span class="s">&#39;spam&#39;</span><span class="p">:</span> <span class="s">&#39;eggs&#39;</span><span class="p">})</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>3.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
       <h1 class="entry-title"><a href="/blog/2014/12/24/libevent-not-found-error-while-install-tmux/">Libevent Not Found Error While Install Tmux</a></h1>
     
     
@@ -544,7 +490,7 @@ sudo apt-get upgrade It will list all &hellip;">
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/12/09/study-of-bloom-filters-and-bloom-filter-perl-module/">Study of Bloom Filters and Bloom::Filter Perl Module</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/12/02/notes-on-mojolicious/">Notes on Mojolicious</a></h1>
     
     
       <p class="meta">
@@ -560,14 +506,148 @@ sudo apt-get upgrade It will list all &hellip;">
   
 
 
-<time datetime="2014-12-09T13:46:30+08:00" pubdate data-updated="true">Dec 9<span>th</span>, 2014</time>
+<time datetime="2014-12-02T20:52:52+08:00" pubdate data-updated="true">Dec 2<span>nd</span>, 2014</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content">
+  <div class="entry-content"><p>Will keep notes of some of the mojo tips I got.</p>
+
+<p>1.A helper command to generate app for us.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">mojo</span> <span class="n">generate</span> <span class="n">app</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>This will generate Mojolicious application directory structure.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">mojo</span> <span class="n">generate</span> <span class="n">lite_app</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>This will generate Mojolicious::Lite application for us.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">mojo</span> <span class="n">generate</span> <span class="n">lite_app</span> <span class="n">hello</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>This will generate the app with the name “hello”</p>
+
+<p>2.about deploying your app to heroku</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">cpanm</span> <span class="nn">Mojolicious::Command::deploy::</span><span class="n">heroku</span>
+</span><span class="line"><span class="n">mojo</span> <span class="n">generate</span> <span class="n">lite_app</span> <span class="n">bigfan</span>
+</span><span class="line"><span class="o">./</span><span class="n">bigfan</span> <span class="n">deploy</span> <span class="n">heroku</span> <span class="o">--</span><span class="n">create</span>
+</span><span class="line"><span class="ow">or</span> <span class="n">we</span> <span class="n">can</span> <span class="n">assign</span> <span class="k">our</span> <span class="n">app</span> <span class="n">name</span> <span class="n">like</span> <span class="n">the</span> <span class="n">following:</span>
+</span><span class="line"><span class="o">./</span><span class="n">bigfan</span> <span class="n">deploy</span> <span class="n">heroku</span> <span class="o">-</span><span class="n">n</span> <span class="n">bigfan</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>3.In mojo, something like “hello.html.ep”, here “ep” stands for “embedded perl”, we can have html.ep, json.ep, txt.ep.</p>
+
+<p>4.Three kinds of placeholders.</p>
+
+<p>generic placeholders:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">get</span> <span class="s">&#39;/:fname/:lname&#39;</span> <span class="o">=&gt;</span> <span class="n">sub</span><span class="p">{</span>
+</span><span class="line">	<span class="nb">shift</span><span class="o">-&gt;</span><span class="n">render</span><span class="p">(</span><span class="err">&#39;</span><span class="n">capture</span><span class="p">);</span>
+</span><span class="line"><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>relaxed placeholders: </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">get</span> <span class="s">&#39;/:fname/(.lname)&#39;</span> <span class="o">=&gt;</span> <span class="n">sub</span><span class="p">{</span>
+</span><span class="line">	<span class="nb">shift</span><span class="o">-&gt;</span><span class="n">render</span><span class="p">(</span><span class="err">&#39;</span><span class="n">capture</span><span class="p">);</span>
+</span><span class="line"><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>wildcard placeholders:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">get</span> <span class="s">&#39;/:fname/(*lname)&#39;</span> <span class="o">=&gt;</span> <span class="n">sub</span><span class="p">{</span>
+</span><span class="line">	<span class="nb">shift</span><span class="o">-&gt;</span><span class="n">render</span><span class="p">(</span><span class="err">&#39;</span><span class="n">capture</span><span class="p">);</span>
+</span><span class="line"><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/11/27/make-array-into-string-using-perl/">Make Array Into String Using Perl</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-11-27T16:49:04+08:00" pubdate data-updated="true">Nov 27<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In perl, there are cases we may want to make an array into string, and then for the string, we may also want to change it to the format that we want to use. Here below are some exaples. </p>
+
+<p>Say we have an array, </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">@nums</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1234</span><span class="p">,</span> <span class="mi">5678</span><span class="p">,</span> <span class="mi">2345</span><span class="p">,</span> <span class="mi">8976</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>And we then want to change it to a string with comma separated followed by a blank space.  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">$nums</span> <span class="o">=</span> <span class="nb">join</span> <span class="s">&quot;, &quot;</span><span class="p">,</span> <span class="nv">@nums</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>We then want to use the nums in a sql “in” clause which will have the format, </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sql"><span class="line"><span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="k">table</span> <span class="k">where</span> <span class="k">column</span> <span class="k">in</span> <span class="p">(</span><span class="mi">1234</span><span class="p">,</span> <span class="mi">5678</span><span class="p">,</span> <span class="mi">2345</span><span class="p">,</span> <span class="mi">8976</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Of course we can not use the array @nums here, we can change the $nums to the format, </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">$nums_in_str</span> <span class="o">=</span> <span class="s">&quot;(&quot;</span> <span class="o">.</span> <span class="nb">join</span><span class="p">(</span> <span class="s">&quot;,&quot;</span><span class="p">,</span> <span class="nv">@nums</span> <span class="p">)</span> <span class="o">.</span> <span class="s">&quot;)&quot;</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Then we can do the sql query as the following:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sql"><span class="line"><span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="k">table</span> <span class="k">where</span> <span class="k">column</span> <span class="k">in</span> <span class="err">$</span><span class="n">nums_in_str</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>That’s it!</p>
 </div>
   
   

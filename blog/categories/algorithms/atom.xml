@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Algorithms | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/algorithms/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2018-10-11T17:16:21+08:00</updated>
+  <updated>2018-10-11T18:03:05+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,18 +12,6 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
-  
-  <entry>
-    <title type="html"><![CDATA[匹配最长连续数字串]]></title>
-    <link href="http://isunix.github.io/blog/2014/10/14/pi-pei-zui-chang-lian-xu-shu-zi-chuan/"/>
-    <updated>2014-10-14T13:11:06+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/10/14/pi-pei-zui-chang-lian-xu-shu-zi-chuan</id>
-    <content type="html"><![CDATA[<p>Say if we are given a string, like “ab1c123def3456h259887”, we want to get the longest consecutive string which consists of only data.</p>
-
-<p>we are using perl to realize this function. (Actually this is much harder than I thought!)</p>
-
-]]></content>
-  </entry>
   
   <entry>
     <title type="html"><![CDATA[Study of Hash Function]]></title>
@@ -52,15 +40,6 @@ and difinitely http://www.benfrederickson.com/ is a very good site for learning 
 <p>http://blog.163.com/clevertanglei900@126/blog/static/111352259201171111938208/
 this post gives a very clear explanation of what hash function is
 ``` </p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Boyer-Moore 算法实现]]></title>
-    <link href="http://isunix.github.io/blog/2014/08/26/boyer-moore-suan-fa-shi-xian/"/>
-    <updated>2014-08-26T11:52:34+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/08/26/boyer-moore-suan-fa-shi-xian</id>
-    <content type="html"><![CDATA[
 ]]></content>
   </entry>
   
@@ -467,6 +446,180 @@ Status Pop(LinkStack *S,SElemType *e)
         ClearStack(&amp;s);
         printf(“清空栈后，栈空否：%d(1:空 0:否)\n”,StackEmpty(s));
         return 0;
+}
+```</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[CTCI-Q1.1]]></title>
+    <link href="http://isunix.github.io/blog/2014/08/19/ctci-q1-dot-1/"/>
+    <updated>2014-08-19T16:16:38+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/08/19/ctci-q1-dot-1</id>
+    <content type="html"><![CDATA[<p>The question is: </p>
+
+<p><code>yaml
+Implement an algorithm to determine if a string has all unique characters. What if you can not use additional data structures?
+</code></p>
+
+<p>We will try to solve this problem using four languages c++, java, python.</p>
+
+<p>In order to simplify this problem, we shorten the character set to ASCII.</p>
+
+<p>In this case, if the string is longer that 256, surely at least two will be the same. </p>
+
+<p>We can create an array char_set whose values are booleans. thus char_set[val] = true means that the char is in the array and char_set[val] = false means that the char is not in the array.  </p>
+
+<p>1.java version:</p>
+
+<p><code>java
+public static boolean isUnique(String str) {
+        if (str.length() &gt; 256) {
+            return false;
+        }
+        boolean[] acsii_set = new boolean[256];
+        for (int i = 0; i &lt; str.length(); i++) {
+            int val = str.charAt(i);
+            if (ascii_set[val]) return false;
+            ascii_set[val] = true;
+        }
+        return true;
+    }
+</code></p>
+
+<p>2.c++ version:</p>
+
+<p><code>cpp
+bool isUnique(string str){
+	if(str.length() &gt; 256){
+		return false;
+	}
+	bool ascii_set[256] = {false};
+	for (int i=0; i &lt; str.length(); i++){
+		int val = str[i];
+		if (ascii_set[val]){
+			return false;
+		}
+		ascii_set[value] = true;
+	}
+	reutrn true;
+}
+</code>  </p>
+
+<p>3.python version:</p>
+
+<p>```py
+#!/usr/local/bin/python3
+# -<em>- coding: utf-8 -</em>-</p>
+
+<p>def is_unique(str):
+    charsTable = set()
+    for c in str:
+        if c in charsTable:
+            return False
+        charsTable.add(c)
+    return True</p>
+
+<p>test_str1 = “hello”
+test_str2 = “abcdef”
+ans1 = is_unique(test_str1)
+ans2 = is_unique(test_str2)
+print(ans1)
+print(ans2)
+```</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Remove Duplicates From an Unsorted Linked List]]></title>
+    <link href="http://isunix.github.io/blog/2014/08/18/remove-duplicates-from-an-unsorted-linked-list/"/>
+    <updated>2014-08-18T15:12:52+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/08/18/remove-duplicates-from-an-unsorted-linked-list</id>
+    <content type="html"><![CDATA[<p>Write code to remove duplicates from an unsorted linked list.</p>
+
+<p>FOLLOW UP</p>
+
+<p>How would you solve this problem if a temporary buffer is not allowed?  </p>
+
+<p>```cpp
+#include <iostream>
+#include <cstring>
+using namespace std;</cstring></iostream></p>
+
+<p>typedef struct node{
+    int data;
+    node *next;
+}node;
+bool myhash[100];</p>
+
+<p>node* init(int a[], int n){
+    node *head, *p;
+    for(int i=0; i&lt;n; ++i){
+        node *nd = new node();
+        nd-&gt;data = a[i];
+        if(i==0){
+            head = p = nd;
+            continue;
+        }
+        p-&gt;next = nd;
+        p = nd;
+    }
+    return head;
+}
+void removedulicate(node *head){
+    if(head==NULL) return;
+    node *p=head, *q=head-&gt;next;
+    myhash[head-&gt;data] = true;
+    while(q){
+        if(myhash[q-&gt;data]){
+            node *t = q;
+            p-&gt;next = q-&gt;next;
+            q = p-&gt;next;
+            delete t;
+        }
+        else{
+            myhash[q-&gt;data] = true;
+            p = q; q = q-&gt;next;
+        }
+    }
+}
+void removedulicate1(node *head){
+    if(head==NULL) return;
+    node *p, *q, *c=head;
+    while(c){
+        p=c; q=c-&gt;next;
+        int d = c-&gt;data;
+        while(q){
+            if(q-&gt;data==d){
+                node *t = q;
+                p-&gt;next = q-&gt;next;
+                q = p-&gt;next;
+                delete t;
+            }
+            else{
+                p = q; q = q-&gt;next;
+            }
+        }
+        c = c-&gt;next;
+    }
+}
+void print(node *head){
+    while(head){
+        cout«head-&gt;data«” ”;
+        head = head-&gt;next;
+    }
+    cout«endl;
+}
+int main(){
+    int n = 10;
+    int a[] = {
+        3, 2, 1, 3, 5, 6, 2, 6, 3, 1
+    };
+    memset(myhash, false, sizeof(myhash));
+    node *head = init(a, n);
+    removedulicate1(head);
+    print(head);
+    return 0;
 }
 ```</p>
 ]]></content>

@@ -67,9 +67,8 @@ For all those asked-often questions, you can use the following command to take a
 perldoc -q sleep   
 
 ```    
-4.聪明的人知道他们可以改变自己的态度， 信念和行为， 而且他们知道如何去改变。  
  
-5.In emacs, we can use "M-X perldb" to enable the perl debugging mode.  
+4.In emacs, we can use "M-X perldb" to enable the perl debugging mode.  
 
 
 

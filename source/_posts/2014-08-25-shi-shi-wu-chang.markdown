@@ -21,4 +21,3 @@ categories: Life
 
 四姑本无心，却伤害了别人。也伤害了自己，老天是有多么的残忍才允许发生这样的事情啊！
 
-Could god bless us? Could god bless my aunt?

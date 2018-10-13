@@ -31,7 +31,6 @@ categories: Linux
 19. [rename a Tmux Session](http://isunix.github.io/blog/2015/08/20/rename-a-tmux-session/)
 20. [Notes to Be Take While Using Ssh-keygen](http://isunix.github.io/blog/2014/12/23/notes-to-be-take-while-using-ssh-keygen/)
 21. [Some Useful Linux Commands](http://isunix.github.io/blog/2014/12/18/some-useful-linux-commands/)
-22. [Nohup简介](http://isunix.github.io/blog/2014/08/21/nohupjian-jie/)
 
 ## Grep简介:
 - [Bash-Beginners-Guide](http://tldp.org/LDP/Bash-Beginners-Guide/html/sect_04_02.html)

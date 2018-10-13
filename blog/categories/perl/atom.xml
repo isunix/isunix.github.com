@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Perl | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/perl/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2018-10-11T18:03:05+08:00</updated>
+  <updated>2018-10-13T19:16:06+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -589,17 +589,30 @@ ps -ef | grep cgi
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Kill a Tmux Window]]></title>
-    <link href="http://isunix.github.io/blog/2015/06/08/kill-a-tmux-window/"/>
-    <updated>2015-06-08T12:54:07+08:00</updated>
-    <id>http://isunix.github.io/blog/2015/06/08/kill-a-tmux-window</id>
-    <content type="html"><![CDATA[<p>When we are using tmux and stuck there, we can then follow the following steps to kill the window.</p>
+    <title type="html"><![CDATA[Remove Obsolete Packages on Ubuntu]]></title>
+    <link href="http://isunix.github.io/blog/2015/06/02/remove-obsolete-packages-on-ubuntu/"/>
+    <updated>2015-06-02T10:03:32+08:00</updated>
+    <id>http://isunix.github.io/blog/2015/06/02/remove-obsolete-packages-on-ubuntu</id>
+    <content type="html"><![CDATA[<p>After upgrading ubuntu to a new version, there will be many obsolete packages. To see these packages, you can </p>
 
 <p><code>bash
-tmux list-windows
-tmux kill-window -t $window_number
+sudo apt-get upgrade
+</code>
+It will list all those obsolete packages.</p>
+
+<p>To autoremove them one by one will be will tedious, we can first copy those packages into a file, like aa.txt, then use the following perl script to do it once:</p>
+
+<p><code>pl
+use File::Slurp;
+my @modules;
+my $text = read_file('aa.txt', text_ref =&gt; 1);
+@modules = grep {not /\s+/} split('[\s+]', $text);
+foreach my $module (@modules){
+	system("sudo apt-get autoremove $module");
+}
 </code></p>
 
+<p>Done!</p>
 ]]></content>
   </entry>
   

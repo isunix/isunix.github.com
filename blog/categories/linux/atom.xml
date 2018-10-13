@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Linux | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2018-10-11T18:03:05+08:00</updated>
+  <updated>2018-10-13T19:16:06+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -44,7 +44,6 @@
   <li><a href="http://isunix.github.io/blog/2015/08/20/rename-a-tmux-session/">rename a Tmux Session</a></li>
   <li><a href="http://isunix.github.io/blog/2014/12/23/notes-to-be-take-while-using-ssh-keygen/">Notes to Be Take While Using Ssh-keygen</a></li>
   <li><a href="http://isunix.github.io/blog/2014/12/18/some-useful-linux-commands/">Some Useful Linux Commands</a></li>
-  <li><a href="http://isunix.github.io/blog/2014/08/21/nohupjian-jie/">Nohup简介</a></li>
 </ol>
 
 <h2 id="grep">Grep简介:</h2>
@@ -104,39 +103,6 @@ cat aa.log | awk '{print $1}' | pbcopy
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Basics of Linux Screen]]></title>
-    <link href="http://isunix.github.io/blog/2016/05/26/basics-of-linux-screen/"/>
-    <updated>2016-05-26T14:52:24+08:00</updated>
-    <id>http://isunix.github.io/blog/2016/05/26/basics-of-linux-screen</id>
-    <content type="html"><![CDATA[<p>A basic of introduction of linux screen.</p>
-
-<p>1.To create a new screen session without the name specified, just type </p>
-
-<p><code>sh
-screen
-</code> </p>
-
-<p>2.To create a new screen session with the name specified, just type</p>
-
-<p><code>sh
-screen -S sessionname
-</code></p>
-
-<p>3.To detach from a session, type “Ctrl-A” and “d“</p>
-
-<p>4.To list all the sessions , type “screen -ls”</p>
-
-<p>5.To re-attach to a session, type “screen -r sessionname”</p>
-
-<p>6.To switch between windows, type “Ctrl-A” then then enter the window number. Or just “Ctrl-A” followed by pressing “p” or “n”.</p>
-
-<p>7.Type “Ctrl-A” and “?” without quotes. Then you will see all commands or parameters on screen.</p>
-
-<p>8.Type “Ctrl-A” and “:” without quotes, then enter “sessionname NAME” to rename an existing sessioin.</p>
-]]></content>
-  </entry>
-  
-  <entry>
     <title type="html"><![CDATA[Find the Common Lines in Multiple Files]]></title>
     <link href="http://isunix.github.io/blog/2015/11/23/find-the-common-lines-in-multiple-files/"/>
     <updated>2015-11-23T17:22:11+08:00</updated>
@@ -156,23 +122,61 @@ http://unix.stackexchange.com/questions/28158/is-there-a-tool-to-get-the-lines-i
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Sort Then Uinq vs Uniq Then Sort]]></title>
-    <link href="http://isunix.github.io/blog/2015/11/23/sort-then-uinq-vs-uniq-then-sort/"/>
-    <updated>2015-11-23T17:19:54+08:00</updated>
-    <id>http://isunix.github.io/blog/2015/11/23/sort-then-uinq-vs-uniq-then-sort</id>
-    <content type="html"><![CDATA[<table>
-  <tbody>
-    <tr>
-      <td>In linux is there any difference between “sort</td>
-      <td>uniq” and “uniq</td>
-      <td>sort”? If you are not sure, try it first. If you are not sure why, think about it for a while or reference this post:</td>
-    </tr>
-  </tbody>
-</table>
+    <title type="html"><![CDATA[Minutes on Setting Up Emacs on Macos]]></title>
+    <link href="http://isunix.github.io/blog/2015/07/02/minutes-on-setting-up-emacs-on-macos/"/>
+    <updated>2015-07-02T15:29:18+08:00</updated>
+    <id>http://isunix.github.io/blog/2015/07/02/minutes-on-setting-up-emacs-on-macos</id>
+    <content type="html"><![CDATA[<ol>
+  <li>I am am using gui emacs and I want to it to be started from the command line, then I have to do this:</li>
+</ol>
 
-<p><code>html
-http://stackoverflow.com/questions/1402223/calling-uniq-and-sort-in-different-orders-in-shell
+<p><code>sh
+alias emacs='open -a /Applications/Emacs.app $1'
 </code></p>
+
+<ol>
+  <li>I want to change the default font and font size:</li>
+</ol>
+
+<p><code>sh
+(set-default-font "Monaco 28")
+</code></p>
+
+<ol>
+  <li>I want to use evil, after putting it into ~/.emacs.d, also I need to put the folliwng things in to ~/.emacs.d/init.el</li>
+</ol>
+
+<p><code>
+(add-to-list 'load-path "~/.emacs.d/evil")
+(require 'evil)
+(evil-mode 1)
+</code></p>
+
+<ol>
+  <li>I am using slime, so I have to put the following things into my ~/.emacs.d/init.el</li>
+</ol>
+
+<p><code>
+(setq inferior-lisp-program "/usr/local/bin/sbcl")
+(setq slime-contribs '(slime-fancy))
+</code></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Tmux:can't Create Socket: Permission Denied]]></title>
+    <link href="http://isunix.github.io/blog/2015/06/19/tmux-cant-create-socket-permission-denied/"/>
+    <updated>2015-06-19T13:04:00+08:00</updated>
+    <id>http://isunix.github.io/blog/2015/06/19/tmux-cant-create-socket-permission-denied</id>
+    <content type="html"><![CDATA[<p>my tmux’s sockets are output to the dir “~/tmp”, however today I encountered the problem saying “can’t create socket: Permission denied” while I start tmux.</p>
+
+<p>The reason is I have changed the rights on the folder ~/tmp/tmux* , so after the following command:</p>
+
+<p><code>sh
+chmod 700 -R tmux*
+</code></p>
+
+<p>It is back to normal.</p>
 ]]></content>
   </entry>
   

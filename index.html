@@ -118,7 +118,6 @@ Steven Sun’s Blog You may find the following pages in Steven Sun’s Blog migh
   <li><a href="http://isunix.github.io/blog/2015/08/20/rename-a-tmux-session/">rename a Tmux Session</a></li>
   <li><a href="http://isunix.github.io/blog/2014/12/23/notes-to-be-take-while-using-ssh-keygen/">Notes to Be Take While Using Ssh-keygen</a></li>
   <li><a href="http://isunix.github.io/blog/2014/12/18/some-useful-linux-commands/">Some Useful Linux Commands</a></li>
-  <li><a href="http://isunix.github.io/blog/2014/08/21/nohupjian-jie/">Nohup简介</a></li>
 </ol>
 
 <h2 id="grep">Grep简介:</h2>
@@ -855,7 +854,7 @@ Steven Sun’s Blog You may find the following pages in Steven Sun’s Blog migh
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2016/07/02/install-hadoop-on-mac/">Install Hadoop on Mac</a></h1>
+      <h1 class="entry-title"><a href="/blog/2016/05/30/useful-shell-commands/">Useful Shell Commands</a></h1>
     
     
       <p class="meta">
@@ -871,29 +870,92 @@ Steven Sun’s Blog You may find the following pages in Steven Sun’s Blog migh
   
 
 
-<time datetime="2016-07-02T16:16:15+08:00" pubdate data-updated="true">Jul 2<span>nd</span>, 2016</time>
+<time datetime="2016-05-30T16:13:41+08:00" pubdate data-updated="true">May 30<span>th</span>, 2016</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>这篇blog是关于如何在mac上安装hadoop的。 参考书目是《hadoop 核心技术》 by 翟周伟， 还有这篇博文， http://dongfeiwww.com/hadoop/2014/09/05/hadoop-on-mac/。</p>
+  <div class="entry-content"><p>1.In bash shell, it provides us with two options to make debugging very much easier. “-v” and “-x”.</p>
 
-<p>要要注意的点是， 如果是安装hadoop在／usr/local这种路径下， 最后跑start-dfs.sh这种脚本的时候， 是需要sudo权限的， 所以可以按照“核心技术”这本书来， 把hadoop解压到本地一个不需要sudo权限去访问执行的地方。</p>
-
-<p>第二点就是start-all.sh这个脚本被deprecated的了， 推荐使用的是，start-dfs.sh and start-yarn.sh这种单独的脚本。</p>
-
-<p>第三就是运行下ssh localhost看能不能连上。</p>
-
-<p>最后， 配置成功后能从web页面访问到的端口有</p>
+<p>Take the following small script for an example.</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line">http://localhost:50090/status.html      (Secondary NameNode status)
-</span><span class="line">http://localhost:50070/dfshealth.html#tab-overview    (hdfs status)
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="c">#!/bin/bash</span>
+</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;You are using $0&quot;</span>
+</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;Hello $*&quot;</span>
+</span><span class="line"><span class="nb">exit </span>0
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
+<p>If run with the follwoing “-v” option, </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">bash -v aa.sh steven
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>We will get the following result,</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="c">#!/bin/bash</span>
+</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;You are using $0&quot;</span>
+</span><span class="line">You are using aa.sh
+</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;Hello $*&quot;</span>
+</span><span class="line">Hello steven
+</span><span class="line"><span class="nb">exit </span>0
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>If run with the “-x” option, we will get the following result.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">+ <span class="nb">echo</span> <span class="s1">&#39;You are using aa.sh&#39;</span>
+</span><span class="line">You are using aa.sh
+</span><span class="line">+ <span class="nb">echo</span> <span class="s1">&#39;Hello steven&#39;</span>
+</span><span class="line">Hello steven
+</span><span class="line">+ <span class="nb">exit </span>0
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>As we can see, “-x” might be more helpful to us.</p>
+
+<p>2.We can use “read -p” to read from the user input and store the input into an variable. Like this:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nb">read</span> -p <span class="s2">&quot;Enter your name: &quot;</span> name
+</span><span class="line"><span class="nb">echo</span> <span class="nv">$name</span>
+</span><span class="line"><span class="nb">exit </span>0
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>3.use the “-s” option with “read” to control the visibility of the entered text.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="c">#!/bin/bash</span>
+</span><span class="line"><span class="nb">read</span> -p <span class="s2">&quot;May I ask your name: &quot;</span> name
+</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;Hello $name&quot;</span>
+</span><span class="line"><span class="nb">read</span> -sn1 -p <span class="s2">&quot;Press any key to exit&quot;</span>
+</span><span class="line"><span class="nb">echo</span>
+</span><span class="line"><span class="nb">exit </span>0
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>4.Grep with “-c” option to list the number of items grepped.</p>
 </div>
   
   

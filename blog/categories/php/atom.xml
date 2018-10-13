@@ -4,7 +4,7 @@
   <title><![CDATA[Category: PHP | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/php/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2018-10-11T18:03:05+08:00</updated>
+  <updated>2018-10-13T19:16:06+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -42,102 +42,6 @@ the differences between require and include are:  </p>
 *.require在一开始就加载，这个函式通常放在PHP程式的最前面
 *._once后缀表示已加载的不加载
 ```  </p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Pro PHP and Jquery Chap03: Object Oriented Programming]]></title>
-    <link href="http://isunix.github.io/blog/2014/10/30/pro-php-and-jquery-chap03-object-oriented-programming/"/>
-    <updated>2014-10-30T14:03:48+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/10/30/pro-php-and-jquery-chap03-object-oriented-programming</id>
-    <content type="html"><![CDATA[<p>I have written some code in PHP, but I almost never use the object oriented way. Here below is some excerpts from the book “Pro PHP and Jquery”.  </p>
-
-<p>1.How to build a class and instantiate it.   </p>
-
-<p><code>php
-&lt;?php
-  class MyClass{
-    //class properties and methods go here
-  }
-  $obj = new MyClass;
-  var_dump($obj);
-?&gt;
-</code>  </p>
-
-<p>It gives out something like </p>
-
-<p><code>php
-object(MyClass)#1 (0) { }
-</code></p>
-
-<p>2.The following code shows how to set and read out a class property.  </p>
-
-<p>```php
-&lt;?php
-  class MyClass{
-    //class properties and methods go here
-    public $prop1 = “I’m a class property!”;
-  }</p>
-
-<p>$obj = new MyClass;
-  echo $obj-&gt;prop1;
-?&gt;
-```   </p>
-
-<p>3.THe following code shows how to define methods in php. Methods are class-specific functions:  </p>
-
-<p>```php
-&lt;?php
-class MyClass {
-  public $prop1 = “I’m a class property!”;
-  public function setProperty($newval){
-    $this-&gt;prop1 = $newval;
-  }</p>
-
-<p>public function getProperty(){
-    return $this-&gt;prop1 . “<br />”;
-  }
-}</p>
-
-<p>$obj = new MyClass;
-echo $obj-&gt;prop1;</p>
-
-<p>?&gt;
-```</p>
-
-<p>4.Use of contructor methods:</p>
-
-<p>```php
-&lt;?php
-class MyClass
-{
-  public $prop1 = “I’m a class property!”;</p>
-
-<p>public function <strong>construct()
-  {
-    echo ‘The class “’, __CLASS</strong>, ‘” was initiated!<br />’;
-  }</p>
-
-<p>public function setProperty($newval)
-  {
-    $this-&gt;prop1 = $newval;
-  }</p>
-
-<p>public function getProperty()
-  {
-    return $this-&gt;prop1 . “<br />”;
-  }
-}</p>
-
-<p>// Create a new object
-$obj = new MyClass;
-// Get the value of $prop1
-echo $obj-&gt;getProperty();
-// Output a message at the end of the file
-echo “End of file.<br />”;
-?&gt;
-```</p>
-
 ]]></content>
   </entry>
   
@@ -219,6 +123,28 @@ curl -s http://php-osx.liip.ch/install.sh | bash -s 5.5
 </code></p>
 
 <p>and in my phpstorm, I use the path, “usr/local/php5/bin” as the interpreter’s path. It works now.</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Set Up PHP and Apache on Mac OS]]></title>
+    <link href="http://isunix.github.io/blog/2014/06/07/set-up-php-and-apache-on-mac-os/"/>
+    <updated>2014-06-07T14:25:00+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/06/07/set-up-php-and-apache-on-mac-os</id>
+    <content type="html"><![CDATA[<p>I have set up Apache and PHP on my computer many times, every time I googled or Baidued about it, it is high time to keep a note about those steps.    </p>
+
+<ol>
+  <li>sudo mate /etc/apache2/httpd.conf</li>
+  <li>uncomment “#LoadModule php5_module libexec/apache2/libphp5.so”</li>
+  <li>save the file and quit. </li>
+  <li>sudo cp /etc/php.ini.default /etc/php.ini</li>
+  <li>sudo apachectl start </li>
+  <li>ln -s /Library/WebServer/Document $HOME/www</li>
+  <li>rename the file “index.html.en” or just delete the file if you do not want to be botthered.  </li>
+</ol>
+
+<p>That’s the steps all it takes to set up your apache and PHP on a MAC OS machine.</p>
 
 ]]></content>
   </entry>

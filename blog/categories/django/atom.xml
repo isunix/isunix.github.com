@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Django | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/django/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2018-10-11T18:03:05+08:00</updated>
+  <updated>2018-10-13T19:16:06+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -53,80 +53,6 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns</p>
 <p><code>html
 http://www.mc706.com/tip_trick_snippets/42/django-admin-changing-the-page-header/
 </code></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Django Shell Usage]]></title>
-    <link href="http://isunix.github.io/blog/2015/10/23/django-shell-usage/"/>
-    <updated>2015-10-23T16:50:03+08:00</updated>
-    <id>http://isunix.github.io/blog/2015/10/23/django-shell-usage</id>
-    <content type="html"><![CDATA[<p>Let’s say we have an app named “people” and that in our models.py file, we have the following model:</p>
-
-<p><code>py
-from django.db import models
-class Person(models.Model):
-	name = models.CharField(max_length=50)
-	age = models.IntegerField()
-</code></p>
-
-<p>After synchronizing the db, before django 1.7, we issue:</p>
-
-<p><code>sh
-python manage.py syncdb
-</code></p>
-
-<p>After django1.7:</p>
-
-<p><code>sh
-python manage.py makemigrations
-python manage.py migrate
-</code></p>
-
-<p>For django’s shell, we can enter it by issuing the following command:</p>
-
-<p><code>sh
-python manage.py shell
-</code></p>
-
-<p>and then</p>
-
-<p><code>sh
-&gt;&gt;&gt;from people.models import Person
-&gt;&gt;&gt;Person.objects.create(name="steven", age="24")
-&gt;&gt;&gt;Person.objects.get(name="steven")
-</code></p>
-
-<p>There are several ways to create an object:</p>
-
-<p>```sh
-a.  Person.objects.create(name=”steven”, age=24)
-b.  p = Person(name=”steve”, age=24)
-    p.save()</p>
-
-<p>c.  p = Person(name=”steven”)
-	p.age = 23
-	p.save()</p>
-
-<p>d.  Person.objects.get_or_create(name=”steven”, age=24)
-```</p>
-
-<p>There are more ways to get an object:</p>
-
-<p><code>sh
-a.	Person.objects.all()
-b.	Person.objects.all()[:10] #切片操作，获取10个人，不支持负索引，切片可以节约内存
-c.	Person.objects.get(name=name) #{get是用来获取一个对象的，如果需要获取满足条件的一些人，就要用到filter}
-d.	Person.objects.filter(name="abc") # 等于Person.objects.filter(name__exact="abc")
-e.	Person.objects.filter(name__iexact="abc") #{不区分大小写}
-f.	Person.objects.filter(name__contains="abc") # 名称中包含 "abc"的人
-g.	Person.objects.filter(name__icontains="abc") #名称中包含 "abc"，且abc不区分大小写
-h.	Person.objects.filter(name__regex="^abc") # 正则表达式查询
-i.	Person.objects.filter(name__iregex="^abc")# 正则表达式不区分大小写
-j.	Person.objects.exclude(name__contains="WZ") # 排除包含 WZ 的Person对象
-k.	Person.objects.filter(name__contains="abc").exclude(age=23) # 找出名称含有abc, 但是排除年龄是23岁的
-</code></p>
-
 ]]></content>
   </entry>
   

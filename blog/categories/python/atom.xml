@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Python | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/python/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2018-10-11T18:03:05+08:00</updated>
+  <updated>2018-10-13T19:16:06+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -76,26 +76,6 @@ MovieDownload(url)</p>
 
 <p><code>sh
 python3 movie_download.py
-</code></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Pycharm Shortcuts]]></title>
-    <link href="http://isunix.github.io/blog/2015/11/20/pycharm-shortcuts/"/>
-    <updated>2015-11-20T18:47:53+08:00</updated>
-    <id>http://isunix.github.io/blog/2015/11/20/pycharm-shortcuts</id>
-    <content type="html"><![CDATA[<p>The following are some notes on using pycharm.</p>
-
-<p>1.shortcuts</p>
-
-<p><code>sh
-cmd+O           (search class)
-cmd+shift+O     (search file name)
-cmd+alt+O       (go to symbol), then hit cmd+y to get a preview, hit enter will jump to the code.
-by ctrl+clicking a method name, you will be redirected to its definition.
-for a html file, type "!" then type "tab" key will give a basic html5 template.
-for flask project, in the .py file, type 'flaskp' and hit "tab", will give you the definition of post method.
 </code></p>
 ]]></content>
   </entry>
@@ -243,6 +223,45 @@ awk '{ total += $NF } END { print total }' access-log
 
 <p><code>html
 http://www.grymoire.com/Unix/Sh.html
+</code></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Installing From Multiple Requirements Files]]></title>
+    <link href="http://isunix.github.io/blog/2015/09/21/installing-from-multiple-requirements-files/"/>
+    <updated>2015-09-21T16:18:23+08:00</updated>
+    <id>http://isunix.github.io/blog/2015/09/21/installing-from-multiple-requirements-files</id>
+    <content type="html"><![CDATA[<p>Say we want to install modules from multiple requirement files. We will put the requirement files in the directory “requirements”.</p>
+
+<p>First the base.txt file.</p>
+
+<p><code>
+Django==1.7.10
+psycopg2==2.4.5
+</code></p>
+
+<p>Then the file local.txt</p>
+
+<p><code>
+-r base.txt
+django-discover-runner==0.2.2
+</code></p>
+
+<p>and production.txt(production installaions should be close to what is used in other locations, so production.txt commonly just calls base.txt)</p>
+
+<p><code>
+-r base.txt
+</code></p>
+
+<p>The for local and production env, we can issue the following commands:</p>
+
+<p><code>sh
+pip install -r requirements/local.txt
+</code></p>
+
+<p><code>sh
+pip install -r requirements/production.txt
 </code></p>
 ]]></content>
   </entry>

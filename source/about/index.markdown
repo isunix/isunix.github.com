@@ -6,7 +6,7 @@ comments: true
 sharing: true
 footer: true
 ---
-Hi, This is Steven Sun. My Chinese name is 孙广新。I am an engineer in Sonata, an IT company in China.
+Hi, This is Steven Sun. My Chinese name is 孙广新。I am an engineer in Sonata, an IT company in China which has close relationship with Cisco.
 
 I use this blog to keep notes of those things I consider important to me while I was learning something new.
 
@@ -15,7 +15,7 @@ I am a database production analyst there. I acquired the basic knowledge of SQL,
 
 I won the "one team" award in Merkle, which is given to employees who do contribute to their team.
 
-The current company I am in is "Sonata", in Chinese "自协软件"， from 2012/10 ~ now. I am a threat operations analyst here. I am using perl Regex to write regular expression. I am also using PHP to develop internal web tools and using perl to develop handy perl scripts and using Perl Dancer web frame work to develop web tools to aid my work on writing rules against spam message.
+From 2012/10 to 2016/06, I was working in Sonata, in Chinese "自协软件". I am a threat operations analyst there. I was using perl Regex to write regular expression. I was also using PHP to develop internal web tools and using perl to develop handy perl scripts and using Perl Dancer web frame work to develop web tools to aid my work on writing rules against spam message. I was also using Python/Django to maintain/develop internal tools for the team.
 
 I majored in Computer science and Math when I was in university.
 
@@ -26,8 +26,6 @@ I scored 649 in CET-4 and 585 in CET-6.
 I am the number one student for three semesters among those non-English major students.
 
 I am a MacOS and Ubuntu user.
-
-As a summary I am interested in C, Perl, PHP, Python, Shell script, Bootstrap, jQuery, Machine Learning, C, Java. I am also learning Objective-c now.
 
 For more info about me, please refer to my resume which I put in github:
 

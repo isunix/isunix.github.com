@@ -9,7 +9,7 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="I ran across some usage of grep and map in perl in some of the scripts I am reading. just to keep a note here. 1
+  <meta name="description" content="For named argument, it many uses the trick of changing a list into a hash. Take a look at the following code. 1
 2
 3
 4
@@ -21,8 +21,7 @@
 10
 11
 12
-13
-my @line &hellip;">
+listdir(cols &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -75,556 +74,6 @@ my @line &hellip;">
     <div id="content">
       <div class="blog-index">
   
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/19/map-and-grep-in-perl/">Map and Grep in Perl</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-09-19T12:27:58+08:00" pubdate data-updated="true">Sep 19<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I ran across some usage of grep and map in perl in some of the scripts I am reading. just to keep a note here. </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">@line</span> <span class="o">=</span> <span class="nb">grep</span> <span class="p">{</span><span class="ow">not</span> <span class="sr">/^\s*$/</span><span class="p">}</span> <span class="nb">map</span> <span class="p">{</span><span class="nb">chomp</span><span class="p">;</span><span class="nv">$_</span><span class="p">}</span> <span class="sr">&lt;FILEIN&gt;</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="nv">@keyorder</span> <span class="o">=</span> <span class="nb">grep</span> <span class="p">{</span><span class="ow">not</span> <span class="sr">/^\s*$/</span><span class="p">}</span> <span class="nv">@column</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="nv">$rh_meta</span><span class="o">-&gt;</span><span class="p">{</span><span class="nv">$meta_name</span><span class="p">}</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class="line">	<span class="nb">map</span> <span class="p">{</span>
-</span><span class="line">		<span class="p">(</span><span class="nv">$_</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-</span><span class="line">	<span class="p">}</span> <span class="nb">grep</span> <span class="p">{</span>
-</span><span class="line">		<span class="ow">not</span> <span class="sr">/^\d+$/</span><span class="p">;</span>
-</span><span class="line">	<span class="p">}</span> <span class="p">(</span><span class="nv">$meta_body</span> <span class="o">=~</span><span class="sr"> /(\w+)/g</span><span class="p">)</span>
-</span><span class="line">	
-</span><span class="line"><span class="nv">$str</span> <span class="o">=~</span> <span class="nb">tr</span><span class="sr">/a-z/</span><span class="n">A</span><span class="o">-</span><span class="n">Z</span><span class="o">/</span><span class="p">;</span>
-</span><span class="line"><span class="c1">##how to use tr</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>I also come across some usage of redo and labeled loop, please see the following examples.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="c1">#!/usr/bin/perl</span>
-</span><span class="line"><span class="k">for</span> <span class="nv">$i</span> <span class="p">(</span><span class="mi">0</span><span class="o">..</span><span class="mi">9</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">    <span class="k">for</span> <span class="nv">$j</span> <span class="p">(</span><span class="mi">0</span><span class="o">..</span><span class="mi">9</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">        <span class="k">print</span> <span class="s">&quot;$i x $j\n&quot;</span><span class="p">;</span>
-</span><span class="line">        <span class="k">last</span> <span class="k">if</span> <span class="nv">$i</span> <span class="o">==</span><span class="mi">3</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line"><span class="c1">#the one without labeled loop, the &quot;last&quot; will only act on the inner loop.</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>if we want the “last” to act on the “outer” loop, we can do the following:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="c1">#!/usr/bin/perl</span>
-</span><span class="line"><span class="n">LO:</span> <span class="k">for</span> <span class="nv">$i</span> <span class="p">(</span><span class="mi">0</span><span class="o">..</span><span class="mi">9</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">        <span class="k">for</span> <span class="nv">$j</span> <span class="p">(</span><span class="mi">0</span><span class="o">..</span><span class="mi">9</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">            <span class="k">print</span> <span class="s">&quot;$i x $j\n&quot;</span><span class="p">;</span>
-</span><span class="line">            <span class="k">last</span> <span class="n">LO</span> <span class="k">if</span> <span class="nv">$i</span> <span class="o">==</span><span class="mi">3</span><span class="p">;</span>
-</span><span class="line">        <span class="p">}</span>
-</span><span class="line">    <span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>namely we can use “labeled loop” to control the outer loop from the inner loop.</p>
-
-<p>for the redo function, the difference it has to “next” is “next” will go to the next loop, while “redo” will just “redo” the current loop, this is partilarly useful if we want to ask the user to re-enter the password if they get the password wrong:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="n">utf8</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">my</span> <span class="nv">@words</span> <span class="o">=</span> <span class="sx">qw{ fred barney pebbles dino }</span><span class="p">;</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">$errors</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">foreach</span> <span class="p">(</span><span class="nv">@words</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">    <span class="k">print</span> <span class="s">&quot;type the word &#39;$_&#39;: &quot;</span><span class="p">;</span>
-</span><span class="line">    <span class="nb">chomp</span><span class="p">(</span><span class="k">my</span> <span class="nv">$try</span> <span class="o">=</span> <span class="sr">&lt;STDIN&gt;</span><span class="p">);</span>
-</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="nv">$try</span> <span class="ow">ne</span> <span class="nv">$_</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">      <span class="k">print</span> <span class="s">&quot;sorry, it is not right\n&quot;</span><span class="p">;</span>
-</span><span class="line">      <span class="nv">$errors</span><span class="o">++</span><span class="p">;</span>
-</span><span class="line">      <span class="k">redo</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line"><span class="c1">##if you did not enter the right item, you will be asked and again!</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/19/study-of-hash-function/">Study of Hash Function</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-09-19T10:26:02+08:00" pubdate data-updated="true">Sep 19<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Recently I come across an algorithm, and I am sure I have no idea what it is doing, when I ask my colleague, he said it is hash algorithm.  Thus comes out this article talking about hash algorithms.  </p>
-
-<p>First I will list some of the sites I visited while I am learning what is hash function, how to create it and how to use it.  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">http://isthe.com/chongo/tech/comp/fnv/#fnv-prime
-</span><span class="line">I did not spend any time on this post yet.     
-</span><span class="line">
-</span><span class="line">http://www.azillionmonkeys.com/qed/hash.html
-</span><span class="line">This is said to be a very good article on hash function.
-</span><span class="line">
-</span><span class="line">http://burtleburtle.net/bob/hash/doobs.html
-</span><span class="line">This is also a very good article.
-</span><span class="line">
-</span><span class="line">http://en.wikipedia.org/wiki/Hash_function
-</span><span class="line">http://www.benfrederickson.com/heap-visualization/
-</span><span class="line">http://blog.csdn.net/wuliming_sc/article/details/1365962
-</span><span class="line">and difinitely http://www.benfrederickson.com/ is a very good site for learning some knowledge of algorithms.
-</span><span class="line">
-</span><span class="line">http://blog.163.com/clevertanglei900@126/blog/static/111352259201171111938208/
-</span><span class="line">this post gives a very clear explanation of what hash function is</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/17/install-gnuplot-from-the-source-code/">Install Gnuplot From the Source Code</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-09-17T10:38:15+08:00" pubdate data-updated="true">Sep 17<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>On the centos server, I want to install gnuplot in my local dir, here are the steps:  </p>
-
-<ol>
-  <li>
-    <p>download the source code and cd into the dir.</p>
-  </li>
-  <li>
-    <p>./configure –prefix=$HOME/local –with-readline=gnu</p>
-  </li>
-  <li>
-    <p>make</p>
-  </li>
-  <li>
-    <p>make install</p>
-  </li>
-</ol>
-
-<p>That is all. </p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/15/useful-links-for-learning-ml-and-spamassassin/">Useful Links for Learning ML and SpamAssassin</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-09-15T10:32:36+08:00" pubdate data-updated="true">Sep 15<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Below are some links I used while I am learning SpamAssassin and machine learning, of course including Bayes.   </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">http://blog.sina.com.cn/s/blog_77dc7b520100pzwd.html
-</span><span class="line">http://spamassassin.apache.org/full/3.4.x/doc/Mail_SpamAssassin.html
-</span><span class="line">http://www.jb51.net/article/6214.htm
-</span><span class="line">
-</span><span class="line">http://www.baidu.com/index.php?wd=%E8%B4%9D%E5%8F%B6%E6%96%AF&amp;rsv_spt=1&amp;issp=1&amp;rsv_bp=0&amp;ie=utf-8&amp;tn=monline_5_dg&amp;rsv_sug3=7&amp;rsv_sug4=171&amp;rsv_sug1=8&amp;oq=beiyes&amp;rsv_sug2=0&amp;f=3&amp;rsp=0&amp;inputT=6003   
-</span><span class="line">
-</span><span class="line">http://www.ruanyifeng.com/blog/2011/08/bayesian_inference_part_one.html
-</span><span class="line">http://mindhacks.cn/2008/09/21/the-magical-bayesian-method/
-</span><span class="line">http://mindhacks.cn/2008/09/11/machine-learning-and-ai-resources/
-</span><span class="line">http://en.wikipedia.org/wiki/Herbert_A._Simon
-</span><span class="line">http://en.wikipedia.org/wiki/Machine_learning
-</span><span class="line">http://en.wikipedia.org/wiki/Artificial_intelligence
-</span><span class="line">http://en.wikipedia.org/wiki/History_of_artificial_intelligence
-</span><span class="line">http://en.wikipedia.org/wiki/Unsupervised_learning
-</span><span class="line">http://www.yeeyan.org/articles/view/sylviaangel/9995
-</span><span class="line">http://blog.youxu.info/spell-correct.html
-</span><span class="line">http://en.wikipedia.org/wiki/Thomas_Bayes
-</span><span class="line">http://mindhacks.cn/2008/07/07/the-importance-of-knowing-why/
-</span><span class="line">http://blog.csdn.net/g9yuayon/article/details/2574781
-</span><span class="line">http://blog.csdn.net/pongba/article/details/2544933
-</span><span class="line">http://www.chinaunix.net/old_jh/14/412857.html
-</span><span class="line">http://blog.chinaunix.net/uid-10182882-id-2969692.html</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/12/static-variable-in-c/">Static Variable in C</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-09-12T18:18:08+08:00" pubdate data-updated="true">Sep 12<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Static variables are the final type of variable available; these variables keep their value between calls to a function. About their effects, we will take a look at them through the following examples.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="cp">#include &lt;stdio.h&gt;</span>
-</span><span class="line">
-</span><span class="line"><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
-</span><span class="line">    <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line">    <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;=</span><span class="mi">10</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-</span><span class="line">      <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line">    <span class="k">return</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>We all know it will print out 1, 2, till 10.  </p>
-
-<p>If we change it a little bit, like thhis:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="cp">#include &lt;stdio.h&gt;</span>
-</span><span class="line">
-</span><span class="line"><span class="kt">int</span> <span class="nf">foo</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">    <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class="line">    <span class="k">return</span> <span class="o">++</span><span class="n">x</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
-</span><span class="line">    <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line">    <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;=</span><span class="mi">10</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-</span><span class="line">        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">foo</span><span class="p">());</span>
-</span><span class="line">
-</span><span class="line">    <span class="k">return</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>This program will print out 1, all 1.  </p>
-
-<p>What if we want to print out the “i” incrementally, we will use the static keyword.  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="cp">#include &lt;stdio.h&gt;</span>
-</span><span class="line">
-</span><span class="line"><span class="kt">int</span> <span class="nf">foo</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">    <span class="k">static</span> <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class="line">    <span class="k">return</span> <span class="o">++</span><span class="n">x</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
-</span><span class="line">    <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line">    <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;=</span><span class="mi">10</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-</span><span class="line">        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">foo</span><span class="p">());</span>
-</span><span class="line">    <span class="k">return</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>This example is excerpted from the book “extending and embedding perl”.  </p>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/11/constructor-and-destructor-in-perl/">Constructor and Destructor in Perl</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-09-11T13:46:23+08:00" pubdate data-updated="true">Sep 11<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>For Perl constructor, we can seperate the process of object creation from the process of initialization.  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nb">package</span> <span class="nn">CD::</span><span class="n">Music</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="n">strict</span><span class="p">;</span>
-</span><span class="line"><span class="k">sub </span><span class="nf">new</span> <span class="p">{</span>
-</span><span class="line">	<span class="k">my</span> <span class="nv">$self</span> <span class="o">=</span> <span class="p">{};</span>
-</span><span class="line">	<span class="nb">bless</span> <span class="nv">$self</span><span class="p">,</span> <span class="nb">shift</span><span class="p">;</span>
-</span><span class="line">	<span class="nv">$self</span><span class="o">-&gt;</span><span class="n">_incr_count</span><span class="p">();</span>
-</span><span class="line">	<span class="nv">$self</span><span class="o">-&gt;</span><span class="n">_init</span><span class="p">(</span><span class="nv">@_</span><span class="p">);</span>
-</span><span class="line">	<span class="k">return</span> <span class="nv">$self</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line"><span class="p">{</span>
-</span><span class="line">	<span class="k">my</span> <span class="nv">@_init_mems</span> <span class="o">=</span>
-</span><span class="line">	<span class="sx">qw( _name _artist _publisher _ISBN _tracks _room _shelf _rating )</span><span class="p">;</span>
-</span><span class="line">	<span class="k">sub </span><span class="nf">_init</span> <span class="p">{</span>
-</span><span class="line">		<span class="k">my</span> <span class="p">(</span><span class="nv">$self</span><span class="p">,</span><span class="nv">@args</span><span class="p">)</span> <span class="o">=</span> <span class="nv">@_</span><span class="p">;</span>
-</span><span class="line">		<span class="k">my</span> <span class="nv">%inits</span><span class="p">;</span>
-</span><span class="line">		<span class="nv">@inits</span><span class="p">{</span><span class="nv">@_init_mems</span><span class="p">}</span> <span class="o">=</span> <span class="nv">@args</span><span class="p">;</span>
-</span><span class="line">		<span class="nv">%$self</span> <span class="o">=</span> <span class="nv">%inits</span><span class="p">;</span>
-</span><span class="line">	<span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-</div>
-  
-  
-
-
-    </article>
   
   
     <article>
@@ -914,6 +363,1544 @@ my @line &hellip;">
 
 <p>2.-p:
 causes Perl to assume the following loop around your program, which makes it iterate over filename arguments somewhat like sed.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/05/useful-perl-man-page/">Useful Perl Man Page</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-05T18:14:03+08:00" pubdate data-updated="true">Sep 5<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>We can check them like “perl perlre”. These useful perl manuals are:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+<span class="line-number">35</span>
+<span class="line-number">36</span>
+<span class="line-number">37</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">perlre</span>
+</span><span class="line">
+</span><span class="line"><span class="n">perlobj</span>
+</span><span class="line">
+</span><span class="line"><span class="n">perlootut</span>
+</span><span class="line">
+</span><span class="line"><span class="n">perlmodlib</span>
+</span><span class="line">
+</span><span class="line"><span class="n">perlintro</span>
+</span><span class="line">
+</span><span class="line"><span class="n">perlsyn</span>
+</span><span class="line">
+</span><span class="line"><span class="n">perlop</span>
+</span><span class="line">
+</span><span class="line"><span class="n">perlsub</span>
+</span><span class="line">
+</span><span class="line"><span class="n">perlrequick</span>
+</span><span class="line">
+</span><span class="line"><span class="n">perlretut</span>
+</span><span class="line">
+</span><span class="line"><span class="n">perlfunc</span>
+</span><span class="line">
+</span><span class="line"><span class="n">perlref</span>
+</span><span class="line">
+</span><span class="line"><span class="n">perlreftut</span>
+</span><span class="line">
+</span><span class="line"><span class="n">perldsc</span>
+</span><span class="line">
+</span><span class="line"><span class="n">perllol</span>
+</span><span class="line">
+</span><span class="line"><span class="n">perlrun</span>
+</span><span class="line">
+</span><span class="line"><span class="n">perldebug</span>
+</span><span class="line">
+</span><span class="line"><span class="n">perlnewmod</span>
+</span><span class="line">
+</span><span class="line"><span class="n">perlfaq3</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>And below are some modules we may find useful:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nn">Moose::</span><span class="n">Manual</span>
+</span><span class="line">
+</span><span class="line"><span class="n">Mouse</span>
+</span><span class="line">
+</span><span class="line"><span class="nn">Mouse::</span><span class="n">Tiny</span>
+</span><span class="line">
+</span><span class="line"><span class="nn">Class::</span><span class="n">Accessor</span>
+</span><span class="line">
+</span><span class="line"><span class="nn">Role::</span><span class="n">Tiny</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/05/object-oriented-perl/">Object Oriented Perl</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-05T15:46:51+08:00" pubdate data-updated="true">Sep 5<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>We can find details about the info list below by issuing “perldoc perlobj”, or “perldoc perlootut”</p>
+
+<p>1.When we bless something, we are not blessing the variable which contains a reference to that thing, nor are we blessing the reference that the variable stores; we are blessing the thing that the variable refers to (sometimes known as the referent).  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="nn">Scalar::</span><span class="n">Util</span> <span class="s">&#39;blessed&#39;</span><span class="p">;</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">$foo</span> <span class="o">=</span> <span class="p">{};</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">$bar</span> <span class="o">=</span> <span class="nv">$foo</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="nb">bless</span> <span class="nv">$foo</span><span class="p">,</span> <span class="s">&#39;Class&#39;</span><span class="p">;</span>
+</span><span class="line"><span class="k">print</span> <span class="n">blessed</span><span class="p">(</span> <span class="nv">$bar</span> <span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="nv">$bar</span> <span class="o">=</span> <span class="s">&quot;some other value&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="k">print</span> <span class="n">blessed</span><span class="p">(</span> <span class="nv">$bar</span> <span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>The first will print out “Class” and second undef(of course you can see it).</p>
+
+<p>When we call “bless” on a variable, we are actually blessing the underlying data structure that the variable refers to. We are not blessing the reference itself, nor the variable that contains that reference. That’s why the second call to “blessed( $bar )” returns false. At that point $bar is no longer storing a reference to an
+object. You will sometimes see older books or documentation mention “blessing a reference” or describe an object as a “blessed reference”, but this is incorrect. It isn’t the reference that is blessed as an object; it’s the thing the reference refers to (i.e. the referent).   </p>
+
+<p>2.Objects are merely Perl data structures (hashes, arrays, scalars, filehandles, etc.) that have been explicitly associated with a particular class. That explicit association is created by the built-in “bless” function.</p>
+
+<p>3.An object is simply a data structure that knows to which class it belongs.A class is simply a package. A class provides methods that expect to operate on objects. A method is simply a subroutine that expects a reference to an object (or a package name, for class methods) as the first argument. </p>
+
+<p>4.Each package contains a special array called @ISA. The @ISA array contains a list of that class’s parent classes, if any. This array is examined when Perl does method resolution. It is possible to manually set @ISA. and you may see this in older Perl code. Much older code also uses the base pragma. For new code, we recommend that you use the parent pragma to declare your parents.  This pragma will take care of setting @ISA.  It will also load the parent classes and make sure that the package doesn’t inherit from itself.  </p>
+
+<p>5.However the parent classes are set, the package’s @ISA variable will contain a list of those parents. This is simply a list of scalars, each of which is a string that corresponds to a package name.   </p>
+
+<p>6.All classes inherit from the UNIVERSAL class implicitly. The UNIVERSAL class is implemented by the Perl core, and provides several default methods, such as “isa()”, “can()”, and “VERSION()”.  The “UNIVERSAL” class will never appear in a package’s @ISA variable.  </p>
+
+<p>7.Perl provides no special constructor syntax. This means that a class must implement its own constructor. A constructor is simply a class method that returns a reference to a new object.    </p>
+
+<p>8.A simple read-only accessor simply gets the value of a single attribute:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">sub </span><span class="nf">path</span> <span class="p">{</span>
+</span><span class="line">	<span class="k">my</span> <span class="nv">$self</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
+</span><span class="line">	<span class="k">return</span> <span class="nv">$self</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">path</span><span class="p">};</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>A read-write accessor will allow the caller to set the value as well as get it:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">sub </span><span class="nf">path</span> <span class="p">{</span>
+</span><span class="line">	<span class="k">my</span> <span class="nv">$self</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="nv">@_</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">    	<span class="nv">$self</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">path</span><span class="p">}</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">return</span> <span class="nv">$self</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">path</span><span class="p">};</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>9.More on bless. </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">$object</span> <span class="o">=</span> <span class="nb">bless</span> <span class="p">{},</span> <span class="nv">$class</span><span class="p">;</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">$object</span> <span class="o">=</span> <span class="nb">bless</span> <span class="p">{};</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>In the first form, the anonymous hash is being blessed into the class
+in $class. In the second form, the anonymous hash is blessed into the
+current package. The second form is strongly discouraged, because it breaks the ability of a subclass to reuse the parent’s constructor, but you may still run across it in existing code.   </p>
+
+<p>10.If you simply want to check that a variable contains an object reference, we recommend that you use “defined blessed($object)”, since “ref” returns true values for all references, not just objects.  </p>
+
+<p>11.If you call a method that doesn’t exist in a class, Perl will throw an error. However, if that class or any of its parent classes defines an “AUTOLOAD” method, that “AUTOLOAD” method is called instead.   </p>
+
+<p>12.All the examples so far have shown objects based on a blessed hash. However, it’s possible to bless any type of data structure or referent, including scalars, globs, and subroutines. You may see this sort of thing when looking at code in the wild.  </p>
+
+<p>13.You should also check out perlmodlib for some style guides on constructing both modules and classes.  </p>
+
+<p>14.As we said earlier, most Perl objects are hashes, but an object can be an instance of any Perl data type (scalar, array, etc.). Turning a plain data structure into an object is done by blessing that data structure using Perl’s “bless” function.  </p>
+
+<p>15.Once a referent has been blessed, the “blessed” function from the Scalar::Util core module can tell us its class name. This subroutine returns an object’s class when passed an object, and false otherwise.  </p>
+
+<p>16.A constructor creates a new object. In Perl, a class’s constructor is just another method, unlike some other languages, which provide syntax for constructors. Most Perl classes use “new” as the name for their constructor: my $file = File-&gt;new(…);   </p>
+
+<p>17.What makes a method special is how it’s called. The arrow operator (“-&gt;”) tells Perl that we are calling a method.   </p>
+
+<p>18.When we make a method call, Perl arranges for the method’s invocant to be passed as the first argument. Invocant is a fancy name for the thing on the left side of the arrow. The invocant can either be a class name
+or an object. We can also pass additional arguments to the method:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">sub </span><span class="nf">print_info</span> <span class="p">{</span>
+</span><span class="line">	<span class="k">my</span> <span class="nv">$self</span>   <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
+</span><span class="line">    <span class="k">my</span> <span class="nv">$prefix</span> <span class="o">=</span> <span class="nb">shift</span> <span class="sr">//</span> <span class="s">&quot;This file is at &quot;</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">   	<span class="k">print</span> <span class="nv">$prefix</span><span class="p">,</span> <span class="s">&quot;, &quot;</span><span class="p">,</span> <span class="nv">$self</span><span class="o">-&gt;</span><span class="n">path</span><span class="p">,</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="nv">$file</span><span class="o">-&gt;</span><span class="n">print_info</span><span class="p">(</span><span class="s">&quot;The file is located at &quot;</span><span class="p">);</span>
+</span><span class="line"><span class="c1"># The file is located at /etc/hostname</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>19.Each class can define its attributes. Attributes are sometimes called properties.  </p>
+
+<p>20.Perl has no special syntax for attributes. Under the hood, attributes are often stored as keys in the object’s underlying hash, but don’t worry about this.   </p>
+
+<p>21.You might also see the terms getter and setter. These are two types of accessors. A getter gets the attribute’s value, while a setter sets it. Another term for a setter is mutator. We recommend that you only access attributes via accessor methods.   </p>
+
+<p>22.Attributes are typically defined as read-only or read-write. Read-only attributes can only be set when the object is first created, while read-write attributes can be altered at any time.  </p>
+
+<p>23.We often refer to inheritance relationships as parent-child or “superclass/subclass” relationships. Sometimes we say that the child has an is-a relationship with its parent class.   </p>
+
+<p>24.The process of determining what method should be used is called method resolution. What Perl does is look at the object’s class first (“File::MP3” in this case). If that class defines the method, then that class’s version of the method is called. If not, Perl looks at each parent class in turn. For “File::MP3”, its only parent is “File”. If “File::MP3” does not define the method, but “File” does, then Perl calls the method in “File”.  </p>
+
+<p>25.It is possible to explicitly call a parent method from a child:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nb">package</span> <span class="nn">File::</span><span class="n">MP3</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">use</span> <span class="n">parent</span> <span class="s">&#39;File&#39;</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">sub </span><span class="nf">print_info</span> <span class="p">{</span>
+</span><span class="line">	<span class="k">my</span> <span class="nv">$self</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
+</span><span class="line">	<span class="nv">$self</span><span class="o">-&gt;</span><span class="nn">SUPER::</span><span class="n">print_info</span><span class="p">();</span>
+</span><span class="line">	<span class="k">print</span> <span class="s">&quot;Its title is &quot;</span><span class="p">,</span> <span class="nv">$self</span><span class="o">-&gt;</span><span class="n">title</span><span class="p">,</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>26.The “has()” subroutine declares an attribute, and “Moose” automatically creates accessors for these attributes. It also takes care of creating a “new()” method for you. This constructor knows about the attributes you declared.     </p>
+
+<p>27.与@INC数组类似，@INC包含文件的寻找路径, @ISA数组含有类(包)名，当一个方法在当前包中未找到的时就到@ISA中中的包去寻找。@ISA中还含有当前类继承的基类名。  </p>
+
+<p>28.oo中的new可以有如下的几种写法的: 注意这两种写法的区别  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="c1">#!/usr/bin/perl</span>
+</span><span class="line"><span class="k">use</span> <span class="n">Cocoa</span><span class="p">;</span>
+</span><span class="line"><span class="nv">$cup</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Cocoa</span><span class="p">;</span>
+</span><span class="line"><span class="nv">$cup</span><span class="o">-&gt;</span><span class="n">setImports</span><span class="p">(</span> <span class="s">&#39;java.io.InputStream&#39;</span><span class="p">,</span> <span class="s">&#39;java.net.*&#39;</span><span class="p">);</span>
+</span><span class="line"><span class="nv">$cup</span><span class="o">-&gt;</span><span class="n">declareMain</span><span class="p">(</span> <span class="s">&quot;Msg&quot;</span> <span class="p">,</span> <span class="s">&quot;java.applet.Applet&quot;</span><span class="p">,</span> <span class="s">&quot;Runnable&quot;</span><span class="p">);</span>
+</span><span class="line"><span class="nv">$cup</span><span class="o">-&gt;</span><span class="n">closeMain</span><span class="p">();</span>
+</span><span class="line">
+</span><span class="line"><span class="ow">or</span>
+</span><span class="line">
+</span><span class="line"><span class="c1">#!/usr/bin/perl</span>
+</span><span class="line"><span class="k">use</span> <span class="n">Cocoa</span><span class="p">;</span>
+</span><span class="line"><span class="nv">$cup</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Cocoa</span><span class="p">;</span>
+</span><span class="line"><span class="nn">Cocoa::</span><span class="n">setImports</span><span class="p">(</span><span class="nv">$cup</span><span class="p">,</span> <span class="s">&#39;java.io.InputStream&#39;</span><span class="p">,</span> <span class="s">&#39;java.net.*&#39;</span><span class="p">);</span>
+</span><span class="line"><span class="nn">Cocoa::</span><span class="n">declareMain</span><span class="p">(</span><span class="nv">$cup</span><span class="p">,</span> <span class="s">&quot;Msg&quot;</span> <span class="p">,</span> <span class="s">&quot;java.applet.Applet&quot;</span><span class="p">,</span> <span class="s">&quot;Runnable&quot;</span><span class="p">);</span>
+</span><span class="line"><span class="nn">Cocoa::</span><span class="n">closeMain</span><span class="p">(</span><span class="nv">$cup</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>29.类方法通过@ISA数组继承.</p>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/31/useful-js-code-snippets/">Useful Js Code Snippets</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-31T17:47:03+08:00" pubdate data-updated="true">Aug 31<span>st</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>1.To sort an array from small to big nums, we can use the following method.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="kd">function</span> <span class="nx">compare</span><span class="p">(</span><span class="nx">num1</span><span class="p">,</span> <span class="nx">num2</span><span class="p">){</span>
+</span><span class="line">  <span class="k">return</span> <span class="nx">num1</span> <span class="o">-</span> <span class="nx">num2</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">var</span> <span class="nx">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">200</span><span class="p">];</span>
+</span><span class="line"><span class="nx">nums</span><span class="p">.</span><span class="nx">sort</span><span class="p">(</span><span class="nx">compare</span><span class="p">);</span>
+</span><span class="line"><span class="nx">print</span><span class="p">(</span><span class="nx">nums</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>2.reduce, every, some, forEach迭代器方法</p>
+
+<p>3.map will give out a new array:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="kd">function</span> <span class="nx">first</span><span class="p">(</span><span class="nx">word</span><span class="p">){</span>
+</span><span class="line">  <span class="k">return</span> <span class="nx">word</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">var</span> <span class="nx">words</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;for&quot;</span><span class="p">,</span> <span class="s2">&quot;your&quot;</span><span class="p">,</span> <span class="s2">&quot;info&quot;</span><span class="p">];</span>
+</span><span class="line"><span class="kd">var</span> <span class="nx">acronym</span> <span class="o">=</span> <span class="nx">words</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">first</span><span class="p">);</span>
+</span><span class="line"><span class="nx">print</span><span class="p">(</span><span class="nx">acronym</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">));</span>
+</span><span class="line"><span class="c1">//fyi</span>
+</span><span class="line">
+</span><span class="line"><span class="c1">//print(acronym);</span>
+</span><span class="line"><span class="c1">//f,y,i</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>note how we used join to avoid the “,”</p>
+
+<p>4.filter</p>
+
+<p>Filter is quite similar to “every”, it accept a function whose return value is boolean. In contrast to “every”, when filter(func) evaluated to true, it does not retrun “true”, it returns a new array, whose item is the those items in the original way after beed passed to the funcition.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="kd">function</span> <span class="nx">passing</span><span class="p">(</span><span class="nx">num</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">   <span class="k">return</span> <span class="nx">num</span> <span class="o">&gt;=</span> <span class="mi">60</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">var</span> <span class="nx">grades</span> <span class="o">=</span> <span class="p">[];</span>
+</span><span class="line"><span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">;</span> <span class="o">++</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">   <span class="nx">grades</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span> <span class="o">*</span> <span class="mi">101</span><span class="p">);</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line"><span class="kd">var</span> <span class="nx">passGrades</span> <span class="o">=</span> <span class="nx">grades</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nx">passing</span><span class="p">);</span>
+</span><span class="line"><span class="nx">print</span><span class="p">(</span><span class="nx">grades</span><span class="p">);</span>
+</span><span class="line"><span class="nx">print</span><span class="p">(</span><span class="nx">passGrades</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>5.the following code shows how to get a studetnt’s average score and how to get a discipline’s averge score.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="c1">//discipline&#39;s average score</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">var</span> <span class="nx">grades</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">89</span><span class="p">,</span> <span class="mi">77</span><span class="p">,</span> <span class="mi">78</span><span class="p">],[</span><span class="mi">76</span><span class="p">,</span> <span class="mi">82</span><span class="p">,</span> <span class="mi">81</span><span class="p">],[</span><span class="mi">91</span><span class="p">,</span> <span class="mi">94</span><span class="p">,</span> <span class="mi">89</span><span class="p">]];</span>
+</span><span class="line"><span class="kd">var</span> <span class="nx">total</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line"><span class="kd">var</span> <span class="nx">average</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
+</span><span class="line"><span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">col</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">col</span> <span class="o">&lt;</span> <span class="nx">grades</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="o">++</span><span class="nx">col</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">   <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">row</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">row</span> <span class="o">&lt;</span> <span class="nx">grades</span><span class="p">[</span><span class="nx">col</span><span class="p">].</span><span class="nx">length</span><span class="p">;</span> <span class="o">++</span><span class="nx">row</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">      <span class="nx">total</span> <span class="o">+=</span> <span class="nx">grades</span><span class="p">[</span><span class="nx">row</span><span class="p">][</span><span class="nx">col</span><span class="p">];</span>
+</span><span class="line">   <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line">   <span class="nx">average</span> <span class="o">=</span> <span class="nx">total</span> <span class="o">/</span> <span class="nx">grades</span><span class="p">[</span><span class="nx">col</span><span class="p">].</span><span class="nx">length</span><span class="p">;</span>
+</span><span class="line">   <span class="nx">print</span><span class="p">(</span><span class="s2">&quot;Test &quot;</span> <span class="o">+</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">col</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; average: &quot;</span> <span class="o">+</span>
+</span><span class="line">         <span class="nx">average</span><span class="p">.</span><span class="nx">toFixed</span><span class="p">(</span><span class="mi">2</span><span class="p">));</span>
+</span><span class="line">   <span class="nx">total</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line">   <span class="nx">average</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="c1">//a student&#39;s average score</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">var</span> <span class="nx">grades</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">89</span><span class="p">,</span> <span class="mi">77</span><span class="p">,</span> <span class="mi">78</span><span class="p">],[</span><span class="mi">76</span><span class="p">,</span> <span class="mi">82</span><span class="p">,</span> <span class="mi">81</span><span class="p">],[</span><span class="mi">91</span><span class="p">,</span> <span class="mi">94</span><span class="p">,</span> <span class="mi">89</span><span class="p">]];</span>
+</span><span class="line"><span class="kd">var</span> <span class="nx">total</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line"><span class="kd">var</span> <span class="nx">average</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
+</span><span class="line"><span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">row</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">row</span> <span class="o">&lt;</span> <span class="nx">grades</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="o">++</span><span class="nx">row</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">   <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">col</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">col</span> <span class="o">&lt;</span> <span class="nx">grades</span><span class="p">[</span><span class="nx">row</span><span class="p">].</span><span class="nx">length</span><span class="p">;</span> <span class="o">++</span><span class="nx">col</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">      <span class="nx">total</span> <span class="o">+=</span> <span class="nx">grades</span><span class="p">[</span><span class="nx">row</span><span class="p">][</span><span class="nx">col</span><span class="p">];</span>
+</span><span class="line">   <span class="p">}</span>
+</span><span class="line">   <span class="nx">average</span> <span class="o">=</span> <span class="nx">total</span> <span class="o">/</span> <span class="nx">grades</span><span class="p">[</span><span class="nx">row</span><span class="p">].</span><span class="nx">length</span><span class="p">;</span>
+</span><span class="line">   <span class="nx">print</span><span class="p">(</span><span class="s2">&quot;Student &quot;</span> <span class="o">+</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">row</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; average: &quot;</span> <span class="o">+</span>
+</span><span class="line">         <span class="nx">average</span><span class="p">.</span><span class="nx">toFixed</span><span class="p">(</span><span class="mi">2</span><span class="p">));</span>
+</span><span class="line">   <span class="nx">total</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line">   <span class="nx">average</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/31/cheng-xu-de-shu-ru-shu-chu/">程序的输入输出</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-31T10:45:18+08:00" pubdate data-updated="true">Aug 31<span>st</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>介绍三种程序的输入输出方法。   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="cp">#include &lt;stdlib.h&gt;</span>
+</span><span class="line"><span class="cp">#include &lt;stdio.h&gt;</span>
+</span><span class="line"><span class="cp">#define INF 100000</span>
+</span><span class="line">
+</span><span class="line"><span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+</span><span class="line">
+</span><span class="line">  <span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">min</span><span class="o">=</span><span class="n">INF</span><span class="p">,</span> <span class="n">max</span><span class="o">=-</span><span class="n">INF</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+</span><span class="line">  <span class="k">while</span><span class="p">(</span><span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%d&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">x</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">){</span>
+</span><span class="line">    <span class="n">s</span> <span class="o">+=</span> <span class="n">x</span><span class="p">;</span>
+</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">&lt;</span> <span class="n">min</span><span class="p">)</span> <span class="n">min</span><span class="o">=</span><span class="n">x</span><span class="p">;</span>
+</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="n">max</span><span class="p">)</span> <span class="n">max</span><span class="o">=</span><span class="n">x</span><span class="p">;</span>
+</span><span class="line">    <span class="n">n</span><span class="o">++</span><span class="p">;</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line">  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d %d %.3f</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">min</span><span class="p">,</span> <span class="n">max</span><span class="p">,</span> <span class="p">(</span><span class="kt">double</span><span class="p">)</span><span class="n">s</span><span class="o">/</span><span class="n">n</span><span class="p">);</span>
+</span><span class="line">  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="cp">#define LOCAL</span>
+</span><span class="line"><span class="cp">#include &lt;stdlib.h&gt;</span>
+</span><span class="line"><span class="cp">#include &lt;stdio.h&gt;</span>
+</span><span class="line"><span class="cp">#define INF 10000000</span>
+</span><span class="line">
+</span><span class="line"><span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+</span><span class="line">  <span class="err">#</span><span class="n">ifdef</span> <span class="n">LOCAL</span>
+</span><span class="line">    <span class="n">freopen</span><span class="p">(</span><span class="s">&quot;data.in&quot;</span><span class="p">,</span> <span class="s">&quot;r&quot;</span><span class="p">,</span> <span class="n">stdin</span><span class="p">);</span>
+</span><span class="line">    <span class="n">freopen</span><span class="p">(</span><span class="s">&quot;data.out&quot;</span><span class="p">,</span> <span class="s">&quot;w&quot;</span><span class="p">,</span> <span class="n">stdout</span><span class="p">);</span>
+</span><span class="line">  <span class="err">#</span><span class="n">endif</span>
+</span><span class="line">
+</span><span class="line">  <span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">min</span><span class="o">=</span><span class="n">INF</span><span class="p">,</span> <span class="n">max</span><span class="o">=-</span><span class="n">INF</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+</span><span class="line">  <span class="k">while</span><span class="p">(</span><span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%d&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">x</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">){</span>
+</span><span class="line">    <span class="n">s</span> <span class="o">+=</span> <span class="n">x</span><span class="p">;</span>
+</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">&lt;</span> <span class="n">min</span><span class="p">)</span> <span class="n">min</span><span class="o">=</span><span class="n">x</span><span class="p">;</span>
+</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="n">max</span><span class="p">)</span> <span class="n">max</span><span class="o">=</span><span class="n">x</span><span class="p">;</span>
+</span><span class="line">    <span class="n">n</span><span class="o">++</span><span class="p">;</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line">  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d %d %.3f</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">min</span><span class="p">,</span> <span class="n">max</span><span class="p">,</span> <span class="p">(</span><span class="kt">double</span><span class="p">)</span><span class="n">s</span><span class="o">/</span><span class="n">n</span><span class="p">);</span>
+</span><span class="line">  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="cp">#include &lt;stdlib.h&gt;</span>
+</span><span class="line"><span class="cp">#include &lt;stdio.h&gt;</span>
+</span><span class="line"><span class="cp">#define INF 10000000</span>
+</span><span class="line">
+</span><span class="line"><span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+</span><span class="line">  <span class="kt">FILE</span> <span class="o">*</span><span class="n">fin</span><span class="p">,</span> <span class="o">*</span><span class="n">fout</span><span class="p">;</span>
+</span><span class="line">  <span class="n">fin</span> <span class="o">=</span> <span class="n">fopen</span><span class="p">(</span><span class="s">&quot;data.in&quot;</span><span class="p">,</span> <span class="s">&quot;rb&quot;</span><span class="p">);</span>
+</span><span class="line">  <span class="n">fout</span> <span class="o">=</span> <span class="n">fopen</span><span class="p">(</span><span class="s">&quot;data.out&quot;</span><span class="p">,</span> <span class="s">&quot;wb&quot;</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line">  <span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">min</span><span class="o">=</span><span class="n">INF</span><span class="p">,</span> <span class="n">max</span><span class="o">=-</span><span class="n">INF</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+</span><span class="line">  <span class="k">while</span><span class="p">(</span><span class="n">fscanf</span><span class="p">(</span><span class="n">fin</span><span class="p">,</span> <span class="s">&quot;%d&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">x</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">){</span>
+</span><span class="line">    <span class="n">s</span> <span class="o">+=</span> <span class="n">x</span><span class="p">;</span>
+</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">&lt;</span> <span class="n">min</span><span class="p">)</span> <span class="n">min</span><span class="o">=</span><span class="n">x</span><span class="p">;</span>
+</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="n">max</span><span class="p">)</span> <span class="n">max</span><span class="o">=</span><span class="n">x</span><span class="p">;</span>
+</span><span class="line">    <span class="n">n</span><span class="o">++</span><span class="p">;</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">  <span class="n">fprintf</span><span class="p">(</span><span class="n">fout</span><span class="p">,</span> <span class="s">&quot;%d %d %.3f</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">min</span><span class="p">,</span> <span class="n">max</span><span class="p">,</span> <span class="p">(</span><span class="kt">double</span><span class="p">)</span><span class="n">s</span><span class="o">/</span><span class="n">n</span><span class="p">);</span>
+</span><span class="line">  <span class="n">fclose</span><span class="p">(</span><span class="n">fin</span><span class="p">);</span>
+</span><span class="line">  <span class="n">fclose</span><span class="p">(</span><span class="n">fout</span><span class="p">);</span>
+</span><span class="line">  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/20/ctci-q1-dot-2/">CTCI-Q1.2</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-20T10:58:48+08:00" pubdate data-updated="true">Aug 20<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>The question is:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">Implement a function void reverse(char* str) in C or C++ which reverses a null-terminated string.</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>We have two solutions here, the first is to swap the i and n-i-1 element.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+</pre></td><td class="code"><pre><code class="cpp"><span class="line"><span class="cp">#include &lt;iostream&gt;</span>
+</span><span class="line"><span class="cp">#include &lt;cstring&gt;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line"><span class="kt">void</span> <span class="n">swap</span><span class="p">(</span><span class="kt">char</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">,</span> <span class="kt">char</span> <span class="o">&amp;</span><span class="n">b</span><span class="p">){</span>
+</span><span class="line">  <span class="n">a</span> <span class="o">=</span> <span class="n">a</span><span class="o">^</span><span class="n">b</span><span class="p">;</span>
+</span><span class="line">  <span class="n">b</span> <span class="o">=</span> <span class="n">a</span><span class="o">^</span><span class="n">b</span><span class="p">;</span>
+</span><span class="line">  <span class="n">a</span> <span class="o">=</span> <span class="n">a</span><span class="o">^</span><span class="n">b</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="kt">void</span> <span class="n">reverse</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">s</span><span class="p">){</span>
+</span><span class="line">  <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="n">strlen</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
+</span><span class="line">  <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+</span><span class="line">  <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">    <span class="n">swap</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="n">n</span><span class="o">-</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]);</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="kt">int</span> <span class="n">main</span><span class="p">(){</span>
+</span><span class="line">  <span class="kt">char</span> <span class="n">s1</span><span class="p">[]</span> <span class="o">=</span> <span class="s">&quot;123456789&quot;</span><span class="p">;</span>
+</span><span class="line">  <span class="kt">char</span> <span class="n">s2</span><span class="p">[]</span> <span class="o">=</span> <span class="s">&quot;abcdefg&quot;</span><span class="p">;</span>
+</span><span class="line">  <span class="n">reverse</span><span class="p">(</span><span class="n">s1</span><span class="p">);</span>
+</span><span class="line">  <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">s1</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+</span><span class="line">  <span class="n">reverse</span><span class="p">(</span><span class="n">s2</span><span class="p">);</span>
+</span><span class="line">  <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">s2</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+</pre></td><td class="code"><pre><code class="cpp"><span class="line"><span class="cp">#include &lt;iostream&gt;</span>
+</span><span class="line"><span class="cp">#include &lt;cstring&gt;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="kt">void</span> <span class="n">reverse</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">str</span><span class="p">){</span>
+</span><span class="line">  <span class="kt">char</span><span class="o">*</span> <span class="n">end</span> <span class="o">=</span> <span class="n">str</span><span class="p">;</span>
+</span><span class="line">  <span class="kt">char</span> <span class="n">tmp</span><span class="p">;</span>
+</span><span class="line">  <span class="k">if</span><span class="p">(</span><span class="n">str</span><span class="p">){</span>
+</span><span class="line">    <span class="k">while</span><span class="p">(</span><span class="o">*</span><span class="n">end</span><span class="p">){</span>
+</span><span class="line">      <span class="o">++</span><span class="n">end</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">    <span class="o">--</span><span class="n">end</span><span class="p">;</span>
+</span><span class="line">    <span class="c1">//find the end of the string, since the last char is nul, we use --end to set one char back.</span>
+</span><span class="line">    <span class="k">while</span><span class="p">(</span><span class="n">str</span> <span class="o">&lt;</span> <span class="n">end</span><span class="p">){</span>
+</span><span class="line">      <span class="n">tmp</span> <span class="o">=</span> <span class="o">*</span><span class="n">str</span><span class="p">;</span>
+</span><span class="line">      <span class="o">*</span><span class="n">str</span><span class="o">++</span> <span class="o">=</span> <span class="o">*</span><span class="n">end</span><span class="p">;</span>
+</span><span class="line">      <span class="o">*</span><span class="n">end</span><span class="o">--</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="kt">int</span> <span class="n">main</span><span class="p">(){</span>
+</span><span class="line">  <span class="kt">char</span> <span class="n">s1</span><span class="p">[]</span> <span class="o">=</span> <span class="s">&quot;123456789&quot;</span><span class="p">;</span>
+</span><span class="line">  <span class="kt">char</span> <span class="n">s2</span><span class="p">[]</span> <span class="o">=</span> <span class="s">&quot;abcdefg&quot;</span><span class="p">;</span>
+</span><span class="line">  <span class="n">reverse</span><span class="p">(</span><span class="n">s1</span><span class="p">);</span>
+</span><span class="line">  <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">s1</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+</span><span class="line">  <span class="n">reverse</span><span class="p">(</span><span class="n">s2</span><span class="p">);</span>
+</span><span class="line">  <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">s2</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>For the python version, we use recursion to get the last char of the string first and then the second to last char by using the recursion method. </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="c">#!/usr/local/bin/python3</span>
+</span><span class="line"><span class="c"># -*- coding: utf-8 -*-</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line"><span class="k">def</span> <span class="nf">reverseStringRecursive</span><span class="p">(</span><span class="nb">str</span><span class="p">):</span>
+</span><span class="line">    <span class="k">if</span> <span class="nb">str</span> <span class="o">!=</span> <span class="s">&quot;&quot;</span><span class="p">:</span>
+</span><span class="line">        <span class="k">return</span> <span class="nb">str</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">:]</span> <span class="o">+</span> <span class="n">reverseStringRecursive</span><span class="p">(</span><span class="nb">str</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+</span><span class="line">    <span class="k">else</span><span class="p">:</span>
+</span><span class="line">        <span class="k">return</span> <span class="s">&quot;&quot;</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line">
+</span><span class="line"><span class="n">str1</span> <span class="o">=</span> <span class="s">&quot;abcdef&quot;</span>
+</span><span class="line"><span class="n">str2</span> <span class="o">=</span> <span class="s">&quot;123456&quot;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">print</span><span class="p">(</span><span class="n">reverseStringRecursive</span><span class="p">(</span><span class="n">str1</span><span class="p">))</span>
+</span><span class="line"><span class="k">print</span><span class="p">(</span><span class="n">reverseStringRecursive</span><span class="p">(</span><span class="n">str2</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>This method is very elegant.  </p>
+
+<p>As to the java version, I have no idea how to implement it in java: so sad!</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+</pre></td><td class="code"><pre><code class="java"><span class="line"><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Solution</span><span class="o">{</span>
+</span><span class="line">  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">swap</span><span class="o">(</span><span class="kt">char</span> <span class="n">a</span><span class="o">,</span> <span class="kt">char</span> <span class="n">b</span><span class="o">){</span>
+</span><span class="line">    <span class="kt">char</span> <span class="n">temp</span><span class="o">;</span>
+</span><span class="line">    <span class="n">temp</span> <span class="o">=</span> <span class="n">a</span><span class="o">;</span>
+</span><span class="line">    <span class="n">a</span> <span class="o">=</span> <span class="n">b</span><span class="o">;</span>
+</span><span class="line">    <span class="n">b</span> <span class="o">=</span> <span class="n">temp</span><span class="o">;</span>
+</span><span class="line">  <span class="o">}</span>
+</span><span class="line">
+</span><span class="line">  <span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">reverse</span><span class="o">(</span><span class="n">String</span> <span class="n">s</span><span class="o">){</span>
+</span><span class="line">    <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="na">length</span><span class="o">();</span>
+</span><span class="line">    <span class="kt">int</span> <span class="n">i</span><span class="o">;</span>
+</span><span class="line">    <span class="k">for</span> <span class="o">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">n</span><span class="o">/</span><span class="mi">2</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+</span><span class="line">      <span class="n">swap</span><span class="o">(</span><span class="n">s</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">i</span><span class="o">),</span> <span class="n">s</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">n</span><span class="o">-</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="o">));</span>
+</span><span class="line">    <span class="o">}</span>
+</span><span class="line">    <span class="k">return</span> <span class="n">s</span><span class="o">;</span>
+</span><span class="line">  <span class="o">}</span>
+</span><span class="line">
+</span><span class="line">  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
+</span><span class="line">    <span class="n">String</span> <span class="n">str</span> <span class="o">=</span> <span class="s">&quot;abcdef&quot;</span><span class="o">;</span>
+</span><span class="line">    <span class="n">Solution</span> <span class="n">slt</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Solution</span><span class="o">();</span>
+</span><span class="line">    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;the original string is &quot;</span> <span class="o">+</span> <span class="n">str</span> <span class="o">+</span> <span class="s">&quot; and the reversed string is:\n&quot;</span> <span class="o">+</span> <span class="n">slt</span><span class="o">.</span><span class="na">reverse</span><span class="o">(</span><span class="n">str</span><span class="o">));</span>
+</span><span class="line">  <span class="o">}</span>
+</span><span class="line"><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/19/shun-xu-zhan-de-cyu-yan-shi-xian/">顺序栈和链栈的c语言实现</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-19T21:29:35+08:00" pubdate data-updated="true">Aug 19<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>1.sequence stack </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+<span class="line-number">35</span>
+<span class="line-number">36</span>
+<span class="line-number">37</span>
+<span class="line-number">38</span>
+<span class="line-number">39</span>
+<span class="line-number">40</span>
+<span class="line-number">41</span>
+<span class="line-number">42</span>
+<span class="line-number">43</span>
+<span class="line-number">44</span>
+<span class="line-number">45</span>
+<span class="line-number">46</span>
+<span class="line-number">47</span>
+<span class="line-number">48</span>
+<span class="line-number">49</span>
+<span class="line-number">50</span>
+<span class="line-number">51</span>
+<span class="line-number">52</span>
+<span class="line-number">53</span>
+<span class="line-number">54</span>
+<span class="line-number">55</span>
+<span class="line-number">56</span>
+<span class="line-number">57</span>
+<span class="line-number">58</span>
+<span class="line-number">59</span>
+<span class="line-number">60</span>
+<span class="line-number">61</span>
+<span class="line-number">62</span>
+<span class="line-number">63</span>
+<span class="line-number">64</span>
+<span class="line-number">65</span>
+<span class="line-number">66</span>
+<span class="line-number">67</span>
+<span class="line-number">68</span>
+<span class="line-number">69</span>
+<span class="line-number">70</span>
+<span class="line-number">71</span>
+<span class="line-number">72</span>
+<span class="line-number">73</span>
+<span class="line-number">74</span>
+<span class="line-number">75</span>
+<span class="line-number">76</span>
+<span class="line-number">77</span>
+<span class="line-number">78</span>
+<span class="line-number">79</span>
+<span class="line-number">80</span>
+<span class="line-number">81</span>
+<span class="line-number">82</span>
+<span class="line-number">83</span>
+<span class="line-number">84</span>
+<span class="line-number">85</span>
+<span class="line-number">86</span>
+<span class="line-number">87</span>
+<span class="line-number">88</span>
+<span class="line-number">89</span>
+<span class="line-number">90</span>
+<span class="line-number">91</span>
+<span class="line-number">92</span>
+<span class="line-number">93</span>
+<span class="line-number">94</span>
+<span class="line-number">95</span>
+<span class="line-number">96</span>
+<span class="line-number">97</span>
+<span class="line-number">98</span>
+<span class="line-number">99</span>
+<span class="line-number">100</span>
+<span class="line-number">101</span>
+<span class="line-number">102</span>
+<span class="line-number">103</span>
+<span class="line-number">104</span>
+<span class="line-number">105</span>
+<span class="line-number">106</span>
+<span class="line-number">107</span>
+<span class="line-number">108</span>
+<span class="line-number">109</span>
+<span class="line-number">110</span>
+<span class="line-number">111</span>
+<span class="line-number">112</span>
+<span class="line-number">113</span>
+<span class="line-number">114</span>
+<span class="line-number">115</span>
+<span class="line-number">116</span>
+<span class="line-number">117</span>
+<span class="line-number">118</span>
+<span class="line-number">119</span>
+<span class="line-number">120</span>
+<span class="line-number">121</span>
+<span class="line-number">122</span>
+</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="cp">#include &quot;stdio.h&quot;</span>
+</span><span class="line"><span class="cp">#include &quot;stdlib.h&quot;</span>
+</span><span class="line"><span class="cp">#include &quot;math.h&quot;</span>
+</span><span class="line"><span class="cp">#include &quot;time.h&quot;</span>
+</span><span class="line">
+</span><span class="line"><span class="cp">#define OK 1</span>
+</span><span class="line"><span class="cp">#define ERROR 0</span>
+</span><span class="line"><span class="cp">#define TRUE 1</span>
+</span><span class="line"><span class="cp">#define FALSE 0</span>
+</span><span class="line"><span class="cp">#define MAXSIZE 1000 </span><span class="cm">/* 存储空间初始分配量 */</span><span class="cp"></span>
+</span><span class="line">
+</span><span class="line"><span class="k">typedef</span> <span class="kt">int</span> <span class="n">Status</span><span class="p">;</span>
+</span><span class="line"><span class="k">typedef</span> <span class="kt">int</span> <span class="n">SElemType</span><span class="p">;</span> <span class="cm">/* SElemType类型根据实际情况而定，这里假设为int */</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 顺序栈结构 */</span>
+</span><span class="line"><span class="k">typedef</span> <span class="k">struct</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="n">SElemType</span> <span class="n">data</span><span class="p">[</span><span class="n">MAXSIZE</span><span class="p">];</span>
+</span><span class="line">        <span class="kt">int</span> <span class="n">top</span><span class="p">;</span> <span class="cm">/* 用于栈顶指针 */</span>
+</span><span class="line"><span class="p">}</span><span class="n">SqStack</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="n">Status</span> <span class="nf">visit</span><span class="p">(</span><span class="n">SElemType</span> <span class="n">c</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d &quot;</span><span class="p">,</span><span class="n">c</span><span class="p">);</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/*  构造一个空栈S */</span>
+</span><span class="line"><span class="n">Status</span> <span class="nf">InitStack</span><span class="p">(</span><span class="n">SqStack</span> <span class="o">*</span><span class="n">S</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="cm">/* S.data=(SElemType *)malloc(MAXSIZE*sizeof(SElemType)); */</span>
+</span><span class="line">        <span class="n">S</span><span class="o">-&gt;</span><span class="n">top</span><span class="o">=-</span><span class="mi">1</span><span class="p">;</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 把S置为空栈 */</span>
+</span><span class="line"><span class="n">Status</span> <span class="nf">ClearStack</span><span class="p">(</span><span class="n">SqStack</span> <span class="o">*</span><span class="n">S</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="n">S</span><span class="o">-&gt;</span><span class="n">top</span><span class="o">=-</span><span class="mi">1</span><span class="p">;</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 若栈S为空栈，则返回TRUE，否则返回FALSE */</span>
+</span><span class="line"><span class="n">Status</span> <span class="nf">StackEmpty</span><span class="p">(</span><span class="n">SqStack</span> <span class="n">S</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="k">if</span> <span class="p">(</span><span class="n">S</span><span class="p">.</span><span class="n">top</span><span class="o">==-</span><span class="mi">1</span><span class="p">)</span>
+</span><span class="line">                <span class="k">return</span> <span class="n">TRUE</span><span class="p">;</span>
+</span><span class="line">        <span class="k">else</span>
+</span><span class="line">                <span class="k">return</span> <span class="n">FALSE</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 返回S的元素个数，即栈的长度 */</span>
+</span><span class="line"><span class="kt">int</span> <span class="nf">StackLength</span><span class="p">(</span><span class="n">SqStack</span> <span class="n">S</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">S</span><span class="p">.</span><span class="n">top</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 若栈不空，则用e返回S的栈顶元素，并返回OK；否则返回ERROR */</span>
+</span><span class="line"><span class="n">Status</span> <span class="nf">GetTop</span><span class="p">(</span><span class="n">SqStack</span> <span class="n">S</span><span class="p">,</span><span class="n">SElemType</span> <span class="o">*</span><span class="n">e</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="k">if</span> <span class="p">(</span><span class="n">S</span><span class="p">.</span><span class="n">top</span><span class="o">==-</span><span class="mi">1</span><span class="p">)</span>
+</span><span class="line">                <span class="k">return</span> <span class="n">ERROR</span><span class="p">;</span>
+</span><span class="line">        <span class="k">else</span>
+</span><span class="line">                <span class="o">*</span><span class="n">e</span><span class="o">=</span><span class="n">S</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="n">S</span><span class="p">.</span><span class="n">top</span><span class="p">];</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 插入元素e为新的栈顶元素 */</span>
+</span><span class="line"><span class="n">Status</span> <span class="nf">Push</span><span class="p">(</span><span class="n">SqStack</span> <span class="o">*</span><span class="n">S</span><span class="p">,</span><span class="n">SElemType</span> <span class="n">e</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="k">if</span><span class="p">(</span><span class="n">S</span><span class="o">-&gt;</span><span class="n">top</span> <span class="o">==</span> <span class="n">MAXSIZE</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="cm">/* 栈满 */</span>
+</span><span class="line">        <span class="p">{</span>
+</span><span class="line">                <span class="k">return</span> <span class="n">ERROR</span><span class="p">;</span>
+</span><span class="line">        <span class="p">}</span>
+</span><span class="line">        <span class="n">S</span><span class="o">-&gt;</span><span class="n">top</span><span class="o">++</span><span class="p">;</span>				<span class="cm">/* 栈顶指针增加一 */</span>
+</span><span class="line">        <span class="n">S</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">[</span><span class="n">S</span><span class="o">-&gt;</span><span class="n">top</span><span class="p">]</span><span class="o">=</span><span class="n">e</span><span class="p">;</span>  <span class="cm">/* 将新插入元素赋值给栈顶空间 */</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 若栈不空，则删除S的栈顶元素，用e返回其值，并返回OK；否则返回ERROR */</span>
+</span><span class="line"><span class="n">Status</span> <span class="nf">Pop</span><span class="p">(</span><span class="n">SqStack</span> <span class="o">*</span><span class="n">S</span><span class="p">,</span><span class="n">SElemType</span> <span class="o">*</span><span class="n">e</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="k">if</span><span class="p">(</span><span class="n">S</span><span class="o">-&gt;</span><span class="n">top</span><span class="o">==-</span><span class="mi">1</span><span class="p">)</span>
+</span><span class="line">                <span class="k">return</span> <span class="n">ERROR</span><span class="p">;</span>
+</span><span class="line">        <span class="o">*</span><span class="n">e</span><span class="o">=</span><span class="n">S</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">[</span><span class="n">S</span><span class="o">-&gt;</span><span class="n">top</span><span class="p">];</span>	<span class="cm">/* 将要删除的栈顶元素赋值给e */</span>
+</span><span class="line">        <span class="n">S</span><span class="o">-&gt;</span><span class="n">top</span><span class="o">--</span><span class="p">;</span>				<span class="cm">/* 栈顶指针减一 */</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 从栈底到栈顶依次对栈中每个元素显示 */</span>
+</span><span class="line"><span class="n">Status</span> <span class="nf">StackTraverse</span><span class="p">(</span><span class="n">SqStack</span> <span class="n">S</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+</span><span class="line">        <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+</span><span class="line">        <span class="k">while</span><span class="p">(</span><span class="n">i</span><span class="o">&lt;=</span><span class="n">S</span><span class="p">.</span><span class="n">top</span><span class="p">)</span>
+</span><span class="line">        <span class="p">{</span>
+</span><span class="line">                <span class="n">visit</span><span class="p">(</span><span class="n">S</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="o">++</span><span class="p">]);</span>
+</span><span class="line">        <span class="p">}</span>
+</span><span class="line">        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="kt">int</span> <span class="n">j</span><span class="p">;</span>
+</span><span class="line">        <span class="n">SqStack</span> <span class="n">s</span><span class="p">;</span>
+</span><span class="line">        <span class="kt">int</span> <span class="n">e</span><span class="p">;</span>
+</span><span class="line">        <span class="k">if</span><span class="p">(</span><span class="n">InitStack</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="p">)</span><span class="o">==</span><span class="n">OK</span><span class="p">)</span>
+</span><span class="line">                <span class="k">for</span><span class="p">(</span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="n">j</span><span class="o">&lt;=</span><span class="mi">10</span><span class="p">;</span><span class="n">j</span><span class="o">++</span><span class="p">)</span>
+</span><span class="line">                        <span class="n">Push</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="p">,</span><span class="n">j</span><span class="p">);</span>
+</span><span class="line">        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;栈中元素依次为：&quot;</span><span class="p">);</span>
+</span><span class="line">        <span class="n">StackTraverse</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
+</span><span class="line">        <span class="n">Pop</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="p">,</span><span class="o">&amp;</span><span class="n">e</span><span class="p">);</span>
+</span><span class="line">        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;弹出的栈顶元素 e=%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">e</span><span class="p">);</span>
+</span><span class="line">        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;栈空否：%d(1:空 0:否)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">StackEmpty</span><span class="p">(</span><span class="n">s</span><span class="p">));</span>
+</span><span class="line">        <span class="n">GetTop</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="o">&amp;</span><span class="n">e</span><span class="p">);</span>
+</span><span class="line">        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;栈顶元素 e=%d 栈的长度为%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">e</span><span class="p">,</span><span class="n">StackLength</span><span class="p">(</span><span class="n">s</span><span class="p">));</span>
+</span><span class="line">        <span class="n">ClearStack</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="p">);</span>
+</span><span class="line">        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;清空栈后，栈空否：%d(1:空 0:否)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">StackEmpty</span><span class="p">(</span><span class="n">s</span><span class="p">));</span>
+</span><span class="line">
+</span><span class="line">        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>2.Linked stack</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+<span class="line-number">35</span>
+<span class="line-number">36</span>
+<span class="line-number">37</span>
+<span class="line-number">38</span>
+<span class="line-number">39</span>
+<span class="line-number">40</span>
+<span class="line-number">41</span>
+<span class="line-number">42</span>
+<span class="line-number">43</span>
+<span class="line-number">44</span>
+<span class="line-number">45</span>
+<span class="line-number">46</span>
+<span class="line-number">47</span>
+<span class="line-number">48</span>
+<span class="line-number">49</span>
+<span class="line-number">50</span>
+<span class="line-number">51</span>
+<span class="line-number">52</span>
+<span class="line-number">53</span>
+<span class="line-number">54</span>
+<span class="line-number">55</span>
+<span class="line-number">56</span>
+<span class="line-number">57</span>
+<span class="line-number">58</span>
+<span class="line-number">59</span>
+<span class="line-number">60</span>
+<span class="line-number">61</span>
+<span class="line-number">62</span>
+<span class="line-number">63</span>
+<span class="line-number">64</span>
+<span class="line-number">65</span>
+<span class="line-number">66</span>
+<span class="line-number">67</span>
+<span class="line-number">68</span>
+<span class="line-number">69</span>
+<span class="line-number">70</span>
+<span class="line-number">71</span>
+<span class="line-number">72</span>
+<span class="line-number">73</span>
+<span class="line-number">74</span>
+<span class="line-number">75</span>
+<span class="line-number">76</span>
+<span class="line-number">77</span>
+<span class="line-number">78</span>
+<span class="line-number">79</span>
+<span class="line-number">80</span>
+<span class="line-number">81</span>
+<span class="line-number">82</span>
+<span class="line-number">83</span>
+<span class="line-number">84</span>
+<span class="line-number">85</span>
+<span class="line-number">86</span>
+<span class="line-number">87</span>
+<span class="line-number">88</span>
+<span class="line-number">89</span>
+<span class="line-number">90</span>
+<span class="line-number">91</span>
+<span class="line-number">92</span>
+<span class="line-number">93</span>
+<span class="line-number">94</span>
+<span class="line-number">95</span>
+<span class="line-number">96</span>
+<span class="line-number">97</span>
+<span class="line-number">98</span>
+<span class="line-number">99</span>
+<span class="line-number">100</span>
+<span class="line-number">101</span>
+<span class="line-number">102</span>
+<span class="line-number">103</span>
+<span class="line-number">104</span>
+<span class="line-number">105</span>
+<span class="line-number">106</span>
+<span class="line-number">107</span>
+<span class="line-number">108</span>
+<span class="line-number">109</span>
+<span class="line-number">110</span>
+<span class="line-number">111</span>
+<span class="line-number">112</span>
+<span class="line-number">113</span>
+<span class="line-number">114</span>
+<span class="line-number">115</span>
+<span class="line-number">116</span>
+<span class="line-number">117</span>
+<span class="line-number">118</span>
+<span class="line-number">119</span>
+<span class="line-number">120</span>
+<span class="line-number">121</span>
+<span class="line-number">122</span>
+<span class="line-number">123</span>
+<span class="line-number">124</span>
+<span class="line-number">125</span>
+<span class="line-number">126</span>
+<span class="line-number">127</span>
+<span class="line-number">128</span>
+<span class="line-number">129</span>
+<span class="line-number">130</span>
+<span class="line-number">131</span>
+<span class="line-number">132</span>
+<span class="line-number">133</span>
+<span class="line-number">134</span>
+<span class="line-number">135</span>
+<span class="line-number">136</span>
+<span class="line-number">137</span>
+<span class="line-number">138</span>
+<span class="line-number">139</span>
+<span class="line-number">140</span>
+<span class="line-number">141</span>
+<span class="line-number">142</span>
+<span class="line-number">143</span>
+</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="cp">#include &quot;stdio.h&quot;</span>
+</span><span class="line"><span class="cp">#include &quot;stdlib.h&quot;</span>
+</span><span class="line"><span class="cp">#include &quot;math.h&quot;</span>
+</span><span class="line"><span class="cp">#include &quot;time.h&quot;</span>
+</span><span class="line">
+</span><span class="line"><span class="cp">#define OK 1</span>
+</span><span class="line"><span class="cp">#define ERROR 0</span>
+</span><span class="line"><span class="cp">#define TRUE 1</span>
+</span><span class="line"><span class="cp">#define FALSE 0</span>
+</span><span class="line"><span class="cp">#define MAXSIZE 1000 </span><span class="cm">/* 存储空间初始分配量 */</span><span class="cp"></span>
+</span><span class="line">
+</span><span class="line"><span class="k">typedef</span> <span class="kt">int</span> <span class="n">Status</span><span class="p">;</span>
+</span><span class="line"><span class="k">typedef</span> <span class="kt">int</span> <span class="n">SElemType</span><span class="p">;</span> <span class="cm">/* SElemType类型根据实际情况而定，这里假设为int */</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 链栈结构 */</span>
+</span><span class="line"><span class="k">typedef</span> <span class="k">struct</span> <span class="n">StackNode</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="n">SElemType</span> <span class="n">data</span><span class="p">;</span>
+</span><span class="line">        <span class="k">struct</span> <span class="n">StackNode</span> <span class="o">*</span><span class="n">next</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span><span class="n">StackNode</span><span class="p">,</span><span class="o">*</span><span class="n">LinkStackPtr</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line"><span class="k">typedef</span> <span class="k">struct</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="n">LinkStackPtr</span> <span class="n">top</span><span class="p">;</span>
+</span><span class="line">        <span class="kt">int</span> <span class="n">count</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span><span class="n">LinkStack</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="n">Status</span> <span class="nf">visit</span><span class="p">(</span><span class="n">SElemType</span> <span class="n">c</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d &quot;</span><span class="p">,</span><span class="n">c</span><span class="p">);</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/*  构造一个空栈S */</span>
+</span><span class="line"><span class="n">Status</span> <span class="nf">InitStack</span><span class="p">(</span><span class="n">LinkStack</span> <span class="o">*</span><span class="n">S</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="n">S</span><span class="o">-&gt;</span><span class="n">top</span> <span class="o">=</span> <span class="p">(</span><span class="n">LinkStackPtr</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">StackNode</span><span class="p">));</span>
+</span><span class="line">        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">S</span><span class="o">-&gt;</span><span class="n">top</span><span class="p">)</span>
+</span><span class="line">                <span class="k">return</span> <span class="n">ERROR</span><span class="p">;</span>
+</span><span class="line">        <span class="n">S</span><span class="o">-&gt;</span><span class="n">top</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
+</span><span class="line">        <span class="n">S</span><span class="o">-&gt;</span><span class="n">count</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 把S置为空栈 */</span>
+</span><span class="line"><span class="n">Status</span> <span class="nf">ClearStack</span><span class="p">(</span><span class="n">LinkStack</span> <span class="o">*</span><span class="n">S</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="n">LinkStackPtr</span> <span class="n">p</span><span class="p">,</span><span class="n">q</span><span class="p">;</span>
+</span><span class="line">        <span class="n">p</span><span class="o">=</span><span class="n">S</span><span class="o">-&gt;</span><span class="n">top</span><span class="p">;</span>
+</span><span class="line">        <span class="k">while</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+</span><span class="line">        <span class="p">{</span>
+</span><span class="line">                <span class="n">q</span><span class="o">=</span><span class="n">p</span><span class="p">;</span>
+</span><span class="line">                <span class="n">p</span><span class="o">=</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+</span><span class="line">                <span class="n">free</span><span class="p">(</span><span class="n">q</span><span class="p">);</span>
+</span><span class="line">        <span class="p">}</span>
+</span><span class="line">        <span class="n">S</span><span class="o">-&gt;</span><span class="n">count</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 若栈S为空栈，则返回TRUE，否则返回FALSE */</span>
+</span><span class="line"><span class="n">Status</span> <span class="nf">StackEmpty</span><span class="p">(</span><span class="n">LinkStack</span> <span class="n">S</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="k">if</span> <span class="p">(</span><span class="n">S</span><span class="p">.</span><span class="n">count</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span>
+</span><span class="line">                <span class="k">return</span> <span class="n">TRUE</span><span class="p">;</span>
+</span><span class="line">        <span class="k">else</span>
+</span><span class="line">                <span class="k">return</span> <span class="n">FALSE</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 返回S的元素个数，即栈的长度 */</span>
+</span><span class="line"><span class="kt">int</span> <span class="nf">StackLength</span><span class="p">(</span><span class="n">LinkStack</span> <span class="n">S</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">S</span><span class="p">.</span><span class="n">count</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 若栈不空，则用e返回S的栈顶元素，并返回OK；否则返回ERROR */</span>
+</span><span class="line"><span class="n">Status</span> <span class="nf">GetTop</span><span class="p">(</span><span class="n">LinkStack</span> <span class="n">S</span><span class="p">,</span><span class="n">SElemType</span> <span class="o">*</span><span class="n">e</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="k">if</span> <span class="p">(</span><span class="n">S</span><span class="p">.</span><span class="n">top</span><span class="o">==</span><span class="nb">NULL</span><span class="p">)</span>
+</span><span class="line">                <span class="k">return</span> <span class="n">ERROR</span><span class="p">;</span>
+</span><span class="line">        <span class="k">else</span>
+</span><span class="line">                <span class="o">*</span><span class="n">e</span><span class="o">=</span><span class="n">S</span><span class="p">.</span><span class="n">top</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">;</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 插入元素e为新的栈顶元素 */</span>
+</span><span class="line"><span class="n">Status</span> <span class="nf">Push</span><span class="p">(</span><span class="n">LinkStack</span> <span class="o">*</span><span class="n">S</span><span class="p">,</span><span class="n">SElemType</span> <span class="n">e</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="n">LinkStackPtr</span> <span class="n">s</span><span class="o">=</span><span class="p">(</span><span class="n">LinkStackPtr</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">StackNode</span><span class="p">));</span>
+</span><span class="line">        <span class="n">s</span><span class="o">-&gt;</span><span class="n">data</span><span class="o">=</span><span class="n">e</span><span class="p">;</span>
+</span><span class="line">        <span class="n">s</span><span class="o">-&gt;</span><span class="n">next</span><span class="o">=</span><span class="n">S</span><span class="o">-&gt;</span><span class="n">top</span><span class="p">;</span>	<span class="cm">/* 把当前的栈顶元素赋值给新结点的直接后继 */</span>
+</span><span class="line">        <span class="n">S</span><span class="o">-&gt;</span><span class="n">top</span><span class="o">=</span><span class="n">s</span><span class="p">;</span>         <span class="cm">/* 将新的结点s赋值给栈顶指针 */</span>
+</span><span class="line">        <span class="n">S</span><span class="o">-&gt;</span><span class="n">count</span><span class="o">++</span><span class="p">;</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 若栈不空，则删除S的栈顶元素，用e返回其值，并返回OK；否则返回ERROR */</span>
+</span><span class="line"><span class="n">Status</span> <span class="nf">Pop</span><span class="p">(</span><span class="n">LinkStack</span> <span class="o">*</span><span class="n">S</span><span class="p">,</span><span class="n">SElemType</span> <span class="o">*</span><span class="n">e</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="n">LinkStackPtr</span> <span class="n">p</span><span class="p">;</span>
+</span><span class="line">        <span class="k">if</span><span class="p">(</span><span class="n">StackEmpty</span><span class="p">(</span><span class="o">*</span><span class="n">S</span><span class="p">))</span>
+</span><span class="line">                <span class="k">return</span> <span class="n">ERROR</span><span class="p">;</span>
+</span><span class="line">        <span class="o">*</span><span class="n">e</span><span class="o">=</span><span class="n">S</span><span class="o">-&gt;</span><span class="n">top</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">;</span>
+</span><span class="line">        <span class="n">p</span><span class="o">=</span><span class="n">S</span><span class="o">-&gt;</span><span class="n">top</span><span class="p">;</span>					<span class="cm">/* 将栈顶结点赋值给p */</span>
+</span><span class="line">        <span class="n">S</span><span class="o">-&gt;</span><span class="n">top</span><span class="o">=</span><span class="n">S</span><span class="o">-&gt;</span><span class="n">top</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>    <span class="cm">/* 使得栈顶指针下移一位，指向后一结点 */</span>
+</span><span class="line">        <span class="n">free</span><span class="p">(</span><span class="n">p</span><span class="p">);</span>                    <span class="cm">/* 释放结点p */</span>
+</span><span class="line">        <span class="n">S</span><span class="o">-&gt;</span><span class="n">count</span><span class="o">--</span><span class="p">;</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="n">Status</span> <span class="nf">StackTraverse</span><span class="p">(</span><span class="n">LinkStack</span> <span class="n">S</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="n">LinkStackPtr</span> <span class="n">p</span><span class="p">;</span>
+</span><span class="line">        <span class="n">p</span><span class="o">=</span><span class="n">S</span><span class="p">.</span><span class="n">top</span><span class="p">;</span>
+</span><span class="line">        <span class="k">while</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+</span><span class="line">        <span class="p">{</span>
+</span><span class="line">                 <span class="n">visit</span><span class="p">(</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">);</span>
+</span><span class="line">                 <span class="n">p</span><span class="o">=</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+</span><span class="line">        <span class="p">}</span>
+</span><span class="line">        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="kt">int</span> <span class="n">j</span><span class="p">;</span>
+</span><span class="line">        <span class="n">LinkStack</span> <span class="n">s</span><span class="p">;</span>
+</span><span class="line">        <span class="kt">int</span> <span class="n">e</span><span class="p">;</span>
+</span><span class="line">        <span class="k">if</span><span class="p">(</span><span class="n">InitStack</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="p">)</span><span class="o">==</span><span class="n">OK</span><span class="p">)</span>
+</span><span class="line">                <span class="k">for</span><span class="p">(</span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="n">j</span><span class="o">&lt;=</span><span class="mi">10</span><span class="p">;</span><span class="n">j</span><span class="o">++</span><span class="p">)</span>
+</span><span class="line">                        <span class="n">Push</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="p">,</span><span class="n">j</span><span class="p">);</span>
+</span><span class="line">        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;栈中元素依次为：&quot;</span><span class="p">);</span>
+</span><span class="line">        <span class="n">StackTraverse</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
+</span><span class="line">        <span class="n">Pop</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="p">,</span><span class="o">&amp;</span><span class="n">e</span><span class="p">);</span>
+</span><span class="line">        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;弹出的栈顶元素 e=%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">e</span><span class="p">);</span>
+</span><span class="line">        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;栈空否：%d(1:空 0:否)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">StackEmpty</span><span class="p">(</span><span class="n">s</span><span class="p">));</span>
+</span><span class="line">        <span class="n">GetTop</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="o">&amp;</span><span class="n">e</span><span class="p">);</span>
+</span><span class="line">        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;栈顶元素 e=%d 栈的长度为%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">e</span><span class="p">,</span><span class="n">StackLength</span><span class="p">(</span><span class="n">s</span><span class="p">));</span>
+</span><span class="line">        <span class="n">ClearStack</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="p">);</span>
+</span><span class="line">        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;清空栈后，栈空否：%d(1:空 0:否)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">StackEmpty</span><span class="p">(</span><span class="n">s</span><span class="p">));</span>
+</span><span class="line">        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 </div>
   
   

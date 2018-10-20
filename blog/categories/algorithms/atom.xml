@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Algorithms | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/algorithms/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2018-10-13T19:16:06+08:00</updated>
+  <updated>2018-10-20T18:40:31+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,36 +12,6 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
-  
-  <entry>
-    <title type="html"><![CDATA[Study of Hash Function]]></title>
-    <link href="http://isunix.github.io/blog/2014/09/19/study-of-hash-function/"/>
-    <updated>2014-09-19T10:26:02+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/09/19/study-of-hash-function</id>
-    <content type="html"><![CDATA[<p>Recently I come across an algorithm, and I am sure I have no idea what it is doing, when I ask my colleague, he said it is hash algorithm.  Thus comes out this article talking about hash algorithms.  </p>
-
-<p>First I will list some of the sites I visited while I am learning what is hash function, how to create it and how to use it.  </p>
-
-<p>```
-http://isthe.com/chongo/tech/comp/fnv/#fnv-prime
-I did not spend any time on this post yet.     </p>
-
-<p>http://www.azillionmonkeys.com/qed/hash.html
-This is said to be a very good article on hash function.</p>
-
-<p>http://burtleburtle.net/bob/hash/doobs.html
-This is also a very good article.</p>
-
-<p>http://en.wikipedia.org/wiki/Hash_function
-http://www.benfrederickson.com/heap-visualization/
-http://blog.csdn.net/wuliming_sc/article/details/1365962
-and difinitely http://www.benfrederickson.com/ is a very good site for learning some knowledge of algorithms.</p>
-
-<p>http://blog.163.com/clevertanglei900@126/blog/static/111352259201171111938208/
-this post gives a very clear explanation of what hash function is
-``` </p>
-]]></content>
-  </entry>
   
   <entry>
     <title type="html"><![CDATA[CTCI-Q1.2]]></title>
@@ -621,6 +591,95 @@ int main(){
     print(head);
     return 0;
 }
+```</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Using Python to Implement a Stack]]></title>
+    <link href="http://isunix.github.io/blog/2014/08/14/using-python-to-implement-a-stack/"/>
+    <updated>2014-08-14T10:53:40+08:00</updated>
+    <id>http://isunix.github.io/blog/2014/08/14/using-python-to-implement-a-stack</id>
+    <content type="html"><![CDATA[<p>In this post, we are going to implement a stack using Python. We are gonna do it using two ways. The first is by pushing to the end of the list, and pop out the rightmost item. The second is by “pushing” to the leftmost and pop out the leftmost item.  </p>
+
+<ol>
+  <li>push to the end  </li>
+</ol>
+
+<p>```py
+class Stack:
+    def <strong>init</strong>(self):
+        self.items = []</p>
+
+<pre><code>def is_empty(self):
+    return self.items == []
+
+def push(self, item):
+    self.items.append(item)
+
+def pop(self):
+    return self.items.pop()
+
+'''
+returns the top item from the stack but does not remove it.
+It needs no parameters.
+The stack is not modified.
+'''
+def peek(self):
+    return self.items[len(self.items) - 1]
+
+def size(self):
+    return len(self.items)
+</code></pre>
+
+<p>s = Stack()
+print (s.is_empty())
+s.push(4)
+s.push(‘dog’)
+print (s.peek())
+print(“\n”)
+print (s.peek())
+s.push(True)
+print (s.size())
+print (s.is_empty())
+s.push(8.4)
+print (s.pop())
+print (s.pop())
+print (s.size())
+```  </p>
+
+<ol>
+  <li>push to the front end</li>
+</ol>
+
+<p>```py
+class Stack:
+    def <strong>init</strong>(self):
+        self.items = []</p>
+
+<pre><code>def is_empty(self):
+    return self.items == []
+
+#push, inserting at the front end.
+def push(self, item):
+    self.items.insert(0, item)
+
+#pop out the leftest item.
+def pop(self):
+    return self.items.pop(0)
+
+def peek(self):
+    return self.items[0]
+
+def size(self):
+    return len(self.items)
+</code></pre>
+
+<p>s = Stack()
+s.push(‘hello’)
+s.push(‘true’)
+print(s.pop())
+print (s.pop())
 ```</p>
 ]]></content>
   </entry>

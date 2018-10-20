@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Shell | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/shell/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2018-10-13T19:16:06+08:00</updated>
+  <updated>2018-10-20T18:40:31+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -142,63 +142,6 @@ arguments one at a time, then increments the implicit $OPTIND variable to point 
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Some Useful Shell Scripts]]></title>
-    <link href="http://isunix.github.io/blog/2016/07/19/some-useful-shell-scripts/"/>
-    <updated>2016-07-19T09:31:05+08:00</updated>
-    <id>http://isunix.github.io/blog/2016/07/19/some-useful-shell-scripts</id>
-    <content type="html"><![CDATA[<p>Here is a collection of those *sh commands I used that I think might be useful for later usage.</p>
-
-<p>1.compare two directories and see if the differences between them.</p>
-
-<p><code>sh
-diff -urNa test test1
-</code></p>
-
-<p>2.find all files with “old” in their filename, and then romove them</p>
-
-<p><code>sh
-find ./ -name "*old*" -exec rm -i {} \;
-</code></p>
-
-<p>3.grep</p>
-
-<p><code>sh
-ll | grep "Jul 20" | awk '{print $NF}' | xargs -I , grep -i "Successfully" , | wc -l
-</code></p>
-
-<p>4.substitute string in multiple files and backup the orignal files with “~”</p>
-
-<p><code>sh
-find . | xargs grep "good" -sl | uniq | xargs perl -pi~ -e 's/good/bad/g'
-</code></p>
-
-<p>5.substitute string in multiple files and backup the orignal files with extension “bak”</p>
-
-<p><code>sh
-find . | xargs grep "bad" -sl | uniq | xargs perl -i.bak -p -e 's/bad/excellent/g'
-</code></p>
-
-<p>After checking that everything is ok, we can then remove those “bak” files</p>
-
-<p><code>sh
-find ./ -name "*bak*" -exec rm -i {} \;
-</code></p>
-
-<p>6.grep lines before and aftern certain matching line</p>
-
-<p><code>sh
-grep -C 4 '. $kpi_shell $load_date' orig_cron_kpi.sh  | grep "\.sh" | less
-</code></p>
-
-<p>7.grep lines in one file while not in the other.</p>
-
-<p><code>sh
-grep -F -x -v -f bb.txt aa.txt | grep "\.sh" | less
-</code></p>
-]]></content>
-  </entry>
-  
-  <entry>
     <title type="html"><![CDATA[怎么去除windows编辑过的文件中的^M字符]]></title>
     <link href="http://isunix.github.io/blog/2016/07/18/zen-yao-qu-chu-windowsbian-ji-guo-de-wen-jian-zhong-de-mzi-fu/"/>
     <updated>2016-07-18T08:12:34+08:00</updated>
@@ -253,70 +196,38 @@ make install
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Useful Shell Commands]]></title>
-    <link href="http://isunix.github.io/blog/2016/05/30/useful-shell-commands/"/>
-    <updated>2016-05-30T16:13:41+08:00</updated>
-    <id>http://isunix.github.io/blog/2016/05/30/useful-shell-commands</id>
-    <content type="html"><![CDATA[<p>1.In bash shell, it provides us with two options to make debugging very much easier. “-v” and “-x”.</p>
-
-<p>Take the following small script for an example.</p>
+    <title type="html"><![CDATA[Sort Lines by Length]]></title>
+    <link href="http://isunix.github.io/blog/2016/01/20/sort-lines-by-length/"/>
+    <updated>2016-01-20T10:14:15+08:00</updated>
+    <id>http://isunix.github.io/blog/2016/01/20/sort-lines-by-length</id>
+    <content type="html"><![CDATA[<p>I have a file containing quite many lines of strings and I want to sort them by line length. Here is how.</p>
 
 <p><code>sh
-#!/bin/bash
-echo "You are using $0"
-echo "Hello $*"
-exit 0
+cat $file | awk '{ print length($0) " " $0; }' | sort -r -n | cut -d ' ' -f 2- | less
+</code></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[A Wonderful Post on Stdin]]></title>
+    <link href="http://isunix.github.io/blog/2016/01/05/a-wonderful-post-on-stdin/"/>
+    <updated>2016-01-05T14:30:04+08:00</updated>
+    <id>http://isunix.github.io/blog/2016/01/05/a-wonderful-post-on-stdin</id>
+    <content type="html"><![CDATA[<p>The following is a wonderful post on stdin, stdout, stderr.</p>
+
+<p><code>html
+http://www.jstorimer.com/blogs/workingwithcode/7766119-when-to-use-stderr-instead-of-stdout
 </code></p>
 
-<p>If run with the follwoing “-v” option, </p>
+<p>Notes:</p>
 
-<p><code>sh
-bash -v aa.sh steven
+<p>1.[-n string] 将会测试string的长度，如果大于0， 则返回true</p>
+
+<p>2.awesome os-x command line:</p>
+
+<p><code>html
+https://github.com/herrbischoff/awesome-osx-command-line
 </code></p>
-
-<p>We will get the following result,</p>
-
-<p><code>
-#!/bin/bash
-echo "You are using $0"
-You are using aa.sh
-echo "Hello $*"
-Hello steven
-exit 0
-</code></p>
-
-<p>If run with the “-x” option, we will get the following result.</p>
-
-<p><code>
-+ echo 'You are using aa.sh'
-You are using aa.sh
-+ echo 'Hello steven'
-Hello steven
-+ exit 0
-</code></p>
-
-<p>As we can see, “-x” might be more helpful to us.</p>
-
-<p>2.We can use “read -p” to read from the user input and store the input into an variable. Like this:</p>
-
-<p><code>sh
-read -p "Enter your name: " name
-echo $name
-exit 0
-</code></p>
-
-<p>3.use the “-s” option with “read” to control the visibility of the entered text.</p>
-
-<p><code>sh
-#!/bin/bash
-read -p "May I ask your name: " name
-echo "Hello $name"
-read -sn1 -p "Press any key to exit"
-echo
-exit 0
-</code></p>
-
-<p>4.Grep with “-c” option to list the number of items grepped.</p>
 ]]></content>
   </entry>
   

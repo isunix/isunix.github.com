@@ -492,90 +492,6 @@ Steven Sun’s Blog You may find the following pages in Steven Sun’s Blog migh
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2016/07/19/some-useful-shell-scripts/">Some Useful Shell Scripts</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2016-07-19T09:31:05+08:00" pubdate data-updated="true">Jul 19<span>th</span>, 2016</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Here is a collection of those *sh commands I used that I think might be useful for later usage.</p>
-
-<p>1.compare two directories and see if the differences between them.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">diff -urNa <span class="nb">test </span>test1
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>2.find all files with “old” in their filename, and then romove them</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">find ./ -name <span class="s2">&quot;*old*&quot;</span> -exec rm -i <span class="o">{}</span> <span class="se">\;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>3.grep</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">ll | grep <span class="s2">&quot;Jul 20&quot;</span> | awk <span class="s1">&#39;{print $NF}&#39;</span> | xargs -I , grep -i <span class="s2">&quot;Successfully&quot;</span> , | wc -l
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>4.substitute string in multiple files and backup the orignal files with “~”</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">find . | xargs grep <span class="s2">&quot;good&quot;</span> -sl | uniq | xargs perl -pi~ -e <span class="s1">&#39;s/good/bad/g&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>5.substitute string in multiple files and backup the orignal files with extension “bak”</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">find . | xargs grep <span class="s2">&quot;bad&quot;</span> -sl | uniq | xargs perl -i.bak -p -e <span class="s1">&#39;s/bad/excellent/g&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>After checking that everything is ok, we can then remove those “bak” files</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">find ./ -name <span class="s2">&quot;*bak*&quot;</span> -exec rm -i <span class="o">{}</span> <span class="se">\;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>6.grep lines before and aftern certain matching line</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">grep -C 4 <span class="s1">&#39;. $kpi_shell $load_date&#39;</span> orig_cron_kpi.sh  | grep <span class="s2">&quot;\.sh&quot;</span> | less
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>7.grep lines in one file while not in the other.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">grep -F -x -v -f bb.txt aa.txt | grep <span class="s2">&quot;\.sh&quot;</span> | less
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
       <h1 class="entry-title"><a href="/blog/2016/07/18/zen-yao-qu-chu-windowsbian-ji-guo-de-wen-jian-zhong-de-mzi-fu/">怎么去除windows编辑过的文件中的^M字符</a></h1>
     
     
@@ -854,7 +770,7 @@ Steven Sun’s Blog You may find the following pages in Steven Sun’s Blog migh
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2016/05/30/useful-shell-commands/">Useful Shell Commands</a></h1>
+      <h1 class="entry-title"><a href="/blog/2016/03/31/update-all-python-modules-through-pip/">Update All Python Modules Through Pip</a></h1>
     
     
       <p class="meta">
@@ -870,34 +786,73 @@ Steven Sun’s Blog You may find the following pages in Steven Sun’s Blog migh
   
 
 
-<time datetime="2016-05-30T16:13:41+08:00" pubdate data-updated="true">May 30<span>th</span>, 2016</time>
+<time datetime="2016-03-31T16:32:49+08:00" pubdate data-updated="true">Mar 31<span>st</span>, 2016</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>1.In bash shell, it provides us with two options to make debugging very much easier. “-v” and “-x”.</p>
-
-<p>Take the following small script for an example.</p>
+  <div class="entry-content"><p>I want to update all the installed python modules through pip. Here below is one recipe I found.</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
 <span class="line-number">3</span>
 <span class="line-number">4</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="c">#!/bin/bash</span>
-</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;You are using $0&quot;</span>
-</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;Hello $*&quot;</span>
-</span><span class="line"><span class="nb">exit </span>0
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="kn">import</span> <span class="nn">pip</span>
+</span><span class="line"><span class="kn">from</span> <span class="nn">subprocess</span> <span class="kn">import</span> <span class="n">call</span>
+</span><span class="line">
+</span><span class="line"><span class="k">for</span> <span class="n">dist</span> <span class="ow">in</span> <span class="n">pip</span><span class="o">.</span><span class="n">get_installed_distributions</span><span class="p">():</span>
+</span><span class="line">    <span class="n">call</span><span class="p">(</span><span class="s">&quot;pip install --upgrade &quot;</span> <span class="o">+</span> <span class="n">dist</span><span class="o">.</span><span class="n">project_name</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>If run with the follwoing “-v” option, </p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2016/03/09/sort-an-object-by-one-key-using-js/">Sort an Object by One Key Using Js</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2016-03-09T09:41:03+08:00" pubdate data-updated="true">Mar 9<span>th</span>, 2016</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I have something like the following,</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">bash -v aa.sh steven
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="kd">var</span> <span class="nx">sophos</span> <span class="o">=</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;aa&quot;</span><span class="p">,</span> <span class="nx">time</span><span class="o">:</span><span class="s2">&quot;2016/03/02 01:12&quot;</span><span class="p">};</span>
+</span><span class="line"><span class="kd">var</span> <span class="nx">mcafee</span> <span class="o">=</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;bb&quot;</span><span class="p">,</span> <span class="nx">time</span><span class="o">:</span><span class="s2">&quot;2016/03/03 01:12&quot;</span><span class="p">};</span>
+</span><span class="line"><span class="kd">var</span> <span class="nx">trend</span> <span class="o">=</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;cc&quot;</span><span class="p">,</span> <span class="nx">time</span><span class="o">:</span><span class="s2">&quot;2016/03/04 01:12&quot;</span><span class="p">};</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>We will get the following result,</p>
+<p>and I want to find out the one with the earliest time, in the above code, it is “2016/03/02 01:12”, and the corresponding item is “sophos”, here is the realization is js code.</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
@@ -905,57 +860,41 @@ Steven Sun’s Blog You may find the following pages in Steven Sun’s Blog migh
 <span class="line-number">4</span>
 <span class="line-number">5</span>
 <span class="line-number">6</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="c">#!/bin/bash</span>
-</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;You are using $0&quot;</span>
-</span><span class="line">You are using aa.sh
-</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;Hello $*&quot;</span>
-</span><span class="line">Hello steven
-</span><span class="line"><span class="nb">exit </span>0
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="kd">var</span> <span class="nx">sophos</span> <span class="o">=</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;aa&quot;</span><span class="p">,</span> <span class="nx">time</span><span class="o">:</span><span class="s2">&quot;2016/03/02 01:12&quot;</span><span class="p">};</span>
+</span><span class="line"><span class="kd">var</span> <span class="nx">mcafee</span> <span class="o">=</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;bb&quot;</span><span class="p">,</span> <span class="nx">time</span><span class="o">:</span><span class="s2">&quot;2016/03/03 01:12&quot;</span><span class="p">};</span>
+</span><span class="line"><span class="kd">var</span> <span class="nx">trend</span> <span class="o">=</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;cc&quot;</span><span class="p">,</span> <span class="nx">time</span><span class="o">:</span><span class="s2">&quot;2016/03/04 01:12&quot;</span><span class="p">};</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">[</span><span class="nx">sophos</span><span class="p">,</span> <span class="nx">mcafee</span><span class="p">,</span> <span class="nx">trend</span><span class="p">];</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">function</span> <span class="nx">compare</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">){</span>
+</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="nx">a</span><span class="p">.</span><span class="nx">time</span> <span class="o">&lt;</span> <span class="nx">b</span><span class="p">.</span><span class="nx">time</span><span class="p">){</span>
+</span><span class="line">        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">a</span><span class="p">.</span><span class="nx">time</span> <span class="o">&gt;</span> <span class="nx">b</span><span class="p">.</span><span class="nx">time</span><span class="p">){</span>
+</span><span class="line">        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">    <span class="k">else</span> <span class="p">{</span>
+</span><span class="line">        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">sort</span><span class="p">(</span><span class="nx">compare</span><span class="p">);</span>
+</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>If run with the “-x” option, we will get the following result.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">+ <span class="nb">echo</span> <span class="s1">&#39;You are using aa.sh&#39;</span>
-</span><span class="line">You are using aa.sh
-</span><span class="line">+ <span class="nb">echo</span> <span class="s1">&#39;Hello steven&#39;</span>
-</span><span class="line">Hello steven
-</span><span class="line">+ <span class="nb">exit </span>0
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>As we can see, “-x” might be more helpful to us.</p>
-
-<p>2.We can use “read -p” to read from the user input and store the input into an variable. Like this:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nb">read</span> -p <span class="s2">&quot;Enter your name: &quot;</span> name
-</span><span class="line"><span class="nb">echo</span> <span class="nv">$name</span>
-</span><span class="line"><span class="nb">exit </span>0
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>3.use the “-s” option with “read” to control the visibility of the entered text.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="c">#!/bin/bash</span>
-</span><span class="line"><span class="nb">read</span> -p <span class="s2">&quot;May I ask your name: &quot;</span> name
-</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;Hello $name&quot;</span>
-</span><span class="line"><span class="nb">read</span> -sn1 -p <span class="s2">&quot;Press any key to exit&quot;</span>
-</span><span class="line"><span class="nb">echo</span>
-</span><span class="line"><span class="nb">exit </span>0
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>4.Grep with “-c” option to list the number of items grepped.</p>
 </div>
   
   

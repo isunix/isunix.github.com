@@ -35,25 +35,14 @@ For more info about me, please refer to my resume which I put in github:
 https://github.com/isunix/resume
 ```
 
-My bitbucket site is:
-
-```html
-https://bitbucket.org/Stsun
-```
-
 My github site is:
 
-```html
+```
 https://github.isunix.com
 ```
 
 My email is:
 
-```html
-isunix1989@gamil.com
-or
+```
 mypeacelover@163.com.
 ```
-
-
-

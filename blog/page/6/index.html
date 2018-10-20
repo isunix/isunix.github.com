@@ -9,7 +9,8 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="One of the best illustration of the use of select I read maybe from the book “data munging with perl”. Look at the the differences between the &hellip;">
+  <meta name="description" content="I have some files with file name quite weird in the format, “[Alex_Holmes]_Hadoop_in_Practice(BookZZ.org).pdf
+“. What I want to achieve is removing &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -62,183 +63,6 @@
     <div id="content">
       <div class="blog-index">
   
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/10/24/use-of-select-in-perl/">Use of Select in Perl</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-10-24T13:34:51+08:00" pubdate data-updated="true">Oct 24<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>One of the best illustration of the use of select I read maybe from the book “data munging with perl”.   </p>
-
-<p>Look at the the differences between the following 3 ones.  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">print</span><span class="p">;</span>
-</span><span class="line"><span class="k">print</span> <span class="n">LIST</span><span class="p">;</span>
-</span><span class="line"><span class="k">print</span> <span class="n">FILEHANDLE</span> <span class="n">LIST</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>For the first one “print”, since on target is specified, the contents of <code>$_</code> are printed to the default output file handle(usually STDOUT).    </p>
-
-<p>For the second one “print LIST”, the contents of LIST are printed to the default output file handle.  </p>
-
-<p>For the third one “print FILEHANDLE LIST”, the contents of LIST are printed to the specified file handle, “FILEHANDLE”.  </p>
-
-<p>If you call select with no parameters, it will return the name of the currently selected output file handle, so </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">print</span> <span class="nb">select</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>will normally print main::STDOUT.   </p>
-
-<p>If you call select with the name of a file handle, it will replace the current default output file handle with the new one. It returns the previously selected file handle so that you can store it and reset it later. If you
-need to write a lot of data to a particular file, you could use code like this:   </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nb">open</span> <span class="n">FILE</span><span class="p">,</span> <span class="s">&#39;&gt;out.txt&#39;</span> <span class="ow">or</span> <span class="nb">die</span> <span class="s">&quot;Can&#39;t open out.txt: $!&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">$old</span> <span class="o">=</span> <span class="nb">select</span> <span class="n">FILE</span><span class="p">;</span>
-</span><span class="line"><span class="k">foreach</span> <span class="p">(</span><span class="nv">@data</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">	<span class="k">print</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line"><span class="nb">select</span> <span class="nv">$old</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>Another variable that is useful when writing data is <code>$|</code>. Setting this variable to a nonzero value will force the output buffer to be flushed immediately after every print (or write) statement. This has the effect of making the output stream look as if it were unbuffered. This variable acts on the currently selected output file handle. If you want to unbuffer any other file handle, you will need to select it, change the value of <code>$|</code>, and then reselect the previous file handle using code like this:   </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">$file</span> <span class="o">=</span> <span class="nb">select</span> <span class="n">FILE</span><span class="p">;</span>
-</span><span class="line"><span class="vg">$|</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-</span><span class="line"><span class="nb">select</span> <span class="nv">$file</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>In its compact form, it can be written as:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nb">select</span><span class="p">((</span><span class="nb">select</span><span class="p">(</span><span class="n">FILE</span><span class="p">),</span> <span class="vg">$|</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>Finally we will take a look at an example,  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nb">open</span><span class="p">(</span><span class="n">FILE</span><span class="p">,</span><span class="s">&quot;&gt;./test.out&quot;</span><span class="p">);</span>
-</span><span class="line"><span class="nv">$oldHandle</span> <span class="o">=</span> <span class="nb">select</span><span class="p">(</span><span class="n">FILE</span><span class="p">);</span>
-</span><span class="line"><span class="k">print</span> <span class="nb">select</span><span class="p">;</span>
-</span><span class="line"><span class="k">print</span> <span class="s">&quot;This is sent to test.out.\n&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="nv">$second</span> <span class="o">=</span> <span class="nb">select</span><span class="p">(</span><span class="nv">$oldHandle</span><span class="p">);</span>
-</span><span class="line"><span class="k">print</span> <span class="s">&quot;to default stdout!\n&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="k">print</span> <span class="nv">$second</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>If you understand how “select” works, the output for this piece of code is quite obvious.  </p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/10/17/some-advanced-perl-tricks/">Some Advanced Perl Tricks</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-10-17T18:50:35+08:00" pubdate data-updated="true">Oct 17<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I am taking notes of some of the advanced perl tricks used in perl.</p>
-
-<p>1.to get all the matched items using the /g flag,</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">$_</span> <span class="o">=</span> <span class="s">&quot;Just another Perl hacker,&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">@words</span> <span class="o">=</span> <span class="sr">/(\S+)/g</span><span class="p">;</span> <span class="c1"># &quot;Just&quot; &quot;another&quot; &quot;Perl&quot; &quot;hacker,&quot;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>2.to get the word count,</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">$word_count</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=</span> <span class="sr">/(\S+)/g</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>3.The built-in pos() operator returns the match position for the string we give it (or $_ by default).</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">$_</span> <span class="o">=</span> <span class="s">&quot;just another perl hacker&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="sr">/(just)/g</span><span class="p">;</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">$pos</span> <span class="o">=</span> <span class="nb">pos</span><span class="p">();</span>
-</span><span class="line"><span class="k">print</span> <span class="s">&quot;[$1] ends at position $pos\n&quot;</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>4.To anchor our next match exactly where we left off the last time, we can use the \G anchor. It’s just like the beginning of string anchor \A, except for where \G anchors at the current match position. If our match fails, Perl resets pos() and we start at the beginning of the string.</p>
-
-</div>
-  
-  
-
-
-    </article>
   
   
     <article>
@@ -919,6 +743,202 @@ need to write a lot of data to a particular file, you could use code like this: 
 </span><span class="line">		<span class="nv">%$self</span> <span class="o">=</span> <span class="nv">%inits</span><span class="p">;</span>
 </span><span class="line">	<span class="p">}</span>
 </span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/10/named-arguments/">Named Arguments</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-10T15:58:10+08:00" pubdate data-updated="true">Sep 10<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>For named argument, it many uses the trick of changing a list into a hash. Take a look at the following code.  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">listdir</span><span class="p">(</span><span class="n">cols</span><span class="o">=&gt;</span><span class="mi">4</span><span class="p">,</span> <span class="n">page</span><span class="o">=&gt;</span><span class="mi">1</span><span class="p">,</span> <span class="n">hidden</span><span class="o">=&gt;</span><span class="mi">1</span><span class="p">,</span> <span class="n">sep_dirs</span><span class="o">=&gt;</span><span class="mi">1</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="k">sub </span><span class="nf">listdir</span> <span class="p">{</span>
+</span><span class="line">	<span class="nv">%arg</span> <span class="o">=</span> <span class="nv">@_</span><span class="p">;</span><span class="c1"># Convert argument list to hash</span>
+</span><span class="line">
+</span><span class="line">	<span class="nv">$arg</span><span class="p">{</span><span class="n">match</span><span class="p">}</span> <span class="o">=</span> <span class="s">&quot;*&quot;</span> <span class="k">unless</span> <span class="nb">exists</span> <span class="nv">$arg</span><span class="p">{</span><span class="n">match</span><span class="p">};</span>
+</span><span class="line">	<span class="nv">$arg</span><span class="p">{</span><span class="n">cols</span><span class="p">}</span> <span class="o">=</span> <span class="mi">1</span><span class="k">unless</span> <span class="nb">exists</span> <span class="nv">$arg</span><span class="p">{</span><span class="n">cols</span><span class="p">};</span>
+</span><span class="line"><span class="c1"># etc.</span>
+</span><span class="line"><span class="c1"># Use arguments to control behaviour...</span>
+</span><span class="line">	<span class="nv">@files</span> <span class="o">=</span> <span class="n">get_files</span><span class="p">(</span> <span class="nv">$arg</span><span class="p">{</span><span class="n">match</span><span class="p">}</span> <span class="p">);</span>
+</span><span class="line">	<span class="nb">push</span> <span class="nv">@files</span><span class="p">,</span> <span class="n">get_hidden_files</span><span class="p">()</span> <span class="k">if</span> <span class="nv">$arg</span><span class="p">{</span><span class="n">hidden</span><span class="p">};</span> <span class="c1"># etc.</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Apart from documenting the call better, this approach has another important advantage. Since the entries of a hash can be initialized in any convenient order, we no longer need to re- member the order of the nine potential arguments, as long as we remember their names. In addition, because hashes are flattened inside lists, if we have several calls that require the same subset of arguments, we can store that subset in a separate hash and reuse it:    </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">%std_listing</span> <span class="o">=</span> <span class="p">(</span><span class="n">cols</span><span class="o">=&gt;</span><span class="mi">2</span><span class="p">,</span> <span class="n">page</span><span class="o">=&gt;</span><span class="mi">1</span><span class="p">,</span> <span class="n">sort_by</span><span class="o">=&gt;</span><span class="s">&quot;date&quot;</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="n">listdir</span><span class="p">(</span><span class="n">file</span><span class="o">=&gt;</span><span class="s">&quot;*.txt&quot;</span><span class="p">,</span> <span class="nv">%std_listing</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="n">listdir</span><span class="p">(</span><span class="n">file</span><span class="o">=&gt;</span><span class="s">&quot;*.log&quot;</span><span class="p">,</span> <span class="nv">%std_listing</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="n">listdir</span><span class="p">(</span><span class="n">file</span><span class="o">=&gt;</span><span class="s">&quot;*.dat&quot;</span><span class="p">,</span> <span class="nv">%std_listing</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>We can even override specific elements of the standard set of arguments, by placing an explicit version after the standard set. Then the explicit version will reinitialize (i.e., overwrite) the corresponding entry in the hash:      </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">listdir</span><span class="p">(</span><span class="n">file</span><span class="o">=&gt;</span><span class="s">&quot;*.exe&quot;</span><span class="p">,</span> <span class="nv">%std_listing</span><span class="p">,</span> <span class="n">sort_by</span><span class="o">=&gt;</span><span class="s">&quot;size&quot;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>This idea of a standard argument set, overridden by explicitly specified arguments, can also be used within the subroutine to simplify the handling of default values. For example:   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">sub </span><span class="nf">listdir</span> <span class="p">{</span>
+</span><span class="line">	<span class="nv">%defaults</span> <span class="o">=</span> <span class="p">(</span><span class="n">match</span><span class="o">=&gt;</span><span class="s">&quot;*&quot;</span><span class="p">,</span> <span class="n">cols</span><span class="o">=&gt;</span><span class="mi">1</span><span class="p">,</span> <span class="n">sort_by</span><span class="o">=&gt;</span><span class="s">&quot;name&quot;</span><span class="p">);</span> <span class="nv">%arg</span> <span class="o">=</span> <span class="p">(</span><span class="nv">%defaults</span><span class="p">,</span> <span class="nv">@_</span><span class="p">);</span>
+</span><span class="line">	<span class="c1"># Use arguments to control behaviour...	</span>
+</span><span class="line">	<span class="c1"># etc.</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>In this version, the default values are stored in the %defaults hash, and are then flat- tened into the list used to initialize the %arg hash. The default values appear first in the ini- tializer list. Any entry of the same name passed in via @_ will therefore overwrite the corresponding entry in %arg, replacing the default value with the user-specified one. As a final optimization, the default hash could be moved outside listdir, so that it need only be ini- tialized once, before the program runs, rather than each time listdir is called:    </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">%defaults</span> <span class="o">=</span> <span class="p">(</span><span class="n">match</span><span class="o">=&gt;</span><span class="s">&quot;*&quot;</span><span class="p">,</span> <span class="n">cols</span><span class="o">=&gt;</span><span class="mi">1</span><span class="p">,</span> <span class="n">sort_by</span><span class="o">=&gt;</span><span class="s">&quot;name&quot;</span><span class="p">);</span>
+</span><span class="line"><span class="k">sub </span><span class="nf">listdir</span> <span class="p">{</span>
+</span><span class="line">	<span class="nv">%arg</span> <span class="o">=</span> <span class="p">(</span><span class="nv">%defaults</span><span class="p">,</span> <span class="nv">@_</span><span class="p">);</span>
+</span><span class="line">	<span class="c1"># etc.</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/07/getter-setter-methods-in-perl/">Getter-setter Methods in Perl</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-07T12:49:26+08:00" pubdate data-updated="true">Sep 7<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>As well as getting the value of an attribute, you may well want to set or change it. The syntax you’ll use is as follows:   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">print</span> <span class="s">&quot;Old address: &quot;</span><span class="p">,</span> <span class="nv">$object</span><span class="o">-&gt;</span><span class="n">address</span><span class="p">(),</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="nv">$object</span><span class="o">-&gt;</span><span class="n">address</span><span class="p">(</span><span class="s">&quot;Campus Mirabilis, Pisa, Italy&quot;</span><span class="p">);</span>
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;New address: &quot;</span><span class="p">,</span> <span class="nv">$object</span><span class="o">-&gt;</span><span class="n">address</span><span class="p">(),</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>This kind of accessor is called a get-set method because you can use it to both get and set the attribute. Turning your current read–only accessors into accessors that can also set the value is simple. Let’s create a get–set method for address():   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">sub </span><span class="nf">address</span> <span class="p">{</span>
+</span><span class="line">	<span class="k">my</span> <span class="nv">$self</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
+</span><span class="line">	<span class="c1"># Receive more data</span>
+</span><span class="line">	<span class="k">my</span> <span class="nv">$data</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">	<span class="c1"># Set the address if there&#39;s any data there.</span>
+</span><span class="line">	<span class="nv">$self</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">address</span><span class="p">}</span> <span class="o">=</span> <span class="nv">$data</span> <span class="k">if</span> <span class="nb">defined</span> <span class="nv">$data</span><span class="p">;</span>
+</span><span class="line">	<span class="k">return</span> <span class="nv">$self</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">address</span><span class="p">};</span>
+</span><span class="line">
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>If you don’t particularly want to trap calling the method as a class method (since it’ll generate an error when we try to access the hash entry anyway), you can write really miniature get–set methods like the following:   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">sub </span><span class="nf">address</span> <span class="p">{</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">address</span> <span class="p">}</span> <span class="o">=</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="nb">defined</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">address</span> <span class="p">}</span> <span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="k">sub </span><span class="nf">lastname</span> <span class="p">{</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">lastname</span> <span class="p">}</span> <span class="o">=</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="nb">defined</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">lastname</span> <span class="p">}</span> <span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="k">sub </span><span class="nf">firstname</span> <span class="p">{</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">firstname</span><span class="p">}</span> <span class="o">=</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="nb">defined</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">firstname</span><span class="p">}</span> <span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
 </div>

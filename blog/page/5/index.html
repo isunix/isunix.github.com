@@ -9,8 +9,7 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="Will keep notes of some of the mojo tips I got. 1.A helper command to generate app for us. 1
-mojo generate app This will generate Mojolicious &hellip;">
+  <meta name="description" content="While I was installing tmux on cent-os, I met the error saying that “libevent not found”, something like this. Then I download libevent and install &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -63,6 +62,52 @@ mojo generate app This will generate Mojolicious &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/12/24/libevent-not-found-error-while-install-tmux/">Libevent Not Found Error While Install Tmux</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-12-24T21:13:11+08:00" pubdate data-updated="true">Dec 24<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>While I was installing tmux on cent-os, I met the error saying that “libevent not found”, something like this. Then I download libevent and install it into the location ‘/home/stsun/local’ dir.</p>
+
+<p>Still I get the error saying that “libevent not found”. I solved the problem by the following way.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nv">DIR</span><span class="o">=</span><span class="s2">&quot;$HOME/local&quot;</span>
+</span><span class="line">./configure --prefix<span class="o">=</span><span class="nv">$DIR</span> <span class="nv">CFLAGS</span><span class="o">=</span><span class="s2">&quot;-I$DIR/include&quot;</span> <span class="nv">LDFLAGS</span><span class="o">=</span><span class="s2">&quot;-L$DIR/lib&quot;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Since I install libevent with the option, “–prefix=$HOME/local”.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -998,71 +1043,6 @@ need to write a lot of data to a particular file, you could use code like this: 
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/10/17/some-advanced-perl-tricks/">Some Advanced Perl Tricks</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-10-17T18:50:35+08:00" pubdate data-updated="true">Oct 17<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I am taking notes of some of the advanced perl tricks used in perl.</p>
-
-<p>1.to get all the matched items using the /g flag,</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">$_</span> <span class="o">=</span> <span class="s">&quot;Just another Perl hacker,&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">@words</span> <span class="o">=</span> <span class="sr">/(\S+)/g</span><span class="p">;</span> <span class="c1"># &quot;Just&quot; &quot;another&quot; &quot;Perl&quot; &quot;hacker,&quot;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>2.to get the word count,</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">$word_count</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=</span> <span class="sr">/(\S+)/g</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>3.The built-in pos() operator returns the match position for the string we give it (or $_ by default).</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">$_</span> <span class="o">=</span> <span class="s">&quot;just another perl hacker&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="sr">/(just)/g</span><span class="p">;</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">$pos</span> <span class="o">=</span> <span class="nb">pos</span><span class="p">();</span>
-</span><span class="line"><span class="k">print</span> <span class="s">&quot;[$1] ends at position $pos\n&quot;</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>4.To anchor our next match exactly where we left off the last time, we can use the \G anchor. It’s just like the beginning of string anchor \A, except for where \G anchors at the current match position. If our match fails, Perl resets pos() and we start at the beginning of the string.</p>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/6/">&larr; Older</a>
@@ -1082,7 +1062,7 @@ need to write a lot of data to a particular file, you could use code like this: 
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2018 - Steven Sun -
+  Copyright &copy; 2019 - Steven Sun -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

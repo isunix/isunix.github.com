@@ -9,8 +9,8 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="The following is a wonderful post on stdin, stdout, stderr. 1
-http://www.jstorimer.com/blogs/workingwithcode/7766119-when-to-use-stderr-instead-of- &hellip;">
+  <meta name="description" content="I have a file containing quite many lines of strings and I want to sort them by line length. Here is how. 1
+cat $file | awk &#39;{ print length($0) & &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -63,6 +63,46 @@ http://www.jstorimer.com/blogs/workingwithcode/7766119-when-to-use-stderr-instea
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2016/01/20/sort-lines-by-length/">Sort Lines by Length</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2016-01-20T10:14:15+08:00" pubdate data-updated="true">Jan 20<span>th</span>, 2016</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I have a file containing quite many lines of strings and I want to sort them by line length. Here is how.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat <span class="nv">$file</span> | awk <span class="s1">&#39;{ print length($0) &quot; &quot; $0; }&#39;</span> | sort -r -n | cut -d <span class="s1">&#39; &#39;</span> -f 2- | less
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1583,65 +1623,6 @@ http://www.jstorimer.com/blogs/workingwithcode/7766119-when-to-use-stderr-instea
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/11/19/css-files-not-function-well-while-using-gunicorn/">Css Files Not Function Well While Using Gunicorn</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-11-19T16:42:04+08:00" pubdate data-updated="true">Nov 19<span>th</span>, 2015</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I find that my bootstap files not working well while I am using gunicorn to start the app.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">gunicorn --env <span class="nv">DJANGO_SETTINGS_MODULE</span><span class="o">=</span>myapp.settings myapp_management.wsgi --timeout 300 --workers<span class="o">=</span>2 --pid gunicorn.pid -b 0:10000 --access-logfile<span class="o">=</span>log/access_charts.log --error-logfile<span class="o">=</span>log/error_charts.log --access-logformat <span class="s1">&#39;&quot;%(h)s %(l)s %(u)s %(t)s &quot;%(r)s&quot; %(s)s %(b)s &quot;%(f)s&quot; &quot;%(a)s&quot; %(D)s %(p)s&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>I find a solution for this:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line">http://stackoverflow.com/questions/12800862/django-static-files-under-gunicorn
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>To summarize it here, add the following contents to the urls.py file.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-</span><span class="line">
-</span><span class="line">
-</span><span class="line">urlpatterns +<span class="o">=</span> staticfiles_urlpatterns<span class="o">()</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -1661,7 +1642,7 @@ http://www.jstorimer.com/blogs/workingwithcode/7766119-when-to-use-stderr-instea
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2018 - Steven Sun -
+  Copyright &copy; 2019 - Steven Sun -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

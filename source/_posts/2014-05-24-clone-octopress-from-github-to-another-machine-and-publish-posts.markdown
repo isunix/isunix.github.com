@@ -12,7 +12,7 @@ When you want to clone a octopress blog from the github to a machine and then en
 3. git clone https://github.com/isunix/isunix.github.com _deploy        
 4. sudo gem install bundler   
 5. bundle install    
-6. rake new_post[“The Title of Your Article”]    
+6. bundle exec rake "new_post["The Title of Your Article"]"    
 7. bundle exec rake generate
 8. bundle exec rake preview    
 9. bundle exec rake deploy    

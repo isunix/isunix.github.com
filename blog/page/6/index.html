@@ -9,7 +9,17 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="One of the best illustration of the use of select I read maybe from the book “data munging with perl”. Look at the the differences between the &hellip;">
+  <meta name="description" content="This is a note about chap02 in “Object oriented perl”. 1.For a hash, we have two ways to get the key-value pair. 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+my %hash = ( &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -62,6 +72,158 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/10/28/object-oriented-perl-chap02/">Object Oriented Perl Chap02</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-10-28T14:08:34+08:00" pubdate data-updated="true">Oct 28<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>This is a note about chap02 in “Object oriented perl”.  </p>
+
+<p>1.For a hash, we have two ways to get the key-value pair.  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">%hash</span> <span class="o">=</span> <span class="p">(</span>
+</span><span class="line">    <span class="n">steven</span> <span class="o">=&gt;</span> <span class="s">&quot;good&quot;</span><span class="p">,</span>
+</span><span class="line">    <span class="n">sun</span>    <span class="o">=&gt;</span> <span class="s">&quot;bad&quot;</span><span class="p">,</span>
+</span><span class="line"><span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="k">my</span> <span class="nv">$nextkey</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">while</span> <span class="p">(</span><span class="nb">defined</span><span class="p">(</span><span class="nv">$nextkey</span> <span class="o">=</span> <span class="nb">each</span> <span class="nv">%hash</span><span class="p">)){</span>
+</span><span class="line">    <span class="k">print</span> <span class="s">&quot;the key $nextkey has the value $hash{$nextkey}\n&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>The other way is:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">%hash</span> <span class="o">=</span> <span class="p">(</span>
+</span><span class="line">    <span class="n">steven</span> <span class="o">=&gt;</span> <span class="s">&quot;good&quot;</span><span class="p">,</span>
+</span><span class="line">    <span class="n">sun</span>    <span class="o">=&gt;</span> <span class="s">&quot;bad&quot;</span><span class="p">,</span>
+</span><span class="line"><span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="k">while</span> <span class="p">((</span><span class="nv">$nextkey</span><span class="p">,</span> <span class="nv">$nextval</span><span class="p">)</span> <span class="o">=</span> <span class="nb">each</span> <span class="nv">%hash</span><span class="p">){</span>
+</span><span class="line">    <span class="k">print</span> <span class="s">&quot;the key $nextkey has value $nextval\n&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>2.Subroutines can also be declared with a prototype, which is a series of specifiers that tells the compiler to restrict the type and number of arguments with which the subroutine may be invoked. For example, in the subroutine definition:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">sub </span><span class="nf">insensitive_less_than</span> <span class="p">($$)</span> <span class="p">{</span>
+</span><span class="line">	<span class="k">return</span> <span class="nb">lc</span><span class="p">(</span><span class="nv">$_</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="ow">lt</span> <span class="nb">lc</span><span class="p">(</span><span class="nv">$_</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>The prototype is <code>($$)</code> and specifies that the subroutine insensitive_less_than can only be called with exactly two arguments, each of which will be treated as a scalar—even if it’s actually an array!  </p>
+
+<p>Prototypes are only enforced when a subroutine is called using the name(args) syntax. Prototypes are not enforced when a subroutine is called with a leading &amp; or through a subroutine reference.   </p>
+
+<p>3.Here is a clear illustration of how to use reference in Perl:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">@row1</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">@row2</span> <span class="o">=</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">);</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">@row3</span> <span class="o">=</span> <span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="k">my</span> <span class="nv">@cols</span> <span class="o">=</span> <span class="p">(</span><span class="o">\</span><span class="nv">@row1</span><span class="p">,</span> <span class="o">\</span><span class="nv">@row2</span><span class="p">,</span> <span class="o">\</span><span class="nv">@row3</span><span class="p">);</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">$table</span> <span class="o">=</span> <span class="o">\</span><span class="nv">@cols</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;2 x 3 is &quot;</span><span class="p">,</span> <span class="nv">$table</span><span class="o">-&gt;</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-&gt;</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>4.Here is a script to realize the function of skipping along an array by a fixed step size. It uses anynymous soubroutine and closure.  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">sub </span><span class="nf">hop_along</span><span class="p">{</span>
+</span><span class="line">    <span class="k">my</span> <span class="p">(</span><span class="nv">$from</span><span class="p">,</span> <span class="nv">$to</span><span class="p">,</span> <span class="nv">$step</span><span class="p">)</span> <span class="o">=</span> <span class="nv">@_</span><span class="p">;</span>
+</span><span class="line">    <span class="k">my</span> <span class="nv">$next</span> <span class="o">=</span> <span class="nv">$from</span> <span class="o">-</span> <span class="nv">$step</span><span class="p">;</span>
+</span><span class="line">    <span class="k">my</span> <span class="nv">$closure_ref</span> <span class="o">=</span> <span class="n">sub</span><span class="p">{</span>
+</span><span class="line">        <span class="nv">$next</span> <span class="o">+=</span> <span class="nv">$step</span><span class="p">;</span>
+</span><span class="line">        <span class="k">return</span> <span class="k">if</span> <span class="nv">$next</span> <span class="o">&gt;</span> <span class="nv">$to</span><span class="p">;</span>
+</span><span class="line">        <span class="nv">$_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$next</span><span class="p">;</span>
+</span><span class="line">        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class="line">    <span class="p">};</span>
+</span><span class="line">    <span class="k">return</span> <span class="nv">$closure_ref</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="nv">$iterator</span> <span class="o">=</span> <span class="n">hop_along</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">7</span><span class="p">);</span>
+</span><span class="line"><span class="k">while</span><span class="p">(</span><span class="nv">$iterator</span><span class="o">-&gt;</span><span class="p">(</span><span class="nv">$next</span><span class="p">)){</span>
+</span><span class="line">    <span class="k">print</span> <span class="nv">$next</span><span class="o">.</span><span class="s">&quot; &quot;</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>The sad thing is, I am not sure if this is the best way to achieve the function.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -843,83 +1005,6 @@ need to write a lot of data to a particular file, you could use code like this: 
 </span><span class="line"><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 <p>This example is excerpted from the book “extending and embedding perl”.  </p>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/11/constructor-and-destructor-in-perl/">Constructor and Destructor in Perl</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-09-11T13:46:23+08:00" pubdate data-updated="true">Sep 11<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>For Perl constructor, we can seperate the process of object creation from the process of initialization.  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nb">package</span> <span class="nn">CD::</span><span class="n">Music</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="n">strict</span><span class="p">;</span>
-</span><span class="line"><span class="k">sub </span><span class="nf">new</span> <span class="p">{</span>
-</span><span class="line">	<span class="k">my</span> <span class="nv">$self</span> <span class="o">=</span> <span class="p">{};</span>
-</span><span class="line">	<span class="nb">bless</span> <span class="nv">$self</span><span class="p">,</span> <span class="nb">shift</span><span class="p">;</span>
-</span><span class="line">	<span class="nv">$self</span><span class="o">-&gt;</span><span class="n">_incr_count</span><span class="p">();</span>
-</span><span class="line">	<span class="nv">$self</span><span class="o">-&gt;</span><span class="n">_init</span><span class="p">(</span><span class="nv">@_</span><span class="p">);</span>
-</span><span class="line">	<span class="k">return</span> <span class="nv">$self</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line"><span class="p">{</span>
-</span><span class="line">	<span class="k">my</span> <span class="nv">@_init_mems</span> <span class="o">=</span>
-</span><span class="line">	<span class="sx">qw( _name _artist _publisher _ISBN _tracks _room _shelf _rating )</span><span class="p">;</span>
-</span><span class="line">	<span class="k">sub </span><span class="nf">_init</span> <span class="p">{</span>
-</span><span class="line">		<span class="k">my</span> <span class="p">(</span><span class="nv">$self</span><span class="p">,</span><span class="nv">@args</span><span class="p">)</span> <span class="o">=</span> <span class="nv">@_</span><span class="p">;</span>
-</span><span class="line">		<span class="k">my</span> <span class="nv">%inits</span><span class="p">;</span>
-</span><span class="line">		<span class="nv">@inits</span><span class="p">{</span><span class="nv">@_init_mems</span><span class="p">}</span> <span class="o">=</span> <span class="nv">@args</span><span class="p">;</span>
-</span><span class="line">		<span class="nv">%$self</span> <span class="o">=</span> <span class="nv">%inits</span><span class="p">;</span>
-</span><span class="line">	<span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 </div>
   

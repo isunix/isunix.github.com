@@ -7,13 +7,15 @@ categories: Flask
 ---
 
 我们在Flask中使用shell的时候没有语法高亮和代码提示，想要获得一个ipython般的体验，现在有
-### https://github.com/ei-grad/flask-shell-ipython
+
+- https://github.com/ei-grad/flask-shell-ipython
 
 ```
 pip install flask-shell-ipython
 ```
 
 装好了之后，执行如下的命令就可以了
+
 ```
 flask shell
 ```

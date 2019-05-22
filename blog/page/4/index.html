@@ -9,10 +9,7 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="We will show how to reverse a linked list in place using both python and javascript(actually converted from coffeescript). 1.python version: 1
-2
-3
-4 &hellip;">
+  <meta name="description" content="Say we want to install modules from multiple requirement files. We will put the requirement files in the directory “requirements”. First the base.txt &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +62,71 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/09/21/installing-from-multiple-requirements-files/">Installing From Multiple Requirements Files</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-09-21T16:18:23+08:00" pubdate data-updated="true">Sep 21<span>st</span>, 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Say we want to install modules from multiple requirement files. We will put the requirement files in the directory “requirements”.</p>
+
+<p>First the base.txt file.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">Django==1.7.10
+</span><span class="line">psycopg2==2.4.5</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Then the file local.txt</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">-r base.txt
+</span><span class="line">django-discover-runner==0.2.2</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>and production.txt(production installaions should be close to what is used in other locations, so production.txt commonly just calls base.txt)</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">-r base.txt</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>The for local and production env, we can issue the following commands:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">pip install -r requirements/local.txt
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">pip install -r requirements/production.txt
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1181,67 +1243,6 @@
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>On my server, this will give out the cgi-bin dir.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/06/02/remove-obsolete-packages-on-ubuntu/">Remove Obsolete Packages on Ubuntu</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-06-02T10:03:32+08:00" pubdate data-updated="true">Jun 2<span>nd</span>, 2015</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>After upgrading ubuntu to a new version, there will be many obsolete packages. To see these packages, you can </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line">sudo apt-get upgrade
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>It will list all those obsolete packages.</p>
-
-<p>To autoremove them one by one will be will tedious, we can first copy those packages into a file, like aa.txt, then use the following perl script to do it once:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="nn">File::</span><span class="n">Slurp</span><span class="p">;</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">@modules</span><span class="p">;</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">$text</span> <span class="o">=</span> <span class="n">read_file</span><span class="p">(</span><span class="s">&#39;aa.txt&#39;</span><span class="p">,</span> <span class="n">text_ref</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">);</span>
-</span><span class="line"><span class="nv">@modules</span> <span class="o">=</span> <span class="nb">grep</span> <span class="p">{</span><span class="ow">not</span> <span class="sr">/\s+/</span><span class="p">}</span> <span class="nb">split</span><span class="p">(</span><span class="s">&#39;[\s+]&#39;</span><span class="p">,</span> <span class="nv">$text</span><span class="p">);</span>
-</span><span class="line"><span class="k">foreach</span> <span class="k">my</span> <span class="nv">$module</span> <span class="p">(</span><span class="nv">@modules</span><span class="p">){</span>
-</span><span class="line">	<span class="nb">system</span><span class="p">(</span><span class="s">&quot;sudo apt-get autoremove $module&quot;</span><span class="p">);</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>Done!</p>
 </div>
   
   

@@ -4,7 +4,7 @@
   <title><![CDATA[Steven's Blog]]></title>
   <link href="http://isunix.github.io/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2019-05-22T16:31:38+08:00</updated>
+  <updated>2019-05-22T16:55:50+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,59 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[使用rpm安装crontab命令备忘]]></title>
+    <link href="http://isunix.github.io/blog/2019/05/22/shi-yong-rpman-zhuang-crontabming-ling-bei-wang/"/>
+    <updated>2019-05-22T16:36:21+08:00</updated>
+    <id>http://isunix.github.io/blog/2019/05/22/shi-yong-rpman-zhuang-crontabming-ling-bei-wang</id>
+    <content type="html"><![CDATA[<p>我这边有台ec2, 但是在yum update的时候，总是报错说依赖冲突，后来处理这个问题的时候，过于激进，导致yum不可以用了, 最后把rpm也删了</p>
+
+<p>参考这篇文章
+<a href="https://blog.seosiwei.com/detail/27">https://blog.seosiwei.com/detail/27</a>
+里的方法2，把rpm和yum都删了然后重装了, 软件下载链接是
+<a href="http://mirrors.ustc.edu.cn/centos/6/os/x86_64/Packages/">http://mirrors.ustc.edu.cn/centos/6/os/x86_64/Packages/</a></p>
+
+<p>安装好了之后，发现yum还是不能用，总是报错</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">liblzma.so.0: cannot open shared object file: No such file or directory</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>之类的信息</p>
+
+<p>无可奈何，只好使用rpm了, 我这边需要使用crontab，于是从上面的软件库中下载了</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">cronie-1.4.4-16.el6_8.2.x86_64.rpm``` 和 ```crontabs-1.10-33.el6.noarch.rpm</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>然后执行如下的命令来安装</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">rpm -Uvh --replacepkgs --nodeps --force cron*.rpm</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>然后报各种依赖找不到的错误, 比如</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">librpmio.so.3 not found</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>之类的</p>
+
+<p>好在我们有别的ec2，我们可以去这个另外的ec2上找对应的依赖，然后copy到这个我们出问题的机器上</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">find / -name librpm.so.3 -type f</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>然后发现在/usr/lib64中，librpm.so.3是个软连接，指向/usr/lib64中的librpm.so.3.2.2, 我们把librpm.so.3.2.2copy到我们出问题的机器的/usr/lib64里，然后参照
+<a href="http://isunix.github.io/blog/2019/05/22/linuxming-ling-lnde-shi-yong-bei-wang/">http://isunix.github.io/blog/2019/05/22/linuxming-ling-lnde-shi-yong-bei-wang/</a>
+中的方式来做个软连接</p>
+
+<p>仿照这个方式，如果还有问题，重复找依赖-copy-做软连接的过程</p>
+
+<p>最后再执行</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">rpm -Uvh --replacepkgs --nodeps --force cron*.rpm</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>crontab命令成功安装了.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Linux命令ln的使用备忘]]></title>
@@ -1289,53 +1342,6 @@
 </span><span class="line">        <span class="k">print</span> <span class="vg">$.</span><span class="p">;</span>
 </span><span class="line">    <span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Grep Lines in One File and Not in the Other]]></title>
-    <link href="http://isunix.github.io/blog/2015/12/14/grep-lines-in-one-file-and-not-in-the-other/"/>
-    <updated>2015-12-14T14:46:10+08:00</updated>
-    <id>http://isunix.github.io/blog/2015/12/14/grep-lines-in-one-file-and-not-in-the-other</id>
-    <content type="html"><![CDATA[<p>Say we have a file a, which has the following contentL:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">a
-</span><span class="line">b
-</span><span class="line">c
-</span><span class="line">d
-</span><span class="line">e</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>and b,</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">c
-</span><span class="line">d</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>What if we want to get all those in file a and not in file b, in this case, a, b, e?</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">grep -F -x -v -f b.txt a.txt
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>To qutoe from the page</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line">http://unix.stackexchange.com/questions/28158/is-there-a-tool-to-get-the-lines-in-one-file-that-are-not-in-another
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>The above command is doing the following things:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line">This works by using each line in b.txt as a pattern (-f b.txt) and treating it as a plain string to match (not a regular regex) (-F). You force the match to happen on the whole line (-x) and print out only the lines that don&#39;t match (-v). Therefore you are printing out the lines in a.txt that don&#39;t contain the same data as any line in b.txt.
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>So remember the order of file a and b matters if you really understand what the command is doing.</p>
 ]]></content>
   </entry>
   

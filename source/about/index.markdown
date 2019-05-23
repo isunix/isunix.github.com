@@ -27,7 +27,7 @@ footer: true
 ## 2016.06~2018.07:
 - 安徽华米科技(是的,小米手环, 但是不仅仅是小米手环); 大数据工程师; 这年从上海回到了老家合肥, 命中注定般进入大数据行业
 
-## 2017.07~now:
+## 2018.07~now:
 - 安徽华米科技; 高级大数据工程师
 
 ## 喜欢:
@@ -35,7 +35,7 @@ footer: true
 
 
 ## 邮箱:
-- mypeacelover@163.com
+- <mypeacelover@163.com>
 
 ## github:
-- https://github.isunix.com
+- <https://github.isunix.com>

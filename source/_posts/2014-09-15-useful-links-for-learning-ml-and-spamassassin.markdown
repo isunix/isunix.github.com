@@ -3,7 +3,7 @@ layout: post
 title: "useful links for learning ML and SpamAssassin"
 date: 2014-09-15 10:32:36 +0800
 comments: true
-categories: Machine Learning
+categories: Data&ML&AI
 ---
 Below are some links I used while I am learning SpamAssassin and machine learning, of course including Bayes.
 

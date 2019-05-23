@@ -3,7 +3,7 @@ layout: post
 title: "hive insert using select *"
 date: 2016-08-09 09:34:49 +0800
 comments: true
-categories: Hive
+categories: BigData
 ---
 I want to insert into a table with values from another table. and I want to use the follwing statements,
 

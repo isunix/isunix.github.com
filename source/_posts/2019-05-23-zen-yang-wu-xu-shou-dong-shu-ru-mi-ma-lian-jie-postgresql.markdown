@@ -3,7 +3,7 @@ layout: post
 title: "怎样无需手动输入密码连接PostgreSQL"
 date: 2019-05-23 08:44:13 +0800
 comments: true
-categories: Linux
+categories: Linux&Mac
 ---
 我们要想不每次手动输入密码来连接PostgreSQL, 可以在home目录创建一个pgpass文件```touch ~/.pgpass```.
 然后在里面输入如下的信息```$host:$port:$db:$user:$password```.

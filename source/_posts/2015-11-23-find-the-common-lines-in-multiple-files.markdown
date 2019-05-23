@@ -3,7 +3,7 @@ layout: post
 title: "find the common lines in multiple files"
 date: 2015-11-23 17:22:11 +0800
 comments: true
-categories: Linux
+categories: Linux&Mac
 ---
 What if I want to find the lines exist in all the given files under linux. Of course I can write a small script but I do not want to do that, cause I am sure there are commands for this kind of task.
 

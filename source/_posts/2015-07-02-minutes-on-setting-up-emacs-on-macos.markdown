@@ -3,7 +3,7 @@ layout: post
 title: "minutes on setting up emacs on macos"
 date: 2015-07-02 15:29:18 +0800
 comments: true
-categories: Linux
+categories: Linux&Mac
 ---
 1. I am am using gui emacs and I want to it to be started from the command line, then I have to do this:
 

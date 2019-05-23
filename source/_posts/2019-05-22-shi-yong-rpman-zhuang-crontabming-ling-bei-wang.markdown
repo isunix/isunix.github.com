@@ -3,7 +3,7 @@ layout: post
 title: "使用rpm安装crontab命令备忘"
 date: 2019-05-22 16:36:21 +0800
 comments: true
-categories: Linux
+categories: Linux&Mac
 ---
 我这边有台ec2, 但是在yum update的时候，总是报错说依赖冲突，后来处理这个问题的时候，过于激进，导致yum不可以用了, 最后把rpm也删了
 

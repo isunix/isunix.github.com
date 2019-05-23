@@ -3,7 +3,7 @@ layout: post
 title: "brew update errors fixed"
 date: 2014-06-01 16:12:00 +0800
 comments: true
-categories: Linux
+categories: Linux&Mac
 ---
 I met several errors while updating my homebrew, one is:
 

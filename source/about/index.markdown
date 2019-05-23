@@ -37,7 +37,7 @@ footer: true
 - 熟练和擅长 Perl/Shell Script/Python/SQL/数据分析/Spark/PySpark/Tableau/Superset/Django/Flask/Dancer/Git/Vim/Markdown
 - 喜欢历史/政治/科普/英文/纪录片/唐诗/宋词/元曲/其他的中国古典文化
 - 了解过机器学习和深度学习(依然在持续学习，获得过Coursera上吴恩达的深度学习课程的certificate)
-- 喜欢散步，打羽毛球，美剧, 登山
+- 喜欢散步, 打羽毛球, 美剧, 登山
 
 
 ## 联系

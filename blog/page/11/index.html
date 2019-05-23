@@ -9,7 +9,12 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="I use this script to generate chapters at once. The number of chapters you want to generate in passed through the command line as the first argument &hellip;">
+  <meta name="description" content="我们在标准输入中得到多行的值， 现在我们想要以单行还有多行的结果来把它们给显示出来， 要是想单行显示的话，可以如下: 1
+2
+3
+chomp(@lines = &lt;STDIN&gt;);
+@sorted = sort @lines;
+print &quot;@sorted\n&quot; &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -62,6 +67,58 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/17/perlzhong-dan-xing-huo-zhe-duo-xing-shu-chu-jie-guo/">Perl中单行或者多行输出结果</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-17T15:14:23+08:00" pubdate data-updated="true">Jul 17<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>我们在标准输入中得到多行的值， 现在我们想要以单行还有多行的结果来把它们给显示出来， 要是想单行显示的话，可以如下:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nb">chomp</span><span class="p">(</span><span class="nv">@lines</span> <span class="o">=</span> <span class="sr">&lt;STDIN&gt;</span><span class="p">);</span>
+</span><span class="line"><span class="nv">@sorted</span> <span class="o">=</span> <span class="nb">sort</span> <span class="nv">@lines</span><span class="p">;</span>
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;@sorted\n&quot;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>多行的话可以:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">print</span> <span class="nb">sort</span> <span class="sr">&lt;STDIN&gt;</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>这里的关键的地方就是chomp这个函数。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1556,49 +1613,6 @@
 
 <h2 id="section-7">练习</h2>
 <p>(未翻)</p>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/06/07/php-cgi-not-found-error/">Php-cgi Not Found Error</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-06-07T14:56:33+08:00" pubdate data-updated="true">Jun 7<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Today while I was running a php script from the PHPStrom by a browser, I got the following error telling me that “php-cgi not found.”. I have no other way but to install a new version of php, my original version is 5.4.24, I then installed a 5.5 version.  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line">curl -s http://php-osx.liip.ch/install.sh | bash -s 5.5
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>and in my phpstorm, I use the path, “usr/local/php5/bin” as the interpreter’s path. It works now.</p>
 
 </div>
   

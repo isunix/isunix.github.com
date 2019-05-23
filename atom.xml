@@ -4,7 +4,7 @@
   <title><![CDATA[Steven's Blog]]></title>
   <link href="http://isunix.github.io/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2019-05-22T16:55:50+08:00</updated>
+  <updated>2019-05-23T08:52:45+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,20 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[怎样无需手动输入密码连接PostgreSQL]]></title>
+    <link href="http://isunix.github.io/blog/2019/05/23/zen-yang-wu-xu-shou-dong-shu-ru-mi-ma-lian-jie-postgresql/"/>
+    <updated>2019-05-23T08:44:13+08:00</updated>
+    <id>http://isunix.github.io/blog/2019/05/23/zen-yang-wu-xu-shou-dong-shu-ru-mi-ma-lian-jie-postgresql</id>
+    <content type="html"><![CDATA[<p>我们要想不每次手动输入密码来连接PostgreSQL, 可以在home目录创建一个pgpass文件<code>touch ~/.pgpass</code>.
+然后在里面输入如下的信息<code>$host:$port:$db:$user:$password</code>.
+这里的每个变量实际过程中替换成真实的值.
+然后我们就可以使用如下的方式来进行psql的连接了<code>psql -h $host -p $port -U $user -d $db</code>.
+同理，这里的每个变量实际过程中替换成真实的值.</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[使用rpm安装crontab命令备忘]]></title>
@@ -1294,53 +1308,6 @@
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 </pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | sed -e :a -e <span class="s1">&#39;/^\n*$/{$d;N;ba&#39;</span> -e <span class="s1">&#39;}&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Perl Secret Operators and Constants]]></title>
-    <link href="http://isunix.github.io/blog/2015/12/17/perl-secret-operators-and-constants/"/>
-    <updated>2015-12-17T10:37:47+08:00</updated>
-    <id>http://isunix.github.io/blog/2015/12/17/perl-secret-operators-and-constants</id>
-    <content type="html"><![CDATA[<p>Several days I met some perl one-liner like this:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat <span class="nv">$file</span> | perl -Mautodie -MList::MoreUtils<span class="o">=</span>none -ne <span class="s1">&#39;chomp; push @re, $_ }{ open $fh, $ENV{CF}; @s = &lt;$fh&gt;; foreach $s (@s) { print $s if none { $s =~ qr/$_/ } @re };&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>I have no idea what the “}{“ here means, at first I thought it maybe some typo.</p>
-
-<p>Then my colleagues showed me the following page, which lists many weird perl operators.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line">http://search.cpan.org/dist/perlsecret/lib/perlsecret.pod
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>To have a look at how it is used in the backend:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nv">$ </span>perl -MO<span class="o">=</span>Deparse -lne <span class="s1">&#39;}{print$.&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>It will give the following code:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="o">-</span><span class="n">e</span> <span class="n">syntax</span> <span class="n">OK</span>
-</span><span class="line">    <span class="k">BEGIN</span> <span class="p">{</span> <span class="vg">$/</span> <span class="o">=</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span> <span class="vg">$\</span> <span class="o">=</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span> <span class="p">}</span>
-</span><span class="line">    <span class="n">LINE:</span> <span class="k">while</span> <span class="p">(</span><span class="nb">defined</span><span class="p">(</span><span class="nv">$_</span> <span class="o">=</span> <span class="sr">&lt;ARGV&gt;</span><span class="p">))</span> <span class="p">{</span>
-</span><span class="line">        <span class="nb">chomp</span> <span class="nv">$_</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">    <span class="p">{</span>
-</span><span class="line">        <span class="k">print</span> <span class="vg">$.</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 ]]></content>
   </entry>

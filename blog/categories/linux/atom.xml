@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Linux | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2019-05-22T16:55:50+08:00</updated>
+  <updated>2019-05-23T08:52:45+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,20 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[怎样无需手动输入密码连接PostgreSQL]]></title>
+    <link href="http://isunix.github.io/blog/2019/05/23/zen-yang-wu-xu-shou-dong-shu-ru-mi-ma-lian-jie-postgresql/"/>
+    <updated>2019-05-23T08:44:13+08:00</updated>
+    <id>http://isunix.github.io/blog/2019/05/23/zen-yang-wu-xu-shou-dong-shu-ru-mi-ma-lian-jie-postgresql</id>
+    <content type="html"><![CDATA[<p>我们要想不每次手动输入密码来连接PostgreSQL, 可以在home目录创建一个pgpass文件<code>touch ~/.pgpass</code>.
+然后在里面输入如下的信息<code>$host:$port:$db:$user:$password</code>.
+这里的每个变量实际过程中替换成真实的值.
+然后我们就可以使用如下的方式来进行psql的连接了<code>psql -h $host -p $port -U $user -d $db</code>.
+同理，这里的每个变量实际过程中替换成真实的值.</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[使用rpm安装crontab命令备忘]]></title>
@@ -121,48 +135,6 @@ grep -F -x -f file1 file2 ...
 
 <p><code>html
 http://unix.stackexchange.com/questions/28158/is-there-a-tool-to-get-the-lines-in-one-file-that-are-not-in-another
-</code></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Minutes on Setting Up Emacs on Macos]]></title>
-    <link href="http://isunix.github.io/blog/2015/07/02/minutes-on-setting-up-emacs-on-macos/"/>
-    <updated>2015-07-02T15:29:18+08:00</updated>
-    <id>http://isunix.github.io/blog/2015/07/02/minutes-on-setting-up-emacs-on-macos</id>
-    <content type="html"><![CDATA[<ol>
-  <li>I am am using gui emacs and I want to it to be started from the command line, then I have to do this:</li>
-</ol>
-
-<p><code>sh
-alias emacs='open -a /Applications/Emacs.app $1'
-</code></p>
-
-<ol>
-  <li>I want to change the default font and font size:</li>
-</ol>
-
-<p><code>sh
-(set-default-font "Monaco 28")
-</code></p>
-
-<ol>
-  <li>I want to use evil, after putting it into ~/.emacs.d, also I need to put the folliwng things in to ~/.emacs.d/init.el</li>
-</ol>
-
-<p><code>
-(add-to-list 'load-path "~/.emacs.d/evil")
-(require 'evil)
-(evil-mode 1)
-</code></p>
-
-<ol>
-  <li>I am using slime, so I have to put the following things into my ~/.emacs.d/init.el</li>
-</ol>
-
-<p><code>
-(setq inferior-lisp-program "/usr/local/bin/sbcl")
-(setq slime-contribs '(slime-fancy))
 </code></p>
 ]]></content>
   </entry>

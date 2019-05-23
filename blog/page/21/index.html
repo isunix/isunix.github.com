@@ -9,12 +9,7 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="我们在标准输入中得到多行的值， 现在我们想要以单行还有多行的结果来把它们给显示出来， 要是想单行显示的话，可以如下: 1
-2
-3
-chomp(@lines = &lt;STDIN&gt;);
-@sorted = sort @lines;
-print &quot;@sorted\n&quot; &hellip;">
+  <meta name="description" content="On the centos server, I want to install gnuplot in my local dir, here are the steps: download the source code and cd into the dir. ./configure – &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -104,7 +99,7 @@ print &quot;@sorted\n&quot; &hellip;">
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/07/17/perlzhong-dan-xing-huo-zhe-duo-xing-shu-chu-jie-guo/">Perl中单行或者多行输出结果</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/09/17/install-gnuplot-from-the-source-code/">Install Gnuplot From the Source Code</a></h1>
     
     
       <p class="meta">
@@ -120,30 +115,31 @@ print &quot;@sorted\n&quot; &hellip;">
   
 
 
-<time datetime="2014-07-17T15:14:23+08:00" pubdate data-updated="true">2014 年7 月17 日</time>
+<time datetime="2014-09-17T10:38:15+08:00" pubdate data-updated="true">2014 年9 月17 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>我们在标准输入中得到多行的值， 现在我们想要以单行还有多行的结果来把它们给显示出来， 要是想单行显示的话，可以如下:</p>
+  <div class="entry-content"><p>On the centos server, I want to install gnuplot in my local dir, here are the steps:  </p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nb">chomp</span><span class="p">(</span><span class="nv">@lines</span> <span class="o">=</span> <span class="sr">&lt;STDIN&gt;</span><span class="p">);</span>
-</span><span class="line"><span class="nv">@sorted</span> <span class="o">=</span> <span class="nb">sort</span> <span class="nv">@lines</span><span class="p">;</span>
-</span><span class="line"><span class="k">print</span> <span class="s">&quot;@sorted\n&quot;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<ol>
+  <li>
+    <p>download the source code and cd into the dir.</p>
+  </li>
+  <li>
+    <p>./configure –prefix=$HOME/local –with-readline=gnu</p>
+  </li>
+  <li>
+    <p>make</p>
+  </li>
+  <li>
+    <p>make install</p>
+  </li>
+</ol>
 
-<p>多行的话可以:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">print</span> <span class="nb">sort</span> <span class="sr">&lt;STDIN&gt;</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>这里的关键的地方就是chomp这个函数。</p>
+<p>That is all. </p>
 </div>
   
   
@@ -156,7 +152,7 @@ print &quot;@sorted\n&quot; &hellip;">
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/07/17/generate-chapters-at-once/">Generate Chapters at Once</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/09/15/useful-links-for-learning-ml-and-spamassassin/">Useful Links for Learning ML and SpamAssassin</a></h1>
     
     
       <p class="meta">
@@ -172,74 +168,16 @@ print &quot;@sorted\n&quot; &hellip;">
   
 
 
-<time datetime="2014-07-17T10:47:48+08:00" pubdate data-updated="true">2014 年7 月17 日</time>
+<time datetime="2014-09-15T10:32:36+08:00" pubdate data-updated="true">2014 年9 月15 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>I use this script to generate chapters at once. The number of chapters you want to generate in passed through the command line as the first argument.  </p>
+  <div class="entry-content"><p>Below are some links I used while I am learning SpamAssassin and machine learning, of course including Bayes.</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="n">strict</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="n">warnings</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="n">utf8</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="nn">Data::</span><span class="n">Dumper</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">my</span> <span class="nv">$chap_num</span> <span class="o">=</span> <span class="nv">$ARGV</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
-</span><span class="line">
-</span><span class="line"><span class="k">for</span><span class="p">(</span><span class="k">my</span> <span class="nv">$i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;=</span> <span class="nv">$chap_num</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">){</span>
-</span><span class="line">    <span class="nb">mkdir</span> <span class="s">&quot;chap_$i&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/07/17/split-mids-to-several-lines-with-fixed-number-per-line/">Split Mids to Several Lines With Fixed Number Per Line</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-07-17T10:26:09+08:00" pubdate data-updated="true">2014 年7 月17 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>We have many mids with one mid every line, now we want to print all those mids out with a fixed number of mids per line. I want to realize this function in Perl first without success, so I am using PHP. </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
 <span class="line-number">3</span>
 <span class="line-number">4</span>
@@ -261,30 +199,28 @@ print &quot;@sorted\n&quot; &hellip;">
 <span class="line-number">20</span>
 <span class="line-number">21</span>
 <span class="line-number">22</span>
-</pre></td><td class="code"><pre><code class="php"><span class="line"><span class="o">&lt;?</span><span class="nx">php</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">http://blog.sina.com.cn/s/blog_77dc7b520100pzwd.html
+</span><span class="line">http://spamassassin.apache.org/full/3.4.x/doc/Mail_SpamAssassin.html
+</span><span class="line">http://www.jb51.net/article/6214.htm
 </span><span class="line">
-</span><span class="line"><span class="nv">$scriptname</span> <span class="o">=</span> <span class="nv">$argv</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
-</span><span class="line"><span class="nv">$txt_file</span> <span class="o">=</span> <span class="nv">$argv</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
-</span><span class="line"><span class="nv">$dir</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span><span class="p">;</span>
+</span><span class="line">http://www.baidu.com/index.php?wd=%E8%B4%9D%E5%8F%B6%E6%96%AF&amp;rsv_spt=1&amp;issp=1&amp;rsv_bp=0&amp;ie=utf-8&amp;tn=monline_5_dg&amp;rsv_sug3=7&amp;rsv_sug4=171&amp;rsv_sug1=8&amp;oq=beiyes&amp;rsv_sug2=0&amp;f=3&amp;rsp=0&amp;inputT=6003
 </span><span class="line">
-</span><span class="line"><span class="nv">$contents</span> <span class="o">=</span> <span class="nb">file_get_contents</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">$dir</span><span class="s2">/</span><span class="si">$txt_file</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nx">FILE_USE_INCLUDE_PATH</span><span class="p">);</span>
-</span><span class="line"><span class="nv">$contents</span> <span class="o">=</span> <span class="nx">trim</span><span class="p">(</span><span class="nv">$contents</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="nv">$mid_splited</span> <span class="o">=</span> <span class="nb">preg_split</span><span class="p">(</span><span class="s2">&quot;/</span><span class="se">\n</span><span class="s2">/&quot;</span><span class="p">,</span> <span class="nv">$contents</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="nv">$count_mids</span> <span class="o">=</span> <span class="nb">count</span><span class="p">(</span><span class="nv">$mid_splited</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="k">for</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;</span> <span class="nv">$count_mids</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">){</span>
-</span><span class="line">  <span class="k">print</span> <span class="s2">&quot;</span><span class="si">$mid_splited[$i]</span><span class="s2"> &quot;</span><span class="p">;</span>
-</span><span class="line">  <span class="k">if</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">%</span> <span class="mi">7</span> <span class="o">==</span> <span class="mi">0</span><span class="p">){</span>
-</span><span class="line">    <span class="k">print</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">;</span>
-</span><span class="line">  <span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line">
-</span><span class="line"><span class="cp">?&gt;</span><span class="x"></span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>　</p>
+</span><span class="line">http://www.ruanyifeng.com/blog/2011/08/bayesian_inference_part_one.html
+</span><span class="line">http://mindhacks.cn/2008/09/21/the-magical-bayesian-method/
+</span><span class="line">http://mindhacks.cn/2008/09/11/machine-learning-and-ai-resources/
+</span><span class="line">http://en.wikipedia.org/wiki/Herbert_A._Simon
+</span><span class="line">http://en.wikipedia.org/wiki/Machine_learning
+</span><span class="line">http://en.wikipedia.org/wiki/Artificial_intelligence
+</span><span class="line">http://en.wikipedia.org/wiki/History_of_artificial_intelligence
+</span><span class="line">http://en.wikipedia.org/wiki/Unsupervised_learning
+</span><span class="line">http://www.yeeyan.org/articles/view/sylviaangel/9995
+</span><span class="line">http://blog.youxu.info/spell-correct.html
+</span><span class="line">http://en.wikipedia.org/wiki/Thomas_Bayes
+</span><span class="line">http://mindhacks.cn/2008/07/07/the-importance-of-knowing-why/
+</span><span class="line">http://blog.csdn.net/g9yuayon/article/details/2574781
+</span><span class="line">http://blog.csdn.net/pongba/article/details/2544933
+</span><span class="line">http://www.chinaunix.net/old_jh/14/412857.html
+</span><span class="line">http://blog.chinaunix.net/uid-10182882-id-2969692.html</span></code></pre></td></tr></table></div></figure></notextile></div>
 </div>
   
   
@@ -297,7 +233,7 @@ print &quot;@sorted\n&quot; &hellip;">
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/07/15/swqp-two-values-without-introducing-a-temporary-variable/">Swap Two Values Without Introducing a Temporary Variable</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/09/12/static-variable-in-c/">Static Variable in C</a></h1>
     
     
       <p class="meta">
@@ -313,14 +249,14 @@ print &quot;@sorted\n&quot; &hellip;">
   
 
 
-<time datetime="2014-07-15T13:29:26+08:00" pubdate data-updated="true">2014 年7 月15 日</time>
+<time datetime="2014-09-12T18:18:08+08:00" pubdate data-updated="true">2014 年9 月12 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>The usual way for us to swap two values in c is by introducing a intermediate variable. But actually there is way for us to complete the task wnile not adding a new varible.   </p>
+  <div class="entry-content"><p>Static variables are the final type of variable available; these variables keep their value between calls to a function. About their effects, we will take a look at them through the following examples.</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
@@ -332,67 +268,21 @@ print &quot;@sorted\n&quot; &hellip;">
 <span class="line-number">8</span>
 <span class="line-number">9</span>
 <span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="cp">#include &lt;stdlib.h&gt;</span>
-</span><span class="line"><span class="cp">#include &lt;stdio.h&gt;</span>
+</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="cp">#include &lt;stdio.h&gt;</span>
 </span><span class="line">
-</span><span class="line"><span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
-</span><span class="line">  <span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">;</span>
-</span><span class="line">  <span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%d %d&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">b</span><span class="p">);</span>
-</span><span class="line">  <span class="n">a</span> <span class="o">=</span> <span class="n">b</span> <span class="o">-</span> <span class="n">a</span><span class="p">;</span>
-</span><span class="line">  <span class="n">b</span> <span class="o">=</span> <span class="n">b</span> <span class="o">-</span> <span class="n">a</span><span class="p">;</span>
-</span><span class="line">  <span class="n">a</span> <span class="o">=</span> <span class="n">b</span> <span class="o">+</span> <span class="n">a</span><span class="p">;</span>
+</span><span class="line"><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
+</span><span class="line">    <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
 </span><span class="line">
-</span><span class="line">  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span>
-</span><span class="line">  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line">    <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;=</span><span class="mi">10</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+</span><span class="line">      <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">return</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
 </span><span class="line"><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
 
+<p>We all know it will print out 1, 2, till 10.  </p>
 
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/07/01/remove-the-m-chareacters-in-a-file/">Remove the ^M Chareacters in a File</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-07-01T13:45:23+08:00" pubdate data-updated="true">2014 年7 月1 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>In a file that have multiple “^M” characters in it , we can use vim to remove them.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="p">:</span><span class="nv">%s</span><span class="sr">/^M/</span><span class="o">/</span><span class="n">g</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>the ^M character is made by typing ctrl + v first then hit enter.</p>
-
-<p>Also I write a perl script to convert the from dos to unix and also delete chars in code followng the “//”.</p>
+<p>If we change it a little bit, like thhis:  </p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
@@ -409,26 +299,58 @@ print &quot;@sorted\n&quot; &hellip;">
 <span class="line-number">13</span>
 <span class="line-number">14</span>
 <span class="line-number">15</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nb">open</span><span class="p">(</span><span class="nv">$IN</span><span class="p">,</span> <span class="s">&quot;$ARGV[0]&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">die</span> <span class="s">&quot;in: $@&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="nb">open</span><span class="p">(</span><span class="nv">$OUT</span><span class="p">,</span> <span class="s">&quot;&gt;&quot;</span><span class="p">,</span> <span class="s">&quot;$ARGV[0].new&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">die</span> <span class="s">&quot;out: $@&quot;</span><span class="p">;</span>
+</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="cp">#include &lt;stdio.h&gt;</span>
 </span><span class="line">
-</span><span class="line"><span class="k">while</span> <span class="p">(</span><span class="sr">&lt;$IN&gt;</span><span class="p">){</span>
-</span><span class="line">    <span class="k">my</span> <span class="nv">$line</span> <span class="o">=</span> <span class="nv">$_</span><span class="p">;</span>
-</span><span class="line">    <span class="nv">$line</span> <span class="o">=~</span> <span class="sr">s/(\/\/.*)//g</span><span class="p">;</span>
-</span><span class="line">    <span class="k">print</span> <span class="nv">$OUT</span> <span class="nv">$line</span><span class="p">;</span>
+</span><span class="line"><span class="kt">int</span> <span class="nf">foo</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">    <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line">    <span class="k">return</span> <span class="o">++</span><span class="n">x</span><span class="p">;</span>
 </span><span class="line"><span class="p">}</span>
 </span><span class="line">
-</span><span class="line"><span class="nv">$command</span> <span class="o">=</span> <span class="s">&quot;mv $ARGV[0].new $ARGV[0] &amp;&amp; chmod 777 $ARGV[0] &amp;&amp; dos2unix $ARGV[0]&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
+</span><span class="line">    <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
 </span><span class="line">
-</span><span class="line"><span class="nb">system</span><span class="p">(</span><span class="nv">$command</span><span class="p">);</span>
-</span><span class="line"><span class="k">print</span> <span class="s">&quot;successfully deleted and converted!\n&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="nb">close</span><span class="p">(</span><span class="nv">$IN</span><span class="p">);</span>
-</span><span class="line"><span class="nb">close</span><span class="p">(</span><span class="nv">$OUT</span><span class="p">);</span>
+</span><span class="line">    <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;=</span><span class="mi">10</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+</span><span class="line">        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">foo</span><span class="p">());</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">return</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span><span class="line"><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>The code just explains itself.</p>
+<p>This program will print out 1, all 1.  </p>
 
-<p>Bingo!</p>
+<p>What if we want to print out the “i” incrementally, we will use the static keyword.  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="cp">#include &lt;stdio.h&gt;</span>
+</span><span class="line">
+</span><span class="line"><span class="kt">int</span> <span class="nf">foo</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">    <span class="k">static</span> <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line">    <span class="k">return</span> <span class="o">++</span><span class="n">x</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
+</span><span class="line">    <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;=</span><span class="mi">10</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+</span><span class="line">        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">foo</span><span class="p">());</span>
+</span><span class="line">    <span class="k">return</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>This example is excerpted from the book “extending and embedding perl”.  </p>
+
 </div>
   
   
@@ -470,6 +392,26 @@ print &quot;@sorted\n&quot; &hellip;">
     
       <li class="post">
         <a href="/blog/2019/05/07/hivezhong-shan-chu-partition/">Hive中删除partition</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/05/07/zai-ammonitezhong-importdi-san-fang-jarbao/">在ammonite中import第三方jar包</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/08/09/hive-insert-using-select-star/">Hive Insert Using Select *</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/08/04/copy-and-paste-spaces-separated-text-into-excel/">Copy and Paste Spaces Separated Text Into Excel</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/19/weird-things-happen-when-scripts-executing-with-and-passing-args-with-getopts/">Weird Things Happen When Scripts Executing With . And Passing Args With Getopts</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/18/zen-yao-qu-chu-windowsbian-ji-guo-de-wen-jian-zhong-de-mzi-fu/">怎么去除windows编辑过的文件中的^M字符</a>
       </li>
     
   </ul>

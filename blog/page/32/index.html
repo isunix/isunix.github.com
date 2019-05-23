@@ -1,0 +1,472 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Steven's Blog</title>
+  <meta name="author" content="Steven Sun">
+
+  
+  <meta name="description" content="事情是这样的，在工作中有许多的mids，想要贴到一个文本框中去，但是在进行reinjection后，是成每行一个mid的格式。我们想要把它们变成是每行给定数目的mids这样的格式， 方便贴到文本框中去. 之前用php实现过， 现在贴出来perl的版本的。 1
+2
+3
+4
+5
+6
+7
+8
+9
+10 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://isunix.github.io/blog/page/32">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Steven's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+<!-- MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript"
+   src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  
+
+</head>
+
+<body    class="collapse-sidebar sidebar-footer" >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Steven's Blog</a></h1>
+  
+    <h2>A Dream Land of Peace!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:isunix.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about" class="nav-link">About Me</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/18/split-mids-to-several-lines-with-fixed-number-per-line-using-perl/">Split Mids to Several Lines With Fixed Number Per Line Using Perl</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-18T21:38:16+08:00" pubdate data-updated="true">2014 年7 月18 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>事情是这样的，在工作中有许多的mids，想要贴到一个文本框中去，但是在进行reinjection后，是成每行一个mid的格式。我们想要把它们变成是每行给定数目的mids这样的格式， 方便贴到文本框中去. 之前用php实现过， 现在贴出来perl的版本的。</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="c1">#usage：perl script.pl file.txt</span>
+</span><span class="line"><span class="k">use</span> <span class="n">strict</span><span class="p">;</span>
+</span><span class="line"><span class="k">use</span> <span class="n">warnings</span><span class="p">;</span>
+</span><span class="line"><span class="k">use</span> <span class="n">utf8</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line"><span class="k">my</span> <span class="nv">$columns</span> <span class="o">=</span> <span class="nv">$ARGV</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">||</span> <span class="mi">8</span><span class="p">;</span>
+</span><span class="line"><span class="nb">open</span><span class="p">(</span><span class="k">my</span> <span class="nv">$IN</span><span class="p">,</span> <span class="s">&quot;$ARGV[0]&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">die</span> <span class="s">&quot;in: $@&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="nb">open</span><span class="p">(</span><span class="k">my</span> <span class="nv">$OUT</span><span class="p">,</span> <span class="s">&quot;&gt;&quot;</span><span class="p">,</span> <span class="s">&quot;$ARGV[0].new&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">die</span> <span class="s">&quot;out: $@&quot;</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">while</span><span class="p">(</span><span class="nb">chomp</span><span class="p">(</span><span class="k">my</span> <span class="nv">@lines</span> <span class="o">=</span> <span class="sr">&lt;$IN&gt;</span><span class="p">)){</span>
+</span><span class="line">
+</span><span class="line">        <span class="k">for</span><span class="p">(</span><span class="k">my</span> <span class="nv">$i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;=</span> <span class="nv">@lines</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">){</span>
+</span><span class="line">            <span class="k">my</span> <span class="nv">$t</span> <span class="o">=</span> <span class="nv">$i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class="line">            <span class="k">print</span> <span class="nv">$OUT</span> <span class="s">&quot;$lines[$t]&quot;</span><span class="p">;</span>
+</span><span class="line">            <span class="k">if</span><span class="p">(</span><span class="nv">$i</span> <span class="nv">%</span> <span class="err">$</span><span class="nv">columns</span> <span class="o">==</span> <span class="mi">0</span><span class="p">){</span>
+</span><span class="line">                <span class="k">print</span> <span class="nv">$OUT</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span>
+</span><span class="line">            <span class="p">}</span>
+</span><span class="line">        <span class="p">}</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="nb">close</span><span class="p">(</span><span class="nv">$IN</span><span class="p">);</span>
+</span><span class="line"><span class="nb">close</span><span class="p">(</span><span class="nv">$OUT</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/18/examples-of-using-grep-and-map-in-perl/">Examples of Using Grep and Map in Perl</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-18T20:55:08+08:00" pubdate data-updated="true">2014 年7 月18 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>在«Learnign Perl»中，初步介绍了perl的一些高级用法， 我之前翻译了些intermediate perl, 但是最近这段时间实在是太忙了， 而且现在还有很多其他的事情得去处理，所以真的不知道得到什么时候才可以继续拾起翻译intermediate perl的任务来。好了，下面把学习perl中的一些关于map还有grep的例子记录在这里，也方便自己以后来查询。   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">@odd_numbers</span> <span class="o">=</span> <span class="nb">grep</span> <span class="p">{</span> <span class="nv">$_</span> <span class="nv">%</span> <span class="nv">2</span> <span class="p">}</span> <span class="mi">1</span><span class="o">..</span><span class="mi">1000</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">my</span> <span class="nv">@matching_lines</span> <span class="o">=</span> <span class="nb">grep</span> <span class="p">{</span> <span class="sr">/\bfred\b/i</span> <span class="p">}</span> <span class="sr">&lt;$fh&gt;</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">my</span> <span class="nv">@matching_lines</span> <span class="o">=</span> <span class="nb">grep</span> <span class="sr">/\bfred\b/i</span><span class="p">,</span> <span class="sr">&lt;$fh&gt;</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">my</span> <span class="nv">@matching_lines</span> <span class="o">=</span> <span class="nb">grep</span> <span class="sr">/\bfred\b/i</span><span class="p">,</span> <span class="sr">&lt;$fh&gt;</span><span class="p">;</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">$line_count</span> <span class="o">=</span> <span class="nv">@matching_lines</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line"><span class="k">my</span> <span class="nv">$line_count</span> <span class="o">=</span> <span class="nb">grep</span> <span class="sr">/\bfred\b/i</span><span class="p">,</span> <span class="sr">&lt;$fh&gt;</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line"><span class="k">my</span> <span class="nv">@data</span> <span class="o">=</span> <span class="p">(</span><span class="mf">4.75</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1234</span><span class="p">,</span> <span class="mf">6.9456</span><span class="p">,</span> <span class="mf">12345678.9</span><span class="p">,</span> <span class="mf">29.95</span><span class="p">);</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">@formatted_data</span> <span class="o">=</span> <span class="nb">map</span> <span class="p">{</span> <span class="o">&amp;</span><span class="n">big_money</span><span class="p">(</span><span class="nv">$_</span><span class="p">)</span> <span class="p">}</span> <span class="nv">@data</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;The money numbers are:\n&quot;</span><span class="p">,</span>
+</span><span class="line"><span class="nb">map</span> <span class="p">{</span> <span class="nb">sprintf</span><span class="p">(</span><span class="s">&quot;%25s\n&quot;</span><span class="p">,</span> <span class="nv">$_</span><span class="p">)</span> <span class="p">}</span> <span class="nv">@formatted_data</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line"><span class="k">my</span> <span class="nv">@data</span> <span class="o">=</span> <span class="p">(</span><span class="mf">4.75</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1234</span><span class="p">,</span> <span class="mf">6.9456</span><span class="p">,</span> <span class="mf">12345678.9</span><span class="p">,</span> <span class="mf">29.95</span><span class="p">);</span>
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;The money numbers are:\n&quot;</span><span class="p">,</span>
+</span><span class="line"><span class="nb">map</span> <span class="p">{</span> <span class="nb">sprintf</span><span class="p">(</span><span class="s">&quot;%25s\n&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">big_money</span><span class="p">(</span><span class="nv">$_</span><span class="p">)</span> <span class="p">)</span> <span class="p">}</span> <span class="nv">@data</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;Some powers of two are:\n&quot;</span><span class="p">,</span>
+</span><span class="line"><span class="nb">map</span> <span class="s">&quot;\t&quot;</span> <span class="o">.</span> <span class="p">(</span> <span class="mi">2</span> <span class="o">**</span> <span class="nv">$_</span> <span class="p">)</span> <span class="o">.</span> <span class="s">&quot;\n&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="o">..</span><span class="mi">15</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/18/using-of-loops-in-perl/">Using of Loops in Perl</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-18T19:59:02+08:00" pubdate data-updated="true">2014 年7 月18 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>«Learning Perl»中的一个例子。  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">Make a program that will repeatedly ask the user to guess a secret number
+from 1 to 100 until the user guesses the secret number. Your program should pick
+the number at random by using the magical formula int(1 + rand 100).§ When
+the user guesses wrong, the program should respond, “Too high” or “Too low.” If
+the user enters the word quit or exit, or if the user enters a blank line, the program
+should quit. Of course, if the user guesses correctly, the program should quit then
+as well!</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>还是把code贴在这里吧！ </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">$secret</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="nb">rand</span><span class="p">(</span><span class="mi">100</span><span class="p">));</span>
+</span><span class="line">
+</span><span class="line"><span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">){</span>
+</span><span class="line">    <span class="k">print</span> <span class="s">&quot;please enter a guess from 1 to 100: &quot;</span><span class="p">;</span>
+</span><span class="line">    <span class="nb">chomp</span><span class="p">(</span><span class="k">my</span> <span class="nv">$guess</span> <span class="o">=</span> <span class="sr">&lt;STDIN&gt;</span><span class="p">);</span>
+</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="nv">$guess</span> <span class="o">=~</span><span class="sr"> /quit|exit|\A\s*\z/i</span><span class="p">){</span>
+</span><span class="line">        <span class="k">print</span> <span class="s">&quot;sorry you gave up, the number was $secret.\n&quot;</span><span class="p">;</span>
+</span><span class="line">        <span class="k">last</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span> <span class="k">elsif</span> <span class="p">(</span><span class="nv">$guess</span> <span class="o">&lt;</span> <span class="nv">$secret</span><span class="p">){</span>
+</span><span class="line">        <span class="k">print</span> <span class="s">&quot;too small!\n&quot;</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span> <span class="k">elsif</span> <span class="p">(</span><span class="nv">$guess</span> <span class="o">==</span> <span class="nv">$secret</span><span class="p">){</span>
+</span><span class="line">        <span class="k">print</span> <span class="s">&quot;that was it!\n&quot;</span><span class="p">;</span>
+</span><span class="line">        <span class="k">last</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class="line">        <span class="k">print</span> <span class="s">&quot;too large!\n&quot;</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/page/33/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/blog/page/31/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2019/05/23/zen-yang-wu-xu-shou-dong-shu-ru-mi-ma-lian-jie-postgresql/">怎样无需手动输入密码连接PostgreSQL</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/05/22/shi-yong-rpman-zhuang-crontabming-ling-bei-wang/">使用rpm安装crontab命令备忘</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/05/22/linuxming-ling-lnde-shi-yong-bei-wang/">Linux命令ln的使用备忘</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/05/21/flaskzhong-shi-yong-ipythonde-shell/">Flask中使用ipython的shell</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/05/07/hivezhong-shan-chu-partition/">Hive中删除partition</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/05/07/zai-ammonitezhong-importdi-san-fang-jarbao/">在ammonite中import第三方jar包</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/08/09/hive-insert-using-select-star/">Hive Insert Using Select *</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/08/04/copy-and-paste-spaces-separated-text-into-excel/">Copy and Paste Spaces Separated Text Into Excel</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/19/weird-things-happen-when-scripts-executing-with-and-passing-args-with-getopts/">Weird Things Happen When Scripts Executing With . And Passing Args With Getopts</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/18/zen-yao-qu-chu-windowsbian-ji-guo-de-wen-jian-zhong-de-mzi-fu/">怎么去除windows编辑过的文件中的^M字符</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>Categories</h1>
+  <ul id="categories">
+    <li class='category'><a href='/blog/categories/algorithms/'>Algorithms (8)</a></li>
+<li class='category'><a href='/blog/categories/bigdata/'>BigData (4)</a></li>
+<li class='category'><a href='/blog/categories/blog/'>Blog (4)</a></li>
+<li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
+<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (1)</a></li>
+<li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (4)</a></li>
+<li class='category'><a href='/blog/categories/editor/'>Editor (1)</a></li>
+<li class='category'><a href='/blog/categories/javascript/'>Javascript (4)</a></li>
+<li class='category'><a href='/blog/categories/linux-and-mac/'>Linux&Mac (10)</a></li>
+<li class='category'><a href='/blog/categories/php/'>PHP (5)</a></li>
+<li class='category'><a href='/blog/categories/perl/'>Perl (50)</a></li>
+<li class='category'><a href='/blog/categories/python/'>Python (7)</a></li>
+<li class='category'><a href='/blog/categories/ruby/'>Ruby (1)</a></li>
+<li class='category'><a href='/blog/categories/scala/'>Scala (1)</a></li>
+<li class='category'><a href='/blog/categories/shell/'>Shell (12)</a></li>
+
+  </ul>
+</section>
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2019 - Steven Sun -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

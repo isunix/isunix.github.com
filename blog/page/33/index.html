@@ -1,0 +1,650 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Steven's Blog</title>
+  <meta name="author" content="Steven Sun">
+
+  
+  <meta name="description" content="1.要求用户输入人名， 打印出对应的item. 1
+2
+3
+4
+5
+6
+7
+8
+9
+my %last_name = qw{ fred flintstone barney rubble wilma flintstone
+}; print &quot;please enter a first name &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://isunix.github.io/blog/page/33">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Steven's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+<!-- MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript"
+   src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  
+
+</head>
+
+<body    class="collapse-sidebar sidebar-footer" >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Steven's Blog</a></h1>
+  
+    <h2>A Dream Land of Peace!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:isunix.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about" class="nav-link">About Me</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/18/use-examples-regarding-hash-in-perl/">Use Examples Regarding Hash in Perl</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-18T19:18:44+08:00" pubdate data-updated="true">2014 年7 月18 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>1.要求用户输入人名， 打印出对应的item.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">%last_name</span> <span class="o">=</span> <span class="sx">qw{</span>
+</span><span class="line"><span class="sx">    fred flintstone</span>
+</span><span class="line"><span class="sx">    barney rubble</span>
+</span><span class="line"><span class="sx">    wilma flintstone</span>
+</span><span class="line"><span class="sx">}</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;please enter a first name: &quot;</span><span class="p">;</span>
+</span><span class="line"><span class="nb">chomp</span><span class="p">(</span><span class="k">my</span> <span class="nv">$name</span> <span class="o">=</span> <span class="sr">&lt;STDIN&gt;</span><span class="p">);</span>
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;that&#39;s $name $last_name{$name}.\n&quot;</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>这是一个很典型的标准用法了。  </p>
+
+<p>2.要求用户进行几行输入，然后统计频数.   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="n">strict</span><span class="p">;</span>
+</span><span class="line"><span class="k">use</span> <span class="n">warnings</span><span class="p">;</span>
+</span><span class="line"><span class="k">use</span> <span class="n">utf8</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">my</span> <span class="p">(</span><span class="nv">@words</span><span class="p">,</span> <span class="nv">%count</span><span class="p">,</span> <span class="nv">$word</span><span class="p">);</span>
+</span><span class="line"><span class="nb">chomp</span><span class="p">(</span><span class="nv">@words</span> <span class="o">=</span> <span class="sr">&lt;STDIN&gt;</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="k">foreach</span> <span class="nv">$word</span> <span class="p">(</span><span class="nv">@words</span><span class="p">){</span>
+</span><span class="line">    <span class="nv">$count</span><span class="p">{</span><span class="nv">$word</span><span class="p">}</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="k">foreach</span> <span class="nv">$word</span> <span class="p">(</span><span class="nb">keys</span> <span class="nv">%count</span><span class="p">){</span>
+</span><span class="line">    <span class="k">print</span> <span class="s">&quot;$word was seen $count{$word} times.\n&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/18/notes-on-tail-recursion-using-c/">Notes on Tail Recursion Using C</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-18T13:50:41+08:00" pubdate data-updated="true">2014 年7 月18 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>还是先上一段递归的c代码吧:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="cp">#include &lt;stdlib.h&gt;</span>
+</span><span class="line"><span class="cp">#include &lt;stdio.h&gt;</span>
+</span><span class="line">
+</span><span class="line"><span class="kt">int</span> <span class="nf">FibonacciRecursive</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">){</span>
+</span><span class="line">  <span class="k">if</span><span class="p">(</span><span class="n">n</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">){</span>
+</span><span class="line">    <span class="k">return</span> <span class="n">n</span><span class="p">;</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line">  <span class="k">return</span> <span class="p">(</span><span class="n">FibonacciRecursive</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">FibonacciRecursive</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">));</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+</span><span class="line">  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Fibonacci number till 6 is: %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">FibonacciRecursive</span><span class="p">(</span><span class="mi">6</span><span class="p">));</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>而所谓的尾递归就是把当前的运算结果（或路径）放在参数里传给下层函数, 采用尾递归的算法示例如下:   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="kt">int</span> <span class="nf">FibonacciTailRecursive</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="kt">int</span> <span class="n">ret1</span><span class="p">,</span> <span class="kt">int</span> <span class="n">ret2</span><span class="p">){</span>
+</span><span class="line">  <span class="k">if</span><span class="p">(</span><span class="n">n</span><span class="o">==</span><span class="mi">0</span><span class="p">){</span>
+</span><span class="line">    <span class="k">return</span> <span class="n">ret1</span><span class="p">;</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line">  <span class="k">return</span> <span class="n">FibonacciTailRecursive</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">ret2</span><span class="p">,</span> <span class="n">ret1</span> <span class="o">+</span> <span class="n">ret2</span><span class="p">);</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>一下是一个在别人的博客中看到的利用递归还有尾递归来求单链表的长度的例子。 </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+<span class="line-number">35</span>
+<span class="line-number">36</span>
+<span class="line-number">37</span>
+<span class="line-number">38</span>
+<span class="line-number">39</span>
+<span class="line-number">40</span>
+<span class="line-number">41</span>
+<span class="line-number">42</span>
+<span class="line-number">43</span>
+<span class="line-number">44</span>
+<span class="line-number">45</span>
+<span class="line-number">46</span>
+<span class="line-number">47</span>
+<span class="line-number">48</span>
+<span class="line-number">49</span>
+<span class="line-number">50</span>
+<span class="line-number">51</span>
+<span class="line-number">52</span>
+<span class="line-number">53</span>
+<span class="line-number">54</span>
+<span class="line-number">55</span>
+<span class="line-number">56</span>
+<span class="line-number">57</span>
+<span class="line-number">58</span>
+<span class="line-number">59</span>
+<span class="line-number">60</span>
+<span class="line-number">61</span>
+<span class="line-number">62</span>
+<span class="line-number">63</span>
+<span class="line-number">64</span>
+<span class="line-number">65</span>
+<span class="line-number">66</span>
+</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="cp">#include &lt;stdlib.h&gt;</span>
+</span><span class="line"><span class="cp">#include &lt;stdio.h&gt;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">typedef</span> <span class="k">struct</span> <span class="n">node</span><span class="p">{</span>
+</span><span class="line">  <span class="kt">int</span> <span class="n">data</span><span class="p">;</span>
+</span><span class="line">  <span class="k">struct</span> <span class="n">node</span><span class="o">*</span> <span class="n">next</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span><span class="n">node</span><span class="p">,</span> <span class="o">*</span><span class="n">linklist</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="kt">void</span> <span class="nf">InitLinklist</span><span class="p">(</span><span class="n">linklist</span><span class="o">*</span> <span class="n">head</span><span class="p">){</span>
+</span><span class="line">  <span class="k">if</span><span class="p">(</span><span class="o">*</span><span class="n">head</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">){</span>
+</span><span class="line">    <span class="n">free</span><span class="p">(</span><span class="o">*</span><span class="n">head</span><span class="p">);</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line">  <span class="o">*</span><span class="n">head</span> <span class="o">=</span> <span class="p">(</span><span class="n">node</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">node</span><span class="p">));</span>
+</span><span class="line">  <span class="p">(</span><span class="o">*</span><span class="n">head</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="kt">void</span> <span class="nf">InsertNode</span><span class="p">(</span><span class="n">linklist</span><span class="o">*</span> <span class="n">head</span><span class="p">,</span> <span class="kt">int</span> <span class="n">d</span><span class="p">){</span>
+</span><span class="line">  <span class="n">node</span><span class="o">*</span> <span class="n">newNode</span> <span class="o">=</span> <span class="p">(</span><span class="n">node</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">node</span><span class="p">));</span>
+</span><span class="line">  <span class="n">newNode</span><span class="o">-&gt;</span><span class="n">data</span> <span class="o">=</span> <span class="n">d</span><span class="p">;</span>
+</span><span class="line">  <span class="n">newNode</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">head</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+</span><span class="line">  <span class="p">(</span><span class="o">*</span><span class="n">head</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="n">newNode</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="c1">//using recursion to get the length of the linklist;</span>
+</span><span class="line"><span class="kt">int</span> <span class="nf">GetLengthRecursive</span><span class="p">(</span><span class="n">linklist</span> <span class="n">head</span><span class="p">){</span>
+</span><span class="line">  <span class="k">if</span><span class="p">(</span><span class="n">head</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">){</span>
+</span><span class="line">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line">  <span class="k">return</span> <span class="p">(</span><span class="n">GetLengthRecursive</span><span class="p">(</span><span class="n">head</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="c1">//using tail recursive to get the length of a linklist,</span>
+</span><span class="line"><span class="c1">//with the help of the variable &quot;acc&quot; to store the length of the current linklist, increment it</span>
+</span><span class="line">
+</span><span class="line"><span class="kt">int</span> <span class="nf">GetLengthTailRecursive</span><span class="p">(</span><span class="n">linklist</span> <span class="n">head</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">acc</span><span class="p">){</span>
+</span><span class="line">  <span class="k">if</span><span class="p">(</span><span class="n">head</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">){</span>
+</span><span class="line">    <span class="k">return</span> <span class="o">*</span><span class="n">acc</span><span class="p">;</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line">  <span class="o">*</span><span class="n">acc</span> <span class="o">=</span> <span class="o">*</span><span class="n">acc</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class="line">  <span class="k">return</span> <span class="n">GetLengthTailRecursive</span><span class="p">(</span><span class="n">head</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">,</span> <span class="n">acc</span><span class="p">);</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="kt">void</span> <span class="nf">PrintLinklist</span><span class="p">(</span><span class="n">linklist</span> <span class="n">head</span><span class="p">){</span>
+</span><span class="line">  <span class="n">node</span><span class="o">*</span> <span class="n">pnode</span> <span class="o">=</span> <span class="n">head</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+</span><span class="line">  <span class="k">while</span><span class="p">(</span><span class="n">pnode</span><span class="p">){</span>
+</span><span class="line">    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d-&gt;&quot;</span><span class="p">,</span> <span class="n">pnode</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">);</span>
+</span><span class="line">    <span class="n">pnode</span> <span class="o">=</span> <span class="n">pnode</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line">  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;-&gt;NULL</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+</span><span class="line">  <span class="n">linklist</span> <span class="n">head</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span><span class="line">  <span class="kt">int</span> <span class="n">len</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line">  <span class="n">InitLinklist</span><span class="p">(</span><span class="o">&amp;</span><span class="n">head</span><span class="p">);</span>
+</span><span class="line">  <span class="n">InsertNode</span><span class="p">(</span><span class="o">&amp;</span><span class="n">head</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+</span><span class="line">  <span class="n">InsertNode</span><span class="p">(</span><span class="o">&amp;</span><span class="n">head</span><span class="p">,</span> <span class="mi">21</span><span class="p">);</span>
+</span><span class="line">  <span class="n">InsertNode</span><span class="p">(</span><span class="o">&amp;</span><span class="n">head</span><span class="p">,</span> <span class="mi">14</span><span class="p">);</span>
+</span><span class="line">  <span class="n">InsertNode</span><span class="p">(</span><span class="o">&amp;</span><span class="n">head</span><span class="p">,</span> <span class="mi">19</span><span class="p">);</span>
+</span><span class="line">  <span class="n">InsertNode</span><span class="p">(</span><span class="o">&amp;</span><span class="n">head</span><span class="p">,</span> <span class="mi">132</span><span class="p">);</span>
+</span><span class="line">  <span class="n">InsertNode</span><span class="p">(</span><span class="o">&amp;</span><span class="n">head</span><span class="p">,</span> <span class="mi">192</span><span class="p">);</span>
+</span><span class="line">  <span class="n">PrintLinklist</span><span class="p">(</span><span class="n">head</span><span class="p">);</span>
+</span><span class="line">  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;The length of linklist is: %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">GetLengthRecursive</span><span class="p">(</span><span class="n">head</span><span class="p">));</span>
+</span><span class="line">  <span class="n">GetLengthTailRecursive</span><span class="p">(</span><span class="n">head</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">len</span><span class="p">);</span>
+</span><span class="line">  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;the length of linklist is: %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">len</span><span class="p">);</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/17/interesting-use-of-state-in-perl/">Interesting Use of State in Perl</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-17T18:48:44+08:00" pubdate data-updated="true">2014 年7 月17 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>还是来自«learning perl»中的例子。</p>
+
+<ol>
+  <li>写一个名为greet的子例程，当给定一个人名作为参数的时候，打出欢迎他的信息，并告诉他前一个来宾的名字。  </li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="mf">5.010</span><span class="p">;</span>
+</span><span class="line"><span class="n">greet</span><span class="p">(</span><span class="s">&#39;Fred&#39;</span><span class="p">);</span>
+</span><span class="line"><span class="n">greet</span><span class="p">(</span><span class="s">&#39;Barney&#39;</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="k">sub </span><span class="nf">greet</span><span class="p">{</span>
+</span><span class="line">    <span class="n">state</span> <span class="nv">$last_person</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">my</span> <span class="nv">$name</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">print</span> <span class="s">&quot;Hi, $name!&quot;</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="nb">defined</span> <span class="nv">$last_person</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">        <span class="k">print</span> <span class="s">&quot;$last_person is also here!\n&quot;</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">else</span> <span class="p">{</span>
+</span><span class="line">        <span class="k">print</span> <span class="s">&quot;you are the first one here!\n&quot;</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">    <span class="nv">$last_person</span> <span class="o">=</span> <span class="nv">$name</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>2.修改程序1， 告诉所有新来的人之前已经迎来了哪些人.   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="nn">Data::</span><span class="n">Dumper</span><span class="p">;</span>
+</span><span class="line"><span class="k">use</span> <span class="mf">5.010</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="n">greet</span><span class="p">(</span><span class="s">&#39;Fred&#39;</span><span class="p">);</span>
+</span><span class="line"><span class="n">greet</span><span class="p">(</span><span class="s">&#39;Barney&#39;</span><span class="p">);</span>
+</span><span class="line"><span class="n">greet</span><span class="p">(</span><span class="s">&#39;Wilma&#39;</span><span class="p">);</span>
+</span><span class="line"><span class="n">greet</span><span class="p">(</span><span class="s">&#39;Betty&#39;</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="k">sub </span><span class="nf">greet</span><span class="p">{</span>
+</span><span class="line">    <span class="n">state</span> <span class="nv">@before</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">my</span> <span class="nv">$name</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
+</span><span class="line">    <span class="k">print</span> <span class="s">&quot;Hi, $name!&quot;</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="nv">@before</span><span class="p">){</span>
+</span><span class="line">        <span class="k">print</span> <span class="s">&quot; I have seen @before\n&quot;</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">    <span class="k">else</span> <span class="p">{</span>
+</span><span class="line">        <span class="k">print</span> <span class="s">&quot; you are the first one here!\n&quot;</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">    <span class="nb">push</span> <span class="nv">@before</span><span class="p">,</span> <span class="nv">$name</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/page/34/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/blog/page/32/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2019/05/23/zen-yang-wu-xu-shou-dong-shu-ru-mi-ma-lian-jie-postgresql/">怎样无需手动输入密码连接PostgreSQL</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/05/22/shi-yong-rpman-zhuang-crontabming-ling-bei-wang/">使用rpm安装crontab命令备忘</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/05/22/linuxming-ling-lnde-shi-yong-bei-wang/">Linux命令ln的使用备忘</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/05/21/flaskzhong-shi-yong-ipythonde-shell/">Flask中使用ipython的shell</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/05/07/hivezhong-shan-chu-partition/">Hive中删除partition</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/05/07/zai-ammonitezhong-importdi-san-fang-jarbao/">在ammonite中import第三方jar包</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/08/09/hive-insert-using-select-star/">Hive Insert Using Select *</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/08/04/copy-and-paste-spaces-separated-text-into-excel/">Copy and Paste Spaces Separated Text Into Excel</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/19/weird-things-happen-when-scripts-executing-with-and-passing-args-with-getopts/">Weird Things Happen When Scripts Executing With . And Passing Args With Getopts</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/18/zen-yao-qu-chu-windowsbian-ji-guo-de-wen-jian-zhong-de-mzi-fu/">怎么去除windows编辑过的文件中的^M字符</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>Categories</h1>
+  <ul id="categories">
+    <li class='category'><a href='/blog/categories/algorithms/'>Algorithms (8)</a></li>
+<li class='category'><a href='/blog/categories/bigdata/'>BigData (4)</a></li>
+<li class='category'><a href='/blog/categories/blog/'>Blog (4)</a></li>
+<li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
+<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (1)</a></li>
+<li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (4)</a></li>
+<li class='category'><a href='/blog/categories/editor/'>Editor (1)</a></li>
+<li class='category'><a href='/blog/categories/javascript/'>Javascript (4)</a></li>
+<li class='category'><a href='/blog/categories/linux-and-mac/'>Linux&Mac (10)</a></li>
+<li class='category'><a href='/blog/categories/php/'>PHP (5)</a></li>
+<li class='category'><a href='/blog/categories/perl/'>Perl (50)</a></li>
+<li class='category'><a href='/blog/categories/python/'>Python (7)</a></li>
+<li class='category'><a href='/blog/categories/ruby/'>Ruby (1)</a></li>
+<li class='category'><a href='/blog/categories/scala/'>Scala (1)</a></li>
+<li class='category'><a href='/blog/categories/shell/'>Shell (12)</a></li>
+
+  </ul>
+</section>
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2019 - Steven Sun -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

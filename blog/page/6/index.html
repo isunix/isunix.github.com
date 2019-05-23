@@ -9,8 +9,8 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="I find that my bootstap files not working well while I am using gunicorn to start the app. 1
-gunicorn --env DJANGO_SETTINGS_MODULE=myapp.settings &hellip;">
+  <meta name="description" content="I have a file containing quite many lines of strings and I want to sort them by line length. Here is how. 1
+cat $file | awk &#39;{ print length($0) & &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -100,7 +100,7 @@ gunicorn --env DJANGO_SETTINGS_MODULE=myapp.settings &hellip;">
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2015/11/19/css-files-not-function-well-while-using-gunicorn/">Css Files Not Function Well While Using Gunicorn</a></h1>
+      <h1 class="entry-title"><a href="/blog/2016/01/20/sort-lines-by-length/">Sort Lines by Length</a></h1>
     
     
       <p class="meta">
@@ -116,78 +116,17 @@ gunicorn --env DJANGO_SETTINGS_MODULE=myapp.settings &hellip;">
   
 
 
-<time datetime="2015-11-19T16:42:04+08:00" pubdate data-updated="true">2015 年11 月19 日</time>
+<time datetime="2016-01-20T10:14:15+08:00" pubdate data-updated="true">2016 年1 月20 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>I find that my bootstap files not working well while I am using gunicorn to start the app.</p>
+  <div class="entry-content"><p>I have a file containing quite many lines of strings and I want to sort them by line length. Here is how.</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">gunicorn --env <span class="nv">DJANGO_SETTINGS_MODULE</span><span class="o">=</span>myapp.settings myapp_management.wsgi --timeout 300 --workers<span class="o">=</span>2 --pid gunicorn.pid -b 0:10000 --access-logfile<span class="o">=</span>log/access_charts.log --error-logfile<span class="o">=</span>log/error_charts.log --access-logformat <span class="s1">&#39;&quot;%(h)s %(l)s %(u)s %(t)s &quot;%(r)s&quot; %(s)s %(b)s &quot;%(f)s&quot; &quot;%(a)s&quot; %(D)s %(p)s&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>I find a solution for this:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line">http://stackoverflow.com/questions/12800862/django-static-files-under-gunicorn
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>To summarize it here, add the following contents to the urls.py file.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-</span><span class="line">
-</span><span class="line">
-</span><span class="line">urlpatterns +<span class="o">=</span> staticfiles_urlpatterns<span class="o">()</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/11/19/using-ptpython-with-python3-as-the-backend/">Using Ptpython With Python3 as the Backend</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-11-19T12:32:02+08:00" pubdate data-updated="true">2015 年11 月19 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I want to use ptpython with python3 as the interpreter, here is how:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">pip3 install ptpython
-</span><span class="line">python3 -m ptpython
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat <span class="nv">$file</span> | awk <span class="s1">&#39;{ print length($0) &quot; &quot; $0; }&#39;</span> | sort -r -n | cut -d <span class="s1">&#39; &#39;</span> -f 2- | less
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 </div>
   
@@ -201,7 +140,7 @@ gunicorn --env DJANGO_SETTINGS_MODULE=myapp.settings &hellip;">
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2015/11/18/django-admin-changing-the-page-header/">Django Admin: Changing the Page Header</a></h1>
+      <h1 class="entry-title"><a href="/blog/2016/01/05/a-wonderful-post-on-stdin/">A Wonderful Post on Stdin</a></h1>
     
     
       <p class="meta">
@@ -217,19 +156,27 @@ gunicorn --env DJANGO_SETTINGS_MODULE=myapp.settings &hellip;">
   
 
 
-<time datetime="2015-11-18T16:58:31+08:00" pubdate data-updated="true">2015 年11 月18 日</time>
+<time datetime="2016-01-05T14:30:04+08:00" pubdate data-updated="true">2016 年1 月5 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>This post shows how to change the header of the django admin page.</p>
-
-<p>The blog for reference is:</p>
+  <div class="entry-content"><p>The following is a wonderful post on stdin, stdout, stderr.</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line">http://www.mc706.com/tip_trick_snippets/42/django-admin-changing-the-page-header/
+</pre></td><td class="code"><pre><code class="html"><span class="line">http://www.jstorimer.com/blogs/workingwithcode/7766119-when-to-use-stderr-instead-of-stdout
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Notes:</p>
+
+<p>1.[-n string] 将会测试string的长度，如果大于0， 则返回true</p>
+
+<p>2.awesome os-x command line:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line">https://github.com/herrbischoff/awesome-osx-command-line
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 </div>
   
@@ -243,7 +190,7 @@ gunicorn --env DJANGO_SETTINGS_MODULE=myapp.settings &hellip;">
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2015/11/02/the-most-used-shell-commands/">The Most Used Shell Commands</a></h1>
+      <h1 class="entry-title"><a href="/blog/2015/12/31/wget-several-files-using-bash-cmd/">Wget Several Files Using Bash Cmd</a></h1>
     
     
       <p class="meta">
@@ -259,89 +206,27 @@ gunicorn --env DJANGO_SETTINGS_MODULE=myapp.settings &hellip;">
   
 
 
-<time datetime="2015-11-02T16:21:57+08:00" pubdate data-updated="true">2015 年11 月2 日</time>
+<time datetime="2015-12-31T18:36:09+08:00" pubdate data-updated="true">2015 年12 月31 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>We can use the following shell scripts to find the 10 most used shell commands for a user.</p>
+  <div class="entry-content"><p>I want to down the lecture notes on the page </p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nb">history</span> | awk <span class="s1">&#39;{a[$2]++} END {for(i in a) {print a[i]&quot; &quot;i}}&#39;</span>| sort -rn | head
+</pre></td><td class="code"><pre><code class="html"><span class="line">http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-001-structure-and-interpretation-of-computer-programs-spring-2005/lecture-notes/
 </span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
 
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/11/02/trap-interrupts-in-shell-scripts/">Trap Interrupts in Shell Scripts</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-11-02T14:45:18+08:00" pubdate data-updated="true">2015 年11 月2 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Today I met some shell scirpts like the following:</p>
+<p>Here is the command I am using.</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nb">trap</span> <span class="s2">&quot;rm -f $file; exit&quot;</span> INT TERM EXIT
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>More code here:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cleanup<span class="o">()</span> <span class="o">{</span>
-</span><span class="line">    <span class="nb">echo</span> <span class="s2">&quot;Cleaning stuff up...&quot;</span>
-</span><span class="line">    <span class="nb">exit</span>
-</span><span class="line"><span class="o">}</span>
-</span><span class="line">
-</span><span class="line"><span class="nb">trap </span>cleanup INT TERM
-</span><span class="line"><span class="nb">echo</span> <span class="s1">&#39; --- press ENTER to close --- &#39;</span>
-</span><span class="line"><span class="nb">read </span>var
-</span><span class="line">cleanup
+</pre></td><td class="code"><pre><code class="sh"><span class="line">wget http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-001-structure-and-interpretation-of-computer-programs-spring-2005/lecture-notes/lecture<span class="o">{</span>1..26<span class="o">}</span>webhand.pdf
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>change “trap cleanup INT TERM” above to “trap cleanup INT TERM EXIT” and then execute the script. Enter ‘exit’ and see what differences will happen.</p>
+<p>The sad thing is not all the sequences are consecutive.</p>
 
-<p>The following are references:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line">http://unix.stackexchange.com/questions/57940/trap-int-term-exit-really-necessary
-</span><span class="line">http://kb.mit.edu/confluence/pages/viewpage.action?pageId=3907156
-</span></code></pre></td></tr></table></div></figure></notextile></div>
 </div>
   
   
@@ -383,6 +268,26 @@ gunicorn --env DJANGO_SETTINGS_MODULE=myapp.settings &hellip;">
     
       <li class="post">
         <a href="/blog/2019/05/07/hivezhong-shan-chu-partition/">Hive中删除partition</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/05/07/zai-ammonitezhong-importdi-san-fang-jarbao/">在ammonite中import第三方jar包</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/08/09/hive-insert-using-select-star/">Hive Insert Using Select *</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/08/04/copy-and-paste-spaces-separated-text-into-excel/">Copy and Paste Spaces Separated Text Into Excel</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/19/weird-things-happen-when-scripts-executing-with-and-passing-args-with-getopts/">Weird Things Happen When Scripts Executing With . And Passing Args With Getopts</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/18/zen-yao-qu-chu-windowsbian-ji-guo-de-wen-jian-zhong-de-mzi-fu/">怎么去除windows编辑过的文件中的^M字符</a>
       </li>
     
   </ul>

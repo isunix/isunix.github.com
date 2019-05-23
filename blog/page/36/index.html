@@ -1,0 +1,424 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Steven's Blog</title>
+  <meta name="author" content="Steven Sun">
+
+  
+  <meta name="description" content="In Perl, function sort() sort the item of an array according to its corresponding acssci code. for example, if we have an array @array = (1, 3, 10, 2 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://isunix.github.io/blog/page/36">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Steven's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+<!-- MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript"
+   src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  
+
+</head>
+
+<body    class="collapse-sidebar sidebar-footer" >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Steven's Blog</a></h1>
+  
+    <h2>A Dream Land of Peace!</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:isunix.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about" class="nav-link">About Me</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/22/sort-in-perl/">Sort in Perl</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-06-22T12:31:50+08:00" pubdate data-updated="true">2014 年6 月22 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In Perl, function sort() sort the item of an array according to its corresponding acssci code. for example, if we have an array @array = (1, 3, 10, 2, 21) and use sort against this array, we will get the following result: 1 10 2 21 3. However if we want to sort these numbers according to its value, we can use the following method:   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nb">sort</span><span class="p">{</span><span class="nv">$a</span> <span class="sr">&lt;=&gt;</span> <span class="nv">$b</span><span class="p">}</span> <span class="nv">@array</span><span class="p">;</span>   <span class="c1">#ascending</span>
+</span><span class="line">
+</span><span class="line"><span class="nb">sort</span><span class="p">{</span><span class="nv">$b</span> <span class="sr">&lt;=&gt;</span> <span class="nv">$a</span><span class="p">}</span> <span class="nv">@array</span><span class="p">;</span>   <span class="c1">#descending</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/16/dancer-introduction-notes/">Dancer::Introduction Notes</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-06-16T00:05:17+08:00" pubdate data-updated="true">2014 年6 月16 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>1.A route pattern can contain one or more tokens, and tokens can be optional.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">get</span> <span class="s">&#39;/hello/:name?&#39;</span> <span class="o">=&gt;</span> <span class="k">sub </span><span class="p">{</span>
+</span><span class="line">    <span class="s">&quot;Hello there &quot;</span> <span class="o">.</span> <span class="p">(</span><span class="n">param</span><span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">)</span> <span class="o">||</span> <span class="s">&quot;whoever you are!&quot;</span><span class="p">);</span>
+</span><span class="line"><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>2.A route can contain a wildcard (represented by a ‘*’). Each wildcard match will be returned in an arrayref, accessible via the `splat’ keyword:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">get</span> <span class="s">&#39;/download/*.*&#39;</span> <span class="o">=&gt;</span> <span class="k">sub </span><span class="p">{</span>
+</span><span class="line">    <span class="k">my</span> <span class="p">(</span><span class="nv">$file</span><span class="p">,</span> <span class="nv">$ext</span><span class="p">)</span> <span class="o">=</span> <span class="n">splat</span><span class="p">;</span>
+</span><span class="line">    <span class="c1"># do something with $file.$ext here</span>
+</span><span class="line"><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>3.A route can be defined with a Perl regular expression. In order to tell Dancer to consider the route as a real regexp, the route must be defined explicitly with qr{}, like the following:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">get</span> <span class="sx">qr{/hello/([\w]+)}</span> <span class="o">=&gt;</span> <span class="k">sub </span><span class="p">{</span>
+</span><span class="line">    <span class="k">my</span> <span class="p">(</span><span class="nv">$name</span><span class="p">)</span> <span class="o">=</span> <span class="n">splat</span><span class="p">;</span>
+</span><span class="line">    <span class="k">return</span> <span class="s">&quot;Hello $name&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>4.Routes may include some matching conditions (on the useragent and the hostname at the moment):</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">get</span> <span class="s">&#39;/foo&#39;</span><span class="p">,</span> <span class="p">{</span><span class="n">agent</span> <span class="o">=&gt;</span> <span class="s">&#39;Songbird (\d\.\d)[\d\/]*?&#39;</span><span class="p">}</span> <span class="o">=&gt;</span> <span class="k">sub </span><span class="p">{</span>
+</span><span class="line">  <span class="s">&#39;foo method for songbird&#39;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="n">get</span> <span class="s">&#39;/foo&#39;</span> <span class="o">=&gt;</span> <span class="k">sub </span><span class="p">{</span>
+</span><span class="line">  <span class="s">&#39;all browsers except songbird&#39;</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>5.An action can choose not to serve the current request and ask Dancer to process the request with the next matching route. This is done with the pass keyword, like in the following example:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">get</span> <span class="s">&#39;/say/:word&#39;</span> <span class="o">=&gt;</span> <span class="k">sub </span><span class="p">{</span>
+</span><span class="line">    <span class="k">return</span> <span class="n">pass</span> <span class="k">if</span> <span class="p">(</span><span class="n">params</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">word</span><span class="p">}</span> <span class="o">=~</span><span class="sr"> /^\d+$/</span><span class="p">);</span>
+</span><span class="line">    <span class="s">&quot;I say a word: &quot;</span><span class="o">.</span><span class="n">params</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">word</span><span class="p">};</span>
+</span><span class="line"><span class="p">};</span>
+</span><span class="line">
+</span><span class="line"><span class="n">get</span> <span class="s">&#39;/say/:number&#39;</span> <span class="o">=&gt;</span> <span class="k">sub </span><span class="p">{</span>
+</span><span class="line">    <span class="s">&quot;I say a number: &quot;</span><span class="o">.</span><span class="n">params</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">number</span><span class="p">};</span>
+</span><span class="line"><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>6.Before hooks, after hooks, before_template_render hooks.</p>
+
+<p>7.You can use the load method to include additional routes into your application.</p>
+
+<p>8.A Dancer application can access the information from its config file easily with the config keyword:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">get</span> <span class="s">&#39;/appname&#39;</span> <span class="o">=&gt;</span> <span class="k">sub </span><span class="p">{</span>
+</span><span class="line">    <span class="k">return</span> <span class="s">&quot;This is &quot;</span> <span class="o">.</span> <span class="n">config</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">appname</span><span class="p">};</span>
+</span><span class="line"><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>9.In order to enable the logging system for your application, you first have to start the logger engine in your config.yml:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">logger:</span> <span class="s">&#39;file&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>10.Dancer configures the Template::Toolkit engine to use &lt;% %&gt; brackets instead of its default [% %] brackets, although you can change this in your config file. Of course you have to import the “Template” module.</p>
+
+<p>11.A layout is a special view, located in the ‘layouts’ directory (inside the views directory) which must have a token named `content’. That token marks the place where to render the action view. This lets you define a global layout for your actions. Any tokens that you defined when you called the ‘template’ keyword are available in the layouts, as well as the standard session, request, and params tokens. This allows you to insert per-page content into the HTML boilerplate, such as page titles, current-page tags for navigation, etc. (refer to the standard document for more details).</p>
+
+<p>12.Through  “set serializer =&gt; ‘JSON’;”  we can do data serializer;</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/15/how-to-insert-pictures-in-octopress/">How to Insert Pictures in Octopress</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-06-15T23:14:54+08:00" pubdate data-updated="true">2014 年6 月15 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Of course you can google about it, but I just keep it down so that every time I do it, I do not need to google again. It is pretty easy. </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line">{\% img [class names] /path/to/image [width] [height] [title text [alt text]] \%}
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Of course you need to remove the “\” in the above line. I just it there so it will be interpreted as inserting a pic here. Sorry about this.</p>
+
+<p>Just add your pics in the above format. Note here I add a subdir in the source/images/ dir.  </p>
+
+<p>That is it. </p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/page/37/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/blog/page/35/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2019/05/23/zen-yang-wu-xu-shou-dong-shu-ru-mi-ma-lian-jie-postgresql/">怎样无需手动输入密码连接PostgreSQL</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/05/22/shi-yong-rpman-zhuang-crontabming-ling-bei-wang/">使用rpm安装crontab命令备忘</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/05/22/linuxming-ling-lnde-shi-yong-bei-wang/">Linux命令ln的使用备忘</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/05/21/flaskzhong-shi-yong-ipythonde-shell/">Flask中使用ipython的shell</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/05/07/hivezhong-shan-chu-partition/">Hive中删除partition</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/05/07/zai-ammonitezhong-importdi-san-fang-jarbao/">在ammonite中import第三方jar包</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/08/09/hive-insert-using-select-star/">Hive Insert Using Select *</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/08/04/copy-and-paste-spaces-separated-text-into-excel/">Copy and Paste Spaces Separated Text Into Excel</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/19/weird-things-happen-when-scripts-executing-with-and-passing-args-with-getopts/">Weird Things Happen When Scripts Executing With . And Passing Args With Getopts</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/18/zen-yao-qu-chu-windowsbian-ji-guo-de-wen-jian-zhong-de-mzi-fu/">怎么去除windows编辑过的文件中的^M字符</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>Categories</h1>
+  <ul id="categories">
+    <li class='category'><a href='/blog/categories/algorithms/'>Algorithms (8)</a></li>
+<li class='category'><a href='/blog/categories/bigdata/'>BigData (4)</a></li>
+<li class='category'><a href='/blog/categories/blog/'>Blog (4)</a></li>
+<li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
+<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (1)</a></li>
+<li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (4)</a></li>
+<li class='category'><a href='/blog/categories/editor/'>Editor (1)</a></li>
+<li class='category'><a href='/blog/categories/javascript/'>Javascript (4)</a></li>
+<li class='category'><a href='/blog/categories/linux-and-mac/'>Linux&Mac (10)</a></li>
+<li class='category'><a href='/blog/categories/php/'>PHP (5)</a></li>
+<li class='category'><a href='/blog/categories/perl/'>Perl (50)</a></li>
+<li class='category'><a href='/blog/categories/python/'>Python (7)</a></li>
+<li class='category'><a href='/blog/categories/ruby/'>Ruby (1)</a></li>
+<li class='category'><a href='/blog/categories/scala/'>Scala (1)</a></li>
+<li class='category'><a href='/blog/categories/shell/'>Shell (12)</a></li>
+
+  </ul>
+</section>
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2019 - Steven Sun -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

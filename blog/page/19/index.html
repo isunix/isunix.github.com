@@ -9,8 +9,7 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="Here below is the one-liner I found to remove a blank line in a file. 1
-perl -pi -e &#39;s!^\s+?$!!&#39; file.txt ">
+  <meta name="description" content="One of the best illustration of the use of select I read maybe from the book “data munging with perl”. Look at the the differences between the &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -100,7 +99,7 @@ perl -pi -e &#39;s!^\s+?$!!&#39; file.txt ">
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/07/24/perl-one-liner-to-remove-blank-lines/">Perl One-liner to Remove Blank Lines</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/10/24/use-of-select-in-perl/">Use of Select in Perl</a></h1>
     
     
       <p class="meta">
@@ -116,70 +115,40 @@ perl -pi -e &#39;s!^\s+?$!!&#39; file.txt ">
   
 
 
-<time datetime="2014-07-24T15:05:16+08:00" pubdate data-updated="true">2014 年7 月24 日</time>
+<time datetime="2014-10-24T13:34:51+08:00" pubdate data-updated="true">2014 年10 月24 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>Here below is the one-liner I found to remove a blank line in a file.   </p>
+  <div class="entry-content"><p>One of the best illustration of the use of select I read maybe from the book “data munging with perl”.   </p>
+
+<p>Look at the the differences between the following 3 ones.  </p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">perl</span> <span class="o">-</span><span class="n">pi</span> <span class="o">-</span><span class="n">e</span> <span class="s">&#39;s!^\s+?$!!&#39;</span> <span class="n">file</span><span class="o">.</span><span class="n">txt</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">print</span><span class="p">;</span>
+</span><span class="line"><span class="k">print</span> <span class="n">LIST</span><span class="p">;</span>
+</span><span class="line"><span class="k">print</span> <span class="n">FILEHANDLE</span> <span class="n">LIST</span><span class="p">;</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
 
+<p>For the first one “print”, since on target is specified, the contents of <code>$_</code> are printed to the default output file handle(usually STDOUT).    </p>
 
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/07/21/perl-script-to-comiple-c-slash-cpp-files-conveniently/">Perl Script to Comiple C/cpp Files Conveniently</a></h1>
-    
-    
-      <p class="meta">
-        
+<p>For the second one “print LIST”, the contents of LIST are printed to the default output file handle.  </p>
 
+<p>For the third one “print FILEHANDLE LIST”, the contents of LIST are printed to the specified file handle, “FILEHANDLE”.  </p>
 
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-07-21T21:31:33+08:00" pubdate data-updated="true">2014 年7 月21 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>我自己在编译c还有c++文件的时候， 总感觉每次都得敲像下面这种格式的一串字符， 感觉很麻烦的。   </p>
+<p>If you call select with no parameters, it will return the name of the currently selected output file handle, so </p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="n">gcc</span> <span class="o">-</span><span class="n">o</span> <span class="n">hello</span> <span class="n">hello</span><span class="p">.</span><span class="n">c</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">print</span> <span class="nb">select</span><span class="p">;</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>will normally print main::STDOUT.   </p>
 
-<p>所以就有了现在的这个脚本。使用方法很简单，想上面这个hello.c的文件，我们只要发出下面的命令:    </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="n">cpl</span> <span class="n">hello</span><span class="p">.</span><span class="n">c</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>就可以编译出来一个去掉以原来的文件名去掉ext的文件。  </p>
-
-<p>很简单吧！哈哈！  </p>
-
-<p>下面给出来代码， 还是继续把doc写进去的那种。</p>
+<p>If you call select with the name of a file handle, it will replace the current default output file handle with the new one. It returns the previously selected file handle so that you can store it and reset it later. If you
+need to write a lot of data to a particular file, you could use code like this:   </p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
@@ -187,89 +156,49 @@ perl -pi -e &#39;s!^\s+?$!!&#39; file.txt ">
 <span class="line-number">4</span>
 <span class="line-number">5</span>
 <span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-<span class="line-number">28</span>
-<span class="line-number">29</span>
-<span class="line-number">30</span>
-<span class="line-number">31</span>
-<span class="line-number">32</span>
-<span class="line-number">33</span>
-<span class="line-number">34</span>
-<span class="line-number">35</span>
-<span class="line-number">36</span>
-<span class="line-number">37</span>
-<span class="line-number">38</span>
-<span class="line-number">39</span>
-<span class="line-number">40</span>
-<span class="line-number">41</span>
-<span class="line-number">42</span>
-<span class="line-number">43</span>
-<span class="line-number">44</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="mf">5.010</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="n">strict</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="n">warnings</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="n">utf8</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="n">Cwd</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="nn">File::</span><span class="n">Basename</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">my</span> <span class="nv">$currentDir</span> <span class="o">=</span> <span class="n">getcwd</span><span class="p">;</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">$file</span> <span class="o">=</span> <span class="nv">$ARGV</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">$fullpath</span> <span class="o">=</span> <span class="s">&quot;$currentDir/$file&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">@suffix_list</span> <span class="o">=</span> <span class="sx">qw(.cpp .c)</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">my</span> <span class="p">(</span><span class="nv">$name</span><span class="p">,</span> <span class="nv">$dir</span><span class="p">,</span> <span class="nv">$ext</span><span class="p">)</span> <span class="o">=</span> <span class="n">fileparse</span><span class="p">(</span><span class="nv">$file</span><span class="p">,</span> <span class="nv">@suffix_list</span><span class="p">);</span>
-</span><span class="line"><span class="n">given</span><span class="p">(</span><span class="nv">$ext</span><span class="p">){</span>
-</span><span class="line">
-</span><span class="line">    <span class="n">when</span><span class="p">(</span><span class="s">&quot;.c&quot;</span><span class="p">){</span>
-</span><span class="line">        <span class="k">my</span> <span class="nv">$compile_c</span> <span class="o">=</span> <span class="s">&quot;gcc -o $name $file&quot;</span><span class="p">;</span>
-</span><span class="line">        <span class="nb">system</span><span class="p">(</span><span class="nv">$compile_c</span><span class="p">);</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">
-</span><span class="line">    <span class="n">when</span><span class="p">(</span><span class="s">&quot;.cpp&quot;</span><span class="p">){</span>
-</span><span class="line">        <span class="k">my</span> <span class="nv">$compile_cpp</span> <span class="o">=</span> <span class="s">&quot;g++ -o $name $file&quot;</span><span class="p">;</span>
-</span><span class="line">        <span class="nb">system</span><span class="p">(</span><span class="nv">$compile_cpp</span><span class="p">);</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">
-</span><span class="line">    <span class="n">default</span><span class="p">{</span>
-</span><span class="line">        <span class="n">say</span> <span class="s">&quot;$file is of an type not compilable!&quot;</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nb">open</span> <span class="n">FILE</span><span class="p">,</span> <span class="s">&#39;&gt;out.txt&#39;</span> <span class="ow">or</span> <span class="nb">die</span> <span class="s">&quot;Can&#39;t open out.txt: $!&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">$old</span> <span class="o">=</span> <span class="nb">select</span> <span class="n">FILE</span><span class="p">;</span>
+</span><span class="line"><span class="k">foreach</span> <span class="p">(</span><span class="nv">@data</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">	<span class="k">print</span><span class="p">;</span>
 </span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="cp">__END__</span>
-</span><span class="line"><span class="cp">=pod</span>
-</span><span class="line">
-</span><span class="line"><span class="cp">=head1 NAME</span>
-</span><span class="line">
-</span><span class="line"><span class="cp">cpl</span>
-</span><span class="line">
-</span><span class="line"><span class="cp">=head1 SYNOPSIS</span>
-</span><span class="line"><span class="cp">    $ cpl filename</span>
-</span><span class="line">
-</span><span class="line"><span class="cp">cpl --use gcc/g++ to compile a file with c/cpp extension. Usually we will do things like &quot;gcc -o hello hello.c&quot;, but with this scipt, we can just issue command like this, &quot;gcp hello.c&quot;;</span>
-</span><span class="line">
-</span><span class="line"><span class="cp">Thanks,</span>
-</span><span class="line"><span class="cp">Steven</span>
+</span><span class="line"><span class="nb">select</span> <span class="nv">$old</span><span class="p">;</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Another variable that is useful when writing data is <code>$|</code>. Setting this variable to a nonzero value will force the output buffer to be flushed immediately after every print (or write) statement. This has the effect of making the output stream look as if it were unbuffered. This variable acts on the currently selected output file handle. If you want to unbuffer any other file handle, you will need to select it, change the value of <code>$|</code>, and then reselect the previous file handle using code like this:   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">$file</span> <span class="o">=</span> <span class="nb">select</span> <span class="n">FILE</span><span class="p">;</span>
+</span><span class="line"><span class="vg">$|</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class="line"><span class="nb">select</span> <span class="nv">$file</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>In its compact form, it can be written as:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nb">select</span><span class="p">((</span><span class="nb">select</span><span class="p">(</span><span class="n">FILE</span><span class="p">),</span> <span class="vg">$|</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Finally we will take a look at an example,  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nb">open</span><span class="p">(</span><span class="n">FILE</span><span class="p">,</span><span class="s">&quot;&gt;./test.out&quot;</span><span class="p">);</span>
+</span><span class="line"><span class="nv">$oldHandle</span> <span class="o">=</span> <span class="nb">select</span><span class="p">(</span><span class="n">FILE</span><span class="p">);</span>
+</span><span class="line"><span class="k">print</span> <span class="nb">select</span><span class="p">;</span>
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;This is sent to test.out.\n&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="nv">$second</span> <span class="o">=</span> <span class="nb">select</span><span class="p">(</span><span class="nv">$oldHandle</span><span class="p">);</span>
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;to default stdout!\n&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="k">print</span> <span class="nv">$second</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>If you understand how “select” works, the output for this piece of code is quite obvious.  </p>
 </div>
   
   
@@ -282,7 +211,7 @@ perl -pi -e &#39;s!^\s+?$!!&#39; file.txt ">
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/07/21/perl-script-to-delete-files-without-extension/">Perl Script to Delete Files Without Extension</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/10/17/some-advanced-perl-tricks/">Some Advanced Perl Tricks</a></h1>
     
     
       <p class="meta">
@@ -298,14 +227,80 @@ perl -pi -e &#39;s!^\s+?$!!&#39; file.txt ">
   
 
 
-<time datetime="2014-07-21T18:18:34+08:00" pubdate data-updated="true">2014 年7 月21 日</time>
+<time datetime="2014-10-17T18:50:35+08:00" pubdate data-updated="true">2014 年10 月17 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>I want to delete those files without the extension I need, so I just write this perl script. The directory can also be specified on the command line. I list all those extensions I need as a pattern.</p>
+  <div class="entry-content"><p>I am taking notes of some of the advanced perl tricks used in perl.</p>
+
+<p>1.to get all the matched items using the /g flag,</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">$_</span> <span class="o">=</span> <span class="s">&quot;Just another Perl hacker,&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">@words</span> <span class="o">=</span> <span class="sr">/(\S+)/g</span><span class="p">;</span> <span class="c1"># &quot;Just&quot; &quot;another&quot; &quot;Perl&quot; &quot;hacker,&quot;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>2.to get the word count,</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">$word_count</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=</span> <span class="sr">/(\S+)/g</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>3.The built-in pos() operator returns the match position for the string we give it (or $_ by default).</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">$_</span> <span class="o">=</span> <span class="s">&quot;just another perl hacker&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="sr">/(just)/g</span><span class="p">;</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">$pos</span> <span class="o">=</span> <span class="nb">pos</span><span class="p">();</span>
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;[$1] ends at position $pos\n&quot;</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>4.To anchor our next match exactly where we left off the last time, we can use the \G anchor. It’s just like the beginning of string anchor \A, except for where \G anchors at the current match position. If our match fails, Perl resets pos() and we start at the beginning of the string.</p>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/10/17/a-perl-script-to-rename-file-names/">A Perl Script to Rename File Names</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-10-17T16:15:19+08:00" pubdate data-updated="true">2014 年10 月17 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I have some files with file name quite weird in the format, “[Alex_Holmes]_Hadoop_in_Practice(BookZZ.org).pdf
+“. What I want to achieve is removing the parts in the [] or ().  Here below is the perl script I wrote. </p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
@@ -328,251 +323,27 @@ perl -pi -e &#39;s!^\s+?$!!&#39; file.txt ">
 <span class="line-number">19</span>
 <span class="line-number">20</span>
 <span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-<span class="line-number">28</span>
-<span class="line-number">29</span>
-<span class="line-number">30</span>
-<span class="line-number">31</span>
-<span class="line-number">32</span>
-<span class="line-number">33</span>
-<span class="line-number">34</span>
-<span class="line-number">35</span>
-<span class="line-number">36</span>
-<span class="line-number">37</span>
-<span class="line-number">38</span>
-<span class="line-number">39</span>
-<span class="line-number">40</span>
-<span class="line-number">41</span>
-<span class="line-number">42</span>
-<span class="line-number">43</span>
 </pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="n">strict</span><span class="p">;</span>
 </span><span class="line"><span class="k">use</span> <span class="n">warnings</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="n">utf8</span><span class="p">;</span>
+</span><span class="line"><span class="k">use</span> <span class="nn">Data::</span><span class="n">Dumper</span><span class="p">;</span>
 </span><span class="line"><span class="k">use</span> <span class="n">Cwd</span><span class="p">;</span>
 </span><span class="line">
-</span><span class="line"><span class="k">my</span> <span class="nv">$targetDir</span> <span class="o">=</span> <span class="nv">$ARGV</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">||</span> <span class="n">getcwd</span><span class="p">;</span>
-</span><span class="line"><span class="nb">chdir</span> <span class="nv">$targetDir</span><span class="p">;</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">$target_dir</span> <span class="o">=</span> <span class="n">getcwd</span><span class="p">();</span>
 </span><span class="line">
-</span><span class="line"><span class="k">my</span> <span class="nv">$pattern</span> <span class="o">=</span> <span class="sx">qr/\.(md|py|php|sh|bash|zsh|vimrc|eamcs|c|cpp|java|pl|js|css|html|rb|txt)$/</span><span class="n">i</span><span class="p">,</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">@file_list</span><span class="p">;</span>
+</span><span class="line"><span class="nb">opendir</span><span class="p">(</span><span class="k">my</span> <span class="nv">$dh</span><span class="p">,</span> <span class="nv">$target_dir</span><span class="p">)</span> <span class="o">||</span> <span class="nb">die</span> <span class="s">&quot;can&#39;t opendir $target_dir: $!&quot;</span><span class="p">;</span>
 </span><span class="line">
+</span><span class="line"><span class="k">my</span> <span class="nv">@files</span> <span class="o">=</span> <span class="nb">grep</span> <span class="p">{</span> <span class="sr">/\w/</span> <span class="o">&amp;&amp;</span> <span class="o">-</span><span class="n">f</span> <span class="s">&quot;$_&quot;</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="sr">/^\./</span><span class="p">}</span> <span class="nb">readdir</span><span class="p">(</span><span class="nv">$dh</span><span class="p">);</span>
+</span><span class="line"><span class="c1"># [Alex_Holmes]_Hadoop_in_Practice(BookZZ.org).pdf</span>
+</span><span class="line"><span class="c1">#files not staring with &quot;.&quot; and contains char, thus (., .., .DS_STORE) will be ignored.</span>
+</span><span class="line"><span class="c1">#print Dumper @files;</span>
 </span><span class="line">
-</span><span class="line"><span class="nb">opendir</span><span class="p">(</span><span class="k">my</span> <span class="nv">$dh</span><span class="p">,</span> <span class="nv">$targetDir</span><span class="p">)</span> <span class="o">||</span> <span class="nb">die</span> <span class="s">&quot;can&#39;t opendir $targetDir: $!&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="k">while</span> <span class="p">(</span><span class="nb">readdir</span> <span class="nv">$dh</span><span class="p">){</span>
-</span><span class="line">    <span class="k">next</span> <span class="k">unless</span> <span class="o">-</span><span class="n">f</span><span class="p">;</span>
-</span><span class="line">    <span class="k">next</span> <span class="k">if</span> <span class="nv">$_</span> <span class="o">=~</span> <span class="nv">$pattern</span><span class="p">;</span>
-</span><span class="line">    <span class="nb">push</span> <span class="nv">@file_list</span><span class="p">,</span> <span class="nv">$_</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line"><span class="nb">closedir</span> <span class="nv">$dh</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">print</span> <span class="s">&quot;The following files are going to be deleted: @file_list\n&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="nb">unlink</span> <span class="nv">@file_list</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="cp">__END__</span>
-</span><span class="line"><span class="cp">=pod</span>
-</span><span class="line">
-</span><span class="line"><span class="cp">=head1 NAME</span>
-</span><span class="line">
-</span><span class="line"><span class="cp">delete-files.pl -delete those files without the extension as specifed in the pattern</span>
-</span><span class="line">
-</span><span class="line"><span class="cp">=head1 SYNOPSIS</span>
-</span><span class="line">
-</span><span class="line"><span class="cp">    $ delete-files</span>
-</span><span class="line"><span class="cp">It reads the files in the directory where you execute this script, and delete those</span>
-</span><span class="line"><span class="cp">not having the extension as is specified &quot;(md|py|php|sh|bash|zsh|vimrc|eamcs|c|cpp|java|pl|js|css|html|rb|txt)&quot;</span>
-</span><span class="line">
-</span><span class="line"><span class="cp">Please use this script carefully. If you have somefile without extension which you also</span>
-</span><span class="line"><span class="cp">consider them important, they maybe deleted.</span>
-</span><span class="line">
-</span><span class="line"><span class="cp">Thanks,</span>
-</span><span class="line"><span class="cp">Steven</span>
-</span><span class="line">
-</span><span class="line"><span class="cp">=cut</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>I also wrote document for this scirpt. haha!</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/07/18/split-mids-to-several-lines-with-fixed-number-per-line-using-perl/">Split Mids to Several Lines With Fixed Number Per Line Using Perl</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-07-18T21:38:16+08:00" pubdate data-updated="true">2014 年7 月18 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>事情是这样的，在工作中有许多的mids，想要贴到一个文本框中去，但是在进行reinjection后，是成每行一个mid的格式。我们想要把它们变成是每行给定数目的mids这样的格式， 方便贴到文本框中去. 之前用php实现过， 现在贴出来perl的版本的。</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="c1">#usage：perl script.pl file.txt</span>
-</span><span class="line"><span class="k">use</span> <span class="n">strict</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="n">warnings</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="n">utf8</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line">
-</span><span class="line"><span class="k">my</span> <span class="nv">$columns</span> <span class="o">=</span> <span class="nv">$ARGV</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">||</span> <span class="mi">8</span><span class="p">;</span>
-</span><span class="line"><span class="nb">open</span><span class="p">(</span><span class="k">my</span> <span class="nv">$IN</span><span class="p">,</span> <span class="s">&quot;$ARGV[0]&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">die</span> <span class="s">&quot;in: $@&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="nb">open</span><span class="p">(</span><span class="k">my</span> <span class="nv">$OUT</span><span class="p">,</span> <span class="s">&quot;&gt;&quot;</span><span class="p">,</span> <span class="s">&quot;$ARGV[0].new&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">die</span> <span class="s">&quot;out: $@&quot;</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">while</span><span class="p">(</span><span class="nb">chomp</span><span class="p">(</span><span class="k">my</span> <span class="nv">@lines</span> <span class="o">=</span> <span class="sr">&lt;$IN&gt;</span><span class="p">)){</span>
-</span><span class="line">
-</span><span class="line">        <span class="k">for</span><span class="p">(</span><span class="k">my</span> <span class="nv">$i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;=</span> <span class="nv">@lines</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">){</span>
-</span><span class="line">            <span class="k">my</span> <span class="nv">$t</span> <span class="o">=</span> <span class="nv">$i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
-</span><span class="line">            <span class="k">print</span> <span class="nv">$OUT</span> <span class="s">&quot;$lines[$t]&quot;</span><span class="p">;</span>
-</span><span class="line">            <span class="k">if</span><span class="p">(</span><span class="nv">$i</span> <span class="nv">%</span> <span class="err">$</span><span class="nv">columns</span> <span class="o">==</span> <span class="mi">0</span><span class="p">){</span>
-</span><span class="line">                <span class="k">print</span> <span class="nv">$OUT</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span>
-</span><span class="line">            <span class="p">}</span>
-</span><span class="line">        <span class="p">}</span>
+</span><span class="line"><span class="k">for</span><span class="p">(</span><span class="nv">@files</span><span class="p">){</span>
+</span><span class="line">    <span class="k">my</span> <span class="nv">$file</span> <span class="o">=</span> <span class="nv">$_</span><span class="p">;</span>
+</span><span class="line">    <span class="k">if</span><span class="p">(</span><span class="sr">/^(?:\[[\S\s]+\])([\S\s]+)(?:\([\S\s]+\))\.pdf$/</span><span class="p">){</span>
+</span><span class="line">        <span class="k">my</span> <span class="nv">$new_name</span> <span class="o">=</span> <span class="nv">$1</span><span class="o">.</span><span class="s">&quot;.pdf&quot;</span><span class="p">;</span>
+</span><span class="line">        <span class="nb">rename</span><span class="p">(</span><span class="s">&quot;$file&quot;</span><span class="p">,</span> <span class="s">&quot;$new_name&quot;</span><span class="p">)</span> <span class="o">||</span> <span class="nb">die</span><span class="p">(</span><span class="s">&quot;error in renaming: $!&quot;</span><span class="p">);</span>
 </span><span class="line">    <span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="nb">close</span><span class="p">(</span><span class="nv">$IN</span><span class="p">);</span>
-</span><span class="line"><span class="nb">close</span><span class="p">(</span><span class="nv">$OUT</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/07/18/examples-of-using-grep-and-map-in-perl/">Examples of Using Grep and Map in Perl</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-07-18T20:55:08+08:00" pubdate data-updated="true">2014 年7 月18 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>在«Learnign Perl»中，初步介绍了perl的一些高级用法， 我之前翻译了些intermediate perl, 但是最近这段时间实在是太忙了， 而且现在还有很多其他的事情得去处理，所以真的不知道得到什么时候才可以继续拾起翻译intermediate perl的任务来。好了，下面把学习perl中的一些关于map还有grep的例子记录在这里，也方便自己以后来查询。   </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-<span class="line-number">28</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">@odd_numbers</span> <span class="o">=</span> <span class="nb">grep</span> <span class="p">{</span> <span class="nv">$_</span> <span class="nv">%</span> <span class="nv">2</span> <span class="p">}</span> <span class="mi">1</span><span class="o">..</span><span class="mi">1000</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">my</span> <span class="nv">@matching_lines</span> <span class="o">=</span> <span class="nb">grep</span> <span class="p">{</span> <span class="sr">/\bfred\b/i</span> <span class="p">}</span> <span class="sr">&lt;$fh&gt;</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">my</span> <span class="nv">@matching_lines</span> <span class="o">=</span> <span class="nb">grep</span> <span class="sr">/\bfred\b/i</span><span class="p">,</span> <span class="sr">&lt;$fh&gt;</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">my</span> <span class="nv">@matching_lines</span> <span class="o">=</span> <span class="nb">grep</span> <span class="sr">/\bfred\b/i</span><span class="p">,</span> <span class="sr">&lt;$fh&gt;</span><span class="p">;</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">$line_count</span> <span class="o">=</span> <span class="nv">@matching_lines</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line">
-</span><span class="line"><span class="k">my</span> <span class="nv">$line_count</span> <span class="o">=</span> <span class="nb">grep</span> <span class="sr">/\bfred\b/i</span><span class="p">,</span> <span class="sr">&lt;$fh&gt;</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line">
-</span><span class="line"><span class="k">my</span> <span class="nv">@data</span> <span class="o">=</span> <span class="p">(</span><span class="mf">4.75</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1234</span><span class="p">,</span> <span class="mf">6.9456</span><span class="p">,</span> <span class="mf">12345678.9</span><span class="p">,</span> <span class="mf">29.95</span><span class="p">);</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">@formatted_data</span> <span class="o">=</span> <span class="nb">map</span> <span class="p">{</span> <span class="o">&amp;</span><span class="n">big_money</span><span class="p">(</span><span class="nv">$_</span><span class="p">)</span> <span class="p">}</span> <span class="nv">@data</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line">
-</span><span class="line"><span class="k">print</span> <span class="s">&quot;The money numbers are:\n&quot;</span><span class="p">,</span>
-</span><span class="line"><span class="nb">map</span> <span class="p">{</span> <span class="nb">sprintf</span><span class="p">(</span><span class="s">&quot;%25s\n&quot;</span><span class="p">,</span> <span class="nv">$_</span><span class="p">)</span> <span class="p">}</span> <span class="nv">@formatted_data</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line">
-</span><span class="line"><span class="k">my</span> <span class="nv">@data</span> <span class="o">=</span> <span class="p">(</span><span class="mf">4.75</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1234</span><span class="p">,</span> <span class="mf">6.9456</span><span class="p">,</span> <span class="mf">12345678.9</span><span class="p">,</span> <span class="mf">29.95</span><span class="p">);</span>
-</span><span class="line"><span class="k">print</span> <span class="s">&quot;The money numbers are:\n&quot;</span><span class="p">,</span>
-</span><span class="line"><span class="nb">map</span> <span class="p">{</span> <span class="nb">sprintf</span><span class="p">(</span><span class="s">&quot;%25s\n&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">big_money</span><span class="p">(</span><span class="nv">$_</span><span class="p">)</span> <span class="p">)</span> <span class="p">}</span> <span class="nv">@data</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line">
-</span><span class="line"><span class="k">print</span> <span class="s">&quot;Some powers of two are:\n&quot;</span><span class="p">,</span>
-</span><span class="line"><span class="nb">map</span> <span class="s">&quot;\t&quot;</span> <span class="o">.</span> <span class="p">(</span> <span class="mi">2</span> <span class="o">**</span> <span class="nv">$_</span> <span class="p">)</span> <span class="o">.</span> <span class="s">&quot;\n&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="o">..</span><span class="mi">15</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 </div>
   
@@ -615,6 +386,26 @@ perl -pi -e &#39;s!^\s+?$!!&#39; file.txt ">
     
       <li class="post">
         <a href="/blog/2019/05/07/hivezhong-shan-chu-partition/">Hive中删除partition</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/05/07/zai-ammonitezhong-importdi-san-fang-jarbao/">在ammonite中import第三方jar包</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/08/09/hive-insert-using-select-star/">Hive Insert Using Select *</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/08/04/copy-and-paste-spaces-separated-text-into-excel/">Copy and Paste Spaces Separated Text Into Excel</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/19/weird-things-happen-when-scripts-executing-with-and-passing-args-with-getopts/">Weird Things Happen When Scripts Executing With . And Passing Args With Getopts</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/18/zen-yao-qu-chu-windowsbian-ji-guo-de-wen-jian-zhong-de-mzi-fu/">怎么去除windows编辑过的文件中的^M字符</a>
       </li>
     
   </ul>

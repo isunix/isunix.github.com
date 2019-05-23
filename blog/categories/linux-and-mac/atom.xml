@@ -4,7 +4,7 @@
   <title><![CDATA[catogories：Linux&Mac | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/linux-and-mac/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2019-05-23T10:49:18+08:00</updated>
+  <updated>2019-05-23T11:01:51+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -14,16 +14,128 @@
 
   
   <entry>
-    <title type="html"><![CDATA[How to Find the Password for Pidgin]]></title>
-    <link href="http://isunix.github.io/blog/2014/06/05/how-to-find-the-password-for-pidgin/"/>
-    <updated>2014-06-05T20:49:16+08:00</updated>
-    <id>http://isunix.github.io/blog/2014/06/05/how-to-find-the-password-for-pidgin</id>
-    <content type="html"><![CDATA[<p>Use the following command line to find the password for your account on pidgin:</p>
+    <title type="html"><![CDATA[怎样无需手动输入密码连接PostgreSQL]]></title>
+    <link href="http://isunix.github.io/blog/2019/05/23/zen-yang-wu-xu-shou-dong-shu-ru-mi-ma-lian-jie-postgresql/"/>
+    <updated>2019-05-23T08:44:13+08:00</updated>
+    <id>http://isunix.github.io/blog/2019/05/23/zen-yang-wu-xu-shou-dong-shu-ru-mi-ma-lian-jie-postgresql</id>
+    <content type="html"><![CDATA[<p>我们要想不每次手动输入密码来连接PostgreSQL, 可以在home目录创建一个pgpass文件<code>touch ~/.pgpass</code>.
+然后在里面输入如下的信息<code>$host:$port:$db:$user:$password</code>.
+这里的每个变量实际过程中替换成真实的值.
+然后我们就可以使用如下的方式来进行psql的连接了<code>psql -h $host -p $port -U $user -d $db</code>.
+同理，这里的每个变量实际过程中替换成真实的值.</p>
 
-<p><code>bash
-cat $HOME/.purple/accounts.xml | grep pass
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[使用rpm安装crontab命令备忘]]></title>
+    <link href="http://isunix.github.io/blog/2019/05/22/shi-yong-rpman-zhuang-crontabming-ling-bei-wang/"/>
+    <updated>2019-05-22T16:36:21+08:00</updated>
+    <id>http://isunix.github.io/blog/2019/05/22/shi-yong-rpman-zhuang-crontabming-ling-bei-wang</id>
+    <content type="html"><![CDATA[<p>我这边有台ec2, 但是在yum update的时候，总是报错说依赖冲突，后来处理这个问题的时候，过于激进，导致yum不可以用了, 最后把rpm也删了</p>
+
+<p>参考这篇文章
+<a href="https://blog.seosiwei.com/detail/27">https://blog.seosiwei.com/detail/27</a>
+里的方法2，把rpm和yum都删了然后重装了, 软件下载链接是
+<a href="http://mirrors.ustc.edu.cn/centos/6/os/x86_64/Packages/">http://mirrors.ustc.edu.cn/centos/6/os/x86_64/Packages/</a></p>
+
+<p>安装好了之后，发现yum还是不能用，总是报错</p>
+
+<p><code>
+liblzma.so.0: cannot open shared object file: No such file or directory
 </code>
-and it works.</p>
+之类的信息</p>
+
+<p>无可奈何，只好使用rpm了, 我这边需要使用crontab，于是从上面的软件库中下载了</p>
+
+<p><code>
+cronie-1.4.4-16.el6_8.2.x86_64.rpm</code> 和 <code>crontabs-1.10-33.el6.noarch.rpm
+</code></p>
+
+<p>然后执行如下的命令来安装</p>
+
+<p><code>
+rpm -Uvh --replacepkgs --nodeps --force cron*.rpm
+</code></p>
+
+<p>然后报各种依赖找不到的错误, 比如</p>
+
+<p><code>
+librpmio.so.3 not found
+</code>
+之类的</p>
+
+<p>好在我们有别的ec2，我们可以去这个另外的ec2上找对应的依赖，然后copy到这个我们出问题的机器上</p>
+
+<p><code>
+find / -name librpm.so.3 -type f
+</code></p>
+
+<p>然后发现在/usr/lib64中，librpm.so.3是个软连接，指向/usr/lib64中的librpm.so.3.2.2, 我们把librpm.so.3.2.2copy到我们出问题的机器的/usr/lib64里，然后参照
+<a href="http://isunix.github.io/blog/2019/05/22/linuxming-ling-lnde-shi-yong-bei-wang/">http://isunix.github.io/blog/2019/05/22/linuxming-ling-lnde-shi-yong-bei-wang/</a>
+中的方式来做个软连接</p>
+
+<p>仿照这个方式，如果还有问题，重复找依赖-copy-做软连接的过程</p>
+
+<p>最后再执行</p>
+
+<p><code>
+rpm -Uvh --replacepkgs --nodeps --force cron*.rpm
+</code>
+crontab命令成功安装了.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Linux命令ln的使用备忘]]></title>
+    <link href="http://isunix.github.io/blog/2019/05/22/linuxming-ling-lnde-shi-yong-bei-wang/"/>
+    <updated>2019-05-22T16:22:49+08:00</updated>
+    <id>http://isunix.github.io/blog/2019/05/22/linuxming-ling-lnde-shi-yong-bei-wang</id>
+    <content type="html"><![CDATA[<p>我们现在在/usr/lib64中有个文件librpm.so.3.2.2, 我们想要在/usr/lib64做个软连接, 起名叫做librpm.so.3, 指向librpm.so.3.2.2, 我们可以这样做,</p>
+
+<p><code>cd /usr/lib64 &amp;&amp; ln -s librpm.so.3.2.2 librpm.so.3</code></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Copy and Paste Spaces Separated Text Into Excel]]></title>
+    <link href="http://isunix.github.io/blog/2016/08/04/copy-and-paste-spaces-separated-text-into-excel/"/>
+    <updated>2016-08-04T16:06:03+08:00</updated>
+    <id>http://isunix.github.io/blog/2016/08/04/copy-and-paste-spaces-separated-text-into-excel</id>
+    <content type="html"><![CDATA[<p>最近经常需要把空格作为delimiter的文本粘贴到excel里。之前的做法是</p>
+
+<p><code>sh
+cat aa.log | awk '{print $1}' | pbcopy
+</code>
+来一列一列地copy到excel里。甚是繁琐。 excel不会用的啊。</p>
+
+<p>今天发现了原来还可以这么来操作。</p>
+
+<ol>
+  <li>把整个文件的内容粘贴到excel里去</li>
+  <li>在excel中选中文件内容， 然后点击 Data-&gt;Text to Columns, 然后选择合适的delimiter去把文本内容给搞到excel中去。</li>
+</ol>
+
+<p>Bingo！</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Find the Common Lines in Multiple Files]]></title>
+    <link href="http://isunix.github.io/blog/2015/11/23/find-the-common-lines-in-multiple-files/"/>
+    <updated>2015-11-23T17:22:11+08:00</updated>
+    <id>http://isunix.github.io/blog/2015/11/23/find-the-common-lines-in-multiple-files</id>
+    <content type="html"><![CDATA[<p>What if I want to find the lines exist in all the given files under linux. Of course I can write a small script but I do not want to do that, cause I am sure there are commands for this kind of task.</p>
+
+<p><code>sh
+grep -F -x -f file1 file2 ...
+</code></p>
+
+<p>you can refer to the following page for more details.</p>
+
+<p><code>html
+http://unix.stackexchange.com/questions/28158/is-there-a-tool-to-get-the-lines-in-one-file-that-are-not-in-another
+</code></p>
 ]]></content>
   </entry>
   

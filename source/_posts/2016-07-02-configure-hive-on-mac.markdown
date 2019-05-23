@@ -3,7 +3,7 @@ layout: post
 title: "configure hive on mac"
 date: 2016-07-02 18:14:13 +0800
 comments: true
-categories: Hadoop
+categories: BigData
 ---
 花了很长的时间在hive的安装和配置上， 先把有用的链接记下来， 等有空了再详细的写下安装过程。
 

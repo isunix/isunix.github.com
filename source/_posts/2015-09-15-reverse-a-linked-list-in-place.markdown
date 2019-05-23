@@ -3,7 +3,7 @@ layout: post
 title: "reverse a linked list in place"
 date: 2015-09-15 09:33:40 +0800
 comments: true
-categories: Algorithm
+categories: Algorithms
 ---
 We will show how to reverse a linked list in place using both python and javascript(actually converted from coffeescript).
 

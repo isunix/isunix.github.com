@@ -3,7 +3,7 @@ layout: post
 title: "django development in python3 environemnt"
 date: 2015-10-12 14:55:22 +0800
 comments: true
-categories: Django
+categories: Django&Flask
 ---
 What if I want to development a django app in python3 environement.
 

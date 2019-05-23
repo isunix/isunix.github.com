@@ -3,7 +3,7 @@ layout: post
 title: "css files not function well while using gunicorn"
 date: 2015-11-19 16:42:04 +0800
 comments: true
-categories: Django
+categories: Django&Flask
 ---
 I find that my bootstap files not working well while I am using gunicorn to start the app.
 

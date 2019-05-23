@@ -3,7 +3,7 @@ layout: post
 title: "Django Admin: Changing the Page Header"
 date: 2015-11-18 16:58:31 +0800
 comments: true
-categories: Django
+categories: Django&Flask
 ---
 This post shows how to change the header of the django admin page.
 

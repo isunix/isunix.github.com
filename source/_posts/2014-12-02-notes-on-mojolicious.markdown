@@ -3,7 +3,7 @@ layout: post
 title: "notes on mojolicious"
 date: 2014-12-02 20:52:52 +0800
 comments: true
-categories: Mojo
+categories: Perl
 ---
 Will keep notes of some of the mojo tips I got.
 
@@ -21,7 +21,7 @@ This will generate Mojolicious::Lite application for us.
 
 ```pl
 mojo generate lite_app hello
-``` 
+```
 This will generate the app with the name "hello"
 
 2.about deploying your app to heroku
@@ -46,7 +46,7 @@ get '/:fname/:lname' => sub{
 };
 ```
 
-relaxed placeholders: 
+relaxed placeholders:
 
 ```pl
 get '/:fname/(.lname)' => sub{

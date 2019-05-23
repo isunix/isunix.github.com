@@ -3,7 +3,7 @@ layout: post
 title: "remove the ^M chareacters in a file"
 date: 2014-07-01 13:45:23 +0800
 comments: true
-categories: Vim
+categories: Editor
 ---
 In a file that have multiple "^M" characters in it , we can use vim to remove them.
 

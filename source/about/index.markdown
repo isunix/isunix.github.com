@@ -30,8 +30,13 @@ footer: true
 ## 2018.07~now:
 - 安徽华米科技; 高级大数据工程师
 
-## 喜欢:
-- 一切有美感的东西; Mac 爱好者； Ubuntu爱好者; 熟练和擅长Perl/Shell Script/Python/SQL/数理基础知识/数据分析/Spark/PySpark/Tableau/Superset/Django/Dancer/Git/Vim/Markdown/历史/政治/科普/英文/纪录片/唐诗/宋词/元曲/其他的中国古典文化; 了解过机器学习和深度学习(依然在持续学习，获得过Coursera上吴恩达的深度学习课程的certificate)
+## 更多:
+- 一切有美感的东西
+- Mac 爱好者
+- Ubuntu爱好者
+- 熟练和擅长 Perl/Shell Script/Python/SQL/数理基础知识/数据分析/Spark/PySpark/Tableau/Superset/Django/Flask/Dancer/Git/Vim/Markdown
+- 喜欢历史/政治/科普/英文/纪录片/唐诗/宋词/元曲/其他的中国古典文化
+- 了解过机器学习和深度学习(依然在持续学习，获得过Coursera上吴恩达的深度学习课程的certificate)
 
 
 ## 邮箱:

@@ -9,7 +9,8 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="In Perl, function sort() sort the item of an array according to its corresponding acssci code. for example, if we have an array @array = (1, 3, 10, 2 &hellip;">
+  <meta name="description" content="In a file that have multiple “^M” characters in it , we can use vim to remove them. 1
+:%s/^M//g the ^M character is made by typing ctrl + v first &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -93,6 +94,86 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/01/remove-the-m-chareacters-in-a-file/">Remove the ^M Chareacters in a File</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-01T13:45:23+08:00" pubdate data-updated="true">2014 年7 月1 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In a file that have multiple “^M” characters in it , we can use vim to remove them.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="p">:</span><span class="nv">%s</span><span class="sr">/^M/</span><span class="o">/</span><span class="n">g</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>the ^M character is made by typing ctrl + v first then hit enter.</p>
+
+<p>Also I write a perl script to convert the from dos to unix and also delete chars in code followng the “//”.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nb">open</span><span class="p">(</span><span class="nv">$IN</span><span class="p">,</span> <span class="s">&quot;$ARGV[0]&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">die</span> <span class="s">&quot;in: $@&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="nb">open</span><span class="p">(</span><span class="nv">$OUT</span><span class="p">,</span> <span class="s">&quot;&gt;&quot;</span><span class="p">,</span> <span class="s">&quot;$ARGV[0].new&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">die</span> <span class="s">&quot;out: $@&quot;</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">while</span> <span class="p">(</span><span class="sr">&lt;$IN&gt;</span><span class="p">){</span>
+</span><span class="line">    <span class="k">my</span> <span class="nv">$line</span> <span class="o">=</span> <span class="nv">$_</span><span class="p">;</span>
+</span><span class="line">    <span class="nv">$line</span> <span class="o">=~</span> <span class="sr">s/(\/\/.*)//g</span><span class="p">;</span>
+</span><span class="line">    <span class="k">print</span> <span class="nv">$OUT</span> <span class="nv">$line</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="nv">$command</span> <span class="o">=</span> <span class="s">&quot;mv $ARGV[0].new $ARGV[0] &amp;&amp; chmod 777 $ARGV[0] &amp;&amp; dos2unix $ARGV[0]&quot;</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="nb">system</span><span class="p">(</span><span class="nv">$command</span><span class="p">);</span>
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;successfully deleted and converted!\n&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="nb">close</span><span class="p">(</span><span class="nv">$IN</span><span class="p">);</span>
+</span><span class="line"><span class="nb">close</span><span class="p">(</span><span class="nv">$OUT</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>The code just explains itself.</p>
+
+<p>Bingo!</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -270,52 +351,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/06/15/how-to-insert-pictures-in-octopress/">How to Insert Pictures in Octopress</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-06-15T23:14:54+08:00" pubdate data-updated="true">2014 年6 月15 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Of course you can google about it, but I just keep it down so that every time I do it, I do not need to google again. It is pretty easy. </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line">{\% img [class names] /path/to/image [width] [height] [title text [alt text]] \%}
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>Of course you need to remove the “\” in the above line. I just it there so it will be interpreted as inserting a pic here. Sorry about this.</p>
-
-<p>Just add your pics in the above format. Note here I add a subdir in the source/images/ dir.  </p>
-
-<p>That is it. </p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/37/">&larr; Older</a>
@@ -331,6 +366,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2019/05/23/da-jian-supersetshu-ju-bao-biao-ping-tai/">搭建Superset数据报表平台</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2019/05/23/zen-yang-wu-xu-shou-dong-shu-ru-mi-ma-lian-jie-postgresql/">怎样无需手动输入密码连接PostgreSQL</a>
@@ -368,10 +407,6 @@
         <a href="/blog/2016/07/19/weird-things-happen-when-scripts-executing-with-and-passing-args-with-getopts/">Weird Things Happen When Scripts Executing With . And Passing Args With Getopts</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2016/07/18/zen-yao-qu-chu-windowsbian-ji-guo-de-wen-jian-zhong-de-mzi-fu/">怎么去除windows编辑过的文件中的^M字符</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -383,7 +418,7 @@
 <li class='category'><a href='/blog/categories/blog/'>Blog (4)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
 <li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (1)</a></li>
-<li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (4)</a></li>
+<li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (5)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (1)</a></li>
 <li class='category'><a href='/blog/categories/javascript/'>Javascript (4)</a></li>
 <li class='category'><a href='/blog/categories/linux-and-mac/'>Linux&Mac (10)</a></li>

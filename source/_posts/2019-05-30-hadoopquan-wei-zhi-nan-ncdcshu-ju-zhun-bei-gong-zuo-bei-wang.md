@@ -5,7 +5,7 @@ date: 2019-05-30 09:23:39 +0800
 comments: true
 categories: BigData
 ---
-<Hadoop: The Definitive Guide, Fourth Edition> <http://hadoopbook.com> 是本好书, 书中的例子用到了ncdc<ftp://ftp.ncdc.noaa.gov/pub/data/gsod/>的数据，这个也是非常赞的。我们知道统计学大师Fisher当年就是在气象工作站，研究气象数据很多年，后来在统计学上面做出了卓越的成就。气象数据纷繁复杂，通过实际的气象数据来阅读这本书，会教会读者在真实的情况下，如何面对数据，这个要比用一些dummy数据做演示，效果好太多.
+<Hadoop: The Definitive Guide, Fourth Edition> <http://hadoopbook.com> 是本好书, 书中的例子用到了ncdc的数据<ftp://ftp.ncdc.noaa.gov/pub/data/gsod/>，这个也是非常赞的。我们知道统计学大师Fisher当年就是在气象工作站，研究气象数据很多年，后来在统计学上面做出了卓越的成就。气象数据纷繁复杂，通过实际的气象数据来阅读这本书，会教会读者在真实的情况下，如何面对数据，这个要比用一些dummy数据做演示，效果好太多.
 
 官网github上面的数据很少<https://github.com/tomwhite/hadoop-book/tree/master/input/ncdc/all>. 我们自己从上面的ncdc的链接中去下载，我们下载tar文件. 具体也可以参考这篇文章<https://blog.csdn.net/mrcharles/article/details/50442367>
 

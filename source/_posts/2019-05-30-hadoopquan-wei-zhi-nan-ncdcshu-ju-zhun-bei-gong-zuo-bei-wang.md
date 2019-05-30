@@ -18,7 +18,7 @@ cdir="$(cd `dirname $0`; pwd)"
 for i in $(seq 1930 1960)
 do
     wget --execute robots=off —accept=tar -r -np -nH --cut-dirs=4 - R index.html* ftp://ftp.ncdc.noaa.gov/pub/data/gsod/$i/
-    done
+done
 ```
 
 下载好了之后，我们把这些1930/gsod_1930.tar 之类的文件，重新命令为1930/1930.tar, 然后把所有的文件都放到一个本地的目录，起名叫gsod， 现在gsod目录里都是1930/1930.tar这样的文件了.

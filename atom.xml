@@ -4,7 +4,7 @@
   <title><![CDATA[Steven's Blog]]></title>
   <link href="http://isunix.github.io/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2019-05-24T07:31:11+08:00</updated>
+  <updated>2019-05-30T10:32:32+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,206 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Hadoop权威指南ncdc数据准备工作备忘]]></title>
+    <link href="http://isunix.github.io/blog/2019/05/30/hadoopquan-wei-zhi-nan-ncdcshu-ju-zhun-bei-gong-zuo-bei-wang/"/>
+    <updated>2019-05-30T09:23:39+08:00</updated>
+    <id>http://isunix.github.io/blog/2019/05/30/hadoopquan-wei-zhi-nan-ncdcshu-ju-zhun-bei-gong-zuo-bei-wang</id>
+    <content type="html"><![CDATA[<p>&lt;Hadoop: The Definitive Guide, Fourth Edition&gt; <a href="http://hadoopbook.com">http://hadoopbook.com</a> 是本好书, 书中的例子用到了ncdc<a href="ftp://ftp.ncdc.noaa.gov/pub/data/gsod/">ftp://ftp.ncdc.noaa.gov/pub/data/gsod/</a>的数据，这个也是非常赞的。我们知道统计学大师Fisher当年就是在气象工作站，研究气象数据很多年，后来在统计学上面做出了卓越的成就。气象数据纷繁复杂，通过实际的气象数据来阅读这本书，会教会读者在真实的情况下，如何面对数据，这个要比用一些dummy数据做演示，效果好太多.</p>
+
+<p>官网github上面的数据很少<a href="https://github.com/tomwhite/hadoop-book/tree/master/input/ncdc/all">https://github.com/tomwhite/hadoop-book/tree/master/input/ncdc/all</a>. 我们自己从上面的ncdc的链接中去下载，我们下载tar文件. 具体也可以参考这篇文章<a href="https://blog.csdn.net/mrcharles/article/details/50442367">https://blog.csdn.net/mrcharles/article/details/50442367</a></p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="c">#!/bin/bash</span>
+</span><span class="line">
+</span><span class="line"><span class="c">#这里cd到你想下载到的目录, 每个文件的格式如下所示gsod_1901.tar, 发现tar文件竟然只有从1930年才不是空文件</span>
+</span><span class="line"><span class="nv">cdir</span><span class="o">=</span><span class="s2">&quot;$(cd `dirname $0`; pwd)&quot;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">for </span>i in <span class="k">$(</span>seq 1930 1960<span class="k">)</span>
+</span><span class="line"><span class="k">do</span>
+</span><span class="line"><span class="k">    </span>wget --execute <span class="nv">robots</span><span class="o">=</span>off —accept<span class="o">=</span>tar -r -np -nH --cut-dirs<span class="o">=</span>4 - R index.html* ftp://ftp.ncdc.noaa.gov/pub/data/gsod/<span class="nv">$i</span>/
+</span><span class="line">    <span class="k">done</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>下载好了之后，我们把这些1930/gsod_1930.tar 之类的文件，重新命令为1930/1930.tar, 然后把所有的文件都放到一个本地的目录，起名叫gsod， 现在gsod目录里都是1930/1930.tar这样的文件了.</p>
+
+<p>接下来我们在hdfs上创建目录，</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">hdfs dfs -mkdir /GSOD /GSOD_ALL
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>然后将本地的gsod文件夹里的文件都上传到/GSOD/里面去</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">hdfs dfs -put gsod/* /GSOD/
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>这个过程在我的本机上，先是出现了namenode找不到的问题，然后又出现了namenode in safemode，创建不了的问题, 解决办法是</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">stop-all.sh
+</span><span class="line">hdfs namenode -format
+</span><span class="line">start-all.sh
+</span><span class="line">hadoop dfsadmin -safemode leave
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>然后重新执行</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">hdfs dfs -put gsod/* /GSOD/
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>接下来我们要做的就是在hadoop上处理这些数据了. 首先创建generate_input_list.sh来生成MR的input文件:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="c">#!/bin/bash</span>
+</span><span class="line">
+</span><span class="line"><span class="nv">a</span><span class="o">=</span><span class="nv">$1</span>
+</span><span class="line">rm -rf ncdc_files.txt
+</span><span class="line">hdfs dfs -rm /ncdc_files.txt
+</span><span class="line">
+</span><span class="line"><span class="k">while</span> <span class="o">[</span> <span class="nv">$a</span> -le <span class="nv">$2</span> <span class="o">]</span>
+</span><span class="line"><span class="k">do</span>
+</span><span class="line"><span class="k">        </span><span class="nv">filename</span><span class="o">=</span><span class="s2">&quot;/GSOD/${a}/${a}.tar&quot;</span>
+</span><span class="line">        <span class="nb">echo</span> <span class="s2">&quot;$filename&quot;</span> &gt;&gt; ncdc_files.txt
+</span><span class="line">        <span class="nv">a</span><span class="o">=</span><span class="sb">`</span>expr <span class="nv">$a</span> + 1<span class="sb">`</span>
+</span><span class="line"><span class="k">done</span>
+</span><span class="line">
+</span><span class="line">hdfs dfs -put ncdc_files.txt /
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>ncdc_files.txt中的每一行就是<code>/GSOD/1950/1950.tar</code>这样的数据.</p>
+
+<p>然后我们来产生文件:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">sh generate_input_list.sh 1901 1956
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>接下来我们来创建load_ncdc_map.sh脚本，在MapReduce的Streaming上正常运行</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="c">#!/bin/bash</span>
+</span><span class="line">
+</span><span class="line"><span class="nb">read </span>offset hdfs_file
+</span><span class="line"><span class="nb">echo</span> -e <span class="s2">&quot;$offset\t$hdfs_file&quot;</span>
+</span><span class="line">
+</span><span class="line"><span class="c"># Retrieve file from HDFS to local disk</span>
+</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;reporter:status:Retrieving $hdfs_file&quot;</span> &gt;&amp;2
+</span><span class="line">/Users/sun1/repo/hadoop-3.1.2/bin/hdfs dfs -get <span class="nv">$hdfs_file</span> .
+</span><span class="line"><span class="c"># Create local directory</span>
+</span><span class="line"><span class="nv">target</span><span class="o">=</span><span class="sb">`</span>basename <span class="nv">$hdfs_file</span> .tar<span class="sb">`</span>
+</span><span class="line">mkdir <span class="nv">$target</span>
+</span><span class="line">
+</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;reporter:status:Un-tarring $hdfs_file to $target&quot;</span> &gt;&amp;2
+</span><span class="line">tar xf <span class="sb">`</span>basename <span class="nv">$hdfs_file</span><span class="sb">`</span> -C <span class="nv">$target</span>
+</span><span class="line"><span class="c"># Unzip each station file and concat into one file</span>
+</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;reporter:status:Un-gzipping $target&quot;</span> &gt;&amp;2
+</span><span class="line"><span class="k">for </span>file in <span class="nv">$target</span>/*
+</span><span class="line"><span class="k">do</span>
+</span><span class="line"><span class="k">        </span>gunzip -c <span class="nv">$file</span> &gt;&gt; <span class="nv">$target</span>.all
+</span><span class="line">        <span class="nb">echo</span> <span class="s2">&quot;reporter:status:Processed $file&quot;</span> &gt;&amp;2
+</span><span class="line"><span class="k">done</span>
+</span><span class="line"><span class="c"># Put gzipped version into HDFS</span>
+</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;reporter:status:Gzipping $target and putting in HDFS&quot;</span> &gt;&amp;2
+</span><span class="line">gzip -c <span class="nv">$target</span>.all | /Users/sun1/repo/hadoop-3.1.2/bin/hdfs  dfs -put - /GSOD_ALL/<span class="nv">$target</span>.gz
+</span><span class="line">rm <span class="sb">`</span>basename <span class="nv">$hdfs_file</span><span class="sb">`</span>
+</span><span class="line">rm -r <span class="nv">$target</span>
+</span><span class="line">rm <span class="nv">$target</span>.all
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>然后我们可以使用如下的方式来调用这个shell脚本了:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="c">#!/bin/bash</span>
+</span><span class="line">
+</span><span class="line">hadoop jar <span class="k">${</span><span class="nv">HADOOP_HOME</span><span class="k">}</span>/share/hadoop/tools/lib/hadoop-streaming-3.1.2.jar <span class="se">\</span>
+</span><span class="line">    -D mapreduce.job.reduces<span class="o">=</span>0 <span class="se">\</span>
+</span><span class="line">    -D mapreduce.map.speculative<span class="o">=</span><span class="nb">false</span> <span class="se">\</span>
+</span><span class="line">    -D mapreduce.task.timeout<span class="o">=</span>12000000 <span class="se">\</span>
+</span><span class="line">    -inputformat org.apache.hadoop.mapred.lib.NLineInputFormat <span class="se">\</span>
+</span><span class="line">    -input /ncdc_files.txt <span class="se">\</span>
+</span><span class="line">    -output /output/gsod <span class="se">\</span>
+</span><span class="line">    -mapper load_ncdc_map.sh <span class="se">\</span>
+</span><span class="line">    -file load_ncdc_map.sh
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>最后运行完了，我们可以check下目标文件是否生成</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">hdfs dfs -ls /GSOD_ALL
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>以及检查输出的结果</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">hdfs dfs -cat /output/gsod/part-00053
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[搭建Superset数据报表平台]]></title>
@@ -702,330 +902,6 @@
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>The sad thing is not all the sequences are consecutive.</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Useful Awk Commands]]></title>
-    <link href="http://isunix.github.io/blog/2015/12/21/useful-awk-commands/"/>
-    <updated>2015-12-21T16:51:15+08:00</updated>
-    <id>http://isunix.github.io/blog/2015/12/21/useful-awk-commands</id>
-    <content type="html"><![CDATA[<p>The following blogs are referenced, </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">http://www.catonmat.net/blog/awk-one-liners-explained-part-one/</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>And I will list some of the commands I think might be useful for later usage here.</p>
-
-<ul>
-  <li>Print the total number of lines containing word “Regex”.</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;/Regex/ { n++ }; END { print n+0 }&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Print every line with more than 4 fields.</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;NF &gt; 4&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Print every line where the value of the last field is greater than 4.</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;$NF &gt; 4&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Convert Windows/DOS newlines (CRLF) to Unix newlines (LF) from Unix.</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;{ sub(/\r$/,&quot;&quot;); print }&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Convert Unix newlines (LF) to Windows/DOS newlines (CRLF) from Unix.</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;{ sub(/$/,&quot;\r&quot;); print }&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Delete leading whitespace (spaces and tabs) from the beginning of each line (ltrim).</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;{ sub(/^[ \t]+/, &quot;&quot;); print }&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Delete trailing whitespace (spaces and tabs) from the end of each line (rtrim).</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;{ sub(/[ \t]+$/, &quot;&quot;); print }&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Delete both leading and trailing whitespaces from each line (trim).</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;{ gsub(/^[ \t]+|[ \t]+$/, &quot;&quot;); print }&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Insert 5 blank spaces at beginning of each line.</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;{ sub(/^/, &quot;     &quot;); print }&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Center all text on a 79-character width.</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;{ l=length(); s=int((79-l)/2); printf &quot;%&quot;(s+l)&quot;s\n&quot;, $0 }&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Substitute (find and replace) “foo” with “bar” on each line.</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;{ sub(/foo/,&quot;bar&quot;); print }&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Substitute “foo” with “bar” only on lines that contain “baz”.</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;/baz/ { gsub(/foo/, &quot;bar&quot;) }; { print }&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Substitute “foo” with “bar” only on lines that do not contain “baz”.</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;!/baz/ { gsub(/foo/, &quot;bar&quot;) }; { print }&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Change “scarlet” or “ruby” or “puce” to “red”.</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;{ gsub(/scarlet|ruby|puce/, &quot;red&quot;); print}&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Reverse order of lines (emulate “tac”).</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;{ a[i++] = $0 } END { for (j=i-1; j&gt;=0;) print a[j--] }&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Swap first field with second on every line.</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;{ temp = $1; $1 = $2; $2 = temp; print }&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Delete the second field on each line.</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;{ $2 = &quot;&quot;; print }&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Print the fields in reverse order on every line.</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;{ for (i=NF; i&gt;0; i--) printf(&quot;%s &quot;, $i); printf (&quot;\n&quot;) }&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Remove duplicate, consecutive lines (emulate “uniq”)</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;a !~ $0; { a = $0 }&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Remove duplicate, nonconsecutive lines.</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;!a[$0]++&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Concatenate every 5 lines of input with a comma.</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;ORS=NR%5?&quot;,&quot;:&quot;\n&quot;&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Print only the lines that match a regular expression “/regex/” (emulates “grep”).</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;/regex/&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Print only the lines that do not match a regular expression “/regex/” (emulates “grep -v”).</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;!/regex/&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Print the line immediately before a line that matches “/regex/” (but not the line that matches itself).</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;/regex/ { print x }; { x=$0 }&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Print the line immediately after a line that matches “/regex/” (but not the line that matches itself).</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;/regex/ { getline; print }&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Print lines that match any of “AAA” or “BBB”, or “CCC”.</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;/AAA|BBB|CCC/&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Print lines that contain “AAA” and “BBB”, and “CCC” in this order.</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;/AAA.*BBB.*CCC/&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Print only the lines that are 65 characters in length or longer.</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;length &gt; 64&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Print a section of file from regular expression to end of file.</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;/regex/,0&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Print lines 8 to 12 (inclusive).</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;NR==8,NR==12&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Print line number 52.</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;NR==52&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Print section of a file between two regular expressions (inclusive).</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;/Iowa/,/Montana/&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Delete all blank lines from a file.</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk NF
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>This one-liner uses the special NF variable that contains number of fields on the line. For empty lines, NF is 0, that evaluates to false, and false statements do not get the line printed.</p>
-
-<ul>
-  <li>Create a string of a specific length (generate a string of x’s of length 513).</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">awk <span class="s1">&#39;BEGIN { while (a++&lt;513) s=s &quot;x&quot;; print s }&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Insert a string of specific length at a certain character position (insert 49 x’s after 6th char).</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">gawk --re-interval <span class="s1">&#39;BEGIN{ while(a++&lt;49) s=s &quot;x&quot; }; { sub(/^.{6}/,&quot;&amp;&quot; s) }; 1&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Print all lines where 5th field is equal to “abc123”.
-&lt;div class=&#8217;bogus-wrapper&#8217;&gt;<notextile><figure class="code">&lt;figcaption&gt;<span></span>&lt;/figcaption&gt;&lt;div class=&#8221;highlight&#8221;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#8221;gutter&#8221;&gt;&lt;pre class=&#8221;line-numbers&#8221;&gt;<span class="line-number">1</span></figure></notextile></li>
-</ul>
-<p>&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217;&gt;&lt;pre&gt;<code class="sh"><span class="line">cat file | awk <span class="s1">&#39;$5 == &quot;abc123&quot;&#39;</span>
-</span></code>&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/notextile&gt;&lt;/div&gt;</p>
-
-<ul>
-  <li>Print any line where field #5 is not equal to “abc123”.</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;$5 != &quot;abc123&quot;&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Print all lines whose 7th field matches a regular expression.</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;$7  ~ /^[a-f]/&#39;</span>
-</span><span class="line">or
-</span><span class="line">cat file | awk <span class="s1">&#39;$7 !~ /^[a-f]/&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 ]]></content>
   </entry>

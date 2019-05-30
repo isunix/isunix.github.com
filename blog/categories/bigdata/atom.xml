@@ -4,7 +4,7 @@
   <title><![CDATA[catogories：BigData | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/bigdata/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2019-05-24T07:31:11+08:00</updated>
+  <updated>2019-05-30T10:32:32+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,146 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Hadoop权威指南ncdc数据准备工作备忘]]></title>
+    <link href="http://isunix.github.io/blog/2019/05/30/hadoopquan-wei-zhi-nan-ncdcshu-ju-zhun-bei-gong-zuo-bei-wang/"/>
+    <updated>2019-05-30T09:23:39+08:00</updated>
+    <id>http://isunix.github.io/blog/2019/05/30/hadoopquan-wei-zhi-nan-ncdcshu-ju-zhun-bei-gong-zuo-bei-wang</id>
+    <content type="html"><![CDATA[<p>&lt;Hadoop: The Definitive Guide, Fourth Edition&gt; <a href="http://hadoopbook.com">http://hadoopbook.com</a> 是本好书, 书中的例子用到了ncdc<a href="ftp://ftp.ncdc.noaa.gov/pub/data/gsod/">ftp://ftp.ncdc.noaa.gov/pub/data/gsod/</a>的数据，这个也是非常赞的。我们知道统计学大师Fisher当年就是在气象工作站，研究气象数据很多年，后来在统计学上面做出了卓越的成就。气象数据纷繁复杂，通过实际的气象数据来阅读这本书，会教会读者在真实的情况下，如何面对数据，这个要比用一些dummy数据做演示，效果好太多.</p>
+
+<p>官网github上面的数据很少<a href="https://github.com/tomwhite/hadoop-book/tree/master/input/ncdc/all">https://github.com/tomwhite/hadoop-book/tree/master/input/ncdc/all</a>. 我们自己从上面的ncdc的链接中去下载，我们下载tar文件. 具体也可以参考这篇文章<a href="https://blog.csdn.net/mrcharles/article/details/50442367">https://blog.csdn.net/mrcharles/article/details/50442367</a></p>
+
+<p>```sh
+#!/bin/bash</p>
+
+<h1 id="cd-gsod1901tar-tar1930">这里cd到你想下载到的目录, 每个文件的格式如下所示gsod_1901.tar, 发现tar文件竟然只有从1930年才不是空文件</h1>
+<p>cdir=”$(cd <code>dirname $0</code>; pwd)”</p>
+
+<p>for i in $(seq 1930 1960)
+do
+    wget –execute robots=off —accept=tar -r -np -nH –cut-dirs=4 - R index.html* ftp://ftp.ncdc.noaa.gov/pub/data/gsod/$i/
+    done
+```</p>
+
+<p>下载好了之后，我们把这些1930/gsod_1930.tar 之类的文件，重新命令为1930/1930.tar, 然后把所有的文件都放到一个本地的目录，起名叫gsod， 现在gsod目录里都是1930/1930.tar这样的文件了.</p>
+
+<p>接下来我们在hdfs上创建目录，</p>
+
+<p><code>sh
+hdfs dfs -mkdir /GSOD /GSOD_ALL
+</code></p>
+
+<p>然后将本地的gsod文件夹里的文件都上传到/GSOD/里面去</p>
+
+<p><code>sh
+hdfs dfs -put gsod/* /GSOD/
+</code></p>
+
+<p>这个过程在我的本机上，先是出现了namenode找不到的问题，然后又出现了namenode in safemode，创建不了的问题, 解决办法是</p>
+
+<p><code>sh
+stop-all.sh
+hdfs namenode -format
+start-all.sh
+hadoop dfsadmin -safemode leave
+</code></p>
+
+<p>然后重新执行</p>
+
+<p><code>sh
+hdfs dfs -put gsod/* /GSOD/
+</code></p>
+
+<p>接下来我们要做的就是在hadoop上处理这些数据了. 首先创建generate_input_list.sh来生成MR的input文件:</p>
+
+<p>```sh
+#!/bin/bash</p>
+
+<p>a=$1
+rm -rf ncdc_files.txt
+hdfs dfs -rm /ncdc_files.txt</p>
+
+<p>while [ $a -le $2 ]
+do
+        filename=”/GSOD/${a}/${a}.tar”
+        echo “$filename” » ncdc_files.txt
+        a=<code>expr $a + 1</code>
+done</p>
+
+<p>hdfs dfs -put ncdc_files.txt /
+```</p>
+
+<p>ncdc_files.txt中的每一行就是<code>/GSOD/1950/1950.tar</code>这样的数据.</p>
+
+<p>然后我们来产生文件:</p>
+
+<p><code>sh
+sh generate_input_list.sh 1901 1956
+</code></p>
+
+<p>接下来我们来创建load_ncdc_map.sh脚本，在MapReduce的Streaming上正常运行</p>
+
+<p>```sh
+#!/bin/bash</p>
+
+<p>read offset hdfs_file
+echo -e “$offset\t$hdfs_file”</p>
+
+<h1 id="retrieve-file-from-hdfs-to-local-disk">Retrieve file from HDFS to local disk</h1>
+<p>echo “reporter:status:Retrieving $hdfs_file” &gt;&amp;2
+/Users/sun1/repo/hadoop-3.1.2/bin/hdfs dfs -get $hdfs_file .
+# Create local directory
+target=<code>basename $hdfs_file .tar</code>
+mkdir $target</p>
+
+<p>echo “reporter:status:Un-tarring $hdfs_file to $target” &gt;&amp;2
+tar xf <code>basename $hdfs_file</code> -C $target
+# Unzip each station file and concat into one file
+echo “reporter:status:Un-gzipping $target” &gt;&amp;2
+for file in $target/*
+do
+        gunzip -c $file » $target.all
+        echo “reporter:status:Processed $file” &gt;&amp;2
+done
+# Put gzipped version into HDFS
+echo “reporter:status:Gzipping $target and putting in HDFS” &gt;&amp;2
+gzip -c $target.all | /Users/sun1/repo/hadoop-3.1.2/bin/hdfs  dfs -put - /GSOD_ALL/$target.gz
+rm <code>basename $hdfs_file</code>
+rm -r $target
+rm $target.all
+```</p>
+
+<p>然后我们可以使用如下的方式来调用这个shell脚本了:</p>
+
+<p>```sh
+#!/bin/bash</p>
+
+<p>hadoop jar ${HADOOP_HOME}/share/hadoop/tools/lib/hadoop-streaming-3.1.2.jar \
+    -D mapreduce.job.reduces=0 \
+    -D mapreduce.map.speculative=false \
+    -D mapreduce.task.timeout=12000000 \
+    -inputformat org.apache.hadoop.mapred.lib.NLineInputFormat \
+    -input /ncdc_files.txt \
+    -output /output/gsod \
+    -mapper load_ncdc_map.sh \
+    -file load_ncdc_map.sh
+```</p>
+
+<p>最后运行完了，我们可以check下目标文件是否生成</p>
+
+<p><code>sh
+hdfs dfs -ls /GSOD_ALL
+</code></p>
+
+<p>以及检查输出的结果</p>
+
+<p><code>sh
+hdfs dfs -cat /output/gsod/part-00053
+</code></p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Hive中删除partition]]></title>

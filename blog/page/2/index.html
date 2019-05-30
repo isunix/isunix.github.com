@@ -9,7 +9,9 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="我们现在在/usr/lib64中有个文件librpm.so.3.2.2, 我们想要在/usr/lib64做个软连接, 起名叫做librpm.so.3, 指向librpm.so.3.2.2, 我们可以这样做, cd /usr/lib64 &amp;&amp; ln -s librpm.so.3.2. &hellip;">
+  <meta name="description" content="我这边有台ec2, 但是在yum update的时候，总是报错说依赖冲突，后来处理这个问题的时候，过于激进，导致yum不可以用了, 最后把rpm也删了 参考这篇文章
+https://blog.seosiwei.com/detail/27
+里的方法2，把rpm和yum都删了然后重装了, &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -99,6 +101,86 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2019/05/22/shi-yong-rpman-zhuang-crontabming-ling-bei-wang/">使用rpm安装crontab命令备忘</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2019-05-22T16:36:21+08:00" pubdate data-updated="true">2019 年5 月22 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>我这边有台ec2, 但是在yum update的时候，总是报错说依赖冲突，后来处理这个问题的时候，过于激进，导致yum不可以用了, 最后把rpm也删了</p>
+
+<p>参考这篇文章
+<a href="https://blog.seosiwei.com/detail/27">https://blog.seosiwei.com/detail/27</a>
+里的方法2，把rpm和yum都删了然后重装了, 软件下载链接是
+<a href="http://mirrors.ustc.edu.cn/centos/6/os/x86_64/Packages/">http://mirrors.ustc.edu.cn/centos/6/os/x86_64/Packages/</a></p>
+
+<p>安装好了之后，发现yum还是不能用，总是报错</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">liblzma.so.0: cannot open shared object file: No such file or directory</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>之类的信息</p>
+
+<p>无可奈何，只好使用rpm了, 我这边需要使用crontab，于是从上面的软件库中下载了</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">cronie-1.4.4-16.el6_8.2.x86_64.rpm``` 和 ```crontabs-1.10-33.el6.noarch.rpm</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>然后执行如下的命令来安装</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">rpm -Uvh --replacepkgs --nodeps --force cron*.rpm</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>然后报各种依赖找不到的错误, 比如</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">librpmio.so.3 not found</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>之类的</p>
+
+<p>好在我们有别的ec2，我们可以去这个另外的ec2上找对应的依赖，然后copy到这个我们出问题的机器上</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">find / -name librpm.so.3 -type f</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>然后发现在/usr/lib64中，librpm.so.3是个软连接，指向/usr/lib64中的librpm.so.3.2.2, 我们把librpm.so.3.2.2copy到我们出问题的机器的/usr/lib64里，然后参照
+<a href="http://isunix.github.io/blog/2019/05/22/linuxming-ling-lnde-shi-yong-bei-wang/">http://isunix.github.io/blog/2019/05/22/linuxming-ling-lnde-shi-yong-bei-wang/</a>
+中的方式来做个软连接</p>
+
+<p>仿照这个方式，如果还有问题，重复找依赖-copy-做软连接的过程</p>
+
+<p>最后再执行</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">rpm -Uvh --replacepkgs --nodeps --force cron*.rpm</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>crontab命令成功安装了.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2019/05/22/linuxming-ling-lnde-shi-yong-bei-wang/">Linux命令ln的使用备忘</a></h1>
     
     
@@ -180,43 +262,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2019/05/07/hivezhong-shan-chu-partition/">Hive中删除partition</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2019-05-07T17:25:48+08:00" pubdate data-updated="true">2019 年5 月7 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">alter table xxx drop PARTITION (partition_name&lt;='2019-01-13');</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -232,6 +277,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2019/05/30/hadoopquan-wei-zhi-nan-ncdcshu-ju-zhun-bei-gong-zuo-bei-wang/">Hadoop权威指南ncdc数据准备工作备忘</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2019/05/23/da-jian-supersetshu-ju-bao-biao-ping-tai/">搭建Superset数据报表平台</a>
@@ -269,10 +318,6 @@
         <a href="/blog/2016/08/04/copy-and-paste-spaces-separated-text-into-excel/">Copy and Paste Spaces Separated Text Into Excel</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2016/07/19/weird-things-happen-when-scripts-executing-with-and-passing-args-with-getopts/">Weird Things Happen When Scripts Executing With . And Passing Args With Getopts</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -280,7 +325,7 @@
   <h1>Categories</h1>
   <ul id="categories">
     <li class='category'><a href='/blog/categories/algorithms/'>Algorithms (8)</a></li>
-<li class='category'><a href='/blog/categories/bigdata/'>BigData (4)</a></li>
+<li class='category'><a href='/blog/categories/bigdata/'>BigData (5)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (4)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
 <li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (1)</a></li>

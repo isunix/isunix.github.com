@@ -9,8 +9,29 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="算了还是引用一下«learning perl»中文翻译版本中的话吧: 1
-在Perl中可以使用my操作符来创建私有变量， 但是每次调用这个子程序的时候，这个私有变量都会被重新定义。而使用state操作符来声明的变量，我们便可以在子程序的多次调用期间保留变量之前的值， 并将变量的作用域限于子程序内部 &hellip;">
+  <meta name="description" content="还是来自«learning perl»中的例子。 写一个名为greet的子例程，当给定一个人名作为参数的时候，打出欢迎他的信息，并告诉他前一个来宾的名字。 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+use 5.010;
+greet &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -94,6 +115,139 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/17/interesting-use-of-state-in-perl/">Interesting Use of State in Perl</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-17T18:48:44+08:00" pubdate data-updated="true">2014 年7 月17 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>还是来自«learning perl»中的例子。</p>
+
+<ol>
+  <li>写一个名为greet的子例程，当给定一个人名作为参数的时候，打出欢迎他的信息，并告诉他前一个来宾的名字。  </li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="mf">5.010</span><span class="p">;</span>
+</span><span class="line"><span class="n">greet</span><span class="p">(</span><span class="s">&#39;Fred&#39;</span><span class="p">);</span>
+</span><span class="line"><span class="n">greet</span><span class="p">(</span><span class="s">&#39;Barney&#39;</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="k">sub </span><span class="nf">greet</span><span class="p">{</span>
+</span><span class="line">    <span class="n">state</span> <span class="nv">$last_person</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">my</span> <span class="nv">$name</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">print</span> <span class="s">&quot;Hi, $name!&quot;</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="nb">defined</span> <span class="nv">$last_person</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">        <span class="k">print</span> <span class="s">&quot;$last_person is also here!\n&quot;</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">else</span> <span class="p">{</span>
+</span><span class="line">        <span class="k">print</span> <span class="s">&quot;you are the first one here!\n&quot;</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">    <span class="nv">$last_person</span> <span class="o">=</span> <span class="nv">$name</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>2.修改程序1， 告诉所有新来的人之前已经迎来了哪些人.   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="nn">Data::</span><span class="n">Dumper</span><span class="p">;</span>
+</span><span class="line"><span class="k">use</span> <span class="mf">5.010</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="n">greet</span><span class="p">(</span><span class="s">&#39;Fred&#39;</span><span class="p">);</span>
+</span><span class="line"><span class="n">greet</span><span class="p">(</span><span class="s">&#39;Barney&#39;</span><span class="p">);</span>
+</span><span class="line"><span class="n">greet</span><span class="p">(</span><span class="s">&#39;Wilma&#39;</span><span class="p">);</span>
+</span><span class="line"><span class="n">greet</span><span class="p">(</span><span class="s">&#39;Betty&#39;</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="k">sub </span><span class="nf">greet</span><span class="p">{</span>
+</span><span class="line">    <span class="n">state</span> <span class="nv">@before</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">my</span> <span class="nv">$name</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
+</span><span class="line">    <span class="k">print</span> <span class="s">&quot;Hi, $name!&quot;</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="nv">@before</span><span class="p">){</span>
+</span><span class="line">        <span class="k">print</span> <span class="s">&quot; I have seen @before\n&quot;</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">    <span class="k">else</span> <span class="p">{</span>
+</span><span class="line">        <span class="k">print</span> <span class="s">&quot; you are the first one here!\n&quot;</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">    <span class="nb">push</span> <span class="nv">@before</span><span class="p">,</span> <span class="nv">$name</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -280,64 +434,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/07/17/generate-chapters-at-once/">Generate Chapters at Once</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-07-17T10:47:48+08:00" pubdate data-updated="true">2014 年7 月17 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I use this script to generate chapters at once. The number of chapters you want to generate in passed through the command line as the first argument.  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="n">strict</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="n">warnings</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="n">utf8</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="nn">Data::</span><span class="n">Dumper</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">my</span> <span class="nv">$chap_num</span> <span class="o">=</span> <span class="nv">$ARGV</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
-</span><span class="line">
-</span><span class="line"><span class="k">for</span><span class="p">(</span><span class="k">my</span> <span class="nv">$i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;=</span> <span class="nv">$chap_num</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">){</span>
-</span><span class="line">    <span class="nb">mkdir</span> <span class="s">&quot;chap_$i&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/36/">&larr; Older</a>
@@ -353,6 +449,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2019/05/31/pipenvshi-yong-bei-wang/">Pipenv使用备忘</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2019/05/31/shi-yong-dou-ban-yuan-an-zhuang-pythonbao/">使用豆瓣源安装python包</a>
@@ -390,10 +490,6 @@
         <a href="/blog/2019/05/07/zai-ammonitezhong-importdi-san-fang-jarbao/">在ammonite中import第三方jar包</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2016/08/09/hive-insert-using-select-star/">Hive Insert Using Select *</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -411,7 +507,7 @@
 <li class='category'><a href='/blog/categories/linux-and-mac/'>Linux&Mac (10)</a></li>
 <li class='category'><a href='/blog/categories/php/'>PHP (5)</a></li>
 <li class='category'><a href='/blog/categories/perl/'>Perl (50)</a></li>
-<li class='category'><a href='/blog/categories/python/'>Python (8)</a></li>
+<li class='category'><a href='/blog/categories/python/'>Python (9)</a></li>
 <li class='category'><a href='/blog/categories/ruby/'>Ruby (1)</a></li>
 <li class='category'><a href='/blog/categories/scala/'>Scala (1)</a></li>
 <li class='category'><a href='/blog/categories/shell/'>Shell (12)</a></li>

@@ -9,7 +9,8 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="While I was installing tmux on cent-os, I met the error saying that “libevent not found”, something like this. Then I download libevent and install &hellip;">
+  <meta name="description" content="Enter the user name and password in a shell script in the following way will make the login process easier. 1
+mysql -h $host -u$user -p$pass $db ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -93,6 +94,46 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/06/01/login-to-mysql-server-without-entering-password/">Login to Mysql Server Without Entering Password</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-06-01T10:58:02+08:00" pubdate data-updated="true">2015 年6 月1 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Enter the user name and password in a shell script in the following way will make the login process easier.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">mysql -h <span class="nv">$host</span> -u<span class="nv">$user</span> -p<span class="nv">$pass</span> <span class="nv">$db</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -242,99 +283,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/11/26/siting-css-in-cgi-script/">Siting Css in Cgi Script</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-11-26T17:09:55+08:00" pubdate data-updated="true">2014 年11 月26 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>While writing perl cgi scripts, when we need to add css or js files, there are two ways to add the file, one using absolute path, one using relative path. </p>
-
-<p>First we want to check the document root of our file, we cat get it using the following way. </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="c1">#!/usr/bin/env perl</span>
-</span><span class="line">
-</span><span class="line"><span class="k">print</span> <span class="s">&quot;Content-type: text/plain; charset=utf-8\n\n&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="k">print</span> <span class="nv">$ENV</span><span class="p">{</span><span class="n">DOCUMENT_ROOT</span><span class="p">};</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>For example, in my case, it gives out the following result:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="s">&quot;/usr/local/www/apache22/data&quot;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>We assume that our server name is gopid.com, in the /usr/local/www/apache22/ dir, there are the data dir, cgi-bin dir, we make a sub-dir named steven in the data dir, then we can using the following two ways to site the css and js files.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line"><span class="nt">&lt;link</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span> <span class="na">href=</span><span class="s">&quot;/steven/js/bootstrap/css/bootstrap.min.css&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span><span class="nt">&gt;</span>
-</span><span class="line"><span class="nt">&lt;link</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span> <span class="na">href=</span><span class="s">&quot;/steven/css/margin.css&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span><span class="nt">&gt;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>Or using the absolute path: </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line"><span class="nt">&lt;link</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span> <span class="na">href=</span><span class="s">&quot;https://goopig.com/steven/js/bootstrap/css/bootstrap.min.css&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span><span class="nt">&gt;</span>
-</span><span class="line"><span class="nt">&lt;link</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span> <span class="na">href=</span><span class="s">&quot;https://goopig.com/steven/css/margin.css&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span><span class="nt">&gt;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>PS, if we want to print out the whole env infomation using cgi, we can using the following script:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="c1">#!/usr/local/bin/perl</span>
-</span><span class="line">
-</span><span class="line"><span class="k">print</span> <span class="s">&quot;Content-type: text/plain; charset=utf-8\n\n&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="k">foreach</span> <span class="nv">$var</span> <span class="p">(</span><span class="nb">sort</span><span class="p">(</span><span class="nb">keys</span><span class="p">(</span><span class="nv">%ENV</span><span class="p">)))</span> <span class="p">{</span>
-</span><span class="line">    <span class="nv">$val</span> <span class="o">=</span> <span class="nv">$ENV</span><span class="p">{</span><span class="nv">$var</span><span class="p">};</span>
-</span><span class="line">    <span class="nv">$val</span> <span class="o">=~</span> <span class="n">s</span><span class="o">|\</span><span class="n">n</span><span class="o">|\\</span><span class="n">n</span><span class="o">|</span><span class="n">g</span><span class="p">;</span>
-</span><span class="line">    <span class="nv">$val</span> <span class="o">=~</span> <span class="n">s</span><span class="o">|</span><span class="s">&quot;|\\&quot;</span><span class="o">|</span><span class="n">g</span><span class="p">;</span>
-</span><span class="line">    <span class="k">print</span> <span class="s">&quot;${var}=\&quot;${val}\&quot;\n&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/18/">&larr; Older</a>
@@ -350,6 +298,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2019/05/31/pipenvshi-yong-bei-wang/">Pipenv使用备忘</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2019/05/31/shi-yong-dou-ban-yuan-an-zhuang-pythonbao/">使用豆瓣源安装python包</a>
@@ -387,10 +339,6 @@
         <a href="/blog/2019/05/07/zai-ammonitezhong-importdi-san-fang-jarbao/">在ammonite中import第三方jar包</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2016/08/09/hive-insert-using-select-star/">Hive Insert Using Select *</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -408,7 +356,7 @@
 <li class='category'><a href='/blog/categories/linux-and-mac/'>Linux&Mac (10)</a></li>
 <li class='category'><a href='/blog/categories/php/'>PHP (5)</a></li>
 <li class='category'><a href='/blog/categories/perl/'>Perl (50)</a></li>
-<li class='category'><a href='/blog/categories/python/'>Python (8)</a></li>
+<li class='category'><a href='/blog/categories/python/'>Python (9)</a></li>
 <li class='category'><a href='/blog/categories/ruby/'>Ruby (1)</a></li>
 <li class='category'><a href='/blog/categories/scala/'>Scala (1)</a></li>
 <li class='category'><a href='/blog/categories/shell/'>Shell (12)</a></li>

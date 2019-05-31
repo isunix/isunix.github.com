@@ -21,5 +21,13 @@ pipenv shell
 pipenv install --dev
 ```
 
+如果我们想删除创建的virtualenv, 可以
+
+```sh
+pipenv --rm
+```
+
+也可以到``~/.local/share/virtualenvs``下面去手动删除.
+
 
 

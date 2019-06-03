@@ -6,3 +6,9 @@ comments: true
 categories: Django&Flask
 ---
 主要参考链接<https://superset.incubator.apache.org/installation.html>
+
+1. 如果想看superset的版本
+
+```sh
+superset version -v
+```

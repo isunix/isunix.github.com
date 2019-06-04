@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "pyspark中引入col函数的方式"
+title: "PySpark中引入col函数的方式"
 date: 2019-06-04 08:59:32 +0800
 comments: true
 categories: BigData

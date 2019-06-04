@@ -9,7 +9,7 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="This blog post is about some of the usages of jQuery while I am learning and using jQuery. I keep a note of it so that I can pick it up conveniently &hellip;">
+  <meta name="description" content="There are two build systems for building a module. One is to use the old and stable “ExtUtils::Makemaker”, and new one is using “Module::Build”. We &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -93,6 +93,114 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/12/two-ways-to-create-a-module/">Two Ways to Build a Module</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-12T20:51:22+08:00" pubdate data-updated="true">2014 年8 月12 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>There are two build systems for building a module. One is to use the old and stable “ExtUtils::Makemaker”, and new one is using “Module::Build”. We will use the Module::Starter module to help us create a module.  </p>
+
+<p>By default, Module::Starter create a distribution with Makefile.PL</p>
+
+<p>First with Makefile.PL  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">module</span><span class="o">-</span><span class="n">starter</span> <span class="o">--</span><span class="n">module</span><span class="o">=</span><span class="s">&quot;Animal&quot;</span> <span class="o">--</span><span class="n">author</span><span class="o">=</span><span class="s">&quot;Steven Sun&quot;</span> <span class="o">--</span><span class="n">email</span><span class="o">=</span><span class="n">steven</span><span class="o">.</span><span class="n">sun2013</span><span class="nv">@gmail</span><span class="o">.</span><span class="n">com</span> <span class="o">--</span><span class="n">verbose</span>
+</span><span class="line">
+</span><span class="line"><span class="n">This</span> <span class="n">is</span> <span class="n">the</span> <span class="n">same</span> <span class="n">as:</span>
+</span><span class="line"><span class="n">module</span><span class="o">-</span><span class="n">starter</span> <span class="o">--</span><span class="n">builder</span><span class="o">=</span><span class="s">&quot;ExtUtils::Makemaker&quot;</span> <span class="o">--</span><span class="n">module</span><span class="o">=</span><span class="s">&quot;Animal&quot;</span> <span class="o">--</span><span class="n">author</span><span class="o">=</span><span class="s">&quot;Steven Sun&quot;</span> <span class="o">--</span><span class="n">email</span><span class="o">=</span><span class="n">steven</span><span class="o">.</span><span class="n">sun2013</span><span class="nv">@gmail</span><span class="o">.</span><span class="n">com</span> <span class="o">--</span><span class="n">verbose</span>
+</span><span class="line">
+</span><span class="line"><span class="n">perl</span> <span class="n">Makefile</span><span class="o">.</span><span class="n">PL</span>
+</span><span class="line"><span class="n">make</span>
+</span><span class="line"><span class="n">make</span> <span class="n">test</span>
+</span><span class="line"><span class="n">make</span> <span class="n">disttest</span>
+</span><span class="line"><span class="n">make</span> <span class="n">dist</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Next we will show you the “Build.PL”</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">module</span><span class="o">-</span><span class="n">starter</span> <span class="o">--</span><span class="n">builder</span><span class="o">=</span><span class="s">&quot;Module::Build&quot;</span> <span class="o">--</span><span class="n">module</span><span class="o">=</span><span class="s">&quot;Animal&quot;</span> <span class="o">--</span><span class="n">author</span><span class="o">=</span><span class="s">&quot;Steven Sun&quot;</span> <span class="o">--</span><span class="n">email</span><span class="o">=</span><span class="n">steven</span><span class="o">.</span><span class="n">sun2013</span><span class="nv">@gmail</span><span class="o">.</span><span class="n">com</span> <span class="o">--</span><span class="n">verbose</span>
+</span><span class="line">
+</span><span class="line"><span class="ow">or</span> <span class="n">in</span> <span class="n">a</span> <span class="n">simpler</span> <span class="n">way</span><span class="p">,</span> <span class="n">we</span> <span class="n">can</span> <span class="k">do</span> <span class="n">this:</span>
+</span><span class="line"><span class="n">module</span><span class="o">-</span><span class="n">starter</span> <span class="o">--</span><span class="n">mb</span> <span class="o">--</span><span class="n">module</span><span class="o">=</span><span class="s">&quot;Animal&quot;</span> <span class="o">--</span><span class="n">author</span><span class="o">=</span><span class="s">&quot;Steven Sun&quot;</span> <span class="o">--</span><span class="n">email</span><span class="o">=</span><span class="n">steven</span><span class="o">.</span><span class="n">sun2013</span><span class="nv">@gmail</span><span class="o">.</span><span class="n">com</span> <span class="o">--</span><span class="n">verbose</span>
+</span><span class="line">
+</span><span class="line"><span class="n">perl</span> <span class="n">Build</span><span class="o">.</span><span class="n">PL</span>
+</span><span class="line"><span class="o">./</span><span class="n">Build</span>
+</span><span class="line"><span class="o">./</span><span class="n">Build</span> <span class="n">test</span>
+</span><span class="line"><span class="o">./</span><span class="n">Build</span> <span class="n">disttest</span>       <span class="c1">##this will create a .tar.gz archive which we can distribute now.  </span>
+</span><span class="line"><span class="o">./</span><span class="n">Build</span> <span class="n">dist</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>For the Module::Build way, there is a shortcut.   </p>
+
+<p>We don’t want to type that long command line every time, so module-starter can get that information from a    <br />
+configuration file $HOME/.module-starter/config. If we’re on Windows, that .module-starter name is a bit of a    <br />
+problem, so we can set the MODULE_STARTER_DIR environment variable to the name of the directory that contains
+config. Inside config, we can list the parameter names and values separated by a colon.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">author:</span> <span class="n">Steven</span> <span class="n">Sun</span>
+</span><span class="line"><span class="n">email:</span> <span class="n">steven</span><span class="o">.</span><span class="n">sun2013</span><span class="nv">@gmail</span><span class="o">.</span><span class="n">com</span>
+</span><span class="line"><span class="n">builder:</span> <span class="nn">Module::</span><span class="n">Build</span>
+</span><span class="line"><span class="n">verbose:</span> <span class="mi">1</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>Once we have our configuration file setup, life is much easier since we only need to specify the name of the distribution that we want to create. </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">%</span> <span class="nv">module</span><span class="err">−</span><span class="n">starter</span> <span class="err">−−</span><span class="n">module</span><span class="o">=</span><span class="n">Animal</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -782,67 +890,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/08/01/ways-to-include-a-jquery-file/">Ways to Include a Jquery File</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-08-01T15:03:11+08:00" pubdate data-updated="true">2014 年8 月1 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>The following are several addtional ways to include a jquery file in your php script.  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;js/jquery-1.11.1.min.js&quot;</span><span class="o">&gt;&lt;</span><span class="err">/script&gt;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>or  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js&quot;</span><span class="o">&gt;</span>
-</span><span class="line"><span class="o">&lt;</span><span class="err">/script&gt;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>or  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;http://www.google.com/jsapi&quot;</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="err">/script&gt;</span>
-</span><span class="line">
-</span><span class="line"><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span><span class="o">&gt;</span>
-</span><span class="line">	<span class="nx">google</span><span class="p">.</span><span class="nx">load</span><span class="p">(</span><span class="s2">&quot;jquery&quot;</span><span class="p">,</span> <span class="s2">&quot;1.7.1&quot;</span><span class="p">);</span>
-</span><span class="line"><span class="o">&lt;</span><span class="err">/script&gt; </span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/30/">&larr; Older</a>
@@ -858,6 +905,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2019/06/03/gitshang-chuan-da-wen-jian/">Git上传大文件</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2019/05/31/pipenvshi-yong-bei-wang/">Pipenv使用备忘</a>
@@ -895,10 +946,6 @@
         <a href="/blog/2019/05/07/hivezhong-shan-chu-partition/">Hive中删除partition</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2019/05/07/zai-ammonitezhong-importdi-san-fang-jarbao/">在ammonite中import第三方jar包</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -913,7 +960,7 @@
 <li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (5)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (1)</a></li>
 <li class='category'><a href='/blog/categories/javascript/'>Javascript (4)</a></li>
-<li class='category'><a href='/blog/categories/linux-and-mac/'>Linux&Mac (10)</a></li>
+<li class='category'><a href='/blog/categories/linux-and-mac/'>Linux&Mac (11)</a></li>
 <li class='category'><a href='/blog/categories/php/'>PHP (5)</a></li>
 <li class='category'><a href='/blog/categories/perl/'>Perl (50)</a></li>
 <li class='category'><a href='/blog/categories/python/'>Python (9)</a></li>

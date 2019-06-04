@@ -9,10 +9,8 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="I want to use ptpython with python3 as the interpreter, here is how: 1
-2
-pip3 install ptpython
-python3 -m ptpython ">
+  <meta name="description" content="I find that my bootstap files not working well while I am using gunicorn to start the app. 1
+gunicorn --env DJANGO_SETTINGS_MODULE=myapp.settings &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -102,6 +100,65 @@ python3 -m ptpython ">
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2015/11/19/css-files-not-function-well-while-using-gunicorn/">Css Files Not Function Well While Using Gunicorn</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-11-19T16:42:04+08:00" pubdate data-updated="true">2015 年11 月19 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I find that my bootstap files not working well while I am using gunicorn to start the app.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">gunicorn --env <span class="nv">DJANGO_SETTINGS_MODULE</span><span class="o">=</span>myapp.settings myapp_management.wsgi --timeout 300 --workers<span class="o">=</span>2 --pid gunicorn.pid -b 0:10000 --access-logfile<span class="o">=</span>log/access_charts.log --error-logfile<span class="o">=</span>log/error_charts.log --access-logformat <span class="s1">&#39;&quot;%(h)s %(l)s %(u)s %(t)s &quot;%(r)s&quot; %(s)s %(b)s &quot;%(f)s&quot; &quot;%(a)s&quot; %(D)s %(p)s&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>I find a solution for this:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line">http://stackoverflow.com/questions/12800862/django-static-files-under-gunicorn
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>To summarize it here, add the following contents to the urls.py file.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+</span><span class="line">
+</span><span class="line">
+</span><span class="line">urlpatterns +<span class="o">=</span> staticfiles_urlpatterns<span class="o">()</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2015/11/19/using-ptpython-with-python3-as-the-backend/">Using Ptpython With Python3 as the Backend</a></h1>
     
     
@@ -181,46 +238,6 @@ python3 -m ptpython ">
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/11/02/the-most-used-shell-commands/">The Most Used Shell Commands</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-11-02T16:21:57+08:00" pubdate data-updated="true">2015 年11 月2 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>We can use the following shell scripts to find the 10 most used shell commands for a user.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nb">history</span> | awk <span class="s1">&#39;{a[$2]++} END {for(i in a) {print a[i]&quot; &quot;i}}&#39;</span>| sort -rn | head
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/12/">&larr; Older</a>
@@ -236,6 +253,10 @@ python3 -m ptpython ">
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2019/06/03/gitshang-chuan-da-wen-jian/">Git上传大文件</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2019/05/31/pipenvshi-yong-bei-wang/">Pipenv使用备忘</a>
@@ -273,10 +294,6 @@ python3 -m ptpython ">
         <a href="/blog/2019/05/07/hivezhong-shan-chu-partition/">Hive中删除partition</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2019/05/07/zai-ammonitezhong-importdi-san-fang-jarbao/">在ammonite中import第三方jar包</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -291,7 +308,7 @@ python3 -m ptpython ">
 <li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (5)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (1)</a></li>
 <li class='category'><a href='/blog/categories/javascript/'>Javascript (4)</a></li>
-<li class='category'><a href='/blog/categories/linux-and-mac/'>Linux&Mac (10)</a></li>
+<li class='category'><a href='/blog/categories/linux-and-mac/'>Linux&Mac (11)</a></li>
 <li class='category'><a href='/blog/categories/php/'>PHP (5)</a></li>
 <li class='category'><a href='/blog/categories/perl/'>Perl (50)</a></li>
 <li class='category'><a href='/blog/categories/python/'>Python (9)</a></li>

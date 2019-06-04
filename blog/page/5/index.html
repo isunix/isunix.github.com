@@ -9,8 +9,8 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="最近经常需要把空格作为delimiter的文本粘贴到excel里。之前的做法是 1
-cat aa.log | awk &#39;{print $1}&#39; | pbcopy 来一列一列地copy到excel里。甚是繁琐。 excel不会用的啊。 今天发现了原来还可以这么来操作。 &hellip;">
+  <meta name="description" content="I want to insert into a table with values from another table. and I want to use the follwing statements, 1
+insert into table table_a select * from &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -94,6 +94,66 @@ cat aa.log | awk &#39;{print $1}&#39; | pbcopy 来一列一列地copy到excel里
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2016/08/09/hive-insert-using-select-star/">Hive Insert Using Select *</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2016-08-09T09:34:49+08:00" pubdate data-updated="true">2016 年8 月9 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I want to insert into a table with values from another table. and I want to use the follwing statements,</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sql"><span class="line"><span class="k">insert</span> <span class="k">into</span> <span class="k">table</span> <span class="n">table_a</span> <span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="n">table_b</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Both table_a and table_b have the followig 3 fields, “name”, “age”, and the “load_day” field which is used to partition.</p>
+
+<p>If using the above syntax, we will get errors saying table has just 2 fields and table_b has 3.</p>
+
+<p>So one right way to insert the data is:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sql"><span class="line"><span class="k">insert</span> <span class="k">into</span> <span class="k">table</span> <span class="n">table_a</span><span class="p">(</span><span class="n">partition</span><span class="o">=</span><span class="ss">&quot;2016-08-01&quot;</span><span class="p">)</span> <span class="k">select</span> <span class="n">name</span><span class="p">,</span> <span class="n">age</span> <span class="k">from</span> <span class="n">table_b</span> <span class="k">where</span> <span class="n">load_day</span> <span class="o">=</span> <span class="ss">&quot;2016-08-01&quot;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>What if there are many fields, thus we will need to list them one by one after select which is very tedious.</p>
+
+<p>Here is the solution,</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="sql"><span class="line"><span class="k">set</span> <span class="n">hive</span><span class="p">.</span><span class="k">exec</span><span class="p">.</span><span class="k">dynamic</span><span class="p">.</span><span class="n">partition</span><span class="p">.</span><span class="k">mode</span><span class="o">=</span><span class="n">nonstrict</span><span class="p">;</span>
+</span><span class="line"><span class="k">insert</span> <span class="k">into</span> <span class="k">table</span> <span class="n">table_a</span> <span class="n">partition</span><span class="p">(</span><span class="n">load_day</span><span class="p">)</span> <span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="n">table_b</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -365,56 +425,6 @@ cat aa.log | awk &#39;{print $1}&#39; | pbcopy 来一列一列地copy到excel里
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2016/07/18/zen-yao-qu-chu-windowsbian-ji-guo-de-wen-jian-zhong-de-mzi-fu/">怎么去除windows编辑过的文件中的^M字符</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2016-07-18T08:12:34+08:00" pubdate data-updated="true">2016 年7 月18 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>We can use the following two methods to get rid of the “^M” character in a file which was edited on windows using vim.</p>
-
-<p>1.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">:%s/<span class="se">\r</span>//g
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>2.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">:%s/ctrl-v ctrl-m//g
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>The second one means pressing ctrl-v, then ctrl-m first.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/6/">&larr; Older</a>
@@ -430,6 +440,10 @@ cat aa.log | awk &#39;{print $1}&#39; | pbcopy 来一列一列地copy到excel里
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2019/06/04/pysparkzhong-yin-ru-colhan-shu-de-fang-shi/">Pyspark中引入col函数的方式</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2019/06/03/gitshang-chuan-da-wen-jian/">Git上传大文件</a>
@@ -467,10 +481,6 @@ cat aa.log | awk &#39;{print $1}&#39; | pbcopy 来一列一列地copy到excel里
         <a href="/blog/2019/05/21/flaskzhong-shi-yong-ipythonde-shell/">Flask中使用ipython的shell</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2019/05/07/hivezhong-shan-chu-partition/">Hive中删除partition</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -478,7 +488,7 @@ cat aa.log | awk &#39;{print $1}&#39; | pbcopy 来一列一列地copy到excel里
   <h1>Categories</h1>
   <ul id="categories">
     <li class='category'><a href='/blog/categories/algorithms/'>Algorithms (8)</a></li>
-<li class='category'><a href='/blog/categories/bigdata/'>BigData (5)</a></li>
+<li class='category'><a href='/blog/categories/bigdata/'>BigData (6)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (4)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
 <li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (1)</a></li>

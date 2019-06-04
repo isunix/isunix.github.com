@@ -9,8 +9,7 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="I better not write one by myself, there is a very good article on this: 1
-http://perlmaven.com/stdout-stderr-and-redirection ">
+  <meta name="description" content="While I was developing a dancer application, I usually open a new port, like goople.com:4001. Actually there is a better way to do this. On our &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -94,6 +93,102 @@ http://perlmaven.com/stdout-stderr-and-redirection ">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/11/24/apache-setup-to-redirect-a-site/">Apache Setup to Redirect a Site</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-11-24T14:31:59+08:00" pubdate data-updated="true">2014 年11 月24 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>While I was developing a dancer application, I usually open a new port, like goople.com:4001. Actually there is a better way to do this.</p>
+
+<p>On our CentOS server, in the httpd.conf file, we include the following piece to it:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line">Include etc/apache22/Includes/*.conf
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>If it is not already there.</p>
+
+<p>Then in the dir,  /usr/local/etc/apache22/Includes, we will write our own configuration file.</p>
+
+<p>Then we can make a file named sun.conf in the Includes dir and write to it something like this:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line">Alias /~stsun /home/stsun/public_html
+</span><span class="line">
+</span><span class="line"><span class="nt">&lt;Directory</span> <span class="err">&quot;/</span><span class="na">home</span><span class="err">/</span><span class="na">stsun</span><span class="err">/</span><span class="na">public_html</span><span class="err">&quot;</span><span class="nt">&gt;</span>
+</span><span class="line">	Options +Indexes FollowSymLinks
+</span><span class="line">	AllowOverride All
+</span><span class="line">	Order allow,deny
+</span><span class="line">	Allow from all
+</span><span class="line"><span class="nt">&lt;/Directory&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Of course we have another way for this:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line">NameVirtualHost *:8080
+</span><span class="line"><span class="nt">&lt;VirtualHost</span> <span class="err">*</span><span class="na">:8080</span><span class="nt">&gt;</span>
+</span><span class="line">    DocumentRoot &quot;/Users/sun/w&quot;
+</span><span class="line">    <span class="nt">&lt;Directory</span> <span class="err">&quot;/</span><span class="na">Users</span><span class="err">/</span><span class="na">sun</span><span class="err">/</span><span class="na">w</span><span class="err">&quot;</span><span class="nt">&gt;</span>
+</span><span class="line">        DirectoryIndex index.html
+</span><span class="line">        AddHandler cgi-script .py .pl
+</span><span class="line">        AddType text/html .py .html .pl
+</span><span class="line">        Options ExecCGI
+</span><span class="line">        Order Allow,Deny
+</span><span class="line">        AllowOverride All
+</span><span class="line">        Allow from all
+</span><span class="line">    <span class="nt">&lt;/Directory&gt;</span>
+</span><span class="line"><span class="nt">&lt;/VirtualHost&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -203,56 +298,6 @@ http://perlmaven.com/stdout-stderr-and-redirection ">
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/11/06/install-perl-on-centos-locally/">Install Perl on Centos Locally</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-11-06T16:55:54+08:00" pubdate data-updated="true">2014 年11 月6 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Following the following steps to install perl in the local directory on your machine.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">tar</span> <span class="o">-</span><span class="n">xzf</span> <span class="n">perl</span><span class="o">-</span><span class="mf">5.10.1</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
-</span><span class="line"><span class="n">cd</span> <span class="n">perl</span><span class="o">-</span><span class="mf">5.10.1</span>
-</span><span class="line"><span class="o">.</span><span class="sr">/Configure -des -Dprefix=$HOME/</span><span class="nb">local</span>
-</span><span class="line"><span class="n">make</span>
-</span><span class="line"><span class="n">make</span> <span class="n">test</span>
-</span><span class="line"><span class="n">make</span> <span class="n">install</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/20/">&larr; Older</a>
@@ -268,6 +313,10 @@ http://perlmaven.com/stdout-stderr-and-redirection ">
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2019/06/04/pysparkzhong-yin-ru-colhan-shu-de-fang-shi/">Pyspark中引入col函数的方式</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2019/06/03/gitshang-chuan-da-wen-jian/">Git上传大文件</a>
@@ -305,10 +354,6 @@ http://perlmaven.com/stdout-stderr-and-redirection ">
         <a href="/blog/2019/05/21/flaskzhong-shi-yong-ipythonde-shell/">Flask中使用ipython的shell</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2019/05/07/hivezhong-shan-chu-partition/">Hive中删除partition</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -316,7 +361,7 @@ http://perlmaven.com/stdout-stderr-and-redirection ">
   <h1>Categories</h1>
   <ul id="categories">
     <li class='category'><a href='/blog/categories/algorithms/'>Algorithms (8)</a></li>
-<li class='category'><a href='/blog/categories/bigdata/'>BigData (5)</a></li>
+<li class='category'><a href='/blog/categories/bigdata/'>BigData (6)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (4)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
 <li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (1)</a></li>

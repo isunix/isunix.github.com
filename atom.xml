@@ -4,7 +4,7 @@
   <title><![CDATA[Steven's Blog]]></title>
   <link href="http://isunix.github.io/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2019-06-04T09:05:08+08:00</updated>
+  <updated>2019-06-04T11:36:22+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,24 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Presto问题debug]]></title>
+    <link href="http://isunix.github.io/blog/2019/06/04/prestowen-ti-debug/"/>
+    <updated>2019-06-04T10:27:51+08:00</updated>
+    <id>http://isunix.github.io/blog/2019/06/04/prestowen-ti-debug</id>
+    <content type="html"><![CDATA[<p>我们在执行presto-cli命名的时候，可以使用如下的方式 <code>presto-cli --catalog hive --schema $schema --output-format CSV_HEADER --server $ip:$port --debug</code></p>
+
+<p>这样就会打印出诊断信息出来.</p>
+
+<p>我们使用如下的命令看下presto-server的状态 <code>initctl list | grep -i presto</code></p>
+
+<p><code>sudo stop presto-server</code> 这样来关闭 presto-server； <code>sudo start presto-server</code> 这样来开启.</p>
+
+<p>如果想要看查看presto的log，可以去 <code>/var/log/presto</code>, 对于debug非常有用.</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[PySpark中引入col函数的方式]]></title>
@@ -850,28 +868,6 @@
 </span><span class="line">https://cwiki.apache.org/confluence/display/Hive/GettingStarted
 </span><span class="line">https://amodernstory.com/2015/03/29/installing-hive-on-mac/
 </span></code></pre></td></tr></table></div></figure></notextile></div>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Update All Python Modules Through Pip]]></title>
-    <link href="http://isunix.github.io/blog/2016/03/31/update-all-python-modules-through-pip/"/>
-    <updated>2016-03-31T16:32:49+08:00</updated>
-    <id>http://isunix.github.io/blog/2016/03/31/update-all-python-modules-through-pip</id>
-    <content type="html"><![CDATA[<p>I want to update all the installed python modules through pip. Here below is one recipe I found.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="kn">import</span> <span class="nn">pip</span>
-</span><span class="line"><span class="kn">from</span> <span class="nn">subprocess</span> <span class="kn">import</span> <span class="n">call</span>
-</span><span class="line">
-</span><span class="line"><span class="k">for</span> <span class="n">dist</span> <span class="ow">in</span> <span class="n">pip</span><span class="o">.</span><span class="n">get_installed_distributions</span><span class="p">():</span>
-</span><span class="line">    <span class="n">call</span><span class="p">(</span><span class="s">&quot;pip install --upgrade &quot;</span> <span class="o">+</span> <span class="n">dist</span><span class="o">.</span><span class="n">project_name</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
 ]]></content>
   </entry>
   

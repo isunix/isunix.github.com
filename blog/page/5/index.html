@@ -9,8 +9,12 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="I want to insert into a table with values from another table. and I want to use the follwing statements, 1
-insert into table table_a select * from &hellip;">
+  <meta name="description" content="我们在scala的repl中, 如果想要引入一个第三方的jar包, 可以使用如下的方式
+1
+:require joda-time-2.1.jar 而在ammonite中, 可以使用如下的方式
+1
+import $cp.`joda-time-2.1.jar`
+">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -94,6 +98,48 @@ insert into table table_a select * from &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2019/05/07/zai-ammonitezhong-importdi-san-fang-jarbao/">在ammonite中import第三方jar包</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2019-05-07T16:54:15+08:00" pubdate data-updated="true">2019 年5 月7 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3 id="scalarepl-jar-">我们在scala的repl中, 如果想要引入一个第三方的jar包, 可以使用如下的方式</h3>
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">:require joda-time-2.1.jar</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<h3 id="ammonite-">而在ammonite中, 可以使用如下的方式</h3>
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">import $cp.`joda-time-2.1.jar`</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -205,226 +251,6 @@ insert into table table_a select * from &hellip;">
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2016/07/19/weird-things-happen-when-scripts-executing-with-and-passing-args-with-getopts/">Weird Things Happen When Scripts Executing With . And Passing Args With Getopts</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2016-07-19T17:43:32+08:00" pubdate data-updated="true">2016 年7 月19 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I have met the following scripts, say aa.sh</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nb">echo</span> <span class="s2">&quot;OPTIND for aa.sh before calling is: &quot;</span> <span class="nv">$OPTIND</span>
-</span><span class="line"><span class="k">while </span><span class="nb">getopts</span> <span class="s2">&quot;t:c:&quot;</span> opt
-</span><span class="line"><span class="k">do</span>
-</span><span class="line"><span class="k">    case</span> <span class="s2">&quot;$opt&quot;</span> in
-</span><span class="line">        t<span class="o">)</span> <span class="nb">time</span><span class="o">=</span><span class="s2">&quot;${OPTARG}&quot;</span>;;
-</span><span class="line">        c<span class="o">)</span> <span class="nv">count</span><span class="o">=</span><span class="s2">&quot;${OPTARG}&quot;</span>;;
-</span><span class="line">    <span class="k">esac</span>
-</span><span class="line"><span class="k">done</span>
-</span><span class="line">
-</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;time for aa.sh is $time&quot;</span>
-</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;count for aa.sh is $count&quot;</span>
-</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;OPTIND for aa.sh after calling is: &quot;</span> <span class="nv">$OPTIND</span><span class="sb">`</span>sh
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>and bb.sh</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nb">echo</span> <span class="s2">&quot;OPTIND for bb.sh before calling is: &quot;</span> <span class="nv">$OPTIND</span>
-</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;we are setting the OPTIND to 1&quot;</span>
-</span><span class="line"><span class="k">while </span><span class="nb">getopts</span> <span class="s2">&quot;t:c:&quot;</span> opt
-</span><span class="line"><span class="k">do</span>
-</span><span class="line"><span class="k">    case</span> <span class="s2">&quot;$opt&quot;</span> in
-</span><span class="line">        t<span class="o">)</span> <span class="nb">time</span><span class="o">=</span><span class="s2">&quot;${OPTARG}&quot;</span>;;
-</span><span class="line">        c<span class="o">)</span> <span class="nv">count</span><span class="o">=</span><span class="s2">&quot;${OPTARG}&quot;</span>;;
-</span><span class="line">    <span class="k">esac</span>
-</span><span class="line"><span class="k">done</span>
-</span><span class="line">
-</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;time for bb.sh is $time&quot;</span>
-</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;count for bb.sh is $count&quot;</span>
-</span><span class="line">
-</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;OPTIND for bb.sh after calling is: &quot;</span> <span class="nv">$OPTIND</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>and call.sh</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">. ./aa.sh -t 2016-07-15 -c 4
-</span><span class="line">. ./bb.sh -a 2016-07-20 -c 0
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>and now execute the script, it will give out the followig result,</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">OPTIND <span class="k">for </span>aa.sh before calling is:  1
-</span><span class="line"><span class="nb">time </span><span class="k">for </span>aa.sh is 2016-07-15
-</span><span class="line">count <span class="k">for </span>aa.sh is 4
-</span><span class="line">OPTIND <span class="k">for </span>aa.sh after calling is:  5
-</span><span class="line">OPTIND <span class="k">for </span>bb.sh before calling is:  <span class="nv">5</span>
-</span><span class="line"><span class="o">=</span><span class="nb">time </span><span class="k">for </span>bb.sh is 2016-07-15
-</span><span class="line">count <span class="k">for </span>bb.sh is 4
-</span><span class="line">OPTIND <span class="k">for </span>bb.sh after calling is:  5
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>Which is definitely not what we want.</p>
-
-<p>We can now change bb.sh into the following to test it again.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nb">echo</span> <span class="s2">&quot;OPTIND for bb.sh before calling is: &quot;</span> <span class="nv">$OPTIND</span>
-</span><span class="line">
-</span><span class="line"><span class="nv">OPTIND</span><span class="o">=</span>1
-</span><span class="line">
-</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;we are setting the OPTIND to 1&quot;</span>
-</span><span class="line"><span class="k">while </span><span class="nb">getopts</span> <span class="s2">&quot;t:c:&quot;</span> opt
-</span><span class="line"><span class="k">do</span>
-</span><span class="line"><span class="k">    case</span> <span class="s2">&quot;$opt&quot;</span> in
-</span><span class="line">        t<span class="o">)</span> <span class="nb">time</span><span class="o">=</span><span class="s2">&quot;${OPTARG}&quot;</span>;;
-</span><span class="line">        c<span class="o">)</span> <span class="nv">count</span><span class="o">=</span><span class="s2">&quot;${OPTARG}&quot;</span>;;
-</span><span class="line">    <span class="k">esac</span>
-</span><span class="line"><span class="k">done</span>
-</span><span class="line">
-</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;time for bb.sh is $time&quot;</span>
-</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;count for bb.sh is $count&quot;</span>
-</span><span class="line">
-</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;OPTIND for bb.sh after calling is: &quot;</span> <span class="nv">$OPTIND</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>and now “sh call.sh” will give out the following result,</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">OPTIND <span class="k">for </span>aa.sh before calling is:  1
-</span><span class="line"><span class="nb">time </span><span class="k">for </span>aa.sh is 2016-07-15
-</span><span class="line">count <span class="k">for </span>aa.sh is 4
-</span><span class="line">OPTIND <span class="k">for </span>aa.sh after calling is:  5
-</span><span class="line">OPTIND <span class="k">for </span>bb.sh before calling is:  5
-</span><span class="line">we are setting the OPTIND to 1
-</span><span class="line"><span class="nb">time </span><span class="k">for </span>bb.sh is 2016-07-20
-</span><span class="line">count <span class="k">for </span>bb.sh is 0
-</span><span class="line">OPTIND <span class="k">for </span>bb.sh after calling is:  5
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>What if we set the OPTIND to 3 now?</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">OPTIND <span class="k">for </span>aa.sh before calling is:  1
-</span><span class="line"><span class="nb">time </span><span class="k">for </span>aa.sh is 2016-07-15
-</span><span class="line">count <span class="k">for </span>aa.sh is 4
-</span><span class="line">OPTIND <span class="k">for </span>aa.sh after calling is:  5
-</span><span class="line">OPTIND <span class="k">for </span>bb.sh before calling is:  5
-</span><span class="line">we are setting the OPTIND to 3
-</span><span class="line"><span class="nb">time </span><span class="k">for </span>bb.sh is 2016-07-15
-</span><span class="line">count <span class="k">for </span>bb.sh is 0
-</span><span class="line">OPTIND <span class="k">for </span>bb.sh after calling is:  5
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>Now the count value is changed to 0, however time is still not changed.</p>
-
-<p>How to understand this? First let us look at the definitions of $OPTIND and getopts</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">A <span class="nb">getopts </span>construct usually comes packaged in a <span class="k">while </span>loop, which processes the options and
-</span><span class="line">arguments one at a <span class="nb">time</span>, <span class="k">then </span>increments the implicit <span class="nv">$OPTIND</span> variable to point to the next.
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>In a while loop contaning getopts, getopts will use $OPTIND to find the arguments. if we call the script using “dot” which is the same as using “source”, $OPTIND will be global and available to the next script using getopts, and the next script will then can not find the right argument using $OPTIND now. </p>
-
-<p>The solution here is, we can reset $OPTIND to 1 or we can call the script using “sh” rather than “.”</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/6/">&larr; Older</a>
@@ -440,6 +266,10 @@ insert into table table_a select * from &hellip;">
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2019/06/04/prestowen-ti-debug/">Presto问题debug</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2019/06/04/pysparkzhong-yin-ru-colhan-shu-de-fang-shi/">PySpark中引入col函数的方式</a>
@@ -477,10 +307,6 @@ insert into table table_a select * from &hellip;">
         <a href="/blog/2019/05/22/linuxming-ling-lnde-shi-yong-bei-wang/">Linux命令ln的使用备忘</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2019/05/21/flaskzhong-shi-yong-ipythonde-shell/">Flask中使用ipython的shell</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -488,7 +314,7 @@ insert into table table_a select * from &hellip;">
   <h1>Categories</h1>
   <ul id="categories">
     <li class='category'><a href='/blog/categories/algorithms/'>Algorithms (8)</a></li>
-<li class='category'><a href='/blog/categories/bigdata/'>BigData (6)</a></li>
+<li class='category'><a href='/blog/categories/bigdata/'>BigData (7)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (4)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
 <li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (1)</a></li>

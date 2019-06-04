@@ -4,7 +4,7 @@
   <title><![CDATA[catogories：BigData | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/bigdata/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2019-06-04T09:05:08+08:00</updated>
+  <updated>2019-06-04T11:36:22+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,24 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Presto问题debug]]></title>
+    <link href="http://isunix.github.io/blog/2019/06/04/prestowen-ti-debug/"/>
+    <updated>2019-06-04T10:27:51+08:00</updated>
+    <id>http://isunix.github.io/blog/2019/06/04/prestowen-ti-debug</id>
+    <content type="html"><![CDATA[<p>我们在执行presto-cli命名的时候，可以使用如下的方式 <code>presto-cli --catalog hive --schema $schema --output-format CSV_HEADER --server $ip:$port --debug</code></p>
+
+<p>这样就会打印出诊断信息出来.</p>
+
+<p>我们使用如下的命令看下presto-server的状态 <code>initctl list | grep -i presto</code></p>
+
+<p><code>sudo stop presto-server</code> 这样来关闭 presto-server； <code>sudo start presto-server</code> 这样来开启.</p>
+
+<p>如果想要看查看presto的log，可以去 <code>/var/log/presto</code>, 对于debug非常有用.</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[PySpark中引入col函数的方式]]></title>
@@ -204,107 +222,6 @@ insert into table table_a(partition="2016-08-01") select name, age from table_b 
 set hive.exec.dynamic.partition.mode=nonstrict;
 insert into table table_a partition(load_day) select * from table_b;
 </code></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Regexp_extract Usage in Impala]]></title>
-    <link href="http://isunix.github.io/blog/2016/07/15/regexp-extract-usage-in-impala/"/>
-    <updated>2016-07-15T10:43:30+08:00</updated>
-    <id>http://isunix.github.io/blog/2016/07/15/regexp-extract-usage-in-impala</id>
-    <content type="html"><![CDATA[<p>I need to use the regexp_extract function to extract certain parts of a string recently when I am doing big data analysis.</p>
-
-<p>http://www.cloudera.com/documentation/archive/impala/2-x/2-1-x/topics/impala_string_functions.html, this link shows us how to do, but sadly regex in impala is a little different from those in perl or python, so I have to look through the page and try again.</p>
-
-<p>I keep a note here for regexp_extract for my later own usage.</p>
-
-<p>Say I have a string </p>
-
-<p><code>
-%2C%22hidisp%22%3A27%2C%22quietMode
-</code></p>
-
-<p>and I want to extract the number followd by “hidisp” and ‘”:’, which is number ‘27’ here.</p>
-
-<p>As describe in the above document, </p>
-
-<p><code>
-Because the impala-shell interpreter uses the \ character for escaping, use \\ to represent the regular expression escape character in any regular expressions that you submit through impala-shell
-</code></p>
-
-<p>So if we want to represent the numbers here, we have use ‘\d’ rather than just ‘\d’ which is a standard in other programming  languages.</p>
-
-<p>regexp_extract usage is in the following format,</p>
-
-<p><code>
-regexp_extract(string subject, string pattern, int index)
-</code></p>
-
-<ol>
-  <li>group 0 matches the full pattern string, including the portion outside any () group, so</li>
-</ol>
-
-<p><code>
-select regexp_extract('%2C%22hidisp%22%3A27%2C%22quietMode', 'hidisp%22%3A(\\d+)', 0);
-</code></p>
-
-<p>this will give out:</p>
-
-<p><code>
-hidisp%22%3A27
-</code></p>
-
-<ol>
-  <li>group 1 matches just the contents inside the first () group in the pattern string:</li>
-</ol>
-
-<p><code>
-select regexp_extract('%2C%22hidisp%22%3A27%2C%22quietMode', 'hidisp%22%3A(\\d+)', 1);
-</code></p>
-
-<p>will give out</p>
-
-<p><code>
-27
-</code></p>
-
-<p>And for the support of non-greedy matches using .*?, take the following string as an example,</p>
-
-<p><code>
-%2C%22reboot%22%3A27%2C%22quietMode%2C%22reboot%22%3A12%2C%22quietMode
-</code></p>
-
-<p>How to extract the first match number for “reboot”, we can get the result in the following ways</p>
-
-<p>a. without any “.*?” around the string pattern ‘reboot%22%3A(\d+)’, which is the easiest way I think </p>
-
-<p><code>
-select regexp_extract('%2C%22reboot%22%3A27%2C%22quietMode%2C%22reboot%22%3A12%2C%22quietMode', 'reboot%22%3A(\\d+)', 1);
-</code></p>
-
-<p>or </p>
-
-<p>b. append “.*?” right after the string pattern ‘reboot%22%3A(\d+)’,</p>
-
-<p><code>
-select regexp_extract('%2C%22reboot%22%3A27%2C%22quietMode%2C%22reboot%22%3A12%2C%22quietMode', 'reboot%22%3A(\\d+).*?', 1);
-</code></p>
-
-<p>or</p>
-
-<p>c. surround the string pattern ‘reboot%22%3A(\d+)’ with ‘.*?’ at both sides</p>
-
-<p><code>
-select regexp_extract('%2C%22reboot%22%3A27%2C%22quietMode%2C%22reboot%22%3A12%2C%22quietMode', '.*?reboot%22%3A(\\d+).*?', 1);
-</code></p>
-
-<p>So after the tree ways to get the leftmost match, we can easily guess how to get the rifht-most match.</p>
-
-<p><code>
-select regexp_extract('%2C%22reboot%22%3A27%2C%22quietMode%2C%22reboot%22%3A12%2C%22quietMode', '.*?reboot%22%3A(\\d+)', 1);
-</code></p>
-
-<p>That is just by appending the string pattern with ‘.*?’ at its left side.</p>
 ]]></content>
   </entry>
   

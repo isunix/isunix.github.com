@@ -9,7 +9,12 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="When you want to clone a octopress blog from the github to a machine and then enabled to publish posts from the cloned repo, you can follow the &hellip;">
+  <meta name="description" content="I met several errors while updating my homebrew, one is: the solution is: 1
+2
+3
+4
+cd `brew --prefix`
+git remote add origin https://github.com/mxcl/ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -99,6 +104,113 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2014/06/01/brew-update-errors-fixed/">Brew Update Errors Fixed</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-06-01T16:12:00+08:00" pubdate data-updated="true">2014 年6 月1 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I met several errors while updating my homebrew, one is:</p>
+
+<p><img src="/images/sun/first.png" /></p>
+
+<p>the solution is:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">cd `brew --prefix`
+</span><span class="line">git remote add origin https://github.com/mxcl/homebrew.git
+</span><span class="line">git fetch origin
+</span><span class="line">git reset --hard origin/master
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>the other is:</p>
+
+<p><img src="/images/sun/second.png" /></p>
+
+<p>To address this this error, we just have have to change the permissions on the folder to a certain user:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">chown -R sun .git</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/31/on-the-error-using-rake-new-post-under-zsh/">On the Error Using Rake New_post Under Zsh</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-05-31T17:48:54+08:00" pubdate data-updated="true">2014 年5 月31 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>When I issue the command “rake new_post[]” using the zsh, I got the error telling me that “no matches found”. I googled, it said if using “noglob rake” rather than simply “rake”, this problem will be solved. But in my case, it does not work. </p>
+
+<p>My expedient solution here is, issuing the followng command:   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">rake "new_post[on the error using rake new_post under zsh]"</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>rather than in the normal way:   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">rake new_post["on the error using rake new_post under zsh"]</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>It works in my case, but it is not a nice solution for sure.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2014/05/24/clone-octopress-from-github-to-another-machine-and-publish-posts/">Clone Octopress From Github to Another Machine and Publish Posts</a></h1>
     
     
@@ -160,6 +272,14 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2019/06/06/centoszhong-xiu-gai-shi-qu/">CentOS中修改时区</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/06/06/amazonec2zhong-xiu-gai-shi-qu/">AmazonEC2中修改时区</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2019/06/04/prestowen-ti-debug/">Presto问题debug</a>
       </li>
     
@@ -191,14 +311,6 @@
         <a href="/blog/2019/05/23/zen-yang-wu-xu-shou-dong-shu-ru-mi-ma-lian-jie-postgresql/">怎样无需手动输入密码连接PostgreSQL</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2019/05/22/shi-yong-rpman-zhuang-crontabming-ling-bei-wang/">使用rpm安装crontab命令备忘</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2019/05/22/linuxming-ling-lnde-shi-yong-bei-wang/">Linux命令ln的使用备忘</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -213,7 +325,7 @@
 <li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (5)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (1)</a></li>
 <li class='category'><a href='/blog/categories/javascript/'>Javascript (4)</a></li>
-<li class='category'><a href='/blog/categories/linux-and-mac/'>Linux&Mac (11)</a></li>
+<li class='category'><a href='/blog/categories/linux-and-mac/'>Linux&Mac (12)</a></li>
 <li class='category'><a href='/blog/categories/php/'>PHP (5)</a></li>
 <li class='category'><a href='/blog/categories/perl/'>Perl (50)</a></li>
 <li class='category'><a href='/blog/categories/python/'>Python (9)</a></li>

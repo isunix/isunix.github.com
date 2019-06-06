@@ -9,36 +9,7 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="We can check them like “perl perlre”. These useful perl manuals are: 1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30 &hellip;">
+  <meta name="description" content="I collect some useful code snippets here for later usage or just keep a note of what I have read. 1.find files larger than a specifed size(in byte): &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -122,6 +93,105 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/06/fun-perl-code-snippets/">Fun Perl Code Snippets</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-06T10:02:29+08:00" pubdate data-updated="true">2014 年9 月6 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I collect some useful code snippets here for later usage or just keep a note of what I have read.  </p>
+
+<p>1.find files larger than a specifed size(in byte):   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="nn">File::</span><span class="n">Find</span><span class="p">;</span>
+</span><span class="line"><span class="n">find</span><span class="p">(</span><span class="k">sub </span><span class="p">{</span> <span class="k">print</span> <span class="s">&quot;$_\n&quot;</span> <span class="k">if</span> <span class="o">-</span><span class="n">s</span> <span class="nv">$_</span> <span class="o">&gt;</span> <span class="nv">$ARGV</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span> <span class="p">},</span> <span class="s">&quot;.&quot;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>2.we can use “man module::name” or “perldoc module::name” to check the detailed info of a module.   </p>
+
+<p>3.For the first example, if using require, we can write it as the following:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nb">require</span> <span class="nn">File::</span><span class="n">Find</span><span class="p">;</span>
+</span><span class="line"><span class="nn">File::Find::</span><span class="n">find</span><span class="p">(</span><span class="k">sub </span><span class="p">{</span> <span class="k">print</span> <span class="s">&quot;$File::Find::name\n&quot;</span> <span class="k">if</span> <span class="o">-</span><span class="n">s</span> <span class="o">&gt;</span> <span class="mi">1_024_000</span><span class="p">;</span> <span class="p">},</span> <span class="s">&#39;.&#39;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>4.”use” happens during compile time, whereas “require” happens at runtime.    </p>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/05/notes-on-perlrun/">Notes on Perlrun</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-05T19:24:02+08:00" pubdate data-updated="true">2014 年9 月5 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>We keep notes on some of the useful notes on perl command line knowledge here.  </p>
+
+<p>1.-i[extension]:  </p>
+
+<p>specifies that files processed by the “&lt;&gt;” construct are to be edited in-place.  It does this by renaming the input file, opening the output file by the original name, and selecting that output file as the default for print() statements.   </p>
+
+<p>2.-p:
+causes Perl to assume the following loop around your program, which makes it iterate over filename arguments somewhat like sed.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -257,420 +327,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/05/object-oriented-perl/">Object Oriented Perl</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-09-05T15:46:51+08:00" pubdate data-updated="true">2014 年9 月5 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>We can find details about the info list below by issuing “perldoc perlobj”, or “perldoc perlootut”</p>
-
-<p>1.When we bless something, we are not blessing the variable which contains a reference to that thing, nor are we blessing the reference that the variable stores; we are blessing the thing that the variable refers to (sometimes known as the referent).  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="nn">Scalar::</span><span class="n">Util</span> <span class="s">&#39;blessed&#39;</span><span class="p">;</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">$foo</span> <span class="o">=</span> <span class="p">{};</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">$bar</span> <span class="o">=</span> <span class="nv">$foo</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="nb">bless</span> <span class="nv">$foo</span><span class="p">,</span> <span class="s">&#39;Class&#39;</span><span class="p">;</span>
-</span><span class="line"><span class="k">print</span> <span class="n">blessed</span><span class="p">(</span> <span class="nv">$bar</span> <span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="nv">$bar</span> <span class="o">=</span> <span class="s">&quot;some other value&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="k">print</span> <span class="n">blessed</span><span class="p">(</span> <span class="nv">$bar</span> <span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>The first will print out “Class” and second undef(of course you can see it).</p>
-
-<p>When we call “bless” on a variable, we are actually blessing the underlying data structure that the variable refers to. We are not blessing the reference itself, nor the variable that contains that reference. That’s why the second call to “blessed( $bar )” returns false. At that point $bar is no longer storing a reference to an
-object. You will sometimes see older books or documentation mention “blessing a reference” or describe an object as a “blessed reference”, but this is incorrect. It isn’t the reference that is blessed as an object; it’s the thing the reference refers to (i.e. the referent).   </p>
-
-<p>2.Objects are merely Perl data structures (hashes, arrays, scalars, filehandles, etc.) that have been explicitly associated with a particular class. That explicit association is created by the built-in “bless” function.</p>
-
-<p>3.An object is simply a data structure that knows to which class it belongs.A class is simply a package. A class provides methods that expect to operate on objects. A method is simply a subroutine that expects a reference to an object (or a package name, for class methods) as the first argument. </p>
-
-<p>4.Each package contains a special array called @ISA. The @ISA array contains a list of that class’s parent classes, if any. This array is examined when Perl does method resolution. It is possible to manually set @ISA. and you may see this in older Perl code. Much older code also uses the base pragma. For new code, we recommend that you use the parent pragma to declare your parents.  This pragma will take care of setting @ISA.  It will also load the parent classes and make sure that the package doesn’t inherit from itself.  </p>
-
-<p>5.However the parent classes are set, the package’s @ISA variable will contain a list of those parents. This is simply a list of scalars, each of which is a string that corresponds to a package name.   </p>
-
-<p>6.All classes inherit from the UNIVERSAL class implicitly. The UNIVERSAL class is implemented by the Perl core, and provides several default methods, such as “isa()”, “can()”, and “VERSION()”.  The “UNIVERSAL” class will never appear in a package’s @ISA variable.  </p>
-
-<p>7.Perl provides no special constructor syntax. This means that a class must implement its own constructor. A constructor is simply a class method that returns a reference to a new object.    </p>
-
-<p>8.A simple read-only accessor simply gets the value of a single attribute:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">sub </span><span class="nf">path</span> <span class="p">{</span>
-</span><span class="line">	<span class="k">my</span> <span class="nv">$self</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
-</span><span class="line">	<span class="k">return</span> <span class="nv">$self</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">path</span><span class="p">};</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>A read-write accessor will allow the caller to set the value as well as get it:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">sub </span><span class="nf">path</span> <span class="p">{</span>
-</span><span class="line">	<span class="k">my</span> <span class="nv">$self</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="nv">@_</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">    	<span class="nv">$self</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">path</span><span class="p">}</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">
-</span><span class="line">    <span class="k">return</span> <span class="nv">$self</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">path</span><span class="p">};</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>9.More on bless. </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">$object</span> <span class="o">=</span> <span class="nb">bless</span> <span class="p">{},</span> <span class="nv">$class</span><span class="p">;</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">$object</span> <span class="o">=</span> <span class="nb">bless</span> <span class="p">{};</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>In the first form, the anonymous hash is being blessed into the class
-in $class. In the second form, the anonymous hash is blessed into the
-current package. The second form is strongly discouraged, because it breaks the ability of a subclass to reuse the parent’s constructor, but you may still run across it in existing code.   </p>
-
-<p>10.If you simply want to check that a variable contains an object reference, we recommend that you use “defined blessed($object)”, since “ref” returns true values for all references, not just objects.  </p>
-
-<p>11.If you call a method that doesn’t exist in a class, Perl will throw an error. However, if that class or any of its parent classes defines an “AUTOLOAD” method, that “AUTOLOAD” method is called instead.   </p>
-
-<p>12.All the examples so far have shown objects based on a blessed hash. However, it’s possible to bless any type of data structure or referent, including scalars, globs, and subroutines. You may see this sort of thing when looking at code in the wild.  </p>
-
-<p>13.You should also check out perlmodlib for some style guides on constructing both modules and classes.  </p>
-
-<p>14.As we said earlier, most Perl objects are hashes, but an object can be an instance of any Perl data type (scalar, array, etc.). Turning a plain data structure into an object is done by blessing that data structure using Perl’s “bless” function.  </p>
-
-<p>15.Once a referent has been blessed, the “blessed” function from the Scalar::Util core module can tell us its class name. This subroutine returns an object’s class when passed an object, and false otherwise.  </p>
-
-<p>16.A constructor creates a new object. In Perl, a class’s constructor is just another method, unlike some other languages, which provide syntax for constructors. Most Perl classes use “new” as the name for their constructor: my $file = File-&gt;new(…);   </p>
-
-<p>17.What makes a method special is how it’s called. The arrow operator (“-&gt;”) tells Perl that we are calling a method.   </p>
-
-<p>18.When we make a method call, Perl arranges for the method’s invocant to be passed as the first argument. Invocant is a fancy name for the thing on the left side of the arrow. The invocant can either be a class name
-or an object. We can also pass additional arguments to the method:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">sub </span><span class="nf">print_info</span> <span class="p">{</span>
-</span><span class="line">	<span class="k">my</span> <span class="nv">$self</span>   <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
-</span><span class="line">    <span class="k">my</span> <span class="nv">$prefix</span> <span class="o">=</span> <span class="nb">shift</span> <span class="sr">//</span> <span class="s">&quot;This file is at &quot;</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line">   	<span class="k">print</span> <span class="nv">$prefix</span><span class="p">,</span> <span class="s">&quot;, &quot;</span><span class="p">,</span> <span class="nv">$self</span><span class="o">-&gt;</span><span class="n">path</span><span class="p">,</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="nv">$file</span><span class="o">-&gt;</span><span class="n">print_info</span><span class="p">(</span><span class="s">&quot;The file is located at &quot;</span><span class="p">);</span>
-</span><span class="line"><span class="c1"># The file is located at /etc/hostname</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>19.Each class can define its attributes. Attributes are sometimes called properties.  </p>
-
-<p>20.Perl has no special syntax for attributes. Under the hood, attributes are often stored as keys in the object’s underlying hash, but don’t worry about this.   </p>
-
-<p>21.You might also see the terms getter and setter. These are two types of accessors. A getter gets the attribute’s value, while a setter sets it. Another term for a setter is mutator. We recommend that you only access attributes via accessor methods.   </p>
-
-<p>22.Attributes are typically defined as read-only or read-write. Read-only attributes can only be set when the object is first created, while read-write attributes can be altered at any time.  </p>
-
-<p>23.We often refer to inheritance relationships as parent-child or “superclass/subclass” relationships. Sometimes we say that the child has an is-a relationship with its parent class.   </p>
-
-<p>24.The process of determining what method should be used is called method resolution. What Perl does is look at the object’s class first (“File::MP3” in this case). If that class defines the method, then that class’s version of the method is called. If not, Perl looks at each parent class in turn. For “File::MP3”, its only parent is “File”. If “File::MP3” does not define the method, but “File” does, then Perl calls the method in “File”.  </p>
-
-<p>25.It is possible to explicitly call a parent method from a child:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nb">package</span> <span class="nn">File::</span><span class="n">MP3</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">use</span> <span class="n">parent</span> <span class="s">&#39;File&#39;</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">sub </span><span class="nf">print_info</span> <span class="p">{</span>
-</span><span class="line">	<span class="k">my</span> <span class="nv">$self</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
-</span><span class="line">	<span class="nv">$self</span><span class="o">-&gt;</span><span class="nn">SUPER::</span><span class="n">print_info</span><span class="p">();</span>
-</span><span class="line">	<span class="k">print</span> <span class="s">&quot;Its title is &quot;</span><span class="p">,</span> <span class="nv">$self</span><span class="o">-&gt;</span><span class="n">title</span><span class="p">,</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>26.The “has()” subroutine declares an attribute, and “Moose” automatically creates accessors for these attributes. It also takes care of creating a “new()” method for you. This constructor knows about the attributes you declared.     </p>
-
-<p>27.与@INC数组类似，@INC包含文件的寻找路径, @ISA数组含有类(包)名，当一个方法在当前包中未找到的时就到@ISA中中的包去寻找。@ISA中还含有当前类继承的基类名。  </p>
-
-<p>28.oo中的new可以有如下的几种写法的: 注意这两种写法的区别  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="c1">#!/usr/bin/perl</span>
-</span><span class="line"><span class="k">use</span> <span class="n">Cocoa</span><span class="p">;</span>
-</span><span class="line"><span class="nv">$cup</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Cocoa</span><span class="p">;</span>
-</span><span class="line"><span class="nv">$cup</span><span class="o">-&gt;</span><span class="n">setImports</span><span class="p">(</span> <span class="s">&#39;java.io.InputStream&#39;</span><span class="p">,</span> <span class="s">&#39;java.net.*&#39;</span><span class="p">);</span>
-</span><span class="line"><span class="nv">$cup</span><span class="o">-&gt;</span><span class="n">declareMain</span><span class="p">(</span> <span class="s">&quot;Msg&quot;</span> <span class="p">,</span> <span class="s">&quot;java.applet.Applet&quot;</span><span class="p">,</span> <span class="s">&quot;Runnable&quot;</span><span class="p">);</span>
-</span><span class="line"><span class="nv">$cup</span><span class="o">-&gt;</span><span class="n">closeMain</span><span class="p">();</span>
-</span><span class="line">
-</span><span class="line"><span class="ow">or</span>
-</span><span class="line">
-</span><span class="line"><span class="c1">#!/usr/bin/perl</span>
-</span><span class="line"><span class="k">use</span> <span class="n">Cocoa</span><span class="p">;</span>
-</span><span class="line"><span class="nv">$cup</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Cocoa</span><span class="p">;</span>
-</span><span class="line"><span class="nn">Cocoa::</span><span class="n">setImports</span><span class="p">(</span><span class="nv">$cup</span><span class="p">,</span> <span class="s">&#39;java.io.InputStream&#39;</span><span class="p">,</span> <span class="s">&#39;java.net.*&#39;</span><span class="p">);</span>
-</span><span class="line"><span class="nn">Cocoa::</span><span class="n">declareMain</span><span class="p">(</span><span class="nv">$cup</span><span class="p">,</span> <span class="s">&quot;Msg&quot;</span> <span class="p">,</span> <span class="s">&quot;java.applet.Applet&quot;</span><span class="p">,</span> <span class="s">&quot;Runnable&quot;</span><span class="p">);</span>
-</span><span class="line"><span class="nn">Cocoa::</span><span class="n">closeMain</span><span class="p">(</span><span class="nv">$cup</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>29.类方法通过@ISA数组继承.</p>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/08/31/useful-js-code-snippets/">Useful Js Code Snippets</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-08-31T17:47:03+08:00" pubdate data-updated="true">2014 年8 月31 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>1.To sort an array from small to big nums, we can use the following method.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="kd">function</span> <span class="nx">compare</span><span class="p">(</span><span class="nx">num1</span><span class="p">,</span> <span class="nx">num2</span><span class="p">){</span>
-</span><span class="line">  <span class="k">return</span> <span class="nx">num1</span> <span class="o">-</span> <span class="nx">num2</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="kd">var</span> <span class="nx">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">200</span><span class="p">];</span>
-</span><span class="line"><span class="nx">nums</span><span class="p">.</span><span class="nx">sort</span><span class="p">(</span><span class="nx">compare</span><span class="p">);</span>
-</span><span class="line"><span class="nx">print</span><span class="p">(</span><span class="nx">nums</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>2.reduce, every, some, forEach迭代器方法</p>
-
-<p>3.map will give out a new array:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="kd">function</span> <span class="nx">first</span><span class="p">(</span><span class="nx">word</span><span class="p">){</span>
-</span><span class="line">  <span class="k">return</span> <span class="nx">word</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="kd">var</span> <span class="nx">words</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;for&quot;</span><span class="p">,</span> <span class="s2">&quot;your&quot;</span><span class="p">,</span> <span class="s2">&quot;info&quot;</span><span class="p">];</span>
-</span><span class="line"><span class="kd">var</span> <span class="nx">acronym</span> <span class="o">=</span> <span class="nx">words</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">first</span><span class="p">);</span>
-</span><span class="line"><span class="nx">print</span><span class="p">(</span><span class="nx">acronym</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">));</span>
-</span><span class="line"><span class="c1">//fyi</span>
-</span><span class="line">
-</span><span class="line"><span class="c1">//print(acronym);</span>
-</span><span class="line"><span class="c1">//f,y,i</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>note how we used join to avoid the “,”</p>
-
-<p>4.filter</p>
-
-<p>Filter is quite similar to “every”, it accept a function whose return value is boolean. In contrast to “every”, when filter(func) evaluated to true, it does not retrun “true”, it returns a new array, whose item is the those items in the original way after beed passed to the funcition.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="kd">function</span> <span class="nx">passing</span><span class="p">(</span><span class="nx">num</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">   <span class="k">return</span> <span class="nx">num</span> <span class="o">&gt;=</span> <span class="mi">60</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="kd">var</span> <span class="nx">grades</span> <span class="o">=</span> <span class="p">[];</span>
-</span><span class="line"><span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">;</span> <span class="o">++</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">   <span class="nx">grades</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span> <span class="o">*</span> <span class="mi">101</span><span class="p">);</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line"><span class="kd">var</span> <span class="nx">passGrades</span> <span class="o">=</span> <span class="nx">grades</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nx">passing</span><span class="p">);</span>
-</span><span class="line"><span class="nx">print</span><span class="p">(</span><span class="nx">grades</span><span class="p">);</span>
-</span><span class="line"><span class="nx">print</span><span class="p">(</span><span class="nx">passGrades</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>5.the following code shows how to get a studetnt’s average score and how to get a discipline’s averge score.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-<span class="line-number">28</span>
-<span class="line-number">29</span>
-<span class="line-number">30</span>
-<span class="line-number">31</span>
-<span class="line-number">32</span>
-<span class="line-number">33</span>
-</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="c1">//discipline&#39;s average score</span>
-</span><span class="line">
-</span><span class="line"><span class="kd">var</span> <span class="nx">grades</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">89</span><span class="p">,</span> <span class="mi">77</span><span class="p">,</span> <span class="mi">78</span><span class="p">],[</span><span class="mi">76</span><span class="p">,</span> <span class="mi">82</span><span class="p">,</span> <span class="mi">81</span><span class="p">],[</span><span class="mi">91</span><span class="p">,</span> <span class="mi">94</span><span class="p">,</span> <span class="mi">89</span><span class="p">]];</span>
-</span><span class="line"><span class="kd">var</span> <span class="nx">total</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class="line"><span class="kd">var</span> <span class="nx">average</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
-</span><span class="line"><span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">col</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">col</span> <span class="o">&lt;</span> <span class="nx">grades</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="o">++</span><span class="nx">col</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">   <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">row</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">row</span> <span class="o">&lt;</span> <span class="nx">grades</span><span class="p">[</span><span class="nx">col</span><span class="p">].</span><span class="nx">length</span><span class="p">;</span> <span class="o">++</span><span class="nx">row</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">      <span class="nx">total</span> <span class="o">+=</span> <span class="nx">grades</span><span class="p">[</span><span class="nx">row</span><span class="p">][</span><span class="nx">col</span><span class="p">];</span>
-</span><span class="line">   <span class="p">}</span>
-</span><span class="line">
-</span><span class="line">
-</span><span class="line">   <span class="nx">average</span> <span class="o">=</span> <span class="nx">total</span> <span class="o">/</span> <span class="nx">grades</span><span class="p">[</span><span class="nx">col</span><span class="p">].</span><span class="nx">length</span><span class="p">;</span>
-</span><span class="line">   <span class="nx">print</span><span class="p">(</span><span class="s2">&quot;Test &quot;</span> <span class="o">+</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">col</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; average: &quot;</span> <span class="o">+</span>
-</span><span class="line">         <span class="nx">average</span><span class="p">.</span><span class="nx">toFixed</span><span class="p">(</span><span class="mi">2</span><span class="p">));</span>
-</span><span class="line">   <span class="nx">total</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class="line">   <span class="nx">average</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="c1">//a student&#39;s average score</span>
-</span><span class="line">
-</span><span class="line"><span class="kd">var</span> <span class="nx">grades</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">89</span><span class="p">,</span> <span class="mi">77</span><span class="p">,</span> <span class="mi">78</span><span class="p">],[</span><span class="mi">76</span><span class="p">,</span> <span class="mi">82</span><span class="p">,</span> <span class="mi">81</span><span class="p">],[</span><span class="mi">91</span><span class="p">,</span> <span class="mi">94</span><span class="p">,</span> <span class="mi">89</span><span class="p">]];</span>
-</span><span class="line"><span class="kd">var</span> <span class="nx">total</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class="line"><span class="kd">var</span> <span class="nx">average</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
-</span><span class="line"><span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">row</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">row</span> <span class="o">&lt;</span> <span class="nx">grades</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="o">++</span><span class="nx">row</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">   <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">col</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">col</span> <span class="o">&lt;</span> <span class="nx">grades</span><span class="p">[</span><span class="nx">row</span><span class="p">].</span><span class="nx">length</span><span class="p">;</span> <span class="o">++</span><span class="nx">col</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">      <span class="nx">total</span> <span class="o">+=</span> <span class="nx">grades</span><span class="p">[</span><span class="nx">row</span><span class="p">][</span><span class="nx">col</span><span class="p">];</span>
-</span><span class="line">   <span class="p">}</span>
-</span><span class="line">   <span class="nx">average</span> <span class="o">=</span> <span class="nx">total</span> <span class="o">/</span> <span class="nx">grades</span><span class="p">[</span><span class="nx">row</span><span class="p">].</span><span class="nx">length</span><span class="p">;</span>
-</span><span class="line">   <span class="nx">print</span><span class="p">(</span><span class="s2">&quot;Student &quot;</span> <span class="o">+</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">row</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; average: &quot;</span> <span class="o">+</span>
-</span><span class="line">         <span class="nx">average</span><span class="p">.</span><span class="nx">toFixed</span><span class="p">(</span><span class="mi">2</span><span class="p">));</span>
-</span><span class="line">   <span class="nx">total</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class="line">   <span class="nx">average</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/27/">&larr; Older</a>
@@ -686,6 +342,14 @@ or an object. We can also pass additional arguments to the method:</p>
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2019/06/06/centoszhong-xiu-gai-shi-qu/">CentOS中修改时区</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/06/06/amazonec2zhong-xiu-gai-shi-qu/">AmazonEC2中修改时区</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2019/06/04/prestowen-ti-debug/">Presto问题debug</a>
@@ -719,14 +383,6 @@ or an object. We can also pass additional arguments to the method:</p>
         <a href="/blog/2019/05/23/zen-yang-wu-xu-shou-dong-shu-ru-mi-ma-lian-jie-postgresql/">怎样无需手动输入密码连接PostgreSQL</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2019/05/22/shi-yong-rpman-zhuang-crontabming-ling-bei-wang/">使用rpm安装crontab命令备忘</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2019/05/22/linuxming-ling-lnde-shi-yong-bei-wang/">Linux命令ln的使用备忘</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -741,7 +397,7 @@ or an object. We can also pass additional arguments to the method:</p>
 <li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (5)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (1)</a></li>
 <li class='category'><a href='/blog/categories/javascript/'>Javascript (4)</a></li>
-<li class='category'><a href='/blog/categories/linux-and-mac/'>Linux&Mac (11)</a></li>
+<li class='category'><a href='/blog/categories/linux-and-mac/'>Linux&Mac (12)</a></li>
 <li class='category'><a href='/blog/categories/php/'>PHP (5)</a></li>
 <li class='category'><a href='/blog/categories/perl/'>Perl (50)</a></li>
 <li class='category'><a href='/blog/categories/python/'>Python (9)</a></li>

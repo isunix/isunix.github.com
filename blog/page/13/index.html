@@ -9,17 +9,8 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="Today I met some shell scirpts like the following: 1
-trap &quot;rm -f $file; exit&quot; INT TERM EXIT More code here: 1
-2
-3
-4
-5
-6
-7
-8
-9
-cleanup() { &hellip;">
+  <meta name="description" content="This post shows how to change the header of the django admin page. The blog for reference is: 1
+http://www.mc706.com/tip_trick_snippets/42/django- &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -109,6 +100,88 @@ cleanup() { &hellip;">
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2015/11/18/django-admin-changing-the-page-header/">Django Admin: Changing the Page Header</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-11-18T16:58:31+08:00" pubdate data-updated="true">2015 年11 月18 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>This post shows how to change the header of the django admin page.</p>
+
+<p>The blog for reference is:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line">http://www.mc706.com/tip_trick_snippets/42/django-admin-changing-the-page-header/
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/11/02/the-most-used-shell-commands/">The Most Used Shell Commands</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-11-02T16:21:57+08:00" pubdate data-updated="true">2015 年11 月2 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>We can use the following shell scripts to find the 10 most used shell commands for a user.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nb">history</span> | awk <span class="s1">&#39;{a[$2]++} END {for(i in a) {print a[i]&quot; &quot;i}}&#39;</span>| sort -rn | head
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2015/11/02/trap-interrupts-in-shell-scripts/">Trap Interrupts in Shell Scripts</a></h1>
     
     
@@ -175,127 +248,6 @@ cleanup() { &hellip;">
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/10/12/django-development-in-python3-environemnt/">Django Development in Python3 Environemnt</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-10-12T14:55:22+08:00" pubdate data-updated="true">2015 年10 月12 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>What if I want to development a django app in python3 environement.</p>
-
-<p>Using vitualenv</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">python3 -m venv sbenv
-</span><span class="line"><span class="nb">source </span>sbenv/bin/activate
-</span><span class="line">pip install -r requirements.txt
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>Using virtualenvwrapper</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">which python3   --to get the location of python3 interpreter
-</span><span class="line">mkvirtualenv --python<span class="o">=</span>/usr/local/bin/python3 django_dev
-</span><span class="line">workon django_dev
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/09/21/installing-from-multiple-requirements-files/">Installing From Multiple Requirements Files</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-09-21T16:18:23+08:00" pubdate data-updated="true">2015 年9 月21 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Say we want to install modules from multiple requirement files. We will put the requirement files in the directory “requirements”.</p>
-
-<p>First the base.txt file.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">Django==1.7.10
-</span><span class="line">psycopg2==2.4.5</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>Then the file local.txt</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">-r base.txt
-</span><span class="line">django-discover-runner==0.2.2</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>and production.txt(production installaions should be close to what is used in other locations, so production.txt commonly just calls base.txt)</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">-r base.txt</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>The for local and production env, we can issue the following commands:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">pip install -r requirements/local.txt
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">pip install -r requirements/production.txt
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/14/">&larr; Older</a>
@@ -311,6 +263,14 @@ cleanup() { &hellip;">
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2019/06/06/centoszhong-xiu-gai-shi-qu/">CentOS中修改时区</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/06/06/amazonec2zhong-xiu-gai-shi-qu/">AmazonEC2中修改时区</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2019/06/04/prestowen-ti-debug/">Presto问题debug</a>
@@ -344,14 +304,6 @@ cleanup() { &hellip;">
         <a href="/blog/2019/05/23/zen-yang-wu-xu-shou-dong-shu-ru-mi-ma-lian-jie-postgresql/">怎样无需手动输入密码连接PostgreSQL</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2019/05/22/shi-yong-rpman-zhuang-crontabming-ling-bei-wang/">使用rpm安装crontab命令备忘</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2019/05/22/linuxming-ling-lnde-shi-yong-bei-wang/">Linux命令ln的使用备忘</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -366,7 +318,7 @@ cleanup() { &hellip;">
 <li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (5)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (1)</a></li>
 <li class='category'><a href='/blog/categories/javascript/'>Javascript (4)</a></li>
-<li class='category'><a href='/blog/categories/linux-and-mac/'>Linux&Mac (11)</a></li>
+<li class='category'><a href='/blog/categories/linux-and-mac/'>Linux&Mac (12)</a></li>
 <li class='category'><a href='/blog/categories/php/'>PHP (5)</a></li>
 <li class='category'><a href='/blog/categories/perl/'>Perl (50)</a></li>
 <li class='category'><a href='/blog/categories/python/'>Python (9)</a></li>

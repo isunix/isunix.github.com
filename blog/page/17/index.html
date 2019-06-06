@@ -9,8 +9,7 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="After upgrading ubuntu to a new version, there will be many obsolete packages. To see these packages, you can 1
-sudo apt-get upgrade It will list all &hellip;">
+  <meta name="description" content="my tmux’s sockets are output to the dir “~/tmp”, however today I encountered the problem saying “can’t create socket: Permission denied” while I &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -100,6 +99,90 @@ sudo apt-get upgrade It will list all &hellip;">
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2015/06/19/tmux-cant-create-socket-permission-denied/">Tmux:can&#8217;t Create Socket: Permission Denied</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-06-19T13:04:00+08:00" pubdate data-updated="true">2015 年6 月19 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>my tmux’s sockets are output to the dir “~/tmp”, however today I encountered the problem saying “can’t create socket: Permission denied” while I start tmux.</p>
+
+<p>The reason is I have changed the rights on the folder ~/tmp/tmux* , so after the following command:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">chmod 700 -R tmux*
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>It is back to normal.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/06/09/find-cgi-bin-dir-on-a-linux-server/">Find Cgi-bin Dir on a Linux Server</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-06-09T18:49:22+08:00" pubdate data-updated="true">2015 年6 月9 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">ps -ef | grep cgi
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>On my server, this will give out the cgi-bin dir.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2015/06/02/remove-obsolete-packages-on-ubuntu/">Remove Obsolete Packages on Ubuntu</a></h1>
     
     
@@ -156,99 +239,6 @@ sudo apt-get upgrade It will list all &hellip;">
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/06/01/reconfigure-partially-installed-packages-in-ubuntu/">Reconfigure Partially Installed Packages in Ubuntu</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-06-01T13:22:30+08:00" pubdate data-updated="true">2015 年6 月1 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>When I try to upgrade my ubuntu version from 14.04 to 14.10, the system rebooted during the upgrade. When I try to login to the gnu desktop, it goes back to the login screen again and again.</p>
-
-<p>So I have to login in using the “tty” terminal by “ctrl+alt+F3”, and then issue the following command:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line">sudo dpkg --configure -a
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>There maybe something wrong logging in using the mosted updated kernal, so we can choose to log in using an previous version of kernal(provided if is not removed yet]).</p>
-
-<p>Then if we still want to upgrade, we can do it when we successfully log in to the system.</p>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/06/01/alternative-way-to-bypass-problems-met-when-rake-new-post/">Alternative Way to Bypass Problems Met When Rake New_post</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-06-01T11:06:22+08:00" pubdate data-updated="true">2015 年6 月1 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I met errors while I am issuing the command “rake new_post” add generate a new post. Here is an alternative way to generate new post:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="ruby"><span class="line"><span class="n">bundle</span> <span class="nb">exec</span> <span class="n">rake</span> <span class="s2">&quot;new_post[alternative way to bypass problems met when rake new_post]&quot;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>and then we can use the “Mou” app to open the page:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="ruby"><span class="line"><span class="nb">open</span> <span class="o">-</span><span class="n">a</span> <span class="no">Mou</span> <span class="n">source</span><span class="o">/</span><span class="n">_posts</span><span class="o">/</span><span class="mi">2015</span><span class="o">-</span><span class="mo">06</span><span class="o">-</span><span class="mo">01</span><span class="o">-</span><span class="n">alternative</span><span class="o">-</span><span class="n">way</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">bypass</span><span class="o">-</span><span class="n">problems</span><span class="o">-</span><span class="n">met</span><span class="o">-</span><span class="k">when</span><span class="o">-</span><span class="n">rake</span><span class="o">-</span><span class="kp">new</span><span class="o">-</span><span class="n">post</span><span class="o">.</span><span class="n">markdown</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/18/">&larr; Older</a>
@@ -264,6 +254,14 @@ sudo apt-get upgrade It will list all &hellip;">
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2019/06/06/centoszhong-xiu-gai-shi-qu/">CentOS中修改时区</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/06/06/amazonec2zhong-xiu-gai-shi-qu/">AmazonEC2中修改时区</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2019/06/04/prestowen-ti-debug/">Presto问题debug</a>
@@ -297,14 +295,6 @@ sudo apt-get upgrade It will list all &hellip;">
         <a href="/blog/2019/05/23/zen-yang-wu-xu-shou-dong-shu-ru-mi-ma-lian-jie-postgresql/">怎样无需手动输入密码连接PostgreSQL</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2019/05/22/shi-yong-rpman-zhuang-crontabming-ling-bei-wang/">使用rpm安装crontab命令备忘</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2019/05/22/linuxming-ling-lnde-shi-yong-bei-wang/">Linux命令ln的使用备忘</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -319,7 +309,7 @@ sudo apt-get upgrade It will list all &hellip;">
 <li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (5)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (1)</a></li>
 <li class='category'><a href='/blog/categories/javascript/'>Javascript (4)</a></li>
-<li class='category'><a href='/blog/categories/linux-and-mac/'>Linux&Mac (11)</a></li>
+<li class='category'><a href='/blog/categories/linux-and-mac/'>Linux&Mac (12)</a></li>
 <li class='category'><a href='/blog/categories/php/'>PHP (5)</a></li>
 <li class='category'><a href='/blog/categories/perl/'>Perl (50)</a></li>
 <li class='category'><a href='/blog/categories/python/'>Python (9)</a></li>

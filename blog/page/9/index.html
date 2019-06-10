@@ -9,8 +9,13 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="I have a file containing quite many lines of strings and I want to sort them by line length. Here is how. 1
-cat $file | awk &#39;{ print length($0) & &hellip;">
+  <meta name="description" content="I want to update all the installed python modules through pip. Here below is one recipe I found. 1
+2
+3
+4
+5
+import pip
+from subprocess import call for &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -100,6 +105,143 @@ cat $file | awk &#39;{ print length($0) & &hellip;">
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2016/03/31/update-all-python-modules-through-pip/">Update All Python Modules Through Pip</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2016-03-31T16:32:49+08:00" pubdate data-updated="true">2016 年3 月31 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I want to update all the installed python modules through pip. Here below is one recipe I found.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="kn">import</span> <span class="nn">pip</span>
+</span><span class="line"><span class="kn">from</span> <span class="nn">subprocess</span> <span class="kn">import</span> <span class="n">call</span>
+</span><span class="line">
+</span><span class="line"><span class="k">for</span> <span class="n">dist</span> <span class="ow">in</span> <span class="n">pip</span><span class="o">.</span><span class="n">get_installed_distributions</span><span class="p">():</span>
+</span><span class="line">    <span class="n">call</span><span class="p">(</span><span class="s">&quot;pip install --upgrade &quot;</span> <span class="o">+</span> <span class="n">dist</span><span class="o">.</span><span class="n">project_name</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2016/03/09/sort-an-object-by-one-key-using-js/">Sort an Object by One Key Using Js</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2016-03-09T09:41:03+08:00" pubdate data-updated="true">2016 年3 月9 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I have something like the following,</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="kd">var</span> <span class="nx">sophos</span> <span class="o">=</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;aa&quot;</span><span class="p">,</span> <span class="nx">time</span><span class="o">:</span><span class="s2">&quot;2016/03/02 01:12&quot;</span><span class="p">};</span>
+</span><span class="line"><span class="kd">var</span> <span class="nx">mcafee</span> <span class="o">=</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;bb&quot;</span><span class="p">,</span> <span class="nx">time</span><span class="o">:</span><span class="s2">&quot;2016/03/03 01:12&quot;</span><span class="p">};</span>
+</span><span class="line"><span class="kd">var</span> <span class="nx">trend</span> <span class="o">=</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;cc&quot;</span><span class="p">,</span> <span class="nx">time</span><span class="o">:</span><span class="s2">&quot;2016/03/04 01:12&quot;</span><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>and I want to find out the one with the earliest time, in the above code, it is “2016/03/02 01:12”, and the corresponding item is “sophos”, here is the realization is js code.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="kd">var</span> <span class="nx">sophos</span> <span class="o">=</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;aa&quot;</span><span class="p">,</span> <span class="nx">time</span><span class="o">:</span><span class="s2">&quot;2016/03/02 01:12&quot;</span><span class="p">};</span>
+</span><span class="line"><span class="kd">var</span> <span class="nx">mcafee</span> <span class="o">=</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;bb&quot;</span><span class="p">,</span> <span class="nx">time</span><span class="o">:</span><span class="s2">&quot;2016/03/03 01:12&quot;</span><span class="p">};</span>
+</span><span class="line"><span class="kd">var</span> <span class="nx">trend</span> <span class="o">=</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;cc&quot;</span><span class="p">,</span> <span class="nx">time</span><span class="o">:</span><span class="s2">&quot;2016/03/04 01:12&quot;</span><span class="p">};</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">[</span><span class="nx">sophos</span><span class="p">,</span> <span class="nx">mcafee</span><span class="p">,</span> <span class="nx">trend</span><span class="p">];</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">function</span> <span class="nx">compare</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">){</span>
+</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="nx">a</span><span class="p">.</span><span class="nx">time</span> <span class="o">&lt;</span> <span class="nx">b</span><span class="p">.</span><span class="nx">time</span><span class="p">){</span>
+</span><span class="line">        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">a</span><span class="p">.</span><span class="nx">time</span> <span class="o">&gt;</span> <span class="nx">b</span><span class="p">.</span><span class="nx">time</span><span class="p">){</span>
+</span><span class="line">        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">    <span class="k">else</span> <span class="p">{</span>
+</span><span class="line">        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">sort</span><span class="p">(</span><span class="nx">compare</span><span class="p">);</span>
+</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2016/01/20/sort-lines-by-length/">Sort Lines by Length</a></h1>
     
     
@@ -135,105 +277,6 @@ cat $file | awk &#39;{ print length($0) & &hellip;">
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2016/01/05/a-wonderful-post-on-stdin/">A Wonderful Post on Stdin</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2016-01-05T14:30:04+08:00" pubdate data-updated="true">2016 年1 月5 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>The following is a wonderful post on stdin, stdout, stderr.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line">http://www.jstorimer.com/blogs/workingwithcode/7766119-when-to-use-stderr-instead-of-stdout
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>Notes:</p>
-
-<p>1.[-n string] 将会测试string的长度，如果大于0， 则返回true</p>
-
-<p>2.awesome os-x command line:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line">https://github.com/herrbischoff/awesome-osx-command-line
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/12/31/wget-several-files-using-bash-cmd/">Wget Several Files Using Bash Cmd</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-12-31T18:36:09+08:00" pubdate data-updated="true">2015 年12 月31 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I want to down the lecture notes on the page </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line">http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-001-structure-and-interpretation-of-computer-programs-spring-2005/lecture-notes/
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>Here is the command I am using.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">wget http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-001-structure-and-interpretation-of-computer-programs-spring-2005/lecture-notes/lecture<span class="o">{</span>1..26<span class="o">}</span>webhand.pdf
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>The sad thing is not all the sequences are consecutive.</p>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/10/">&larr; Older</a>
@@ -249,6 +292,14 @@ cat $file | awk &#39;{ print length($0) & &hellip;">
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2019/06/10/emrzhong-chuang-jian-huede-superuser/">EMR中创建HUE的superuser</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/06/06/centoszhong-an-zhuang-nodejs/">CentOS中安装nodejs</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2019/06/06/centoszhong-xiu-gai-shi-qu/">CentOS中修改时区</a>
@@ -282,14 +333,6 @@ cat $file | awk &#39;{ print length($0) & &hellip;">
         <a href="/blog/2019/05/30/hadoopquan-wei-zhi-nan-ncdcshu-ju-zhun-bei-gong-zuo-bei-wang/">Hadoop权威指南ncdc数据准备工作备忘</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2019/05/23/da-jian-supersetshu-ju-bao-biao-ping-tai/">搭建Superset数据报表平台</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2019/05/23/zen-yang-wu-xu-shou-dong-shu-ru-mi-ma-lian-jie-postgresql/">怎样无需手动输入密码连接PostgreSQL</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -297,14 +340,14 @@ cat $file | awk &#39;{ print length($0) & &hellip;">
   <h1>Categories</h1>
   <ul id="categories">
     <li class='category'><a href='/blog/categories/algorithms/'>Algorithms (8)</a></li>
-<li class='category'><a href='/blog/categories/bigdata/'>BigData (7)</a></li>
+<li class='category'><a href='/blog/categories/bigdata/'>BigData (8)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (4)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
 <li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (1)</a></li>
 <li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (5)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (1)</a></li>
 <li class='category'><a href='/blog/categories/javascript/'>Javascript (4)</a></li>
-<li class='category'><a href='/blog/categories/linux-and-mac/'>Linux&Mac (12)</a></li>
+<li class='category'><a href='/blog/categories/linux-and-mac/'>Linux&Mac (13)</a></li>
 <li class='category'><a href='/blog/categories/php/'>PHP (5)</a></li>
 <li class='category'><a href='/blog/categories/perl/'>Perl (50)</a></li>
 <li class='category'><a href='/blog/categories/python/'>Python (9)</a></li>

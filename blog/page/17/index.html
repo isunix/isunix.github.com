@@ -9,7 +9,8 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="my tmux’s sockets are output to the dir “~/tmp”, however today I encountered the problem saying “can’t create socket: Permission denied” while I &hellip;">
+  <meta name="description" content="There is a “tap” method in Ruby and I find it is very useful. The definitionof “tap” in ruby documentaion is: 1
+Yields self to the block, and then &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -99,6 +100,158 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2015/07/20/tap-method-in-ruby/">Tap Method in Ruby</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-07-20T15:31:51+08:00" pubdate data-updated="true">2015 年7 月20 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>There is a “tap” method in Ruby and I find it is very useful.</p>
+
+<p>The definitionof “tap” in ruby documentaion is:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">Yields self to the block, and then returns self. The primary purpose of this method is to “tap into” a method chain, in order to perform operations on intermediate results within the chain.</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Put it anonther way:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">It’s a helper for call chaining. It passes its object into the given block and, after the block finishes, returns the object:</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="ruby"><span class="line"><span class="n">an_object</span><span class="o">.</span><span class="n">tap</span> <span class="k">do</span> <span class="o">|</span><span class="n">o</span><span class="o">|</span>
+</span><span class="line">  <span class="c1"># do stuff with an_object, which is in o</span>
+</span><span class="line"><span class="k">end</span> <span class="c1"># ===&gt; an_object</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Another example:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+</pre></td><td class="code"><pre><code class="ruby"><span class="line"><span class="k">def</span> <span class="nf">hash_table</span><span class="p">(</span><span class="n">numbers</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+</span><span class="line">    <span class="o">[].</span><span class="n">tap</span> <span class="k">do</span> <span class="o">|</span><span class="n">result</span><span class="o">|</span>
+</span><span class="line">      <span class="nb">hash</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span class="line">      <span class="n">numbers</span><span class="o">.</span><span class="n">each_with_index</span> <span class="k">do</span> <span class="o">|</span> <span class="n">n</span><span class="p">,</span> <span class="n">i</span> <span class="o">|</span>
+</span><span class="line">        <span class="k">if</span> <span class="n">j</span> <span class="o">=</span> <span class="nb">hash</span><span class="o">[</span><span class="n">target</span> <span class="o">-</span> <span class="n">n</span><span class="o">]</span>
+</span><span class="line">          <span class="k">return</span> <span class="n">result</span> <span class="o">&lt;&lt;</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+</span><span class="line">        <span class="k">end</span>
+</span><span class="line">        <span class="nb">hash</span><span class="o">[</span><span class="n">n</span><span class="o">]</span> <span class="o">=</span> <span class="n">i</span>
+</span><span class="line">      <span class="k">end</span>
+</span><span class="line">    <span class="k">end</span>
+</span><span class="line">  <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/07/02/minutes-on-setting-up-emacs-on-macos/">Minutes on Setting Up Emacs on Macos</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-07-02T15:29:18+08:00" pubdate data-updated="true">2015 年7 月2 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><ol>
+  <li>I am am using gui emacs and I want to it to be started from the command line, then I have to do this:</li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nb">alias </span><span class="nv">emacs</span><span class="o">=</span><span class="s1">&#39;open -a /Applications/Emacs.app $1&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<ol>
+  <li>I want to change the default font and font size:</li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="o">(</span><span class="nb">set</span>-default-font <span class="s2">&quot;Monaco 28&quot;</span><span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<ol>
+  <li>I want to use evil, after putting it into ~/.emacs.d, also I need to put the folliwng things in to ~/.emacs.d/init.el</li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="o">(</span>add-to-list <span class="s1">&#39;load-path &quot;~/.emacs.d/evil&quot;)</span>
+</span><span class="line"><span class="s1">(require &#39;</span>evil<span class="o">)</span>
+</span><span class="line"><span class="o">(</span>evil-mode 1<span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<ol>
+  <li>I am using slime, so I have to put the following things into my ~/.emacs.d/init.el</li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="o">(</span>setq inferior-lisp-program <span class="s2">&quot;/usr/local/bin/sbcl&quot;</span><span class="o">)</span>
+</span><span class="line"><span class="o">(</span>setq slime-contribs <span class="err">&#39;</span><span class="o">(</span>slime-fancy<span class="o">))</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2015/06/19/tmux-cant-create-socket-permission-denied/">Tmux:can&#8217;t Create Socket: Permission Denied</a></h1>
     
     
@@ -138,107 +291,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/06/09/find-cgi-bin-dir-on-a-linux-server/">Find Cgi-bin Dir on a Linux Server</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-06-09T18:49:22+08:00" pubdate data-updated="true">2015 年6 月9 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line">ps -ef | grep cgi
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>On my server, this will give out the cgi-bin dir.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/06/02/remove-obsolete-packages-on-ubuntu/">Remove Obsolete Packages on Ubuntu</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-06-02T10:03:32+08:00" pubdate data-updated="true">2015 年6 月2 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>After upgrading ubuntu to a new version, there will be many obsolete packages. To see these packages, you can </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line">sudo apt-get upgrade
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>It will list all those obsolete packages.</p>
-
-<p>To autoremove them one by one will be will tedious, we can first copy those packages into a file, like aa.txt, then use the following perl script to do it once:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="nn">File::</span><span class="n">Slurp</span><span class="p">;</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">@modules</span><span class="p">;</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">$text</span> <span class="o">=</span> <span class="n">read_file</span><span class="p">(</span><span class="s">&#39;aa.txt&#39;</span><span class="p">,</span> <span class="n">text_ref</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">);</span>
-</span><span class="line"><span class="nv">@modules</span> <span class="o">=</span> <span class="nb">grep</span> <span class="p">{</span><span class="ow">not</span> <span class="sr">/\s+/</span><span class="p">}</span> <span class="nb">split</span><span class="p">(</span><span class="s">&#39;[\s+]&#39;</span><span class="p">,</span> <span class="nv">$text</span><span class="p">);</span>
-</span><span class="line"><span class="k">foreach</span> <span class="k">my</span> <span class="nv">$module</span> <span class="p">(</span><span class="nv">@modules</span><span class="p">){</span>
-</span><span class="line">	<span class="nb">system</span><span class="p">(</span><span class="s">&quot;sudo apt-get autoremove $module&quot;</span><span class="p">);</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>Done!</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/18/">&larr; Older</a>
@@ -254,6 +306,14 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2019/06/10/emrzhong-chuang-jian-huede-superuser/">EMR中创建HUE的superuser</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/06/06/centoszhong-an-zhuang-nodejs/">CentOS中安装nodejs</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2019/06/06/centoszhong-xiu-gai-shi-qu/">CentOS中修改时区</a>
@@ -287,14 +347,6 @@
         <a href="/blog/2019/05/30/hadoopquan-wei-zhi-nan-ncdcshu-ju-zhun-bei-gong-zuo-bei-wang/">Hadoop权威指南ncdc数据准备工作备忘</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2019/05/23/da-jian-supersetshu-ju-bao-biao-ping-tai/">搭建Superset数据报表平台</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2019/05/23/zen-yang-wu-xu-shou-dong-shu-ru-mi-ma-lian-jie-postgresql/">怎样无需手动输入密码连接PostgreSQL</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -302,14 +354,14 @@
   <h1>Categories</h1>
   <ul id="categories">
     <li class='category'><a href='/blog/categories/algorithms/'>Algorithms (8)</a></li>
-<li class='category'><a href='/blog/categories/bigdata/'>BigData (7)</a></li>
+<li class='category'><a href='/blog/categories/bigdata/'>BigData (8)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (4)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
 <li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (1)</a></li>
 <li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (5)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (1)</a></li>
 <li class='category'><a href='/blog/categories/javascript/'>Javascript (4)</a></li>
-<li class='category'><a href='/blog/categories/linux-and-mac/'>Linux&Mac (12)</a></li>
+<li class='category'><a href='/blog/categories/linux-and-mac/'>Linux&Mac (13)</a></li>
 <li class='category'><a href='/blog/categories/php/'>PHP (5)</a></li>
 <li class='category'><a href='/blog/categories/perl/'>Perl (50)</a></li>
 <li class='category'><a href='/blog/categories/python/'>Python (9)</a></li>

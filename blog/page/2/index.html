@@ -9,8 +9,8 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="在python代码中通过 from pyspark.sql.functions import col 来引入 col 这个函数的时候，总是报错，找不到这个函数. 后来参考
-https://stackoverflow.com/questions/40163106/cannot-find-col- &hellip;">
+  <meta name="description" content="
+">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -100,6 +100,87 @@ https://stackoverflow.com/questions/40163106/cannot-find-col- &hellip;">
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2019/06/06/amazonec2zhong-xiu-gai-shi-qu/">AmazonEC2中修改时区</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2019-06-06T14:33:07+08:00" pubdate data-updated="true">2019 年6 月6 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2019/06/04/prestowen-ti-debug/">Presto问题debug</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2019-06-04T10:27:51+08:00" pubdate data-updated="true">2019 年6 月4 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>我们在执行presto-cli命名的时候，可以使用如下的方式 <code>presto-cli --catalog hive --schema $schema --output-format CSV_HEADER --server $ip:$port --debug</code></p>
+
+<p>这样就会打印出诊断信息出来.</p>
+
+<p>我们使用如下的命令看下presto-server的状态 <code>initctl list | grep -i presto</code></p>
+
+<p><code>sudo stop presto-server</code> 这样来关闭 presto-server； <code>sudo start presto-server</code> 这样来开启.</p>
+
+<p>如果想要看查看presto的log，可以去 <code>/var/log/presto</code>, 对于debug非常有用.</p>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2019/06/04/pysparkzhong-yin-ru-colhan-shu-de-fang-shi/">PySpark中引入col函数的方式</a></h1>
     
     
@@ -133,104 +214,6 @@ https://stackoverflow.com/questions/40163106/cannot-find-col- &hellip;">
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2019/06/03/gitshang-chuan-da-wen-jian/">Git上传大文件</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2019-06-03T09:28:32+08:00" pubdate data-updated="true">2019 年6 月3 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>我们如果需要上传大文件到git，比如数据集，可以使用Git Large File Storage <a href="https://git-lfs.github.com">https://git-lfs.github.com</a>.</p>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2019/05/31/pipenvshi-yong-bei-wang/">Pipenv使用备忘</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2019-05-31T08:22:14+08:00" pubdate data-updated="true">2019 年5 月31 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>我在某个python环境下有很多包，我们使用如下的命令把这些包给输出到requirements.txt里去</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">pip freeze &gt; requirements.txt
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>然后我们使用pipenv来创建一个虚拟环境</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">mkdir xxx <span class="o">&amp;&amp;</span> mv requirements.txt xxx <span class="o">&amp;&amp;</span> <span class="nb">cd </span>xxx
-</span><span class="line">pipenv --python 3.6
-</span><span class="line">pipenv shell
-</span><span class="line">pipenv install --dev
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>如果我们想删除创建的virtualenv, 可以</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">pipenv --rm
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>也可以到<code>~/.local/share/virtualenvs</code>下面去手动删除.</p>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -246,6 +229,14 @@ https://stackoverflow.com/questions/40163106/cannot-find-col- &hellip;">
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2019/06/10/emrzhong-chuang-jian-huede-superuser/">EMR中创建HUE的superuser</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/06/06/centoszhong-an-zhuang-nodejs/">CentOS中安装nodejs</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2019/06/06/centoszhong-xiu-gai-shi-qu/">CentOS中修改时区</a>
@@ -279,14 +270,6 @@ https://stackoverflow.com/questions/40163106/cannot-find-col- &hellip;">
         <a href="/blog/2019/05/30/hadoopquan-wei-zhi-nan-ncdcshu-ju-zhun-bei-gong-zuo-bei-wang/">Hadoop权威指南ncdc数据准备工作备忘</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2019/05/23/da-jian-supersetshu-ju-bao-biao-ping-tai/">搭建Superset数据报表平台</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2019/05/23/zen-yang-wu-xu-shou-dong-shu-ru-mi-ma-lian-jie-postgresql/">怎样无需手动输入密码连接PostgreSQL</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -294,14 +277,14 @@ https://stackoverflow.com/questions/40163106/cannot-find-col- &hellip;">
   <h1>Categories</h1>
   <ul id="categories">
     <li class='category'><a href='/blog/categories/algorithms/'>Algorithms (8)</a></li>
-<li class='category'><a href='/blog/categories/bigdata/'>BigData (7)</a></li>
+<li class='category'><a href='/blog/categories/bigdata/'>BigData (8)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (4)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
 <li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (1)</a></li>
 <li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (5)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (1)</a></li>
 <li class='category'><a href='/blog/categories/javascript/'>Javascript (4)</a></li>
-<li class='category'><a href='/blog/categories/linux-and-mac/'>Linux&Mac (12)</a></li>
+<li class='category'><a href='/blog/categories/linux-and-mac/'>Linux&Mac (13)</a></li>
 <li class='category'><a href='/blog/categories/php/'>PHP (5)</a></li>
 <li class='category'><a href='/blog/categories/perl/'>Perl (50)</a></li>
 <li class='category'><a href='/blog/categories/python/'>Python (9)</a></li>

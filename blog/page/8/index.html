@@ -9,14 +9,7 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="花了很长的时间在hive的安装和配置上， 先把有用的链接记下来， 等有空了再详细的写下安装过程。 1
-2
-3
-4
-5
-6
-http://stackoverflow.com/questions/5016505/mysql-grant-all-privileges-on-database
-https &hellip;">
+  <meta name="description" content="I need to use the regexp_extract function to extract certain parts of a string recently when I am doing big data analysis. http://www.cloudera.com/ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -106,6 +99,184 @@ https &hellip;">
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2016/07/15/regexp-extract-usage-in-impala/">Regexp_extract Usage in Impala</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2016-07-15T10:43:30+08:00" pubdate data-updated="true">2016 年7 月15 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I need to use the regexp_extract function to extract certain parts of a string recently when I am doing big data analysis.</p>
+
+<p>http://www.cloudera.com/documentation/archive/impala/2-x/2-1-x/topics/impala_string_functions.html, this link shows us how to do, but sadly regex in impala is a little different from those in perl or python, so I have to look through the page and try again.</p>
+
+<p>I keep a note here for regexp_extract for my later own usage.</p>
+
+<p>Say I have a string </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">%2C%22hidisp%22%3A27%2C%22quietMode</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>and I want to extract the number followd by “hidisp” and ‘”:’, which is number ‘27’ here.</p>
+
+<p>As describe in the above document, </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">Because the impala-shell interpreter uses the \ character for escaping, use \\ to represent the regular expression escape character in any regular expressions that you submit through impala-shell</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>So if we want to represent the numbers here, we have use ‘\d’ rather than just ‘\d’ which is a standard in other programming  languages.</p>
+
+<p>regexp_extract usage is in the following format,</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">regexp_extract(string subject, string pattern, int index)</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<ol>
+  <li>group 0 matches the full pattern string, including the portion outside any () group, so</li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">select regexp_extract('%2C%22hidisp%22%3A27%2C%22quietMode', 'hidisp%22%3A(\\d+)', 0);</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>this will give out:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">hidisp%22%3A27</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<ol>
+  <li>group 1 matches just the contents inside the first () group in the pattern string:</li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">select regexp_extract('%2C%22hidisp%22%3A27%2C%22quietMode', 'hidisp%22%3A(\\d+)', 1);</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>will give out</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">27</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>And for the support of non-greedy matches using .*?, take the following string as an example,</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">%2C%22reboot%22%3A27%2C%22quietMode%2C%22reboot%22%3A12%2C%22quietMode</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>How to extract the first match number for “reboot”, we can get the result in the following ways</p>
+
+<p>a. without any “.*?” around the string pattern ‘reboot%22%3A(\d+)’, which is the easiest way I think </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">select regexp_extract('%2C%22reboot%22%3A27%2C%22quietMode%2C%22reboot%22%3A12%2C%22quietMode', 'reboot%22%3A(\\d+)', 1);</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>or </p>
+
+<p>b. append “.*?” right after the string pattern ‘reboot%22%3A(\d+)’,</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">select regexp_extract('%2C%22reboot%22%3A27%2C%22quietMode%2C%22reboot%22%3A12%2C%22quietMode', 'reboot%22%3A(\\d+).*?', 1);</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>or</p>
+
+<p>c. surround the string pattern ‘reboot%22%3A(\d+)’ with ‘.*?’ at both sides</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">select regexp_extract('%2C%22reboot%22%3A27%2C%22quietMode%2C%22reboot%22%3A12%2C%22quietMode', '.*?reboot%22%3A(\\d+).*?', 1);</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>So after the tree ways to get the leftmost match, we can easily guess how to get the rifht-most match.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">select regexp_extract('%2C%22reboot%22%3A27%2C%22quietMode%2C%22reboot%22%3A12%2C%22quietMode', '.*?reboot%22%3A(\\d+)', 1);</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>That is just by appending the string pattern with ‘.*?’ at its left side.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2016/07/12/tmux-error-while-loading-shared-libraries-libevent-2-dot-0-so-dot-5/">Tmux: Error While Loading Shared Libraries: libevent-2.0.so.5</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2016-07-12T10:34:50+08:00" pubdate data-updated="true">2016 年7 月12 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I have kept a blog on tmux installation which is about missing module libevent, and the post is on:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line">http://isunix.github.io/blog/2014/12/24/libevent-not-found-error-while-install-tmux/
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Recently even after I install the livevent module, I still get the following errors after installing tmux and then running tmux:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line"> ./tmux: error while loading shared libraries: libevent-2.0.so.5: cannot open shared object file: No such file or
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>I installed the libevent lib in $HOME/local/lib, and tmux says it can not find the library, Weird. With the help of one of my colleague, this problem is solved.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nb">export </span><span class="nv">DIR</span><span class="o">=</span><span class="s2">&quot;$HOME/local&quot;</span>
+</span><span class="line"><span class="nb">export </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="nv">$LD_LIBRARY_PATH</span>:<span class="nv">$DIR</span>/lib
+</span><span class="line">./configure --prefix<span class="o">=</span><span class="nv">$DIR</span> <span class="nv">CFLAGS</span><span class="o">=</span><span class="s2">&quot;-I$DIR/include&quot;</span> <span class="nv">LDFLAGS</span><span class="o">=</span><span class="s2">&quot;-L$DIR/lib&quot;</span>
+</span><span class="line">make
+</span><span class="line">make install
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>As we can see, the point here is setting the “LD_LIBRARY_PATH” variable.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2016/07/02/configure-hive-on-mac/">Configure Hive on Mac</a></h1>
     
     
@@ -151,143 +322,6 @@ https &hellip;">
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2016/03/31/update-all-python-modules-through-pip/">Update All Python Modules Through Pip</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2016-03-31T16:32:49+08:00" pubdate data-updated="true">2016 年3 月31 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I want to update all the installed python modules through pip. Here below is one recipe I found.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="kn">import</span> <span class="nn">pip</span>
-</span><span class="line"><span class="kn">from</span> <span class="nn">subprocess</span> <span class="kn">import</span> <span class="n">call</span>
-</span><span class="line">
-</span><span class="line"><span class="k">for</span> <span class="n">dist</span> <span class="ow">in</span> <span class="n">pip</span><span class="o">.</span><span class="n">get_installed_distributions</span><span class="p">():</span>
-</span><span class="line">    <span class="n">call</span><span class="p">(</span><span class="s">&quot;pip install --upgrade &quot;</span> <span class="o">+</span> <span class="n">dist</span><span class="o">.</span><span class="n">project_name</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2016/03/09/sort-an-object-by-one-key-using-js/">Sort an Object by One Key Using Js</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2016-03-09T09:41:03+08:00" pubdate data-updated="true">2016 年3 月9 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I have something like the following,</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="kd">var</span> <span class="nx">sophos</span> <span class="o">=</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;aa&quot;</span><span class="p">,</span> <span class="nx">time</span><span class="o">:</span><span class="s2">&quot;2016/03/02 01:12&quot;</span><span class="p">};</span>
-</span><span class="line"><span class="kd">var</span> <span class="nx">mcafee</span> <span class="o">=</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;bb&quot;</span><span class="p">,</span> <span class="nx">time</span><span class="o">:</span><span class="s2">&quot;2016/03/03 01:12&quot;</span><span class="p">};</span>
-</span><span class="line"><span class="kd">var</span> <span class="nx">trend</span> <span class="o">=</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;cc&quot;</span><span class="p">,</span> <span class="nx">time</span><span class="o">:</span><span class="s2">&quot;2016/03/04 01:12&quot;</span><span class="p">};</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>and I want to find out the one with the earliest time, in the above code, it is “2016/03/02 01:12”, and the corresponding item is “sophos”, here is the realization is js code.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="kd">var</span> <span class="nx">sophos</span> <span class="o">=</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;aa&quot;</span><span class="p">,</span> <span class="nx">time</span><span class="o">:</span><span class="s2">&quot;2016/03/02 01:12&quot;</span><span class="p">};</span>
-</span><span class="line"><span class="kd">var</span> <span class="nx">mcafee</span> <span class="o">=</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;bb&quot;</span><span class="p">,</span> <span class="nx">time</span><span class="o">:</span><span class="s2">&quot;2016/03/03 01:12&quot;</span><span class="p">};</span>
-</span><span class="line"><span class="kd">var</span> <span class="nx">trend</span> <span class="o">=</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;cc&quot;</span><span class="p">,</span> <span class="nx">time</span><span class="o">:</span><span class="s2">&quot;2016/03/04 01:12&quot;</span><span class="p">};</span>
-</span><span class="line">
-</span><span class="line"><span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">[</span><span class="nx">sophos</span><span class="p">,</span> <span class="nx">mcafee</span><span class="p">,</span> <span class="nx">trend</span><span class="p">];</span>
-</span><span class="line">
-</span><span class="line"><span class="kd">function</span> <span class="nx">compare</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">){</span>
-</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="nx">a</span><span class="p">.</span><span class="nx">time</span> <span class="o">&lt;</span> <span class="nx">b</span><span class="p">.</span><span class="nx">time</span><span class="p">){</span>
-</span><span class="line">        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">a</span><span class="p">.</span><span class="nx">time</span> <span class="o">&gt;</span> <span class="nx">b</span><span class="p">.</span><span class="nx">time</span><span class="p">){</span>
-</span><span class="line">        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">    <span class="k">else</span> <span class="p">{</span>
-</span><span class="line">        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">sort</span><span class="p">(</span><span class="nx">compare</span><span class="p">);</span>
-</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/9/">&larr; Older</a>
@@ -303,6 +337,14 @@ https &hellip;">
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2019/06/10/emrzhong-chuang-jian-huede-superuser/">EMR中创建HUE的superuser</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/06/06/centoszhong-an-zhuang-nodejs/">CentOS中安装nodejs</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2019/06/06/centoszhong-xiu-gai-shi-qu/">CentOS中修改时区</a>
@@ -336,14 +378,6 @@ https &hellip;">
         <a href="/blog/2019/05/30/hadoopquan-wei-zhi-nan-ncdcshu-ju-zhun-bei-gong-zuo-bei-wang/">Hadoop权威指南ncdc数据准备工作备忘</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2019/05/23/da-jian-supersetshu-ju-bao-biao-ping-tai/">搭建Superset数据报表平台</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2019/05/23/zen-yang-wu-xu-shou-dong-shu-ru-mi-ma-lian-jie-postgresql/">怎样无需手动输入密码连接PostgreSQL</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -351,14 +385,14 @@ https &hellip;">
   <h1>Categories</h1>
   <ul id="categories">
     <li class='category'><a href='/blog/categories/algorithms/'>Algorithms (8)</a></li>
-<li class='category'><a href='/blog/categories/bigdata/'>BigData (7)</a></li>
+<li class='category'><a href='/blog/categories/bigdata/'>BigData (8)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (4)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
 <li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (1)</a></li>
 <li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (5)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (1)</a></li>
 <li class='category'><a href='/blog/categories/javascript/'>Javascript (4)</a></li>
-<li class='category'><a href='/blog/categories/linux-and-mac/'>Linux&Mac (12)</a></li>
+<li class='category'><a href='/blog/categories/linux-and-mac/'>Linux&Mac (13)</a></li>
 <li class='category'><a href='/blog/categories/php/'>PHP (5)</a></li>
 <li class='category'><a href='/blog/categories/perl/'>Perl (50)</a></li>
 <li class='category'><a href='/blog/categories/python/'>Python (9)</a></li>

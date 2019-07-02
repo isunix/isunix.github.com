@@ -9,8 +9,8 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="Will keep notes of some of the mojo tips I got. 1.A helper command to generate app for us. 1
-mojo generate app This will generate Mojolicious &hellip;">
+  <meta name="description" content="Enter the user name and password in a shell script in the following way will make the login process easier. 1
+mysql -h $host -u$user -p$pass $db ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -94,6 +94,92 @@ mojo generate app This will generate Mojolicious &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/06/01/login-to-mysql-server-without-entering-password/">Login to Mysql Server Without Entering Password</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-06-01T10:58:02+08:00" pubdate data-updated="true">2015 年6 月1 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Enter the user name and password in a shell script in the following way will make the login process easier.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">mysql -h <span class="nv">$host</span> -u<span class="nv">$user</span> -p<span class="nv">$pass</span> <span class="nv">$db</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/12/24/libevent-not-found-error-while-install-tmux/">Libevent Not Found Error While Install Tmux</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-12-24T21:13:11+08:00" pubdate data-updated="true">2014 年12 月24 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>While I was installing tmux on cent-os, I met the error saying that “libevent not found”, something like this. Then I download libevent and install it into the location ‘/home/stsun/local’ dir.</p>
+
+<p>Still I get the error saying that “libevent not found”. I solved the problem by the following way.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nv">DIR</span><span class="o">=</span><span class="s2">&quot;$HOME/local&quot;</span>
+</span><span class="line">./configure --prefix<span class="o">=</span><span class="nv">$DIR</span> <span class="nv">CFLAGS</span><span class="o">=</span><span class="s2">&quot;-I$DIR/include&quot;</span> <span class="nv">LDFLAGS</span><span class="o">=</span><span class="s2">&quot;-L$DIR/lib&quot;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Since I install libevent with the option, “–prefix=$HOME/local”.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -197,195 +283,6 @@ mojo generate app This will generate Mojolicious &hellip;">
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/11/26/siting-css-in-cgi-script/">Siting Css in Cgi Script</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-11-26T17:09:55+08:00" pubdate data-updated="true">2014 年11 月26 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>While writing perl cgi scripts, when we need to add css or js files, there are two ways to add the file, one using absolute path, one using relative path. </p>
-
-<p>First we want to check the document root of our file, we cat get it using the following way. </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="c1">#!/usr/bin/env perl</span>
-</span><span class="line">
-</span><span class="line"><span class="k">print</span> <span class="s">&quot;Content-type: text/plain; charset=utf-8\n\n&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="k">print</span> <span class="nv">$ENV</span><span class="p">{</span><span class="n">DOCUMENT_ROOT</span><span class="p">};</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>For example, in my case, it gives out the following result:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="s">&quot;/usr/local/www/apache22/data&quot;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>We assume that our server name is gopid.com, in the /usr/local/www/apache22/ dir, there are the data dir, cgi-bin dir, we make a sub-dir named steven in the data dir, then we can using the following two ways to site the css and js files.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line"><span class="nt">&lt;link</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span> <span class="na">href=</span><span class="s">&quot;/steven/js/bootstrap/css/bootstrap.min.css&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span><span class="nt">&gt;</span>
-</span><span class="line"><span class="nt">&lt;link</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span> <span class="na">href=</span><span class="s">&quot;/steven/css/margin.css&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span><span class="nt">&gt;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>Or using the absolute path: </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line"><span class="nt">&lt;link</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span> <span class="na">href=</span><span class="s">&quot;https://goopig.com/steven/js/bootstrap/css/bootstrap.min.css&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span><span class="nt">&gt;</span>
-</span><span class="line"><span class="nt">&lt;link</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span> <span class="na">href=</span><span class="s">&quot;https://goopig.com/steven/css/margin.css&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span><span class="nt">&gt;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>PS, if we want to print out the whole env infomation using cgi, we can using the following script:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="c1">#!/usr/local/bin/perl</span>
-</span><span class="line">
-</span><span class="line"><span class="k">print</span> <span class="s">&quot;Content-type: text/plain; charset=utf-8\n\n&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="k">foreach</span> <span class="nv">$var</span> <span class="p">(</span><span class="nb">sort</span><span class="p">(</span><span class="nb">keys</span><span class="p">(</span><span class="nv">%ENV</span><span class="p">)))</span> <span class="p">{</span>
-</span><span class="line">    <span class="nv">$val</span> <span class="o">=</span> <span class="nv">$ENV</span><span class="p">{</span><span class="nv">$var</span><span class="p">};</span>
-</span><span class="line">    <span class="nv">$val</span> <span class="o">=~</span> <span class="n">s</span><span class="o">|\</span><span class="n">n</span><span class="o">|\\</span><span class="n">n</span><span class="o">|</span><span class="n">g</span><span class="p">;</span>
-</span><span class="line">    <span class="nv">$val</span> <span class="o">=~</span> <span class="n">s</span><span class="o">|</span><span class="s">&quot;|\\&quot;</span><span class="o">|</span><span class="n">g</span><span class="p">;</span>
-</span><span class="line">    <span class="k">print</span> <span class="s">&quot;${var}=\&quot;${val}\&quot;\n&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/11/24/apache-setup-to-redirect-a-site/">Apache Setup to Redirect a Site</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-11-24T14:31:59+08:00" pubdate data-updated="true">2014 年11 月24 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>While I was developing a dancer application, I usually open a new port, like goople.com:4001. Actually there is a better way to do this.</p>
-
-<p>On our CentOS server, in the httpd.conf file, we include the following piece to it:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line">Include etc/apache22/Includes/*.conf
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>If it is not already there.</p>
-
-<p>Then in the dir,  /usr/local/etc/apache22/Includes, we will write our own configuration file.</p>
-
-<p>Then we can make a file named sun.conf in the Includes dir and write to it something like this:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line">Alias /~stsun /home/stsun/public_html
-</span><span class="line">
-</span><span class="line"><span class="nt">&lt;Directory</span> <span class="err">&quot;/</span><span class="na">home</span><span class="err">/</span><span class="na">stsun</span><span class="err">/</span><span class="na">public_html</span><span class="err">&quot;</span><span class="nt">&gt;</span>
-</span><span class="line">	Options +Indexes FollowSymLinks
-</span><span class="line">	AllowOverride All
-</span><span class="line">	Order allow,deny
-</span><span class="line">	Allow from all
-</span><span class="line"><span class="nt">&lt;/Directory&gt;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>Of course we have another way for this:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line">NameVirtualHost *:8080
-</span><span class="line"><span class="nt">&lt;VirtualHost</span> <span class="err">*</span><span class="na">:8080</span><span class="nt">&gt;</span>
-</span><span class="line">    DocumentRoot &quot;/Users/sun/w&quot;
-</span><span class="line">    <span class="nt">&lt;Directory</span> <span class="err">&quot;/</span><span class="na">Users</span><span class="err">/</span><span class="na">sun</span><span class="err">/</span><span class="na">w</span><span class="err">&quot;</span><span class="nt">&gt;</span>
-</span><span class="line">        DirectoryIndex index.html
-</span><span class="line">        AddHandler cgi-script .py .pl
-</span><span class="line">        AddType text/html .py .html .pl
-</span><span class="line">        Options ExecCGI
-</span><span class="line">        Order Allow,Deny
-</span><span class="line">        AllowOverride All
-</span><span class="line">        Allow from all
-</span><span class="line">    <span class="nt">&lt;/Directory&gt;</span>
-</span><span class="line"><span class="nt">&lt;/VirtualHost&gt;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/21/">&larr; Older</a>
@@ -401,6 +298,14 @@ mojo generate app This will generate Mojolicious &hellip;">
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2019/07/02/yong-pythonlai-fa-song-markdownge-shi-de-you-jian/">用Python来发送markdown格式的邮件</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/06/10/zeppelinda-pei-presto/">Zeppelin搭配Presto</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2019/06/10/emrzhong-chuang-jian-huede-superuser/">EMR中创建HUE的superuser</a>
@@ -434,14 +339,6 @@ mojo generate app This will generate Mojolicious &hellip;">
         <a href="/blog/2019/05/31/pipenvshi-yong-bei-wang/">Pipenv使用备忘</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2019/05/31/shi-yong-dou-ban-yuan-an-zhuang-pythonbao/">使用豆瓣源安装python包</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2019/05/30/hadoopquan-wei-zhi-nan-ncdcshu-ju-zhun-bei-gong-zuo-bei-wang/">Hadoop权威指南ncdc数据准备工作备忘</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -449,12 +346,13 @@ mojo generate app This will generate Mojolicious &hellip;">
   <h1>Categories</h1>
   <ul id="categories">
     <li class='category'><a href='/blog/categories/algorithms/'>Algorithms (8)</a></li>
-<li class='category'><a href='/blog/categories/bigdata/'>BigData (8)</a></li>
+<li class='category'><a href='/blog/categories/bigdata/'>BigData (9)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (4)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
 <li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (1)</a></li>
 <li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (5)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (1)</a></li>
+<li class='category'><a href='/blog/categories/fun/'>Fun (1)</a></li>
 <li class='category'><a href='/blog/categories/javascript/'>Javascript (4)</a></li>
 <li class='category'><a href='/blog/categories/linux-and-mac/'>Linux&Mac (13)</a></li>
 <li class='category'><a href='/blog/categories/php/'>PHP (5)</a></li>

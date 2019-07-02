@@ -9,7 +9,7 @@ categories: Fun
 
 mdmail， 这个是一个支持用 markdown 格式来发送邮件的工具.
 
-```py
+```python
 import mdmail
 
 email="""

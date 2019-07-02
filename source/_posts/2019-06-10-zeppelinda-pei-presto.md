@@ -10,6 +10,7 @@ categories: BigData
 ``https://stackoverflow.com/questions/35858606/presto-interpreter-in-zeppelin-on-emr``
 
 - 在 master 机器上安装 jdbc
+
 ```sh
 sudo /usr/lib/zeppelin/bin/install-interpreter.sh --name jdbc
 ```

@@ -9,7 +9,7 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="The usual way for us to swap two values in c is by introducing a intermediate variable. But actually there is way for us to complete the task wnile &hellip;">
+  <meta name="description" content="We have many mids with one mid every line, now we want to print all those mids out with a fixed number of mids per line. I want to realize this &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -93,6 +93,89 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/17/split-mids-to-several-lines-with-fixed-number-per-line/">Split Mids to Several Lines With Fixed Number Per Line</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-17T10:26:09+08:00" pubdate data-updated="true">2014 年7 月17 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>We have many mids with one mid every line, now we want to print all those mids out with a fixed number of mids per line. I want to realize this function in Perl first without success, so I am using PHP. </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+</pre></td><td class="code"><pre><code class="php"><span class="line"><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class="line">
+</span><span class="line"><span class="nv">$scriptname</span> <span class="o">=</span> <span class="nv">$argv</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+</span><span class="line"><span class="nv">$txt_file</span> <span class="o">=</span> <span class="nv">$argv</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+</span><span class="line"><span class="nv">$dir</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="nv">$contents</span> <span class="o">=</span> <span class="nb">file_get_contents</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">$dir</span><span class="s2">/</span><span class="si">$txt_file</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nx">FILE_USE_INCLUDE_PATH</span><span class="p">);</span>
+</span><span class="line"><span class="nv">$contents</span> <span class="o">=</span> <span class="nx">trim</span><span class="p">(</span><span class="nv">$contents</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="nv">$mid_splited</span> <span class="o">=</span> <span class="nb">preg_split</span><span class="p">(</span><span class="s2">&quot;/</span><span class="se">\n</span><span class="s2">/&quot;</span><span class="p">,</span> <span class="nv">$contents</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="nv">$count_mids</span> <span class="o">=</span> <span class="nb">count</span><span class="p">(</span><span class="nv">$mid_splited</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="k">for</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;</span> <span class="nv">$count_mids</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">){</span>
+</span><span class="line">  <span class="k">print</span> <span class="s2">&quot;</span><span class="si">$mid_splited[$i]</span><span class="s2"> &quot;</span><span class="p">;</span>
+</span><span class="line">  <span class="k">if</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">%</span> <span class="mi">7</span> <span class="o">==</span> <span class="mi">0</span><span class="p">){</span>
+</span><span class="line">    <span class="k">print</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">;</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line"><span class="cp">?&gt;</span><span class="x"></span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>　</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -238,50 +321,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/06/22/sort-in-perl/">Sort in Perl</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-06-22T12:31:50+08:00" pubdate data-updated="true">2014 年6 月22 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>In Perl, function sort() sort the item of an array according to its corresponding acssci code. for example, if we have an array @array = (1, 3, 10, 2, 21) and use sort against this array, we will get the following result: 1 10 2 21 3. However if we want to sort these numbers according to its value, we can use the following method:   </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nb">sort</span><span class="p">{</span><span class="nv">$a</span> <span class="sr">&lt;=&gt;</span> <span class="nv">$b</span><span class="p">}</span> <span class="nv">@array</span><span class="p">;</span>   <span class="c1">#ascending</span>
-</span><span class="line">
-</span><span class="line"><span class="nb">sort</span><span class="p">{</span><span class="nv">$b</span> <span class="sr">&lt;=&gt;</span> <span class="nv">$a</span><span class="p">}</span> <span class="nv">@array</span><span class="p">;</span>   <span class="c1">#descending</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/41/">&larr; Older</a>
@@ -297,6 +336,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2019/07/04/zui-jin-de-gong-zuo-de-%5B%3F%5D-xie-gan-xiang/">最近的工作的一些感想</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2019/07/04/numpyde-%5B%3F%5D-xie-shu-ju-chu-li-bei-wang/">Numpy的一些数据处理备忘</a>
@@ -334,10 +377,6 @@
         <a href="/blog/2019/06/04/pysparkzhong-yin-ru-colhan-shu-de-fang-shi/">PySpark中引入col函数的方式</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2019/06/03/gitshang-chuan-da-wen-jian/">Git上传大文件</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -346,7 +385,7 @@
   <ul id="categories">
     <li class='category'><a href='/blog/categories/algorithms/'>Algorithms (8)</a></li>
 <li class='category'><a href='/blog/categories/bigdata/'>BigData (9)</a></li>
-<li class='category'><a href='/blog/categories/blog/'>Blog (4)</a></li>
+<li class='category'><a href='/blog/categories/blog/'>Blog (5)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
 <li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (2)</a></li>
 <li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (5)</a></li>

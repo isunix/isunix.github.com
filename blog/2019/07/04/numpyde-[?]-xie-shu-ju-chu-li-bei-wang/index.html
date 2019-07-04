@@ -5,13 +5,21 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Some Advanced Perl Tricks - Steven's Blog</title>
+  <title>Numpy的一些数据处理备忘 - Steven's Blog</title>
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="I am taking notes of some of the advanced perl tricks used in perl. 1.to get all the matched items using the /g flag, 1
+  <meta name="description" content="记录numpy中的一些数据处理的方法. 比如我们通过如下的方式，获取到了iris的数据, 1
 2
-$_ = &quot;Just another &hellip;">
+3
+4
+5
+6
+7
+8
+import pandas as pd
+import numpy as np
+from sklearn.datasets import load_iris iris = &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -20,7 +28,7 @@ $_ = &quot;Just another &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://isunix.github.io/blog/2014/10/17/some-advanced-perl-tricks">
+  <link rel="canonical" href="http://isunix.github.io/blog/2019/07/04/numpyde-%5B%3F%5D-xie-shu-ju-chu-li-bei-wang">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Steven's Blog" type="application/atom+xml">
@@ -98,7 +106,7 @@ $_ = &quot;Just another &hellip;">
   
   <header>
     
-      <h1 class="entry-title">Some Advanced Perl Tricks</h1>
+      <h1 class="entry-title">Numpy的一些数据处理备忘</h1>
     
     
       <p class="meta">
@@ -114,43 +122,60 @@ $_ = &quot;Just another &hellip;">
   
 
 
-<time datetime="2014-10-17T18:50:35+08:00" pubdate data-updated="true">2014 年10 月17 日</time>
+<time datetime="2019-07-04T11:43:34+08:00" pubdate data-updated="true">2019 年7 月4 日</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>I am taking notes of some of the advanced perl tricks used in perl.</p>
+<div class="entry-content"><h2 id="numpy">记录numpy中的一些数据处理的方法.</h2>
 
-<p>1.to get all the matched items using the /g flag,</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">$_</span> <span class="o">=</span> <span class="s">&quot;Just another Perl hacker,&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">@words</span> <span class="o">=</span> <span class="sr">/(\S+)/g</span><span class="p">;</span> <span class="c1"># &quot;Just&quot; &quot;another&quot; &quot;Perl&quot; &quot;hacker,&quot;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>2.to get the word count,</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">$word_count</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=</span> <span class="sr">/(\S+)/g</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>3.The built-in pos() operator returns the match position for the string we give it (or $_ by default).</p>
+<p>比如我们通过如下的方式，获取到了iris的数据,</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
 <span class="line-number">3</span>
 <span class="line-number">4</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">$_</span> <span class="o">=</span> <span class="s">&quot;just another perl hacker&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="sr">/(just)/g</span><span class="p">;</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">$pos</span> <span class="o">=</span> <span class="nb">pos</span><span class="p">();</span>
-</span><span class="line"><span class="k">print</span> <span class="s">&quot;[$1] ends at position $pos\n&quot;</span><span class="p">;</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+</span><span class="line"><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+</span><span class="line"><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_iris</span>
+</span><span class="line">
+</span><span class="line"><span class="n">iris</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">()</span>
+</span><span class="line"><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">iris</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">iris</span><span class="o">.</span><span class="n">feature_names</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;sepal length&#39;</span><span class="p">,</span> <span class="s">&#39;sepal width&#39;</span><span class="p">,</span> <span class="s">&#39;petal length&#39;</span><span class="p">,</span> <span class="s">&#39;petal width&#39;</span><span class="p">,</span> <span class="s">&#39;label&#39;</span><span class="p">]</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>4.To anchor our next match exactly where we left off the last time, we can use the \G anchor. It’s just like the beginning of string anchor \A, except for where \G anchors at the current match position. If our match fails, Perl resets pos() and we start at the beginning of the string.</p>
+<p>如果我们想要去取第一列，第二列，和最后一列(label), 可以使用如下的方式:</p>
 
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">100</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p><code>df.shape</code> 是 <code>(150, 5)</code>, <code>data.shape</code> 是 <code>(100, 3)</code></p>
+
+<p><code>data</code> 现在是<code>lists in list</code> 的一个<code>ndarray</code></p>
+
+<p>如果我们想要去取<code>data</code>的每行的前两列， 还有最后一列，可以使用如下的方式:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">data</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p><code>X, y</code> 都是 ndarray. <code>x.shape</code> 是 <code>(100, 2)</code>, <code>y.shape</code> 是 <code>(100,)</code></p>
+
+<p>如果要对标签进行二分类，我们可以使用 python 的 list comprehension:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span> <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">y</span><span class="p">])</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>这样处理了之后，y 的 shape 还是跟之前是一样的.</p>
 </div>
 
 
@@ -173,12 +198,12 @@ $_ = &quot;Just another &hellip;">
   
 
 
-<time datetime="2014-10-17T18:50:35+08:00" pubdate data-updated="true">2014 年10 月17 日</time>
+<time datetime="2019-07-04T11:43:34+08:00" pubdate data-updated="true">2019 年7 月4 日</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/perl/'>Perl</a>
+    <a class='category' href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI</a>
   
 </span>
 
@@ -194,10 +219,8 @@ $_ = &quot;Just another &hellip;">
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2014/10/17/a-perl-script-to-rename-file-names/" title="Previous Post: a perl script to rename file names">&laquo; a perl script to rename file names</a>
+        <a class="basic-alignment left" href="/blog/2019/07/02/yong-pythonlai-fa-song-markdownge-shi-de-you-jian/" title="Previous Post: 用Python来发送markdown格式的邮件">&laquo; 用Python来发送markdown格式的邮件</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2014/10/24/use-of-select-in-perl/" title="Next Post: use of select in perl">use of select in perl &raquo;</a>
       
     </p>
   </footer>

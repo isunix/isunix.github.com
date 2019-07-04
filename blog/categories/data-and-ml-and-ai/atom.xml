@@ -4,7 +4,7 @@
   <title><![CDATA[catogories：Data&ML&AI | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/data-and-ml-and-ai/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2019-07-02T15:42:51+08:00</updated>
+  <updated>2019-07-04T12:01:35+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,54 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Numpy的一些数据处理备忘]]></title>
+    <link href="http://isunix.github.io/blog/2019/07/04/numpyde-%5B%3F%5D-xie-shu-ju-chu-li-bei-wang/"/>
+    <updated>2019-07-04T11:43:34+08:00</updated>
+    <id>http://isunix.github.io/blog/2019/07/04/numpyde-[?]-xie-shu-ju-chu-li-bei-wang</id>
+    <content type="html"><![CDATA[<h2 id="numpy">记录numpy中的一些数据处理的方法.</h2>
+
+<p>比如我们通过如下的方式，获取到了iris的数据,</p>
+
+<p>```py
+import pandas as pd
+import numpy as np
+from sklearn.datasets import load_iris</p>
+
+<p>iris = load_iris()
+df = pd.DataFrame(iris.data, columns=iris.feature_names)</p>
+
+<p>df.columns = [‘sepal length’, ‘sepal width’, ‘petal length’, ‘petal width’, ‘label’]
+```</p>
+
+<p>如果我们想要去取第一列，第二列，和最后一列(label), 可以使用如下的方式:</p>
+
+<p><code>py
+data = np.array(df.iloc[:100, [0, 1, -1]])
+</code></p>
+
+<p><code>df.shape</code> 是 <code>(150, 5)</code>, <code>data.shape</code> 是 <code>(100, 3)</code></p>
+
+<p><code>data</code> 现在是<code>lists in list</code> 的一个<code>ndarray</code></p>
+
+<p>如果我们想要去取<code>data</code>的每行的前两列， 还有最后一列，可以使用如下的方式:</p>
+
+<p><code>py
+X, y = data[:, :-1], data[:, -1]
+</code></p>
+
+<p><code>X, y</code> 都是 ndarray. <code>x.shape</code> 是 <code>(100, 2)</code>, <code>y.shape</code> 是 <code>(100,)</code></p>
+
+<p>如果要对标签进行二分类，我们可以使用 python 的 list comprehension:</p>
+
+<p><code>py
+y = np.array([1 if i == 1 else -1 for i in y])
+</code></p>
+
+<p>这样处理了之后，y 的 shape 还是跟之前是一样的.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Useful Links for Learning ML and SpamAssassin]]></title>

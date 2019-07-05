@@ -9,12 +9,7 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="We will use linked list to output words in a file in alphabetical order. This example is in: 1
-http://man.ddvip.com/web/perl/perl9.htm#10.1 1
-2
-3
-4
-5 &hellip;">
+  <meta name="description" content="The problem is: I have to update a js file, say in the dir public_html/js/aa.js. also I have to upate it in another dir, like public_html2/js/aa.js &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -104,238 +99,6 @@ http://man.ddvip.com/web/perl/perl9.htm#10.1 1
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2015/09/07/linked-list-in-perl/">Linked List in Perl</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-09-07T12:30:05+08:00" pubdate data-updated="true">2015 年9 月7 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>We will use linked list to output words in a file in alphabetical order. This example is in:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line">http://man.ddvip.com/web/perl/perl9.htm#10.1
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-<span class="line-number">28</span>
-<span class="line-number">29</span>
-<span class="line-number">30</span>
-<span class="line-number">31</span>
-<span class="line-number">32</span>
-<span class="line-number">33</span>
-<span class="line-number">34</span>
-<span class="line-number">35</span>
-<span class="line-number">36</span>
-<span class="line-number">37</span>
-<span class="line-number">38</span>
-<span class="line-number">39</span>
-<span class="line-number">40</span>
-<span class="line-number">41</span>
-<span class="line-number">42</span>
-<span class="line-number">43</span>
-<span class="line-number">44</span>
-<span class="line-number">45</span>
-<span class="line-number">46</span>
-<span class="line-number">47</span>
-<span class="line-number">48</span>
-<span class="line-number">49</span>
-<span class="line-number">50</span>
-<span class="line-number">51</span>
-<span class="line-number">52</span>
-<span class="line-number">53</span>
-<span class="line-number">54</span>
-<span class="line-number">55</span>
-<span class="line-number">56</span>
-<span class="line-number">57</span>
-<span class="line-number">58</span>
-<span class="line-number">59</span>
-<span class="line-number">60</span>
-<span class="line-number">61</span>
-<span class="line-number">62</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="n">utf8</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="nv">$header</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="k">while</span> <span class="p">(</span> <span class="nv">$line</span> <span class="o">=</span> <span class="sr">&lt;STDIN&gt;</span> <span class="p">)</span> <span class="p">{</span>
-</span><span class="line">    <span class="nb">chomp</span><span class="p">;</span>
-</span><span class="line">    <span class="nv">@words</span> <span class="o">=</span> <span class="nb">split</span><span class="p">(</span><span class="sr"> /\s+/</span><span class="p">,</span> <span class="nv">$line</span> <span class="p">);</span>
-</span><span class="line">    <span class="k">foreach</span> <span class="k">my</span> <span class="nv">$word</span> <span class="p">(</span><span class="nv">@words</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">        <span class="c1">##remove punctuation and transform from uppercase to lower case.</span>
-</span><span class="line">
-</span><span class="line">        <span class="nv">$word</span> <span class="o">=~</span> <span class="sr">s/[,.:;-]//</span><span class="p">;</span>
-</span><span class="line">        <span class="nv">$word</span> <span class="o">=~</span> <span class="nb">tr</span><span class="sr">/A-Z/</span><span class="n">a</span><span class="o">-</span><span class="n">z</span><span class="o">/</span><span class="p">;</span>
-</span><span class="line">        <span class="o">&amp;</span><span class="n">add_word_to_list</span><span class="p">(</span><span class="nv">$word</span><span class="p">);</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="o">&amp;</span><span class="n">print_list</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">sub </span><span class="nf">add_word_to_list</span> <span class="p">{</span>
-</span><span class="line">
-</span><span class="line">    <span class="c1">#these two are lists.</span>
-</span><span class="line">    <span class="k">my</span> <span class="p">(</span><span class="nv">$word</span><span class="p">)</span> <span class="o">=</span> <span class="nv">@_</span><span class="p">;</span>
-</span><span class="line">    <span class="k">my</span> <span class="p">(</span><span class="nv">$pointer</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line">    <span class="c1"># if list is empty, add first item;</span>
-</span><span class="line">    <span class="k">if</span> <span class="p">(</span> <span class="nv">$header</span> <span class="ow">eq</span> <span class="s">&quot;&quot;</span> <span class="p">)</span> <span class="p">{</span>
-</span><span class="line">        <span class="nv">$header</span> <span class="o">=</span> <span class="nv">$word</span><span class="p">;</span>
-</span><span class="line">        <span class="nv">$wordlist</span><span class="p">{</span><span class="nv">$word</span><span class="p">}</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="p">;</span>
-</span><span class="line">        <span class="k">return</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">
-</span><span class="line">    <span class="c1"># if word identical to first element in list, do nothing</span>
-</span><span class="line">    <span class="k">return</span> <span class="k">if</span> <span class="p">(</span> <span class="nv">$header</span> <span class="ow">eq</span> <span class="nv">$word</span> <span class="p">);</span>
-</span><span class="line">
-</span><span class="line">    <span class="c1"># to see if word should be the new first word in the list.</span>
-</span><span class="line">
-</span><span class="line">    <span class="k">if</span> <span class="p">(</span> <span class="nv">$header</span> <span class="ow">gt</span> <span class="nv">$word</span> <span class="p">)</span> <span class="p">{</span>
-</span><span class="line">        <span class="nv">$wordlist</span><span class="p">{</span><span class="nv">$word</span><span class="p">}</span> <span class="o">=</span> <span class="nv">$header</span><span class="p">;</span>
-</span><span class="line">        <span class="nv">$header</span> <span class="o">=</span> <span class="nv">$word</span><span class="p">;</span>
-</span><span class="line">        <span class="k">return</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">
-</span><span class="line">    <span class="c1"># find place where the word belongs</span>
-</span><span class="line">    <span class="nv">$pointer</span> <span class="o">=</span> <span class="nv">$header</span><span class="p">;</span>
-</span><span class="line">    <span class="k">while</span> <span class="p">(</span> <span class="nv">$wordlist</span><span class="p">{</span><span class="nv">$pointer</span><span class="p">}</span> <span class="ow">ne</span> <span class="s">&quot;&quot;</span> <span class="o">&amp;&amp;</span> <span class="nv">$wordlist</span><span class="p">{</span><span class="nv">$pointer</span><span class="p">}</span> <span class="ow">lt</span> <span class="nv">$word</span> <span class="p">)</span> <span class="p">{</span>
-</span><span class="line">        <span class="nv">$pointer</span> <span class="o">=</span> <span class="nv">$wordlist</span><span class="p">{</span><span class="nv">$pointer</span><span class="p">};</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">
-</span><span class="line">    <span class="c1"># if the word seen already, do nothing</span>
-</span><span class="line">    <span class="k">return</span> <span class="k">if</span> <span class="p">(</span> <span class="nv">$word</span> <span class="ow">eq</span> <span class="nv">$wordlist</span><span class="p">{</span><span class="nv">$pointer</span><span class="p">}</span> <span class="p">);</span>
-</span><span class="line">    <span class="nv">$wordlist</span><span class="p">{</span><span class="nv">$word</span><span class="p">}</span>    <span class="o">=</span> <span class="nv">$wordlist</span><span class="p">{</span><span class="nv">$pointer</span><span class="p">};</span>
-</span><span class="line">    <span class="nv">$wordlist</span><span class="p">{</span><span class="nv">$pointer</span><span class="p">}</span> <span class="o">=</span> <span class="nv">$word</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="k">sub </span><span class="nf">print_list</span> <span class="p">{</span>
-</span><span class="line">    <span class="nb">local</span> <span class="p">(</span><span class="nv">$pointer</span><span class="p">);</span>
-</span><span class="line">    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Words in the input are:\n&quot;</span><span class="p">);</span>
-</span><span class="line">    <span class="nv">$pointer</span> <span class="o">=</span> <span class="nv">$header</span><span class="p">;</span>
-</span><span class="line">    <span class="k">while</span> <span class="p">(</span> <span class="nv">$pointer</span> <span class="ow">ne</span> <span class="s">&quot;&quot;</span> <span class="p">)</span> <span class="p">{</span>
-</span><span class="line">        <span class="k">print</span><span class="p">(</span><span class="s">&quot;$pointer\n&quot;</span><span class="p">);</span>
-</span><span class="line">        <span class="nv">$pointer</span> <span class="o">=</span> <span class="nv">$wordlist</span><span class="p">{</span><span class="nv">$pointer</span><span class="p">};</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>and for a tree structure:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-<span class="line-number">28</span>
-<span class="line-number">29</span>
-<span class="line-number">30</span>
-<span class="line-number">31</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="n">utf8</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">my</span> <span class="nv">$rootname</span> <span class="o">=</span> <span class="s">&quot;parent&quot;</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">my</span> <span class="nv">%tree</span> <span class="o">=</span> <span class="p">(</span>
-</span><span class="line">    <span class="s">&quot;parentleft&quot;</span><span class="p">,</span> <span class="s">&quot;child1&quot;</span><span class="p">,</span>      <span class="s">&quot;parentright&quot;</span><span class="p">,</span> <span class="s">&quot;child2&quot;</span><span class="p">,</span>
-</span><span class="line">    <span class="s">&quot;child1left&quot;</span><span class="p">,</span> <span class="s">&quot;grandchild1&quot;</span><span class="p">,</span> <span class="s">&quot;child1right&quot;</span><span class="p">,</span> <span class="s">&quot;grandchild2&quot;</span><span class="p">,</span>
-</span><span class="line">    <span class="s">&quot;child2left&quot;</span><span class="p">,</span> <span class="s">&quot;grandchild3&quot;</span><span class="p">,</span> <span class="s">&quot;child2right&quot;</span><span class="p">,</span> <span class="s">&quot;grandchild4&quot;</span>
-</span><span class="line"><span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="c1"># traverse tree, printing its elements</span>
-</span><span class="line"><span class="o">&amp;</span><span class="n">print_tree</span><span class="p">(</span><span class="nv">$rootname</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="k">sub </span><span class="nf">print_tree</span> <span class="p">{</span>
-</span><span class="line">    <span class="nb">local</span> <span class="p">(</span><span class="nv">$nodename</span><span class="p">)</span> <span class="o">=</span> <span class="nv">@_</span><span class="p">;</span>
-</span><span class="line">    <span class="nb">local</span> <span class="p">(</span> <span class="nv">$leftchildname</span><span class="p">,</span> <span class="nv">$rightchildname</span> <span class="p">);</span>
-</span><span class="line">
-</span><span class="line">    <span class="nv">$leftchildname</span>  <span class="o">=</span> <span class="nv">$nodename</span> <span class="o">.</span> <span class="s">&quot;left&quot;</span><span class="p">;</span>
-</span><span class="line">    <span class="nv">$rightchildname</span> <span class="o">=</span> <span class="nv">$nodename</span> <span class="o">.</span> <span class="s">&quot;right&quot;</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line">    <span class="c1"># this is a left-order traversal.</span>
-</span><span class="line">
-</span><span class="line">    <span class="k">if</span> <span class="p">(</span> <span class="nv">$tree</span><span class="p">{</span><span class="nv">$leftchildname</span><span class="p">}</span> <span class="ow">ne</span> <span class="s">&quot;&quot;</span> <span class="p">)</span> <span class="p">{</span>
-</span><span class="line">        <span class="o">&amp;</span><span class="n">print_tree</span><span class="p">(</span> <span class="nv">$tree</span><span class="p">{</span><span class="nv">$leftchildname</span><span class="p">}</span> <span class="p">);</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">    <span class="k">print</span><span class="p">(</span><span class="s">&quot;$nodename\n&quot;</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line">    <span class="k">if</span> <span class="p">(</span> <span class="nv">$tree</span><span class="p">{</span><span class="nv">$rightchildname</span><span class="p">}</span> <span class="ow">ne</span> <span class="s">&quot;&quot;</span> <span class="p">)</span> <span class="p">{</span>
-</span><span class="line">        <span class="o">&amp;</span><span class="n">print_tree</span><span class="p">(</span> <span class="nv">$tree</span><span class="p">{</span><span class="nv">$rightchildname</span><span class="p">}</span> <span class="p">);</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
       <h1 class="entry-title"><a href="/blog/2015/08/10/js-file-does-not-update/">Js File Does Not Update</a></h1>
     
     
@@ -419,6 +182,178 @@ http://man.ddvip.com/web/perl/perl9.htm#10.1 1
 
     </article>
   
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/07/27/python-linked-list-example/">Python Linked List Example</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-07-27T16:21:27+08:00" pubdate data-updated="true">2015 年7 月27 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Will use python linked list to solve the following problem:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+<span class="line-number">35</span>
+<span class="line-number">36</span>
+<span class="line-number">37</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="k">class</span> <span class="nc">Node</span><span class="p">:</span>
+</span><span class="line">    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="bp">None</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class="line">        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="k">class</span> <span class="nc">LinkedList</span><span class="p">:</span>
+</span><span class="line">    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">head</span> <span class="o">=</span> <span class="bp">None</span>
+</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">tail</span> <span class="o">=</span> <span class="bp">None</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">def</span> <span class="nf">addNode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+</span><span class="line">        <span class="n">node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</span><span class="line">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+</span><span class="line">            <span class="bp">self</span><span class="o">.</span><span class="n">head</span> <span class="o">=</span> <span class="n">node</span>
+</span><span class="line">            <span class="bp">self</span><span class="o">.</span><span class="n">tail</span> <span class="o">=</span> <span class="n">node</span>
+</span><span class="line">        <span class="k">else</span><span class="p">:</span>
+</span><span class="line">            <span class="bp">self</span><span class="o">.</span><span class="n">tail</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">node</span>
+</span><span class="line">            <span class="bp">self</span><span class="o">.</span><span class="n">tail</span> <span class="o">=</span> <span class="n">node</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class="line">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+</span><span class="line">            <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span>
+</span><span class="line">            <span class="n">nodeStore</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">index</span><span class="o">.</span><span class="n">value</span><span class="p">)]</span>
+</span><span class="line">            <span class="k">while</span> <span class="n">index</span><span class="o">.</span><span class="n">next</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+</span><span class="line">                <span class="n">index</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">next</span>
+</span><span class="line">                <span class="n">nodeStore</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">index</span><span class="o">.</span><span class="n">value</span><span class="p">))</span>
+</span><span class="line">            <span class="k">return</span> <span class="s">&quot;LinkedList  [ &quot;</span> <span class="o">+</span> <span class="s">&quot;-&gt;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">nodeStore</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot; ]&quot;</span>
+</span><span class="line">        <span class="k">return</span> <span class="s">&quot;LinkedList  []&quot;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">def</span> <span class="nf">generatedLinkedList</span><span class="p">(</span><span class="n">numArray</span><span class="p">):</span>
+</span><span class="line">    <span class="n">linkedlist</span> <span class="o">=</span> <span class="n">LinkedList</span><span class="p">()</span>
+</span><span class="line">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">numArray</span><span class="p">)):</span>
+</span><span class="line">        <span class="n">linkedlist</span><span class="o">.</span><span class="n">addNode</span><span class="p">(</span><span class="n">numArray</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+</span><span class="line">    <span class="k">return</span> <span class="n">linkedlist</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Then we will start to solve the problem:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="kn">from</span> <span class="nn">LinkedList</span> <span class="kn">import</span> <span class="o">*</span>
+</span><span class="line">
+</span><span class="line"><span class="k">class</span> <span class="nc">ListsSum</span><span class="p">:</span>
+</span><span class="line">    <span class="k">def</span> <span class="nf">addLists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">l1</span><span class="p">,</span> <span class="n">l2</span><span class="p">):</span>
+</span><span class="line">        <span class="n">p1</span> <span class="o">=</span> <span class="n">l1</span><span class="o">.</span><span class="n">head</span>
+</span><span class="line">        <span class="n">p2</span> <span class="o">=</span> <span class="n">l2</span><span class="o">.</span><span class="n">head</span>
+</span><span class="line">        <span class="n">carry</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class="line">        <span class="n">linkedlist_sum</span> <span class="o">=</span> <span class="n">LinkedList</span><span class="p">()</span>
+</span><span class="line">        <span class="k">while</span> <span class="p">(</span><span class="n">p1</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">p2</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">carry</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
+</span><span class="line">            <span class="n">dig_sum</span> <span class="o">=</span> <span class="n">carry</span>
+</span><span class="line">            <span class="k">if</span> <span class="n">p1</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+</span><span class="line">                <span class="n">dig_sum</span> <span class="o">+=</span> <span class="n">p1</span><span class="o">.</span><span class="n">value</span>
+</span><span class="line">                <span class="n">p1</span> <span class="o">=</span> <span class="n">p1</span><span class="o">.</span><span class="n">next</span>
+</span><span class="line">            <span class="k">if</span> <span class="n">p2</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+</span><span class="line">                <span class="n">dig_sum</span> <span class="o">+=</span> <span class="n">p2</span><span class="o">.</span><span class="n">value</span>
+</span><span class="line">                <span class="n">p2</span> <span class="o">=</span> <span class="n">p2</span><span class="o">.</span><span class="n">next</span>
+</span><span class="line">
+</span><span class="line">            <span class="n">linkedlist_sum</span><span class="o">.</span><span class="n">addNode</span><span class="p">(</span><span class="n">dig_sum</span><span class="o">%</span><span class="mi">10</span><span class="p">)</span>
+</span><span class="line">            <span class="n">carry</span> <span class="o">=</span> <span class="n">dig_sum</span><span class="o">/</span><span class="mi">10</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">linkedlist_sum</span>
+</span><span class="line">
+</span><span class="line"><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+</span><span class="line">    <span class="n">solution</span> <span class="o">=</span> <span class="n">ListsSum</span><span class="p">()</span>
+</span><span class="line">    <span class="n">list1</span> <span class="o">=</span> <span class="n">generatedLinkedList</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+</span><span class="line">    <span class="n">list2</span> <span class="o">=</span> <span class="n">generatedLinkedList</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span>
+</span><span class="line">    <span class="k">print</span><span class="p">(</span><span class="n">list1</span><span class="p">)</span>
+</span><span class="line">    <span class="k">print</span><span class="p">(</span><span class="n">list2</span><span class="p">)</span>
+</span><span class="line">    <span class="k">print</span><span class="p">(</span><span class="n">solution</span><span class="o">.</span><span class="n">addLists</span><span class="p">(</span><span class="n">list1</span><span class="p">,</span><span class="n">list2</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
+  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/19/">&larr; Older</a>
@@ -437,10 +372,6 @@ http://man.ddvip.com/web/perl/perl9.htm#10.1 1
     
       <li class="post">
         <a href="/blog/2019/07/05/ryu-yan-de-%5B%3F%5D-xie-ji-lu/">R语言的一些记录</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2019/07/05/the-elements-of-statistical-learning-xue-xi-bi-ji/">The Elements of Statistical Learning Xue Xi Bi Ji</a>
       </li>
     
       <li class="post">
@@ -473,6 +404,10 @@ http://man.ddvip.com/web/perl/perl9.htm#10.1 1
     
       <li class="post">
         <a href="/blog/2019/06/06/centoszhong-xiu-gai-shi-qu/">CentOS中修改时区</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/06/06/amazonec2zhong-xiu-gai-shi-qu/">AmazonEC2中修改时区</a>
       </li>
     
   </ul>

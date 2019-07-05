@@ -9,8 +9,8 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="The following is a wonderful post on stdin, stdout, stderr. 1
-http://www.jstorimer.com/blogs/workingwithcode/7766119-when-to-use-stderr-instead-of- &hellip;">
+  <meta name="description" content="I have a file containing quite many lines of strings and I want to sort them by line length. Here is how. 1
+cat $file | awk &#39;{ print length($0) & &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -94,6 +94,46 @@ http://www.jstorimer.com/blogs/workingwithcode/7766119-when-to-use-stderr-instea
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2016/01/20/sort-lines-by-length/">Sort Lines by Length</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2016-01-20T10:14:15+08:00" pubdate data-updated="true">2016 年1 月20 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I have a file containing quite many lines of strings and I want to sort them by line length. Here is how.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat <span class="nv">$file</span> | awk <span class="s1">&#39;{ print length($0) &quot; &quot; $0; }&#39;</span> | sort -r -n | cut -d <span class="s1">&#39; &#39;</span> -f 2- | less
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -194,357 +234,6 @@ http://www.jstorimer.com/blogs/workingwithcode/7766119-when-to-use-stderr-instea
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/12/21/useful-awk-commands/">Useful Awk Commands</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-12-21T16:51:15+08:00" pubdate data-updated="true">2015 年12 月21 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>The following blogs are referenced, </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">http://www.catonmat.net/blog/awk-one-liners-explained-part-one/</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>And I will list some of the commands I think might be useful for later usage here.</p>
-
-<ul>
-  <li>Print the total number of lines containing word “Regex”.</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;/Regex/ { n++ }; END { print n+0 }&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Print every line with more than 4 fields.</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;NF &gt; 4&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Print every line where the value of the last field is greater than 4.</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;$NF &gt; 4&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Convert Windows/DOS newlines (CRLF) to Unix newlines (LF) from Unix.</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;{ sub(/\r$/,&quot;&quot;); print }&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Convert Unix newlines (LF) to Windows/DOS newlines (CRLF) from Unix.</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;{ sub(/$/,&quot;\r&quot;); print }&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Delete leading whitespace (spaces and tabs) from the beginning of each line (ltrim).</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;{ sub(/^[ \t]+/, &quot;&quot;); print }&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Delete trailing whitespace (spaces and tabs) from the end of each line (rtrim).</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;{ sub(/[ \t]+$/, &quot;&quot;); print }&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Delete both leading and trailing whitespaces from each line (trim).</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;{ gsub(/^[ \t]+|[ \t]+$/, &quot;&quot;); print }&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Insert 5 blank spaces at beginning of each line.</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;{ sub(/^/, &quot;     &quot;); print }&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Center all text on a 79-character width.</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;{ l=length(); s=int((79-l)/2); printf &quot;%&quot;(s+l)&quot;s\n&quot;, $0 }&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Substitute (find and replace) “foo” with “bar” on each line.</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;{ sub(/foo/,&quot;bar&quot;); print }&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Substitute “foo” with “bar” only on lines that contain “baz”.</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;/baz/ { gsub(/foo/, &quot;bar&quot;) }; { print }&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Substitute “foo” with “bar” only on lines that do not contain “baz”.</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;!/baz/ { gsub(/foo/, &quot;bar&quot;) }; { print }&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Change “scarlet” or “ruby” or “puce” to “red”.</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;{ gsub(/scarlet|ruby|puce/, &quot;red&quot;); print}&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Reverse order of lines (emulate “tac”).</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;{ a[i++] = $0 } END { for (j=i-1; j&gt;=0;) print a[j--] }&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Swap first field with second on every line.</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;{ temp = $1; $1 = $2; $2 = temp; print }&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Delete the second field on each line.</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;{ $2 = &quot;&quot;; print }&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Print the fields in reverse order on every line.</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;{ for (i=NF; i&gt;0; i--) printf(&quot;%s &quot;, $i); printf (&quot;\n&quot;) }&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Remove duplicate, consecutive lines (emulate “uniq”)</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;a !~ $0; { a = $0 }&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Remove duplicate, nonconsecutive lines.</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;!a[$0]++&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Concatenate every 5 lines of input with a comma.</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;ORS=NR%5?&quot;,&quot;:&quot;\n&quot;&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Print only the lines that match a regular expression “/regex/” (emulates “grep”).</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;/regex/&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Print only the lines that do not match a regular expression “/regex/” (emulates “grep -v”).</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;!/regex/&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Print the line immediately before a line that matches “/regex/” (but not the line that matches itself).</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;/regex/ { print x }; { x=$0 }&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Print the line immediately after a line that matches “/regex/” (but not the line that matches itself).</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;/regex/ { getline; print }&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Print lines that match any of “AAA” or “BBB”, or “CCC”.</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;/AAA|BBB|CCC/&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Print lines that contain “AAA” and “BBB”, and “CCC” in this order.</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;/AAA.*BBB.*CCC/&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Print only the lines that are 65 characters in length or longer.</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;length &gt; 64&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Print a section of file from regular expression to end of file.</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;/regex/,0&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Print lines 8 to 12 (inclusive).</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;NR==8,NR==12&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Print line number 52.</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;NR==52&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Print section of a file between two regular expressions (inclusive).</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;/Iowa/,/Montana/&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Delete all blank lines from a file.</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk NF
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>This one-liner uses the special NF variable that contains number of fields on the line. For empty lines, NF is 0, that evaluates to false, and false statements do not get the line printed.</p>
-
-<ul>
-  <li>Create a string of a specific length (generate a string of x’s of length 513).</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">awk <span class="s1">&#39;BEGIN { while (a++&lt;513) s=s &quot;x&quot;; print s }&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Insert a string of specific length at a certain character position (insert 49 x’s after 6th char).</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">gawk --re-interval <span class="s1">&#39;BEGIN{ while(a++&lt;49) s=s &quot;x&quot; }; { sub(/^.{6}/,&quot;&amp;&quot; s) }; 1&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Print all lines where 5th field is equal to “abc123”.
-&lt;div class=&#8217;bogus-wrapper&#8217;&gt;<notextile><figure class="code">&lt;figcaption&gt;<span></span>&lt;/figcaption&gt;&lt;div class=&#8221;highlight&#8221;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#8221;gutter&#8221;&gt;&lt;pre class=&#8221;line-numbers&#8221;&gt;<span class="line-number">1</span></figure></notextile></li>
-</ul>
-<p>&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217;&gt;&lt;pre&gt;<code class="sh"><span class="line">cat file | awk <span class="s1">&#39;$5 == &quot;abc123&quot;&#39;</span>
-</span></code>&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/notextile&gt;&lt;/div&gt;</p>
-
-<ul>
-  <li>Print any line where field #5 is not equal to “abc123”.</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;$5 != &quot;abc123&quot;&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>Print all lines whose 7th field matches a regular expression.</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | awk <span class="s1">&#39;$7  ~ /^[a-f]/&#39;</span>
-</span><span class="line">or
-</span><span class="line">cat file | awk <span class="s1">&#39;$7 !~ /^[a-f]/&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/13/">&larr; Older</a>
@@ -563,6 +252,10 @@ http://www.jstorimer.com/blogs/workingwithcode/7766119-when-to-use-stderr-instea
     
       <li class="post">
         <a href="/blog/2019/07/05/ryu-yan-de-%5B%3F%5D-xie-ji-lu/">R语言的一些记录</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/07/05/the-elements-of-statistical-learning-xue-xi-bi-ji/">The Elements of Statistical Learning Xue Xi Bi Ji</a>
       </li>
     
       <li class="post">
@@ -595,10 +288,6 @@ http://www.jstorimer.com/blogs/workingwithcode/7766119-when-to-use-stderr-instea
     
       <li class="post">
         <a href="/blog/2019/06/06/centoszhong-xiu-gai-shi-qu/">CentOS中修改时区</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2019/06/06/amazonec2zhong-xiu-gai-shi-qu/">AmazonEC2中修改时区</a>
       </li>
     
   </ul>

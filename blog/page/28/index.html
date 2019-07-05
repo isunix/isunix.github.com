@@ -9,7 +9,7 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="For named argument, it many uses the trick of changing a list into a hash. Take a look at the following code. 1
+  <meta name="description" content="For Perl constructor, we can seperate the process of object creation from the process of initialization. 1
 2
 3
 4
@@ -21,7 +21,12 @@
 10
 11
 12
-listdir(cols &hellip;">
+13
+14
+15
+16
+17
+18 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -105,6 +110,83 @@ listdir(cols &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/11/constructor-and-destructor-in-perl/">Constructor and Destructor in Perl</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-11T13:46:23+08:00" pubdate data-updated="true">2014 年9 月11 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>For Perl constructor, we can seperate the process of object creation from the process of initialization.  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nb">package</span> <span class="nn">CD::</span><span class="n">Music</span><span class="p">;</span>
+</span><span class="line"><span class="k">use</span> <span class="n">strict</span><span class="p">;</span>
+</span><span class="line"><span class="k">sub </span><span class="nf">new</span> <span class="p">{</span>
+</span><span class="line">	<span class="k">my</span> <span class="nv">$self</span> <span class="o">=</span> <span class="p">{};</span>
+</span><span class="line">	<span class="nb">bless</span> <span class="nv">$self</span><span class="p">,</span> <span class="nb">shift</span><span class="p">;</span>
+</span><span class="line">	<span class="nv">$self</span><span class="o">-&gt;</span><span class="n">_incr_count</span><span class="p">();</span>
+</span><span class="line">	<span class="nv">$self</span><span class="o">-&gt;</span><span class="n">_init</span><span class="p">(</span><span class="nv">@_</span><span class="p">);</span>
+</span><span class="line">	<span class="k">return</span> <span class="nv">$self</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">	<span class="k">my</span> <span class="nv">@_init_mems</span> <span class="o">=</span>
+</span><span class="line">	<span class="sx">qw( _name _artist _publisher _ISBN _tracks _room _shelf _rating )</span><span class="p">;</span>
+</span><span class="line">	<span class="k">sub </span><span class="nf">_init</span> <span class="p">{</span>
+</span><span class="line">		<span class="k">my</span> <span class="p">(</span><span class="nv">$self</span><span class="p">,</span><span class="nv">@args</span><span class="p">)</span> <span class="o">=</span> <span class="nv">@_</span><span class="p">;</span>
+</span><span class="line">		<span class="k">my</span> <span class="nv">%inits</span><span class="p">;</span>
+</span><span class="line">		<span class="nv">@inits</span><span class="p">{</span><span class="nv">@_init_mems</span><span class="p">}</span> <span class="o">=</span> <span class="nv">@args</span><span class="p">;</span>
+</span><span class="line">		<span class="nv">%$self</span> <span class="o">=</span> <span class="nv">%inits</span><span class="p">;</span>
+</span><span class="line">	<span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -302,62 +384,6 @@ listdir(cols &hellip;">
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/06/fun-perl-code-snippets/">Fun Perl Code Snippets</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-09-06T10:02:29+08:00" pubdate data-updated="true">2014 年9 月6 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I collect some useful code snippets here for later usage or just keep a note of what I have read.  </p>
-
-<p>1.find files larger than a specifed size(in byte):   </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="nn">File::</span><span class="n">Find</span><span class="p">;</span>
-</span><span class="line"><span class="n">find</span><span class="p">(</span><span class="k">sub </span><span class="p">{</span> <span class="k">print</span> <span class="s">&quot;$_\n&quot;</span> <span class="k">if</span> <span class="o">-</span><span class="n">s</span> <span class="nv">$_</span> <span class="o">&gt;</span> <span class="nv">$ARGV</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span> <span class="p">},</span> <span class="s">&quot;.&quot;</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>2.we can use “man module::name” or “perldoc module::name” to check the detailed info of a module.   </p>
-
-<p>3.For the first example, if using require, we can write it as the following:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nb">require</span> <span class="nn">File::</span><span class="n">Find</span><span class="p">;</span>
-</span><span class="line"><span class="nn">File::Find::</span><span class="n">find</span><span class="p">(</span><span class="k">sub </span><span class="p">{</span> <span class="k">print</span> <span class="s">&quot;$File::Find::name\n&quot;</span> <span class="k">if</span> <span class="o">-</span><span class="n">s</span> <span class="o">&gt;</span> <span class="mi">1_024_000</span><span class="p">;</span> <span class="p">},</span> <span class="s">&#39;.&#39;</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>4.”use” happens during compile time, whereas “require” happens at runtime.    </p>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/29/">&larr; Older</a>
@@ -376,6 +402,10 @@ listdir(cols &hellip;">
     
       <li class="post">
         <a href="/blog/2019/07/05/ryu-yan-de-%5B%3F%5D-xie-ji-lu/">R语言的一些记录</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/07/05/the-elements-of-statistical-learning-xue-xi-bi-ji/">The Elements of Statistical Learning Xue Xi Bi Ji</a>
       </li>
     
       <li class="post">
@@ -408,10 +438,6 @@ listdir(cols &hellip;">
     
       <li class="post">
         <a href="/blog/2019/06/06/centoszhong-xiu-gai-shi-qu/">CentOS中修改时区</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2019/06/06/amazonec2zhong-xiu-gai-shi-qu/">AmazonEC2中修改时区</a>
       </li>
     
   </ul>

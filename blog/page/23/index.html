@@ -9,7 +9,8 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="For a person who has experience in programming PHP, he should have heard the concept of “include”, “include_once”, “require”, “require_once”. We will &hellip;">
+  <meta name="description" content="I better not write one by myself, there is a very good article on this: 1
+http://perlmaven.com/stdout-stderr-and-redirection ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -93,6 +94,46 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/11/18/print-stderr-in-perl/">Print Stderr in Perl</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-11-18T16:52:16+08:00" pubdate data-updated="true">2014 年11 月18 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I better not write one by myself, there is a very good article on this:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line">http://perlmaven.com/stdout-stderr-and-redirection
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -212,227 +253,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/10/28/object-oriented-perl-chap03/">Object Oriented Perl Chap03</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-10-28T16:58:25+08:00" pubdate data-updated="true">2014 年10 月28 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>This is a note about chap03 in “Object oriented perl”.  </p>
-
-<p>1.In object oriented perl, there are three rules,</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="mi">1</span><span class="o">.</span> <span class="n">rule1:</span> <span class="n">To</span> <span class="n">create</span> <span class="n">a</span> <span class="n">class</span><span class="p">,</span> <span class="n">build</span> <span class="n">a</span> <span class="nb">package</span><span class="o">.</span>
-</span><span class="line"><span class="mi">2</span><span class="o">.</span> <span class="n">rule2:</span> <span class="n">To</span> <span class="n">create</span> <span class="n">a</span> <span class="n">method</span><span class="p">,</span> <span class="nb">write</span> <span class="n">a</span> <span class="n">subroutine</span><span class="o">.</span>
-</span><span class="line"><span class="mi">3</span><span class="o">.</span> <span class="n">rule3:</span> <span class="n">To</span> <span class="n">create</span> <span class="n">an</span> <span class="n">object</span><span class="p">,</span> <span class="nb">bless</span> <span class="n">a</span> <span class="n">referent</span><span class="o">.</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>2.Some cases while calling a method through an arrow:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">$hsh_ref</span><span class="o">-&gt;</span><span class="p">{</span><span class="s">&quot;key&quot;</span><span class="p">};</span><span class="c1"># Access the hash referred to by $hashref</span>
-</span><span class="line"><span class="nv">$arr_ref</span><span class="o">-&gt;</span><span class="p">[</span><span class="nv">$index</span><span class="p">];</span><span class="c1"># Access the array referred to by $arrayref</span>
-</span><span class="line"><span class="nv">$sub_ref</span><span class="o">-&gt;</span><span class="p">(</span><span class="nv">@args</span><span class="p">);</span><span class="c1"># Access the sub referred to by $subref</span>
-</span><span class="line"><span class="nv">$obj_ref</span><span class="o">-&gt;</span><span class="n">method</span><span class="p">(</span><span class="nv">@args</span><span class="p">);</span><span class="c1"># Access the object referred to by $objref</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>3.When a method like <code>Bug::print_me</code> is called, the argument list that it receives begins with the object reference through which it was called, followed by any arguments that were explicitly given to the method. That means that calling </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nn">Bug::</span><span class="n">print_me</span><span class="p">(</span><span class="s">&quot;logfile&quot;</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>is not the same as calling </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">$nextbug</span><span class="o">-&gt;</span><span class="n">print_me</span><span class="p">(</span><span class="s">&quot;logfile&quot;</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>In the first case, print_me is treated as a regular subroutine so the argument list passed to <code>Bug::print_me</code> is equivalent to:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="p">(</span> <span class="s">&quot;logfile&quot;</span> <span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>In the second case, <code>print_me</code> is treated as a method so the argument list is equivalent to:   </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="p">(</span> <span class="nv">$objref</span><span class="p">,</span> <span class="s">&quot;logfile&quot;</span> <span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>Having a reference to the object passed as the first parameter is vital, because it means that the method then has access to the object on which it’s supposed to operate. Hence you’ll find that most methods in Perl start with something equivalent to this:   </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nb">package</span> <span class="n">Bug</span><span class="p">;</span>
-</span><span class="line"><span class="k">sub </span><span class="nf">print_me</span><span class="p">{</span>
-</span><span class="line">	<span class="k">my</span> <span class="p">(</span><span class="nv">$self</span><span class="p">)</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>or better still:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nb">package</span> <span class="n">Bug</span><span class="p">;</span>
-</span><span class="line"><span class="k">sub </span><span class="nf">print_me</span><span class="p">{</span>
-</span><span class="line">	<span class="k">my</span> <span class="p">(</span><span class="nv">$self</span><span class="p">,</span> <span class="nv">@args</span><span class="p">)</span> <span class="o">=</span> <span class="nv">@_</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>This second version is better because it provides a lexically scoped copy of the argument list <code>(@args)</code>.   </p>
-
-<p>4.Unlike other object-oriented languages, Perl doesn’t require that an object be a special kind of recordlike data structure. In fact, you can use any existing type of Perl variable—a scalar, an array, a hash—as an object in Perl.   </p>
-
-<p>5.The <code>bless</code> function takes two arguments: a reference to the variable to be marked and a string containing the name of the class. It then sets an internal flag on the variable, indicating that it now belongs to the class.  </p>
-
-<p>6.We didn’t bless the reference; we blessed the referent. The scalar didn’t change—only the nameless hash it refers to has been marked.   </p>
-
-<p>7.You can check that the blessing succeeded by applying the built-in ref function to <code>$nextbug</code>. Normally, when <code>ref</code> is applied to a reference, it returns the type of that reference.  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">$nextbug</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class="line">    <span class="n">_id</span> <span class="o">=&gt;</span> <span class="s">&quot;00001&quot;</span><span class="p">,</span>
-</span><span class="line">    <span class="n">_type</span> <span class="o">=&gt;</span> <span class="s">&quot;fatal&quot;</span><span class="p">,</span>
-</span><span class="line">    <span class="n">_descr</span> <span class="o">=&gt;</span> <span class="s">&quot;application does not compile&quot;</span>
-</span><span class="line"><span class="p">};</span>
-</span><span class="line"><span class="nb">bless</span> <span class="nv">$nextbug</span><span class="p">,</span> <span class="s">&quot;Bug&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="k">print</span> <span class="nb">ref</span><span class="p">(</span><span class="nv">$nextbug</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>THe above code gives out the result, <code>Bug</code>.   </p>
-
-<p>8.Based on the things we said above, we will show a piece of code to demonstrate how to get and set attributes in perl.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-<span class="line-number">28</span>
-<span class="line-number">29</span>
-<span class="line-number">30</span>
-<span class="line-number">31</span>
-<span class="line-number">32</span>
-<span class="line-number">33</span>
-<span class="line-number">34</span>
-<span class="line-number">35</span>
-<span class="line-number">36</span>
-<span class="line-number">37</span>
-<span class="line-number">38</span>
-<span class="line-number">39</span>
-<span class="line-number">40</span>
-<span class="line-number">41</span>
-<span class="line-number">42</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nb">package</span> <span class="nn">CD::</span><span class="n">Music</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="n">strict</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="p">{</span>
-</span><span class="line">    <span class="k">my</span> <span class="nv">$_count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class="line">    <span class="k">sub </span><span class="nf">get_count</span><span class="p">{</span><span class="nv">$_count</span><span class="p">}</span>
-</span><span class="line">    <span class="k">sub </span><span class="nf">_incr_count</span><span class="p">{</span><span class="o">++</span><span class="nv">$_count</span><span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="k">sub </span><span class="nf">new</span> <span class="p">{</span>
-</span><span class="line">    <span class="k">my</span> <span class="p">(</span><span class="nv">$class</span><span class="p">,</span> <span class="nv">@arg</span><span class="p">)</span> <span class="o">=</span> <span class="nv">@_</span><span class="p">;</span>
-</span><span class="line">    <span class="nv">$class</span><span class="o">-&gt;</span><span class="n">_incr_count</span><span class="p">();</span>
-</span><span class="line">    <span class="nb">bless</span><span class="p">{</span>
-</span><span class="line">        <span class="n">name</span> <span class="o">=&gt;</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-</span><span class="line">        <span class="n">singer</span> <span class="o">=&gt;</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
-</span><span class="line">        <span class="n">album</span> <span class="o">=&gt;</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>
-</span><span class="line">        <span class="n">rating</span> <span class="o">=&gt;</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span>
-</span><span class="line">    <span class="p">},</span> <span class="nv">$class</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="k">sub </span><span class="nf">name</span><span class="p">{</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="p">{</span><span class="n">name</span><span class="p">}</span> <span class="p">}</span>
-</span><span class="line"><span class="k">sub </span><span class="nf">singer</span><span class="p">{</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="p">{</span><span class="n">singer</span><span class="p">}</span> <span class="p">}</span>
-</span><span class="line"><span class="k">sub </span><span class="nf">album</span><span class="p">{</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="p">{</span><span class="n">album</span><span class="p">}</span> <span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="k">sub </span><span class="nf">rating</span> <span class="p">{</span>
-</span><span class="line">    <span class="k">my</span> <span class="p">(</span><span class="nv">$self</span><span class="p">,</span> <span class="nv">$rating</span><span class="p">)</span> <span class="o">=</span> <span class="nv">@_</span><span class="p">;</span>
-</span><span class="line">    <span class="nv">$self</span> <span class="o">-&gt;</span> <span class="p">{</span><span class="n">rating</span><span class="p">}</span> <span class="o">=</span> <span class="nv">$rating</span> <span class="k">if</span> <span class="nv">$rating</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="nb">package</span> <span class="n">main</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">my</span> <span class="nv">$cd</span> <span class="o">=</span> <span class="nn">CD::</span><span class="n">Music</span><span class="o">-&gt;</span><span class="k">new</span><span class="p">(</span><span class="s">&quot;谁的眼泪在飞&quot;</span><span class="p">,</span> <span class="s">&quot;孟庭苇&quot;</span><span class="p">,</span> <span class="s">&quot;谁的眼泪在飞&quot;</span><span class="p">,</span> <span class="mi">7</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="k">print</span> <span class="nv">$cd</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">,</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">print</span> <span class="nv">$cd</span><span class="o">-&gt;</span><span class="n">singer</span><span class="o">.</span><span class="s">&quot;\n&quot;</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">print</span> <span class="nv">$cd</span><span class="o">-&gt;</span><span class="n">album</span><span class="p">,</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">print</span> <span class="nv">$cd</span><span class="o">-&gt;</span><span class="n">rating</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="o">.</span><span class="s">&quot;\n&quot;</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">print</span> <span class="s">&quot;There have been &quot;</span><span class="p">,</span> <span class="nn">CD::</span><span class="n">Music</span><span class="o">-&gt;</span><span class="n">get_count</span><span class="p">(),</span> <span class="s">&quot; CD[s] created\n&quot;</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/24/">&larr; Older</a>
@@ -448,6 +268,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2019/07/05/ryu-yan-de-%5B%3F%5D-xie-ji-lu/">R语言的一些记录</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2019/07/04/shu-ju-fen-xi-he-ji-qi-xue-xi-%5B%3F%5D-xie-zhai-chao/">数据分析和机器学习一些摘抄</a>
@@ -485,10 +309,6 @@
         <a href="/blog/2019/06/06/amazonec2zhong-xiu-gai-shi-qu/">AmazonEC2中修改时区</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2019/06/04/prestowen-ti-debug/">Presto问题debug</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -499,7 +319,7 @@
 <li class='category'><a href='/blog/categories/bigdata/'>BigData (9)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (5)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
-<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (3)</a></li>
+<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (4)</a></li>
 <li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (5)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (1)</a></li>
 <li class='category'><a href='/blog/categories/fun/'>Fun (1)</a></li>

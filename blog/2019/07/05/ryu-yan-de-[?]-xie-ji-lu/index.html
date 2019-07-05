@@ -5,12 +5,13 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Perl One-liner to Remove Blank Lines - Steven's Blog</title>
+  <title>R语言的一些记录 - Steven's Blog</title>
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="Here below is the one-liner I found to remove a blank line in a file. 1
-perl -pi -e &#39;s!^\s+?$!!&#39; file.txt ">
+  <meta name="description" content="在R语言中，如果我们有一个vector 叫 x, x 的值中有 NA，如果我们想要过滤掉 x 中的 NA, 并把过滤后的结果，赋值给变量 y， 可以如下操作: 1
+y &lt;- x[!is.na(x)] 如果我们再想找出 y 中元素大于0的元素，可以如下操作L: 1
+y[y &gt; 0] &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +20,7 @@ perl -pi -e &#39;s!^\s+?$!!&#39; file.txt ">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://isunix.github.io/blog/2014/07/24/perl-one-liner-to-remove-blank-lines">
+  <link rel="canonical" href="http://isunix.github.io/blog/2019/07/05/ryu-yan-de-%5B%3F%5D-xie-ji-lu">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Steven's Blog" type="application/atom+xml">
@@ -97,7 +98,7 @@ perl -pi -e &#39;s!^\s+?$!!&#39; file.txt ">
   
   <header>
     
-      <h1 class="entry-title">Perl One-liner to Remove Blank Lines</h1>
+      <h1 class="entry-title">R语言的一些记录</h1>
     
     
       <p class="meta">
@@ -113,17 +114,35 @@ perl -pi -e &#39;s!^\s+?$!!&#39; file.txt ">
   
 
 
-<time datetime="2014-07-24T15:05:16+08:00" pubdate data-updated="true">2014 年7 月24 日</time>
+<time datetime="2019-07-05T08:00:01+08:00" pubdate data-updated="true">2019 年7 月5 日</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>Here below is the one-liner I found to remove a blank line in a file.   </p>
+<div class="entry-content"><p>在R语言中，如果我们有一个<code>vector</code> 叫 <code>x</code>, <code>x</code> 的值中有 <code>NA</code>，如果我们想要过滤掉 <code>x</code> 中的 <code>NA</code>, 并把过滤后的结果，赋值给变量 <code>y</code>， 可以如下操作:</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">perl</span> <span class="o">-</span><span class="n">pi</span> <span class="o">-</span><span class="n">e</span> <span class="s">&#39;s!^\s+?$!!&#39;</span> <span class="n">file</span><span class="o">.</span><span class="n">txt</span>
+</pre></td><td class="code"><pre><code class="r"><span class="line">y <span class="o">&lt;-</span> x<span class="p">[</span><span class="o">!</span>is.na<span class="p">(</span>x<span class="p">)]</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>如果我们再想找出 <code>y</code> 中元素大于0的元素，可以如下操作L:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="r"><span class="line">y<span class="p">[</span>y <span class="o">&gt;</span> <span class="m">0</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>以上两步合在一起，可以如下操作:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="r"><span class="line">x<span class="p">[</span><span class="o">!</span>is.na<span class="p">(</span>x<span class="p">)</span> <span class="o">&amp;</span> x <span class="o">&gt;</span> <span class="m">0</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>如果我们直接使用 <code>x[x &gt; 0]</code> 是不行的，会得到如下的包含<code>NA</code> 值的一个 <code>vector</code>:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="r"><span class="line"> <span class="kc">NA</span>        <span class="kc">NA</span> <span class="m">0.3488261</span>        <span class="kc">NA</span> <span class="m">2.4099262</span>        <span class="kc">NA</span>        <span class="kc">NA</span>        <span class="kc">NA</span>        <span class="kc">NA</span>        <span class="kc">NA</span> <span class="m">0.4626879</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 </div>
 
@@ -147,12 +166,12 @@ perl -pi -e &#39;s!^\s+?$!!&#39; file.txt ">
   
 
 
-<time datetime="2014-07-24T15:05:16+08:00" pubdate data-updated="true">2014 年7 月24 日</time>
+<time datetime="2019-07-05T08:00:01+08:00" pubdate data-updated="true">2019 年7 月5 日</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/perl/'>Perl</a>
+    <a class='category' href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI</a>
   
 </span>
 
@@ -168,10 +187,8 @@ perl -pi -e &#39;s!^\s+?$!!&#39; file.txt ">
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2014/07/21/perl-script-to-comiple-c-slash-cpp-files-conveniently/" title="Previous Post: perl script to comiple c/cpp files conveniently">&laquo; perl script to comiple c/cpp files conveniently</a>
+        <a class="basic-alignment left" href="/blog/2019/07/04/shu-ju-fen-xi-he-ji-qi-xue-xi-%5B%3F%5D-xie-zhai-chao/" title="Previous Post: 数据分析和机器学习一些摘抄">&laquo; 数据分析和机器学习一些摘抄</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2014/07/24/a-typical-perl-program/" title="Next Post: a typical perl program">a typical perl program &raquo;</a>
       
     </p>
   </footer>

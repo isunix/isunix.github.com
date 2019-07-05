@@ -9,7 +9,37 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="Of courese there are many perl programms that can be claimed as “typical”, yet you can not what is truely “typical”. The one below is where I met in &hellip;">
+  <meta name="description" content="This one is where I excerpted from the book “perl for dummies”. 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -93,6 +123,134 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/24/a-typical-perl-script-to-search-info-in-a-file/">A Typical Perl Script to Search Info in a File</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-24T15:33:54+08:00" pubdate data-updated="true">2014 年7 月24 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>This one is where I excerpted from the book “perl for dummies”.  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+<span class="line-number">35</span>
+<span class="line-number">36</span>
+<span class="line-number">37</span>
+<span class="line-number">38</span>
+<span class="line-number">39</span>
+<span class="line-number">40</span>
+<span class="line-number">41</span>
+<span class="line-number">42</span>
+<span class="line-number">43</span>
+<span class="line-number">44</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">$TheDB</span> <span class="o">=</span> <span class="s">&#39;edata.txt&#39;</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line"><span class="nb">open</span><span class="p">(</span><span class="n">INDB</span><span class="p">,</span> <span class="nv">$TheDB</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">die</span> <span class="s">&quot;The database $TheDB could &quot;</span> <span class="o">.</span> <span class="s">&quot;not be found.\n&quot;</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">
+</span><span class="line">  <span class="k">print</span> <span class="s">&quot;\nDo you want to search by employee ID (I), &quot;</span> <span class="o">.</span> <span class="s">&quot; or quit (Q): &quot;</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">  <span class="nv">$DoSearch</span> <span class="o">=</span> <span class="sr">&lt;STDIN&gt;</span><span class="p">;</span>
+</span><span class="line">  <span class="nb">chomp</span><span class="p">(</span><span class="nv">$DoSearch</span><span class="p">);</span>
+</span><span class="line">  <span class="nv">$DoSearch</span> <span class="o">=~</span> <span class="nb">tr</span><span class="sr">/A-Z/</span><span class="n">a</span><span class="o">-</span><span class="n">z</span><span class="o">/</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">  <span class="k">if</span><span class="p">(</span><span class="nv">$DoSearch</span> <span class="ow">eq</span> <span class="s">&#39;q&#39;</span><span class="p">)</span> <span class="p">{</span> <span class="k">last</span> <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">  <span class="k">unless</span><span class="p">(</span><span class="nv">$DoSearch</span> <span class="ow">eq</span> <span class="s">&#39;i&#39;</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">    <span class="k">print</span> <span class="s">&quot;You must enter either I or Q.\n&quot;</span><span class="p">;</span>
+</span><span class="line">    <span class="k">next</span><span class="p">;</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">  <span class="k">print</span> <span class="s">&quot;Search for ID number: &quot;</span><span class="p">;</span>
+</span><span class="line">  <span class="nv">$SearchFor</span> <span class="o">=</span> <span class="sr">&lt;STDIN&gt;</span><span class="p">;</span>
+</span><span class="line">  <span class="nb">chomp</span><span class="p">(</span><span class="nv">$SearchFor</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line">  <span class="nb">seek</span><span class="p">(</span><span class="n">INDB</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>   <span class="c1">##search from the beginning of file.</span>
+</span><span class="line">
+</span><span class="line">  <span class="nv">$SuccessCount</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">  <span class="k">while</span><span class="p">(</span><span class="sr">&lt;INDB&gt;</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">    <span class="nv">$TheRec</span> <span class="o">=</span> <span class="nv">$_</span><span class="p">;</span>
+</span><span class="line">    <span class="nb">chomp</span><span class="p">(</span><span class="nv">$TheRec</span><span class="p">);</span>
+</span><span class="line">    <span class="p">(</span><span class="nv">$LastName</span><span class="p">,</span> <span class="nv">$FirstName</span><span class="p">,</span> <span class="nv">$ID</span><span class="p">,</span> <span class="nv">$Tel</span><span class="p">)</span> <span class="o">=</span>
+</span><span class="line">      <span class="nb">split</span><span class="p">(</span><span class="sr">/\t/</span><span class="p">,</span> <span class="nv">$TheRec</span><span class="p">);</span>
+</span><span class="line">    <span class="k">if</span><span class="p">(</span><span class="nv">$ID</span> <span class="ow">eq</span> <span class="nv">$SearchFor</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">      <span class="nv">$SuccessCount</span> <span class="o">=</span> <span class="nv">$SuccessCount</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class="line">      <span class="k">print</span> <span class="s">&quot;$ID: $FirstName $LastName, ext. &quot;</span><span class="o">.</span> <span class="s">&quot;$Tel\n&quot;</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">  <span class="k">if</span><span class="p">(</span><span class="nv">$SuccessCount</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span> <span class="k">print</span> <span class="s">&quot;No records found.\n&quot;</span> <span class="p">}</span>
+</span><span class="line">  <span class="k">else</span> <span class="p">{</span> <span class="k">print</span> <span class="s">&quot;$SuccessCount records found.\n&quot;</span> <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;Program finished.\n&quot;</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>We can learn the use of while, endless loop, file-handle, last, tr, seek, $_, eq, split, string concatenation if-else, chomp, ==, eq all these things in one perl script.  </p>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -236,148 +394,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/07/21/perl-script-to-comiple-c-slash-cpp-files-conveniently/">Perl Script to Comiple C/cpp Files Conveniently</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-07-21T21:31:33+08:00" pubdate data-updated="true">2014 年7 月21 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>我自己在编译c还有c++文件的时候， 总感觉每次都得敲像下面这种格式的一串字符， 感觉很麻烦的。   </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="n">gcc</span> <span class="o">-</span><span class="n">o</span> <span class="n">hello</span> <span class="n">hello</span><span class="p">.</span><span class="n">c</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>所以就有了现在的这个脚本。使用方法很简单，想上面这个hello.c的文件，我们只要发出下面的命令:    </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="n">cpl</span> <span class="n">hello</span><span class="p">.</span><span class="n">c</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>就可以编译出来一个去掉以原来的文件名去掉ext的文件。  </p>
-
-<p>很简单吧！哈哈！  </p>
-
-<p>下面给出来代码， 还是继续把doc写进去的那种。</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-<span class="line-number">28</span>
-<span class="line-number">29</span>
-<span class="line-number">30</span>
-<span class="line-number">31</span>
-<span class="line-number">32</span>
-<span class="line-number">33</span>
-<span class="line-number">34</span>
-<span class="line-number">35</span>
-<span class="line-number">36</span>
-<span class="line-number">37</span>
-<span class="line-number">38</span>
-<span class="line-number">39</span>
-<span class="line-number">40</span>
-<span class="line-number">41</span>
-<span class="line-number">42</span>
-<span class="line-number">43</span>
-<span class="line-number">44</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="mf">5.010</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="n">strict</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="n">warnings</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="n">utf8</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="n">Cwd</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="nn">File::</span><span class="n">Basename</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">my</span> <span class="nv">$currentDir</span> <span class="o">=</span> <span class="n">getcwd</span><span class="p">;</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">$file</span> <span class="o">=</span> <span class="nv">$ARGV</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">$fullpath</span> <span class="o">=</span> <span class="s">&quot;$currentDir/$file&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">@suffix_list</span> <span class="o">=</span> <span class="sx">qw(.cpp .c)</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">my</span> <span class="p">(</span><span class="nv">$name</span><span class="p">,</span> <span class="nv">$dir</span><span class="p">,</span> <span class="nv">$ext</span><span class="p">)</span> <span class="o">=</span> <span class="n">fileparse</span><span class="p">(</span><span class="nv">$file</span><span class="p">,</span> <span class="nv">@suffix_list</span><span class="p">);</span>
-</span><span class="line"><span class="n">given</span><span class="p">(</span><span class="nv">$ext</span><span class="p">){</span>
-</span><span class="line">
-</span><span class="line">    <span class="n">when</span><span class="p">(</span><span class="s">&quot;.c&quot;</span><span class="p">){</span>
-</span><span class="line">        <span class="k">my</span> <span class="nv">$compile_c</span> <span class="o">=</span> <span class="s">&quot;gcc -o $name $file&quot;</span><span class="p">;</span>
-</span><span class="line">        <span class="nb">system</span><span class="p">(</span><span class="nv">$compile_c</span><span class="p">);</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">
-</span><span class="line">    <span class="n">when</span><span class="p">(</span><span class="s">&quot;.cpp&quot;</span><span class="p">){</span>
-</span><span class="line">        <span class="k">my</span> <span class="nv">$compile_cpp</span> <span class="o">=</span> <span class="s">&quot;g++ -o $name $file&quot;</span><span class="p">;</span>
-</span><span class="line">        <span class="nb">system</span><span class="p">(</span><span class="nv">$compile_cpp</span><span class="p">);</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">
-</span><span class="line">    <span class="n">default</span><span class="p">{</span>
-</span><span class="line">        <span class="n">say</span> <span class="s">&quot;$file is of an type not compilable!&quot;</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="cp">__END__</span>
-</span><span class="line"><span class="cp">=pod</span>
-</span><span class="line">
-</span><span class="line"><span class="cp">=head1 NAME</span>
-</span><span class="line">
-</span><span class="line"><span class="cp">cpl</span>
-</span><span class="line">
-</span><span class="line"><span class="cp">=head1 SYNOPSIS</span>
-</span><span class="line"><span class="cp">    $ cpl filename</span>
-</span><span class="line">
-</span><span class="line"><span class="cp">cpl --use gcc/g++ to compile a file with c/cpp extension. Usually we will do things like &quot;gcc -o hello hello.c&quot;, but with this scipt, we can just issue command like this, &quot;gcp hello.c&quot;;</span>
-</span><span class="line">
-</span><span class="line"><span class="cp">Thanks,</span>
-</span><span class="line"><span class="cp">Steven</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/37/">&larr; Older</a>
@@ -393,6 +409,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2019/07/05/ryu-yan-de-%5B%3F%5D-xie-ji-lu/">R语言的一些记录</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2019/07/04/shu-ju-fen-xi-he-ji-qi-xue-xi-%5B%3F%5D-xie-zhai-chao/">数据分析和机器学习一些摘抄</a>
@@ -430,10 +450,6 @@
         <a href="/blog/2019/06/06/amazonec2zhong-xiu-gai-shi-qu/">AmazonEC2中修改时区</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2019/06/04/prestowen-ti-debug/">Presto问题debug</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -444,7 +460,7 @@
 <li class='category'><a href='/blog/categories/bigdata/'>BigData (9)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (5)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
-<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (3)</a></li>
+<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (4)</a></li>
 <li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (5)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (1)</a></li>
 <li class='category'><a href='/blog/categories/fun/'>Fun (1)</a></li>

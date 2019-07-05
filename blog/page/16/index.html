@@ -9,17 +9,8 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="Today I met some shell scirpts like the following: 1
-trap &quot;rm -f $file; exit&quot; INT TERM EXIT More code here: 1
-2
-3
-4
-5
-6
-7
-8
-9
-cleanup() { &hellip;">
+  <meta name="description" content="We can use the following shell scripts to find the 10 most used shell commands for a user. 1
+history | awk &#39;{a[$2]++} END {for(i in a) {print a[i &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -103,6 +94,46 @@ cleanup() { &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/11/02/the-most-used-shell-commands/">The Most Used Shell Commands</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-11-02T16:21:57+08:00" pubdate data-updated="true">2015 年11 月2 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>We can use the following shell scripts to find the 10 most used shell commands for a user.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nb">history</span> | awk <span class="s1">&#39;{a[$2]++} END {for(i in a) {print a[i]&quot; &quot;i}}&#39;</span>| sort -rn | head
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -231,71 +262,6 @@ cleanup() { &hellip;">
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/09/21/installing-from-multiple-requirements-files/">Installing From Multiple Requirements Files</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-09-21T16:18:23+08:00" pubdate data-updated="true">2015 年9 月21 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Say we want to install modules from multiple requirement files. We will put the requirement files in the directory “requirements”.</p>
-
-<p>First the base.txt file.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">Django==1.7.10
-</span><span class="line">psycopg2==2.4.5</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>Then the file local.txt</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">-r base.txt
-</span><span class="line">django-discover-runner==0.2.2</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>and production.txt(production installaions should be close to what is used in other locations, so production.txt commonly just calls base.txt)</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">-r base.txt</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>The for local and production env, we can issue the following commands:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">pip install -r requirements/local.txt
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">pip install -r requirements/production.txt
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/17/">&larr; Older</a>
@@ -311,6 +277,10 @@ cleanup() { &hellip;">
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2019/07/05/ryu-yan-de-%5B%3F%5D-xie-ji-lu/">R语言的一些记录</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2019/07/04/shu-ju-fen-xi-he-ji-qi-xue-xi-%5B%3F%5D-xie-zhai-chao/">数据分析和机器学习一些摘抄</a>
@@ -348,10 +318,6 @@ cleanup() { &hellip;">
         <a href="/blog/2019/06/06/amazonec2zhong-xiu-gai-shi-qu/">AmazonEC2中修改时区</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2019/06/04/prestowen-ti-debug/">Presto问题debug</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -362,7 +328,7 @@ cleanup() { &hellip;">
 <li class='category'><a href='/blog/categories/bigdata/'>BigData (9)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (5)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
-<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (3)</a></li>
+<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (4)</a></li>
 <li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (5)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (1)</a></li>
 <li class='category'><a href='/blog/categories/fun/'>Fun (1)</a></li>

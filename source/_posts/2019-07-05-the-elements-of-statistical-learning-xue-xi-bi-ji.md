@@ -7,13 +7,13 @@ categories: Data&ML&AI
 ---
 # 0. Preface
 
-1. `In God we trust, all others bring data`
+        1. In God we trust, all others bring data
 
-2. `We are drowning in information and starving for knowledge.`
+        2. We are drowning in information and starving for knowledge.
 
-3. `There is no true interpretation of anything; interpretation is a vehicle in the service of human comprehension. The value of interpretation is in enabling others to fruitfully think about an idea.`
+        3. There is no true interpretation of anything; interpretation is a vehicle in the service of human comprehension. The value of interpretation is in enabling others to fruitfully think about an idea.
 
-4. `The quiet statisticians have changed our world; not by discov- ering new facts or technical developments, but by changing the ways that we reason, experiment and form our opinions`
+        4. The quiet statisticians have changed our world; not by discov- ering new facts or technical developments, but by changing the ways that we reason, experiment and form our opinions
 
 ****
 # 1. Introduction

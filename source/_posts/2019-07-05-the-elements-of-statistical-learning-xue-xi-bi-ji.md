@@ -15,6 +15,7 @@ categories: Data&ML&AI
 
         4. The quiet statisticians have changed our world; not by discov- ering new facts or technical developments, but by changing the ways that we reason, experiment and form our opinions
 
+
 ****
 # 1. Introduction
 

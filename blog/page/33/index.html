@@ -9,7 +9,7 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="There are two build systems for building a module. One is to use the old and stable “ExtUtils::Makemaker”, and new one is using “Module::Build”. We &hellip;">
+  <meta name="description" content="Just as is depicted by the title, in this post, we are going to realize the recursive traversing and non-recursive traveersing of a binary tree. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -93,6 +93,703 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/13/er-cha-shu-bian-li-de-di-gui-yu-fei-di-gui-shi-xian/">二叉树遍历的递归与非递归实现</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-13T11:00:50+08:00" pubdate data-updated="true">2014 年8 月13 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Just as is depicted by the title, in this post, we are going to realize the recursive traversing and non-recursive traveersing of a binary tree.   </p>
+
+<p>First we will show the recursive one. This example is from the book ‘大话数据结构’.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+<span class="line-number">35</span>
+<span class="line-number">36</span>
+<span class="line-number">37</span>
+<span class="line-number">38</span>
+<span class="line-number">39</span>
+<span class="line-number">40</span>
+<span class="line-number">41</span>
+<span class="line-number">42</span>
+<span class="line-number">43</span>
+<span class="line-number">44</span>
+<span class="line-number">45</span>
+<span class="line-number">46</span>
+<span class="line-number">47</span>
+<span class="line-number">48</span>
+<span class="line-number">49</span>
+<span class="line-number">50</span>
+<span class="line-number">51</span>
+<span class="line-number">52</span>
+<span class="line-number">53</span>
+<span class="line-number">54</span>
+<span class="line-number">55</span>
+<span class="line-number">56</span>
+<span class="line-number">57</span>
+<span class="line-number">58</span>
+<span class="line-number">59</span>
+<span class="line-number">60</span>
+<span class="line-number">61</span>
+<span class="line-number">62</span>
+<span class="line-number">63</span>
+<span class="line-number">64</span>
+<span class="line-number">65</span>
+<span class="line-number">66</span>
+<span class="line-number">67</span>
+<span class="line-number">68</span>
+<span class="line-number">69</span>
+<span class="line-number">70</span>
+<span class="line-number">71</span>
+<span class="line-number">72</span>
+<span class="line-number">73</span>
+<span class="line-number">74</span>
+<span class="line-number">75</span>
+<span class="line-number">76</span>
+<span class="line-number">77</span>
+<span class="line-number">78</span>
+<span class="line-number">79</span>
+<span class="line-number">80</span>
+<span class="line-number">81</span>
+<span class="line-number">82</span>
+<span class="line-number">83</span>
+<span class="line-number">84</span>
+<span class="line-number">85</span>
+<span class="line-number">86</span>
+<span class="line-number">87</span>
+<span class="line-number">88</span>
+<span class="line-number">89</span>
+<span class="line-number">90</span>
+<span class="line-number">91</span>
+<span class="line-number">92</span>
+<span class="line-number">93</span>
+<span class="line-number">94</span>
+<span class="line-number">95</span>
+<span class="line-number">96</span>
+<span class="line-number">97</span>
+<span class="line-number">98</span>
+<span class="line-number">99</span>
+<span class="line-number">100</span>
+<span class="line-number">101</span>
+<span class="line-number">102</span>
+<span class="line-number">103</span>
+<span class="line-number">104</span>
+<span class="line-number">105</span>
+<span class="line-number">106</span>
+<span class="line-number">107</span>
+<span class="line-number">108</span>
+<span class="line-number">109</span>
+<span class="line-number">110</span>
+<span class="line-number">111</span>
+<span class="line-number">112</span>
+<span class="line-number">113</span>
+<span class="line-number">114</span>
+<span class="line-number">115</span>
+<span class="line-number">116</span>
+<span class="line-number">117</span>
+<span class="line-number">118</span>
+<span class="line-number">119</span>
+<span class="line-number">120</span>
+<span class="line-number">121</span>
+<span class="line-number">122</span>
+<span class="line-number">123</span>
+<span class="line-number">124</span>
+<span class="line-number">125</span>
+<span class="line-number">126</span>
+<span class="line-number">127</span>
+<span class="line-number">128</span>
+<span class="line-number">129</span>
+<span class="line-number">130</span>
+<span class="line-number">131</span>
+<span class="line-number">132</span>
+<span class="line-number">133</span>
+<span class="line-number">134</span>
+<span class="line-number">135</span>
+<span class="line-number">136</span>
+<span class="line-number">137</span>
+<span class="line-number">138</span>
+<span class="line-number">139</span>
+<span class="line-number">140</span>
+<span class="line-number">141</span>
+<span class="line-number">142</span>
+<span class="line-number">143</span>
+<span class="line-number">144</span>
+<span class="line-number">145</span>
+<span class="line-number">146</span>
+<span class="line-number">147</span>
+<span class="line-number">148</span>
+<span class="line-number">149</span>
+<span class="line-number">150</span>
+<span class="line-number">151</span>
+<span class="line-number">152</span>
+<span class="line-number">153</span>
+<span class="line-number">154</span>
+<span class="line-number">155</span>
+<span class="line-number">156</span>
+<span class="line-number">157</span>
+<span class="line-number">158</span>
+<span class="line-number">159</span>
+<span class="line-number">160</span>
+<span class="line-number">161</span>
+<span class="line-number">162</span>
+<span class="line-number">163</span>
+<span class="line-number">164</span>
+<span class="line-number">165</span>
+<span class="line-number">166</span>
+<span class="line-number">167</span>
+<span class="line-number">168</span>
+<span class="line-number">169</span>
+<span class="line-number">170</span>
+<span class="line-number">171</span>
+<span class="line-number">172</span>
+<span class="line-number">173</span>
+<span class="line-number">174</span>
+<span class="line-number">175</span>
+<span class="line-number">176</span>
+<span class="line-number">177</span>
+<span class="line-number">178</span>
+<span class="line-number">179</span>
+<span class="line-number">180</span>
+<span class="line-number">181</span>
+<span class="line-number">182</span>
+<span class="line-number">183</span>
+<span class="line-number">184</span>
+<span class="line-number">185</span>
+<span class="line-number">186</span>
+<span class="line-number">187</span>
+<span class="line-number">188</span>
+<span class="line-number">189</span>
+<span class="line-number">190</span>
+<span class="line-number">191</span>
+<span class="line-number">192</span>
+<span class="line-number">193</span>
+<span class="line-number">194</span>
+<span class="line-number">195</span>
+<span class="line-number">196</span>
+<span class="line-number">197</span>
+<span class="line-number">198</span>
+<span class="line-number">199</span>
+<span class="line-number">200</span>
+<span class="line-number">201</span>
+<span class="line-number">202</span>
+<span class="line-number">203</span>
+<span class="line-number">204</span>
+<span class="line-number">205</span>
+<span class="line-number">206</span>
+<span class="line-number">207</span>
+<span class="line-number">208</span>
+<span class="line-number">209</span>
+<span class="line-number">210</span>
+<span class="line-number">211</span>
+<span class="line-number">212</span>
+<span class="line-number">213</span>
+<span class="line-number">214</span>
+<span class="line-number">215</span>
+<span class="line-number">216</span>
+<span class="line-number">217</span>
+<span class="line-number">218</span>
+<span class="line-number">219</span>
+<span class="line-number">220</span>
+<span class="line-number">221</span>
+<span class="line-number">222</span>
+<span class="line-number">223</span>
+<span class="line-number">224</span>
+<span class="line-number">225</span>
+<span class="line-number">226</span>
+<span class="line-number">227</span>
+<span class="line-number">228</span>
+<span class="line-number">229</span>
+<span class="line-number">230</span>
+<span class="line-number">231</span>
+<span class="line-number">232</span>
+<span class="line-number">233</span>
+<span class="line-number">234</span>
+<span class="line-number">235</span>
+<span class="line-number">236</span>
+<span class="line-number">237</span>
+<span class="line-number">238</span>
+<span class="line-number">239</span>
+<span class="line-number">240</span>
+<span class="line-number">241</span>
+<span class="line-number">242</span>
+<span class="line-number">243</span>
+<span class="line-number">244</span>
+<span class="line-number">245</span>
+<span class="line-number">246</span>
+<span class="line-number">247</span>
+<span class="line-number">248</span>
+<span class="line-number">249</span>
+<span class="line-number">250</span>
+<span class="line-number">251</span>
+<span class="line-number">252</span>
+<span class="line-number">253</span>
+<span class="line-number">254</span>
+<span class="line-number">255</span>
+<span class="line-number">256</span>
+<span class="line-number">257</span>
+<span class="line-number">258</span>
+<span class="line-number">259</span>
+<span class="line-number">260</span>
+<span class="line-number">261</span>
+<span class="line-number">262</span>
+<span class="line-number">263</span>
+<span class="line-number">264</span>
+<span class="line-number">265</span>
+<span class="line-number">266</span>
+<span class="line-number">267</span>
+<span class="line-number">268</span>
+<span class="line-number">269</span>
+<span class="line-number">270</span>
+<span class="line-number">271</span>
+<span class="line-number">272</span>
+<span class="line-number">273</span>
+<span class="line-number">274</span>
+<span class="line-number">275</span>
+<span class="line-number">276</span>
+<span class="line-number">277</span>
+<span class="line-number">278</span>
+<span class="line-number">279</span>
+<span class="line-number">280</span>
+<span class="line-number">281</span>
+<span class="line-number">282</span>
+<span class="line-number">283</span>
+<span class="line-number">284</span>
+<span class="line-number">285</span>
+<span class="line-number">286</span>
+<span class="line-number">287</span>
+<span class="line-number">288</span>
+<span class="line-number">289</span>
+<span class="line-number">290</span>
+<span class="line-number">291</span>
+<span class="line-number">292</span>
+<span class="line-number">293</span>
+<span class="line-number">294</span>
+<span class="line-number">295</span>
+<span class="line-number">296</span>
+<span class="line-number">297</span>
+<span class="line-number">298</span>
+<span class="line-number">299</span>
+<span class="line-number">300</span>
+<span class="line-number">301</span>
+<span class="line-number">302</span>
+<span class="line-number">303</span>
+<span class="line-number">304</span>
+<span class="line-number">305</span>
+<span class="line-number">306</span>
+<span class="line-number">307</span>
+<span class="line-number">308</span>
+<span class="line-number">309</span>
+<span class="line-number">310</span>
+<span class="line-number">311</span>
+<span class="line-number">312</span>
+<span class="line-number">313</span>
+<span class="line-number">314</span>
+<span class="line-number">315</span>
+<span class="line-number">316</span>
+<span class="line-number">317</span>
+<span class="line-number">318</span>
+<span class="line-number">319</span>
+<span class="line-number">320</span>
+<span class="line-number">321</span>
+<span class="line-number">322</span>
+<span class="line-number">323</span>
+<span class="line-number">324</span>
+<span class="line-number">325</span>
+<span class="line-number">326</span>
+<span class="line-number">327</span>
+</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="cp">#include &quot;stdio.h&quot;</span>
+</span><span class="line"><span class="cp">#include &quot;stdlib.h&quot;</span>
+</span><span class="line"><span class="cp">#include &quot;math.h&quot;</span>
+</span><span class="line"><span class="cp">#include &quot;time.h&quot;</span>
+</span><span class="line">
+</span><span class="line"><span class="cp">#define OK 1</span>
+</span><span class="line"><span class="cp">#define ERROR 0</span>
+</span><span class="line"><span class="cp">#define TRUE 1</span>
+</span><span class="line"><span class="cp">#define FALSE 0</span>
+</span><span class="line">
+</span><span class="line"><span class="cp">#define MAXSIZE 100 </span><span class="cm">/* 存储空间初始分配量 */</span><span class="cp"></span>
+</span><span class="line"><span class="cp">#define MAX_TREE_SIZE 100 </span><span class="cm">/* 二叉树的最大结点数 */</span><span class="cp"></span>
+</span><span class="line">
+</span><span class="line"><span class="k">typedef</span> <span class="kt">int</span> <span class="n">Status</span><span class="p">;</span>		<span class="cm">/* Status是函数的类型,其值是函数结果状态代码，如OK等 */</span>
+</span><span class="line"><span class="k">typedef</span> <span class="kt">int</span> <span class="n">TElemType</span><span class="p">;</span>  <span class="cm">/* 树结点的数据类型，目前暂定为整型 */</span>
+</span><span class="line"><span class="k">typedef</span> <span class="n">TElemType</span> <span class="n">SqBiTree</span><span class="p">[</span><span class="n">MAX_TREE_SIZE</span><span class="p">];</span> <span class="cm">/* 0号单元存储根结点  */</span>
+</span><span class="line">
+</span><span class="line"><span class="k">typedef</span> <span class="k">struct</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">	<span class="kt">int</span> <span class="n">level</span><span class="p">,</span><span class="n">order</span><span class="p">;</span> <span class="cm">/* 结点的层,本层序号(按满二叉树计算) */</span>
+</span><span class="line"><span class="p">}</span><span class="n">Position</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="n">TElemType</span> <span class="n">Nil</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="cm">/*  设整型以0为空 */</span>
+</span><span class="line">
+</span><span class="line"><span class="n">Status</span> <span class="nf">visit</span><span class="p">(</span><span class="n">TElemType</span> <span class="n">c</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">	<span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d &quot;</span><span class="p">,</span><span class="n">c</span><span class="p">);</span>
+</span><span class="line">	<span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 构造空二叉树T。因为T是固定数组，不会改变，故不需要&amp; */</span>
+</span><span class="line"><span class="n">Status</span> <span class="nf">InitBiTree</span><span class="p">(</span><span class="n">SqBiTree</span> <span class="n">T</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+</span><span class="line">	<span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">MAX_TREE_SIZE</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+</span><span class="line">		<span class="n">T</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">Nil</span><span class="p">;</span> <span class="cm">/* 初值为空 */</span>
+</span><span class="line">	<span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 按层序次序输入二叉树中结点的值(字符型或整型), 构造顺序存储的二叉树T */</span>
+</span><span class="line"><span class="n">Status</span> <span class="nf">CreateBiTree</span><span class="p">(</span><span class="n">SqBiTree</span> <span class="n">T</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">	<span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+</span><span class="line"> 	<span class="n">printf</span><span class="p">(</span><span class="s">&quot;请按层序输入结点的值(整型)，0表示空结点，输999结束。结点数≤%d:</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">MAX_TREE_SIZE</span><span class="p">);</span>
+</span><span class="line">	<span class="k">while</span><span class="p">(</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">10</span><span class="p">)</span>
+</span><span class="line">	<span class="p">{</span>
+</span><span class="line">		<span class="n">T</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">		<span class="k">if</span><span class="p">(</span><span class="n">i</span><span class="o">!=</span><span class="mi">0</span><span class="o">&amp;&amp;</span><span class="n">T</span><span class="p">[(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="n">Nil</span><span class="o">&amp;&amp;</span><span class="n">T</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">!=</span><span class="n">Nil</span><span class="p">)</span> <span class="cm">/* 此结点(不空)无双亲且不是根 */</span>
+</span><span class="line">		<span class="p">{</span>
+</span><span class="line">			<span class="n">printf</span><span class="p">(</span><span class="s">&quot;出现无双亲的非根结点%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">T</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+</span><span class="line">			<span class="n">exit</span><span class="p">(</span><span class="n">ERROR</span><span class="p">);</span>
+</span><span class="line">		<span class="p">}</span>
+</span><span class="line">		<span class="n">i</span><span class="o">++</span><span class="p">;</span>
+</span><span class="line">	<span class="p">}</span>
+</span><span class="line">	<span class="k">while</span><span class="p">(</span><span class="n">i</span><span class="o">&lt;</span><span class="n">MAX_TREE_SIZE</span><span class="p">)</span>
+</span><span class="line">	<span class="p">{</span>
+</span><span class="line">		<span class="n">T</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">Nil</span><span class="p">;</span> <span class="cm">/* 将空赋值给T的后面的结点 */</span>
+</span><span class="line">		<span class="n">i</span><span class="o">++</span><span class="p">;</span>
+</span><span class="line">	<span class="p">}</span>
+</span><span class="line">
+</span><span class="line">	<span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line"><span class="cp">#define ClearBiTree InitBiTree </span><span class="cm">/* 在顺序存储结构中，两函数完全一样 */</span><span class="cp"></span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 初始条件: 二叉树T存在 */</span>
+</span><span class="line"><span class="cm">/* 操作结果: 若T为空二叉树,则返回TRUE,否则FALSE */</span>
+</span><span class="line"><span class="n">Status</span> <span class="nf">BiTreeEmpty</span><span class="p">(</span><span class="n">SqBiTree</span> <span class="n">T</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">	<span class="k">if</span><span class="p">(</span><span class="n">T</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="n">Nil</span><span class="p">)</span> <span class="cm">/* 根结点为空,则树空 */</span>
+</span><span class="line">		<span class="k">return</span> <span class="n">TRUE</span><span class="p">;</span>
+</span><span class="line">	<span class="k">else</span>
+</span><span class="line">		<span class="k">return</span> <span class="n">FALSE</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 初始条件: 二叉树T存在。操作结果: 返回T的深度 */</span>
+</span><span class="line"><span class="kt">int</span> <span class="nf">BiTreeDepth</span><span class="p">(</span><span class="n">SqBiTree</span> <span class="n">T</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">   <span class="kt">int</span> <span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="o">=-</span><span class="mi">1</span><span class="p">;</span>
+</span><span class="line">   <span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="n">MAX_TREE_SIZE</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span><span class="n">i</span><span class="o">&gt;=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">--</span><span class="p">)</span> <span class="cm">/* 找到最后一个结点 */</span>
+</span><span class="line">     <span class="k">if</span><span class="p">(</span><span class="n">T</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">!=</span><span class="n">Nil</span><span class="p">)</span>
+</span><span class="line">       <span class="k">break</span><span class="p">;</span>
+</span><span class="line">   <span class="n">i</span><span class="o">++</span><span class="p">;</span>
+</span><span class="line">   <span class="k">do</span>
+</span><span class="line">     <span class="n">j</span><span class="o">++</span><span class="p">;</span>
+</span><span class="line">   <span class="k">while</span><span class="p">(</span><span class="n">i</span><span class="o">&gt;=</span><span class="n">powl</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">j</span><span class="p">));</span><span class="cm">/* 计算2的j次幂。 */</span>
+</span><span class="line">   <span class="k">return</span> <span class="n">j</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 初始条件: 二叉树T存在 */</span>
+</span><span class="line"><span class="cm">/* 操作结果:  当T不空,用e返回T的根,返回OK;否则返回ERROR,e无定义 */</span>
+</span><span class="line"><span class="n">Status</span> <span class="nf">Root</span><span class="p">(</span><span class="n">SqBiTree</span> <span class="n">T</span><span class="p">,</span><span class="n">TElemType</span> <span class="o">*</span><span class="n">e</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">	<span class="k">if</span><span class="p">(</span><span class="n">BiTreeEmpty</span><span class="p">(</span><span class="n">T</span><span class="p">))</span> <span class="cm">/* T空 */</span>
+</span><span class="line">		<span class="k">return</span> <span class="n">ERROR</span><span class="p">;</span>
+</span><span class="line">	<span class="k">else</span>
+</span><span class="line">	<span class="p">{</span>
+</span><span class="line">		<span class="o">*</span><span class="n">e</span><span class="o">=</span><span class="n">T</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+</span><span class="line">		<span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
+</span><span class="line">	<span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 初始条件: 二叉树T存在,e是T中某个结点(的位置) */</span>
+</span><span class="line"><span class="cm">/* 操作结果: 返回处于位置e(层,本层序号)的结点的值 */</span>
+</span><span class="line"><span class="n">TElemType</span> <span class="nf">Value</span><span class="p">(</span><span class="n">SqBiTree</span> <span class="n">T</span><span class="p">,</span><span class="n">Position</span> <span class="n">e</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">	 <span class="k">return</span> <span class="n">T</span><span class="p">[(</span><span class="kt">int</span><span class="p">)</span><span class="n">powl</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">e</span><span class="p">.</span><span class="n">level</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="n">e</span><span class="p">.</span><span class="n">order</span><span class="o">-</span><span class="mi">2</span><span class="p">];</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 初始条件: 二叉树T存在,e是T中某个结点(的位置) */</span>
+</span><span class="line"><span class="cm">/* 操作结果: 给处于位置e(层,本层序号)的结点赋新值value */</span>
+</span><span class="line"><span class="n">Status</span> <span class="nf">Assign</span><span class="p">(</span><span class="n">SqBiTree</span> <span class="n">T</span><span class="p">,</span><span class="n">Position</span> <span class="n">e</span><span class="p">,</span><span class="n">TElemType</span> <span class="n">value</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">	<span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">powl</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">e</span><span class="p">.</span><span class="n">level</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="n">e</span><span class="p">.</span><span class="n">order</span><span class="o">-</span><span class="mi">2</span><span class="p">;</span> <span class="cm">/* 将层、本层序号转为矩阵的序号 */</span>
+</span><span class="line">	<span class="k">if</span><span class="p">(</span><span class="n">value</span><span class="o">!=</span><span class="n">Nil</span><span class="o">&amp;&amp;</span><span class="n">T</span><span class="p">[(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="n">Nil</span><span class="p">)</span> <span class="cm">/* 给叶子赋非空值但双亲为空 */</span>
+</span><span class="line">		<span class="k">return</span> <span class="n">ERROR</span><span class="p">;</span>
+</span><span class="line">	<span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">value</span><span class="o">==</span><span class="n">Nil</span><span class="o">&amp;&amp;</span><span class="p">(</span><span class="n">T</span><span class="p">[</span><span class="n">i</span><span class="o">*</span><span class="mi">2</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">!=</span><span class="n">Nil</span><span class="o">||</span><span class="n">T</span><span class="p">[</span><span class="n">i</span><span class="o">*</span><span class="mi">2</span><span class="o">+</span><span class="mi">2</span><span class="p">]</span><span class="o">!=</span><span class="n">Nil</span><span class="p">))</span> <span class="cm">/*  给双亲赋空值但有叶子（不空） */</span>
+</span><span class="line">		<span class="k">return</span> <span class="n">ERROR</span><span class="p">;</span>
+</span><span class="line">	<span class="n">T</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">value</span><span class="p">;</span>
+</span><span class="line">	<span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 初始条件: 二叉树T存在,e是T中某个结点 */</span>
+</span><span class="line"><span class="cm">/* 操作结果: 若e是T的非根结点,则返回它的双亲,否则返回＂空＂ */</span>
+</span><span class="line"><span class="n">TElemType</span> <span class="nf">Parent</span><span class="p">(</span><span class="n">SqBiTree</span> <span class="n">T</span><span class="p">,</span><span class="n">TElemType</span> <span class="n">e</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+</span><span class="line">	<span class="k">if</span><span class="p">(</span><span class="n">T</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="n">Nil</span><span class="p">)</span> <span class="cm">/* 空树 */</span>
+</span><span class="line">		<span class="k">return</span> <span class="n">Nil</span><span class="p">;</span>
+</span><span class="line">	<span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;=</span><span class="n">MAX_TREE_SIZE</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+</span><span class="line">		<span class="k">if</span><span class="p">(</span><span class="n">T</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">==</span><span class="n">e</span><span class="p">)</span> <span class="cm">/* 找到e */</span>
+</span><span class="line">			<span class="k">return</span> <span class="n">T</span><span class="p">[(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
+</span><span class="line">	<span class="k">return</span> <span class="n">Nil</span><span class="p">;</span> <span class="cm">/* 没找到e */</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="o">*</span> <span class="err">初始条件</span><span class="o">:</span> <span class="err">二叉树</span><span class="n">T</span><span class="err">存在</span><span class="p">,</span><span class="n">e</span><span class="err">是</span><span class="n">T</span><span class="err">中某个结点</span> <span class="err">*/</span>
+</span><span class="line"><span class="cm">/* 操作结果: 返回e的左孩子。若e无左孩子,则返回＂空＂ */</span>
+</span><span class="line"><span class="n">TElemType</span> <span class="n">LeftChild</span><span class="p">(</span><span class="n">SqBiTree</span> <span class="n">T</span><span class="p">,</span><span class="n">TElemType</span> <span class="n">e</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+</span><span class="line">	<span class="k">if</span><span class="p">(</span><span class="n">T</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="n">Nil</span><span class="p">)</span> <span class="cm">/* 空树 */</span>
+</span><span class="line">		<span class="k">return</span> <span class="n">Nil</span><span class="p">;</span>
+</span><span class="line">	<span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;=</span><span class="n">MAX_TREE_SIZE</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+</span><span class="line">		<span class="k">if</span><span class="p">(</span><span class="n">T</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">==</span><span class="n">e</span><span class="p">)</span> <span class="cm">/* 找到e */</span>
+</span><span class="line">			<span class="k">return</span> <span class="n">T</span><span class="p">[</span><span class="n">i</span><span class="o">*</span><span class="mi">2</span><span class="o">+</span><span class="mi">1</span><span class="p">];</span>
+</span><span class="line">	<span class="k">return</span> <span class="n">Nil</span><span class="p">;</span> <span class="cm">/* 没找到e */</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 初始条件: 二叉树T存在,e是T中某个结点 */</span>
+</span><span class="line"><span class="cm">/* 操作结果: 返回e的右孩子。若e无右孩子,则返回＂空＂ */</span>
+</span><span class="line"><span class="n">TElemType</span> <span class="n">RightChild</span><span class="p">(</span><span class="n">SqBiTree</span> <span class="n">T</span><span class="p">,</span><span class="n">TElemType</span> <span class="n">e</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+</span><span class="line">	<span class="k">if</span><span class="p">(</span><span class="n">T</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="n">Nil</span><span class="p">)</span> <span class="cm">/* 空树 */</span>
+</span><span class="line">		<span class="k">return</span> <span class="n">Nil</span><span class="p">;</span>
+</span><span class="line">	<span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;=</span><span class="n">MAX_TREE_SIZE</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+</span><span class="line">		<span class="k">if</span><span class="p">(</span><span class="n">T</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">==</span><span class="n">e</span><span class="p">)</span> <span class="cm">/* 找到e */</span>
+</span><span class="line">			<span class="k">return</span> <span class="n">T</span><span class="p">[</span><span class="n">i</span><span class="o">*</span><span class="mi">2</span><span class="o">+</span><span class="mi">2</span><span class="p">];</span>
+</span><span class="line">	<span class="k">return</span> <span class="n">Nil</span><span class="p">;</span> <span class="cm">/* 没找到e */</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 初始条件: 二叉树T存在,e是T中某个结点 */</span>
+</span><span class="line"><span class="cm">/* 操作结果: 返回e的左兄弟。若e是T的左孩子或无左兄弟,则返回＂空＂ */</span>
+</span><span class="line"><span class="n">TElemType</span> <span class="n">LeftSibling</span><span class="p">(</span><span class="n">SqBiTree</span> <span class="n">T</span><span class="p">,</span><span class="n">TElemType</span> <span class="n">e</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+</span><span class="line">	<span class="k">if</span><span class="p">(</span><span class="n">T</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="n">Nil</span><span class="p">)</span> <span class="cm">/* 空树 */</span>
+</span><span class="line">		<span class="k">return</span> <span class="n">Nil</span><span class="p">;</span>
+</span><span class="line">	<span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;=</span><span class="n">MAX_TREE_SIZE</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+</span><span class="line">		<span class="k">if</span><span class="p">(</span><span class="n">T</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">==</span><span class="n">e</span><span class="o">&amp;&amp;</span><span class="n">i</span><span class="o">%</span><span class="mi">2</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span> <span class="cm">/* 找到e且其序号为偶数(是右孩子) */</span>
+</span><span class="line">			<span class="k">return</span> <span class="n">T</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
+</span><span class="line">	<span class="k">return</span> <span class="n">Nil</span><span class="p">;</span> <span class="cm">/* 没找到e */</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 初始条件: 二叉树T存在,e是T中某个结点 */</span>
+</span><span class="line"><span class="cm">/* 操作结果: 返回e的右兄弟。若e是T的右孩子或无右兄弟,则返回＂空＂ */</span>
+</span><span class="line"><span class="n">TElemType</span> <span class="n">RightSibling</span><span class="p">(</span><span class="n">SqBiTree</span> <span class="n">T</span><span class="p">,</span><span class="n">TElemType</span> <span class="n">e</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+</span><span class="line">	<span class="k">if</span><span class="p">(</span><span class="n">T</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="n">Nil</span><span class="p">)</span> <span class="cm">/* 空树 */</span>
+</span><span class="line">		<span class="k">return</span> <span class="n">Nil</span><span class="p">;</span>
+</span><span class="line">	<span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;=</span><span class="n">MAX_TREE_SIZE</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+</span><span class="line">		<span class="k">if</span><span class="p">(</span><span class="n">T</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">==</span><span class="n">e</span><span class="o">&amp;&amp;</span><span class="n">i</span><span class="o">%</span><span class="mi">2</span><span class="p">)</span> <span class="cm">/* 找到e且其序号为奇数(是左孩子) */</span>
+</span><span class="line">			<span class="k">return</span> <span class="n">T</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">];</span>
+</span><span class="line">	<span class="k">return</span> <span class="n">Nil</span><span class="p">;</span> <span class="cm">/* 没找到e */</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* PreOrderTraverse()调用 */</span>
+</span><span class="line"><span class="kt">void</span> <span class="n">PreTraverse</span><span class="p">(</span><span class="n">SqBiTree</span> <span class="n">T</span><span class="p">,</span><span class="kt">int</span> <span class="n">e</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">	<span class="n">visit</span><span class="p">(</span><span class="n">T</span><span class="p">[</span><span class="n">e</span><span class="p">]);</span>
+</span><span class="line">	<span class="k">if</span><span class="p">(</span><span class="n">T</span><span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">e</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">!=</span><span class="n">Nil</span><span class="p">)</span> <span class="cm">/* 左子树不空 */</span>
+</span><span class="line">		<span class="n">PreTraverse</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">e</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+</span><span class="line">	<span class="k">if</span><span class="p">(</span><span class="n">T</span><span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">e</span><span class="o">+</span><span class="mi">2</span><span class="p">]</span><span class="o">!=</span><span class="n">Nil</span><span class="p">)</span> <span class="cm">/* 右子树不空 */</span>
+</span><span class="line">		<span class="n">PreTraverse</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">e</span><span class="o">+</span><span class="mi">2</span><span class="p">);</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 初始条件: 二叉树存在 */</span>
+</span><span class="line"><span class="cm">/* 操作结果: 先序遍历T。 */</span>
+</span><span class="line"><span class="n">Status</span> <span class="n">PreOrderTraverse</span><span class="p">(</span><span class="n">SqBiTree</span> <span class="n">T</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">	<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">BiTreeEmpty</span><span class="p">(</span><span class="n">T</span><span class="p">))</span> <span class="cm">/* 树不空 */</span>
+</span><span class="line">	 <span class="n">PreTraverse</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+</span><span class="line">	<span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class="line">	<span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* InOrderTraverse()调用 */</span>
+</span><span class="line"><span class="kt">void</span> <span class="n">InTraverse</span><span class="p">(</span><span class="n">SqBiTree</span> <span class="n">T</span><span class="p">,</span><span class="kt">int</span> <span class="n">e</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">	<span class="k">if</span><span class="p">(</span><span class="n">T</span><span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">e</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">!=</span><span class="n">Nil</span><span class="p">)</span> <span class="cm">/* 左子树不空 */</span>
+</span><span class="line">		<span class="n">InTraverse</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">e</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+</span><span class="line">	<span class="n">visit</span><span class="p">(</span><span class="n">T</span><span class="p">[</span><span class="n">e</span><span class="p">]);</span>
+</span><span class="line">	<span class="k">if</span><span class="p">(</span><span class="n">T</span><span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">e</span><span class="o">+</span><span class="mi">2</span><span class="p">]</span><span class="o">!=</span><span class="n">Nil</span><span class="p">)</span> <span class="cm">/* 右子树不空 */</span>
+</span><span class="line">		<span class="n">InTraverse</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">e</span><span class="o">+</span><span class="mi">2</span><span class="p">);</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 初始条件: 二叉树存在 */</span>
+</span><span class="line"><span class="cm">/* 操作结果: 中序遍历T。 */</span>
+</span><span class="line"><span class="n">Status</span> <span class="n">InOrderTraverse</span><span class="p">(</span><span class="n">SqBiTree</span> <span class="n">T</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">	<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">BiTreeEmpty</span><span class="p">(</span><span class="n">T</span><span class="p">))</span> <span class="cm">/* 树不空 */</span>
+</span><span class="line">		<span class="n">InTraverse</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+</span><span class="line">	<span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class="line">	<span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* PostOrderTraverse()调用 */</span>
+</span><span class="line"><span class="kt">void</span> <span class="n">PostTraverse</span><span class="p">(</span><span class="n">SqBiTree</span> <span class="n">T</span><span class="p">,</span><span class="kt">int</span> <span class="n">e</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">	<span class="k">if</span><span class="p">(</span><span class="n">T</span><span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">e</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">!=</span><span class="n">Nil</span><span class="p">)</span> <span class="cm">/* 左子树不空 */</span>
+</span><span class="line">		<span class="n">PostTraverse</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">e</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+</span><span class="line">	<span class="k">if</span><span class="p">(</span><span class="n">T</span><span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">e</span><span class="o">+</span><span class="mi">2</span><span class="p">]</span><span class="o">!=</span><span class="n">Nil</span><span class="p">)</span> <span class="cm">/* 右子树不空 */</span>
+</span><span class="line">		<span class="n">PostTraverse</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">e</span><span class="o">+</span><span class="mi">2</span><span class="p">);</span>
+</span><span class="line">	<span class="n">visit</span><span class="p">(</span><span class="n">T</span><span class="p">[</span><span class="n">e</span><span class="p">]);</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 初始条件: 二叉树T存在 */</span>
+</span><span class="line"><span class="cm">/* 操作结果: 后序遍历T。 */</span>
+</span><span class="line"><span class="n">Status</span> <span class="n">PostOrderTraverse</span><span class="p">(</span><span class="n">SqBiTree</span> <span class="n">T</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">	<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">BiTreeEmpty</span><span class="p">(</span><span class="n">T</span><span class="p">))</span> <span class="cm">/* 树不空 */</span>
+</span><span class="line">		<span class="n">PostTraverse</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+</span><span class="line">	<span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class="line">	<span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 层序遍历二叉树 */</span>
+</span><span class="line"><span class="kt">void</span> <span class="n">LevelOrderTraverse</span><span class="p">(</span><span class="n">SqBiTree</span> <span class="n">T</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">	<span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="n">MAX_TREE_SIZE</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">j</span><span class="p">;</span>
+</span><span class="line">	<span class="k">while</span><span class="p">(</span><span class="n">T</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">==</span><span class="n">Nil</span><span class="p">)</span>
+</span><span class="line">		<span class="n">i</span><span class="o">--</span><span class="p">;</span> <span class="cm">/* 找到最后一个非空结点的序号 */</span>
+</span><span class="line">	<span class="k">for</span><span class="p">(</span><span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">j</span><span class="o">&lt;=</span><span class="n">i</span><span class="p">;</span><span class="n">j</span><span class="o">++</span><span class="p">)</span>  <span class="cm">/* 从根结点起,按层序遍历二叉树 */</span>
+</span><span class="line">		<span class="k">if</span><span class="p">(</span><span class="n">T</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">!=</span><span class="n">Nil</span><span class="p">)</span>
+</span><span class="line">			<span class="n">visit</span><span class="p">(</span><span class="n">T</span><span class="p">[</span><span class="n">j</span><span class="p">]);</span> <span class="cm">/* 只遍历非空的结点 */</span>
+</span><span class="line">	<span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 逐层、按本层序号输出二叉树 */</span>
+</span><span class="line"><span class="kt">void</span> <span class="n">Print</span><span class="p">(</span><span class="n">SqBiTree</span> <span class="n">T</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">	<span class="kt">int</span> <span class="n">j</span><span class="p">,</span><span class="n">k</span><span class="p">;</span>
+</span><span class="line">	<span class="n">Position</span> <span class="n">p</span><span class="p">;</span>
+</span><span class="line">	<span class="n">TElemType</span> <span class="n">e</span><span class="p">;</span>
+</span><span class="line">	<span class="k">for</span><span class="p">(</span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="n">j</span><span class="o">&lt;=</span><span class="n">BiTreeDepth</span><span class="p">(</span><span class="n">T</span><span class="p">);</span><span class="n">j</span><span class="o">++</span><span class="p">)</span>
+</span><span class="line">	<span class="p">{</span>
+</span><span class="line">		<span class="n">printf</span><span class="p">(</span><span class="s">&quot;第%d层: &quot;</span><span class="p">,</span><span class="n">j</span><span class="p">);</span>
+</span><span class="line">		<span class="k">for</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="n">k</span><span class="o">&lt;=</span><span class="n">powl</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span><span class="n">k</span><span class="o">++</span><span class="p">)</span>
+</span><span class="line">		<span class="p">{</span>
+</span><span class="line">			<span class="n">p</span><span class="p">.</span><span class="n">level</span><span class="o">=</span><span class="n">j</span><span class="p">;</span>
+</span><span class="line">			<span class="n">p</span><span class="p">.</span><span class="n">order</span><span class="o">=</span><span class="n">k</span><span class="p">;</span>
+</span><span class="line">			<span class="n">e</span><span class="o">=</span><span class="n">Value</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="n">p</span><span class="p">);</span>
+</span><span class="line">			<span class="k">if</span><span class="p">(</span><span class="n">e</span><span class="o">!=</span><span class="n">Nil</span><span class="p">)</span>
+</span><span class="line">				<span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d:%d &quot;</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">e</span><span class="p">);</span>
+</span><span class="line">		<span class="p">}</span>
+</span><span class="line">		<span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class="line">	<span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="kt">int</span> <span class="n">main</span><span class="p">()</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">	<span class="n">Status</span> <span class="n">i</span><span class="p">;</span>
+</span><span class="line">	<span class="n">Position</span> <span class="n">p</span><span class="p">;</span>
+</span><span class="line">	<span class="n">TElemType</span> <span class="n">e</span><span class="p">;</span>
+</span><span class="line">	<span class="n">SqBiTree</span> <span class="n">T</span><span class="p">;</span>
+</span><span class="line">	<span class="n">InitBiTree</span><span class="p">(</span><span class="n">T</span><span class="p">);</span>
+</span><span class="line">	<span class="n">CreateBiTree</span><span class="p">(</span><span class="n">T</span><span class="p">);</span>
+</span><span class="line">	<span class="n">printf</span><span class="p">(</span><span class="s">&quot;建立二叉树后,树空否？%d(1:是 0:否) 树的深度=%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">BiTreeEmpty</span><span class="p">(</span><span class="n">T</span><span class="p">),</span><span class="n">BiTreeDepth</span><span class="p">(</span><span class="n">T</span><span class="p">));</span>
+</span><span class="line">	<span class="n">i</span><span class="o">=</span><span class="n">Root</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="o">&amp;</span><span class="n">e</span><span class="p">);</span>
+</span><span class="line">	<span class="k">if</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</span><span class="line">		<span class="n">printf</span><span class="p">(</span><span class="s">&quot;二叉树的根为：%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">e</span><span class="p">);</span>
+</span><span class="line">	<span class="k">else</span>
+</span><span class="line">		<span class="nf">printf</span><span class="p">(</span><span class="s">&quot;树空，无根</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class="line">	<span class="n">printf</span><span class="p">(</span><span class="s">&quot;层序遍历二叉树:</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class="line">	<span class="n">LevelOrderTraverse</span><span class="p">(</span><span class="n">T</span><span class="p">);</span>
+</span><span class="line">	<span class="n">printf</span><span class="p">(</span><span class="s">&quot;前序遍历二叉树:</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class="line">	<span class="n">PreOrderTraverse</span><span class="p">(</span><span class="n">T</span><span class="p">);</span>
+</span><span class="line">	<span class="n">printf</span><span class="p">(</span><span class="s">&quot;中序遍历二叉树:</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class="line">	<span class="n">InOrderTraverse</span><span class="p">(</span><span class="n">T</span><span class="p">);</span>
+</span><span class="line">	<span class="n">printf</span><span class="p">(</span><span class="s">&quot;后序遍历二叉树:</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class="line">	<span class="n">PostOrderTraverse</span><span class="p">(</span><span class="n">T</span><span class="p">);</span>
+</span><span class="line">	<span class="n">printf</span><span class="p">(</span><span class="s">&quot;修改结点的层号3本层序号2。&quot;</span><span class="p">);</span>
+</span><span class="line">	<span class="n">p</span><span class="p">.</span><span class="n">level</span><span class="o">=</span><span class="mi">3</span><span class="p">;</span>
+</span><span class="line">	<span class="n">p</span><span class="p">.</span><span class="n">order</span><span class="o">=</span><span class="mi">2</span><span class="p">;</span>
+</span><span class="line">	<span class="n">e</span><span class="o">=</span><span class="n">Value</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="n">p</span><span class="p">);</span>
+</span><span class="line">	<span class="n">printf</span><span class="p">(</span><span class="s">&quot;待修改结点的原值为%d请输入新值:50 &quot;</span><span class="p">,</span><span class="n">e</span><span class="p">);</span>
+</span><span class="line">	<span class="n">e</span><span class="o">=</span><span class="mi">50</span><span class="p">;</span>
+</span><span class="line">	<span class="n">Assign</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="n">p</span><span class="p">,</span><span class="n">e</span><span class="p">);</span>
+</span><span class="line">	<span class="n">printf</span><span class="p">(</span><span class="s">&quot;前序遍历二叉树:</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class="line">	<span class="n">PreOrderTraverse</span><span class="p">(</span><span class="n">T</span><span class="p">);</span>
+</span><span class="line">	<span class="n">printf</span><span class="p">(</span><span class="s">&quot;结点%d的双亲为%d,左右孩子分别为&quot;</span><span class="p">,</span><span class="n">e</span><span class="p">,</span><span class="n">Parent</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="n">e</span><span class="p">));</span>
+</span><span class="line">	<span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d,%d,左右兄弟分别为&quot;</span><span class="p">,</span><span class="n">LeftChild</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="n">e</span><span class="p">),</span><span class="n">RightChild</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="n">e</span><span class="p">));</span>
+</span><span class="line">	<span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d,%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">LeftSibling</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="n">e</span><span class="p">),</span><span class="n">RightSibling</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="n">e</span><span class="p">));</span>
+</span><span class="line">	<span class="n">ClearBiTree</span><span class="p">(</span><span class="n">T</span><span class="p">);</span>
+</span><span class="line">	<span class="n">printf</span><span class="p">(</span><span class="s">&quot;清除二叉树后,树空否？%d(1:是 0:否) 树的深度=%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">BiTreeEmpty</span><span class="p">(</span><span class="n">T</span><span class="p">),</span><span class="n">BiTreeDepth</span><span class="p">(</span><span class="n">T</span><span class="p">));</span>
+</span><span class="line">	<span class="n">i</span><span class="o">=</span><span class="n">Root</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="o">&amp;</span><span class="n">e</span><span class="p">);</span>
+</span><span class="line">	<span class="k">if</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</span><span class="line">		<span class="n">printf</span><span class="p">(</span><span class="s">&quot;二叉树的根为：%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">e</span><span class="p">);</span>
+</span><span class="line">	<span class="k">else</span>
+</span><span class="line">		<span class="nf">printf</span><span class="p">(</span><span class="s">&quot;树空，无根</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Now we will show you how to do without using the recursion method.  </p>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -328,568 +1025,6 @@ config. Inside config, we can list the parameter names and values separated by a
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/08/02/lian-biao-de-liang-chong-shi-xian-fang-shi/">链表的两种实现方式</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-08-02T10:31:18+08:00" pubdate data-updated="true">2014 年8 月2 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>这是关于线性表链式存住的两种实现方式，一个使用指针，一个使用c++中的引用。其实这两种方式是大同小异的。  </p>
-
-<p>The first method will use pointer in c.  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-<span class="line-number">28</span>
-<span class="line-number">29</span>
-<span class="line-number">30</span>
-<span class="line-number">31</span>
-<span class="line-number">32</span>
-<span class="line-number">33</span>
-<span class="line-number">34</span>
-<span class="line-number">35</span>
-<span class="line-number">36</span>
-<span class="line-number">37</span>
-<span class="line-number">38</span>
-<span class="line-number">39</span>
-<span class="line-number">40</span>
-<span class="line-number">41</span>
-<span class="line-number">42</span>
-<span class="line-number">43</span>
-<span class="line-number">44</span>
-<span class="line-number">45</span>
-<span class="line-number">46</span>
-<span class="line-number">47</span>
-<span class="line-number">48</span>
-<span class="line-number">49</span>
-<span class="line-number">50</span>
-<span class="line-number">51</span>
-<span class="line-number">52</span>
-<span class="line-number">53</span>
-<span class="line-number">54</span>
-<span class="line-number">55</span>
-<span class="line-number">56</span>
-<span class="line-number">57</span>
-<span class="line-number">58</span>
-<span class="line-number">59</span>
-<span class="line-number">60</span>
-<span class="line-number">61</span>
-<span class="line-number">62</span>
-<span class="line-number">63</span>
-<span class="line-number">64</span>
-<span class="line-number">65</span>
-<span class="line-number">66</span>
-<span class="line-number">67</span>
-<span class="line-number">68</span>
-<span class="line-number">69</span>
-<span class="line-number">70</span>
-<span class="line-number">71</span>
-<span class="line-number">72</span>
-<span class="line-number">73</span>
-<span class="line-number">74</span>
-<span class="line-number">75</span>
-<span class="line-number">76</span>
-<span class="line-number">77</span>
-<span class="line-number">78</span>
-<span class="line-number">79</span>
-<span class="line-number">80</span>
-<span class="line-number">81</span>
-<span class="line-number">82</span>
-<span class="line-number">83</span>
-<span class="line-number">84</span>
-<span class="line-number">85</span>
-<span class="line-number">86</span>
-<span class="line-number">87</span>
-<span class="line-number">88</span>
-<span class="line-number">89</span>
-<span class="line-number">90</span>
-<span class="line-number">91</span>
-<span class="line-number">92</span>
-<span class="line-number">93</span>
-<span class="line-number">94</span>
-<span class="line-number">95</span>
-<span class="line-number">96</span>
-<span class="line-number">97</span>
-<span class="line-number">98</span>
-<span class="line-number">99</span>
-<span class="line-number">100</span>
-<span class="line-number">101</span>
-<span class="line-number">102</span>
-<span class="line-number">103</span>
-<span class="line-number">104</span>
-<span class="line-number">105</span>
-<span class="line-number">106</span>
-<span class="line-number">107</span>
-<span class="line-number">108</span>
-<span class="line-number">109</span>
-<span class="line-number">110</span>
-<span class="line-number">111</span>
-<span class="line-number">112</span>
-<span class="line-number">113</span>
-<span class="line-number">114</span>
-<span class="line-number">115</span>
-<span class="line-number">116</span>
-<span class="line-number">117</span>
-<span class="line-number">118</span>
-<span class="line-number">119</span>
-<span class="line-number">120</span>
-<span class="line-number">121</span>
-<span class="line-number">122</span>
-<span class="line-number">123</span>
-<span class="line-number">124</span>
-<span class="line-number">125</span>
-<span class="line-number">126</span>
-<span class="line-number">127</span>
-<span class="line-number">128</span>
-<span class="line-number">129</span>
-<span class="line-number">130</span>
-<span class="line-number">131</span>
-<span class="line-number">132</span>
-<span class="line-number">133</span>
-<span class="line-number">134</span>
-<span class="line-number">135</span>
-<span class="line-number">136</span>
-<span class="line-number">137</span>
-<span class="line-number">138</span>
-<span class="line-number">139</span>
-<span class="line-number">140</span>
-<span class="line-number">141</span>
-<span class="line-number">142</span>
-<span class="line-number">143</span>
-<span class="line-number">144</span>
-<span class="line-number">145</span>
-<span class="line-number">146</span>
-<span class="line-number">147</span>
-<span class="line-number">148</span>
-<span class="line-number">149</span>
-<span class="line-number">150</span>
-<span class="line-number">151</span>
-<span class="line-number">152</span>
-<span class="line-number">153</span>
-<span class="line-number">154</span>
-<span class="line-number">155</span>
-<span class="line-number">156</span>
-<span class="line-number">157</span>
-<span class="line-number">158</span>
-<span class="line-number">159</span>
-<span class="line-number">160</span>
-<span class="line-number">161</span>
-<span class="line-number">162</span>
-<span class="line-number">163</span>
-<span class="line-number">164</span>
-<span class="line-number">165</span>
-<span class="line-number">166</span>
-<span class="line-number">167</span>
-<span class="line-number">168</span>
-<span class="line-number">169</span>
-<span class="line-number">170</span>
-<span class="line-number">171</span>
-<span class="line-number">172</span>
-<span class="line-number">173</span>
-<span class="line-number">174</span>
-<span class="line-number">175</span>
-<span class="line-number">176</span>
-<span class="line-number">177</span>
-<span class="line-number">178</span>
-<span class="line-number">179</span>
-<span class="line-number">180</span>
-<span class="line-number">181</span>
-<span class="line-number">182</span>
-<span class="line-number">183</span>
-<span class="line-number">184</span>
-<span class="line-number">185</span>
-<span class="line-number">186</span>
-<span class="line-number">187</span>
-<span class="line-number">188</span>
-<span class="line-number">189</span>
-<span class="line-number">190</span>
-<span class="line-number">191</span>
-<span class="line-number">192</span>
-<span class="line-number">193</span>
-<span class="line-number">194</span>
-<span class="line-number">195</span>
-<span class="line-number">196</span>
-<span class="line-number">197</span>
-<span class="line-number">198</span>
-<span class="line-number">199</span>
-<span class="line-number">200</span>
-<span class="line-number">201</span>
-<span class="line-number">202</span>
-<span class="line-number">203</span>
-<span class="line-number">204</span>
-<span class="line-number">205</span>
-<span class="line-number">206</span>
-<span class="line-number">207</span>
-<span class="line-number">208</span>
-<span class="line-number">209</span>
-<span class="line-number">210</span>
-<span class="line-number">211</span>
-<span class="line-number">212</span>
-<span class="line-number">213</span>
-<span class="line-number">214</span>
-<span class="line-number">215</span>
-</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="cm">/*first inlcude all those need header files.*/</span>
-</span><span class="line"><span class="cp">#include &quot;stdio.h&quot;</span>
-</span><span class="line"><span class="cp">#include &quot;string.h&quot;</span>
-</span><span class="line"><span class="cp">#include &quot;ctype.h&quot;</span>
-</span><span class="line"><span class="cp">#include &quot;stdlib.h&quot;</span>
-</span><span class="line"><span class="cp">#include &quot;math.h&quot;</span>
-</span><span class="line">
-</span><span class="line"><span class="cm">/*define those constants needed*/</span>
-</span><span class="line"><span class="cp">#define OK 1</span>
-</span><span class="line"><span class="cp">#define ERROR 0</span>
-</span><span class="line"><span class="cp">#define TRUE 1</span>
-</span><span class="line"><span class="cp">#define FALSE 0</span>
-</span><span class="line">
-</span><span class="line"><span class="cm">/*define the initial size allocated.*/</span>
-</span><span class="line"><span class="cp">#define MAXSIZE 20</span>
-</span><span class="line">
-</span><span class="line"><span class="cm">/*define the return type of a function*/</span>
-</span><span class="line"><span class="k">typedef</span> <span class="kt">int</span> <span class="n">Status</span><span class="p">;</span>
-</span><span class="line"><span class="k">typedef</span> <span class="kt">int</span> <span class="n">ElemType</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="cm">/*define a struct Node with the name Node, and make LinkList a pointer point to Node*/</span>
-</span><span class="line"><span class="k">typedef</span> <span class="k">struct</span> <span class="n">Node</span> <span class="p">{</span>
-</span><span class="line">    <span class="n">ElemType</span> <span class="n">data</span><span class="p">;</span>
-</span><span class="line">    <span class="k">struct</span> <span class="n">Node</span> <span class="o">*</span><span class="n">next</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span><span class="n">Node</span><span class="p">;</span>
-</span><span class="line"><span class="k">typedef</span> <span class="k">struct</span> <span class="n">Node</span> <span class="o">*</span><span class="n">LinkList</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="cm">/*initialize the LinkList*/</span>
-</span><span class="line"><span class="n">Status</span> <span class="nf">InitList</span><span class="p">(</span><span class="n">LinkList</span> <span class="o">*</span><span class="n">L</span><span class="p">)</span>
-</span><span class="line"><span class="p">{</span>
-</span><span class="line">    <span class="o">*</span><span class="n">L</span><span class="o">=</span><span class="p">(</span><span class="n">LinkList</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Node</span><span class="p">));</span>
-</span><span class="line">    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="o">*</span><span class="n">L</span><span class="p">))</span>
-</span><span class="line">    	<span class="k">return</span> <span class="n">ERROR</span><span class="p">;</span>
-</span><span class="line">    <span class="p">(</span><span class="o">*</span><span class="n">L</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">next</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line">    <span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="n">Status</span> <span class="nf">ListEmpty</span><span class="p">(</span><span class="n">LinkList</span> <span class="n">L</span><span class="p">){</span>
-</span><span class="line">    <span class="k">if</span><span class="p">(</span><span class="n">L</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">)</span>
-</span><span class="line">    	<span class="k">return</span> <span class="n">FALSE</span><span class="p">;</span>
-</span><span class="line">    <span class="k">else</span>
-</span><span class="line">    	<span class="k">return</span> <span class="n">TRUE</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="cm">/*if the linklist already exists, set it to empty*/</span>
-</span><span class="line"><span class="n">Status</span> <span class="nf">ClearList</span><span class="p">(</span><span class="n">LinkList</span> <span class="o">*</span><span class="n">L</span><span class="p">)</span>
-</span><span class="line"><span class="p">{</span>
-</span><span class="line">	<span class="n">LinkList</span> <span class="n">p</span><span class="p">,</span><span class="n">q</span><span class="p">;</span>
-</span><span class="line">	<span class="n">p</span><span class="o">=</span><span class="p">(</span><span class="o">*</span><span class="n">L</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>     <span class="cm">/*p points to the first node*/</span>
-</span><span class="line">	<span class="k">while</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>          <span class="cm">/*it means not to the end of the linklist*/</span>
-</span><span class="line">	<span class="p">{</span>
-</span><span class="line">		<span class="n">q</span><span class="o">=</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
-</span><span class="line">		<span class="n">free</span><span class="p">(</span><span class="n">p</span><span class="p">);</span>
-</span><span class="line">		<span class="n">p</span><span class="o">=</span><span class="n">q</span><span class="p">;</span>
-</span><span class="line">	<span class="p">}</span>
-</span><span class="line">	<span class="p">(</span><span class="o">*</span><span class="n">L</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">next</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>  <span class="cm">/*pointer field for the head Node will be null*/</span>
-</span><span class="line">	<span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="cm">/*return the length of the linklist*/</span>
-</span><span class="line"><span class="kt">int</span> <span class="nf">ListLength</span><span class="p">(</span><span class="n">LinkList</span> <span class="n">L</span><span class="p">)</span>
-</span><span class="line"><span class="p">{</span>
-</span><span class="line">    <span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-</span><span class="line">    <span class="n">LinkList</span> <span class="n">p</span><span class="o">=</span><span class="n">L</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>  <span class="cm">/*p points to the first node*/</span>
-</span><span class="line">    <span class="k">while</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
-</span><span class="line">    <span class="p">{</span>
-</span><span class="line">        <span class="n">i</span><span class="o">++</span><span class="p">;</span>
-</span><span class="line">        <span class="n">p</span><span class="o">=</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">    <span class="k">return</span> <span class="n">i</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="cm">/*get the i th element of L and returning its value using e*/</span>
-</span><span class="line"><span class="n">Status</span> <span class="nf">GetElem</span><span class="p">(</span><span class="n">LinkList</span> <span class="n">L</span><span class="p">,</span><span class="kt">int</span> <span class="n">i</span><span class="p">,</span><span class="n">ElemType</span> <span class="o">*</span><span class="n">e</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">	<span class="kt">int</span> <span class="n">j</span><span class="p">;</span>
-</span><span class="line">	<span class="n">LinkList</span> <span class="n">p</span><span class="p">;</span>		<span class="cm">/* declare a node &quot;p&quot; */</span>
-</span><span class="line">	<span class="n">p</span> <span class="o">=</span> <span class="n">L</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>		<span class="cm">/* let p point to the first node of L */</span>
-</span><span class="line">	<span class="n">j</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>		
-</span><span class="line">	<span class="k">while</span> <span class="p">(</span><span class="n">p</span> <span class="o">&amp;&amp;</span> <span class="n">j</span><span class="o">&lt;</span><span class="n">i</span><span class="p">)</span>
-</span><span class="line">	<span class="p">{</span>
-</span><span class="line">		<span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>  <span class="cm">/* let p point to the next node */</span>
-</span><span class="line">		<span class="o">++</span><span class="n">j</span><span class="p">;</span>
-</span><span class="line">	<span class="p">}</span>
-</span><span class="line">	<span class="k">if</span> <span class="p">(</span> <span class="o">!</span><span class="n">p</span> <span class="o">||</span> <span class="n">j</span><span class="o">&gt;</span><span class="n">i</span> <span class="p">)</span>
-</span><span class="line">		<span class="k">return</span> <span class="n">ERROR</span><span class="p">;</span>  <span class="cm">/*  the i th element does not exist */</span>
-</span><span class="line">	<span class="o">*</span><span class="n">e</span> <span class="o">=</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">;</span>   <span class="cm">/*  get the data of the i th element */</span>
-</span><span class="line">	<span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="cm">/* locate element e in L */</span>
-</span><span class="line"><span class="kt">int</span> <span class="nf">LocateElem</span><span class="p">(</span><span class="n">LinkList</span> <span class="n">L</span><span class="p">,</span><span class="n">ElemType</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">    <span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-</span><span class="line">    <span class="n">LinkList</span> <span class="n">p</span><span class="o">=</span><span class="n">L</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
-</span><span class="line">    <span class="k">while</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
-</span><span class="line">    <span class="p">{</span>
-</span><span class="line">        <span class="n">i</span><span class="o">++</span><span class="p">;</span>
-</span><span class="line">        <span class="k">if</span><span class="p">(</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">data</span><span class="o">==</span><span class="n">e</span><span class="p">)</span> <span class="cm">/* find the element */</span>
-</span><span class="line">                <span class="k">return</span> <span class="n">i</span><span class="p">;</span>
-</span><span class="line">        <span class="n">p</span><span class="o">=</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">
-</span><span class="line">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">	
-</span><span class="line"><span class="cm">/*insert at the location of the i th element*/</span> 	
-</span><span class="line"><span class="n">Status</span> <span class="nf">ListInsert</span><span class="p">(</span><span class="n">LinkList</span> <span class="o">*</span><span class="n">L</span><span class="p">,</span><span class="kt">int</span> <span class="n">i</span><span class="p">,</span><span class="n">ElemType</span> <span class="n">e</span><span class="p">)</span>
-</span><span class="line"><span class="p">{</span>
-</span><span class="line">	<span class="kt">int</span> <span class="n">j</span><span class="p">;</span>
-</span><span class="line">	<span class="n">LinkList</span> <span class="n">p</span><span class="p">,</span><span class="n">s</span><span class="p">;</span>
-</span><span class="line">	<span class="n">p</span> <span class="o">=</span> <span class="o">*</span><span class="n">L</span><span class="p">;</span>
-</span><span class="line">	<span class="n">j</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-</span><span class="line">	<span class="k">while</span> <span class="p">(</span><span class="n">p</span> <span class="o">&amp;&amp;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">i</span><span class="p">)</span>     <span class="cm">/* find the i th node */</span>
-</span><span class="line">	<span class="p">{</span>
-</span><span class="line">		<span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
-</span><span class="line">		<span class="o">++</span><span class="n">j</span><span class="p">;</span>
-</span><span class="line">	<span class="p">}</span>
-</span><span class="line">	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">p</span> <span class="o">||</span> <span class="n">j</span> <span class="o">&gt;</span> <span class="n">i</span><span class="p">)</span>
-</span><span class="line">		<span class="k">return</span> <span class="n">ERROR</span><span class="p">;</span>
-</span><span class="line">	<span class="n">s</span> <span class="o">=</span> <span class="p">(</span><span class="n">LinkList</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Node</span><span class="p">));</span>
-</span><span class="line">	<span class="n">s</span><span class="o">-&gt;</span><span class="n">data</span> <span class="o">=</span> <span class="n">e</span><span class="p">;</span>
-</span><span class="line">	<span class="n">s</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
-</span><span class="line">	<span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="n">s</span><span class="p">;</span>
-</span><span class="line">	<span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="cm">/*delete the i th element, returning its value using e*/</span>
-</span><span class="line">
-</span><span class="line"><span class="n">Status</span> <span class="nf">ListDelete</span><span class="p">(</span><span class="n">LinkList</span> <span class="o">*</span><span class="n">L</span><span class="p">,</span><span class="kt">int</span> <span class="n">i</span><span class="p">,</span><span class="n">ElemType</span> <span class="o">*</span><span class="n">e</span><span class="p">)</span>
-</span><span class="line"><span class="p">{</span>
-</span><span class="line">	<span class="kt">int</span> <span class="n">j</span><span class="p">;</span>
-</span><span class="line">	<span class="n">LinkList</span> <span class="n">p</span><span class="p">,</span><span class="n">q</span><span class="p">;</span>
-</span><span class="line">	<span class="n">p</span> <span class="o">=</span> <span class="o">*</span><span class="n">L</span><span class="p">;</span>
-</span><span class="line">	<span class="n">j</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-</span><span class="line">	<span class="k">while</span> <span class="p">(</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">&amp;&amp;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">i</span><span class="p">)</span>	
-</span><span class="line">	<span class="p">{</span>
-</span><span class="line">        <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
-</span><span class="line">        <span class="o">++</span><span class="n">j</span><span class="p">;</span>
-</span><span class="line">	<span class="p">}</span>
-</span><span class="line">	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">)</span> <span class="o">||</span> <span class="n">j</span> <span class="o">&gt;</span> <span class="n">i</span><span class="p">)</span>
-</span><span class="line">	    <span class="k">return</span> <span class="n">ERROR</span><span class="p">;</span>
-</span><span class="line">	<span class="n">q</span> <span class="o">=</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
-</span><span class="line">	<span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="n">q</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>			
-</span><span class="line">	<span class="o">*</span><span class="n">e</span> <span class="o">=</span> <span class="n">q</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">;</span>
-</span><span class="line">	<span class="n">free</span><span class="p">(</span><span class="n">q</span><span class="p">);</span>
-</span><span class="line">	<span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="cm">/*print out all elements*/</span>
-</span><span class="line">
-</span><span class="line"><span class="n">Status</span> <span class="nf">visit</span><span class="p">(</span><span class="n">ElemType</span> <span class="n">c</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d &quot;</span><span class="p">,</span><span class="n">c</span><span class="p">);</span>
-</span><span class="line">    <span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="n">Status</span> <span class="nf">ListTraverse</span><span class="p">(</span><span class="n">LinkList</span> <span class="n">L</span><span class="p">)</span>
-</span><span class="line"><span class="p">{</span>
-</span><span class="line">    <span class="n">LinkList</span> <span class="n">p</span><span class="o">=</span><span class="n">L</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
-</span><span class="line">    <span class="k">while</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
-</span><span class="line">    <span class="p">{</span>
-</span><span class="line">        <span class="n">visit</span><span class="p">(</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">);</span>
-</span><span class="line">        <span class="n">p</span><span class="o">=</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-</span><span class="line">    <span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="cm">/*create the data for the n elements randomly, create a linked list with head node*/</span>
-</span><span class="line">
-</span><span class="line"><span class="kt">void</span> <span class="nf">CreateListHead</span><span class="p">(</span><span class="n">LinkList</span> <span class="o">*</span><span class="n">L</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">)</span>
-</span><span class="line"><span class="p">{</span>
-</span><span class="line">	<span class="n">LinkList</span> <span class="n">p</span><span class="p">;</span>
-</span><span class="line">	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
-</span><span class="line">	<span class="n">srand</span><span class="p">(</span><span class="n">time</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span>
-</span><span class="line">	<span class="o">*</span><span class="n">L</span> <span class="o">=</span> <span class="p">(</span><span class="n">LinkList</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Node</span><span class="p">));</span>
-</span><span class="line">	<span class="p">(</span><span class="o">*</span><span class="n">L</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-</span><span class="line">	<span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-</span><span class="line">	<span class="p">{</span>
-</span><span class="line">		<span class="n">p</span> <span class="o">=</span> <span class="p">(</span><span class="n">LinkList</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Node</span><span class="p">));</span>
-</span><span class="line">		<span class="n">p</span><span class="o">-&gt;</span><span class="n">data</span> <span class="o">=</span> <span class="n">rand</span><span class="p">()</span><span class="o">%</span><span class="mi">100</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
-</span><span class="line">		<span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">L</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
-</span><span class="line">		<span class="p">(</span><span class="o">*</span><span class="n">L</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="n">p</span><span class="p">;</span>						
-</span><span class="line">	<span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="cm">/*create the data for the n elements randomly, create a linked list with tail node*/</span>
-</span><span class="line">
-</span><span class="line"><span class="kt">void</span> <span class="nf">CreateListTail</span><span class="p">(</span><span class="n">LinkList</span> <span class="o">*</span><span class="n">L</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">)</span>
-</span><span class="line"><span class="p">{</span>
-</span><span class="line">	<span class="n">LinkList</span> <span class="n">p</span><span class="p">,</span><span class="n">r</span><span class="p">;</span>
-</span><span class="line">	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
-</span><span class="line">	<span class="n">srand</span><span class="p">(</span><span class="n">time</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span>
-</span><span class="line">	<span class="o">*</span><span class="n">L</span> <span class="o">=</span> <span class="p">(</span><span class="n">LinkList</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Node</span><span class="p">));</span>
-</span><span class="line">	<span class="n">r</span><span class="o">=*</span><span class="n">L</span><span class="p">;</span>
-</span><span class="line">	<span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-</span><span class="line">	<span class="p">{</span>
-</span><span class="line">		<span class="n">p</span> <span class="o">=</span> <span class="p">(</span><span class="n">Node</span> <span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Node</span><span class="p">));</span>
-</span><span class="line">		<span class="n">p</span><span class="o">-&gt;</span><span class="n">data</span> <span class="o">=</span> <span class="n">rand</span><span class="p">()</span><span class="o">%</span><span class="mi">100</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
-</span><span class="line">		<span class="n">r</span><span class="o">-&gt;</span><span class="n">next</span><span class="o">=</span><span class="n">p</span><span class="p">;</span>
-</span><span class="line">		<span class="n">r</span> <span class="o">=</span> <span class="n">p</span><span class="p">;</span>
-</span><span class="line">	<span class="p">}</span>
-</span><span class="line">	<span class="n">r</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="cm">/*in the main function you  have to do the following initializations*/</span>
-</span><span class="line">
-</span><span class="line"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
-</span><span class="line"><span class="p">{</span>
-</span><span class="line">    <span class="n">LinkList</span> <span class="n">L</span><span class="p">;</span>
-</span><span class="line">    <span class="n">ElemType</span> <span class="n">e</span><span class="p">;</span>
-</span><span class="line">    <span class="n">Status</span> <span class="n">i</span><span class="p">;</span>
-</span><span class="line">    <span class="kt">int</span> <span class="n">j</span><span class="p">,</span><span class="n">k</span><span class="p">;</span>
-</span><span class="line">    <span class="n">i</span><span class="o">=</span><span class="n">InitList</span><span class="p">(</span><span class="o">&amp;</span><span class="n">L</span><span class="p">);</span>
-</span><span class="line">	<span class="cm">/*blahblah*/</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>The following is a version using c++’s reference “&amp;”, it is a little different, but mostly wil be the same as the above.  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-<span class="line-number">28</span>
-<span class="line-number">29</span>
-<span class="line-number">30</span>
-<span class="line-number">31</span>
-<span class="line-number">32</span>
-<span class="line-number">33</span>
-<span class="line-number">34</span>
-<span class="line-number">35</span>
-<span class="line-number">36</span>
-<span class="line-number">37</span>
-<span class="line-number">38</span>
-<span class="line-number">39</span>
-<span class="line-number">40</span>
-<span class="line-number">41</span>
-<span class="line-number">42</span>
-<span class="line-number">43</span>
-<span class="line-number">44</span>
-</pre></td><td class="code"><pre><code class="cpp"><span class="line"><span class="cp">#include &lt;stdio.h&gt;</span>
-</span><span class="line"><span class="cp">#include &lt;stdlib.h&gt;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">typedef</span> <span class="kt">char</span> <span class="n">ElemType</span><span class="p">;</span>
-</span><span class="line"><span class="k">typedef</span> <span class="k">struct</span> <span class="n">LNode</span>  		
-</span><span class="line"><span class="p">{</span>
-</span><span class="line">	<span class="n">ElemType</span> <span class="n">data</span><span class="p">;</span>
-</span><span class="line">	<span class="k">struct</span> <span class="n">LNode</span> <span class="o">*</span><span class="n">next</span><span class="p">;</span>		
-</span><span class="line"><span class="p">}</span> <span class="n">LinkList</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="cm">/*creating the linked list by inserting at the head*/</span>
-</span><span class="line">
-</span><span class="line"><span class="kt">void</span> <span class="n">CreateListF</span><span class="p">(</span><span class="n">LinkList</span> <span class="o">*&amp;</span><span class="n">L</span><span class="p">,</span><span class="n">ElemType</span> <span class="n">a</span><span class="p">[],</span><span class="kt">int</span> <span class="n">n</span><span class="p">)</span>
-</span><span class="line"><span class="p">{</span>
-</span><span class="line">	<span class="n">LinkList</span> <span class="o">*</span><span class="n">s</span><span class="p">;</span><span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
-</span><span class="line">	<span class="n">L</span><span class="o">=</span><span class="p">(</span><span class="n">LinkList</span> <span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">LinkList</span><span class="p">));</span>  	
-</span><span class="line">	<span class="n">L</span><span class="o">-&gt;</span><span class="n">next</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
-</span><span class="line">	<span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">n</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
-</span><span class="line">	<span class="p">{</span>
-</span><span class="line">		<span class="n">s</span><span class="o">=</span><span class="p">(</span><span class="n">LinkList</span> <span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">LinkList</span><span class="p">));</span>
-</span><span class="line">		<span class="n">s</span><span class="o">-&gt;</span><span class="n">data</span><span class="o">=</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-</span><span class="line">		<span class="n">s</span><span class="o">-&gt;</span><span class="n">next</span><span class="o">=</span><span class="n">L</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>			
-</span><span class="line">		<span class="n">L</span><span class="o">-&gt;</span><span class="n">next</span><span class="o">=</span><span class="n">s</span><span class="p">;</span>
-</span><span class="line">	<span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="cm">/*creating the linked list by inserting at the tail*/</span>
-</span><span class="line"><span class="kt">void</span> <span class="n">CreateListR</span><span class="p">(</span><span class="n">LinkList</span> <span class="o">*&amp;</span><span class="n">L</span><span class="p">,</span><span class="n">ElemType</span> <span class="n">a</span><span class="p">[],</span><span class="kt">int</span> <span class="n">n</span><span class="p">)</span>
-</span><span class="line"><span class="p">{</span>
-</span><span class="line">	<span class="n">LinkList</span> <span class="o">*</span><span class="n">s</span><span class="p">,</span><span class="o">*</span><span class="n">r</span><span class="p">;</span><span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
-</span><span class="line">	<span class="n">L</span><span class="o">=</span><span class="p">(</span><span class="n">LinkList</span> <span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">LinkList</span><span class="p">));</span>  	
-</span><span class="line">	<span class="n">L</span><span class="o">-&gt;</span><span class="n">next</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
-</span><span class="line">	<span class="n">r</span><span class="o">=</span><span class="n">L</span><span class="p">;</span>					
-</span><span class="line">	<span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">n</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
-</span><span class="line">	<span class="p">{</span>
-</span><span class="line">		<span class="n">s</span><span class="o">=</span><span class="p">(</span><span class="n">LinkList</span> <span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">LinkList</span><span class="p">));</span>
-</span><span class="line">		<span class="n">s</span><span class="o">-&gt;</span><span class="n">data</span><span class="o">=</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-</span><span class="line">		<span class="n">r</span><span class="o">-&gt;</span><span class="n">next</span><span class="o">=</span><span class="n">s</span><span class="p">;</span>			
-</span><span class="line">		<span class="n">r</span><span class="o">=</span><span class="n">s</span><span class="p">;</span>
-</span><span class="line">	<span class="p">}</span>
-</span><span class="line">	<span class="n">r</span><span class="o">-&gt;</span><span class="n">next</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>			
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="cm">/*and blah and blah*/</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/34/">&larr; Older</a>
@@ -905,6 +1040,10 @@ config. Inside config, we can list the parameter names and values separated by a
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2019/07/07/ji-qi-xue-xi-de-liu-cheng-tu/">机器学习的流程图</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2019/07/05/ryu-yan-de-%5B%3F%5D-xie-ji-lu/">R语言的一些记录</a>
@@ -942,10 +1081,6 @@ config. Inside config, we can list the parameter names and values separated by a
         <a href="/blog/2019/06/06/centoszhong-xiu-gai-shi-qu/">CentOS中修改时区</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2019/06/06/amazonec2zhong-xiu-gai-shi-qu/">AmazonEC2中修改时区</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -956,7 +1091,7 @@ config. Inside config, we can list the parameter names and values separated by a
 <li class='category'><a href='/blog/categories/bigdata/'>BigData (9)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (5)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
-<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (4)</a></li>
+<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (5)</a></li>
 <li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (5)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (1)</a></li>
 <li class='category'><a href='/blog/categories/fun/'>Fun (1)</a></li>

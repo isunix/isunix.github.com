@@ -54,3 +54,15 @@ my_data <- data.frame(patients, my_matrix)
 cnames <- c("patient", "age", "weight", "bp", "rating", "test")
 colnames(my_data) <- cnames
 ```
+
+如果我们想要获取当前的工作目录,
+
+```r
+getwd()
+```
+
+如果我们想要切换到另外一个目录，可以
+
+```r
+setwd("~/data/ISLR")
+```

@@ -4,7 +4,7 @@
   <title><![CDATA[catogories：Data&ML&AI | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/data-and-ml-and-ai/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2019-07-07T07:51:22+08:00</updated>
+  <updated>2019-07-07T15:47:43+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -53,6 +53,32 @@ x[!is.na(x) &amp; x &gt; 0]
 
 <p><code>
  NA        NA 0.3488261        NA 2.4099262        NA        NA        NA        NA        NA 0.4626879
+</code></p>
+
+<p>创建一个4行5列的<code>matrix</code>，包含的数值是从1到20，</p>
+
+<p><code>r
+my_matrix &lt;- matrix(data=1:20, nrow = 4, ncol = 5)
+</code></p>
+
+<p>如果我想给这个<code>matrix</code>的每行添加一列，作为名字，可以采用如下的方式</p>
+
+<p><code>r
+patients &lt;- c("Bill", "Gina", "Kelly", "Sean")
+cbind(patients, my_matrix)
+</code></p>
+
+<p>但是上面这种方式，会导致<code>implicit coercion</code>, 把数字变成字符，为了解决这个问题，我们可以使用如下的方式</p>
+
+<p><code>r
+my_data &lt;- data.frame(patients, my_matrix)
+</code></p>
+
+<p>如果我们再想给每个列增加一个<code>name</code>, 可以使用如下的方式:</p>
+
+<p><code>r
+cnames &lt;- c("patient", "age", "weight", "bp", "rating", "test")
+colnames(my_data) &lt;- cnames
 </code></p>
 ]]></content>
   </entry>

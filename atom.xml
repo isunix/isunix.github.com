@@ -4,7 +4,7 @@
   <title><![CDATA[Steven's Blog]]></title>
   <link href="http://isunix.github.io/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2019-07-07T07:51:22+08:00</updated>
+  <updated>2019-07-07T15:47:43+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -53,6 +53,34 @@
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 </pre></td><td class="code"><pre><code class="r"><span class="line"> <span class="kc">NA</span>        <span class="kc">NA</span> <span class="m">0.3488261</span>        <span class="kc">NA</span> <span class="m">2.4099262</span>        <span class="kc">NA</span>        <span class="kc">NA</span>        <span class="kc">NA</span>        <span class="kc">NA</span>        <span class="kc">NA</span> <span class="m">0.4626879</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>创建一个4行5列的<code>matrix</code>，包含的数值是从1到20，</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="r"><span class="line">my_matrix <span class="o">&lt;-</span> matrix<span class="p">(</span>data<span class="o">=</span><span class="m">1</span><span class="o">:</span><span class="m">20</span><span class="p">,</span> nrow <span class="o">=</span> <span class="m">4</span><span class="p">,</span> ncol <span class="o">=</span> <span class="m">5</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>如果我想给这个<code>matrix</code>的每行添加一列，作为名字，可以采用如下的方式</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="r"><span class="line">patients <span class="o">&lt;-</span> c<span class="p">(</span><span class="s">&quot;Bill&quot;</span><span class="p">,</span> <span class="s">&quot;Gina&quot;</span><span class="p">,</span> <span class="s">&quot;Kelly&quot;</span><span class="p">,</span> <span class="s">&quot;Sean&quot;</span><span class="p">)</span>
+</span><span class="line">cbind<span class="p">(</span>patients<span class="p">,</span> my_matrix<span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>但是上面这种方式，会导致<code>implicit coercion</code>, 把数字变成字符，为了解决这个问题，我们可以使用如下的方式</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="r"><span class="line">my_data <span class="o">&lt;-</span> data.frame<span class="p">(</span>patients<span class="p">,</span> my_matrix<span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>如果我们再想给每个列增加一个<code>name</code>, 可以使用如下的方式:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="r"><span class="line">cnames <span class="o">&lt;-</span> c<span class="p">(</span><span class="s">&quot;patient&quot;</span><span class="p">,</span> <span class="s">&quot;age&quot;</span><span class="p">,</span> <span class="s">&quot;weight&quot;</span><span class="p">,</span> <span class="s">&quot;bp&quot;</span><span class="p">,</span> <span class="s">&quot;rating&quot;</span><span class="p">,</span> <span class="s">&quot;test&quot;</span><span class="p">)</span>
+</span><span class="line">colnames<span class="p">(</span>my_data<span class="p">)</span> <span class="o">&lt;-</span> cnames
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 ]]></content>
   </entry>

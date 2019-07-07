@@ -28,3 +28,29 @@ x[!is.na(x) & x > 0]
 ```
  NA        NA 0.3488261        NA 2.4099262        NA        NA        NA        NA        NA 0.4626879
 ```
+
+创建一个4行5列的`matrix`，包含的数值是从1到20，
+
+```r
+my_matrix <- matrix(data=1:20, nrow = 4, ncol = 5)
+```
+
+如果我想给这个`matrix`的每行添加一列，作为名字，可以采用如下的方式
+
+```r
+patients <- c("Bill", "Gina", "Kelly", "Sean")
+cbind(patients, my_matrix)
+```
+
+但是上面这种方式，会导致`implicit coercion`, 把数字变成字符，为了解决这个问题，我们可以使用如下的方式
+
+```r
+my_data <- data.frame(patients, my_matrix)
+```
+
+如果我们再想给每个列增加一个`name`, 可以使用如下的方式:
+
+```r
+cnames <- c("patient", "age", "weight", "bp", "rating", "test")
+colnames(my_data) <- cnames
+```

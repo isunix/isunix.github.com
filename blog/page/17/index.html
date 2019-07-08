@@ -9,12 +9,17 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="What if I want to development a django app in python3 environement. Using vitualenv 1
+  <meta name="description" content="Today I met some shell scirpts like the following: 1
+trap &quot;rm -f $file; exit&quot; INT TERM EXIT More code here: 1
 2
 3
-python3 -m venv sbenv
-source sbenv/bin/activate
-pip install &hellip;">
+4
+5
+6
+7
+8
+9
+cleanup() { &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -98,6 +103,77 @@ pip install &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/11/02/trap-interrupts-in-shell-scripts/">Trap Interrupts in Shell Scripts</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-11-02T14:45:18+08:00" pubdate data-updated="true">2015 年11 月2 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Today I met some shell scirpts like the following:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nb">trap</span> <span class="s2">&quot;rm -f $file; exit&quot;</span> INT TERM EXIT
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>More code here:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cleanup<span class="o">()</span> <span class="o">{</span>
+</span><span class="line">    <span class="nb">echo</span> <span class="s2">&quot;Cleaning stuff up...&quot;</span>
+</span><span class="line">    <span class="nb">exit</span>
+</span><span class="line"><span class="o">}</span>
+</span><span class="line">
+</span><span class="line"><span class="nb">trap </span>cleanup INT TERM
+</span><span class="line"><span class="nb">echo</span> <span class="s1">&#39; --- press ENTER to close --- &#39;</span>
+</span><span class="line"><span class="nb">read </span>var
+</span><span class="line">cleanup
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>change “trap cleanup INT TERM” above to “trap cleanup INT TERM EXIT” and then execute the script. Enter ‘exit’ and see what differences will happen.</p>
+
+<p>The following are references:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line">http://unix.stackexchange.com/questions/57940/trap-int-term-exit-really-necessary
+</span><span class="line">http://kb.mit.edu/confluence/pages/viewpage.action?pageId=3907156
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -220,400 +296,6 @@ pip install &hellip;">
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/09/15/reverse-a-linked-list-in-place/">Reverse a Linked List in Place</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-09-15T09:33:40+08:00" pubdate data-updated="true">2015 年9 月15 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>We will show how to reverse a linked list in place using both python and javascript(actually converted from coffeescript).</p>
-
-<p>1.python version:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="k">class</span> <span class="nc">ListNode</span><span class="p">:</span>
-</span><span class="line">    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">val</span> <span class="o">=</span> <span class="n">x</span>
-</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="bp">None</span>
-</span><span class="line">
-</span><span class="line"><span class="k">def</span> <span class="nf">reverse</span><span class="p">(</span><span class="n">head</span><span class="p">):</span>
-</span><span class="line">    <span class="n">p</span> <span class="o">=</span> <span class="n">head</span>
-</span><span class="line">    <span class="n">start</span> <span class="o">=</span> <span class="bp">None</span>
-</span><span class="line">    <span class="k">while</span> <span class="n">p</span><span class="p">:</span>
-</span><span class="line">        <span class="n">next_one</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">next</span>
-</span><span class="line">        <span class="n">p</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">start</span>
-</span><span class="line">        <span class="n">start</span> <span class="o">=</span> <span class="n">p</span>
-</span><span class="line">        <span class="n">p</span> <span class="o">=</span> <span class="n">next_one</span>
-</span><span class="line">
-</span><span class="line">    <span class="k">return</span> <span class="n">start</span>
-</span><span class="line">
-</span><span class="line"><span class="n">head</span> <span class="o">=</span> <span class="n">ListNode</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-</span><span class="line"><span class="n">head</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">ListNode</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</span><span class="line"><span class="n">head</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">ListNode</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-</span><span class="line">
-</span><span class="line"><span class="n">result</span> <span class="o">=</span> <span class="n">reverse</span><span class="p">(</span><span class="n">head</span><span class="p">)</span>
-</span><span class="line"><span class="k">while</span> <span class="n">result</span><span class="p">:</span>
-</span><span class="line">    <span class="k">print</span> <span class="n">result</span><span class="o">.</span><span class="n">val</span>
-</span><span class="line">    <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">next</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>2.javascript version:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-<span class="line-number">28</span>
-<span class="line-number">29</span>
-<span class="line-number">30</span>
-<span class="line-number">31</span>
-<span class="line-number">32</span>
-<span class="line-number">33</span>
-<span class="line-number">34</span>
-<span class="line-number">35</span>
-<span class="line-number">36</span>
-<span class="line-number">37</span>
-<span class="line-number">38</span>
-</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="c1">// Generated by CoffeeScript 1.9.3</span>
-</span><span class="line"><span class="kd">var</span> <span class="nx">ListNode</span><span class="p">,</span> <span class="nx">head</span><span class="p">,</span> <span class="nx">result</span><span class="p">,</span> <span class="nx">reverse_linkedList</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="nx">ListNode</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class="line">  <span class="kd">function</span> <span class="nx">ListNode</span><span class="p">(</span><span class="nx">val</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">    <span class="k">this</span><span class="p">.</span><span class="nx">val</span> <span class="o">=</span> <span class="nx">val</span><span class="p">;</span>
-</span><span class="line">    <span class="k">this</span><span class="p">.</span><span class="nx">next</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
-</span><span class="line">  <span class="p">}</span>
-</span><span class="line">
-</span><span class="line">  <span class="k">return</span> <span class="nx">ListNode</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="p">})();</span>
-</span><span class="line">
-</span><span class="line"><span class="nx">reverse_linkedList</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">head</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">  <span class="kd">var</span> <span class="nx">next_one</span><span class="p">,</span> <span class="nx">p</span><span class="p">,</span> <span class="nx">start</span><span class="p">;</span>
-</span><span class="line">  <span class="nx">p</span> <span class="o">=</span> <span class="nx">head</span><span class="p">;</span>
-</span><span class="line">  <span class="nx">start</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
-</span><span class="line">  <span class="k">while</span> <span class="p">(</span><span class="nx">p</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">    <span class="nx">next_one</span> <span class="o">=</span> <span class="nx">p</span><span class="p">.</span><span class="nx">next</span><span class="p">;</span>
-</span><span class="line">    <span class="nx">p</span><span class="p">.</span><span class="nx">next</span> <span class="o">=</span> <span class="nx">start</span><span class="p">;</span>
-</span><span class="line">    <span class="nx">start</span> <span class="o">=</span> <span class="nx">p</span><span class="p">;</span>
-</span><span class="line">    <span class="nx">p</span> <span class="o">=</span> <span class="nx">next_one</span><span class="p">;</span>
-</span><span class="line">  <span class="p">}</span>
-</span><span class="line">  <span class="k">return</span> <span class="nx">start</span><span class="p">;</span>
-</span><span class="line"><span class="p">};</span>
-</span><span class="line">
-</span><span class="line"><span class="nx">head</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ListNode</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="nx">head</span><span class="p">.</span><span class="nx">next</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ListNode</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="nx">head</span><span class="p">.</span><span class="nx">next</span><span class="p">.</span><span class="nx">next</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ListNode</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="nx">result</span> <span class="o">=</span> <span class="nx">reverse_linkedList</span><span class="p">(</span><span class="nx">head</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="k">while</span> <span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">val</span><span class="p">);</span>
-</span><span class="line">  <span class="nx">result</span> <span class="o">=</span> <span class="nx">result</span><span class="p">.</span><span class="nx">next</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>3.to reverse a linked from position m to n:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-<span class="line-number">28</span>
-<span class="line-number">29</span>
-<span class="line-number">30</span>
-<span class="line-number">31</span>
-<span class="line-number">32</span>
-<span class="line-number">33</span>
-<span class="line-number">34</span>
-<span class="line-number">35</span>
-<span class="line-number">36</span>
-<span class="line-number">37</span>
-<span class="line-number">38</span>
-<span class="line-number">39</span>
-<span class="line-number">40</span>
-<span class="line-number">41</span>
-<span class="line-number">42</span>
-<span class="line-number">43</span>
-<span class="line-number">44</span>
-<span class="line-number">45</span>
-<span class="line-number">46</span>
-<span class="line-number">47</span>
-</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="k">class</span> <span class="nc">ListNode</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-</span><span class="line">    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">val</span> <span class="o">=</span> <span class="n">x</span>
-</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="bp">None</span>
-</span><span class="line">
-</span><span class="line"><span class="k">class</span> <span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-</span><span class="line">    <span class="k">def</span> <span class="nf">reverseBetween</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">head</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
-</span><span class="line">        <span class="n">dummyNode</span> <span class="o">=</span> <span class="n">ListNode</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-</span><span class="line">        <span class="n">p</span> <span class="o">=</span> <span class="n">dummyNode</span>
-</span><span class="line">        <span class="n">q</span> <span class="o">=</span> <span class="n">head</span>
-</span><span class="line">
-</span><span class="line">        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
-</span><span class="line">            <span class="n">p</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">q</span>
-</span><span class="line">            <span class="n">q</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">next</span>
-</span><span class="line">            <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">next</span>
-</span><span class="line">
-</span><span class="line">        <span class="n">start</span> <span class="o">=</span> <span class="bp">None</span>
-</span><span class="line">        <span class="n">end</span> <span class="o">=</span> <span class="n">q</span>
-</span><span class="line">        <span class="n">next_one</span> <span class="o">=</span> <span class="bp">None</span>
-</span><span class="line">
-</span><span class="line">        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
-</span><span class="line">            <span class="n">next_one</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">next</span>
-</span><span class="line">            <span class="n">q</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">start</span>
-</span><span class="line">            <span class="n">start</span> <span class="o">=</span> <span class="n">q</span>
-</span><span class="line">            <span class="n">q</span> <span class="o">=</span> <span class="n">next_one</span>
-</span><span class="line">
-</span><span class="line">
-</span><span class="line">        <span class="n">p</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">start</span>
-</span><span class="line">        <span class="n">end</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">next_one</span>
-</span><span class="line">        <span class="k">return</span> <span class="n">dummyNode</span><span class="o">.</span><span class="n">next</span>
-</span><span class="line">
-</span><span class="line">
-</span><span class="line"><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
-</span><span class="line">    <span class="n">solution</span> <span class="o">=</span> <span class="n">Solution</span><span class="p">()</span>
-</span><span class="line">
-</span><span class="line">    <span class="n">head</span> <span class="o">=</span> <span class="n">ListNode</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-</span><span class="line">    <span class="n">head</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">ListNode</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</span><span class="line">    <span class="n">head</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">ListNode</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-</span><span class="line">    <span class="n">head</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">ListNode</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
-</span><span class="line">    <span class="n">head</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">ListNode</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-</span><span class="line">
-</span><span class="line">    <span class="n">m</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span>
-</span><span class="line">
-</span><span class="line">    <span class="n">result</span> <span class="o">=</span> <span class="n">solution</span><span class="o">.</span><span class="n">reverseBetween</span><span class="p">(</span><span class="n">head</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
-</span><span class="line">    <span class="k">while</span> <span class="n">result</span><span class="p">:</span>
-</span><span class="line">        <span class="k">print</span> <span class="n">result</span><span class="o">.</span><span class="n">val</span>
-</span><span class="line">        <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">next</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>4.we will also show another ways to reverse a linked list, first the cursive way:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="k">class</span> <span class="nc">ListNode</span><span class="p">:</span>
-</span><span class="line">    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">val</span> <span class="o">=</span> <span class="n">x</span>
-</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="bp">None</span>
-</span><span class="line">
-</span><span class="line"><span class="k">def</span> <span class="nf">reverse</span><span class="p">(</span><span class="n">head</span><span class="p">):</span>
-</span><span class="line">    <span class="k">if</span> <span class="n">head</span> <span class="o">==</span> <span class="bp">None</span> <span class="ow">or</span> <span class="n">head</span><span class="o">.</span><span class="n">next</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
-</span><span class="line">        <span class="k">return</span> <span class="n">head</span>
-</span><span class="line">
-</span><span class="line">    <span class="n">second</span> <span class="o">=</span> <span class="n">head</span><span class="o">.</span><span class="n">next</span>
-</span><span class="line">    <span class="n">head</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="bp">None</span>
-</span><span class="line">    <span class="n">result</span> <span class="o">=</span> <span class="n">reverse</span><span class="p">(</span><span class="n">second</span><span class="p">)</span>
-</span><span class="line">    <span class="n">second</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">head</span>
-</span><span class="line">
-</span><span class="line">    <span class="k">return</span> <span class="n">result</span>
-</span><span class="line">
-</span><span class="line"><span class="n">head</span> <span class="o">=</span> <span class="n">ListNode</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-</span><span class="line"><span class="n">head</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">ListNode</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</span><span class="line"><span class="n">head</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">ListNode</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-</span><span class="line">
-</span><span class="line"><span class="n">result</span> <span class="o">=</span> <span class="n">reverse</span><span class="p">(</span><span class="n">head</span><span class="p">)</span>
-</span><span class="line"><span class="k">while</span> <span class="n">result</span><span class="p">:</span>
-</span><span class="line">    <span class="k">print</span> <span class="n">result</span><span class="o">.</span><span class="n">val</span>
-</span><span class="line">    <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">next</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-<span class="line-number">28</span>
-<span class="line-number">29</span>
-<span class="line-number">30</span>
-<span class="line-number">31</span>
-<span class="line-number">32</span>
-<span class="line-number">33</span>
-<span class="line-number">34</span>
-<span class="line-number">35</span>
-<span class="line-number">36</span>
-<span class="line-number">37</span>
-</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="c1">// Generated by CoffeeScript 1.9.3</span>
-</span><span class="line"><span class="kd">var</span> <span class="nx">ListNode</span><span class="p">,</span> <span class="nx">head</span><span class="p">,</span> <span class="nx">result</span><span class="p">,</span> <span class="nx">reverse_linkedList</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="nx">ListNode</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class="line">  <span class="kd">function</span> <span class="nx">ListNode</span><span class="p">(</span><span class="nx">val</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">    <span class="k">this</span><span class="p">.</span><span class="nx">val</span> <span class="o">=</span> <span class="nx">val</span><span class="p">;</span>
-</span><span class="line">    <span class="k">this</span><span class="p">.</span><span class="nx">next</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
-</span><span class="line">  <span class="p">}</span>
-</span><span class="line">
-</span><span class="line">  <span class="k">return</span> <span class="nx">ListNode</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="p">})();</span>
-</span><span class="line">
-</span><span class="line"><span class="nx">reverse_linkedList</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">head</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">  <span class="kd">var</span> <span class="nx">result</span><span class="p">,</span> <span class="nx">second</span><span class="p">;</span>
-</span><span class="line">  <span class="k">if</span> <span class="p">(</span><span class="nx">head</span> <span class="o">===</span> <span class="kc">null</span> <span class="o">||</span> <span class="nx">head</span><span class="p">.</span><span class="nx">next</span> <span class="o">===</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">    <span class="k">return</span> <span class="nx">head</span><span class="p">;</span>
-</span><span class="line">  <span class="p">}</span>
-</span><span class="line">  <span class="nx">second</span> <span class="o">=</span> <span class="nx">head</span><span class="p">.</span><span class="nx">next</span><span class="p">;</span>
-</span><span class="line">  <span class="nx">head</span><span class="p">.</span><span class="nx">next</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
-</span><span class="line">  <span class="nx">result</span> <span class="o">=</span> <span class="nx">reverse_linkedList</span><span class="p">(</span><span class="nx">second</span><span class="p">);</span>
-</span><span class="line">  <span class="nx">second</span><span class="p">.</span><span class="nx">next</span> <span class="o">=</span> <span class="nx">head</span><span class="p">;</span>
-</span><span class="line">  <span class="k">return</span> <span class="nx">result</span><span class="p">;</span>
-</span><span class="line"><span class="p">};</span>
-</span><span class="line">
-</span><span class="line"><span class="nx">head</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ListNode</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="nx">head</span><span class="p">.</span><span class="nx">next</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ListNode</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="nx">head</span><span class="p">.</span><span class="nx">next</span><span class="p">.</span><span class="nx">next</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ListNode</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="nx">result</span> <span class="o">=</span> <span class="nx">reverse_linkedList</span><span class="p">(</span><span class="nx">head</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="k">while</span> <span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">val</span><span class="p">);</span>
-</span><span class="line">  <span class="nx">result</span> <span class="o">=</span> <span class="nx">result</span><span class="p">.</span><span class="nx">next</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/18/">&larr; Older</a>
@@ -629,6 +311,10 @@ pip install &hellip;">
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2019/07/08/sparkwen-jian-cao-zuo-bei-wang/">Spark文件操作备忘</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2019/07/07/ji-qi-xue-xi-de-liu-cheng-tu/">机器学习的流程图</a>
@@ -666,10 +352,6 @@ pip install &hellip;">
         <a href="/blog/2019/06/06/centoszhong-an-zhuang-nodejs/">CentOS中安装nodejs</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2019/06/06/centoszhong-xiu-gai-shi-qu/">CentOS中修改时区</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -677,7 +359,7 @@ pip install &hellip;">
   <h1>Categories</h1>
   <ul id="categories">
     <li class='category'><a href='/blog/categories/algorithms/'>Algorithms (8)</a></li>
-<li class='category'><a href='/blog/categories/bigdata/'>BigData (9)</a></li>
+<li class='category'><a href='/blog/categories/bigdata/'>BigData (10)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (5)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
 <li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (5)</a></li>

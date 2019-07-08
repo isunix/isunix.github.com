@@ -4,7 +4,7 @@
   <title><![CDATA[Steven's Blog]]></title>
   <link href="http://isunix.github.io/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2019-07-07T16:10:45+08:00</updated>
+  <updated>2019-07-08T11:35:41+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,79 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Spark文件操作备忘]]></title>
+    <link href="http://isunix.github.io/blog/2019/07/08/sparkwen-jian-cao-zuo-bei-wang/"/>
+    <updated>2019-07-08T11:08:53+08:00</updated>
+    <id>http://isunix.github.io/blog/2019/07/08/sparkwen-jian-cao-zuo-bei-wang</id>
+    <content type="html"><![CDATA[<ol>
+  <li>读取一个文本文件，然后进行repartition:</li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">spark.read.textFile<span class="o">(</span>path1<span class="o">)</span>.repartition<span class="o">(</span>1<span class="o">)</span>.write.text<span class="o">(</span>path2<span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<ol>
+  <li>pyspark 基本的dataframe的操作:</li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
+</span><span class="line"><span class="n">master</span> <span class="o">=</span> <span class="s">&quot;local&quot;</span>
+</span><span class="line">
+</span><span class="line"><span class="n">df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">parquet</span><span class="p">(</span><span class="n">raw_data</span><span class="p">)</span>
+</span><span class="line"><span class="n">df_filtered</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s">&#39;f1&#39;</span><span class="p">,</span> <span class="s">&#39;f2&#39;</span><span class="p">,</span> <span class="s">&#39;f3&#39;</span><span class="p">,</span> <span class="s">&#39;f4&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">((</span><span class="n">df</span><span class="p">[</span><span class="s">&#39;f1&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">1531670400</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">&#39;f1&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">1532188800</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">&#39;f2&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">15</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">&#39;f3&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="s">&#39;&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">&#39;f4&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">))</span>
+</span><span class="line">
+</span><span class="line"><span class="kn">import</span> <span class="nn">pyspark.sql.functions</span> <span class="kn">as</span> <span class="nn">func</span>
+</span><span class="line"><span class="n">result</span> <span class="o">=</span> <span class="n">df_filtered</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">&#39;f3&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">countDistinct</span><span class="p">(</span><span class="s">&#39;f1&#39;</span><span class="p">))</span>
+</span><span class="line">
+</span><span class="line"><span class="n">result</span><span class="o">.</span><span class="n">rdd</span><span class="o">.</span><span class="n">repartition</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">row</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="s">&quot;,&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span><span class="o">.</span><span class="n">saveAsTextFile</span><span class="p">(</span><span class="n">path2</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<ol>
+  <li>用Spark错做数据</li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+</pre></td><td class="code"><pre><code class="scala"><span class="line"><span class="k">val</span> <span class="n">diff</span> <span class="k">=</span> <span class="n">diff1</span><span class="o">.</span><span class="n">union</span><span class="o">(</span><span class="n">diff2</span><span class="o">)</span>
+</span><span class="line">
+</span><span class="line"><span class="k">val</span> <span class="n">raw</span> <span class="k">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">textFile</span><span class="o">(</span><span class="n">path1</span><span class="o">)</span>
+</span><span class="line">
+</span><span class="line"><span class="c1">// 限定有3个字段, 存成df</span>
+</span><span class="line"><span class="k">val</span> <span class="n">raw_df</span> <span class="k">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">filter</span><span class="o">(</span><span class="n">x</span> <span class="k">=&gt;</span> <span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="o">(</span><span class="s">&quot;\t&quot;</span><span class="o">).</span><span class="n">length</span> <span class="o">==</span> <span class="mi">3</span><span class="o">).</span><span class="n">map</span><span class="o">(</span><span class="n">x</span> <span class="k">=&gt;</span> <span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="o">(</span><span class="s">&quot;\t&quot;</span><span class="o">)(</span><span class="mi">0</span><span class="o">),</span> <span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="o">(</span><span class="s">&quot;\t&quot;</span><span class="o">)(</span><span class="mi">1</span><span class="o">).</span><span class="n">toLong</span><span class="o">,</span> <span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="o">(</span><span class="s">&quot;\t&quot;</span><span class="o">)(</span><span class="mi">2</span><span class="o">))).</span><span class="n">toDF</span><span class="o">(</span><span class="s">&quot;f1&quot;</span><span class="o">,</span> <span class="s">&quot;f2&quot;</span><span class="o">,</span> <span class="s">&quot;f3&quot;</span><span class="o">)</span>
+</span><span class="line">
+</span><span class="line"><span class="c1">// join获取rawdata</span>
+</span><span class="line"><span class="k">val</span> <span class="n">joined_diff</span> <span class="k">=</span> <span class="n">diff</span><span class="o">.</span><span class="n">join</span><span class="o">(</span><span class="n">raw_df</span><span class="o">,</span> <span class="n">diff</span><span class="o">(</span><span class="s">&quot;f1&quot;</span><span class="o">)</span> <span class="o">===</span> <span class="n">raw_df</span><span class="o">(</span><span class="s">&quot;f1&quot;</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="n">diff</span><span class="o">(</span><span class="s">&quot;f2&quot;</span><span class="o">)</span> <span class="o">===</span> <span class="n">raw_df</span><span class="o">(</span><span class="s">&quot;f2&quot;</span><span class="o">),</span> <span class="s">&quot;inner&quot;</span><span class="o">).</span><span class="n">toDF</span><span class="o">(</span><span class="s">&quot;f1&quot;</span><span class="o">,</span> <span class="s">&quot;f2&quot;</span><span class="o">,</span> <span class="s">&quot;f3&quot;</span><span class="o">,</span> <span class="s">&quot;f4&quot;</span><span class="o">,</span> <span class="s">&quot;f5&quot;</span><span class="o">,</span> <span class="s">&quot;f6&quot;</span><span class="o">)</span>
+</span><span class="line">
+</span><span class="line"><span class="c1">// 存数据</span>
+</span><span class="line"><span class="k">val</span> <span class="n">result_df</span> <span class="k">=</span> <span class="n">joined_diff</span><span class="o">.</span><span class="n">select</span><span class="o">(</span><span class="n">$</span><span class="s">&quot;f1&quot;</span><span class="o">,</span> <span class="n">$</span><span class="s">&quot;f2&quot;</span><span class="o">,</span> <span class="n">$</span><span class="s">&quot;f3&quot;</span><span class="o">,</span> <span class="n">$</span><span class="s">&quot;f4&quot;</span><span class="o">)</span>
+</span><span class="line"><span class="n">result_df</span><span class="o">.</span><span class="n">repartition</span><span class="o">(</span><span class="mi">1</span><span class="o">).</span><span class="n">write</span><span class="o">.</span><span class="n">mode</span><span class="o">(</span><span class="s">&quot;overwrite&quot;</span><span class="o">).</span><span class="n">option</span><span class="o">(</span><span class="s">&quot;delimiter&quot;</span><span class="o">,</span> <span class="s">&quot;\t&quot;</span><span class="o">).</span><span class="n">csv</span><span class="o">(</span><span class="n">path2</span><span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[机器学习的流程图]]></title>
@@ -678,59 +751,6 @@
 然后我们就可以使用如下的方式来进行psql的连接了<code>psql -h $host -p $port -U $user -d $db</code>.
 同理，这里的每个变量实际过程中替换成真实的值.</p>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[使用rpm安装crontab命令备忘]]></title>
-    <link href="http://isunix.github.io/blog/2019/05/22/shi-yong-rpman-zhuang-crontabming-ling-bei-wang/"/>
-    <updated>2019-05-22T16:36:21+08:00</updated>
-    <id>http://isunix.github.io/blog/2019/05/22/shi-yong-rpman-zhuang-crontabming-ling-bei-wang</id>
-    <content type="html"><![CDATA[<p>我这边有台ec2, 但是在yum update的时候，总是报错说依赖冲突，后来处理这个问题的时候，过于激进，导致yum不可以用了, 最后把rpm也删了</p>
-
-<p>参考这篇文章
-<a href="https://blog.seosiwei.com/detail/27">https://blog.seosiwei.com/detail/27</a>
-里的方法2，把rpm和yum都删了然后重装了, 软件下载链接是
-<a href="http://mirrors.ustc.edu.cn/centos/6/os/x86_64/Packages/">http://mirrors.ustc.edu.cn/centos/6/os/x86_64/Packages/</a></p>
-
-<p>安装好了之后，发现yum还是不能用，总是报错</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">liblzma.so.0: cannot open shared object file: No such file or directory</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>之类的信息</p>
-
-<p>无可奈何，只好使用rpm了, 我这边需要使用crontab，于是从上面的软件库中下载了</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">cronie-1.4.4-16.el6_8.2.x86_64.rpm``` 和 ```crontabs-1.10-33.el6.noarch.rpm</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>然后执行如下的命令来安装</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">rpm -Uvh --replacepkgs --nodeps --force cron*.rpm</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>然后报各种依赖找不到的错误, 比如</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">librpmio.so.3 not found</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>之类的</p>
-
-<p>好在我们有别的ec2，我们可以去这个另外的ec2上找对应的依赖，然后copy到这个我们出问题的机器上</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">find / -name librpm.so.3 -type f</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>然后发现在/usr/lib64中，librpm.so.3是个软连接，指向/usr/lib64中的librpm.so.3.2.2, 我们把librpm.so.3.2.2copy到我们出问题的机器的/usr/lib64里，然后参照
-<a href="http://isunix.github.io/blog/2019/05/22/linuxming-ling-lnde-shi-yong-bei-wang/">http://isunix.github.io/blog/2019/05/22/linuxming-ling-lnde-shi-yong-bei-wang/</a>
-中的方式来做个软连接</p>
-
-<p>仿照这个方式，如果还有问题，重复找依赖-copy-做软连接的过程</p>
-
-<p>最后再执行</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">rpm -Uvh --replacepkgs --nodeps --force cron*.rpm</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>crontab命令成功安装了.</p>
 ]]></content>
   </entry>
   

@@ -5,13 +5,13 @@ date: 2019-07-08 11:08:53 +0800
 comments: true
 categories: BigData
 ---
-1. 读取一个文本文件，然后进行repartition:
+### 读取一个文本文件，然后进行repartition:
 
 ```sh
 spark.read.textFile(path1).repartition(1).write.text(path2)
 ```
 
-2. pyspark 基本的dataframe的操作:
+### pyspark 基本的dataframe的操作:
 
 ```py
 from pyspark.sql import SparkSession
@@ -26,7 +26,7 @@ result = df_filtered.groupby(df['f3']).agg(func.countDistinct('f1'))
 result.rdd.repartition(1).map(lambda row: str(row[0]) + "," + str(row[1])).saveAsTextFile(path2)
 ```
 
-3. 用Spark错做数据
+### 用Spark操作数据
 
 ```scala
 val diff = diff1.union(diff2)

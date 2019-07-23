@@ -9,7 +9,7 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="还是先上一段递归的c代码吧: 1
+  <meta name="description" content="1.要求用户输入人名， 打印出对应的item. 1
 2
 3
 4
@@ -18,12 +18,8 @@
 7
 8
 9
-10
-11
-12
-13
-#include &lt;stdlib.h&gt;
-#include &lt;stdio.h&gt; int FibonacciRecursive(int n){ if(n &lt; 2){ return n &hellip;">
+my %last_name = qw{ fred flintstone barney rubble wilma flintstone
+}; print &quot;please enter a first name &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -107,6 +103,95 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/18/use-examples-regarding-hash-in-perl/">Use Examples Regarding Hash in Perl</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-18T19:18:44+08:00" pubdate data-updated="true">2014 年7 月18 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>1.要求用户输入人名， 打印出对应的item.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">%last_name</span> <span class="o">=</span> <span class="sx">qw{</span>
+</span><span class="line"><span class="sx">    fred flintstone</span>
+</span><span class="line"><span class="sx">    barney rubble</span>
+</span><span class="line"><span class="sx">    wilma flintstone</span>
+</span><span class="line"><span class="sx">}</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;please enter a first name: &quot;</span><span class="p">;</span>
+</span><span class="line"><span class="nb">chomp</span><span class="p">(</span><span class="k">my</span> <span class="nv">$name</span> <span class="o">=</span> <span class="sr">&lt;STDIN&gt;</span><span class="p">);</span>
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;that&#39;s $name $last_name{$name}.\n&quot;</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>这是一个很典型的标准用法了。  </p>
+
+<p>2.要求用户进行几行输入，然后统计频数.   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="n">strict</span><span class="p">;</span>
+</span><span class="line"><span class="k">use</span> <span class="n">warnings</span><span class="p">;</span>
+</span><span class="line"><span class="k">use</span> <span class="n">utf8</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">my</span> <span class="p">(</span><span class="nv">@words</span><span class="p">,</span> <span class="nv">%count</span><span class="p">,</span> <span class="nv">$word</span><span class="p">);</span>
+</span><span class="line"><span class="nb">chomp</span><span class="p">(</span><span class="nv">@words</span> <span class="o">=</span> <span class="sr">&lt;STDIN&gt;</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="k">foreach</span> <span class="nv">$word</span> <span class="p">(</span><span class="nv">@words</span><span class="p">){</span>
+</span><span class="line">    <span class="nv">$count</span><span class="p">{</span><span class="nv">$word</span><span class="p">}</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="k">foreach</span> <span class="nv">$word</span> <span class="p">(</span><span class="nb">keys</span> <span class="nv">%count</span><span class="p">){</span>
+</span><span class="line">    <span class="k">print</span> <span class="s">&quot;$word was seen $count{$word} times.\n&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -457,139 +542,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/07/17/about-the-use-of-state-in-perl/">About the Use of State in Perl</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-07-17T16:02:20+08:00" pubdate data-updated="true">2014 年7 月17 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>算了还是引用一下«learning perl»中文翻译版本中的话吧:   </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">在Perl中可以使用my操作符来创建私有变量， 但是每次调用这个子程序的时候，这个私有变量都会被重新定义。而使用state操作符来声明的变量，我们便可以在子程序的多次调用期间保留变量之前的值， 并将变量的作用域限于子程序内部
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>让我们来看下使用my还有使用state所产生的不同的效果吧。  </p>
-
-<p>首先是my:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="mf">5.010</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="n">running_sum</span><span class="p">(</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span> <span class="p">);</span>
-</span><span class="line"><span class="n">running_sum</span><span class="p">(</span> <span class="mi">1</span><span class="o">..</span><span class="mi">3</span> <span class="p">);</span>
-</span><span class="line"><span class="n">running_sum</span><span class="p">(</span> <span class="mi">4</span> <span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="k">sub </span><span class="nf">running_sum</span> <span class="p">{</span>
-</span><span class="line">    <span class="k">my</span> <span class="nv">$sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class="line">    <span class="k">my</span> <span class="nv">@numbers</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line">    <span class="k">foreach</span> <span class="k">my</span> <span class="nv">$number</span> <span class="p">(</span> <span class="nv">@_</span> <span class="p">)</span> <span class="p">{</span>
-</span><span class="line">      <span class="nb">push</span> <span class="nv">@numbers</span><span class="p">,</span> <span class="nv">$number</span><span class="p">;</span>
-</span><span class="line">      <span class="nv">$sum</span> <span class="o">+=</span> <span class="nv">$number</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">
-</span><span class="line">    <span class="n">say</span> <span class="s">&quot;the sum of (@numbers) is $sum&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>这段code产生的结果是:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">the</span> <span class="n">sum</span> <span class="n">of</span> <span class="p">(</span><span class="mi">5</span> <span class="mi">6</span><span class="p">)</span> <span class="n">is</span> <span class="mi">11</span>
-</span><span class="line"><span class="n">the</span> <span class="n">sum</span> <span class="n">of</span> <span class="p">(</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">)</span> <span class="n">is</span> <span class="mi">6</span>
-</span><span class="line"><span class="n">the</span> <span class="n">sum</span> <span class="n">of</span> <span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="n">is</span> <span class="mi">4</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>下面是state:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="mf">5.010</span><span class="p">;</span>
-</span><span class="line"><span class="n">running_sum</span><span class="p">(</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span> <span class="p">);</span>
-</span><span class="line"><span class="n">running_sum</span><span class="p">(</span> <span class="mi">1</span><span class="o">..</span><span class="mi">3</span> <span class="p">);</span>
-</span><span class="line"><span class="n">running_sum</span><span class="p">(</span> <span class="mi">4</span> <span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="k">sub </span><span class="nf">running_sum</span> <span class="p">{</span>
-</span><span class="line">    <span class="n">state</span> <span class="nv">$sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class="line">    <span class="n">state</span> <span class="nv">@numbers</span><span class="p">;</span>
-</span><span class="line">    <span class="k">foreach</span> <span class="k">my</span> <span class="nv">$number</span> <span class="p">(</span> <span class="nv">@_</span> <span class="p">)</span> <span class="p">{</span>
-</span><span class="line">        <span class="nb">push</span> <span class="nv">@numbers</span><span class="p">,</span> <span class="nv">$number</span><span class="p">;</span>
-</span><span class="line">        <span class="nv">$sum</span> <span class="o">+=</span> <span class="nv">$number</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="n">say</span> <span class="s">&quot;The sum of (@numbers) is $sum&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>它的结果是:   </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">The</span> <span class="n">sum</span> <span class="n">of</span> <span class="p">(</span><span class="mi">5</span> <span class="mi">6</span><span class="p">)</span> <span class="n">is</span> <span class="mi">11</span>
-</span><span class="line"><span class="n">The</span> <span class="n">sum</span> <span class="n">of</span> <span class="p">(</span><span class="mi">5</span> <span class="mi">6</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">)</span> <span class="n">is</span> <span class="mi">17</span>
-</span><span class="line"><span class="n">The</span> <span class="n">sum</span> <span class="n">of</span> <span class="p">(</span><span class="mi">5</span> <span class="mi">6</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">)</span> <span class="n">is</span> <span class="mi">21</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/41/">&larr; Older</a>
@@ -605,6 +557,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2019/07/23/pythonzhong-cong-ndarrayhuo-zhe-dataframeli-huo-qu-shu-ju-he-biao-qian/">Python中从ndarray或者DataFrame里获取数据和标签</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2019/07/20/dui-da-shu-ju-fen-xi-fen-xi-gong-zuo-de-%5B%3F%5D-xie-si-kao/">对(大)数据分析工作的一些思考</a>
@@ -642,10 +598,6 @@
         <a href="/blog/2019/06/10/zeppelinda-pei-presto/">Zeppelin搭配Presto</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2019/06/10/emrzhong-chuang-jian-huede-superuser/">EMR中创建HUE的superuser</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -656,7 +608,7 @@
 <li class='category'><a href='/blog/categories/bigdata/'>BigData (10)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (6)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
-<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (5)</a></li>
+<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (6)</a></li>
 <li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (5)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (1)</a></li>
 <li class='category'><a href='/blog/categories/fun/'>Fun (1)</a></li>

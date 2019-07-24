@@ -9,19 +9,8 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="Say we have a file a, which has the following contentL: 1
-2
-3
-4
-5
-a
-b
-c
-d
-e and b, 1
-2
-c
-d What if we want to get all those in file a and not in file &hellip;">
+  <meta name="description" content="Several days I met some perl one-liner like this: 1
+cat $file | perl -Mautodie -MList::MoreUtils=none -ne &#39;chomp; push @re, $_ }{ open $fh, $ENV{ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -105,6 +94,80 @@ d What if we want to get all those in file a and not in file &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/12/17/perl-secret-operators-and-constants/">Perl Secret Operators and Constants</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-12-17T10:37:47+08:00" pubdate data-updated="true">2015 年12 月17 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Several days I met some perl one-liner like this:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat <span class="nv">$file</span> | perl -Mautodie -MList::MoreUtils<span class="o">=</span>none -ne <span class="s1">&#39;chomp; push @re, $_ }{ open $fh, $ENV{CF}; @s = &lt;$fh&gt;; foreach $s (@s) { print $s if none { $s =~ qr/$_/ } @re };&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>I have no idea what the “}{“ here means, at first I thought it maybe some typo.</p>
+
+<p>Then my colleagues showed me the following page, which lists many weird perl operators.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line">http://search.cpan.org/dist/perlsecret/lib/perlsecret.pod
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>To have a look at how it is used in the backend:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nv">$ </span>perl -MO<span class="o">=</span>Deparse -lne <span class="s1">&#39;}{print$.&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>It will give the following code:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="o">-</span><span class="n">e</span> <span class="n">syntax</span> <span class="n">OK</span>
+</span><span class="line">    <span class="k">BEGIN</span> <span class="p">{</span> <span class="vg">$/</span> <span class="o">=</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span> <span class="vg">$\</span> <span class="o">=</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span> <span class="p">}</span>
+</span><span class="line">    <span class="n">LINE:</span> <span class="k">while</span> <span class="p">(</span><span class="nb">defined</span><span class="p">(</span><span class="nv">$_</span> <span class="o">=</span> <span class="sr">&lt;ARGV&gt;</span><span class="p">))</span> <span class="p">{</span>
+</span><span class="line">        <span class="nb">chomp</span> <span class="nv">$_</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">    <span class="p">{</span>
+</span><span class="line">        <span class="k">print</span> <span class="vg">$.</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -629,114 +692,6 @@ d What if we want to get all those in file a and not in file &hellip;">
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/12/04/use-python-request-to-download-movies/">Use Python Request to Download Movies</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-12-04T14:50:25+08:00" pubdate data-updated="true">2015 年12 月4 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>This post shows a working way to download movies using python requests module.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-<span class="line-number">28</span>
-<span class="line-number">29</span>
-<span class="line-number">30</span>
-<span class="line-number">31</span>
-<span class="line-number">32</span>
-</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="kn">import</span> <span class="nn">requests</span>
-</span><span class="line"><span class="kn">import</span> <span class="nn">re</span>
-</span><span class="line"><span class="kn">import</span> <span class="nn">sys</span>
-</span><span class="line">
-</span><span class="line"><span class="k">class</span> <span class="nc">MovieDownload</span><span class="p">:</span>
-</span><span class="line">    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
-</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">url</span>
-</span><span class="line">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">__contains__</span><span class="p">(</span><span class="s">&#39;//&#39;</span><span class="p">):</span>
-</span><span class="line">            <span class="bp">self</span><span class="o">.</span><span class="n">download_movie</span><span class="p">()</span>
-</span><span class="line">        <span class="k">else</span><span class="p">:</span>
-</span><span class="line">            <span class="k">print</span><span class="p">(</span><span class="s">&quot;wrong url entered&quot;</span><span class="p">)</span>
-</span><span class="line">
-</span><span class="line">
-</span><span class="line">    <span class="k">def</span> <span class="nf">download_movie</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span class="line">        <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
-</span><span class="line">        <span class="n">pattern_title</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">&#39;&lt;h2 class=&quot;entry_title&quot;&gt;(.*?)&lt;/h2&gt;&#39;</span><span class="p">)</span>
-</span><span class="line">        <span class="n">title</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">pattern_title</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-</span><span class="line">        <span class="n">pattern_to_download</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">&#39;&lt;li&gt;&lt;a href=&quot;(.*?)&quot;&gt;.*?1024\.mkv.*?&lt;/a&gt;&#39;</span><span class="p">)</span>
-</span><span class="line">        <span class="n">movie_urls</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">pattern_to_download</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
-</span><span class="line">
-</span><span class="line">        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;movie.txt&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-</span><span class="line">            <span class="k">print</span><span class="p">(</span><span class="s">&quot;There are {} urls here!</span><span class="se">\n</span><span class="s">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">movie_urls</span><span class="p">)))</span>
-</span><span class="line">            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;There are {} urls here!</span><span class="se">\n\n</span><span class="s">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">movie_urls</span><span class="p">)))</span>
-</span><span class="line">            <span class="k">for</span> <span class="n">movie_url</span> <span class="ow">in</span> <span class="n">movie_urls</span><span class="p">:</span>
-</span><span class="line">                <span class="k">print</span><span class="p">(</span><span class="s">&quot;{}</span><span class="se">\n</span><span class="s">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">movie_url</span><span class="p">))</span>
-</span><span class="line">                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;{}</span><span class="se">\n\n</span><span class="s">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">movie_url</span><span class="p">))</span>
-</span><span class="line">
-</span><span class="line">
-</span><span class="line"><span class="n">url</span> <span class="o">=</span> <span class="s">&quot;http://cn163.net/archives/3639/&quot;</span>
-</span><span class="line"><span class="n">MovieDownload</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-</span><span class="line">
-</span><span class="line"><span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>and then execute the script as:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">python3 movie_download.py
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/16/">&larr; Older</a>
@@ -752,6 +707,10 @@ d What if we want to get all those in file a and not in file &hellip;">
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2019/07/24/vscode-remote-yuan-cheng-kai-fa-yu-diao-shi/">Vscode Remote Yuan Cheng Kai Fa Yu Diao Shi</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2019/07/23/pythonzhong-cong-ndarrayhuo-zhe-dataframeli-huo-qu-shu-ju-he-biao-qian/">Python中从ndarray或者DataFrame里获取数据和标签</a>
@@ -787,10 +746,6 @@ d What if we want to get all those in file a and not in file &hellip;">
     
       <li class="post">
         <a href="/blog/2019/07/02/yong-pythonlai-fa-song-markdownge-shi-de-you-jian/">用Python来发送markdown格式的邮件</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2019/06/10/zeppelinda-pei-presto/">Zeppelin搭配Presto</a>
       </li>
     
   </ul>

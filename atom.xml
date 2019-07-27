@@ -4,7 +4,7 @@
   <title><![CDATA[Steven's Blog]]></title>
   <link href="http://isunix.github.io/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2019-07-27T22:20:13+08:00</updated>
+  <updated>2019-07-27T22:57:32+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -426,10 +426,147 @@
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">an_ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">11</span><span class="p">,</span><span class="mi">12</span><span class="p">],</span> <span class="p">[</span><span class="mi">21</span><span class="p">,</span> <span class="mi">22</span><span class="p">],</span> <span class="p">[</span><span class="mi">31</span><span class="p">,</span> <span class="mi">32</span><span class="p">]])</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">an_ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">11</span><span class="p">,</span><span class="mi">12</span><span class="p">],</span> <span class="p">[</span><span class="mi">21</span><span class="p">,</span> <span class="mi">22</span><span class="p">],</span> <span class="p">[</span><span class="mi">31</span><span class="p">,</span> <span class="mi">31</span><span class="p">]])</span>
 </span><span class="line"><span class="n">bigger_than_fifteen</span> <span class="o">=</span> <span class="p">(</span><span class="n">an_array</span> <span class="o">&gt;</span> <span class="mi">15</span><span class="p">)</span>
+</span><span class="line"><span class="n">an_ndarray</span><span class="p">[</span><span class="n">bigger_than_fifteen</span><span class="p">]</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
+<p>或者我们也可以直接如下操作:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">an_ndarray</span><span class="p">[(</span><span class="n">an_ndarray</span> <span class="o">&gt;</span> <span class="mi">15</span><span class="p">)]</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<ul>
+  <li>下面是针对上面的<code>an_ndarray</code>进行的一些数学操作</li>
+</ul>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+<span class="line-number">35</span>
+<span class="line-number">36</span>
+<span class="line-number">37</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="c"># 求各个元素的均值</span>
+</span><span class="line"><span class="n">an_ndarray</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</span><span class="line">
+</span><span class="line"><span class="c"># 求每行的均值</span>
+</span><span class="line"><span class="n">an_ndarray</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="c"># 求每列的均值</span>
+</span><span class="line"><span class="n">an_ndarray</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="c"># 求所有元素的和</span>
+</span><span class="line"><span class="n">an_ndarray</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</span><span class="line">
+</span><span class="line"><span class="c"># 求每行的中位数</span>
+</span><span class="line"><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">an_ndarray</span><span class="p">,</span> <span class="n">axix</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="c"># 求每列的中位数</span>
+</span><span class="line"><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">an_ndarray</span><span class="p">,</span> <span class="n">axix</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="c"># 想要找到unique的元素</span>
+</span><span class="line"><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">an_ndarray</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="c"># 下面是一些集合的操作</span>
+</span><span class="line"><span class="n">s1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="s">&#39;desk&#39;</span><span class="p">,</span><span class="s">&#39;chair&#39;</span><span class="p">,</span><span class="s">&#39;bulb&#39;</span><span class="p">])</span>
+</span><span class="line"><span class="n">s2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="s">&#39;lamp&#39;</span><span class="p">,</span><span class="s">&#39;bulb&#39;</span><span class="p">,</span><span class="s">&#39;chair&#39;</span><span class="p">])</span>
+</span><span class="line"><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="c"># s1 和 s2 交集</span>
+</span><span class="line"><span class="n">np</span><span class="o">.</span><span class="n">intersect1d</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="c"># s1 和 s2 去重并集</span>
+</span><span class="line"><span class="n">np</span><span class="o">.</span><span class="n">union1d</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="c"># 在s1然后不在s2中的元素</span>
+</span><span class="line"><span class="n">np</span><span class="o">.</span><span class="n">setdiff1d</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="c"># 判断s1中的元素是不是在s2中</span>
+</span><span class="line"><span class="n">np</span><span class="o">.</span><span class="n">in1d</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<ul>
+  <li>
+    <p>广播
+最好的操作方式是能打印出来看看长啥样.</p>
+  </li>
+  <li>
+    <p>文件的存取</p>
+  </li>
+</ul>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span> <span class="mf">23.23</span><span class="p">,</span> <span class="mf">24.24</span><span class="p">])</span>
+</span><span class="line"><span class="n">np</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">&#39;an_array&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+</span><span class="line"><span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s">&#39;an_array.npy&#39;</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="s">&#39;array.txt&#39;</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s">&#39;,&#39;</span><span class="p">)</span>
+</span><span class="line"><span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s">&#39;array.txt&#39;</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s">&#39;,&#39;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<ul>
+  <li>拼接数据集</li>
+</ul>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">K</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">high</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+</span><span class="line"><span class="n">M</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">high</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+</span><span class="line">
+</span><span class="line"><span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">K</span><span class="p">,</span><span class="n">M</span><span class="p">))</span>
+</span><span class="line"><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">K</span><span class="p">,</span><span class="n">M</span><span class="p">))</span>
+</span><span class="line">
+</span><span class="line"><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">K</span><span class="p">,</span> <span class="n">M</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+</span><span class="line"><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">K</span><span class="p">,</span> <span class="n">M</span><span class="o">.</span><span class="n">T</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="c"># vstack 和 hstack 和  最下面的两种方式是等价的</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 ]]></content>
   </entry>
   

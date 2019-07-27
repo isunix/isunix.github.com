@@ -4,7 +4,7 @@
   <title><![CDATA[catogories：Data&ML&AI | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/data-and-ml-and-ai/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2019-07-27T22:20:13+08:00</updated>
+  <updated>2019-07-27T22:57:32+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -190,10 +190,96 @@ y = np.array([1 if i == 1 else -1 for i in y])
 </ul>
 
 <p><code>py
-an_ndarray = np.array([[11,12], [21, 22], [31, 32]])
+an_ndarray = np.array([[11,12], [21, 22], [31, 31]])
 bigger_than_fifteen = (an_array &gt; 15)
+an_ndarray[bigger_than_fifteen]
 </code></p>
 
+<p>或者我们也可以直接如下操作:</p>
+
+<p><code>py
+an_ndarray[(an_ndarray &gt; 15)]
+</code></p>
+
+<ul>
+  <li>下面是针对上面的<code>an_ndarray</code>进行的一些数学操作</li>
+</ul>
+
+<p>```py
+# 求各个元素的均值
+an_ndarray.mean()</p>
+
+<h1 id="section">求每行的均值</h1>
+<p>an_ndarray.mean(axis=1)</p>
+
+<h1 id="section-1">求每列的均值</h1>
+<p>an_ndarray.mean(axis=0)</p>
+
+<h1 id="section-2">求所有元素的和</h1>
+<p>an_ndarray.sum()</p>
+
+<h1 id="section-3">求每行的中位数</h1>
+<p>np.median(an_ndarray, axix=1)</p>
+
+<h1 id="section-4">求每列的中位数</h1>
+<p>np.median(an_ndarray, axix=0)</p>
+
+<h1 id="unique">想要找到unique的元素</h1>
+<p>np.unique(an_ndarray)</p>
+
+<h1 id="section-5">下面是一些集合的操作</h1>
+<p>s1 = np.array([‘desk’,’chair’,’bulb’])
+s2 = np.array([‘lamp’,’bulb’,’chair’])
+(s1, s2)</p>
+
+<h1 id="s1--s2-">s1 和 s2 交集</h1>
+<p>np.intersect1d(s1, s2)</p>
+
+<h1 id="s1--s2--1">s1 和 s2 去重并集</h1>
+<p>np.union1d(s1, s2)</p>
+
+<h1 id="s1s2">在s1然后不在s2中的元素</h1>
+<p>np.setdiff1d(s1, s2)</p>
+
+<h1 id="s1s2-1">判断s1中的元素是不是在s2中</h1>
+<p>np.in1d(s1, s2)
+```</p>
+
+<ul>
+  <li>
+    <p>广播
+最好的操作方式是能打印出来看看长啥样.</p>
+  </li>
+  <li>
+    <p>文件的存取</p>
+  </li>
+</ul>
+
+<p>```py
+x = np.array([ 23.23, 24.24])
+np.save(‘an_array’, x)
+np.load(‘an_array.npy’)</p>
+
+<p>np.savetxt(‘array.txt’, X=x, delimiter=’,’)
+np.loadtxt(‘array.txt’, delimiter=’,’)
+```</p>
+
+<ul>
+  <li>拼接数据集</li>
+</ul>
+
+<p>```py
+K = np.random.randint(low=2,high=50,size=(2,2))
+M = np.random.randint(low=2,high=50,size=(2,2))</p>
+
+<p>np.vstack((K,M))
+np.hstack((K,M))</p>
+
+<p>np.concatenate([K, M], axis = 0)
+np.concatenate([K, M.T], axis = 1)</p>
+
+<h1 id="vstack--hstack---">vstack 和 hstack 和  最下面的两种方式是等价的</h1>
+<p>```</p>
 ]]></content>
   </entry>
   

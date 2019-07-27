@@ -53,8 +53,84 @@ y = np.array([1 if i == 1 else -1 for i in y])
 - 我们也可以使用如下的方式，对array中的元素进行判断
 
 ```py
-an_ndarray = np.array([[11,12], [21, 22], [31, 32]])
+an_ndarray = np.array([[11,12], [21, 22], [31, 31]])
 bigger_than_fifteen = (an_array > 15)
+an_ndarray[bigger_than_fifteen]
 ```
 
+或者我们也可以直接如下操作:
 
+```py
+an_ndarray[(an_ndarray > 15)]
+```
+
+- 下面是针对上面的`an_ndarray`进行的一些数学操作
+
+```py
+# 求各个元素的均值
+an_ndarray.mean()
+
+# 求每行的均值
+an_ndarray.mean(axis=1)
+
+# 求每列的均值
+an_ndarray.mean(axis=0)
+
+# 求所有元素的和
+an_ndarray.sum()
+
+# 求每行的中位数
+np.median(an_ndarray, axix=1)
+
+# 求每列的中位数
+np.median(an_ndarray, axix=0)
+
+# 想要找到unique的元素
+np.unique(an_ndarray)
+
+# 下面是一些集合的操作
+s1 = np.array(['desk','chair','bulb'])
+s2 = np.array(['lamp','bulb','chair'])
+(s1, s2)
+
+# s1 和 s2 交集
+np.intersect1d(s1, s2)
+
+# s1 和 s2 去重并集
+np.union1d(s1, s2)
+
+# 在s1然后不在s2中的元素
+np.setdiff1d(s1, s2)
+
+# 判断s1中的元素是不是在s2中
+np.in1d(s1, s2)
+```
+
+- 广播
+最好的操作方式是能打印出来看看长啥样.
+
+- 文件的存取
+
+```py
+x = np.array([ 23.23, 24.24])
+np.save('an_array', x)
+np.load('an_array.npy')
+
+np.savetxt('array.txt', X=x, delimiter=',')
+np.loadtxt('array.txt', delimiter=',')
+```
+
+- 拼接数据集
+
+```py
+K = np.random.randint(low=2,high=50,size=(2,2))
+M = np.random.randint(low=2,high=50,size=(2,2))
+
+np.vstack((K,M))
+np.hstack((K,M))
+
+np.concatenate([K, M], axis = 0)
+np.concatenate([K, M.T], axis = 1)
+
+# vstack 和 hstack 和  最下面的两种方式是等价的
+```

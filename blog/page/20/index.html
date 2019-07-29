@@ -9,8 +9,7 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="When I am using python installed from pyenv, we can enable different python versions by issuing the following command: 1
-pyenv global 2.7.10 3.4.3 &hellip;">
+  <meta name="description" content="The problem is: I have to update a js file, say in the dir public_html/js/aa.js. also I have to upate it in another dir, like public_html2/js/aa.js &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -94,6 +93,51 @@ pyenv global 2.7.10 3.4.3 &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/08/10/js-file-does-not-update/">Js File Does Not Update</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-08-10T16:00:36+08:00" pubdate data-updated="true">2015 年8 月10 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>The problem is: I have to update a js file, say in the dir public_html/js/aa.js. also I have to upate it in another dir, like public_html2/js/aa.js</p>
+
+<p>However aftering changing the file, one works the other still the same.</p>
+
+<p>After exploring for a while, the solutiio is: just change the js file name and change the name where the file is used.</p>
+
+<p>The problem was caused by cache. We can file more by looking at the page:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">http://stackoverflow.com/questions/32414/how-can-i-force-clients-to-refresh-javascript-files</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -310,86 +354,6 @@ pyenv global 2.7.10 3.4.3 &hellip;">
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/07/20/tap-method-in-ruby/">Tap Method in Ruby</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-07-20T15:31:51+08:00" pubdate data-updated="true">2015 年7 月20 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>There is a “tap” method in Ruby and I find it is very useful.</p>
-
-<p>The definitionof “tap” in ruby documentaion is:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">Yields self to the block, and then returns self. The primary purpose of this method is to “tap into” a method chain, in order to perform operations on intermediate results within the chain.</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>Put it anonther way:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">It’s a helper for call chaining. It passes its object into the given block and, after the block finishes, returns the object:</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="ruby"><span class="line"><span class="n">an_object</span><span class="o">.</span><span class="n">tap</span> <span class="k">do</span> <span class="o">|</span><span class="n">o</span><span class="o">|</span>
-</span><span class="line">  <span class="c1"># do stuff with an_object, which is in o</span>
-</span><span class="line"><span class="k">end</span> <span class="c1"># ===&gt; an_object</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>Another example:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-</pre></td><td class="code"><pre><code class="ruby"><span class="line"><span class="k">def</span> <span class="nf">hash_table</span><span class="p">(</span><span class="n">numbers</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
-</span><span class="line">    <span class="o">[].</span><span class="n">tap</span> <span class="k">do</span> <span class="o">|</span><span class="n">result</span><span class="o">|</span>
-</span><span class="line">      <span class="nb">hash</span> <span class="o">=</span> <span class="p">{}</span>
-</span><span class="line">      <span class="n">numbers</span><span class="o">.</span><span class="n">each_with_index</span> <span class="k">do</span> <span class="o">|</span> <span class="n">n</span><span class="p">,</span> <span class="n">i</span> <span class="o">|</span>
-</span><span class="line">        <span class="k">if</span> <span class="n">j</span> <span class="o">=</span> <span class="nb">hash</span><span class="o">[</span><span class="n">target</span> <span class="o">-</span> <span class="n">n</span><span class="o">]</span>
-</span><span class="line">          <span class="k">return</span> <span class="n">result</span> <span class="o">&lt;&lt;</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
-</span><span class="line">        <span class="k">end</span>
-</span><span class="line">        <span class="nb">hash</span><span class="o">[</span><span class="n">n</span><span class="o">]</span> <span class="o">=</span> <span class="n">i</span>
-</span><span class="line">      <span class="k">end</span>
-</span><span class="line">    <span class="k">end</span>
-</span><span class="line">  <span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/21/">&larr; Older</a>
@@ -405,6 +369,10 @@ pyenv global 2.7.10 3.4.3 &hellip;">
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2019/07/29/pythonzhong-bu-shu-chu-warningde-xin-xi/">Python中不输出warning的信息</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2019/07/24/vscode-remote-yuan-cheng-kai-fa-yu-diao-shi/">VScode Remote 远程开发与调试</a>
@@ -442,10 +410,6 @@ pyenv global 2.7.10 3.4.3 &hellip;">
         <a href="/blog/2019/07/04/numpyde-%5B%3F%5D-xie-shu-ju-chu-li-bei-wang/">Numpy的一些数据处理备忘</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2019/07/02/yong-pythonlai-fa-song-markdownge-shi-de-you-jian/">用Python来发送markdown格式的邮件</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -464,7 +428,7 @@ pyenv global 2.7.10 3.4.3 &hellip;">
 <li class='category'><a href='/blog/categories/linux-and-mac/'>Linux&Mac (13)</a></li>
 <li class='category'><a href='/blog/categories/php/'>PHP (5)</a></li>
 <li class='category'><a href='/blog/categories/perl/'>Perl (50)</a></li>
-<li class='category'><a href='/blog/categories/python/'>Python (9)</a></li>
+<li class='category'><a href='/blog/categories/python/'>Python (10)</a></li>
 <li class='category'><a href='/blog/categories/ruby/'>Ruby (1)</a></li>
 <li class='category'><a href='/blog/categories/scala/'>Scala (1)</a></li>
 <li class='category'><a href='/blog/categories/shell/'>Shell (12)</a></li>

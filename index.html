@@ -9,10 +9,9 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="我们在Python 代码中，如果不想输出一些warnings, 可以在代码的一开始，加入如下的代码，就可以了. 1
-2
-import warnings
-warnings.filterwarnings(&#39;ignore&#39;) filterwarnings 函数可以带参数的， &hellip;">
+  <meta name="description" content="今天在本地起个pyspark 发现总是遇到 1
+Caused by: java.net.UnknownHostException: master: nodename nor servname provided, or not known
+尝试了设置 SPARK_HOME, HADOOP_HOME &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -96,6 +95,61 @@ warnings.filterwarnings(&#39;ignore&#39;) filterwarnings 函数可以带参数�
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2019/07/30/macshang-dan-ji-qi-pysparkyu-dao-de-wen-ti-debug/">Mac上单机起PySpark遇到的问题debug</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2019-07-30T10:38:15+08:00" pubdate data-updated="true">2019 年7 月30 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>今天在本地起个<code>pyspark</code> 发现总是遇到</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">Caused by: java.net.UnknownHostException: master: nodename nor servname provided, or not known</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>尝试了设置 <code>SPARK_HOME</code>, <code>HADOOP_HOME</code> 等变量之后，依然不起作用。</p>
+
+<p>最后发现是要修改 <code>SPARK_HOME</code> 里面的配置文件<code>spark-env.sh</code></p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nb">export </span><span class="nv">SPARK_MASTER_IP</span><span class="o">=</span>StevenMac
+</span><span class="line"><span class="nb">export </span><span class="nv">SPARK_LOCAL_IP</span><span class="o">=</span>StevenMac
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>并且在<code>/etc/hosts</code> 文件中，加入如下的内容:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">127.0.0.1  StevenMac
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -187,53 +241,6 @@ warnings.filterwarnings(&#39;ignore&#39;) filterwarnings 函数可以带参数�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2019/07/23/pythonzhong-cong-ndarrayhuo-zhe-dataframeli-huo-qu-shu-ju-he-biao-qian/">Python中从ndarray或者DataFrame里获取数据和标签</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2019-07-23T11:27:22+08:00" pubdate data-updated="true">2019 年7 月23 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>如果我们有一个ndarray, 最后一列是label，前面几列是data, 我们可以通过如下的方式去获取数据(假如我们有9列):</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">X = dataset[:,0:-1] or X = dataset[:,0:8]
-</span><span class="line">Y = dataset[:,8]</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>如果我们有个DataFrame, 我们可以通过如下的方式去获取:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">X, y = data.iloc[:,:-1], data.iloc[:,-1]</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -247,6 +254,10 @@ warnings.filterwarnings(&#39;ignore&#39;) filterwarnings 函数可以带参数�
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2019/07/30/macshang-dan-ji-qi-pysparkyu-dao-de-wen-ti-debug/">Mac上单机起PySpark遇到的问题debug</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2019/07/29/pythonzhong-bu-shu-chu-warningde-xin-xi/">Python中不输出warning的信息</a>
@@ -284,10 +295,6 @@ warnings.filterwarnings(&#39;ignore&#39;) filterwarnings 函数可以带参数�
         <a href="/blog/2019/07/04/zui-jin-de-gong-zuo-de-%5B%3F%5D-xie-gan-xiang/">最近的工作的一些感想</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2019/07/04/numpyde-%5B%3F%5D-xie-shu-ju-chu-li-bei-wang/">Numpy的一些数据处理备忘</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -295,7 +302,7 @@ warnings.filterwarnings(&#39;ignore&#39;) filterwarnings 函数可以带参数�
   <h1>Categories</h1>
   <ul id="categories">
     <li class='category'><a href='/blog/categories/algorithms/'>Algorithms (8)</a></li>
-<li class='category'><a href='/blog/categories/bigdata/'>BigData (10)</a></li>
+<li class='category'><a href='/blog/categories/bigdata/'>BigData (11)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (6)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
 <li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (6)</a></li>

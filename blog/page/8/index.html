@@ -9,7 +9,8 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="&lt;Hadoop: The Definitive Guide, Fourth Edition&gt; http://hadoopbook.com 是本好书, 书中的例子用到了ncdc的数据ftp://ftp.ncdc.noaa.gov/pub/data/gsod/，这个也是非常赞的。 &hellip;">
+  <meta name="description" content="我们在使用pip安装python的包的时候，可以使用豆瓣源来提高下载速度 1
+pip install requests -i https://pypi.doubanio.com/simple/ --trusted-host pypi.doubanio.com 在linux和mac上，我们可以在$ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -93,6 +94,58 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2019/05/31/shi-yong-dou-ban-yuan-an-zhuang-pythonbao/">使用豆瓣源安装python包</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2019-05-31T08:01:15+08:00" pubdate data-updated="true">2019 年5 月31 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>我们在使用pip安装python的包的时候，可以使用豆瓣源来提高下载速度</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">pip  install  requests -i  https://pypi.doubanio.com/simple/  --trusted-host pypi.doubanio.com
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>在linux和mac上，我们可以在$HOME/.pip/pip.conf里面，写入如下的内容, 那样就不用每次都像上面那样写那么长的一大串了</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="o">[</span>global<span class="o">]</span>
+</span><span class="line">index-url <span class="o">=</span> https://pypi.doubanio.com/simple
+</span><span class="line"><span class="o">[</span>install<span class="o">]</span>
+</span><span class="line">trusted-host <span class="o">=</span> pypi.doubanio.com
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -365,47 +418,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2019/05/23/zen-yang-wu-xu-shou-dong-shu-ru-mi-ma-lian-jie-postgresql/">怎样无需手动输入密码连接PostgreSQL</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2019-05-23T08:44:13+08:00" pubdate data-updated="true">2019 年5 月23 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>我们要想不每次手动输入密码来连接PostgreSQL, 可以在home目录创建一个pgpass文件<code>touch ~/.pgpass</code>.
-然后在里面输入如下的信息<code>$host:$port:$db:$user:$password</code>.
-这里的每个变量实际过程中替换成真实的值.
-然后我们就可以使用如下的方式来进行psql的连接了<code>psql -h $host -p $port -U $user -d $db</code>.
-同理，这里的每个变量实际过程中替换成真实的值.</p>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/9/">&larr; Older</a>
@@ -421,6 +433,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2019/07/30/macshang-dan-ji-qi-pysparkyu-dao-de-wen-ti-debug/">Mac上单机起PySpark遇到的问题debug</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2019/07/29/pythonzhong-bu-shu-chu-warningde-xin-xi/">Python中不输出warning的信息</a>
@@ -458,10 +474,6 @@
         <a href="/blog/2019/07/04/zui-jin-de-gong-zuo-de-%5B%3F%5D-xie-gan-xiang/">最近的工作的一些感想</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2019/07/04/numpyde-%5B%3F%5D-xie-shu-ju-chu-li-bei-wang/">Numpy的一些数据处理备忘</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -469,7 +481,7 @@
   <h1>Categories</h1>
   <ul id="categories">
     <li class='category'><a href='/blog/categories/algorithms/'>Algorithms (8)</a></li>
-<li class='category'><a href='/blog/categories/bigdata/'>BigData (10)</a></li>
+<li class='category'><a href='/blog/categories/bigdata/'>BigData (11)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (6)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
 <li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (6)</a></li>

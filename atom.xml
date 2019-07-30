@@ -4,7 +4,7 @@
   <title><![CDATA[Steven's Blog]]></title>
   <link href="http://isunix.github.io/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2019-07-29T13:40:12+08:00</updated>
+  <updated>2019-07-30T10:48:55+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,34 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Mac上单机起PySpark遇到的问题debug]]></title>
+    <link href="http://isunix.github.io/blog/2019/07/30/macshang-dan-ji-qi-pysparkyu-dao-de-wen-ti-debug/"/>
+    <updated>2019-07-30T10:38:15+08:00</updated>
+    <id>http://isunix.github.io/blog/2019/07/30/macshang-dan-ji-qi-pysparkyu-dao-de-wen-ti-debug</id>
+    <content type="html"><![CDATA[<p>今天在本地起个<code>pyspark</code> 发现总是遇到</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">Caused by: java.net.UnknownHostException: master: nodename nor servname provided, or not known</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>尝试了设置 <code>SPARK_HOME</code>, <code>HADOOP_HOME</code> 等变量之后，依然不起作用。</p>
+
+<p>最后发现是要修改 <code>SPARK_HOME</code> 里面的配置文件<code>spark-env.sh</code></p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nb">export </span><span class="nv">SPARK_MASTER_IP</span><span class="o">=</span>StevenMac
+</span><span class="line"><span class="nb">export </span><span class="nv">SPARK_LOCAL_IP</span><span class="o">=</span>StevenMac
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>并且在<code>/etc/hosts</code> 文件中，加入如下的内容:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">127.0.0.1  StevenMac
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Python中不输出warning的信息]]></title>
@@ -734,40 +762,6 @@
     <updated>2019-06-03T09:28:32+08:00</updated>
     <id>http://isunix.github.io/blog/2019/06/03/gitshang-chuan-da-wen-jian</id>
     <content type="html"><![CDATA[<p>我们如果需要上传大文件到git，比如数据集，可以使用Git Large File Storage <a href="https://git-lfs.github.com">https://git-lfs.github.com</a>.</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Pipenv使用备忘]]></title>
-    <link href="http://isunix.github.io/blog/2019/05/31/pipenvshi-yong-bei-wang/"/>
-    <updated>2019-05-31T08:22:14+08:00</updated>
-    <id>http://isunix.github.io/blog/2019/05/31/pipenvshi-yong-bei-wang</id>
-    <content type="html"><![CDATA[<p>我在某个python环境下有很多包，我们使用如下的命令把这些包给输出到requirements.txt里去</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">pip freeze &gt; requirements.txt
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>然后我们使用pipenv来创建一个虚拟环境</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">mkdir xxx <span class="o">&amp;&amp;</span> mv requirements.txt xxx <span class="o">&amp;&amp;</span> <span class="nb">cd </span>xxx
-</span><span class="line">pipenv --python 3.6
-</span><span class="line">pipenv shell
-</span><span class="line">pipenv install --dev
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>如果我们想删除创建的virtualenv, 可以</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">pipenv --rm
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>也可以到<code>~/.local/share/virtualenvs</code>下面去手动删除.</p>
 
 ]]></content>
   </entry>

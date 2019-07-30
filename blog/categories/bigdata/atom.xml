@@ -4,7 +4,7 @@
   <title><![CDATA[catogories：BigData | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/bigdata/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2019-07-29T13:40:12+08:00</updated>
+  <updated>2019-07-30T10:44:31+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,34 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Mac上单机起PySpark遇到的问题debug]]></title>
+    <link href="http://isunix.github.io/blog/2019/07/30/macshang-dan-ji-qi-pysparkyu-dao-de-wen-ti-debug/"/>
+    <updated>2019-07-30T10:38:15+08:00</updated>
+    <id>http://isunix.github.io/blog/2019/07/30/macshang-dan-ji-qi-pysparkyu-dao-de-wen-ti-debug</id>
+    <content type="html"><![CDATA[<p>今天在本地起个<code>pyspark</code> 发现总是遇到</p>
+
+<p><code>
+Caused by: java.net.UnknownHostException: master: nodename nor servname provided, or not known
+</code>
+尝试了设置 <code>SPARK_HOME</code>, <code>HADOOP_HOME</code> 等变量之后，依然不起作用。</p>
+
+<p>最后发现是要修改 <code>SPARK_HOME</code> 里面的配置文件<code>spark-env.sh</code></p>
+
+<p><code>sh
+export SPARK_MASTER_IP=StevenMac
+export SPARK_LOCAL_IP=StevenMac
+</code></p>
+
+<p>并且在<code>/etc/hosts</code> 文件中，加入如下的内容:</p>
+
+<p><code>sh
+127.0.0.1  StevenMac
+</code></p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Spark文件操作备忘]]></title>
@@ -111,17 +139,6 @@ sudo build/env/bin/hue  createsuperuser
 <p><code>sudo stop presto-server</code> 这样来关闭 presto-server； <code>sudo start presto-server</code> 这样来开启.</p>
 
 <p>如果想要看查看presto的log，可以去 <code>/var/log/presto</code>, 对于debug非常有用.</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[PySpark中引入col函数的方式]]></title>
-    <link href="http://isunix.github.io/blog/2019/06/04/pysparkzhong-yin-ru-colhan-shu-de-fang-shi/"/>
-    <updated>2019-06-04T08:59:32+08:00</updated>
-    <id>http://isunix.github.io/blog/2019/06/04/pysparkzhong-yin-ru-colhan-shu-de-fang-shi</id>
-    <content type="html"><![CDATA[<p>在python代码中通过 <code>from pyspark.sql.functions import col</code> 来引入 <code>col</code> 这个函数的时候，总是报错，找不到这个函数. 后来参考
-<a href="https://stackoverflow.com/questions/40163106/cannot-find-col-function-in-pyspark">https://stackoverflow.com/questions/40163106/cannot-find-col-function-in-pyspark</a> 这个文章, <code>pip install pyspark-stubs</code> 再去引用就好了.</p>
 
 ]]></content>
   </entry>

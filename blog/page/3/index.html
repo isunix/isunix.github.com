@@ -9,7 +9,18 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="下面的机器学习的一个流程图是从某视频中看到的，现在记录如下: 虽然说会的不难， 但是里面的每一步都很艰辛。比如被很多人认为脏活累活的”加载预处理数据集”这块，这个大家实践下来的基本共识是，这块就占了整个机器学习流程的60%到80%的工作量。所以，不要心存美好幻想， &hellip;">
+  <meta name="description" content="读取一个文本文件，然后进行repartition: 1
+spark.read.textFile(path1).repartition(1).write.text(path2) pyspark 基本的dataframe的操作: 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+from pyspark. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -93,6 +104,100 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2019/07/08/sparkwen-jian-cao-zuo-bei-wang/">Spark文件操作备忘</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2019-07-08T11:08:53+08:00" pubdate data-updated="true">2019 年7 月8 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3 id="repartition">读取一个文本文件，然后进行repartition:</h3>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">spark.read.textFile<span class="o">(</span>path1<span class="o">)</span>.repartition<span class="o">(</span>1<span class="o">)</span>.write.text<span class="o">(</span>path2<span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<h3 id="pyspark-dataframe">pyspark 基本的dataframe的操作:</h3>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
+</span><span class="line"><span class="n">master</span> <span class="o">=</span> <span class="s">&quot;local&quot;</span>
+</span><span class="line">
+</span><span class="line"><span class="n">df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">parquet</span><span class="p">(</span><span class="n">raw_data</span><span class="p">)</span>
+</span><span class="line"><span class="n">df_filtered</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s">&#39;f1&#39;</span><span class="p">,</span> <span class="s">&#39;f2&#39;</span><span class="p">,</span> <span class="s">&#39;f3&#39;</span><span class="p">,</span> <span class="s">&#39;f4&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">((</span><span class="n">df</span><span class="p">[</span><span class="s">&#39;f1&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">1531670400</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">&#39;f1&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">1532188800</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">&#39;f2&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">15</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">&#39;f3&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="s">&#39;&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">&#39;f4&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">))</span>
+</span><span class="line">
+</span><span class="line"><span class="kn">import</span> <span class="nn">pyspark.sql.functions</span> <span class="kn">as</span> <span class="nn">func</span>
+</span><span class="line"><span class="n">result</span> <span class="o">=</span> <span class="n">df_filtered</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">&#39;f3&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">countDistinct</span><span class="p">(</span><span class="s">&#39;f1&#39;</span><span class="p">))</span>
+</span><span class="line">
+</span><span class="line"><span class="n">result</span><span class="o">.</span><span class="n">rdd</span><span class="o">.</span><span class="n">repartition</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">row</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="s">&quot;,&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span><span class="o">.</span><span class="n">saveAsTextFile</span><span class="p">(</span><span class="n">path2</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<h3 id="spark">用Spark操作数据</h3>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+</pre></td><td class="code"><pre><code class="scala"><span class="line"><span class="k">val</span> <span class="n">diff</span> <span class="k">=</span> <span class="n">diff1</span><span class="o">.</span><span class="n">union</span><span class="o">(</span><span class="n">diff2</span><span class="o">)</span>
+</span><span class="line">
+</span><span class="line"><span class="k">val</span> <span class="n">raw</span> <span class="k">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">textFile</span><span class="o">(</span><span class="n">path1</span><span class="o">)</span>
+</span><span class="line">
+</span><span class="line"><span class="c1">// 限定有3个字段, 存成df</span>
+</span><span class="line"><span class="k">val</span> <span class="n">raw_df</span> <span class="k">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">filter</span><span class="o">(</span><span class="n">x</span> <span class="k">=&gt;</span> <span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="o">(</span><span class="s">&quot;\t&quot;</span><span class="o">).</span><span class="n">length</span> <span class="o">==</span> <span class="mi">3</span><span class="o">).</span><span class="n">map</span><span class="o">(</span><span class="n">x</span> <span class="k">=&gt;</span> <span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="o">(</span><span class="s">&quot;\t&quot;</span><span class="o">)(</span><span class="mi">0</span><span class="o">),</span> <span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="o">(</span><span class="s">&quot;\t&quot;</span><span class="o">)(</span><span class="mi">1</span><span class="o">).</span><span class="n">toLong</span><span class="o">,</span> <span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="o">(</span><span class="s">&quot;\t&quot;</span><span class="o">)(</span><span class="mi">2</span><span class="o">))).</span><span class="n">toDF</span><span class="o">(</span><span class="s">&quot;f1&quot;</span><span class="o">,</span> <span class="s">&quot;f2&quot;</span><span class="o">,</span> <span class="s">&quot;f3&quot;</span><span class="o">)</span>
+</span><span class="line">
+</span><span class="line"><span class="c1">// join获取rawdata</span>
+</span><span class="line"><span class="k">val</span> <span class="n">joined_diff</span> <span class="k">=</span> <span class="n">diff</span><span class="o">.</span><span class="n">join</span><span class="o">(</span><span class="n">raw_df</span><span class="o">,</span> <span class="n">diff</span><span class="o">(</span><span class="s">&quot;f1&quot;</span><span class="o">)</span> <span class="o">===</span> <span class="n">raw_df</span><span class="o">(</span><span class="s">&quot;f1&quot;</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="n">diff</span><span class="o">(</span><span class="s">&quot;f2&quot;</span><span class="o">)</span> <span class="o">===</span> <span class="n">raw_df</span><span class="o">(</span><span class="s">&quot;f2&quot;</span><span class="o">),</span> <span class="s">&quot;inner&quot;</span><span class="o">).</span><span class="n">toDF</span><span class="o">(</span><span class="s">&quot;f1&quot;</span><span class="o">,</span> <span class="s">&quot;f2&quot;</span><span class="o">,</span> <span class="s">&quot;f3&quot;</span><span class="o">,</span> <span class="s">&quot;f4&quot;</span><span class="o">,</span> <span class="s">&quot;f5&quot;</span><span class="o">,</span> <span class="s">&quot;f6&quot;</span><span class="o">)</span>
+</span><span class="line">
+</span><span class="line"><span class="c1">// 存数据</span>
+</span><span class="line"><span class="k">val</span> <span class="n">result_df</span> <span class="k">=</span> <span class="n">joined_diff</span><span class="o">.</span><span class="n">select</span><span class="o">(</span><span class="n">$</span><span class="s">&quot;f1&quot;</span><span class="o">,</span> <span class="n">$</span><span class="s">&quot;f2&quot;</span><span class="o">,</span> <span class="n">$</span><span class="s">&quot;f3&quot;</span><span class="o">,</span> <span class="n">$</span><span class="s">&quot;f4&quot;</span><span class="o">)</span>
+</span><span class="line"><span class="n">result_df</span><span class="o">.</span><span class="n">repartition</span><span class="o">(</span><span class="mi">1</span><span class="o">).</span><span class="n">write</span><span class="o">.</span><span class="n">mode</span><span class="o">(</span><span class="s">&quot;overwrite&quot;</span><span class="o">).</span><span class="n">option</span><span class="o">(</span><span class="s">&quot;delimiter&quot;</span><span class="o">,</span> <span class="s">&quot;\t&quot;</span><span class="o">).</span><span class="n">csv</span><span class="o">(</span><span class="n">path2</span><span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -232,48 +337,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2019/07/04/shu-ju-fen-xi-he-ji-qi-xue-xi-%5B%3F%5D-xie-zhai-chao/">数据分析和机器学习一些摘抄</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2019-07-04T18:24:50+08:00" pubdate data-updated="true">2019 年7 月4 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><ul>
-  <li>怎么对待缺失值</li>
-</ul>
-
-<p><code>Missing values play an important role in statistics and data analysis. Often, missing values must not be ignored, but rather they should be carefully
-| studied to see if there's an underlying pattern or cause for their missingness.</code></p>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/4/">&larr; Older</a>
@@ -289,6 +352,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2019/08/01/shi-yong-sparkde-mllibjin-xing-ji-qi-xue-xi/">使用Spark的MLlib进行机器学习</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2019/07/30/macshang-dan-ji-qi-pysparkyu-dao-de-wen-ti-debug/">Mac上单机起PySpark遇到的问题debug</a>
@@ -326,10 +393,6 @@
         <a href="/blog/2019/07/04/shu-ju-fen-xi-he-ji-qi-xue-xi-%5B%3F%5D-xie-zhai-chao/">数据分析和机器学习一些摘抄</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2019/07/04/zui-jin-de-gong-zuo-de-%5B%3F%5D-xie-gan-xiang/">最近的工作的一些感想</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -340,7 +403,7 @@
 <li class='category'><a href='/blog/categories/bigdata/'>BigData (11)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (6)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
-<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (6)</a></li>
+<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (7)</a></li>
 <li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (5)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (2)</a></li>
 <li class='category'><a href='/blog/categories/fun/'>Fun (1)</a></li>

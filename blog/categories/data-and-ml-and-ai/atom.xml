@@ -4,7 +4,7 @@
   <title><![CDATA[catogories：Data&ML&AI | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/data-and-ml-and-ai/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2019-07-30T10:52:45+08:00</updated>
+  <updated>2019-08-02T07:54:11+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,58 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[使用Spark的MLlib进行机器学习]]></title>
+    <link href="http://isunix.github.io/blog/2019/08/01/shi-yong-sparkde-mllibjin-xing-ji-qi-xue-xi/"/>
+    <updated>2019-08-01T17:55:54+08:00</updated>
+    <id>http://isunix.github.io/blog/2019/08/01/shi-yong-sparkde-mllibjin-xing-ji-qi-xue-xi</id>
+    <content type="html"><![CDATA[<ol>
+  <li>比如我们有个case class</li>
+</ol>
+
+<p><code>scala
+case class CaseClassTest(user: String, name: String)
+</code></p>
+
+<p>我们通过使用<code>mapPartitions</code>来进行操作， 注意此处<code>mapPartitions</code>的用法:</p>
+
+<p><code>scala
+val mapResult = spark.read.textFile(input).map(_.split("\t")).mapPartitions {
+      iter =&gt;
+        iter.map {
+          iterms =&gt; CaseClassTest(iterms(0), iterms(1))
+        }
+    }
+</code></p>
+
+<ol>
+  <li>
+    <p><code>reduceByKey</code> 和 <code>case</code> 的用法</p>
+
+    <p><code>scala
+val data = gowalla.map {
+      check: CheckIn =&gt; (check.user, (1L, Set(check.time), Set(check.location)))
+    }.rdd.reduceByKey{
+      case (left, right) =&gt; (left._1 + right._1, left._2.union(right._2),left._3.union(right._3))
+    }.map{
+      case (_, (checkins, days:Set[String], locations:Set[String])) =&gt;
+        Vectors.dense(checkins.toDouble, days.size.toDouble, locations.size.toDouble)
+        //次数，天数，地点数
+    }
+</code></p>
+  </li>
+</ol>
+
+<p><code>reduceByKey</code> 这里是求 <code>(1L, Set(check.time), Set(check.location))</code> 中的一个元素累加，第二个元素求并集，第三个元素也是求并集. <code>case</code> 的作用是让输入符合规范； 注意在 <code>map</code> 中，我们可以限定指示变量的类型， 比如这里的 <code>check: CheckIn =&gt;</code></p>
+
+<h4 id="section">参考</h4>
+
+<ol>
+  <li>Spark机器学习进阶实战</li>
+</ol>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Python中从ndarray或者DataFrame里获取数据和标签]]></title>
@@ -128,158 +180,6 @@ setwd("~/data/ISLR")
 <p><code>Missing values play an important role in statistics and data analysis. Often, missing values must not be ignored, but rather they should be carefully
 | studied to see if there's an underlying pattern or cause for their missingness.</code></p>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Numpy的一些数据处理备忘]]></title>
-    <link href="http://isunix.github.io/blog/2019/07/04/numpyde-%5B%3F%5D-xie-shu-ju-chu-li-bei-wang/"/>
-    <updated>2019-07-04T11:43:34+08:00</updated>
-    <id>http://isunix.github.io/blog/2019/07/04/numpyde-[?]-xie-shu-ju-chu-li-bei-wang</id>
-    <content type="html"><![CDATA[<h2 id="numpy">记录numpy中的一些数据处理的方法.</h2>
-
-<ul>
-  <li>比如我们通过如下的方式，获取到了iris的数据,</li>
-</ul>
-
-<p>```py
-import pandas as pd
-import numpy as np
-from sklearn.datasets import load_iris</p>
-
-<p>iris = load_iris()
-df = pd.DataFrame(iris.data, columns=iris.feature_names)</p>
-
-<p>df.columns = [‘sepal length’, ‘sepal width’, ‘petal length’, ‘petal width’, ‘label’]
-```</p>
-
-<p>A. 如果我们想要去取第一列，第二列，和最后一列(label), 可以使用如下的方式:</p>
-
-<p><code>py
-data = np.array(df.iloc[:100, [0, 1, -1]])
-</code></p>
-
-<p><code>df.shape</code> 是 <code>(150, 5)</code>, <code>data.shape</code> 是 <code>(100, 3)</code></p>
-
-<p><code>data</code> 现在是<code>lists in list</code> 的一个<code>ndarray</code></p>
-
-<p>B. 如果我们想要去取<code>data</code>的每行的前两列， 还有最后一列，可以使用如下的方式:</p>
-
-<p><code>py
-X, y = data[:, :-1], data[:, -1]
-</code></p>
-
-<p><code>X, y</code> 都是 ndarray. <code>x.shape</code> 是 <code>(100, 2)</code>, <code>y.shape</code> 是 <code>(100,)</code></p>
-
-<p>C. 如果要对标签进行二分类，我们可以使用 python 的 list comprehension:</p>
-
-<p><code>py
-y = np.array([1 if i == 1 else -1 for i in y])
-</code></p>
-
-<p>这样处理了之后，y 的 shape 还是跟之前是一样的.</p>
-
-<ul>
-  <li>如果我们又一个ndarray, <code>an_ndarray = np.array([[11,12,13,14], [21,22,23,24], [31,32,33,34]])</code></li>
-</ul>
-
-<p><code>row_rank1 = an_array[1, :]</code> 和 <code>row_rank2 = an_array[1:2, :]</code> 将会给出不同的结果，可以输出来看看有啥不同， 这个很重要.</p>
-
-<ul>
-  <li>我们也可以使用如下的方式，对array中的元素进行判断</li>
-</ul>
-
-<p><code>py
-an_ndarray = np.array([[11,12], [21, 22], [31, 31]])
-bigger_than_fifteen = (an_array &gt; 15)
-an_ndarray[bigger_than_fifteen]
-</code></p>
-
-<p>或者我们也可以直接如下操作:</p>
-
-<p><code>py
-an_ndarray[(an_ndarray &gt; 15)]
-</code></p>
-
-<ul>
-  <li>下面是针对上面的<code>an_ndarray</code>进行的一些数学操作</li>
-</ul>
-
-<p>```py
-# 求各个元素的均值
-an_ndarray.mean()</p>
-
-<h1 id="section">求每行的均值</h1>
-<p>an_ndarray.mean(axis=1)</p>
-
-<h1 id="section-1">求每列的均值</h1>
-<p>an_ndarray.mean(axis=0)</p>
-
-<h1 id="section-2">求所有元素的和</h1>
-<p>an_ndarray.sum()</p>
-
-<h1 id="section-3">求每行的中位数</h1>
-<p>np.median(an_ndarray, axix=1)</p>
-
-<h1 id="section-4">求每列的中位数</h1>
-<p>np.median(an_ndarray, axix=0)</p>
-
-<h1 id="unique">想要找到unique的元素</h1>
-<p>np.unique(an_ndarray)</p>
-
-<h1 id="section-5">下面是一些集合的操作</h1>
-<p>s1 = np.array([‘desk’,’chair’,’bulb’])
-s2 = np.array([‘lamp’,’bulb’,’chair’])
-(s1, s2)</p>
-
-<h1 id="s1--s2-">s1 和 s2 交集</h1>
-<p>np.intersect1d(s1, s2)</p>
-
-<h1 id="s1--s2--1">s1 和 s2 去重并集</h1>
-<p>np.union1d(s1, s2)</p>
-
-<h1 id="s1s2">在s1然后不在s2中的元素</h1>
-<p>np.setdiff1d(s1, s2)</p>
-
-<h1 id="s1s2-1">判断s1中的元素是不是在s2中</h1>
-<p>np.in1d(s1, s2)
-```</p>
-
-<ul>
-  <li>
-    <p>广播
-最好的操作方式是能打印出来看看长啥样.</p>
-  </li>
-  <li>
-    <p>文件的存取</p>
-  </li>
-</ul>
-
-<p>```py
-x = np.array([ 23.23, 24.24])
-np.save(‘an_array’, x)
-np.load(‘an_array.npy’)</p>
-
-<p>np.savetxt(‘array.txt’, X=x, delimiter=’,’)
-np.loadtxt(‘array.txt’, delimiter=’,’)
-```</p>
-
-<ul>
-  <li>拼接数据集</li>
-</ul>
-
-<p>```py
-K = np.random.randint(low=2,high=50,size=(2,2))
-M = np.random.randint(low=2,high=50,size=(2,2))</p>
-
-<p>np.vstack((K,M))
-np.hstack((K,M))</p>
-
-<p>np.concatenate([K, M], axis = 0)
-np.concatenate([K, M.T], axis = 1)</p>
-
-<h1 id="vstack--hstack---">vstack 和 hstack 和  最下面的两种方式是等价的</h1>
-<p>```</p>
 ]]></content>
   </entry>
   

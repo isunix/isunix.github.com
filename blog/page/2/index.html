@@ -9,10 +9,8 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="如果我们有一个ndarray, 最后一列是label，前面几列是data, 我们可以通过如下的方式去获取数据(假如我们有9列): 1
-2
-X = dataset[:,0:-1] or X = dataset[:,0:8]
-Y = dataset[:,8] 如果我们有个DataFrame, &hellip;">
+  <meta name="description" content="最近要给别的团队A，在AWS的EC2 上面去搭建一个算法的开发环境。鉴于自己之前在 AWS 上都是使用的Linux，在和团队A讨论了之后，最后决定建个Linux 的 EC2。 但是在基本的Python和数据分析和算法开发的环境都搭建好了之后，团队A的同学，又提了没有IDE, 影响效率。
+没有办法， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -96,6 +94,53 @@ Y = dataset[:,8] 如果我们有个DataFrame, &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2019/07/24/vscode-remote-yuan-cheng-kai-fa-yu-diao-shi/">VScode Remote 远程开发与调试</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2019-07-24T15:28:32+08:00" pubdate data-updated="true">2019 年7 月24 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>最近要给别的团队A，在AWS的EC2 上面去搭建一个算法的开发环境。鉴于自己之前在 AWS 上都是使用的Linux，在和团队A讨论了之后，最后决定建个Linux 的 EC2。 但是在基本的Python和数据分析和算法开发的环境都搭建好了之后，团队A的同学，又提了没有IDE, 影响效率。
+没有办法，得考虑是不是换个windows 的 EC2 了。这个时候 <code>VS Code Remote Development</code> comes to my rescue.</p>
+
+<p>可以参考下面的文章去看看怎么搞 <code>VS Code Remote Development</code>.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">https://code.visualstudio.com/docs/remote/remote-overview
+</span><span class="line">https://www.jianshu.com/p/0f2fb935a9a1</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>试用了下来， 感觉这个 <code>VS Code Remote Development</code> 是个神器啊.</p>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -239,100 +284,6 @@ Y = dataset[:,8] 如果我们有个DataFrame, &hellip;">
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2019/07/08/sparkwen-jian-cao-zuo-bei-wang/">Spark文件操作备忘</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2019-07-08T11:08:53+08:00" pubdate data-updated="true">2019 年7 月8 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3 id="repartition">读取一个文本文件，然后进行repartition:</h3>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">spark.read.textFile<span class="o">(</span>path1<span class="o">)</span>.repartition<span class="o">(</span>1<span class="o">)</span>.write.text<span class="o">(</span>path2<span class="o">)</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<h3 id="pyspark-dataframe">pyspark 基本的dataframe的操作:</h3>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
-</span><span class="line"><span class="n">master</span> <span class="o">=</span> <span class="s">&quot;local&quot;</span>
-</span><span class="line">
-</span><span class="line"><span class="n">df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">parquet</span><span class="p">(</span><span class="n">raw_data</span><span class="p">)</span>
-</span><span class="line"><span class="n">df_filtered</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s">&#39;f1&#39;</span><span class="p">,</span> <span class="s">&#39;f2&#39;</span><span class="p">,</span> <span class="s">&#39;f3&#39;</span><span class="p">,</span> <span class="s">&#39;f4&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">((</span><span class="n">df</span><span class="p">[</span><span class="s">&#39;f1&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">1531670400</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">&#39;f1&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">1532188800</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">&#39;f2&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">15</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">&#39;f3&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="s">&#39;&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">&#39;f4&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">))</span>
-</span><span class="line">
-</span><span class="line"><span class="kn">import</span> <span class="nn">pyspark.sql.functions</span> <span class="kn">as</span> <span class="nn">func</span>
-</span><span class="line"><span class="n">result</span> <span class="o">=</span> <span class="n">df_filtered</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">&#39;f3&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">countDistinct</span><span class="p">(</span><span class="s">&#39;f1&#39;</span><span class="p">))</span>
-</span><span class="line">
-</span><span class="line"><span class="n">result</span><span class="o">.</span><span class="n">rdd</span><span class="o">.</span><span class="n">repartition</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">row</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="s">&quot;,&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span><span class="o">.</span><span class="n">saveAsTextFile</span><span class="p">(</span><span class="n">path2</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<h3 id="spark">用Spark操作数据</h3>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-</pre></td><td class="code"><pre><code class="scala"><span class="line"><span class="k">val</span> <span class="n">diff</span> <span class="k">=</span> <span class="n">diff1</span><span class="o">.</span><span class="n">union</span><span class="o">(</span><span class="n">diff2</span><span class="o">)</span>
-</span><span class="line">
-</span><span class="line"><span class="k">val</span> <span class="n">raw</span> <span class="k">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">textFile</span><span class="o">(</span><span class="n">path1</span><span class="o">)</span>
-</span><span class="line">
-</span><span class="line"><span class="c1">// 限定有3个字段, 存成df</span>
-</span><span class="line"><span class="k">val</span> <span class="n">raw_df</span> <span class="k">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">filter</span><span class="o">(</span><span class="n">x</span> <span class="k">=&gt;</span> <span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="o">(</span><span class="s">&quot;\t&quot;</span><span class="o">).</span><span class="n">length</span> <span class="o">==</span> <span class="mi">3</span><span class="o">).</span><span class="n">map</span><span class="o">(</span><span class="n">x</span> <span class="k">=&gt;</span> <span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="o">(</span><span class="s">&quot;\t&quot;</span><span class="o">)(</span><span class="mi">0</span><span class="o">),</span> <span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="o">(</span><span class="s">&quot;\t&quot;</span><span class="o">)(</span><span class="mi">1</span><span class="o">).</span><span class="n">toLong</span><span class="o">,</span> <span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="o">(</span><span class="s">&quot;\t&quot;</span><span class="o">)(</span><span class="mi">2</span><span class="o">))).</span><span class="n">toDF</span><span class="o">(</span><span class="s">&quot;f1&quot;</span><span class="o">,</span> <span class="s">&quot;f2&quot;</span><span class="o">,</span> <span class="s">&quot;f3&quot;</span><span class="o">)</span>
-</span><span class="line">
-</span><span class="line"><span class="c1">// join获取rawdata</span>
-</span><span class="line"><span class="k">val</span> <span class="n">joined_diff</span> <span class="k">=</span> <span class="n">diff</span><span class="o">.</span><span class="n">join</span><span class="o">(</span><span class="n">raw_df</span><span class="o">,</span> <span class="n">diff</span><span class="o">(</span><span class="s">&quot;f1&quot;</span><span class="o">)</span> <span class="o">===</span> <span class="n">raw_df</span><span class="o">(</span><span class="s">&quot;f1&quot;</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="n">diff</span><span class="o">(</span><span class="s">&quot;f2&quot;</span><span class="o">)</span> <span class="o">===</span> <span class="n">raw_df</span><span class="o">(</span><span class="s">&quot;f2&quot;</span><span class="o">),</span> <span class="s">&quot;inner&quot;</span><span class="o">).</span><span class="n">toDF</span><span class="o">(</span><span class="s">&quot;f1&quot;</span><span class="o">,</span> <span class="s">&quot;f2&quot;</span><span class="o">,</span> <span class="s">&quot;f3&quot;</span><span class="o">,</span> <span class="s">&quot;f4&quot;</span><span class="o">,</span> <span class="s">&quot;f5&quot;</span><span class="o">,</span> <span class="s">&quot;f6&quot;</span><span class="o">)</span>
-</span><span class="line">
-</span><span class="line"><span class="c1">// 存数据</span>
-</span><span class="line"><span class="k">val</span> <span class="n">result_df</span> <span class="k">=</span> <span class="n">joined_diff</span><span class="o">.</span><span class="n">select</span><span class="o">(</span><span class="n">$</span><span class="s">&quot;f1&quot;</span><span class="o">,</span> <span class="n">$</span><span class="s">&quot;f2&quot;</span><span class="o">,</span> <span class="n">$</span><span class="s">&quot;f3&quot;</span><span class="o">,</span> <span class="n">$</span><span class="s">&quot;f4&quot;</span><span class="o">)</span>
-</span><span class="line"><span class="n">result_df</span><span class="o">.</span><span class="n">repartition</span><span class="o">(</span><span class="mi">1</span><span class="o">).</span><span class="n">write</span><span class="o">.</span><span class="n">mode</span><span class="o">(</span><span class="s">&quot;overwrite&quot;</span><span class="o">).</span><span class="n">option</span><span class="o">(</span><span class="s">&quot;delimiter&quot;</span><span class="o">,</span> <span class="s">&quot;\t&quot;</span><span class="o">).</span><span class="n">csv</span><span class="o">(</span><span class="n">path2</span><span class="o">)</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -348,6 +299,10 @@ Y = dataset[:,8] 如果我们有个DataFrame, &hellip;">
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2019/08/01/shi-yong-sparkde-mllibjin-xing-ji-qi-xue-xi/">使用Spark的MLlib进行机器学习</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2019/07/30/macshang-dan-ji-qi-pysparkyu-dao-de-wen-ti-debug/">Mac上单机起PySpark遇到的问题debug</a>
@@ -385,10 +340,6 @@ Y = dataset[:,8] 如果我们有个DataFrame, &hellip;">
         <a href="/blog/2019/07/04/shu-ju-fen-xi-he-ji-qi-xue-xi-%5B%3F%5D-xie-zhai-chao/">数据分析和机器学习一些摘抄</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2019/07/04/zui-jin-de-gong-zuo-de-%5B%3F%5D-xie-gan-xiang/">最近的工作的一些感想</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -399,7 +350,7 @@ Y = dataset[:,8] 如果我们有个DataFrame, &hellip;">
 <li class='category'><a href='/blog/categories/bigdata/'>BigData (11)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (6)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
-<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (6)</a></li>
+<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (7)</a></li>
 <li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (5)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (2)</a></li>
 <li class='category'><a href='/blog/categories/fun/'>Fun (1)</a></li>

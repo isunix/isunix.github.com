@@ -9,8 +9,7 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="在python代码中通过 from pyspark.sql.functions import col 来引入 col 这个函数的时候，总是报错，找不到这个函数. 后来参考
-https://stackoverflow.com/questions/40163106/cannot-find-col- &hellip;">
+  <meta name="description" content="我们在执行presto-cli命名的时候，可以使用如下的方式 presto-cli --catalog hive --schema $schema --output-format CSV_HEADER --server $ip:$port --debug 这样就会打印出诊断信息出来. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -100,6 +99,51 @@ https://stackoverflow.com/questions/40163106/cannot-find-col- &hellip;">
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2019/06/04/prestowen-ti-debug/">Presto问题debug</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2019-06-04T10:27:51+08:00" pubdate data-updated="true">2019 年6 月4 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>我们在执行presto-cli命名的时候，可以使用如下的方式 <code>presto-cli --catalog hive --schema $schema --output-format CSV_HEADER --server $ip:$port --debug</code></p>
+
+<p>这样就会打印出诊断信息出来.</p>
+
+<p>我们使用如下的命令看下presto-server的状态 <code>initctl list | grep -i presto</code></p>
+
+<p><code>sudo stop presto-server</code> 这样来关闭 presto-server； <code>sudo start presto-server</code> 这样来开启.</p>
+
+<p>如果想要看查看presto的log，可以去 <code>/var/log/presto</code>, 对于debug非常有用.</p>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2019/06/04/pysparkzhong-yin-ru-colhan-shu-de-fang-shi/">PySpark中引入col函数的方式</a></h1>
     
     
@@ -170,67 +214,6 @@ https://stackoverflow.com/questions/40163106/cannot-find-col- &hellip;">
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2019/05/31/pipenvshi-yong-bei-wang/">Pipenv使用备忘</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2019-05-31T08:22:14+08:00" pubdate data-updated="true">2019 年5 月31 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>我在某个python环境下有很多包，我们使用如下的命令把这些包给输出到requirements.txt里去</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">pip freeze &gt; requirements.txt
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>然后我们使用pipenv来创建一个虚拟环境</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">mkdir xxx <span class="o">&amp;&amp;</span> mv requirements.txt xxx <span class="o">&amp;&amp;</span> <span class="nb">cd </span>xxx
-</span><span class="line">pipenv --python 3.6
-</span><span class="line">pipenv shell
-</span><span class="line">pipenv install --dev
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>如果我们想删除创建的virtualenv, 可以</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">pipenv --rm
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>也可以到<code>~/.local/share/virtualenvs</code>下面去手动删除.</p>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/8/">&larr; Older</a>
@@ -246,6 +229,10 @@ https://stackoverflow.com/questions/40163106/cannot-find-col- &hellip;">
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2019/08/01/shi-yong-sparkde-mllibjin-xing-ji-qi-xue-xi/">使用Spark的MLlib进行机器学习</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2019/07/30/macshang-dan-ji-qi-pysparkyu-dao-de-wen-ti-debug/">Mac上单机起PySpark遇到的问题debug</a>
@@ -283,10 +270,6 @@ https://stackoverflow.com/questions/40163106/cannot-find-col- &hellip;">
         <a href="/blog/2019/07/04/shu-ju-fen-xi-he-ji-qi-xue-xi-%5B%3F%5D-xie-zhai-chao/">数据分析和机器学习一些摘抄</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2019/07/04/zui-jin-de-gong-zuo-de-%5B%3F%5D-xie-gan-xiang/">最近的工作的一些感想</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -297,7 +280,7 @@ https://stackoverflow.com/questions/40163106/cannot-find-col- &hellip;">
 <li class='category'><a href='/blog/categories/bigdata/'>BigData (11)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (6)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
-<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (6)</a></li>
+<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (7)</a></li>
 <li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (5)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (2)</a></li>
 <li class='category'><a href='/blog/categories/fun/'>Fun (1)</a></li>

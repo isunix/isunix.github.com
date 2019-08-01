@@ -6,7 +6,7 @@ comments: true
 categories: Data&ML&AI
 ---
 
-1. 比如我们有个case class
+1.比如我们有个 case class
 
 ```scala
 case class CaseClassTest(user: String, name: String)
@@ -25,21 +25,21 @@ val mapResult = spark.read.textFile(input).map(_.split("\t")).mapPartitions {
 
 
 
-2. `reduceByKey` 和 `case` 的用法
+2.reduceByKey`  和 `case` 的用法
 
-   ```scala
-   val data = gowalla.map {
-         check: CheckIn => (check.user, (1L, Set(check.time), Set(check.location)))
-       }.rdd.reduceByKey{
-         case (left, right) => (left._1 + right._1, left._2.union(right._2),left._3.union(right._3))
-       }.map{
-         case (_, (checkins, days:Set[String], locations:Set[String])) =>
-           Vectors.dense(checkins.toDouble, days.size.toDouble, locations.size.toDouble)
-           //次数，天数，地点数
-       }
-   ```
+```scala
+val data = gowalla.map {
+      check: CheckIn => (check.user, (1L, Set(check.time), Set(check.location)))
+    }.rdd.reduceByKey{
+      case (left, right) => (left._1 + right._1, left._2.union(right._2),left._3.union(right._3))
+    }.map{
+      case (_, (checkins, days:Set[String], locations:Set[String])) =>
+        Vectors.dense(checkins.toDouble, days.size.toDouble, locations.size.toDouble)
+        //次数，天数，地点数
+    }
+```
 
-   
+
 
 `reduceByKey` 这里是求 `(1L, Set(check.time), Set(check.location))` 中的一个元素累加，第二个元素求并集，第三个元素也是求并集. `case` 的作用是让输入符合规范； 注意在 `map` 中，我们可以限定指示变量的类型， 比如这里的 `check: CheckIn =>`
 

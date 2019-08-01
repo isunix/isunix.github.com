@@ -4,7 +4,7 @@
   <title><![CDATA[catogories：Data&ML&AI | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/data-and-ml-and-ai/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2019-08-02T07:54:11+08:00</updated>
+  <updated>2019-08-02T07:58:07+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -18,9 +18,7 @@
     <link href="http://isunix.github.io/blog/2019/08/01/shi-yong-sparkde-mllibjin-xing-ji-qi-xue-xi/"/>
     <updated>2019-08-01T17:55:54+08:00</updated>
     <id>http://isunix.github.io/blog/2019/08/01/shi-yong-sparkde-mllibjin-xing-ji-qi-xue-xi</id>
-    <content type="html"><![CDATA[<ol>
-  <li>比如我们有个case class</li>
-</ol>
+    <content type="html"><![CDATA[<p>1.比如我们有个 case class</p>
 
 <p><code>scala
 case class CaseClassTest(user: String, name: String)
@@ -37,11 +35,9 @@ val mapResult = spark.read.textFile(input).map(_.split("\t")).mapPartitions {
     }
 </code></p>
 
-<ol>
-  <li>
-    <p><code>reduceByKey</code> 和 <code>case</code> 的用法</p>
+<p>2.reduceByKey<code>  和 </code>case` 的用法</p>
 
-    <p><code>scala
+<p><code>scala
 val data = gowalla.map {
       check: CheckIn =&gt; (check.user, (1L, Set(check.time), Set(check.location)))
     }.rdd.reduceByKey{
@@ -52,8 +48,6 @@ val data = gowalla.map {
         //次数，天数，地点数
     }
 </code></p>
-  </li>
-</ol>
 
 <p><code>reduceByKey</code> 这里是求 <code>(1L, Set(check.time), Set(check.location))</code> 中的一个元素累加，第二个元素求并集，第三个元素也是求并集. <code>case</code> 的作用是让输入符合规范； 注意在 <code>map</code> 中，我们可以限定指示变量的类型， 比如这里的 <code>check: CheckIn =&gt;</code></p>
 

@@ -9,7 +9,7 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="These two pieces of code are borrowed from the book “CTCI”. First we will show how tu realize the LinkedListNode in java: 1
+  <meta name="description" content="介绍三种程序的输入输出方法。 1
 2
 3
 4
@@ -20,7 +20,14 @@
 9
 10
 11
-12 &hellip;">
+12
+13
+14
+15
+16
+#include &lt;stdlib.h&gt;
+#include &lt;stdio.h&gt;
+#define INF 100000 int main(){ int x, n=0, &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -110,7 +117,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/08/18/lian-biao-jie-dian-yi-ji-shu-jie-dian-de-shi-xian/">链表结点以及树结点的实现</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/08/31/cheng-xu-de-shu-ru-shu-chu/">程序的输入输出</a></h1>
     
     
       <p class="meta">
@@ -126,16 +133,92 @@
   
 
 
-<time datetime="2014-08-18T12:54:05+08:00" pubdate data-updated="true">2014 年8 月18 日</time>
+<time datetime="2014-08-31T10:45:18+08:00" pubdate data-updated="true">2014 年8 月31 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>These two pieces of code are borrowed from the book “CTCI”.</p>
+  <div class="entry-content"><p>介绍三种程序的输入输出方法。   </p>
 
-<p>First we will show how tu realize the LinkedListNode in java:</p>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="cp">#include &lt;stdlib.h&gt;</span>
+</span><span class="line"><span class="cp">#include &lt;stdio.h&gt;</span>
+</span><span class="line"><span class="cp">#define INF 100000</span>
+</span><span class="line">
+</span><span class="line"><span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+</span><span class="line">
+</span><span class="line">  <span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">min</span><span class="o">=</span><span class="n">INF</span><span class="p">,</span> <span class="n">max</span><span class="o">=-</span><span class="n">INF</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+</span><span class="line">  <span class="k">while</span><span class="p">(</span><span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%d&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">x</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">){</span>
+</span><span class="line">    <span class="n">s</span> <span class="o">+=</span> <span class="n">x</span><span class="p">;</span>
+</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">&lt;</span> <span class="n">min</span><span class="p">)</span> <span class="n">min</span><span class="o">=</span><span class="n">x</span><span class="p">;</span>
+</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="n">max</span><span class="p">)</span> <span class="n">max</span><span class="o">=</span><span class="n">x</span><span class="p">;</span>
+</span><span class="line">    <span class="n">n</span><span class="o">++</span><span class="p">;</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line">  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d %d %.3f</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">min</span><span class="p">,</span> <span class="n">max</span><span class="p">,</span> <span class="p">(</span><span class="kt">double</span><span class="p">)</span><span class="n">s</span><span class="o">/</span><span class="n">n</span><span class="p">);</span>
+</span><span class="line">  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="cp">#define LOCAL</span>
+</span><span class="line"><span class="cp">#include &lt;stdlib.h&gt;</span>
+</span><span class="line"><span class="cp">#include &lt;stdio.h&gt;</span>
+</span><span class="line"><span class="cp">#define INF 10000000</span>
+</span><span class="line">
+</span><span class="line"><span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+</span><span class="line">  <span class="err">#</span><span class="n">ifdef</span> <span class="n">LOCAL</span>
+</span><span class="line">    <span class="n">freopen</span><span class="p">(</span><span class="s">&quot;data.in&quot;</span><span class="p">,</span> <span class="s">&quot;r&quot;</span><span class="p">,</span> <span class="n">stdin</span><span class="p">);</span>
+</span><span class="line">    <span class="n">freopen</span><span class="p">(</span><span class="s">&quot;data.out&quot;</span><span class="p">,</span> <span class="s">&quot;w&quot;</span><span class="p">,</span> <span class="n">stdout</span><span class="p">);</span>
+</span><span class="line">  <span class="err">#</span><span class="n">endif</span>
+</span><span class="line">
+</span><span class="line">  <span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">min</span><span class="o">=</span><span class="n">INF</span><span class="p">,</span> <span class="n">max</span><span class="o">=-</span><span class="n">INF</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+</span><span class="line">  <span class="k">while</span><span class="p">(</span><span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%d&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">x</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">){</span>
+</span><span class="line">    <span class="n">s</span> <span class="o">+=</span> <span class="n">x</span><span class="p">;</span>
+</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">&lt;</span> <span class="n">min</span><span class="p">)</span> <span class="n">min</span><span class="o">=</span><span class="n">x</span><span class="p">;</span>
+</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="n">max</span><span class="p">)</span> <span class="n">max</span><span class="o">=</span><span class="n">x</span><span class="p">;</span>
+</span><span class="line">    <span class="n">n</span><span class="o">++</span><span class="p">;</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line">  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d %d %.3f</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">min</span><span class="p">,</span> <span class="n">max</span><span class="p">,</span> <span class="p">(</span><span class="kt">double</span><span class="p">)</span><span class="n">s</span><span class="o">/</span><span class="n">n</span><span class="p">);</span>
+</span><span class="line">  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
@@ -160,84 +243,67 @@
 <span class="line-number">21</span>
 <span class="line-number">22</span>
 <span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-<span class="line-number">28</span>
-<span class="line-number">29</span>
-<span class="line-number">30</span>
-<span class="line-number">31</span>
-<span class="line-number">32</span>
-<span class="line-number">33</span>
-<span class="line-number">34</span>
-<span class="line-number">35</span>
-<span class="line-number">36</span>
-<span class="line-number">37</span>
-<span class="line-number">38</span>
-<span class="line-number">39</span>
-<span class="line-number">40</span>
-<span class="line-number">41</span>
-<span class="line-number">42</span>
-<span class="line-number">43</span>
-<span class="line-number">44</span>
-<span class="line-number">45</span>
-<span class="line-number">46</span>
-<span class="line-number">47</span>
-<span class="line-number">48</span>
-<span class="line-number">49</span>
-</pre></td><td class="code"><pre><code class="java"><span class="line"><span class="kn">package</span> <span class="n">CTCI</span><span class="o">;</span>
+</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="cp">#include &lt;stdlib.h&gt;</span>
+</span><span class="line"><span class="cp">#include &lt;stdio.h&gt;</span>
+</span><span class="line"><span class="cp">#define INF 10000000</span>
 </span><span class="line">
-</span><span class="line"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">LinkedListNode</span> <span class="o">{</span>
-</span><span class="line">	<span class="kd">public</span> <span class="n">LinkedListNode</span> <span class="n">next</span><span class="o">;</span>
-</span><span class="line">	<span class="kd">public</span> <span class="n">LinkedListNode</span> <span class="n">prev</span><span class="o">;</span>
-</span><span class="line">	<span class="kd">public</span> <span class="n">LinkedListNode</span> <span class="n">last</span><span class="o">;</span>
-</span><span class="line">	<span class="kd">public</span> <span class="kt">int</span> <span class="n">data</span><span class="o">;</span>
-</span><span class="line">	<span class="kd">public</span> <span class="nf">LinkedListNode</span><span class="o">(</span><span class="kt">int</span> <span class="n">d</span><span class="o">,</span> <span class="n">LinkedListNode</span> <span class="n">n</span><span class="o">,</span> <span class="n">LinkedListNode</span> <span class="n">p</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">		<span class="n">data</span> <span class="o">=</span> <span class="n">d</span><span class="o">;</span>
-</span><span class="line">		<span class="n">setNext</span><span class="o">(</span><span class="n">n</span><span class="o">);</span>
-</span><span class="line">		<span class="n">setPrevious</span><span class="o">(</span><span class="n">p</span><span class="o">);</span>
-</span><span class="line">	<span class="o">}</span>
-</span><span class="line">	
-</span><span class="line">	<span class="kd">public</span> <span class="nf">LinkedListNode</span><span class="o">()</span> <span class="o">{</span> <span class="o">}</span>
+</span><span class="line"><span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+</span><span class="line">  <span class="kt">FILE</span> <span class="o">*</span><span class="n">fin</span><span class="p">,</span> <span class="o">*</span><span class="n">fout</span><span class="p">;</span>
+</span><span class="line">  <span class="n">fin</span> <span class="o">=</span> <span class="n">fopen</span><span class="p">(</span><span class="s">&quot;data.in&quot;</span><span class="p">,</span> <span class="s">&quot;rb&quot;</span><span class="p">);</span>
+</span><span class="line">  <span class="n">fout</span> <span class="o">=</span> <span class="n">fopen</span><span class="p">(</span><span class="s">&quot;data.out&quot;</span><span class="p">,</span> <span class="s">&quot;wb&quot;</span><span class="p">);</span>
 </span><span class="line">
-</span><span class="line">	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setNext</span><span class="o">(</span><span class="n">LinkedListNode</span> <span class="n">n</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">		<span class="n">next</span> <span class="o">=</span> <span class="n">n</span><span class="o">;</span>
-</span><span class="line">		<span class="k">if</span> <span class="o">(</span><span class="k">this</span> <span class="o">==</span> <span class="n">last</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">			<span class="n">last</span> <span class="o">=</span> <span class="n">n</span><span class="o">;</span>
-</span><span class="line">		<span class="o">}</span>
-</span><span class="line">		<span class="k">if</span> <span class="o">(</span><span class="n">n</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">n</span><span class="o">.</span><span class="na">prev</span> <span class="o">!=</span> <span class="k">this</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">			<span class="n">n</span><span class="o">.</span><span class="na">setPrevious</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
-</span><span class="line">		<span class="o">}</span>
-</span><span class="line">	<span class="o">}</span>
-</span><span class="line">	
-</span><span class="line">	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setPrevious</span><span class="o">(</span><span class="n">LinkedListNode</span> <span class="n">p</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">		<span class="n">prev</span> <span class="o">=</span> <span class="n">p</span><span class="o">;</span>
-</span><span class="line">		<span class="k">if</span> <span class="o">(</span><span class="n">p</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">p</span><span class="o">.</span><span class="na">next</span> <span class="o">!=</span> <span class="k">this</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">			<span class="n">p</span><span class="o">.</span><span class="na">setNext</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
-</span><span class="line">		<span class="o">}</span>
-</span><span class="line">	<span class="o">}</span>	
-</span><span class="line">	
-</span><span class="line">	<span class="kd">public</span> <span class="n">String</span> <span class="nf">printForward</span><span class="o">()</span> <span class="o">{</span>
-</span><span class="line">		<span class="k">if</span> <span class="o">(</span><span class="n">next</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">			<span class="k">return</span> <span class="n">data</span> <span class="o">+</span> <span class="s">&quot;-&gt;&quot;</span> <span class="o">+</span> <span class="n">next</span><span class="o">.</span><span class="na">printForward</span><span class="o">();</span>
-</span><span class="line">		<span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-</span><span class="line">			<span class="k">return</span> <span class="o">((</span><span class="n">Integer</span><span class="o">)</span> <span class="n">data</span><span class="o">).</span><span class="na">toString</span><span class="o">();</span>
-</span><span class="line">		<span class="o">}</span>
-</span><span class="line">	<span class="o">}</span>
-</span><span class="line">	
-</span><span class="line">	<span class="kd">public</span> <span class="n">LinkedListNode</span> <span class="nf">clone</span><span class="o">()</span> <span class="o">{</span>
-</span><span class="line">		<span class="n">LinkedListNode</span> <span class="n">next2</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-</span><span class="line">		<span class="k">if</span> <span class="o">(</span><span class="n">next</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">			<span class="n">next2</span> <span class="o">=</span> <span class="n">next</span><span class="o">.</span><span class="na">clone</span><span class="o">();</span>
-</span><span class="line">		<span class="o">}</span>
-</span><span class="line">		<span class="n">LinkedListNode</span> <span class="n">head2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LinkedListNode</span><span class="o">(</span><span class="n">data</span><span class="o">,</span> <span class="n">next2</span><span class="o">,</span> <span class="kc">null</span><span class="o">);</span>
-</span><span class="line">		<span class="k">return</span> <span class="n">head2</span><span class="o">;</span>
-</span><span class="line">	<span class="o">}</span>
-</span><span class="line"><span class="o">}</span>
+</span><span class="line">
+</span><span class="line">  <span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">min</span><span class="o">=</span><span class="n">INF</span><span class="p">,</span> <span class="n">max</span><span class="o">=-</span><span class="n">INF</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+</span><span class="line">  <span class="k">while</span><span class="p">(</span><span class="n">fscanf</span><span class="p">(</span><span class="n">fin</span><span class="p">,</span> <span class="s">&quot;%d&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">x</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">){</span>
+</span><span class="line">    <span class="n">s</span> <span class="o">+=</span> <span class="n">x</span><span class="p">;</span>
+</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">&lt;</span> <span class="n">min</span><span class="p">)</span> <span class="n">min</span><span class="o">=</span><span class="n">x</span><span class="p">;</span>
+</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="n">max</span><span class="p">)</span> <span class="n">max</span><span class="o">=</span><span class="n">x</span><span class="p">;</span>
+</span><span class="line">    <span class="n">n</span><span class="o">++</span><span class="p">;</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">  <span class="n">fprintf</span><span class="p">(</span><span class="n">fout</span><span class="p">,</span> <span class="s">&quot;%d %d %.3f</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">min</span><span class="p">,</span> <span class="n">max</span><span class="p">,</span> <span class="p">(</span><span class="kt">double</span><span class="p">)</span><span class="n">s</span><span class="o">/</span><span class="n">n</span><span class="p">);</span>
+</span><span class="line">  <span class="n">fclose</span><span class="p">(</span><span class="n">fin</span><span class="p">);</span>
+</span><span class="line">  <span class="n">fclose</span><span class="p">(</span><span class="n">fout</span><span class="p">);</span>
+</span><span class="line">  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>Then the treeNode:  </p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/19/shun-xu-zhan-de-cyu-yan-shi-xian/">顺序栈和链栈的c语言实现</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-19T21:29:35+08:00" pubdate data-updated="true">2014 年8 月19 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>1.sequence stack </p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
@@ -343,241 +409,149 @@
 <span class="line-number">102</span>
 <span class="line-number">103</span>
 <span class="line-number">104</span>
-</pre></td><td class="code"><pre><code class="java"><span class="line"><span class="kn">package</span> <span class="n">CTCI</span><span class="o">;</span>
+<span class="line-number">105</span>
+<span class="line-number">106</span>
+<span class="line-number">107</span>
+<span class="line-number">108</span>
+<span class="line-number">109</span>
+<span class="line-number">110</span>
+<span class="line-number">111</span>
+<span class="line-number">112</span>
+<span class="line-number">113</span>
+<span class="line-number">114</span>
+<span class="line-number">115</span>
+<span class="line-number">116</span>
+<span class="line-number">117</span>
+<span class="line-number">118</span>
+<span class="line-number">119</span>
+<span class="line-number">120</span>
+<span class="line-number">121</span>
+<span class="line-number">122</span>
+</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="cp">#include &quot;stdio.h&quot;</span>
+</span><span class="line"><span class="cp">#include &quot;stdlib.h&quot;</span>
+</span><span class="line"><span class="cp">#include &quot;math.h&quot;</span>
+</span><span class="line"><span class="cp">#include &quot;time.h&quot;</span>
 </span><span class="line">
-</span><span class="line"><span class="cm">/* One node of a binary tree. The data element stored is a single </span>
-</span><span class="line"><span class="cm"> * character.</span>
-</span><span class="line"><span class="cm"> */</span>
-</span><span class="line"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TreeNode</span> <span class="o">{</span>
-</span><span class="line">	<span class="kd">public</span> <span class="kt">int</span> <span class="n">data</span><span class="o">;</span>
-</span><span class="line">	<span class="kd">public</span> <span class="n">TreeNode</span> <span class="n">left</span><span class="o">;</span>
-</span><span class="line">	<span class="kd">public</span> <span class="n">TreeNode</span> <span class="n">right</span><span class="o">;</span>
-</span><span class="line">	<span class="kd">public</span> <span class="n">TreeNode</span> <span class="n">parent</span><span class="o">;</span>
-</span><span class="line">	<span class="kd">private</span> <span class="kt">int</span> <span class="n">size</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+</span><span class="line"><span class="cp">#define OK 1</span>
+</span><span class="line"><span class="cp">#define ERROR 0</span>
+</span><span class="line"><span class="cp">#define TRUE 1</span>
+</span><span class="line"><span class="cp">#define FALSE 0</span>
+</span><span class="line"><span class="cp">#define MAXSIZE 1000 </span><span class="cm">/* 存储空间初始分配量 */</span><span class="cp"></span>
 </span><span class="line">
-</span><span class="line">	<span class="kd">public</span> <span class="nf">TreeNode</span><span class="o">(</span><span class="kt">int</span> <span class="n">d</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">		<span class="n">data</span> <span class="o">=</span> <span class="n">d</span><span class="o">;</span>
-</span><span class="line">		<span class="n">size</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
-</span><span class="line">	<span class="o">}</span>
-</span><span class="line">	
-</span><span class="line">	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setLeftChild</span><span class="o">(</span><span class="n">TreeNode</span> <span class="n">left</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">		<span class="k">this</span><span class="o">.</span><span class="na">left</span> <span class="o">=</span> <span class="n">left</span><span class="o">;</span>
-</span><span class="line">		<span class="k">if</span> <span class="o">(</span><span class="n">left</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">			<span class="n">left</span><span class="o">.</span><span class="na">parent</span> <span class="o">=</span> <span class="k">this</span><span class="o">;</span>
-</span><span class="line">		<span class="o">}</span>
-</span><span class="line">	<span class="o">}</span>
-</span><span class="line">	
-</span><span class="line">	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setRightChild</span><span class="o">(</span><span class="n">TreeNode</span> <span class="n">right</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">		<span class="k">this</span><span class="o">.</span><span class="na">right</span> <span class="o">=</span> <span class="n">right</span><span class="o">;</span>
-</span><span class="line">		<span class="k">if</span> <span class="o">(</span><span class="n">right</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">			<span class="n">right</span><span class="o">.</span><span class="na">parent</span> <span class="o">=</span> <span class="k">this</span><span class="o">;</span>
-</span><span class="line">		<span class="o">}</span>
-</span><span class="line">	<span class="o">}</span>
-</span><span class="line">	
-</span><span class="line">	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">insertInOrder</span><span class="o">(</span><span class="kt">int</span> <span class="n">d</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">		<span class="k">if</span> <span class="o">(</span><span class="n">d</span> <span class="o">&lt;=</span> <span class="n">data</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">			<span class="k">if</span> <span class="o">(</span><span class="n">left</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">				<span class="n">setLeftChild</span><span class="o">(</span><span class="k">new</span> <span class="n">TreeNode</span><span class="o">(</span><span class="n">d</span><span class="o">));</span>
-</span><span class="line">			<span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-</span><span class="line">				<span class="n">left</span><span class="o">.</span><span class="na">insertInOrder</span><span class="o">(</span><span class="n">d</span><span class="o">);</span>
-</span><span class="line">			<span class="o">}</span>
-</span><span class="line">		<span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-</span><span class="line">			<span class="k">if</span> <span class="o">(</span><span class="n">right</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">				<span class="n">setRightChild</span><span class="o">(</span><span class="k">new</span> <span class="n">TreeNode</span><span class="o">(</span><span class="n">d</span><span class="o">));</span>
-</span><span class="line">			<span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-</span><span class="line">				<span class="n">right</span><span class="o">.</span><span class="na">insertInOrder</span><span class="o">(</span><span class="n">d</span><span class="o">);</span>
-</span><span class="line">			<span class="o">}</span>
-</span><span class="line">		<span class="o">}</span>
-</span><span class="line">		<span class="n">size</span><span class="o">++;</span>
-</span><span class="line">	<span class="o">}</span>
-</span><span class="line">	
-</span><span class="line">	<span class="kd">public</span> <span class="kt">int</span> <span class="nf">size</span><span class="o">()</span> <span class="o">{</span>
-</span><span class="line">		<span class="k">return</span> <span class="n">size</span><span class="o">;</span>
-</span><span class="line">	<span class="o">}</span>
-</span><span class="line">	
-</span><span class="line">	<span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isBST</span><span class="o">()</span> <span class="o">{</span>
-</span><span class="line">		<span class="k">if</span> <span class="o">(</span><span class="n">left</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">			<span class="k">if</span> <span class="o">(</span><span class="n">data</span> <span class="o">&lt;</span> <span class="n">left</span><span class="o">.</span><span class="na">data</span> <span class="o">||</span> <span class="o">!</span><span class="n">left</span><span class="o">.</span><span class="na">isBST</span><span class="o">())</span> <span class="o">{</span>
-</span><span class="line">				<span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
-</span><span class="line">			<span class="o">}</span>
-</span><span class="line">		<span class="o">}</span>
-</span><span class="line">		
-</span><span class="line">		<span class="k">if</span> <span class="o">(</span><span class="n">right</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">			<span class="k">if</span> <span class="o">(</span><span class="n">data</span> <span class="o">&gt;=</span> <span class="n">right</span><span class="o">.</span><span class="na">data</span> <span class="o">||</span> <span class="o">!</span><span class="n">right</span><span class="o">.</span><span class="na">isBST</span><span class="o">())</span> <span class="o">{</span>
-</span><span class="line">				<span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
-</span><span class="line">			<span class="o">}</span>
-</span><span class="line">		<span class="o">}</span>		
-</span><span class="line">		
-</span><span class="line">		<span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
-</span><span class="line">	<span class="o">}</span>
-</span><span class="line">	
-</span><span class="line">	<span class="kd">public</span> <span class="kt">int</span> <span class="nf">height</span><span class="o">()</span> <span class="o">{</span>
-</span><span class="line">		<span class="kt">int</span> <span class="n">leftHeight</span> <span class="o">=</span> <span class="n">left</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">?</span> <span class="n">left</span><span class="o">.</span><span class="na">height</span><span class="o">()</span> <span class="o">:</span> <span class="mi">0</span><span class="o">;</span>
-</span><span class="line">		<span class="kt">int</span> <span class="n">rightHeight</span> <span class="o">=</span> <span class="n">right</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">?</span> <span class="n">right</span><span class="o">.</span><span class="na">height</span><span class="o">()</span> <span class="o">:</span> <span class="mi">0</span><span class="o">;</span>
-</span><span class="line">		<span class="k">return</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">Math</span><span class="o">.</span><span class="na">max</span><span class="o">(</span><span class="n">leftHeight</span><span class="o">,</span> <span class="n">rightHeight</span><span class="o">);</span>
-</span><span class="line">	<span class="o">}</span>
-</span><span class="line">	
-</span><span class="line">	<span class="kd">public</span> <span class="n">TreeNode</span> <span class="nf">find</span><span class="o">(</span><span class="kt">int</span> <span class="n">d</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">		<span class="k">if</span> <span class="o">(</span><span class="n">d</span> <span class="o">==</span> <span class="n">data</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">			<span class="k">return</span> <span class="k">this</span><span class="o">;</span>
-</span><span class="line">		<span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">d</span> <span class="o">&lt;=</span> <span class="n">data</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">			<span class="k">return</span> <span class="n">left</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">?</span> <span class="n">left</span><span class="o">.</span><span class="na">find</span><span class="o">(</span><span class="n">d</span><span class="o">)</span> <span class="o">:</span> <span class="kc">null</span><span class="o">;</span>
-</span><span class="line">		<span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">d</span> <span class="o">&gt;</span> <span class="n">data</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">			<span class="k">return</span> <span class="n">right</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">?</span> <span class="n">right</span><span class="o">.</span><span class="na">find</span><span class="o">(</span><span class="n">d</span><span class="o">)</span> <span class="o">:</span> <span class="kc">null</span><span class="o">;</span>
-</span><span class="line">		<span class="o">}</span>
-</span><span class="line">		<span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
-</span><span class="line">	<span class="o">}</span>
-</span><span class="line">	
-</span><span class="line">	<span class="kd">private</span> <span class="kd">static</span> <span class="n">TreeNode</span> <span class="nf">createMinimalBST</span><span class="o">(</span><span class="kt">int</span> <span class="n">arr</span><span class="o">[],</span> <span class="kt">int</span> <span class="n">start</span><span class="o">,</span> <span class="kt">int</span> <span class="n">end</span><span class="o">){</span>
-</span><span class="line">		<span class="k">if</span> <span class="o">(</span><span class="n">end</span> <span class="o">&lt;</span> <span class="n">start</span><span class="o">)</span> <span class="o">{</span>
-</span><span class="line">			<span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
-</span><span class="line">		<span class="o">}</span>
-</span><span class="line">		<span class="kt">int</span> <span class="n">mid</span> <span class="o">=</span> <span class="o">(</span><span class="n">start</span> <span class="o">+</span> <span class="n">end</span><span class="o">)</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
-</span><span class="line">		<span class="n">TreeNode</span> <span class="n">n</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TreeNode</span><span class="o">(</span><span class="n">arr</span><span class="o">[</span><span class="n">mid</span><span class="o">]);</span>
-</span><span class="line">		<span class="n">n</span><span class="o">.</span><span class="na">setLeftChild</span><span class="o">(</span><span class="n">createMinimalBST</span><span class="o">(</span><span class="n">arr</span><span class="o">,</span> <span class="n">start</span><span class="o">,</span> <span class="n">mid</span> <span class="o">-</span> <span class="mi">1</span><span class="o">));</span>
-</span><span class="line">		<span class="n">n</span><span class="o">.</span><span class="na">setRightChild</span><span class="o">(</span><span class="n">createMinimalBST</span><span class="o">(</span><span class="n">arr</span><span class="o">,</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span><span class="o">,</span> <span class="n">end</span><span class="o">));</span>
-</span><span class="line">		<span class="k">return</span> <span class="n">n</span><span class="o">;</span>
-</span><span class="line">	<span class="o">}</span>
-</span><span class="line">	
-</span><span class="line">	<span class="kd">public</span> <span class="kd">static</span> <span class="n">TreeNode</span> <span class="nf">createMinimalBST</span><span class="o">(</span><span class="kt">int</span> <span class="n">array</span><span class="o">[])</span> <span class="o">{</span>
-</span><span class="line">		<span class="k">return</span> <span class="nf">createMinimalBST</span><span class="o">(</span><span class="n">array</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="n">array</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
-</span><span class="line">	<span class="o">}</span>
-</span><span class="line">	
-</span><span class="line">	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">print</span><span class="o">()</span> <span class="o">{</span>
-</span><span class="line">		<span class="n">BTreePrinter</span><span class="o">.</span><span class="na">printNode</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
-</span><span class="line">	<span class="o">}</span>
-</span><span class="line"><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/08/14/install-python-on-centos-locally/">Install Python on Centos Locally</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-08-14T12:25:15+08:00" pubdate data-updated="true">2014 年8 月14 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>This post depicts how to install Python on the CentOS in your local dir.  </p>
-
-<p>1.First show the python2.x version.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">wget</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">python</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">ftp</span><span class="o">/</span><span class="n">python</span><span class="o">/</span><span class="mf">2.7</span><span class="o">.</span><span class="mi">6</span><span class="o">/</span><span class="n">Python</span><span class="o">-</span><span class="mf">2.7</span><span class="o">.</span><span class="mf">6.</span><span class="n">tar</span><span class="o">.</span><span class="n">xz</span>
-</span><span class="line"><span class="n">tar</span> <span class="o">-</span><span class="n">zxvf</span> <span class="n">Python</span><span class="o">-</span><span class="mf">2.7</span><span class="o">.</span><span class="mf">6.</span><span class="n">tar</span><span class="o">.</span><span class="n">xz</span>
-</span><span class="line"><span class="n">cd</span> <span class="n">Python</span><span class="o">-</span><span class="mf">2.7</span><span class="o">.</span><span class="mi">6</span>
-</span><span class="line"><span class="o">./</span><span class="n">configure</span> <span class="o">--</span><span class="n">prefix</span><span class="o">=/</span><span class="n">home</span><span class="o">/</span><span class="n">sun</span><span class="o">/</span><span class="n">local</span> <span class="o">--</span><span class="n">enable</span><span class="o">-</span><span class="nb">unicode</span><span class="o">=</span><span class="n">ucs4</span> <span class="o">--</span><span class="n">enable</span><span class="o">-</span><span class="n">shared</span> <span class="n">LDFLAGS</span><span class="o">=</span><span class="s">&quot;-Wl,-rpath /home/sun/local/lib&quot;</span>
-</span><span class="line"><span class="n">make</span> <span class="o">&amp;&amp;</span> <span class="n">make</span> <span class="n">altinstall</span>
+</span><span class="line"><span class="k">typedef</span> <span class="kt">int</span> <span class="n">Status</span><span class="p">;</span>
+</span><span class="line"><span class="k">typedef</span> <span class="kt">int</span> <span class="n">SElemType</span><span class="p">;</span> <span class="cm">/* SElemType类型根据实际情况而定，这里假设为int */</span>
 </span><span class="line">
-</span><span class="line"><span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">bitbucket</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">pypa</span><span class="o">/</span><span class="n">setuptools</span><span class="o">/</span><span class="n">raw</span><span class="o">/</span><span class="n">bootstrap</span><span class="o">/</span><span class="n">ez_setup</span><span class="o">.</span><span class="n">py</span>
-</span><span class="line"><span class="n">python</span> <span class="n">ez_setup</span><span class="o">.</span><span class="n">py</span>
-</span><span class="line"><span class="n">easy_install</span><span class="o">-</span><span class="mf">2.7</span> <span class="n">pip</span>
-</span><span class="line"><span class="n">pip2</span><span class="o">.</span><span class="mi">7</span> <span class="n">install</span> <span class="p">[</span><span class="n">packagename</span><span class="p">]</span>
-</span><span class="line"><span class="p">(</span><span class="n">pip</span> <span class="n">defaults</span> <span class="n">to</span> <span class="n">pip2</span><span class="o">.</span><span class="mi">7</span><span class="p">)</span>
+</span><span class="line"><span class="cm">/* 顺序栈结构 */</span>
+</span><span class="line"><span class="k">typedef</span> <span class="k">struct</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="n">SElemType</span> <span class="n">data</span><span class="p">[</span><span class="n">MAXSIZE</span><span class="p">];</span>
+</span><span class="line">        <span class="kt">int</span> <span class="n">top</span><span class="p">;</span> <span class="cm">/* 用于栈顶指针 */</span>
+</span><span class="line"><span class="p">}</span><span class="n">SqStack</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="n">Status</span> <span class="nf">visit</span><span class="p">(</span><span class="n">SElemType</span> <span class="n">c</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d &quot;</span><span class="p">,</span><span class="n">c</span><span class="p">);</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/*  构造一个空栈S */</span>
+</span><span class="line"><span class="n">Status</span> <span class="nf">InitStack</span><span class="p">(</span><span class="n">SqStack</span> <span class="o">*</span><span class="n">S</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="cm">/* S.data=(SElemType *)malloc(MAXSIZE*sizeof(SElemType)); */</span>
+</span><span class="line">        <span class="n">S</span><span class="o">-&gt;</span><span class="n">top</span><span class="o">=-</span><span class="mi">1</span><span class="p">;</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 把S置为空栈 */</span>
+</span><span class="line"><span class="n">Status</span> <span class="nf">ClearStack</span><span class="p">(</span><span class="n">SqStack</span> <span class="o">*</span><span class="n">S</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="n">S</span><span class="o">-&gt;</span><span class="n">top</span><span class="o">=-</span><span class="mi">1</span><span class="p">;</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 若栈S为空栈，则返回TRUE，否则返回FALSE */</span>
+</span><span class="line"><span class="n">Status</span> <span class="nf">StackEmpty</span><span class="p">(</span><span class="n">SqStack</span> <span class="n">S</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="k">if</span> <span class="p">(</span><span class="n">S</span><span class="p">.</span><span class="n">top</span><span class="o">==-</span><span class="mi">1</span><span class="p">)</span>
+</span><span class="line">                <span class="k">return</span> <span class="n">TRUE</span><span class="p">;</span>
+</span><span class="line">        <span class="k">else</span>
+</span><span class="line">                <span class="k">return</span> <span class="n">FALSE</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 返回S的元素个数，即栈的长度 */</span>
+</span><span class="line"><span class="kt">int</span> <span class="nf">StackLength</span><span class="p">(</span><span class="n">SqStack</span> <span class="n">S</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">S</span><span class="p">.</span><span class="n">top</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 若栈不空，则用e返回S的栈顶元素，并返回OK；否则返回ERROR */</span>
+</span><span class="line"><span class="n">Status</span> <span class="nf">GetTop</span><span class="p">(</span><span class="n">SqStack</span> <span class="n">S</span><span class="p">,</span><span class="n">SElemType</span> <span class="o">*</span><span class="n">e</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="k">if</span> <span class="p">(</span><span class="n">S</span><span class="p">.</span><span class="n">top</span><span class="o">==-</span><span class="mi">1</span><span class="p">)</span>
+</span><span class="line">                <span class="k">return</span> <span class="n">ERROR</span><span class="p">;</span>
+</span><span class="line">        <span class="k">else</span>
+</span><span class="line">                <span class="o">*</span><span class="n">e</span><span class="o">=</span><span class="n">S</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="n">S</span><span class="p">.</span><span class="n">top</span><span class="p">];</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 插入元素e为新的栈顶元素 */</span>
+</span><span class="line"><span class="n">Status</span> <span class="nf">Push</span><span class="p">(</span><span class="n">SqStack</span> <span class="o">*</span><span class="n">S</span><span class="p">,</span><span class="n">SElemType</span> <span class="n">e</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="k">if</span><span class="p">(</span><span class="n">S</span><span class="o">-&gt;</span><span class="n">top</span> <span class="o">==</span> <span class="n">MAXSIZE</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="cm">/* 栈满 */</span>
+</span><span class="line">        <span class="p">{</span>
+</span><span class="line">                <span class="k">return</span> <span class="n">ERROR</span><span class="p">;</span>
+</span><span class="line">        <span class="p">}</span>
+</span><span class="line">        <span class="n">S</span><span class="o">-&gt;</span><span class="n">top</span><span class="o">++</span><span class="p">;</span>				<span class="cm">/* 栈顶指针增加一 */</span>
+</span><span class="line">        <span class="n">S</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">[</span><span class="n">S</span><span class="o">-&gt;</span><span class="n">top</span><span class="p">]</span><span class="o">=</span><span class="n">e</span><span class="p">;</span>  <span class="cm">/* 将新插入元素赋值给栈顶空间 */</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 若栈不空，则删除S的栈顶元素，用e返回其值，并返回OK；否则返回ERROR */</span>
+</span><span class="line"><span class="n">Status</span> <span class="nf">Pop</span><span class="p">(</span><span class="n">SqStack</span> <span class="o">*</span><span class="n">S</span><span class="p">,</span><span class="n">SElemType</span> <span class="o">*</span><span class="n">e</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="k">if</span><span class="p">(</span><span class="n">S</span><span class="o">-&gt;</span><span class="n">top</span><span class="o">==-</span><span class="mi">1</span><span class="p">)</span>
+</span><span class="line">                <span class="k">return</span> <span class="n">ERROR</span><span class="p">;</span>
+</span><span class="line">        <span class="o">*</span><span class="n">e</span><span class="o">=</span><span class="n">S</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">[</span><span class="n">S</span><span class="o">-&gt;</span><span class="n">top</span><span class="p">];</span>	<span class="cm">/* 将要删除的栈顶元素赋值给e */</span>
+</span><span class="line">        <span class="n">S</span><span class="o">-&gt;</span><span class="n">top</span><span class="o">--</span><span class="p">;</span>				<span class="cm">/* 栈顶指针减一 */</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 从栈底到栈顶依次对栈中每个元素显示 */</span>
+</span><span class="line"><span class="n">Status</span> <span class="nf">StackTraverse</span><span class="p">(</span><span class="n">SqStack</span> <span class="n">S</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+</span><span class="line">        <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+</span><span class="line">        <span class="k">while</span><span class="p">(</span><span class="n">i</span><span class="o">&lt;=</span><span class="n">S</span><span class="p">.</span><span class="n">top</span><span class="p">)</span>
+</span><span class="line">        <span class="p">{</span>
+</span><span class="line">                <span class="n">visit</span><span class="p">(</span><span class="n">S</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="o">++</span><span class="p">]);</span>
+</span><span class="line">        <span class="p">}</span>
+</span><span class="line">        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="kt">int</span> <span class="n">j</span><span class="p">;</span>
+</span><span class="line">        <span class="n">SqStack</span> <span class="n">s</span><span class="p">;</span>
+</span><span class="line">        <span class="kt">int</span> <span class="n">e</span><span class="p">;</span>
+</span><span class="line">        <span class="k">if</span><span class="p">(</span><span class="n">InitStack</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="p">)</span><span class="o">==</span><span class="n">OK</span><span class="p">)</span>
+</span><span class="line">                <span class="k">for</span><span class="p">(</span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="n">j</span><span class="o">&lt;=</span><span class="mi">10</span><span class="p">;</span><span class="n">j</span><span class="o">++</span><span class="p">)</span>
+</span><span class="line">                        <span class="n">Push</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="p">,</span><span class="n">j</span><span class="p">);</span>
+</span><span class="line">        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;栈中元素依次为：&quot;</span><span class="p">);</span>
+</span><span class="line">        <span class="n">StackTraverse</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
+</span><span class="line">        <span class="n">Pop</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="p">,</span><span class="o">&amp;</span><span class="n">e</span><span class="p">);</span>
+</span><span class="line">        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;弹出的栈顶元素 e=%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">e</span><span class="p">);</span>
+</span><span class="line">        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;栈空否：%d(1:空 0:否)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">StackEmpty</span><span class="p">(</span><span class="n">s</span><span class="p">));</span>
+</span><span class="line">        <span class="n">GetTop</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="o">&amp;</span><span class="n">e</span><span class="p">);</span>
+</span><span class="line">        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;栈顶元素 e=%d 栈的长度为%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">e</span><span class="p">,</span><span class="n">StackLength</span><span class="p">(</span><span class="n">s</span><span class="p">));</span>
+</span><span class="line">        <span class="n">ClearStack</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="p">);</span>
+</span><span class="line">        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;清空栈后，栈空否：%d(1:空 0:否)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">StackEmpty</span><span class="p">(</span><span class="n">s</span><span class="p">));</span>
+</span><span class="line">
+</span><span class="line">        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>2.Now the python3.x version</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">wget</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">python</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">ftp</span><span class="o">/</span><span class="n">python</span><span class="o">/</span><span class="mf">3.4</span><span class="o">.</span><span class="mi">1</span><span class="o">/</span><span class="n">Python</span><span class="o">-</span><span class="mf">3.4</span><span class="o">.</span><span class="mf">1.</span><span class="n">tar</span><span class="o">.</span><span class="n">xz</span>
-</span><span class="line"><span class="n">tar</span> <span class="n">xf</span> <span class="n">Python</span><span class="o">-</span><span class="mf">3.4</span><span class="o">.</span><span class="mf">1.</span><span class="n">tar</span><span class="o">.</span><span class="n">xz</span>
-</span><span class="line"><span class="n">cd</span> <span class="n">Python</span><span class="o">-</span><span class="mf">3.4</span><span class="o">.</span><span class="mi">1</span>
-</span><span class="line"><span class="o">./</span><span class="n">configure</span> <span class="o">--</span><span class="n">prefix</span><span class="o">=/</span><span class="n">hom</span><span class="o">/</span><span class="n">sun</span><span class="o">/</span><span class="n">local</span> <span class="o">--</span><span class="n">enable</span><span class="o">-</span><span class="n">shared</span> <span class="n">LDFLAGS</span><span class="o">=</span><span class="s">&quot;-Wl,-rpath /home/sun/local/lib&quot;</span>
-</span><span class="line"><span class="n">make</span> <span class="o">&amp;&amp;</span> <span class="n">make</span> <span class="n">altinstall</span>
-</span><span class="line">
-</span><span class="line"><span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">bitbucket</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">pypa</span><span class="o">/</span><span class="n">setuptools</span><span class="o">/</span><span class="n">raw</span><span class="o">/</span><span class="n">bootstrap</span><span class="o">/</span><span class="n">ez_setup</span><span class="o">.</span><span class="n">py</span>
-</span><span class="line"><span class="n">mv</span> <span class="n">python3</span><span class="o">.</span><span class="mi">4</span> <span class="n">python3</span>
-</span><span class="line"><span class="n">python3</span> <span class="n">ez_setup</span><span class="o">.</span><span class="n">py</span>
-</span><span class="line"><span class="n">easy_install</span><span class="o">-</span><span class="mf">3.4</span> <span class="n">pip</span>
-</span><span class="line"><span class="n">pip3</span> <span class="n">install</span> <span class="p">[</span><span class="n">packagename</span><span class="p">]</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>If you want to install the package used by python3, you need to using the command “pip3 install [packagename]”, otherwise just “pip install [packagename]”</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/08/14/using-python-to-implement-a-stack/">Using Python to Implement a Stack</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-08-14T10:53:40+08:00" pubdate data-updated="true">2014 年8 月14 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>In this post, we are going to implement a stack using Python. We are gonna do it using two ways. The first is by pushing to the end of the list, and pop out the rightmost item. The second is by “pushing” to the leftmost and pop out the leftmost item.  </p>
-
-<ol>
-  <li>push to the end  </li>
-</ol>
+<p>2.Linked stack</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
@@ -617,49 +591,295 @@
 <span class="line-number">36</span>
 <span class="line-number">37</span>
 <span class="line-number">38</span>
-</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="k">class</span> <span class="nc">Stack</span><span class="p">:</span>
-</span><span class="line">    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="line-number">39</span>
+<span class="line-number">40</span>
+<span class="line-number">41</span>
+<span class="line-number">42</span>
+<span class="line-number">43</span>
+<span class="line-number">44</span>
+<span class="line-number">45</span>
+<span class="line-number">46</span>
+<span class="line-number">47</span>
+<span class="line-number">48</span>
+<span class="line-number">49</span>
+<span class="line-number">50</span>
+<span class="line-number">51</span>
+<span class="line-number">52</span>
+<span class="line-number">53</span>
+<span class="line-number">54</span>
+<span class="line-number">55</span>
+<span class="line-number">56</span>
+<span class="line-number">57</span>
+<span class="line-number">58</span>
+<span class="line-number">59</span>
+<span class="line-number">60</span>
+<span class="line-number">61</span>
+<span class="line-number">62</span>
+<span class="line-number">63</span>
+<span class="line-number">64</span>
+<span class="line-number">65</span>
+<span class="line-number">66</span>
+<span class="line-number">67</span>
+<span class="line-number">68</span>
+<span class="line-number">69</span>
+<span class="line-number">70</span>
+<span class="line-number">71</span>
+<span class="line-number">72</span>
+<span class="line-number">73</span>
+<span class="line-number">74</span>
+<span class="line-number">75</span>
+<span class="line-number">76</span>
+<span class="line-number">77</span>
+<span class="line-number">78</span>
+<span class="line-number">79</span>
+<span class="line-number">80</span>
+<span class="line-number">81</span>
+<span class="line-number">82</span>
+<span class="line-number">83</span>
+<span class="line-number">84</span>
+<span class="line-number">85</span>
+<span class="line-number">86</span>
+<span class="line-number">87</span>
+<span class="line-number">88</span>
+<span class="line-number">89</span>
+<span class="line-number">90</span>
+<span class="line-number">91</span>
+<span class="line-number">92</span>
+<span class="line-number">93</span>
+<span class="line-number">94</span>
+<span class="line-number">95</span>
+<span class="line-number">96</span>
+<span class="line-number">97</span>
+<span class="line-number">98</span>
+<span class="line-number">99</span>
+<span class="line-number">100</span>
+<span class="line-number">101</span>
+<span class="line-number">102</span>
+<span class="line-number">103</span>
+<span class="line-number">104</span>
+<span class="line-number">105</span>
+<span class="line-number">106</span>
+<span class="line-number">107</span>
+<span class="line-number">108</span>
+<span class="line-number">109</span>
+<span class="line-number">110</span>
+<span class="line-number">111</span>
+<span class="line-number">112</span>
+<span class="line-number">113</span>
+<span class="line-number">114</span>
+<span class="line-number">115</span>
+<span class="line-number">116</span>
+<span class="line-number">117</span>
+<span class="line-number">118</span>
+<span class="line-number">119</span>
+<span class="line-number">120</span>
+<span class="line-number">121</span>
+<span class="line-number">122</span>
+<span class="line-number">123</span>
+<span class="line-number">124</span>
+<span class="line-number">125</span>
+<span class="line-number">126</span>
+<span class="line-number">127</span>
+<span class="line-number">128</span>
+<span class="line-number">129</span>
+<span class="line-number">130</span>
+<span class="line-number">131</span>
+<span class="line-number">132</span>
+<span class="line-number">133</span>
+<span class="line-number">134</span>
+<span class="line-number">135</span>
+<span class="line-number">136</span>
+<span class="line-number">137</span>
+<span class="line-number">138</span>
+<span class="line-number">139</span>
+<span class="line-number">140</span>
+<span class="line-number">141</span>
+<span class="line-number">142</span>
+<span class="line-number">143</span>
+</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="cp">#include &quot;stdio.h&quot;</span>
+</span><span class="line"><span class="cp">#include &quot;stdlib.h&quot;</span>
+</span><span class="line"><span class="cp">#include &quot;math.h&quot;</span>
+</span><span class="line"><span class="cp">#include &quot;time.h&quot;</span>
 </span><span class="line">
-</span><span class="line">    <span class="k">def</span> <span class="nf">is_empty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span class="line">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="o">==</span> <span class="p">[]</span>
+</span><span class="line"><span class="cp">#define OK 1</span>
+</span><span class="line"><span class="cp">#define ERROR 0</span>
+</span><span class="line"><span class="cp">#define TRUE 1</span>
+</span><span class="line"><span class="cp">#define FALSE 0</span>
+</span><span class="line"><span class="cp">#define MAXSIZE 1000 </span><span class="cm">/* 存储空间初始分配量 */</span><span class="cp"></span>
 </span><span class="line">
-</span><span class="line">    <span class="k">def</span> <span class="nf">push</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
-</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+</span><span class="line"><span class="k">typedef</span> <span class="kt">int</span> <span class="n">Status</span><span class="p">;</span>
+</span><span class="line"><span class="k">typedef</span> <span class="kt">int</span> <span class="n">SElemType</span><span class="p">;</span> <span class="cm">/* SElemType类型根据实际情况而定，这里假设为int */</span>
 </span><span class="line">
-</span><span class="line">    <span class="k">def</span> <span class="nf">pop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span class="line">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
 </span><span class="line">
-</span><span class="line">    <span class="sd">&#39;&#39;&#39;</span>
-</span><span class="line"><span class="sd">    returns the top item from the stack but does not remove it.</span>
-</span><span class="line"><span class="sd">    It needs no parameters.</span>
-</span><span class="line"><span class="sd">    The stack is not modified.</span>
-</span><span class="line"><span class="sd">    &#39;&#39;&#39;</span>
-</span><span class="line">    <span class="k">def</span> <span class="nf">peek</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span class="line">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+</span><span class="line"><span class="cm">/* 链栈结构 */</span>
+</span><span class="line"><span class="k">typedef</span> <span class="k">struct</span> <span class="n">StackNode</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="n">SElemType</span> <span class="n">data</span><span class="p">;</span>
+</span><span class="line">        <span class="k">struct</span> <span class="n">StackNode</span> <span class="o">*</span><span class="n">next</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span><span class="n">StackNode</span><span class="p">,</span><span class="o">*</span><span class="n">LinkStackPtr</span><span class="p">;</span>
 </span><span class="line">
-</span><span class="line">    <span class="k">def</span> <span class="nf">size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span class="line">        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">)</span>
 </span><span class="line">
-</span><span class="line"><span class="n">s</span> <span class="o">=</span> <span class="n">Stack</span><span class="p">()</span>
-</span><span class="line"><span class="k">print</span> <span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">is_empty</span><span class="p">())</span>
-</span><span class="line"><span class="n">s</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
-</span><span class="line"><span class="n">s</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="s">&#39;dog&#39;</span><span class="p">)</span>
-</span><span class="line"><span class="k">print</span> <span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">peek</span><span class="p">())</span>
-</span><span class="line"><span class="k">print</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
-</span><span class="line"><span class="k">print</span> <span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">peek</span><span class="p">())</span>
-</span><span class="line"><span class="n">s</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
-</span><span class="line"><span class="k">print</span> <span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">size</span><span class="p">())</span>
-</span><span class="line"><span class="k">print</span> <span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">is_empty</span><span class="p">())</span>
-</span><span class="line"><span class="n">s</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="mf">8.4</span><span class="p">)</span>
-</span><span class="line"><span class="k">print</span> <span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
-</span><span class="line"><span class="k">print</span> <span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
-</span><span class="line"><span class="k">print</span> <span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">size</span><span class="p">())</span>
+</span><span class="line"><span class="k">typedef</span> <span class="k">struct</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="n">LinkStackPtr</span> <span class="n">top</span><span class="p">;</span>
+</span><span class="line">        <span class="kt">int</span> <span class="n">count</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span><span class="n">LinkStack</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="n">Status</span> <span class="nf">visit</span><span class="p">(</span><span class="n">SElemType</span> <span class="n">c</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d &quot;</span><span class="p">,</span><span class="n">c</span><span class="p">);</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/*  构造一个空栈S */</span>
+</span><span class="line"><span class="n">Status</span> <span class="nf">InitStack</span><span class="p">(</span><span class="n">LinkStack</span> <span class="o">*</span><span class="n">S</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="n">S</span><span class="o">-&gt;</span><span class="n">top</span> <span class="o">=</span> <span class="p">(</span><span class="n">LinkStackPtr</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">StackNode</span><span class="p">));</span>
+</span><span class="line">        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">S</span><span class="o">-&gt;</span><span class="n">top</span><span class="p">)</span>
+</span><span class="line">                <span class="k">return</span> <span class="n">ERROR</span><span class="p">;</span>
+</span><span class="line">        <span class="n">S</span><span class="o">-&gt;</span><span class="n">top</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
+</span><span class="line">        <span class="n">S</span><span class="o">-&gt;</span><span class="n">count</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 把S置为空栈 */</span>
+</span><span class="line"><span class="n">Status</span> <span class="nf">ClearStack</span><span class="p">(</span><span class="n">LinkStack</span> <span class="o">*</span><span class="n">S</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="n">LinkStackPtr</span> <span class="n">p</span><span class="p">,</span><span class="n">q</span><span class="p">;</span>
+</span><span class="line">        <span class="n">p</span><span class="o">=</span><span class="n">S</span><span class="o">-&gt;</span><span class="n">top</span><span class="p">;</span>
+</span><span class="line">        <span class="k">while</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+</span><span class="line">        <span class="p">{</span>
+</span><span class="line">                <span class="n">q</span><span class="o">=</span><span class="n">p</span><span class="p">;</span>
+</span><span class="line">                <span class="n">p</span><span class="o">=</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+</span><span class="line">                <span class="n">free</span><span class="p">(</span><span class="n">q</span><span class="p">);</span>
+</span><span class="line">        <span class="p">}</span>
+</span><span class="line">        <span class="n">S</span><span class="o">-&gt;</span><span class="n">count</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 若栈S为空栈，则返回TRUE，否则返回FALSE */</span>
+</span><span class="line"><span class="n">Status</span> <span class="nf">StackEmpty</span><span class="p">(</span><span class="n">LinkStack</span> <span class="n">S</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="k">if</span> <span class="p">(</span><span class="n">S</span><span class="p">.</span><span class="n">count</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span>
+</span><span class="line">                <span class="k">return</span> <span class="n">TRUE</span><span class="p">;</span>
+</span><span class="line">        <span class="k">else</span>
+</span><span class="line">                <span class="k">return</span> <span class="n">FALSE</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 返回S的元素个数，即栈的长度 */</span>
+</span><span class="line"><span class="kt">int</span> <span class="nf">StackLength</span><span class="p">(</span><span class="n">LinkStack</span> <span class="n">S</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">S</span><span class="p">.</span><span class="n">count</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 若栈不空，则用e返回S的栈顶元素，并返回OK；否则返回ERROR */</span>
+</span><span class="line"><span class="n">Status</span> <span class="nf">GetTop</span><span class="p">(</span><span class="n">LinkStack</span> <span class="n">S</span><span class="p">,</span><span class="n">SElemType</span> <span class="o">*</span><span class="n">e</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="k">if</span> <span class="p">(</span><span class="n">S</span><span class="p">.</span><span class="n">top</span><span class="o">==</span><span class="nb">NULL</span><span class="p">)</span>
+</span><span class="line">                <span class="k">return</span> <span class="n">ERROR</span><span class="p">;</span>
+</span><span class="line">        <span class="k">else</span>
+</span><span class="line">                <span class="o">*</span><span class="n">e</span><span class="o">=</span><span class="n">S</span><span class="p">.</span><span class="n">top</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">;</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 插入元素e为新的栈顶元素 */</span>
+</span><span class="line"><span class="n">Status</span> <span class="nf">Push</span><span class="p">(</span><span class="n">LinkStack</span> <span class="o">*</span><span class="n">S</span><span class="p">,</span><span class="n">SElemType</span> <span class="n">e</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="n">LinkStackPtr</span> <span class="n">s</span><span class="o">=</span><span class="p">(</span><span class="n">LinkStackPtr</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">StackNode</span><span class="p">));</span>
+</span><span class="line">        <span class="n">s</span><span class="o">-&gt;</span><span class="n">data</span><span class="o">=</span><span class="n">e</span><span class="p">;</span>
+</span><span class="line">        <span class="n">s</span><span class="o">-&gt;</span><span class="n">next</span><span class="o">=</span><span class="n">S</span><span class="o">-&gt;</span><span class="n">top</span><span class="p">;</span>	<span class="cm">/* 把当前的栈顶元素赋值给新结点的直接后继 */</span>
+</span><span class="line">        <span class="n">S</span><span class="o">-&gt;</span><span class="n">top</span><span class="o">=</span><span class="n">s</span><span class="p">;</span>         <span class="cm">/* 将新的结点s赋值给栈顶指针 */</span>
+</span><span class="line">        <span class="n">S</span><span class="o">-&gt;</span><span class="n">count</span><span class="o">++</span><span class="p">;</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* 若栈不空，则删除S的栈顶元素，用e返回其值，并返回OK；否则返回ERROR */</span>
+</span><span class="line"><span class="n">Status</span> <span class="nf">Pop</span><span class="p">(</span><span class="n">LinkStack</span> <span class="o">*</span><span class="n">S</span><span class="p">,</span><span class="n">SElemType</span> <span class="o">*</span><span class="n">e</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="n">LinkStackPtr</span> <span class="n">p</span><span class="p">;</span>
+</span><span class="line">        <span class="k">if</span><span class="p">(</span><span class="n">StackEmpty</span><span class="p">(</span><span class="o">*</span><span class="n">S</span><span class="p">))</span>
+</span><span class="line">                <span class="k">return</span> <span class="n">ERROR</span><span class="p">;</span>
+</span><span class="line">        <span class="o">*</span><span class="n">e</span><span class="o">=</span><span class="n">S</span><span class="o">-&gt;</span><span class="n">top</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">;</span>
+</span><span class="line">        <span class="n">p</span><span class="o">=</span><span class="n">S</span><span class="o">-&gt;</span><span class="n">top</span><span class="p">;</span>					<span class="cm">/* 将栈顶结点赋值给p */</span>
+</span><span class="line">        <span class="n">S</span><span class="o">-&gt;</span><span class="n">top</span><span class="o">=</span><span class="n">S</span><span class="o">-&gt;</span><span class="n">top</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>    <span class="cm">/* 使得栈顶指针下移一位，指向后一结点 */</span>
+</span><span class="line">        <span class="n">free</span><span class="p">(</span><span class="n">p</span><span class="p">);</span>                    <span class="cm">/* 释放结点p */</span>
+</span><span class="line">        <span class="n">S</span><span class="o">-&gt;</span><span class="n">count</span><span class="o">--</span><span class="p">;</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="n">Status</span> <span class="nf">StackTraverse</span><span class="p">(</span><span class="n">LinkStack</span> <span class="n">S</span><span class="p">)</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="n">LinkStackPtr</span> <span class="n">p</span><span class="p">;</span>
+</span><span class="line">        <span class="n">p</span><span class="o">=</span><span class="n">S</span><span class="p">.</span><span class="n">top</span><span class="p">;</span>
+</span><span class="line">        <span class="k">while</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+</span><span class="line">        <span class="p">{</span>
+</span><span class="line">                 <span class="n">visit</span><span class="p">(</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">);</span>
+</span><span class="line">                 <span class="n">p</span><span class="o">=</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+</span><span class="line">        <span class="p">}</span>
+</span><span class="line">        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">        <span class="kt">int</span> <span class="n">j</span><span class="p">;</span>
+</span><span class="line">        <span class="n">LinkStack</span> <span class="n">s</span><span class="p">;</span>
+</span><span class="line">        <span class="kt">int</span> <span class="n">e</span><span class="p">;</span>
+</span><span class="line">        <span class="k">if</span><span class="p">(</span><span class="n">InitStack</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="p">)</span><span class="o">==</span><span class="n">OK</span><span class="p">)</span>
+</span><span class="line">                <span class="k">for</span><span class="p">(</span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="n">j</span><span class="o">&lt;=</span><span class="mi">10</span><span class="p">;</span><span class="n">j</span><span class="o">++</span><span class="p">)</span>
+</span><span class="line">                        <span class="n">Push</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="p">,</span><span class="n">j</span><span class="p">);</span>
+</span><span class="line">        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;栈中元素依次为：&quot;</span><span class="p">);</span>
+</span><span class="line">        <span class="n">StackTraverse</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
+</span><span class="line">        <span class="n">Pop</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="p">,</span><span class="o">&amp;</span><span class="n">e</span><span class="p">);</span>
+</span><span class="line">        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;弹出的栈顶元素 e=%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">e</span><span class="p">);</span>
+</span><span class="line">        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;栈空否：%d(1:空 0:否)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">StackEmpty</span><span class="p">(</span><span class="n">s</span><span class="p">));</span>
+</span><span class="line">        <span class="n">GetTop</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="o">&amp;</span><span class="n">e</span><span class="p">);</span>
+</span><span class="line">        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;栈顶元素 e=%d 栈的长度为%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">e</span><span class="p">,</span><span class="n">StackLength</span><span class="p">(</span><span class="n">s</span><span class="p">));</span>
+</span><span class="line">        <span class="n">ClearStack</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="p">);</span>
+</span><span class="line">        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;清空栈后，栈空否：%d(1:空 0:否)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">StackEmpty</span><span class="p">(</span><span class="n">s</span><span class="p">));</span>
+</span><span class="line">        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
 
-<ol>
-  <li>push to the front end</li>
-</ol>
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/18/remove-duplicates-from-an-unsorted-linked-list/">Remove Duplicates From an Unsorted Linked List</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-18T15:12:52+08:00" pubdate data-updated="true">2014 年8 月18 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Write code to remove duplicates from an unsorted linked list.</p>
+
+<p>FOLLOW UP</p>
+
+<p>How would you solve this problem if a temporary buffer is not allowed?  </p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
@@ -687,32 +907,138 @@
 <span class="line-number">24</span>
 <span class="line-number">25</span>
 <span class="line-number">26</span>
-</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="k">class</span> <span class="nc">Stack</span><span class="p">:</span>
-</span><span class="line">    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+<span class="line-number">35</span>
+<span class="line-number">36</span>
+<span class="line-number">37</span>
+<span class="line-number">38</span>
+<span class="line-number">39</span>
+<span class="line-number">40</span>
+<span class="line-number">41</span>
+<span class="line-number">42</span>
+<span class="line-number">43</span>
+<span class="line-number">44</span>
+<span class="line-number">45</span>
+<span class="line-number">46</span>
+<span class="line-number">47</span>
+<span class="line-number">48</span>
+<span class="line-number">49</span>
+<span class="line-number">50</span>
+<span class="line-number">51</span>
+<span class="line-number">52</span>
+<span class="line-number">53</span>
+<span class="line-number">54</span>
+<span class="line-number">55</span>
+<span class="line-number">56</span>
+<span class="line-number">57</span>
+<span class="line-number">58</span>
+<span class="line-number">59</span>
+<span class="line-number">60</span>
+<span class="line-number">61</span>
+<span class="line-number">62</span>
+<span class="line-number">63</span>
+<span class="line-number">64</span>
+<span class="line-number">65</span>
+<span class="line-number">66</span>
+<span class="line-number">67</span>
+<span class="line-number">68</span>
+<span class="line-number">69</span>
+<span class="line-number">70</span>
+<span class="line-number">71</span>
+<span class="line-number">72</span>
+<span class="line-number">73</span>
+<span class="line-number">74</span>
+<span class="line-number">75</span>
+<span class="line-number">76</span>
+<span class="line-number">77</span>
+<span class="line-number">78</span>
+<span class="line-number">79</span>
+</pre></td><td class="code"><pre><code class="cpp"><span class="line"><span class="cp">#include &lt;iostream&gt;</span>
+</span><span class="line"><span class="cp">#include &lt;cstring&gt;</span>
+</span><span class="line"><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
 </span><span class="line">
-</span><span class="line">    <span class="k">def</span> <span class="nf">is_empty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span class="line">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="o">==</span> <span class="p">[]</span>
+</span><span class="line"><span class="k">typedef</span> <span class="k">struct</span> <span class="n">node</span><span class="p">{</span>
+</span><span class="line">    <span class="kt">int</span> <span class="n">data</span><span class="p">;</span>
+</span><span class="line">    <span class="n">node</span> <span class="o">*</span><span class="n">next</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span><span class="n">node</span><span class="p">;</span>
+</span><span class="line"><span class="kt">bool</span> <span class="n">myhash</span><span class="p">[</span><span class="mi">100</span><span class="p">];</span>
 </span><span class="line">
-</span><span class="line">    <span class="c">#push, inserting at the front end.</span>
-</span><span class="line">    <span class="k">def</span> <span class="nf">push</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
-</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span>
-</span><span class="line">
-</span><span class="line">    <span class="c">#pop out the leftest item.</span>
-</span><span class="line">    <span class="k">def</span> <span class="nf">pop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span class="line">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-</span><span class="line">
-</span><span class="line">    <span class="k">def</span> <span class="nf">peek</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span class="line">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-</span><span class="line">
-</span><span class="line">    <span class="k">def</span> <span class="nf">size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span class="line">        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">)</span>
-</span><span class="line">
-</span><span class="line"><span class="n">s</span> <span class="o">=</span> <span class="n">Stack</span><span class="p">()</span>
-</span><span class="line"><span class="n">s</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="s">&#39;hello&#39;</span><span class="p">)</span>
-</span><span class="line"><span class="n">s</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="s">&#39;true&#39;</span><span class="p">)</span>
-</span><span class="line"><span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
-</span><span class="line"><span class="k">print</span> <span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
+</span><span class="line"><span class="n">node</span><span class="o">*</span> <span class="n">init</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">n</span><span class="p">){</span>
+</span><span class="line">    <span class="n">node</span> <span class="o">*</span><span class="n">head</span><span class="p">,</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span>
+</span><span class="line">    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">n</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+</span><span class="line">        <span class="n">node</span> <span class="o">*</span><span class="n">nd</span> <span class="o">=</span> <span class="k">new</span> <span class="n">node</span><span class="p">();</span>
+</span><span class="line">        <span class="n">nd</span><span class="o">-&gt;</span><span class="n">data</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+</span><span class="line">        <span class="k">if</span><span class="p">(</span><span class="n">i</span><span class="o">==</span><span class="mi">0</span><span class="p">){</span>
+</span><span class="line">            <span class="n">head</span> <span class="o">=</span> <span class="n">p</span> <span class="o">=</span> <span class="n">nd</span><span class="p">;</span>
+</span><span class="line">            <span class="k">continue</span><span class="p">;</span>
+</span><span class="line">        <span class="p">}</span>
+</span><span class="line">        <span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="n">nd</span><span class="p">;</span>
+</span><span class="line">        <span class="n">p</span> <span class="o">=</span> <span class="n">nd</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">    <span class="k">return</span> <span class="n">head</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line"><span class="kt">void</span> <span class="n">removedulicate</span><span class="p">(</span><span class="n">node</span> <span class="o">*</span><span class="n">head</span><span class="p">){</span>
+</span><span class="line">    <span class="k">if</span><span class="p">(</span><span class="n">head</span><span class="o">==</span><span class="nb">NULL</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+</span><span class="line">    <span class="n">node</span> <span class="o">*</span><span class="n">p</span><span class="o">=</span><span class="n">head</span><span class="p">,</span> <span class="o">*</span><span class="n">q</span><span class="o">=</span><span class="n">head</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+</span><span class="line">    <span class="n">myhash</span><span class="p">[</span><span class="n">head</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">]</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+</span><span class="line">    <span class="k">while</span><span class="p">(</span><span class="n">q</span><span class="p">){</span>
+</span><span class="line">        <span class="k">if</span><span class="p">(</span><span class="n">myhash</span><span class="p">[</span><span class="n">q</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">]){</span>
+</span><span class="line">            <span class="n">node</span> <span class="o">*</span><span class="n">t</span> <span class="o">=</span> <span class="n">q</span><span class="p">;</span>
+</span><span class="line">            <span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="n">q</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+</span><span class="line">            <span class="n">q</span> <span class="o">=</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+</span><span class="line">            <span class="k">delete</span> <span class="n">t</span><span class="p">;</span>
+</span><span class="line">        <span class="p">}</span>
+</span><span class="line">        <span class="k">else</span><span class="p">{</span>
+</span><span class="line">            <span class="n">myhash</span><span class="p">[</span><span class="n">q</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">]</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+</span><span class="line">            <span class="n">p</span> <span class="o">=</span> <span class="n">q</span><span class="p">;</span> <span class="n">q</span> <span class="o">=</span> <span class="n">q</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+</span><span class="line">        <span class="p">}</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line"><span class="kt">void</span> <span class="n">removedulicate1</span><span class="p">(</span><span class="n">node</span> <span class="o">*</span><span class="n">head</span><span class="p">){</span>
+</span><span class="line">    <span class="k">if</span><span class="p">(</span><span class="n">head</span><span class="o">==</span><span class="nb">NULL</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+</span><span class="line">    <span class="n">node</span> <span class="o">*</span><span class="n">p</span><span class="p">,</span> <span class="o">*</span><span class="n">q</span><span class="p">,</span> <span class="o">*</span><span class="n">c</span><span class="o">=</span><span class="n">head</span><span class="p">;</span>
+</span><span class="line">    <span class="k">while</span><span class="p">(</span><span class="n">c</span><span class="p">){</span>
+</span><span class="line">        <span class="n">p</span><span class="o">=</span><span class="n">c</span><span class="p">;</span> <span class="n">q</span><span class="o">=</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+</span><span class="line">        <span class="kt">int</span> <span class="n">d</span> <span class="o">=</span> <span class="n">c</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">;</span>
+</span><span class="line">        <span class="k">while</span><span class="p">(</span><span class="n">q</span><span class="p">){</span>
+</span><span class="line">            <span class="k">if</span><span class="p">(</span><span class="n">q</span><span class="o">-&gt;</span><span class="n">data</span><span class="o">==</span><span class="n">d</span><span class="p">){</span>
+</span><span class="line">                <span class="n">node</span> <span class="o">*</span><span class="n">t</span> <span class="o">=</span> <span class="n">q</span><span class="p">;</span>
+</span><span class="line">                <span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="n">q</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+</span><span class="line">                <span class="n">q</span> <span class="o">=</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+</span><span class="line">                <span class="k">delete</span> <span class="n">t</span><span class="p">;</span>
+</span><span class="line">            <span class="p">}</span>
+</span><span class="line">            <span class="k">else</span><span class="p">{</span>
+</span><span class="line">                <span class="n">p</span> <span class="o">=</span> <span class="n">q</span><span class="p">;</span> <span class="n">q</span> <span class="o">=</span> <span class="n">q</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+</span><span class="line">            <span class="p">}</span>
+</span><span class="line">        <span class="p">}</span>
+</span><span class="line">        <span class="n">c</span> <span class="o">=</span> <span class="n">c</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line"><span class="kt">void</span> <span class="n">print</span><span class="p">(</span><span class="n">node</span> <span class="o">*</span><span class="n">head</span><span class="p">){</span>
+</span><span class="line">    <span class="k">while</span><span class="p">(</span><span class="n">head</span><span class="p">){</span>
+</span><span class="line">        <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">head</span><span class="o">-&gt;</span><span class="n">data</span><span class="o">&lt;&lt;</span><span class="s">&quot; &quot;</span><span class="p">;</span>
+</span><span class="line">        <span class="n">head</span> <span class="o">=</span> <span class="n">head</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">    <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line"><span class="kt">int</span> <span class="n">main</span><span class="p">(){</span>
+</span><span class="line">    <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+</span><span class="line">    <span class="kt">int</span> <span class="n">a</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class="line">        <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span>
+</span><span class="line">    <span class="p">};</span>
+</span><span class="line">    <span class="n">memset</span><span class="p">(</span><span class="n">myhash</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">myhash</span><span class="p">));</span>
+</span><span class="line">    <span class="n">node</span> <span class="o">*</span><span class="n">head</span> <span class="o">=</span> <span class="n">init</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span>
+</span><span class="line">    <span class="n">removedulicate1</span><span class="p">(</span><span class="n">head</span><span class="p">);</span>
+</span><span class="line">    <span class="n">print</span><span class="p">(</span><span class="n">head</span><span class="p">);</span>
+</span><span class="line">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 </div>
   
@@ -736,6 +1062,18 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2019/08/14/gradient-boosting-algorithm/">Gradient Boosting Algorithm</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/07/guan-yu-pzhi/">关于P值</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/02/guan-yu-zheng-tai-fen-bu-huan-you-pian-du-yu-feng-du/">关于正态分布还有偏度与峰度</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2019/08/01/shi-yong-sparkde-mllibjin-xing-ji-qi-xue-xi/">使用Spark的MLlib进行机器学习</a>
@@ -765,18 +1103,6 @@
         <a href="/blog/2019/07/08/sparkwen-jian-cao-zuo-bei-wang/">Spark文件操作备忘</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2019/07/07/ji-qi-xue-xi-de-liu-cheng-tu/">机器学习的流程图</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2019/07/05/ryu-yan-de-%5B%3F%5D-xie-ji-lu/">R语言的一些记录</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2019/07/04/shu-ju-fen-xi-he-ji-qi-xue-xi-%5B%3F%5D-xie-zhai-chao/">数据分析和机器学习一些摘抄</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -787,7 +1113,7 @@
 <li class='category'><a href='/blog/categories/bigdata/'>BigData (11)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (6)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
-<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (7)</a></li>
+<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (10)</a></li>
 <li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (5)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (2)</a></li>
 <li class='category'><a href='/blog/categories/fun/'>Fun (1)</a></li>

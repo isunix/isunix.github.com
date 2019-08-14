@@ -9,17 +9,10 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="Today I met some shell scirpts like the following: 1
-trap &quot;rm -f $file; exit&quot; INT TERM EXIT More code here: 1
+  <meta name="description" content="I want to use ptpython with python3 as the interpreter, here is how: 1
 2
-3
-4
-5
-6
-7
-8
-9
-cleanup() { &hellip;">
+pip3 install ptpython
+python3 -m ptpython ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -109,7 +102,7 @@ cleanup() { &hellip;">
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2015/11/02/trap-interrupts-in-shell-scripts/">Trap Interrupts in Shell Scripts</a></h1>
+      <h1 class="entry-title"><a href="/blog/2015/11/19/using-ptpython-with-python3-as-the-backend/">Using Ptpython With Python3 as the Backend</a></h1>
     
     
       <p class="meta">
@@ -125,48 +118,19 @@ cleanup() { &hellip;">
   
 
 
-<time datetime="2015-11-02T14:45:18+08:00" pubdate data-updated="true">2015 年11 月2 日</time>
+<time datetime="2015-11-19T12:32:02+08:00" pubdate data-updated="true">2015 年11 月19 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>Today I met some shell scirpts like the following:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nb">trap</span> <span class="s2">&quot;rm -f $file; exit&quot;</span> INT TERM EXIT
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>More code here:</p>
+  <div class="entry-content"><p>I want to use ptpython with python3 as the interpreter, here is how:</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cleanup<span class="o">()</span> <span class="o">{</span>
-</span><span class="line">    <span class="nb">echo</span> <span class="s2">&quot;Cleaning stuff up...&quot;</span>
-</span><span class="line">    <span class="nb">exit</span>
-</span><span class="line"><span class="o">}</span>
-</span><span class="line">
-</span><span class="line"><span class="nb">trap </span>cleanup INT TERM
-</span><span class="line"><span class="nb">echo</span> <span class="s1">&#39; --- press ENTER to close --- &#39;</span>
-</span><span class="line"><span class="nb">read </span>var
-</span><span class="line">cleanup
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>change “trap cleanup INT TERM” above to “trap cleanup INT TERM EXIT” and then execute the script. Enter ‘exit’ and see what differences will happen.</p>
-
-<p>The following are references:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line">http://unix.stackexchange.com/questions/57940/trap-int-term-exit-really-necessary
-</span><span class="line">http://kb.mit.edu/confluence/pages/viewpage.action?pageId=3907156
+</pre></td><td class="code"><pre><code class="sh"><span class="line">pip3 install ptpython
+</span><span class="line">python3 -m ptpython
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 </div>
   
@@ -180,7 +144,7 @@ cleanup() { &hellip;">
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2015/10/12/django-development-in-python3-environemnt/">Django Development in Python3 Environemnt</a></h1>
+      <h1 class="entry-title"><a href="/blog/2015/11/18/django-admin-changing-the-page-header/">Django Admin: Changing the Page Header</a></h1>
     
     
       <p class="meta">
@@ -196,33 +160,19 @@ cleanup() { &hellip;">
   
 
 
-<time datetime="2015-10-12T14:55:22+08:00" pubdate data-updated="true">2015 年10 月12 日</time>
+<time datetime="2015-11-18T16:58:31+08:00" pubdate data-updated="true">2015 年11 月18 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>What if I want to development a django app in python3 environement.</p>
+  <div class="entry-content"><p>This post shows how to change the header of the django admin page.</p>
 
-<p>Using vitualenv</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">python3 -m venv sbenv
-</span><span class="line"><span class="nb">source </span>sbenv/bin/activate
-</span><span class="line">pip install -r requirements.txt
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>Using virtualenvwrapper</p>
+<p>The blog for reference is:</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">which python3   --to get the location of python3 interpreter
-</span><span class="line">mkvirtualenv --python<span class="o">=</span>/usr/local/bin/python3 django_dev
-</span><span class="line">workon django_dev
+</pre></td><td class="code"><pre><code class="html"><span class="line">http://www.mc706.com/tip_trick_snippets/42/django-admin-changing-the-page-header/
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 </div>
   
@@ -236,7 +186,7 @@ cleanup() { &hellip;">
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2015/09/21/installing-from-multiple-requirements-files/">Installing From Multiple Requirements Files</a></h1>
+      <h1 class="entry-title"><a href="/blog/2015/11/02/the-most-used-shell-commands/">The Most Used Shell Commands</a></h1>
     
     
       <p class="meta">
@@ -252,42 +202,17 @@ cleanup() { &hellip;">
   
 
 
-<time datetime="2015-09-21T16:18:23+08:00" pubdate data-updated="true">2015 年9 月21 日</time>
+<time datetime="2015-11-02T16:21:57+08:00" pubdate data-updated="true">2015 年11 月2 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>Say we want to install modules from multiple requirement files. We will put the requirement files in the directory “requirements”.</p>
-
-<p>First the base.txt file.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">Django==1.7.10
-</span><span class="line">psycopg2==2.4.5</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>Then the file local.txt</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">-r base.txt
-</span><span class="line">django-discover-runner==0.2.2</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>and production.txt(production installaions should be close to what is used in other locations, so production.txt commonly just calls base.txt)</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">-r base.txt</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>The for local and production env, we can issue the following commands:</p>
+  <div class="entry-content"><p>We can use the following shell scripts to find the 10 most used shell commands for a user.</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">pip install -r requirements/local.txt
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">pip install -r requirements/production.txt
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nb">history</span> | awk <span class="s1">&#39;{a[$2]++} END {for(i in a) {print a[i]&quot; &quot;i}}&#39;</span>| sort -rn | head
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 </div>
   
@@ -311,6 +236,18 @@ cleanup() { &hellip;">
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2019/08/14/gradient-boosting-algorithm/">Gradient Boosting Algorithm</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/07/guan-yu-pzhi/">关于P值</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/02/guan-yu-zheng-tai-fen-bu-huan-you-pian-du-yu-feng-du/">关于正态分布还有偏度与峰度</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2019/08/01/shi-yong-sparkde-mllibjin-xing-ji-qi-xue-xi/">使用Spark的MLlib进行机器学习</a>
@@ -340,18 +277,6 @@ cleanup() { &hellip;">
         <a href="/blog/2019/07/08/sparkwen-jian-cao-zuo-bei-wang/">Spark文件操作备忘</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2019/07/07/ji-qi-xue-xi-de-liu-cheng-tu/">机器学习的流程图</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2019/07/05/ryu-yan-de-%5B%3F%5D-xie-ji-lu/">R语言的一些记录</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2019/07/04/shu-ju-fen-xi-he-ji-qi-xue-xi-%5B%3F%5D-xie-zhai-chao/">数据分析和机器学习一些摘抄</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -362,7 +287,7 @@ cleanup() { &hellip;">
 <li class='category'><a href='/blog/categories/bigdata/'>BigData (11)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (6)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
-<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (7)</a></li>
+<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (10)</a></li>
 <li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (5)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (2)</a></li>
 <li class='category'><a href='/blog/categories/fun/'>Fun (1)</a></li>

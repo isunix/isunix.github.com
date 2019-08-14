@@ -9,8 +9,8 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="After upgrading ubuntu to a new version, there will be many obsolete packages. To see these packages, you can 1
-sudo apt-get upgrade It will list all &hellip;">
+  <meta name="description" content="I am am using gui emacs and I want to it to be started from the command line, then I have to do this: 1
+alias emacs=&#39;open -a /Applications/Emacs &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -100,7 +100,7 @@ sudo apt-get upgrade It will list all &hellip;">
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2015/06/02/remove-obsolete-packages-on-ubuntu/">Remove Obsolete Packages on Ubuntu</a></h1>
+      <h1 class="entry-title"><a href="/blog/2015/07/02/minutes-on-setting-up-emacs-on-macos/">Minutes on Setting Up Emacs on Macos</a></h1>
     
     
       <p class="meta">
@@ -116,39 +116,50 @@ sudo apt-get upgrade It will list all &hellip;">
   
 
 
-<time datetime="2015-06-02T10:03:32+08:00" pubdate data-updated="true">2015 年6 月2 日</time>
+<time datetime="2015-07-02T15:29:18+08:00" pubdate data-updated="true">2015 年7 月2 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>After upgrading ubuntu to a new version, there will be many obsolete packages. To see these packages, you can </p>
+  <div class="entry-content"><ol>
+  <li>I am am using gui emacs and I want to it to be started from the command line, then I have to do this:</li>
+</ol>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line">sudo apt-get upgrade
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nb">alias </span><span class="nv">emacs</span><span class="o">=</span><span class="s1">&#39;open -a /Applications/Emacs.app $1&#39;</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>It will list all those obsolete packages.</p>
 
-<p>To autoremove them one by one will be will tedious, we can first copy those packages into a file, like aa.txt, then use the following perl script to do it once:</p>
+<ol>
+  <li>I want to change the default font and font size:</li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="o">(</span><span class="nb">set</span>-default-font <span class="s2">&quot;Monaco 28&quot;</span><span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<ol>
+  <li>I want to use evil, after putting it into ~/.emacs.d, also I need to put the folliwng things in to ~/.emacs.d/init.el</li>
+</ol>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
 <span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="nn">File::</span><span class="n">Slurp</span><span class="p">;</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">@modules</span><span class="p">;</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">$text</span> <span class="o">=</span> <span class="n">read_file</span><span class="p">(</span><span class="s">&#39;aa.txt&#39;</span><span class="p">,</span> <span class="n">text_ref</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">);</span>
-</span><span class="line"><span class="nv">@modules</span> <span class="o">=</span> <span class="nb">grep</span> <span class="p">{</span><span class="ow">not</span> <span class="sr">/\s+/</span><span class="p">}</span> <span class="nb">split</span><span class="p">(</span><span class="s">&#39;[\s+]&#39;</span><span class="p">,</span> <span class="nv">$text</span><span class="p">);</span>
-</span><span class="line"><span class="k">foreach</span> <span class="k">my</span> <span class="nv">$module</span> <span class="p">(</span><span class="nv">@modules</span><span class="p">){</span>
-</span><span class="line">	<span class="nb">system</span><span class="p">(</span><span class="s">&quot;sudo apt-get autoremove $module&quot;</span><span class="p">);</span>
-</span><span class="line"><span class="p">}</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="o">(</span>add-to-list <span class="s1">&#39;load-path &quot;~/.emacs.d/evil&quot;)</span>
+</span><span class="line"><span class="s1">(require &#39;</span>evil<span class="o">)</span>
+</span><span class="line"><span class="o">(</span>evil-mode 1<span class="o">)</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>Done!</p>
+<ol>
+  <li>I am using slime, so I have to put the following things into my ~/.emacs.d/init.el</li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="o">(</span>setq inferior-lisp-program <span class="s2">&quot;/usr/local/bin/sbcl&quot;</span><span class="o">)</span>
+</span><span class="line"><span class="o">(</span>setq slime-contribs <span class="err">&#39;</span><span class="o">(</span>slime-fancy<span class="o">))</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 </div>
   
   
@@ -161,7 +172,7 @@ sudo apt-get upgrade It will list all &hellip;">
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2015/06/01/reconfigure-partially-installed-packages-in-ubuntu/">Reconfigure Partially Installed Packages in Ubuntu</a></h1>
+      <h1 class="entry-title"><a href="/blog/2015/06/19/tmux-cant-create-socket-permission-denied/">Tmux:can&#8217;t Create Socket: Permission Denied</a></h1>
     
     
       <p class="meta">
@@ -177,25 +188,22 @@ sudo apt-get upgrade It will list all &hellip;">
   
 
 
-<time datetime="2015-06-01T13:22:30+08:00" pubdate data-updated="true">2015 年6 月1 日</time>
+<time datetime="2015-06-19T13:04:00+08:00" pubdate data-updated="true">2015 年6 月19 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>When I try to upgrade my ubuntu version from 14.04 to 14.10, the system rebooted during the upgrade. When I try to login to the gnu desktop, it goes back to the login screen again and again.</p>
+  <div class="entry-content"><p>my tmux’s sockets are output to the dir “~/tmp”, however today I encountered the problem saying “can’t create socket: Permission denied” while I start tmux.</p>
 
-<p>So I have to login in using the “tty” terminal by “ctrl+alt+F3”, and then issue the following command:</p>
+<p>The reason is I have changed the rights on the folder ~/tmp/tmux* , so after the following command:</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line">sudo dpkg --configure -a
+</pre></td><td class="code"><pre><code class="sh"><span class="line">chmod 700 -R tmux*
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>There maybe something wrong logging in using the mosted updated kernal, so we can choose to log in using an previous version of kernal(provided if is not removed yet]).</p>
-
-<p>Then if we still want to upgrade, we can do it when we successfully log in to the system.</p>
-
+<p>It is back to normal.</p>
 </div>
   
   
@@ -208,7 +216,7 @@ sudo apt-get upgrade It will list all &hellip;">
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2015/06/01/alternative-way-to-bypass-problems-met-when-rake-new-post/">Alternative Way to Bypass Problems Met When Rake New_post</a></h1>
+      <h1 class="entry-title"><a href="/blog/2015/06/09/find-cgi-bin-dir-on-a-linux-server/">Find Cgi-bin Dir on a Linux Server</a></h1>
     
     
       <p class="meta">
@@ -224,24 +232,18 @@ sudo apt-get upgrade It will list all &hellip;">
   
 
 
-<time datetime="2015-06-01T11:06:22+08:00" pubdate data-updated="true">2015 年6 月1 日</time>
+<time datetime="2015-06-09T18:49:22+08:00" pubdate data-updated="true">2015 年6 月9 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>I met errors while I am issuing the command “rake new_post” add generate a new post. Here is an alternative way to generate new post:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="ruby"><span class="line"><span class="n">bundle</span> <span class="nb">exec</span> <span class="n">rake</span> <span class="s2">&quot;new_post[alternative way to bypass problems met when rake new_post]&quot;</span>
+  <div class="entry-content"><div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">ps -ef | grep cgi
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>and then we can use the “Mou” app to open the page:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="ruby"><span class="line"><span class="nb">open</span> <span class="o">-</span><span class="n">a</span> <span class="no">Mou</span> <span class="n">source</span><span class="o">/</span><span class="n">_posts</span><span class="o">/</span><span class="mi">2015</span><span class="o">-</span><span class="mo">06</span><span class="o">-</span><span class="mo">01</span><span class="o">-</span><span class="n">alternative</span><span class="o">-</span><span class="n">way</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">bypass</span><span class="o">-</span><span class="n">problems</span><span class="o">-</span><span class="n">met</span><span class="o">-</span><span class="k">when</span><span class="o">-</span><span class="n">rake</span><span class="o">-</span><span class="kp">new</span><span class="o">-</span><span class="n">post</span><span class="o">.</span><span class="n">markdown</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>On my server, this will give out the cgi-bin dir.</p>
 </div>
   
   
@@ -264,6 +266,18 @@ sudo apt-get upgrade It will list all &hellip;">
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2019/08/14/gradient-boosting-algorithm/">Gradient Boosting Algorithm</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/07/guan-yu-pzhi/">关于P值</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/02/guan-yu-zheng-tai-fen-bu-huan-you-pian-du-yu-feng-du/">关于正态分布还有偏度与峰度</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2019/08/01/shi-yong-sparkde-mllibjin-xing-ji-qi-xue-xi/">使用Spark的MLlib进行机器学习</a>
@@ -293,18 +307,6 @@ sudo apt-get upgrade It will list all &hellip;">
         <a href="/blog/2019/07/08/sparkwen-jian-cao-zuo-bei-wang/">Spark文件操作备忘</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2019/07/07/ji-qi-xue-xi-de-liu-cheng-tu/">机器学习的流程图</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2019/07/05/ryu-yan-de-%5B%3F%5D-xie-ji-lu/">R语言的一些记录</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2019/07/04/shu-ju-fen-xi-he-ji-qi-xue-xi-%5B%3F%5D-xie-zhai-chao/">数据分析和机器学习一些摘抄</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -315,7 +317,7 @@ sudo apt-get upgrade It will list all &hellip;">
 <li class='category'><a href='/blog/categories/bigdata/'>BigData (11)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (6)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
-<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (7)</a></li>
+<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (10)</a></li>
 <li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (5)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (2)</a></li>
 <li class='category'><a href='/blog/categories/fun/'>Fun (1)</a></li>

@@ -9,20 +9,8 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="I ran across some usage of grep and map in perl in some of the scripts I am reading. just to keep a note here. 1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-my @line &hellip;">
+  <meta name="description" content="I have some files with file name quite weird in the format, “[Alex_Holmes]_Hadoop_in_Practice(BookZZ.org).pdf
+“. What I want to achieve is removing &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -112,7 +100,7 @@ my @line &hellip;">
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/09/19/map-and-grep-in-perl/">Map and Grep in Perl</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/10/17/a-perl-script-to-rename-file-names/">A Perl Script to Rename File Names</a></h1>
     
     
       <p class="meta">
@@ -128,207 +116,17 @@ my @line &hellip;">
   
 
 
-<time datetime="2014-09-19T12:27:58+08:00" pubdate data-updated="true">2014 年9 月19 日</time>
+<time datetime="2014-10-17T16:15:19+08:00" pubdate data-updated="true">2014 年10 月17 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>I ran across some usage of grep and map in perl in some of the scripts I am reading. just to keep a note here. </p>
+  <div class="entry-content"><p>I have some files with file name quite weird in the format, “[Alex_Holmes]_Hadoop_in_Practice(BookZZ.org).pdf
+“. What I want to achieve is removing the parts in the [] or ().  Here below is the perl script I wrote. </p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">@line</span> <span class="o">=</span> <span class="nb">grep</span> <span class="p">{</span><span class="ow">not</span> <span class="sr">/^\s*$/</span><span class="p">}</span> <span class="nb">map</span> <span class="p">{</span><span class="nb">chomp</span><span class="p">;</span><span class="nv">$_</span><span class="p">}</span> <span class="sr">&lt;FILEIN&gt;</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="nv">@keyorder</span> <span class="o">=</span> <span class="nb">grep</span> <span class="p">{</span><span class="ow">not</span> <span class="sr">/^\s*$/</span><span class="p">}</span> <span class="nv">@column</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="nv">$rh_meta</span><span class="o">-&gt;</span><span class="p">{</span><span class="nv">$meta_name</span><span class="p">}</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class="line">	<span class="nb">map</span> <span class="p">{</span>
-</span><span class="line">		<span class="p">(</span><span class="nv">$_</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-</span><span class="line">	<span class="p">}</span> <span class="nb">grep</span> <span class="p">{</span>
-</span><span class="line">		<span class="ow">not</span> <span class="sr">/^\d+$/</span><span class="p">;</span>
-</span><span class="line">	<span class="p">}</span> <span class="p">(</span><span class="nv">$meta_body</span> <span class="o">=~</span><span class="sr"> /(\w+)/g</span><span class="p">)</span>
-</span><span class="line">	
-</span><span class="line"><span class="nv">$str</span> <span class="o">=~</span> <span class="nb">tr</span><span class="sr">/a-z/</span><span class="n">A</span><span class="o">-</span><span class="n">Z</span><span class="o">/</span><span class="p">;</span>
-</span><span class="line"><span class="c1">##how to use tr</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>I also come across some usage of redo and labeled loop, please see the following examples.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="c1">#!/usr/bin/perl</span>
-</span><span class="line"><span class="k">for</span> <span class="nv">$i</span> <span class="p">(</span><span class="mi">0</span><span class="o">..</span><span class="mi">9</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">    <span class="k">for</span> <span class="nv">$j</span> <span class="p">(</span><span class="mi">0</span><span class="o">..</span><span class="mi">9</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">        <span class="k">print</span> <span class="s">&quot;$i x $j\n&quot;</span><span class="p">;</span>
-</span><span class="line">        <span class="k">last</span> <span class="k">if</span> <span class="nv">$i</span> <span class="o">==</span><span class="mi">3</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line"><span class="c1">#the one without labeled loop, the &quot;last&quot; will only act on the inner loop.</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>if we want the “last” to act on the “outer” loop, we can do the following:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="c1">#!/usr/bin/perl</span>
-</span><span class="line"><span class="n">LO:</span> <span class="k">for</span> <span class="nv">$i</span> <span class="p">(</span><span class="mi">0</span><span class="o">..</span><span class="mi">9</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">        <span class="k">for</span> <span class="nv">$j</span> <span class="p">(</span><span class="mi">0</span><span class="o">..</span><span class="mi">9</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">            <span class="k">print</span> <span class="s">&quot;$i x $j\n&quot;</span><span class="p">;</span>
-</span><span class="line">            <span class="k">last</span> <span class="n">LO</span> <span class="k">if</span> <span class="nv">$i</span> <span class="o">==</span><span class="mi">3</span><span class="p">;</span>
-</span><span class="line">        <span class="p">}</span>
-</span><span class="line">    <span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>namely we can use “labeled loop” to control the outer loop from the inner loop.</p>
-
-<p>for the redo function, the difference it has to “next” is “next” will go to the next loop, while “redo” will just “redo” the current loop, this is partilarly useful if we want to ask the user to re-enter the password if they get the password wrong:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="n">utf8</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">my</span> <span class="nv">@words</span> <span class="o">=</span> <span class="sx">qw{ fred barney pebbles dino }</span><span class="p">;</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">$errors</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">foreach</span> <span class="p">(</span><span class="nv">@words</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">    <span class="k">print</span> <span class="s">&quot;type the word &#39;$_&#39;: &quot;</span><span class="p">;</span>
-</span><span class="line">    <span class="nb">chomp</span><span class="p">(</span><span class="k">my</span> <span class="nv">$try</span> <span class="o">=</span> <span class="sr">&lt;STDIN&gt;</span><span class="p">);</span>
-</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="nv">$try</span> <span class="ow">ne</span> <span class="nv">$_</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">      <span class="k">print</span> <span class="s">&quot;sorry, it is not right\n&quot;</span><span class="p">;</span>
-</span><span class="line">      <span class="nv">$errors</span><span class="o">++</span><span class="p">;</span>
-</span><span class="line">      <span class="k">redo</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line"><span class="c1">##if you did not enter the right item, you will be asked and again!</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/17/install-gnuplot-from-the-source-code/">Install Gnuplot From the Source Code</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-09-17T10:38:15+08:00" pubdate data-updated="true">2014 年9 月17 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>On the centos server, I want to install gnuplot in my local dir, here are the steps:  </p>
-
-<ol>
-  <li>
-    <p>download the source code and cd into the dir.</p>
-  </li>
-  <li>
-    <p>./configure –prefix=$HOME/local –with-readline=gnu</p>
-  </li>
-  <li>
-    <p>make</p>
-  </li>
-  <li>
-    <p>make install</p>
-  </li>
-</ol>
-
-<p>That is all. </p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/15/useful-links-for-learning-ml-and-spamassassin/">Useful Links for Learning ML and SpamAssassin</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-09-15T10:32:36+08:00" pubdate data-updated="true">2014 年9 月15 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Below are some links I used while I am learning SpamAssassin and machine learning, of course including Bayes.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
 <span class="line-number">3</span>
 <span class="line-number">4</span>
@@ -349,29 +147,156 @@ my @line &hellip;">
 <span class="line-number">19</span>
 <span class="line-number">20</span>
 <span class="line-number">21</span>
-<span class="line-number">22</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">http://blog.sina.com.cn/s/blog_77dc7b520100pzwd.html
-</span><span class="line">http://spamassassin.apache.org/full/3.4.x/doc/Mail_SpamAssassin.html
-</span><span class="line">http://www.jb51.net/article/6214.htm
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="n">strict</span><span class="p">;</span>
+</span><span class="line"><span class="k">use</span> <span class="n">warnings</span><span class="p">;</span>
+</span><span class="line"><span class="k">use</span> <span class="nn">Data::</span><span class="n">Dumper</span><span class="p">;</span>
+</span><span class="line"><span class="k">use</span> <span class="n">Cwd</span><span class="p">;</span>
 </span><span class="line">
-</span><span class="line">http://www.baidu.com/index.php?wd=%E8%B4%9D%E5%8F%B6%E6%96%AF&amp;rsv_spt=1&amp;issp=1&amp;rsv_bp=0&amp;ie=utf-8&amp;tn=monline_5_dg&amp;rsv_sug3=7&amp;rsv_sug4=171&amp;rsv_sug1=8&amp;oq=beiyes&amp;rsv_sug2=0&amp;f=3&amp;rsp=0&amp;inputT=6003
+</span><span class="line"><span class="k">my</span> <span class="nv">$target_dir</span> <span class="o">=</span> <span class="n">getcwd</span><span class="p">();</span>
 </span><span class="line">
-</span><span class="line">http://www.ruanyifeng.com/blog/2011/08/bayesian_inference_part_one.html
-</span><span class="line">http://mindhacks.cn/2008/09/21/the-magical-bayesian-method/
-</span><span class="line">http://mindhacks.cn/2008/09/11/machine-learning-and-ai-resources/
-</span><span class="line">http://en.wikipedia.org/wiki/Herbert_A._Simon
-</span><span class="line">http://en.wikipedia.org/wiki/Machine_learning
-</span><span class="line">http://en.wikipedia.org/wiki/Artificial_intelligence
-</span><span class="line">http://en.wikipedia.org/wiki/History_of_artificial_intelligence
-</span><span class="line">http://en.wikipedia.org/wiki/Unsupervised_learning
-</span><span class="line">http://www.yeeyan.org/articles/view/sylviaangel/9995
-</span><span class="line">http://blog.youxu.info/spell-correct.html
-</span><span class="line">http://en.wikipedia.org/wiki/Thomas_Bayes
-</span><span class="line">http://mindhacks.cn/2008/07/07/the-importance-of-knowing-why/
-</span><span class="line">http://blog.csdn.net/g9yuayon/article/details/2574781
-</span><span class="line">http://blog.csdn.net/pongba/article/details/2544933
-</span><span class="line">http://www.chinaunix.net/old_jh/14/412857.html
-</span><span class="line">http://blog.chinaunix.net/uid-10182882-id-2969692.html</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span><span class="line"><span class="nb">opendir</span><span class="p">(</span><span class="k">my</span> <span class="nv">$dh</span><span class="p">,</span> <span class="nv">$target_dir</span><span class="p">)</span> <span class="o">||</span> <span class="nb">die</span> <span class="s">&quot;can&#39;t opendir $target_dir: $!&quot;</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">my</span> <span class="nv">@files</span> <span class="o">=</span> <span class="nb">grep</span> <span class="p">{</span> <span class="sr">/\w/</span> <span class="o">&amp;&amp;</span> <span class="o">-</span><span class="n">f</span> <span class="s">&quot;$_&quot;</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="sr">/^\./</span><span class="p">}</span> <span class="nb">readdir</span><span class="p">(</span><span class="nv">$dh</span><span class="p">);</span>
+</span><span class="line"><span class="c1"># [Alex_Holmes]_Hadoop_in_Practice(BookZZ.org).pdf</span>
+</span><span class="line"><span class="c1">#files not staring with &quot;.&quot; and contains char, thus (., .., .DS_STORE) will be ignored.</span>
+</span><span class="line"><span class="c1">#print Dumper @files;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">for</span><span class="p">(</span><span class="nv">@files</span><span class="p">){</span>
+</span><span class="line">    <span class="k">my</span> <span class="nv">$file</span> <span class="o">=</span> <span class="nv">$_</span><span class="p">;</span>
+</span><span class="line">    <span class="k">if</span><span class="p">(</span><span class="sr">/^(?:\[[\S\s]+\])([\S\s]+)(?:\([\S\s]+\))\.pdf$/</span><span class="p">){</span>
+</span><span class="line">        <span class="k">my</span> <span class="nv">$new_name</span> <span class="o">=</span> <span class="nv">$1</span><span class="o">.</span><span class="s">&quot;.pdf&quot;</span><span class="p">;</span>
+</span><span class="line">        <span class="nb">rename</span><span class="p">(</span><span class="s">&quot;$file&quot;</span><span class="p">,</span> <span class="s">&quot;$new_name&quot;</span><span class="p">)</span> <span class="o">||</span> <span class="nb">die</span><span class="p">(</span><span class="s">&quot;error in renaming: $!&quot;</span><span class="p">);</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/30/cgi-set-up-on-macos/">Cgi Set Up on Macos</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-30T16:57:08+08:00" pubdate data-updated="true">2014 年9 月30 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>There are multiple guidelines as to how to set up cgi for perl on macos or linux. </p>
+
+<p>This post keeps notes of how to set up cgi on MACOS.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="sr">/Library/</span><span class="n">WebServer</span><span class="sr">/CGI-Executables ~/</span><span class="n">www</span><span class="o">/</span><span class="n">cgi</span><span class="o">-</span><span class="n">bin</span>
+</span><span class="line"><span class="n">cd</span> <span class="o">~</span><span class="sr">/www/cgi</span><span class="o">-</span><span class="n">bin</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>put scripts in this dir and access it using the link “localhost/cgi-bin/filename” </p>
+
+<p>you may need to change the permission of the script to “755” if needed.</p>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/24/dynamicly-adding-a-method-to-a-module/">Dynamicly Adding a Method to a Module</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-24T12:57:20+08:00" pubdate data-updated="true">2014 年9 月24 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>We can follow the following steps to add/change a method in a module dynamicly.  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="n">strict</span><span class="p">;</span>
+</span><span class="line"><span class="k">use</span> <span class="n">warnings</span><span class="p">;</span>
+</span><span class="line"><span class="k">use</span> <span class="n">utf8</span><span class="p">;</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">
+</span><span class="line">    <span class="nb">package</span> <span class="nn">Data::</span><span class="n">Dumper</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">sub </span><span class="nf">test</span> <span class="p">{</span>
+</span><span class="line">        <span class="k">print</span> <span class="s">&quot;test to add a new method to Data::Dumper\n&quot;</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="k">use</span> <span class="nn">Data::</span><span class="n">Dumper</span><span class="p">;</span>
+</span><span class="line"><span class="nn">Data::Dumper::</span><span class="n">test</span><span class="p">;</span>
+</span><span class="line"><span class="k">print</span> <span class="n">Dumper</span> <span class="o">\</span><span class="nv">%</span><span class="nn">Data::Dumper::</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>we can also use the following one liner to check the methods defined in a module:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">perl</span> <span class="o">-</span><span class="n">e</span> <span class="s">&quot;use File::Find; use Data::Dumper; print Dumper \%File::Find::&quot;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>or we can use JSON to print out its format:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">perl</span> <span class="o">-</span><span class="n">e</span> <span class="s">&quot;use File::Find; use JSON; print to_json(\%File::Find::)&quot;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 </div>
   
   
@@ -394,6 +319,18 @@ my @line &hellip;">
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2019/08/14/gradient-boosting-algorithm/">Gradient Boosting Algorithm</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/07/guan-yu-pzhi/">关于P值</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/02/guan-yu-zheng-tai-fen-bu-huan-you-pian-du-yu-feng-du/">关于正态分布还有偏度与峰度</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2019/08/01/shi-yong-sparkde-mllibjin-xing-ji-qi-xue-xi/">使用Spark的MLlib进行机器学习</a>
@@ -423,18 +360,6 @@ my @line &hellip;">
         <a href="/blog/2019/07/08/sparkwen-jian-cao-zuo-bei-wang/">Spark文件操作备忘</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2019/07/07/ji-qi-xue-xi-de-liu-cheng-tu/">机器学习的流程图</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2019/07/05/ryu-yan-de-%5B%3F%5D-xie-ji-lu/">R语言的一些记录</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2019/07/04/shu-ju-fen-xi-he-ji-qi-xue-xi-%5B%3F%5D-xie-zhai-chao/">数据分析和机器学习一些摘抄</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -445,7 +370,7 @@ my @line &hellip;">
 <li class='category'><a href='/blog/categories/bigdata/'>BigData (11)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (6)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
-<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (7)</a></li>
+<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (10)</a></li>
 <li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (5)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (2)</a></li>
 <li class='category'><a href='/blog/categories/fun/'>Fun (1)</a></li>

@@ -9,9 +9,7 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="«Learning Perl»中的一个例子。 1
-Make a program that will repeatedly ask the user to guess a secret number
-from 1 to 100 until the user guesses the secret &hellip;">
+  <meta name="description" content="在«Learnign Perl»中，初步介绍了perl的一些高级用法， 我之前翻译了些intermediate perl, 但是最近这段时间实在是太忙了， 而且现在还有很多其他的事情得去处理，所以真的不知道得到什么时候才可以继续拾起翻译intermediate perl的任务来。好了， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -95,6 +93,100 @@ from 1 to 100 until the user guesses the secret &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/18/examples-of-using-grep-and-map-in-perl/">Examples of Using Grep and Map in Perl</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-18T20:55:08+08:00" pubdate data-updated="true">2014 年7 月18 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>在«Learnign Perl»中，初步介绍了perl的一些高级用法， 我之前翻译了些intermediate perl, 但是最近这段时间实在是太忙了， 而且现在还有很多其他的事情得去处理，所以真的不知道得到什么时候才可以继续拾起翻译intermediate perl的任务来。好了，下面把学习perl中的一些关于map还有grep的例子记录在这里，也方便自己以后来查询。   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">@odd_numbers</span> <span class="o">=</span> <span class="nb">grep</span> <span class="p">{</span> <span class="nv">$_</span> <span class="nv">%</span> <span class="nv">2</span> <span class="p">}</span> <span class="mi">1</span><span class="o">..</span><span class="mi">1000</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">my</span> <span class="nv">@matching_lines</span> <span class="o">=</span> <span class="nb">grep</span> <span class="p">{</span> <span class="sr">/\bfred\b/i</span> <span class="p">}</span> <span class="sr">&lt;$fh&gt;</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">my</span> <span class="nv">@matching_lines</span> <span class="o">=</span> <span class="nb">grep</span> <span class="sr">/\bfred\b/i</span><span class="p">,</span> <span class="sr">&lt;$fh&gt;</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">my</span> <span class="nv">@matching_lines</span> <span class="o">=</span> <span class="nb">grep</span> <span class="sr">/\bfred\b/i</span><span class="p">,</span> <span class="sr">&lt;$fh&gt;</span><span class="p">;</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">$line_count</span> <span class="o">=</span> <span class="nv">@matching_lines</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line"><span class="k">my</span> <span class="nv">$line_count</span> <span class="o">=</span> <span class="nb">grep</span> <span class="sr">/\bfred\b/i</span><span class="p">,</span> <span class="sr">&lt;$fh&gt;</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line"><span class="k">my</span> <span class="nv">@data</span> <span class="o">=</span> <span class="p">(</span><span class="mf">4.75</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1234</span><span class="p">,</span> <span class="mf">6.9456</span><span class="p">,</span> <span class="mf">12345678.9</span><span class="p">,</span> <span class="mf">29.95</span><span class="p">);</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">@formatted_data</span> <span class="o">=</span> <span class="nb">map</span> <span class="p">{</span> <span class="o">&amp;</span><span class="n">big_money</span><span class="p">(</span><span class="nv">$_</span><span class="p">)</span> <span class="p">}</span> <span class="nv">@data</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;The money numbers are:\n&quot;</span><span class="p">,</span>
+</span><span class="line"><span class="nb">map</span> <span class="p">{</span> <span class="nb">sprintf</span><span class="p">(</span><span class="s">&quot;%25s\n&quot;</span><span class="p">,</span> <span class="nv">$_</span><span class="p">)</span> <span class="p">}</span> <span class="nv">@formatted_data</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line"><span class="k">my</span> <span class="nv">@data</span> <span class="o">=</span> <span class="p">(</span><span class="mf">4.75</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1234</span><span class="p">,</span> <span class="mf">6.9456</span><span class="p">,</span> <span class="mf">12345678.9</span><span class="p">,</span> <span class="mf">29.95</span><span class="p">);</span>
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;The money numbers are:\n&quot;</span><span class="p">,</span>
+</span><span class="line"><span class="nb">map</span> <span class="p">{</span> <span class="nb">sprintf</span><span class="p">(</span><span class="s">&quot;%25s\n&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">big_money</span><span class="p">(</span><span class="nv">$_</span><span class="p">)</span> <span class="p">)</span> <span class="p">}</span> <span class="nv">@data</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;Some powers of two are:\n&quot;</span><span class="p">,</span>
+</span><span class="line"><span class="nb">map</span> <span class="s">&quot;\t&quot;</span> <span class="o">.</span> <span class="p">(</span> <span class="mi">2</span> <span class="o">**</span> <span class="nv">$_</span> <span class="p">)</span> <span class="o">.</span> <span class="s">&quot;\n&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="o">..</span><span class="mi">15</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -268,222 +360,6 @@ as well!</span></code></pre></td></tr></table></div></figure></notextile></div>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/07/18/notes-on-tail-recursion-using-c/">Notes on Tail Recursion Using C</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-07-18T13:50:41+08:00" pubdate data-updated="true">2014 年7 月18 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>还是先上一段递归的c代码吧:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="cp">#include &lt;stdlib.h&gt;</span>
-</span><span class="line"><span class="cp">#include &lt;stdio.h&gt;</span>
-</span><span class="line">
-</span><span class="line"><span class="kt">int</span> <span class="nf">FibonacciRecursive</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">){</span>
-</span><span class="line">  <span class="k">if</span><span class="p">(</span><span class="n">n</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">){</span>
-</span><span class="line">    <span class="k">return</span> <span class="n">n</span><span class="p">;</span>
-</span><span class="line">  <span class="p">}</span>
-</span><span class="line">  <span class="k">return</span> <span class="p">(</span><span class="n">FibonacciRecursive</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">FibonacciRecursive</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">));</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
-</span><span class="line">  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Fibonacci number till 6 is: %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">FibonacciRecursive</span><span class="p">(</span><span class="mi">6</span><span class="p">));</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>而所谓的尾递归就是把当前的运算结果（或路径）放在参数里传给下层函数, 采用尾递归的算法示例如下:   </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="kt">int</span> <span class="nf">FibonacciTailRecursive</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="kt">int</span> <span class="n">ret1</span><span class="p">,</span> <span class="kt">int</span> <span class="n">ret2</span><span class="p">){</span>
-</span><span class="line">  <span class="k">if</span><span class="p">(</span><span class="n">n</span><span class="o">==</span><span class="mi">0</span><span class="p">){</span>
-</span><span class="line">    <span class="k">return</span> <span class="n">ret1</span><span class="p">;</span>
-</span><span class="line">  <span class="p">}</span>
-</span><span class="line">  <span class="k">return</span> <span class="n">FibonacciTailRecursive</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">ret2</span><span class="p">,</span> <span class="n">ret1</span> <span class="o">+</span> <span class="n">ret2</span><span class="p">);</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>一下是一个在别人的博客中看到的利用递归还有尾递归来求单链表的长度的例子。 </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-<span class="line-number">28</span>
-<span class="line-number">29</span>
-<span class="line-number">30</span>
-<span class="line-number">31</span>
-<span class="line-number">32</span>
-<span class="line-number">33</span>
-<span class="line-number">34</span>
-<span class="line-number">35</span>
-<span class="line-number">36</span>
-<span class="line-number">37</span>
-<span class="line-number">38</span>
-<span class="line-number">39</span>
-<span class="line-number">40</span>
-<span class="line-number">41</span>
-<span class="line-number">42</span>
-<span class="line-number">43</span>
-<span class="line-number">44</span>
-<span class="line-number">45</span>
-<span class="line-number">46</span>
-<span class="line-number">47</span>
-<span class="line-number">48</span>
-<span class="line-number">49</span>
-<span class="line-number">50</span>
-<span class="line-number">51</span>
-<span class="line-number">52</span>
-<span class="line-number">53</span>
-<span class="line-number">54</span>
-<span class="line-number">55</span>
-<span class="line-number">56</span>
-<span class="line-number">57</span>
-<span class="line-number">58</span>
-<span class="line-number">59</span>
-<span class="line-number">60</span>
-<span class="line-number">61</span>
-<span class="line-number">62</span>
-<span class="line-number">63</span>
-<span class="line-number">64</span>
-<span class="line-number">65</span>
-<span class="line-number">66</span>
-</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="cp">#include &lt;stdlib.h&gt;</span>
-</span><span class="line"><span class="cp">#include &lt;stdio.h&gt;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">typedef</span> <span class="k">struct</span> <span class="n">node</span><span class="p">{</span>
-</span><span class="line">  <span class="kt">int</span> <span class="n">data</span><span class="p">;</span>
-</span><span class="line">  <span class="k">struct</span> <span class="n">node</span><span class="o">*</span> <span class="n">next</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span><span class="n">node</span><span class="p">,</span> <span class="o">*</span><span class="n">linklist</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="kt">void</span> <span class="nf">InitLinklist</span><span class="p">(</span><span class="n">linklist</span><span class="o">*</span> <span class="n">head</span><span class="p">){</span>
-</span><span class="line">  <span class="k">if</span><span class="p">(</span><span class="o">*</span><span class="n">head</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">){</span>
-</span><span class="line">    <span class="n">free</span><span class="p">(</span><span class="o">*</span><span class="n">head</span><span class="p">);</span>
-</span><span class="line">  <span class="p">}</span>
-</span><span class="line">  <span class="o">*</span><span class="n">head</span> <span class="o">=</span> <span class="p">(</span><span class="n">node</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">node</span><span class="p">));</span>
-</span><span class="line">  <span class="p">(</span><span class="o">*</span><span class="n">head</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="kt">void</span> <span class="nf">InsertNode</span><span class="p">(</span><span class="n">linklist</span><span class="o">*</span> <span class="n">head</span><span class="p">,</span> <span class="kt">int</span> <span class="n">d</span><span class="p">){</span>
-</span><span class="line">  <span class="n">node</span><span class="o">*</span> <span class="n">newNode</span> <span class="o">=</span> <span class="p">(</span><span class="n">node</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">node</span><span class="p">));</span>
-</span><span class="line">  <span class="n">newNode</span><span class="o">-&gt;</span><span class="n">data</span> <span class="o">=</span> <span class="n">d</span><span class="p">;</span>
-</span><span class="line">  <span class="n">newNode</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">head</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
-</span><span class="line">  <span class="p">(</span><span class="o">*</span><span class="n">head</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="n">newNode</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="c1">//using recursion to get the length of the linklist;</span>
-</span><span class="line"><span class="kt">int</span> <span class="nf">GetLengthRecursive</span><span class="p">(</span><span class="n">linklist</span> <span class="n">head</span><span class="p">){</span>
-</span><span class="line">  <span class="k">if</span><span class="p">(</span><span class="n">head</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">){</span>
-</span><span class="line">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class="line">  <span class="p">}</span>
-</span><span class="line">  <span class="k">return</span> <span class="p">(</span><span class="n">GetLengthRecursive</span><span class="p">(</span><span class="n">head</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="c1">//using tail recursive to get the length of a linklist,</span>
-</span><span class="line"><span class="c1">//with the help of the variable &quot;acc&quot; to store the length of the current linklist, increment it</span>
-</span><span class="line">
-</span><span class="line"><span class="kt">int</span> <span class="nf">GetLengthTailRecursive</span><span class="p">(</span><span class="n">linklist</span> <span class="n">head</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">acc</span><span class="p">){</span>
-</span><span class="line">  <span class="k">if</span><span class="p">(</span><span class="n">head</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">){</span>
-</span><span class="line">    <span class="k">return</span> <span class="o">*</span><span class="n">acc</span><span class="p">;</span>
-</span><span class="line">  <span class="p">}</span>
-</span><span class="line">  <span class="o">*</span><span class="n">acc</span> <span class="o">=</span> <span class="o">*</span><span class="n">acc</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
-</span><span class="line">  <span class="k">return</span> <span class="n">GetLengthTailRecursive</span><span class="p">(</span><span class="n">head</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">,</span> <span class="n">acc</span><span class="p">);</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="kt">void</span> <span class="nf">PrintLinklist</span><span class="p">(</span><span class="n">linklist</span> <span class="n">head</span><span class="p">){</span>
-</span><span class="line">  <span class="n">node</span><span class="o">*</span> <span class="n">pnode</span> <span class="o">=</span> <span class="n">head</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
-</span><span class="line">  <span class="k">while</span><span class="p">(</span><span class="n">pnode</span><span class="p">){</span>
-</span><span class="line">    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d-&gt;&quot;</span><span class="p">,</span> <span class="n">pnode</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">);</span>
-</span><span class="line">    <span class="n">pnode</span> <span class="o">=</span> <span class="n">pnode</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
-</span><span class="line">  <span class="p">}</span>
-</span><span class="line">  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;-&gt;NULL</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
-</span><span class="line">  <span class="n">linklist</span> <span class="n">head</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-</span><span class="line">  <span class="kt">int</span> <span class="n">len</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class="line">  <span class="n">InitLinklist</span><span class="p">(</span><span class="o">&amp;</span><span class="n">head</span><span class="p">);</span>
-</span><span class="line">  <span class="n">InsertNode</span><span class="p">(</span><span class="o">&amp;</span><span class="n">head</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
-</span><span class="line">  <span class="n">InsertNode</span><span class="p">(</span><span class="o">&amp;</span><span class="n">head</span><span class="p">,</span> <span class="mi">21</span><span class="p">);</span>
-</span><span class="line">  <span class="n">InsertNode</span><span class="p">(</span><span class="o">&amp;</span><span class="n">head</span><span class="p">,</span> <span class="mi">14</span><span class="p">);</span>
-</span><span class="line">  <span class="n">InsertNode</span><span class="p">(</span><span class="o">&amp;</span><span class="n">head</span><span class="p">,</span> <span class="mi">19</span><span class="p">);</span>
-</span><span class="line">  <span class="n">InsertNode</span><span class="p">(</span><span class="o">&amp;</span><span class="n">head</span><span class="p">,</span> <span class="mi">132</span><span class="p">);</span>
-</span><span class="line">  <span class="n">InsertNode</span><span class="p">(</span><span class="o">&amp;</span><span class="n">head</span><span class="p">,</span> <span class="mi">192</span><span class="p">);</span>
-</span><span class="line">  <span class="n">PrintLinklist</span><span class="p">(</span><span class="n">head</span><span class="p">);</span>
-</span><span class="line">  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;The length of linklist is: %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">GetLengthRecursive</span><span class="p">(</span><span class="n">head</span><span class="p">));</span>
-</span><span class="line">  <span class="n">GetLengthTailRecursive</span><span class="p">(</span><span class="n">head</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">len</span><span class="p">);</span>
-</span><span class="line">  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;the length of linklist is: %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">len</span><span class="p">);</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/43/">&larr; Older</a>
@@ -499,6 +375,10 @@ as well!</span></code></pre></td></tr></table></div></figure></notextile></div>
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2019/08/14/data-science-at-the-command-line/">Data Science at the Command Line</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2019/08/14/gradient-boosting-algorithm/">Gradient Boosting Algorithm</a>
@@ -536,10 +416,6 @@ as well!</span></code></pre></td></tr></table></div></figure></notextile></div>
         <a href="/blog/2019/07/20/dui-da-shu-ju-fen-xi-fen-xi-gong-zuo-de-%5B%3F%5D-xie-si-kao/">对(大)数据分析工作的一些思考</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2019/07/08/sparkwen-jian-cao-zuo-bei-wang/">Spark文件操作备忘</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -550,7 +426,7 @@ as well!</span></code></pre></td></tr></table></div></figure></notextile></div>
 <li class='category'><a href='/blog/categories/bigdata/'>BigData (11)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (6)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
-<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (10)</a></li>
+<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (11)</a></li>
 <li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (5)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (2)</a></li>
 <li class='category'><a href='/blog/categories/fun/'>Fun (1)</a></li>

@@ -9,10 +9,14 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="我们在Python 代码中，如果不想输出一些warnings, 可以在代码的一开始，加入如下的代码，就可以了. 1
+  <meta name="description" content="1.比如我们有个 case class 1
+case class CaseClassTest(user: String, name: String) 我们通过使用mapPartitions来进行操作， 注意此处mapPartitions的用法: 1
 2
-import warnings
-warnings.filterwarnings(&#39;ignore&#39;) filterwarnings 函数可以带参数的， &hellip;">
+3
+4
+5
+6
+val mapResult &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -102,6 +106,148 @@ warnings.filterwarnings(&#39;ignore&#39;) filterwarnings 函数可以带参数�
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2019/08/01/shi-yong-sparkde-mllibjin-xing-ji-qi-xue-xi/">使用Spark的MLlib进行机器学习</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2019-08-01T17:55:54+08:00" pubdate data-updated="true">2019 年8 月1 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>1.比如我们有个 case class</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="scala"><span class="line"><span class="k">case</span> <span class="k">class</span> <span class="nc">CaseClassTest</span><span class="o">(</span><span class="n">user</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">name</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>我们通过使用<code>mapPartitions</code>来进行操作， 注意此处<code>mapPartitions</code>的用法:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+</pre></td><td class="code"><pre><code class="scala"><span class="line"><span class="k">val</span> <span class="n">mapResult</span> <span class="k">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">textFile</span><span class="o">(</span><span class="n">input</span><span class="o">).</span><span class="n">map</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="n">split</span><span class="o">(</span><span class="s">&quot;\t&quot;</span><span class="o">)).</span><span class="n">mapPartitions</span> <span class="o">{</span>
+</span><span class="line">      <span class="n">iter</span> <span class="k">=&gt;</span>
+</span><span class="line">        <span class="n">iter</span><span class="o">.</span><span class="n">map</span> <span class="o">{</span>
+</span><span class="line">          <span class="n">iterms</span> <span class="k">=&gt;</span> <span class="nc">CaseClassTest</span><span class="o">(</span><span class="n">iterms</span><span class="o">(</span><span class="mi">0</span><span class="o">),</span> <span class="n">iterms</span><span class="o">(</span><span class="mi">1</span><span class="o">))</span>
+</span><span class="line">        <span class="o">}</span>
+</span><span class="line">    <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>2.reduceByKey<code>  和 </code>case` 的用法</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class="scala"><span class="line"><span class="k">val</span> <span class="n">data</span> <span class="k">=</span> <span class="n">gowalla</span><span class="o">.</span><span class="n">map</span> <span class="o">{</span>
+</span><span class="line">      <span class="n">check</span><span class="k">:</span> <span class="kt">CheckIn</span> <span class="o">=&gt;</span> <span class="o">(</span><span class="n">check</span><span class="o">.</span><span class="n">user</span><span class="o">,</span> <span class="o">(</span><span class="mi">1L</span><span class="o">,</span> <span class="nc">Set</span><span class="o">(</span><span class="n">check</span><span class="o">.</span><span class="n">time</span><span class="o">),</span> <span class="nc">Set</span><span class="o">(</span><span class="n">check</span><span class="o">.</span><span class="n">location</span><span class="o">)))</span>
+</span><span class="line">    <span class="o">}.</span><span class="n">rdd</span><span class="o">.</span><span class="n">reduceByKey</span><span class="o">{</span>
+</span><span class="line">      <span class="k">case</span> <span class="o">(</span><span class="n">left</span><span class="o">,</span> <span class="n">right</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="o">(</span><span class="n">left</span><span class="o">.</span><span class="n">_1</span> <span class="o">+</span> <span class="n">right</span><span class="o">.</span><span class="n">_1</span><span class="o">,</span> <span class="n">left</span><span class="o">.</span><span class="n">_2</span><span class="o">.</span><span class="n">union</span><span class="o">(</span><span class="n">right</span><span class="o">.</span><span class="n">_2</span><span class="o">),</span><span class="n">left</span><span class="o">.</span><span class="n">_3</span><span class="o">.</span><span class="n">union</span><span class="o">(</span><span class="n">right</span><span class="o">.</span><span class="n">_3</span><span class="o">))</span>
+</span><span class="line">    <span class="o">}.</span><span class="n">map</span><span class="o">{</span>
+</span><span class="line">      <span class="k">case</span> <span class="o">(</span><span class="k">_</span><span class="o">,</span> <span class="o">(</span><span class="n">checkins</span><span class="o">,</span> <span class="n">days</span><span class="k">:</span><span class="kt">Set</span><span class="o">[</span><span class="kt">String</span><span class="o">],</span> <span class="n">locations</span><span class="k">:</span><span class="kt">Set</span><span class="o">[</span><span class="kt">String</span><span class="o">]))</span> <span class="k">=&gt;</span>
+</span><span class="line">        <span class="nc">Vectors</span><span class="o">.</span><span class="n">dense</span><span class="o">(</span><span class="n">checkins</span><span class="o">.</span><span class="n">toDouble</span><span class="o">,</span> <span class="n">days</span><span class="o">.</span><span class="n">size</span><span class="o">.</span><span class="n">toDouble</span><span class="o">,</span> <span class="n">locations</span><span class="o">.</span><span class="n">size</span><span class="o">.</span><span class="n">toDouble</span><span class="o">)</span>
+</span><span class="line">        <span class="c1">//次数，天数，地点数</span>
+</span><span class="line">    <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p><code>reduceByKey</code> 这里是求 <code>(1L, Set(check.time), Set(check.location))</code> 中的一个元素累加，第二个元素求并集，第三个元素也是求并集. <code>case</code> 的作用是让输入符合规范； 注意在 <code>map</code> 中，我们可以限定指示变量的类型， 比如这里的 <code>check: CheckIn =&gt;</code></p>
+
+<h4 id="section">参考</h4>
+
+<ol>
+  <li>Spark机器学习进阶实战</li>
+</ol>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2019/07/30/macshang-dan-ji-qi-pysparkyu-dao-de-wen-ti-debug/">Mac上单机起PySpark遇到的问题debug</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2019-07-30T10:38:15+08:00" pubdate data-updated="true">2019 年7 月30 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>今天在本地起个<code>pyspark</code> 发现总是遇到</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">Caused by: java.net.UnknownHostException: master: nodename nor servname provided, or not known</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>尝试了设置 <code>SPARK_HOME</code>, <code>HADOOP_HOME</code> 等变量之后，依然不起作用。</p>
+
+<p>最后发现是要修改 <code>SPARK_HOME</code> 里面的配置文件<code>spark-env.sh</code></p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nb">export </span><span class="nv">SPARK_MASTER_IP</span><span class="o">=</span>StevenMac
+</span><span class="line"><span class="nb">export </span><span class="nv">SPARK_LOCAL_IP</span><span class="o">=</span>StevenMac
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>并且在<code>/etc/hosts</code> 文件中，加入如下的内容:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">127.0.0.1  StevenMac
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>Bingo!!!</p>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2019/07/29/pythonzhong-bu-shu-chu-warningde-xin-xi/">Python中不输出warning的信息</a></h1>
     
     
@@ -140,100 +286,6 @@ warnings.filterwarnings(&#39;ignore&#39;) filterwarnings 函数可以带参数�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2019/07/24/vscode-remote-yuan-cheng-kai-fa-yu-diao-shi/">VScode Remote 远程开发与调试</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2019-07-24T15:28:32+08:00" pubdate data-updated="true">2019 年7 月24 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>最近要给别的团队A，在AWS的EC2 上面去搭建一个算法的开发环境。鉴于自己之前在 AWS 上都是使用的Linux，在和团队A讨论了之后，最后决定建个Linux 的 EC2。 但是在基本的Python和数据分析和算法开发的环境都搭建好了之后，团队A的同学，又提了没有IDE, 影响效率。
-没有办法，得考虑是不是换个windows 的 EC2 了。这个时候 <code>VS Code Remote Development</code> comes to my rescue.</p>
-
-<p>可以参考下面的文章去看看怎么搞 <code>VS Code Remote Development</code>.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">https://code.visualstudio.com/docs/remote/remote-overview
-</span><span class="line">https://www.jianshu.com/p/0f2fb935a9a1</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>试用了下来， 感觉这个 <code>VS Code Remote Development</code> 是个神器啊.</p>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2019/07/23/pythonzhong-cong-ndarrayhuo-zhe-dataframeli-huo-qu-shu-ju-he-biao-qian/">Python中从ndarray或者DataFrame里获取数据和标签</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2019-07-23T11:27:22+08:00" pubdate data-updated="true">2019 年7 月23 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>如果我们有一个ndarray, 最后一列是label，前面几列是data, 我们可以通过如下的方式去获取数据(假如我们有9列):</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">X = dataset[:,0:-1] or X = dataset[:,0:8]
-</span><span class="line">Y = dataset[:,8]</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>如果我们有个DataFrame, 我们可以通过如下的方式去获取:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">X, y = data.iloc[:,:-1], data.iloc[:,-1]</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/4/">&larr; Older</a>
@@ -251,6 +303,18 @@ warnings.filterwarnings(&#39;ignore&#39;) filterwarnings 函数可以带参数�
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2019/08/27/ru-he-cha-kan-linuxzhong-de-nei-cun-zhan-yong-qing-kuang/">如何查看Linux中的内存占用情况</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/27/sparkzhong-pai-xu-shu-chu/">Spark中排序输出</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/21/pysparkde-%5B%3F%5D-xie-jie-shao/">PySpark的一些介绍</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2019/08/14/data-science-at-the-command-line/">Data Science at the Command Line</a>
       </li>
     
@@ -260,10 +324,6 @@ warnings.filterwarnings(&#39;ignore&#39;) filterwarnings 函数可以带参数�
     
       <li class="post">
         <a href="/blog/2019/08/07/guan-yu-pzhi/">关于P值</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2019/08/02/guan-yu-zheng-tai-fen-bu-huan-you-pian-du-yu-feng-du/">关于正态分布还有偏度与峰度</a>
       </li>
     
       <li class="post">
@@ -282,14 +342,6 @@ warnings.filterwarnings(&#39;ignore&#39;) filterwarnings 函数可以带参数�
         <a href="/blog/2019/07/24/vscode-remote-yuan-cheng-kai-fa-yu-diao-shi/">VScode Remote 远程开发与调试</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2019/07/23/pythonzhong-cong-ndarrayhuo-zhe-dataframeli-huo-qu-shu-ju-he-biao-qian/">Python中从ndarray或者DataFrame里获取数据和标签</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2019/07/20/dui-da-shu-ju-fen-xi-fen-xi-gong-zuo-de-%5B%3F%5D-xie-si-kao/">对(大)数据分析工作的一些思考</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -300,12 +352,12 @@ warnings.filterwarnings(&#39;ignore&#39;) filterwarnings 函数可以带参数�
 <li class='category'><a href='/blog/categories/bigdata/'>BigData (11)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (6)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
-<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (11)</a></li>
+<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (12)</a></li>
 <li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (5)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (2)</a></li>
 <li class='category'><a href='/blog/categories/fun/'>Fun (1)</a></li>
 <li class='category'><a href='/blog/categories/javascript/'>Javascript (4)</a></li>
-<li class='category'><a href='/blog/categories/linux-and-mac/'>Linux&Mac (13)</a></li>
+<li class='category'><a href='/blog/categories/linux-and-mac/'>Linux&Mac (14)</a></li>
 <li class='category'><a href='/blog/categories/php/'>PHP (5)</a></li>
 <li class='category'><a href='/blog/categories/perl/'>Perl (50)</a></li>
 <li class='category'><a href='/blog/categories/python/'>Python (10)</a></li>

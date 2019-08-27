@@ -9,8 +9,10 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="
-">
+  <meta name="description" content="本文是关于如何使用命令行的方式，来更好的认识你的数据. 1. 常用的命令和工具: 基本操作命令 sh
+cd, mv, cat, ls, wc, rm, sort, uniq, echo
+printf, pwd, mkdir, dirname, mktemp， find
+mail, sendmail &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -100,7 +102,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2019/08/02/guan-yu-zheng-tai-fen-bu-huan-you-pian-du-yu-feng-du/">关于正态分布还有偏度与峰度</a></h1>
+      <h1 class="entry-title"><a href="/blog/2019/08/14/data-science-at-the-command-line/">Data Science at the Command Line</a></h1>
     
     
       <p class="meta">
@@ -116,14 +118,184 @@
   
 
 
-<time datetime="2019-08-02T08:29:35+08:00" pubdate data-updated="true">2019 年8 月2 日</time>
+<time datetime="2019-08-14T14:13:16+08:00" pubdate data-updated="true">2019 年8 月14 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content">
+  <div class="entry-content"><p>本文是关于如何使用命令行的方式，来更好的认识你的数据.</p>
+
+<h2 id="section">1. 常用的命令和工具:</h2>
+
+<ul>
+  <li>
+    <p>基本操作命令</p>
+
+    <p><code>sh
+cd, mv, cat, ls, wc, rm, sort, uniq, echo
+printf, pwd, mkdir, dirname, mktemp， find
+mail, sendmail, crontab, export, ps
+zip, du, df, tar, split
+exec, type, readlink
+</code></p>
+  </li>
+  <li>
+    <p>基本工具</p>
+
+    <p><code>sh
+grep, egrep, pcregrep, ack
+curl, wget
+ssh, tmux
+awk, sed
+</code></p>
+  </li>
+  <li>
+    <p>辅助命令</p>
+
+    <p><code>sh
+jq, git, 
+man, tldr
+conda, pip
+</code></p>
+  </li>
+  <li>
+    <p>辅助工具</p>
+
+    <p><code>sh
+zsh, oh-my-zsh, sexy-bash-prompt
+</code></p>
+  </li>
+  <li>
+    <p>瑞士军刀</p>
+  </li>
+</ul>
+
+<p><code>sh
+  Perl
+ </code></p>
+
+<h2 id="section-1">2. 一些应用场景:</h2>
+
+<ul>
+  <li>
+    <p>使用 <code>split</code> 按照特定的行数或者大小，将一个文本进行分割</p>
+
+    <p><code>sh
+# Split a file, each split having 10 lines (except the last split)
+split -l 10 filename
+# plit a file with 512 bytes in each split
+split -b 512 filename
+</code></p>
+  </li>
+  <li>
+    <p>使用 <code>grep -x -f</code>  找到两个文件中的相同的行</p>
+
+    <p><code>sh
+grep -x -f  file1 file2
+</code></p>
+  </li>
+  <li>
+    <p>使用 <code>grep</code> 或者 <code>egrep</code> 或者 <code>pcregrep</code> 或者 <code>ack</code> 并且辅助以正则表达式， 进行复杂的文本搜索</p>
+
+    <p><code>sh
+# print file name with the corresponding line number for each match
+grep -Hn search_string path/to/file
+# invert match for excluding specific strings:
+grep -v search_string path/to/file
+# search in case-insensitive mode:
+grep -i search_string path/to/file
+# search consecutive 9 numbers
+grep -E '\d{9}' path/to/file
+# search consecutive 9 numbers and grab it
+grep -Eo '\d{9}' path/to/file
+# recursively search
+grep -eilr "\bamazfit\b\|\bwatch\b" path/to/dir
+</code></p>
+  </li>
+  <li>
+    <p><code>ssh</code> 登陆远程机器并且同时运行远程操作命令</p>
+
+    <p><code>sh
+# ssh 远程执行命令
+ssh yyy@xxx.xxx.xxx.xxx "df -h"
+# ssh 使用key文件登陆， 并且做远程的端口转发
+ssh -L 9007:${hive_server} ${xiaomi_host} -N -i ${keyfile}
+</code></p>
+  </li>
+  <li>
+    <p><code>awk</code> 按照特定的分隔符，查看文本有多少列， 查看想要看的列，按照条件进行筛选</p>
+
+    <p><code>sh
+# 以空格做分隔符， 并且打印出第二列小于20的行
+awk '($2 &lt; 20){print}' 
+# 以'#' 做分隔符， 并且打印出第二列小于20的行
+awk -F '#' '($2&gt;=8){print}' 
+# 以',' 做分隔符， 并且打印出列数
+awk -F"," '{print NF}' 
+# 有多个判断条件
+awk '{if ($4&lt;1 &amp;&amp; $4&gt;=0.85 &amp;&amp; $2 &gt;= 0.001) print $7}'
+</code></p>
+  </li>
+  <li>
+    <p><code>sort</code> 结合 <code>uniq</code> 去重</p>
+
+    <p><code>sh
+du -cks * | sort | uniq | wc -l 
+</code></p>
+  </li>
+  <li>
+    <p><code>xargs</code> 传递参数</p>
+
+    <p><code>sh
+# xargs 结合 kill 来干掉进程
+ps auxww | grep file | grep -v grep | awk '{print $2}' | xargs kill -9
+# 删除找到的文件
+find . -name "*.txt" | xargs -I , rm -rf ,
+</code></p>
+  </li>
+  <li>
+    <p>使用 <code>jq</code> 命令来在命令行下更好的查看json文件 </p>
+
+    <p><code>sh
+cat file.json | jq
+</code></p>
+  </li>
+  <li>
+    <p>非常好用的 <code>|</code></p>
+
+    <p><code>sh 
+xx | yy | zz | dd | ee | ff | gg | hh
+</code></p>
+  </li>
+</ul>
+
+<h2 id="section-2">3. 参考资料:</h2>
+
+<ul>
+  <li>
+    <p><a href="https://www.runoob.com/linux/linux-tutorial.html">Linux 菜鸟教程</a></p>
+  </li>
+  <li>
+    <p><a href="https://www.runoob.com/regexp/regexp-tutorial.html">正则表达式 - 教程</a></p>
+  </li>
+  <li>
+    <p><a href="https://github.com/alebcay/awesome-shell">Awesome-Shell</a></p>
+  </li>
+</ul>
+
+<p>参考链接:</p>
+
+<ul>
+  <li>
+    <p><a href="https://csvkit.readthedocs.io/en/latest/tutorial/1_getting_started.html#installing-csvkit">csvkit</a></p>
+  </li>
+  <li>
+    <p><a href="[https://www.datascienceatthecommandline.com](https://www.datascienceatthecommandline.com/)">Data Science at the Command Line</a></p>
+  </li>
+</ul>
+
 </div>
   
   
@@ -136,7 +308,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2019/08/01/shi-yong-sparkde-mllibjin-xing-ji-qi-xue-xi/">使用Spark的MLlib进行机器学习</a></h1>
+      <h1 class="entry-title"><a href="/blog/2019/08/14/gradient-boosting-algorithm/">Gradient Boosting Algorithm</a></h1>
     
     
       <p class="meta">
@@ -152,64 +324,49 @@
   
 
 
-<time datetime="2019-08-01T17:55:54+08:00" pubdate data-updated="true">2019 年8 月1 日</time>
+<time datetime="2019-08-14T13:51:36+08:00" pubdate data-updated="true">2019 年8 月14 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>1.比如我们有个 case class</p>
+  <div class="entry-content"><p>Gradient Boosting Algorithm 算法参考链接：</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="scala"><span class="line"><span class="k">case</span> <span class="k">class</span> <span class="nc">CaseClassTest</span><span class="o">(</span><span class="n">user</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">name</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<ul>
+  <li><a href="https://arxiv.org/pdf/1603.02754v1.pdf">XGBoost: A Scalable Tree Boosting System</a></li>
+  <li><a href="https://www.analyticsvidhya.com/blog/2017/06/which-algorithm-takes-the-crown-light-gbm-vs-xgboost/">Which algorithm takes the crown: Light GBM vs XGBOOST?</a></li>
+  <li><a href="https://www.analyticsvidhya.com/blog/2015/09/complete-guide-boosting-methods/">Learn Gradient Boosting Algorithm for better predictions (with codes in R)</a></li>
+  <li><a href="https://www.analyticsvidhya.com/blog/2015/05/boosting-algorithms-simplified/">Getting smart with Machine Learning – AdaBoost and Gradient Boost</a></li>
+  <li><a href="https://www.analyticsvidhya.com/blog/2015/11/quick-introduction-boosting-algorithms-machine-learning/">Quick Introduction to Boosting Algorithms in Machine Learning</a></li>
+  <li><a href="https://www.analyticsvidhya.com/blog/2016/02/complete-guide-parameter-tuning-gradient-boosting-gbm-python/">Complete Machine Learning Guide to Parameter Tuning in Gradient Boosting (GBM) in Python</a></li>
+  <li><a href="https://www.analyticsvidhya.com/blog/2016/03/complete-guide-parameter-tuning-xgboost-with-codes-python/">Complete Guide to Parameter Tuning in XGBoost with codes in Python</a></li>
+  <li><a href="https://segmentfault.com/a/1190000014040317">XGboost数据比赛实战之调参篇</a></li>
+  <li><a href="http://www.sohu.com/a/226265476_609569">通俗的将Xgboost的原理讲明白</a></li>
+  <li><a href="https://blog.csdn.net/app_12062011/article/details/52136117">决策树</a> 和 <a href="https://blog.csdn.net/zhaocj/article/details/50503450">决策树源码剖析</a></li>
+  <li><a href="[http://matafight.github.io/2017/03/14/XGBoost-%E7%AE%80%E4%BB%8B/](http://matafight.github.io/2017/03/14/XGBoost-简介/)">XGBoost 笔记</a></li>
+  <li><a href="https://blog.csdn.net/liuzonghao88/article/details/88808408">XGBoost如何避免过拟合</a></li>
+  <li><a href="https://blog.csdn.net/u012735708/article/details/83651832">XGBoost调参笔记</a></li>
+  <li><a href="https://blog.csdn.net/a358463121/article/details/68617389">xgboost中的数学原理</a></li>
+  <li><a href="https://blog.csdn.net/sb19931201/article/details/52557382">xgboost入门与实战</a></li>
+  <li><a href="https://blog.csdn.net/xiaocong1990/article/details/55107239">XGBoost参数调优</a></li>
+  <li><a href="https://blog.csdn.net/Totoro1745/article/details/53328725">xgboost：一个纯小白的学习历程</a></li>
+  <li><a href="https://blog.csdn.net/github_38414650/article/details/76061893">通俗、有逻辑的写一篇说下Xgboost的原理</a></li>
+  <li><a href="https://towardsdatascience.com/boosting-algorithm-gbm-97737c63daa3">Boosting algorithm: GBM</a></li>
+  <li><a href="https://www.imooc.com/article/43784?block_id=tuijian_wz">LightGBM 调参方法</a></li>
+  <li><a href="https://www.kaggle.com/c/LANL-Earthquake-Prediction/discussion/89909">Good summary of XGBoost vs CatBoost vs LightGBM</a></li>
+  <li><a href="https://www.kaggle.com/samratp/lightgbm-xgboost-catboost">LightGBM + XGBoost + Catboost</a></li>
+  <li><a href="https://datascience.stackexchange.com/questions/49567/lightgbm-vs-xgboost-vs-catboost">lightgbm-vs-xgboost-vs-catboost</a></li>
+  <li><a href="https://medium.com/kaggle-nyc/gradient-boosting-decision-trees-xgboost-vs-lightgbm-and-catboost-72df6979e0bb">Gradient Boosting Decision trees: XGBoost vs LightGBM (and catboost)</a></li>
+  <li><a href="https://towardsdatascience.com/catboost-vs-light-gbm-vs-xgboost-5f93620723db">CatBoost vs. Light GBM vs. XGBoost</a></li>
+  <li><a href="https://blog.csdn.net/LrS62520kV/article/details/79620615">CatBoost vs. Light GBM vs. XGBoost 的中文翻译</a></li>
+  <li><a href="https://stackoverflow.com/questions/44937698/lightgbm-oserror-library-not-loaded">关于lightgbm的安装</a></li>
+  <li><a href="https://towardsdatascience.com/custom-loss-functions-for-gradient-boosting-f79c1b40466d">Custom Loss Functions for Gradient Boosting</a></li>
+  <li><a href="https://github.com/Microsoft/LightGBM/blob/master/examples/README.md#machine-learning-challenge-winning-solutions">machine-learning-challenge-winning-solutions-lightgbm-winned</a></li>
+  <li><a href="https://www.jianshu.com/p/b4ac0596e5ef">LightGBM 如何调参</a></li>
+  <li><a href="https://www.cnblogs.com/ljygoodgoodstudydaydayup/p/6665239.html">xgboost调参</a></li>
+</ul>
 
-<p>我们通过使用<code>mapPartitions</code>来进行操作， 注意此处<code>mapPartitions</code>的用法:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-</pre></td><td class="code"><pre><code class="scala"><span class="line"><span class="k">val</span> <span class="n">mapResult</span> <span class="k">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">textFile</span><span class="o">(</span><span class="n">input</span><span class="o">).</span><span class="n">map</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="n">split</span><span class="o">(</span><span class="s">&quot;\t&quot;</span><span class="o">)).</span><span class="n">mapPartitions</span> <span class="o">{</span>
-</span><span class="line">      <span class="n">iter</span> <span class="k">=&gt;</span>
-</span><span class="line">        <span class="n">iter</span><span class="o">.</span><span class="n">map</span> <span class="o">{</span>
-</span><span class="line">          <span class="n">iterms</span> <span class="k">=&gt;</span> <span class="nc">CaseClassTest</span><span class="o">(</span><span class="n">iterms</span><span class="o">(</span><span class="mi">0</span><span class="o">),</span> <span class="n">iterms</span><span class="o">(</span><span class="mi">1</span><span class="o">))</span>
-</span><span class="line">        <span class="o">}</span>
-</span><span class="line">    <span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>2.reduceByKey<code>  和 </code>case` 的用法</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-</pre></td><td class="code"><pre><code class="scala"><span class="line"><span class="k">val</span> <span class="n">data</span> <span class="k">=</span> <span class="n">gowalla</span><span class="o">.</span><span class="n">map</span> <span class="o">{</span>
-</span><span class="line">      <span class="n">check</span><span class="k">:</span> <span class="kt">CheckIn</span> <span class="o">=&gt;</span> <span class="o">(</span><span class="n">check</span><span class="o">.</span><span class="n">user</span><span class="o">,</span> <span class="o">(</span><span class="mi">1L</span><span class="o">,</span> <span class="nc">Set</span><span class="o">(</span><span class="n">check</span><span class="o">.</span><span class="n">time</span><span class="o">),</span> <span class="nc">Set</span><span class="o">(</span><span class="n">check</span><span class="o">.</span><span class="n">location</span><span class="o">)))</span>
-</span><span class="line">    <span class="o">}.</span><span class="n">rdd</span><span class="o">.</span><span class="n">reduceByKey</span><span class="o">{</span>
-</span><span class="line">      <span class="k">case</span> <span class="o">(</span><span class="n">left</span><span class="o">,</span> <span class="n">right</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="o">(</span><span class="n">left</span><span class="o">.</span><span class="n">_1</span> <span class="o">+</span> <span class="n">right</span><span class="o">.</span><span class="n">_1</span><span class="o">,</span> <span class="n">left</span><span class="o">.</span><span class="n">_2</span><span class="o">.</span><span class="n">union</span><span class="o">(</span><span class="n">right</span><span class="o">.</span><span class="n">_2</span><span class="o">),</span><span class="n">left</span><span class="o">.</span><span class="n">_3</span><span class="o">.</span><span class="n">union</span><span class="o">(</span><span class="n">right</span><span class="o">.</span><span class="n">_3</span><span class="o">))</span>
-</span><span class="line">    <span class="o">}.</span><span class="n">map</span><span class="o">{</span>
-</span><span class="line">      <span class="k">case</span> <span class="o">(</span><span class="k">_</span><span class="o">,</span> <span class="o">(</span><span class="n">checkins</span><span class="o">,</span> <span class="n">days</span><span class="k">:</span><span class="kt">Set</span><span class="o">[</span><span class="kt">String</span><span class="o">],</span> <span class="n">locations</span><span class="k">:</span><span class="kt">Set</span><span class="o">[</span><span class="kt">String</span><span class="o">]))</span> <span class="k">=&gt;</span>
-</span><span class="line">        <span class="nc">Vectors</span><span class="o">.</span><span class="n">dense</span><span class="o">(</span><span class="n">checkins</span><span class="o">.</span><span class="n">toDouble</span><span class="o">,</span> <span class="n">days</span><span class="o">.</span><span class="n">size</span><span class="o">.</span><span class="n">toDouble</span><span class="o">,</span> <span class="n">locations</span><span class="o">.</span><span class="n">size</span><span class="o">.</span><span class="n">toDouble</span><span class="o">)</span>
-</span><span class="line">        <span class="c1">//次数，天数，地点数</span>
-</span><span class="line">    <span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p><code>reduceByKey</code> 这里是求 <code>(1L, Set(check.time), Set(check.location))</code> 中的一个元素累加，第二个元素求并集，第三个元素也是求并集. <code>case</code> 的作用是让输入符合规范； 注意在 <code>map</code> 中，我们可以限定指示变量的类型， 比如这里的 <code>check: CheckIn =&gt;</code></p>
-
-<h4 id="section">参考</h4>
-
-<ol>
-  <li>Spark机器学习进阶实战</li>
-</ol>
 </div>
   
   
@@ -222,7 +379,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2019/07/30/macshang-dan-ji-qi-pysparkyu-dao-de-wen-ti-debug/">Mac上单机起PySpark遇到的问题debug</a></h1>
+      <h1 class="entry-title"><a href="/blog/2019/08/07/guan-yu-pzhi/">关于P值</a></h1>
     
     
       <p class="meta">
@@ -238,33 +395,16 @@
   
 
 
-<time datetime="2019-07-30T10:38:15+08:00" pubdate data-updated="true">2019 年7 月30 日</time>
+<time datetime="2019-08-07T13:45:59+08:00" pubdate data-updated="true">2019 年8 月7 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>今天在本地起个<code>pyspark</code> 发现总是遇到</p>
+  <div class="entry-content"><p>参考链接:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">Caused by: java.net.UnknownHostException: master: nodename nor servname provided, or not known</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>尝试了设置 <code>SPARK_HOME</code>, <code>HADOOP_HOME</code> 等变量之后，依然不起作用。</p>
-
-<p>最后发现是要修改 <code>SPARK_HOME</code> 里面的配置文件<code>spark-env.sh</code></p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nb">export </span><span class="nv">SPARK_MASTER_IP</span><span class="o">=</span>StevenMac
-</span><span class="line"><span class="nb">export </span><span class="nv">SPARK_LOCAL_IP</span><span class="o">=</span>StevenMac
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>并且在<code>/etc/hosts</code> 文件中，加入如下的内容:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">127.0.0.1  StevenMac
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>Bingo!!!</p>
+<p><a href="https://towardsdatascience.com/p-values-explained-by-data-scientist-f40a746cfc8">p值是什么？数据科学家用最简单的方式告诉你</a></p>
 
 </div>
   
@@ -290,6 +430,18 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2019/08/27/ru-he-cha-kan-linuxzhong-de-nei-cun-zhan-yong-qing-kuang/">如何查看Linux中的内存占用情况</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/27/sparkzhong-pai-xu-shu-chu/">Spark中排序输出</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/21/pysparkde-%5B%3F%5D-xie-jie-shao/">PySpark的一些介绍</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2019/08/14/data-science-at-the-command-line/">Data Science at the Command Line</a>
       </li>
     
@@ -299,10 +451,6 @@
     
       <li class="post">
         <a href="/blog/2019/08/07/guan-yu-pzhi/">关于P值</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2019/08/02/guan-yu-zheng-tai-fen-bu-huan-you-pian-du-yu-feng-du/">关于正态分布还有偏度与峰度</a>
       </li>
     
       <li class="post">
@@ -321,14 +469,6 @@
         <a href="/blog/2019/07/24/vscode-remote-yuan-cheng-kai-fa-yu-diao-shi/">VScode Remote 远程开发与调试</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2019/07/23/pythonzhong-cong-ndarrayhuo-zhe-dataframeli-huo-qu-shu-ju-he-biao-qian/">Python中从ndarray或者DataFrame里获取数据和标签</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2019/07/20/dui-da-shu-ju-fen-xi-fen-xi-gong-zuo-de-%5B%3F%5D-xie-si-kao/">对(大)数据分析工作的一些思考</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -339,12 +479,12 @@
 <li class='category'><a href='/blog/categories/bigdata/'>BigData (11)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (6)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
-<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (11)</a></li>
+<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (12)</a></li>
 <li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (5)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (2)</a></li>
 <li class='category'><a href='/blog/categories/fun/'>Fun (1)</a></li>
 <li class='category'><a href='/blog/categories/javascript/'>Javascript (4)</a></li>
-<li class='category'><a href='/blog/categories/linux-and-mac/'>Linux&Mac (13)</a></li>
+<li class='category'><a href='/blog/categories/linux-and-mac/'>Linux&Mac (14)</a></li>
 <li class='category'><a href='/blog/categories/php/'>PHP (5)</a></li>
 <li class='category'><a href='/blog/categories/perl/'>Perl (50)</a></li>
 <li class='category'><a href='/blog/categories/python/'>Python (10)</a></li>

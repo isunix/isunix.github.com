@@ -4,7 +4,7 @@
   <title><![CDATA[catogories：Data&ML&AI | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/data-and-ml-and-ai/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2019-08-27T11:23:43+08:00</updated>
+  <updated>2019-08-27T11:49:31+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -45,280 +45,6 @@ file = os.path.join(folder, filename)</p>
 
 <p>df.orderBy(“<em>1”, “</em>2”).coalesce(1).write.csv(“xxx2”, sep=’\t’)
 ```</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[PySpark的一些介绍]]></title>
-    <link href="http://isunix.github.io/blog/2019/08/21/pysparkde-%5B%3F%5D-xie-jie-shao/"/>
-    <updated>2019-08-21T08:00:24+08:00</updated>
-    <id>http://isunix.github.io/blog/2019/08/21/pysparkde-[?]-xie-jie-shao</id>
-    <content type="html"><![CDATA[<ol>
-  <li>
-    <h5 id="section">一些概念</h5>
-
-    <ul>
-      <li>Spark, PySpark, Spark SQL, SparkML</li>
-      <li>Jobs, Stages, Task, Driver, Worker</li>
-      <li>RDD, DataFrames, DataSets</li>
-      <li>SparkSession</li>
-    </ul>
-  </li>
-  <li>
-    <h5 id="rdd">RDD</h5>
-
-    <ol>
-      <li>
-        <p>two ways to create an RDD in PySpark</p>
-
-        <p><code>python
-data = sc.parallelize([('Amber', 22), ('Albert', 12), ('Amber', 9)])
-</code></p>
-
-        <p><code>python
-data_from_file = sc.textFile('/data/PySpark_Data/VS14MORT.txt.gz', 4)
-</code></p>
-      </li>
-      <li>
-        <p>RDDs are <em>schema-less</em> data structures  Thus, parallelizing a dataset is perfectly fine with Spark when using RDDs:</p>
-      </li>
-      <li>
-        <p>```python
-# parallelize a rdd
-data_heterogenous = sc.parallelize([ 
-  (‘Ferrari’, ‘fast’),
-	{‘Porsche’: 100000}, 
-  [‘Spain’,’visited’, 4504]
-]).collect()</p>
-
-        <h1 id="access-element">access element</h1>
-        <p>data_heterogenous[1][‘Porsche’]
-```</p>
-      </li>
-      <li>Transformations
-        <ol>
-          <li>
-            <p>.map(…)</p>
-          </li>
-          <li>
-            <p>.filter(…)  </p>
-          </li>
-          <li>
-            <p>.flatMap(…) </p>
-          </li>
-          <li>
-            <p>.distinct(…)</p>
-          </li>
-          <li>
-            <p>.sample(…)</p>
-          </li>
-          <li>
-            <p>.leftOuterJoin(…)</p>
-          </li>
-          <li>
-            <p>.repartition(…)</p>
-          </li>
-        </ol>
-      </li>
-      <li>Actions
-        <ol>
-          <li>.take(…)</li>
-          <li>.reduce(…)</li>
-          <li>.reduceByKey(…)</li>
-          <li>.count()</li>
-          <li>.collect()</li>
-          <li>.saveAsTextFile(…)</li>
-          <li>.foreach(…)</li>
-        </ol>
-      </li>
-    </ol>
-  </li>
-  <li>
-    <h5 id="dataframes">DataFrames</h5>
-
-    <ol>
-      <li>
-        <p>specify the schema</p>
-
-        <p>```python
-from pyspark.sql.types import *</p>
-
-        <h1 id="generate-our-own-csv-data">Generate our own CSV data</h1>
-        <p>#   This way we don’t have to access the file system yet.
-stringCSVRDD = sc.parallelize([(123, ‘Katie’, 19, ‘brown’), (234, ‘Michael’, 22, ‘green’), (345, ‘Simone’, 23, ‘blue’)])</p>
-
-        <h1 id="the-schema-is-encoded-in-a-string-using-structtype-we-define-the-schema-using-various-pysparksqltypes">The schema is encoded in a string, using StructType we define the schema using various pyspark.sql.types</h1>
-        <p>schemaString = “id name age eyeColor”
-schema = StructType([
-    StructField(“id”, LongType(), True),  <br />
-    StructField(“name”, StringType(), True),
-    StructField(“age”, LongType(), True),
-    StructField(“eyeColor”, StringType(), True)
-])</p>
-
-        <h1 id="apply-the-schema-to-the-rdd-and-create-dataframe">Apply the schema to the RDD and Create DataFrame</h1>
-        <p>swimmers = spark.createDataFrame(stringCSVRDD, schema)</p>
-
-        <h1 id="creates-a-temporary-view-using-the-dataframe">Creates a temporary view using the DataFrame</h1>
-        <p>swimmers.createOrReplaceTempView(“swimmers”)
-```</p>
-      </li>
-      <li>
-        <p>DataFrame Query</p>
-
-        <p>```python
-# Set File Paths
-flightPerfFilePath = “/databricks-datasets/flights/departuredelays.csv”
-airportsFilePath = “/databricks-datasets/flights/airport-codes-na.txt”</p>
-
-        <h1 id="obtain-airports-dataset">Obtain Airports dataset</h1>
-        <p>airports = spark.read.csv(airportsFilePath, header=’true’, inferSchema=’true’, sep=’\t’)
-airports.createOrReplaceTempView(“airports”)</p>
-
-        <h1 id="obtain-departure-delays-dataset">Obtain Departure Delays dataset</h1>
-        <p>flightPerf = spark.read.csv(flightPerfFilePath, header=’true’)
-flightPerf.createOrReplaceTempView(“FlightPerformance”)</p>
-
-        <h1 id="cache-the-departure-delays-dataset">Cache the Departure Delays dataset</h1>
-        <p>flightPerf.cache()</p>
-
-        <h1 id="query-sum-of-flight-delays-by-city-and-origin-code-for-washington-state">Query Sum of Flight Delays by City and Origin Code (for Washington State)</h1>
-        <p>spark.sql(“select a.City, f.origin, sum(f.delay) as Delays from FlightPerformance f join airports a on a.IATA = f.origin where a.State = ‘WA’ group by a.City, f.origin order by sum(f.delay) desc”).show()
-```</p>
-      </li>
-    </ol>
-  </li>
-  <li>
-    <p>Prepare Data</p>
-
-    <ol>
-      <li>
-        <p>create data frame</p>
-
-        <p><code>python
-df = spark.createDataFrame([
-(1, 144.5, 5.9, 33, 'M'), (2, 167.2, 5.4, 45, 'M'), (3, 124.1, 5.2, 23, 'F'), (4, 144.5, 5.9, 33, 'M'), (5, 133.2, 5.7, 54, 'F'), (3, 124.1, 5.2, 23, 'F'), (5, 129.2, 5.3, 42, 'M'), ], ['id', 'weight', 'height',
-'age', 'gender'])
-</code></p>
-      </li>
-      <li>
-        <p>get basic description</p>
-
-        <p><code>python
-print('Count of rows: {0}'.format(df.count()))
-print('Count of distinct rows: {0}'.format(df.distinct().count()))
-df = df.dropDuplicates()
-df = df.dropDuplicates(subset=[c for c in df.columns if c != 'id'])
-df.show()
-</code></p>
-      </li>
-      <li>
-        <p>To calculate the total and distinct number of IDs in one step we can use the <code>.agg(...)</code> method.</p>
-
-        <p>```python
-import pyspark.sql.functions as fn</p>
-
-        <p>df.agg(
-    fn.count(‘id’).alias(‘count’),
-    fn.countDistinct(‘id’).alias(‘distinct’)
-).show()</p>
-
-        <h1 id="give-each-row-a-unique-id">Give each row a unique ID.</h1>
-        <p>df.withColumn(‘new_id’, fn.monotonically_increasing_id()).show()
-```</p>
-      </li>
-      <li>
-        <p>missing observations</p>
-
-        <p>```python
-df_miss = spark.createDataFrame([
-        (1, 143.5, 5.6, 28,   ‘M’,  100000),
-        (2, 167.2, 5.4, 45,   ‘M’,  None),
-        (3, None , 5.2, None, None, None),
-        (4, 144.5, 5.9, 33,   ‘M’,  None),
-        (5, 133.2, 5.7, 54,   ‘F’,  None),
-        (6, 124.1, 5.2, None, ‘F’,  None),
-        (7, 129.2, 5.3, 42,   ‘M’,  76000),
-    ], [‘id’, ‘weight’, ‘height’, ‘age’, ‘gender’, ‘income’])</p>
-
-        <h1 id="to-find-the-number-of-missing-observations-per-row">To find the number of missing observations per row</h1>
-        <p>df_miss.rdd.map(
-    lambda row: (row[‘id’], sum([c == None for c in row]))
-).collect()</p>
-
-        <h1 id="see-what-values-are-missing">see what values are missing</h1>
-        <p>df_miss.where(‘id == 3’).show()</p>
-
-        <h1 id="get-the-percentage-of-missing-observations-we-see-in-each-column">get the percentage of missing observations we see in each column</h1>
-        <p>df_miss.agg(<em>[
-    (1 - (fn.count(c) / fn.count(‘</em>’))).alias(c + ‘_missing’)
-    for c in df_miss.columns
-]).show()</p>
-
-        <h1 id="drop-the-income-feature-as-most-of-its-values-are-missing">drop the ‘income’ feature as most of its values are missing</h1>
-        <p>df_miss_no_income = df_miss.select([c for c in df_miss.columns if c != ‘income’])
-df_miss_no_income.show()</p>
-
-        <h1 id="impute">impute</h1>
-        <p>means = df_miss_no_income.agg(
-    *[fn.mean(c).alias(c) for c in df_miss_no_income.columns if c != ‘gender’]
-).toPandas().to_dict(‘records’)[0]</p>
-
-        <p>means[‘gender’] = ‘missing’</p>
-
-        <p>df_miss_no_income.fillna(means).show()</p>
-
-        <h1 id="descriptive-statistics">Descriptive statistics</h1>
-        <p>import pyspark.sql.types as typ
-fraud = sc.textFile(‘ccFraud.csv.gz’)
-header = fraud.first()</p>
-
-        <p>fraud = fraud \
-    .filter(lambda row: row != header) \
-    .map(lambda row: [int(elem) for elem in row.split(‘,’)])</p>
-
-        <p>fields = [
-    *[
-        typ.StructField(h[1:-1], typ.IntegerType(), True)
-        for h in header.split(‘,’)
-    ]
-]</p>
-
-        <p>schema = typ.StructType(fields)</p>
-
-        <p>fraud_df = spark.createDataFrame(fraud, schema)
-fraud_df.printSchema()
-fraud_df.groupby(‘gender’).count().show()</p>
-
-        <p>numerical = [‘balance’, ‘numTrans’, ‘numIntlTrans’]
-desc = fraud_df.describe(numerical)
-desc.show()</p>
-
-        <p>fraud_df.agg({‘balance’: ‘skewness’}).show()</p>
-
-        <h1 id="find-correlations">find Correlations</h1>
-        <p>fraud_df.corr(‘balance’, ‘numTrans’)</p>
-
-        <h1 id="to-create-a-correlations-matrix">to create a correlations matrix</h1>
-        <p>n_numerical = len(numerical)</p>
-
-        <p>corr = []</p>
-
-        <p>for i in range(0, n_numerical):
-    temp = [None] * i</p>
-
-        <pre><code>for j in range(i, n_numerical):
-    temp.append(fraud_df.corr(numerical[i], numerical[j]))
-corr.append(temp)
-</code></pre>
-
-        <p>corr
-```</p>
-      </li>
-    </ol>
-  </li>
-</ol>
 
 ]]></content>
   </entry>
@@ -555,6 +281,52 @@ xx | yy | zz | dd | ee | ff | gg | hh
 
 <p><a href="https://towardsdatascience.com/p-values-explained-by-data-scientist-f40a746cfc8">p值是什么？数据科学家用最简单的方式告诉你</a></p>
 
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[使用Spark的MLlib进行机器学习]]></title>
+    <link href="http://isunix.github.io/blog/2019/08/01/shi-yong-sparkde-mllibjin-xing-ji-qi-xue-xi/"/>
+    <updated>2019-08-01T17:55:54+08:00</updated>
+    <id>http://isunix.github.io/blog/2019/08/01/shi-yong-sparkde-mllibjin-xing-ji-qi-xue-xi</id>
+    <content type="html"><![CDATA[<p>1.比如我们有个 case class</p>
+
+<p><code>scala
+case class CaseClassTest(user: String, name: String)
+</code></p>
+
+<p>我们通过使用<code>mapPartitions</code>来进行操作， 注意此处<code>mapPartitions</code>的用法:</p>
+
+<p><code>scala
+val mapResult = spark.read.textFile(input).map(_.split("\t")).mapPartitions {
+      iter =&gt;
+        iter.map {
+          iterms =&gt; CaseClassTest(iterms(0), iterms(1))
+        }
+    }
+</code></p>
+
+<p>2.reduceByKey<code>  和 </code>case` 的用法</p>
+
+<p><code>scala
+val data = gowalla.map {
+      check: CheckIn =&gt; (check.user, (1L, Set(check.time), Set(check.location)))
+    }.rdd.reduceByKey{
+      case (left, right) =&gt; (left._1 + right._1, left._2.union(right._2),left._3.union(right._3))
+    }.map{
+      case (_, (checkins, days:Set[String], locations:Set[String])) =&gt;
+        Vectors.dense(checkins.toDouble, days.size.toDouble, locations.size.toDouble)
+        //次数，天数，地点数
+    }
+</code></p>
+
+<p><code>reduceByKey</code> 这里是求 <code>(1L, Set(check.time), Set(check.location))</code> 中的一个元素累加，第二个元素求并集，第三个元素也是求并集. <code>case</code> 的作用是让输入符合规范； 注意在 <code>map</code> 中，我们可以限定指示变量的类型， 比如这里的 <code>check: CheckIn =&gt;</code></p>
+
+<h4 id="section">参考</h4>
+
+<ol>
+  <li>Spark机器学习进阶实战</li>
+</ol>
 ]]></content>
   </entry>
   

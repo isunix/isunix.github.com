@@ -237,7 +237,7 @@ alias &hellip;">
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2019/08/21/pysparkde-%5B%3F%5D-xie-jie-shao/">PySpark的一些介绍</a></h1>
+      <h1 class="entry-title"><a href="/blog/2019/08/14/data-science-at-the-command-line/">Data Science at the Command Line</a></h1>
     
     
       <p class="meta">
@@ -253,278 +253,183 @@ alias &hellip;">
   
 
 
-<time datetime="2019-08-21T08:00:24+08:00" pubdate data-updated="true">2019 年8 月21 日</time>
+<time datetime="2019-08-14T14:13:16+08:00" pubdate data-updated="true">2019 年8 月14 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><ol>
-  <li>
-    <h5 id="section">一些概念</h5>
+  <div class="entry-content"><p>本文是关于如何使用命令行的方式，来更好的认识你的数据.</p>
 
-    <ul>
-      <li>Spark, PySpark, Spark SQL, SparkML</li>
-      <li>Jobs, Stages, Task, Driver, Worker</li>
-      <li>RDD, DataFrames, DataSets</li>
-      <li>SparkSession</li>
-    </ul>
+<h2 id="section">1. 常用的命令和工具:</h2>
+
+<ul>
+  <li>
+    <p>基本操作命令</p>
+
+    <p><code>sh
+cd, mv, cat, ls, wc, rm, sort, uniq, echo
+printf, pwd, mkdir, dirname, mktemp， find
+mail, sendmail, crontab, export, ps
+zip, du, df, tar, split
+exec, type, readlink
+</code></p>
   </li>
   <li>
-    <h5 id="rdd">RDD</h5>
+    <p>基本工具</p>
 
-    <ol>
-      <li>
-        <p>two ways to create an RDD in PySpark</p>
-
-        <p><code>python
-data = sc.parallelize([('Amber', 22), ('Albert', 12), ('Amber', 9)])
+    <p><code>sh
+grep, egrep, pcregrep, ack
+curl, wget
+ssh, tmux
+awk, sed
 </code></p>
-
-        <p><code>python
-data_from_file = sc.textFile('/data/PySpark_Data/VS14MORT.txt.gz', 4)
-</code></p>
-      </li>
-      <li>
-        <p>RDDs are <em>schema-less</em> data structures  Thus, parallelizing a dataset is perfectly fine with Spark when using RDDs:</p>
-      </li>
-      <li>
-        <p>&#8220;`python
-# parallelize a rdd
-data_heterogenous = sc.parallelize([ 
-  (‘Ferrari’, ‘fast’),
-	{‘Porsche’: 100000}, 
-  [‘Spain’,’visited’, 4504]
-]).collect()</p>
-
-        <h1 id="access-element">access element</h1>
-        <p>data_heterogenous[1][‘Porsche’]
-&#8220;`</p>
-      </li>
-      <li>Transformations
-        <ol>
-          <li>
-            <p>.map(…)</p>
-          </li>
-          <li>
-            <p>.filter(…)  </p>
-          </li>
-          <li>
-            <p>.flatMap(…) </p>
-          </li>
-          <li>
-            <p>.distinct(…)</p>
-          </li>
-          <li>
-            <p>.sample(…)</p>
-          </li>
-          <li>
-            <p>.leftOuterJoin(…)</p>
-          </li>
-          <li>
-            <p>.repartition(…)</p>
-          </li>
-        </ol>
-      </li>
-      <li>Actions
-        <ol>
-          <li>.take(…)</li>
-          <li>.reduce(…)</li>
-          <li>.reduceByKey(…)</li>
-          <li>.count()</li>
-          <li>.collect()</li>
-          <li>.saveAsTextFile(…)</li>
-          <li>.foreach(…)</li>
-        </ol>
-      </li>
-    </ol>
   </li>
   <li>
-    <h5 id="dataframes">DataFrames</h5>
+    <p>辅助命令</p>
 
-    <ol>
-      <li>
-        <p>specify the schema</p>
-
-        <p>&#8220;`python
-from pyspark.sql.types import *</p>
-
-        <h1 id="generate-our-own-csv-data">Generate our own CSV data</h1>
-        <p>#   This way we don’t have to access the file system yet.
-stringCSVRDD = sc.parallelize([(123, ‘Katie’, 19, ‘brown’), (234, ‘Michael’, 22, ‘green’), (345, ‘Simone’, 23, ‘blue’)])</p>
-
-        <h1 id="the-schema-is-encoded-in-a-string-using-structtype-we-define-the-schema-using-various-pysparksqltypes">The schema is encoded in a string, using StructType we define the schema using various pyspark.sql.types</h1>
-        <p>schemaString = “id name age eyeColor”
-schema = StructType([
-    StructField(“id”, LongType(), True),  <br />
-    StructField(“name”, StringType(), True),
-    StructField(“age”, LongType(), True),
-    StructField(“eyeColor”, StringType(), True)
-])</p>
-
-        <h1 id="apply-the-schema-to-the-rdd-and-create-dataframe">Apply the schema to the RDD and Create DataFrame</h1>
-        <p>swimmers = spark.createDataFrame(stringCSVRDD, schema)</p>
-
-        <h1 id="creates-a-temporary-view-using-the-dataframe">Creates a temporary view using the DataFrame</h1>
-        <p>swimmers.createOrReplaceTempView(“swimmers”)
-&#8220;`</p>
-      </li>
-      <li>
-        <p>DataFrame Query</p>
-
-        <p>&#8220;`python
-# Set File Paths
-flightPerfFilePath = “/databricks-datasets/flights/departuredelays.csv”
-airportsFilePath = “/databricks-datasets/flights/airport-codes-na.txt”</p>
-
-        <h1 id="obtain-airports-dataset">Obtain Airports dataset</h1>
-        <p>airports = spark.read.csv(airportsFilePath, header=’true’, inferSchema=’true’, sep=’\t’)
-airports.createOrReplaceTempView(“airports”)</p>
-
-        <h1 id="obtain-departure-delays-dataset">Obtain Departure Delays dataset</h1>
-        <p>flightPerf = spark.read.csv(flightPerfFilePath, header=’true’)
-flightPerf.createOrReplaceTempView(“FlightPerformance”)</p>
-
-        <h1 id="cache-the-departure-delays-dataset">Cache the Departure Delays dataset</h1>
-        <p>flightPerf.cache()</p>
-
-        <h1 id="query-sum-of-flight-delays-by-city-and-origin-code-for-washington-state">Query Sum of Flight Delays by City and Origin Code (for Washington State)</h1>
-        <p>spark.sql(“select a.City, f.origin, sum(f.delay) as Delays from FlightPerformance f join airports a on a.IATA = f.origin where a.State = ‘WA’ group by a.City, f.origin order by sum(f.delay) desc”).show()
-&#8220;`</p>
-      </li>
-    </ol>
+    <p><code>sh
+jq, git, 
+man, tldr
+conda, pip
+</code></p>
   </li>
   <li>
-    <p>Prepare Data</p>
+    <p>辅助工具</p>
 
-    <ol>
-      <li>
-        <p>create data frame</p>
-
-        <p><code>python
-df = spark.createDataFrame([
-(1, 144.5, 5.9, 33, 'M'), (2, 167.2, 5.4, 45, 'M'), (3, 124.1, 5.2, 23, 'F'), (4, 144.5, 5.9, 33, 'M'), (5, 133.2, 5.7, 54, 'F'), (3, 124.1, 5.2, 23, 'F'), (5, 129.2, 5.3, 42, 'M'), ], ['id', 'weight', 'height',
-'age', 'gender'])
+    <p><code>sh
+zsh, oh-my-zsh, sexy-bash-prompt
 </code></p>
-      </li>
-      <li>
-        <p>get basic description</p>
-
-        <p><code>python
-print('Count of rows: {0}'.format(df.count()))
-print('Count of distinct rows: {0}'.format(df.distinct().count()))
-df = df.dropDuplicates()
-df = df.dropDuplicates(subset=[c for c in df.columns if c != 'id'])
-df.show()
-</code></p>
-      </li>
-      <li>
-        <p>To calculate the total and distinct number of IDs in one step we can use the <code>.agg(...)</code> method.</p>
-
-        <p>&#8220;`python
-import pyspark.sql.functions as fn</p>
-
-        <p>df.agg(
-    fn.count(‘id’).alias(‘count’),
-    fn.countDistinct(‘id’).alias(‘distinct’)
-).show()</p>
-
-        <h1 id="give-each-row-a-unique-id">Give each row a unique ID.</h1>
-        <p>df.withColumn(‘new_id’, fn.monotonically_increasing_id()).show()
-&#8220;`</p>
-      </li>
-      <li>
-        <p>missing observations</p>
-
-        <p>&#8220;`python
-df_miss = spark.createDataFrame([
-        (1, 143.5, 5.6, 28,   ‘M’,  100000),
-        (2, 167.2, 5.4, 45,   ‘M’,  None),
-        (3, None , 5.2, None, None, None),
-        (4, 144.5, 5.9, 33,   ‘M’,  None),
-        (5, 133.2, 5.7, 54,   ‘F’,  None),
-        (6, 124.1, 5.2, None, ‘F’,  None),
-        (7, 129.2, 5.3, 42,   ‘M’,  76000),
-    ], [‘id’, ‘weight’, ‘height’, ‘age’, ‘gender’, ‘income’])</p>
-
-        <h1 id="to-find-the-number-of-missing-observations-per-row">To find the number of missing observations per row</h1>
-        <p>df_miss.rdd.map(
-    lambda row: (row[‘id’], sum([c == None for c in row]))
-).collect()</p>
-
-        <h1 id="see-what-values-are-missing">see what values are missing</h1>
-        <p>df_miss.where(‘id == 3’).show()</p>
-
-        <h1 id="get-the-percentage-of-missing-observations-we-see-in-each-column">get the percentage of missing observations we see in each column</h1>
-        <p>df_miss.agg(<em>[
-    (1 - (fn.count(c) / fn.count(‘</em>’))).alias(c + ‘_missing’)
-    for c in df_miss.columns
-]).show()</p>
-
-        <h1 id="drop-the-income-feature-as-most-of-its-values-are-missing">drop the ‘income’ feature as most of its values are missing</h1>
-        <p>df_miss_no_income = df_miss.select([c for c in df_miss.columns if c != ‘income’])
-df_miss_no_income.show()</p>
-
-        <h1 id="impute">impute</h1>
-        <p>means = df_miss_no_income.agg(
-    *[fn.mean(c).alias(c) for c in df_miss_no_income.columns if c != ‘gender’]
-).toPandas().to_dict(‘records’)[0]</p>
-
-        <p>means[‘gender’] = ‘missing’</p>
-
-        <p>df_miss_no_income.fillna(means).show()</p>
-
-        <h1 id="descriptive-statistics">Descriptive statistics</h1>
-        <p>import pyspark.sql.types as typ
-fraud = sc.textFile(‘ccFraud.csv.gz’)
-header = fraud.first()</p>
-
-        <p>fraud = fraud \
-    .filter(lambda row: row != header) \
-    .map(lambda row: [int(elem) for elem in row.split(‘,’)])</p>
-
-        <p>fields = [
-    *[
-        typ.StructField(h[1:-1], typ.IntegerType(), True)
-        for h in header.split(‘,’)
-    ]
-]</p>
-
-        <p>schema = typ.StructType(fields)</p>
-
-        <p>fraud_df = spark.createDataFrame(fraud, schema)
-fraud_df.printSchema()
-fraud_df.groupby(‘gender’).count().show()</p>
-
-        <p>numerical = [‘balance’, ‘numTrans’, ‘numIntlTrans’]
-desc = fraud_df.describe(numerical)
-desc.show()</p>
-
-        <p>fraud_df.agg({‘balance’: ‘skewness’}).show()</p>
-
-        <h1 id="find-correlations">find Correlations</h1>
-        <p>fraud_df.corr(‘balance’, ‘numTrans’)</p>
-
-        <h1 id="to-create-a-correlations-matrix">to create a correlations matrix</h1>
-        <p>n_numerical = len(numerical)</p>
-
-        <p>corr = []</p>
-
-        <p>for i in range(0, n_numerical):
-    temp = [None] * i</p>
-
-        <pre><code>for j in range(i, n_numerical):
-    temp.append(fraud_df.corr(numerical[i], numerical[j]))
-corr.append(temp)
-</code></pre>
-
-        <p>corr
-&#8220;`</p>
-      </li>
-    </ol>
   </li>
-</ol>
+  <li>
+    <p>瑞士军刀</p>
+  </li>
+</ul>
+
+<p><code>sh
+  Perl
+ </code></p>
+
+<h2 id="section-1">2. 一些应用场景:</h2>
+
+<ul>
+  <li>
+    <p>使用 <code>split</code> 按照特定的行数或者大小，将一个文本进行分割</p>
+
+    <p><code>sh
+# Split a file, each split having 10 lines (except the last split)
+split -l 10 filename
+# plit a file with 512 bytes in each split
+split -b 512 filename
+</code></p>
+  </li>
+  <li>
+    <p>使用 <code>grep -x -f</code>  找到两个文件中的相同的行</p>
+
+    <p><code>sh
+grep -x -f  file1 file2
+</code></p>
+  </li>
+  <li>
+    <p>使用 <code>grep</code> 或者 <code>egrep</code> 或者 <code>pcregrep</code> 或者 <code>ack</code> 并且辅助以正则表达式， 进行复杂的文本搜索</p>
+
+    <p><code>sh
+# print file name with the corresponding line number for each match
+grep -Hn search_string path/to/file
+# invert match for excluding specific strings:
+grep -v search_string path/to/file
+# search in case-insensitive mode:
+grep -i search_string path/to/file
+# search consecutive 9 numbers
+grep -E '\d{9}' path/to/file
+# search consecutive 9 numbers and grab it
+grep -Eo '\d{9}' path/to/file
+# recursively search
+grep -eilr "\bamazfit\b\|\bwatch\b" path/to/dir
+</code></p>
+  </li>
+  <li>
+    <p><code>ssh</code> 登陆远程机器并且同时运行远程操作命令</p>
+
+    <p><code>sh
+# ssh 远程执行命令
+ssh yyy@xxx.xxx.xxx.xxx "df -h"
+# ssh 使用key文件登陆， 并且做远程的端口转发
+ssh -L 9007:${hive_server} ${xiaomi_host} -N -i ${keyfile}
+</code></p>
+  </li>
+  <li>
+    <p><code>awk</code> 按照特定的分隔符，查看文本有多少列， 查看想要看的列，按照条件进行筛选</p>
+
+    <p><code>sh
+# 以空格做分隔符， 并且打印出第二列小于20的行
+awk '($2 &lt; 20){print}' 
+# 以'#' 做分隔符， 并且打印出第二列小于20的行
+awk -F '#' '($2&gt;=8){print}' 
+# 以',' 做分隔符， 并且打印出列数
+awk -F"," '{print NF}' 
+# 有多个判断条件
+awk '{if ($4&lt;1 &amp;&amp; $4&gt;=0.85 &amp;&amp; $2 &gt;= 0.001) print $7}'
+</code></p>
+  </li>
+  <li>
+    <p><code>sort</code> 结合 <code>uniq</code> 去重</p>
+
+    <p><code>sh
+du -cks * | sort | uniq | wc -l 
+</code></p>
+  </li>
+  <li>
+    <p><code>xargs</code> 传递参数</p>
+
+    <p><code>sh
+# xargs 结合 kill 来干掉进程
+ps auxww | grep file | grep -v grep | awk '{print $2}' | xargs kill -9
+# 删除找到的文件
+find . -name "*.txt" | xargs -I , rm -rf ,
+</code></p>
+  </li>
+  <li>
+    <p>使用 <code>jq</code> 命令来在命令行下更好的查看json文件 </p>
+
+    <p><code>sh
+cat file.json | jq
+</code></p>
+  </li>
+  <li>
+    <p>非常好用的 <code>|</code></p>
+
+    <p><code>sh 
+xx | yy | zz | dd | ee | ff | gg | hh
+</code></p>
+  </li>
+</ul>
+
+<h2 id="section-2">3. 参考资料:</h2>
+
+<ul>
+  <li>
+    <p><a href="https://www.runoob.com/linux/linux-tutorial.html">Linux 菜鸟教程</a></p>
+  </li>
+  <li>
+    <p><a href="https://www.runoob.com/regexp/regexp-tutorial.html">正则表达式 - 教程</a></p>
+  </li>
+  <li>
+    <p><a href="https://github.com/alebcay/awesome-shell">Awesome-Shell</a></p>
+  </li>
+</ul>
+
+<p>参考链接:</p>
+
+<ul>
+  <li>
+    <p><a href="https://csvkit.readthedocs.io/en/latest/tutorial/1_getting_started.html#installing-csvkit">csvkit</a></p>
+  </li>
+  <li>
+    <p><a href="[https://www.datascienceatthecommandline.com](https://www.datascienceatthecommandline.com/)">Data Science at the Command Line</a></p>
+  </li>
+</ul>
 
 </div>
   
@@ -556,10 +461,6 @@ corr.append(temp)
       </li>
     
       <li class="post">
-        <a href="/blog/2019/08/21/pysparkde-%5B%3F%5D-xie-jie-shao/">PySpark的一些介绍</a>
-      </li>
-    
-      <li class="post">
         <a href="/blog/2019/08/14/data-science-at-the-command-line/">Data Science at the Command Line</a>
       </li>
     
@@ -587,6 +488,10 @@ corr.append(temp)
         <a href="/blog/2019/07/24/vscode-remote-yuan-cheng-kai-fa-yu-diao-shi/">VScode Remote 远程开发与调试</a>
       </li>
     
+      <li class="post">
+        <a href="/blog/2019/07/23/pythonzhong-cong-ndarrayhuo-zhe-dataframeli-huo-qu-shu-ju-he-biao-qian/">Python中从ndarray或者DataFrame里获取数据和标签</a>
+      </li>
+    
   </ul>
 </section>
 
@@ -597,7 +502,7 @@ corr.append(temp)
 <li class='category'><a href='/blog/categories/bigdata/'>BigData (11)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (6)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
-<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (12)</a></li>
+<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (11)</a></li>
 <li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (5)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (2)</a></li>
 <li class='category'><a href='/blog/categories/fun/'>Fun (1)</a></li>

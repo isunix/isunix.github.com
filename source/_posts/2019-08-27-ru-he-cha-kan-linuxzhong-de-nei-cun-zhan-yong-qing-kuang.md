@@ -6,7 +6,7 @@ comments: true
 categories: Linux&Mac
 ---
 
-```shell
+```bash
 ps -o pid,user,%mem,command ax | awk '($3 > 0){print}' | sort -b -k3 -r
 ```
 
@@ -14,7 +14,7 @@ ps -o pid,user,%mem,command ax | awk '($3 > 0){print}' | sort -b -k3 -r
 
 也可以将上上面的命令搞成一个alias:
 
-```shell
+```bash
 alias memcheck="ps -o pid,user,%mem,command ax | awk '(\$3 > 0){print}' | sort -b -k3 -r"
 ```
 

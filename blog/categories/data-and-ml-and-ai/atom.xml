@@ -4,7 +4,7 @@
   <title><![CDATA[catogories：Data&ML&AI | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/data-and-ml-and-ai/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2019-08-27T11:49:31+08:00</updated>
+  <updated>2019-08-27T15:50:49+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,32 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[一些关于RNN和LSTM和GRU的阅读材料]]></title>
+    <link href="http://isunix.github.io/blog/2019/08/27/%5B%3F%5D-xie-guan-yu-rnnhe-lstmhe-grude-yue-du-cai-liao/"/>
+    <updated>2019-08-27T15:40:38+08:00</updated>
+    <id>http://isunix.github.io/blog/2019/08/27/[?]-xie-guan-yu-rnnhe-lstmhe-grude-yue-du-cai-liao</id>
+    <content type="html"><![CDATA[<p><a href="https://towardsdatascience.com/illustrated-guide-to-recurrent-neural-networks-79e5eb8049c9">Illustrated Guide to Recurrent Neural Networks</a></p>
+
+<p><a href="https://towardsdatascience.com/illustrated-guide-to-lstms-and-gru-s-a-step-by-step-explanation-44e9eb85bf21">Illustrated Guide to LSTM’s and GRU’s: A step by step explanation</a></p>
+
+<p><a href="https://zhuanlan.zhihu.com/p/28687529">RNN梯度消失和爆炸的原因</a></p>
+
+<p><a href="https://zhuanlan.zhihu.com/p/32481747">人人都能看懂的GRU</a></p>
+
+<p><a href="https://zhuanlan.zhihu.com/p/32085405">人人都能看懂的LSTM</a></p>
+
+<p><a href="http://kyonhuang.top/Andrew-Ng-Deep-Learning-notes/#/Sequence_Models/循环序列模型">循环序列模型</a></p>
+
+<p><a href="http://www.ai-start.com/dl2017/html/lesson5-week1.html">第五门课 序列模型(Sequence Models)</a></p>
+
+<p><a href="https://machinelearningmastery.com/time-series-prediction-lstm-recurrent-neural-networks-python-keras/">Time Series Prediction with LSTM Recurrent Neural Networks in Python with Keras</a></p>
+
+<p><a href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/">Understanding LSTM Networks</a></p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Spark中排序输出]]></title>
@@ -281,52 +307,6 @@ xx | yy | zz | dd | ee | ff | gg | hh
 
 <p><a href="https://towardsdatascience.com/p-values-explained-by-data-scientist-f40a746cfc8">p值是什么？数据科学家用最简单的方式告诉你</a></p>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[使用Spark的MLlib进行机器学习]]></title>
-    <link href="http://isunix.github.io/blog/2019/08/01/shi-yong-sparkde-mllibjin-xing-ji-qi-xue-xi/"/>
-    <updated>2019-08-01T17:55:54+08:00</updated>
-    <id>http://isunix.github.io/blog/2019/08/01/shi-yong-sparkde-mllibjin-xing-ji-qi-xue-xi</id>
-    <content type="html"><![CDATA[<p>1.比如我们有个 case class</p>
-
-<p><code>scala
-case class CaseClassTest(user: String, name: String)
-</code></p>
-
-<p>我们通过使用<code>mapPartitions</code>来进行操作， 注意此处<code>mapPartitions</code>的用法:</p>
-
-<p><code>scala
-val mapResult = spark.read.textFile(input).map(_.split("\t")).mapPartitions {
-      iter =&gt;
-        iter.map {
-          iterms =&gt; CaseClassTest(iterms(0), iterms(1))
-        }
-    }
-</code></p>
-
-<p>2.reduceByKey<code>  和 </code>case` 的用法</p>
-
-<p><code>scala
-val data = gowalla.map {
-      check: CheckIn =&gt; (check.user, (1L, Set(check.time), Set(check.location)))
-    }.rdd.reduceByKey{
-      case (left, right) =&gt; (left._1 + right._1, left._2.union(right._2),left._3.union(right._3))
-    }.map{
-      case (_, (checkins, days:Set[String], locations:Set[String])) =&gt;
-        Vectors.dense(checkins.toDouble, days.size.toDouble, locations.size.toDouble)
-        //次数，天数，地点数
-    }
-</code></p>
-
-<p><code>reduceByKey</code> 这里是求 <code>(1L, Set(check.time), Set(check.location))</code> 中的一个元素累加，第二个元素求并集，第三个元素也是求并集. <code>case</code> 的作用是让输入符合规范； 注意在 <code>map</code> 中，我们可以限定指示变量的类型， 比如这里的 <code>check: CheckIn =&gt;</code></p>
-
-<h4 id="section">参考</h4>
-
-<ol>
-  <li>Spark机器学习进阶实战</li>
-</ol>
 ]]></content>
   </entry>
   

@@ -9,7 +9,10 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="I collect some useful code snippets here for later usage or just keep a note of what I have read. 1.find files larger than a specifed size(in byte): &hellip;">
+  <meta name="description" content="As well as getting the value of an attribute, you may well want to set or change it. The syntax you’ll use is as follows: 1
+2
+3
+print &quot;Old &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -93,6 +96,89 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/07/getter-setter-methods-in-perl/">Getter-setter Methods in Perl</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-07T12:49:26+08:00" pubdate data-updated="true">2014 年9 月7 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>As well as getting the value of an attribute, you may well want to set or change it. The syntax you’ll use is as follows:   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">print</span> <span class="s">&quot;Old address: &quot;</span><span class="p">,</span> <span class="nv">$object</span><span class="o">-&gt;</span><span class="n">address</span><span class="p">(),</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="nv">$object</span><span class="o">-&gt;</span><span class="n">address</span><span class="p">(</span><span class="s">&quot;Campus Mirabilis, Pisa, Italy&quot;</span><span class="p">);</span>
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;New address: &quot;</span><span class="p">,</span> <span class="nv">$object</span><span class="o">-&gt;</span><span class="n">address</span><span class="p">(),</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>This kind of accessor is called a get-set method because you can use it to both get and set the attribute. Turning your current read–only accessors into accessors that can also set the value is simple. Let’s create a get–set method for address():   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">sub </span><span class="nf">address</span> <span class="p">{</span>
+</span><span class="line">	<span class="k">my</span> <span class="nv">$self</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
+</span><span class="line">	<span class="c1"># Receive more data</span>
+</span><span class="line">	<span class="k">my</span> <span class="nv">$data</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">	<span class="c1"># Set the address if there&#39;s any data there.</span>
+</span><span class="line">	<span class="nv">$self</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">address</span><span class="p">}</span> <span class="o">=</span> <span class="nv">$data</span> <span class="k">if</span> <span class="nb">defined</span> <span class="nv">$data</span><span class="p">;</span>
+</span><span class="line">	<span class="k">return</span> <span class="nv">$self</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">address</span><span class="p">};</span>
+</span><span class="line">
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>If you don’t particularly want to trap calling the method as a class method (since it’ll generate an error when we try to access the hash entry anyway), you can write really miniature get–set methods like the following:   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">sub </span><span class="nf">address</span> <span class="p">{</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">address</span> <span class="p">}</span> <span class="o">=</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="nb">defined</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">address</span> <span class="p">}</span> <span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="k">sub </span><span class="nf">lastname</span> <span class="p">{</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">lastname</span> <span class="p">}</span> <span class="o">=</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="nb">defined</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">lastname</span> <span class="p">}</span> <span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="k">sub </span><span class="nf">firstname</span> <span class="p">{</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">firstname</span><span class="p">}</span> <span class="o">=</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="nb">defined</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">firstname</span><span class="p">}</span> <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -193,140 +279,6 @@ causes Perl to assume the following loop around your program, which makes it ite
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/05/useful-perl-man-page/">Useful Perl Man Page</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-09-05T18:14:03+08:00" pubdate data-updated="true">2014 年9 月5 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>We can check them like “perl perlre”. These useful perl manuals are:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-<span class="line-number">28</span>
-<span class="line-number">29</span>
-<span class="line-number">30</span>
-<span class="line-number">31</span>
-<span class="line-number">32</span>
-<span class="line-number">33</span>
-<span class="line-number">34</span>
-<span class="line-number">35</span>
-<span class="line-number">36</span>
-<span class="line-number">37</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">perlre</span>
-</span><span class="line">
-</span><span class="line"><span class="n">perlobj</span>
-</span><span class="line">
-</span><span class="line"><span class="n">perlootut</span>
-</span><span class="line">
-</span><span class="line"><span class="n">perlmodlib</span>
-</span><span class="line">
-</span><span class="line"><span class="n">perlintro</span>
-</span><span class="line">
-</span><span class="line"><span class="n">perlsyn</span>
-</span><span class="line">
-</span><span class="line"><span class="n">perlop</span>
-</span><span class="line">
-</span><span class="line"><span class="n">perlsub</span>
-</span><span class="line">
-</span><span class="line"><span class="n">perlrequick</span>
-</span><span class="line">
-</span><span class="line"><span class="n">perlretut</span>
-</span><span class="line">
-</span><span class="line"><span class="n">perlfunc</span>
-</span><span class="line">
-</span><span class="line"><span class="n">perlref</span>
-</span><span class="line">
-</span><span class="line"><span class="n">perlreftut</span>
-</span><span class="line">
-</span><span class="line"><span class="n">perldsc</span>
-</span><span class="line">
-</span><span class="line"><span class="n">perllol</span>
-</span><span class="line">
-</span><span class="line"><span class="n">perlrun</span>
-</span><span class="line">
-</span><span class="line"><span class="n">perldebug</span>
-</span><span class="line">
-</span><span class="line"><span class="n">perlnewmod</span>
-</span><span class="line">
-</span><span class="line"><span class="n">perlfaq3</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>And below are some modules we may find useful:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nn">Moose::</span><span class="n">Manual</span>
-</span><span class="line">
-</span><span class="line"><span class="n">Mouse</span>
-</span><span class="line">
-</span><span class="line"><span class="nn">Mouse::</span><span class="n">Tiny</span>
-</span><span class="line">
-</span><span class="line"><span class="nn">Class::</span><span class="n">Accessor</span>
-</span><span class="line">
-</span><span class="line"><span class="nn">Role::</span><span class="n">Tiny</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/34/">&larr; Older</a>
@@ -342,6 +294,10 @@ causes Perl to assume the following loop around your program, which makes it ite
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2019/08/27/%5B%3F%5D-xie-guan-yu-rnnhe-lstmhe-grude-yue-du-cai-liao/">一些关于RNN和LSTM和GRU的阅读材料</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2019/08/27/ru-he-cha-kan-linuxzhong-de-nei-cun-zhan-yong-qing-kuang/">如何查看Linux中的内存占用情况</a>
@@ -379,10 +335,6 @@ causes Perl to assume the following loop around your program, which makes it ite
         <a href="/blog/2019/07/24/vscode-remote-yuan-cheng-kai-fa-yu-diao-shi/">VScode Remote 远程开发与调试</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2019/07/23/pythonzhong-cong-ndarrayhuo-zhe-dataframeli-huo-qu-shu-ju-he-biao-qian/">Python中从ndarray或者DataFrame里获取数据和标签</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -393,7 +345,7 @@ causes Perl to assume the following loop around your program, which makes it ite
 <li class='category'><a href='/blog/categories/bigdata/'>BigData (11)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (6)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
-<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (11)</a></li>
+<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (12)</a></li>
 <li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (5)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (2)</a></li>
 <li class='category'><a href='/blog/categories/fun/'>Fun (1)</a></li>

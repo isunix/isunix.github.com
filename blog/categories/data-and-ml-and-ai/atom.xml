@@ -4,7 +4,7 @@
   <title><![CDATA[catogories：Data&ML&AI | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/data-and-ml-and-ai/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2019-08-14T18:38:04+08:00</updated>
+  <updated>2019-08-27T11:22:28+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -14,11 +14,479 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Spark中排序输出]]></title>
+    <link href="http://isunix.github.io/blog/2019/08/27/sparkzhong-pai-xu-shu-chu/"/>
+    <updated>2019-08-27T10:11:02+08:00</updated>
+    <id>http://isunix.github.io/blog/2019/08/27/sparkzhong-pai-xu-shu-chu</id>
+    <content type="html"><![CDATA[<p>```python
+# initialize pyspark
+import pandas as pd
+import numpy as np
+import json
+np.set_printoptions(suppress=True)</p>
+
+<p>import findspark
+findspark.init()
+import pyspark</p>
+
+<p>from pyspark.sql import SparkSession
+spark = SparkSession.builder \
+    .appName(‘PySpark-Analysis’) \
+    .config(“spark.executor.memory”, “3g”) \
+    .config(“spark.executor.cores”, “8”) \
+    .getOrCreate()</p>
+
+<p>import os
+folder = “xxxx”
+filename = “one-big.tsv”
+file = os.path.join(folder, filename)</p>
+
+<p>df = spark.read.text(file).rdd.map(lambda r: r[0]).map(lambda line: line.split(“\t”)).toDF()</p>
+
+<p>df.orderBy(“<em>1”, “</em>2”).coalesce(1).write.csv(“xxx2”, sep=’\t’)
+```</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[PySpark的一些介绍]]></title>
+    <link href="http://isunix.github.io/blog/2019/08/21/pysparkde-%5B%3F%5D-xie-jie-shao/"/>
+    <updated>2019-08-21T08:00:24+08:00</updated>
+    <id>http://isunix.github.io/blog/2019/08/21/pysparkde-[?]-xie-jie-shao</id>
+    <content type="html"><![CDATA[<ol>
+  <li>
+    <h5 id="section">一些概念</h5>
+
+    <ul>
+      <li>Spark, PySpark, Spark SQL, SparkML</li>
+      <li>Jobs, Stages, Task, Driver, Worker</li>
+      <li>RDD, DataFrames, DataSets</li>
+      <li>SparkSession</li>
+    </ul>
+  </li>
+  <li>
+    <h5 id="rdd">RDD</h5>
+
+    <ol>
+      <li>
+        <p>two ways to create an RDD in PySpark</p>
+
+        <p><code>python
+data = sc.parallelize([('Amber', 22), ('Albert', 12), ('Amber', 9)])
+</code></p>
+
+        <p><code>python
+data_from_file = sc.textFile('/data/PySpark_Data/VS14MORT.txt.gz', 4)
+</code></p>
+      </li>
+      <li>
+        <p>RDDs are <em>schema-less</em> data structures  Thus, parallelizing a dataset is perfectly fine with Spark when using RDDs:</p>
+      </li>
+      <li>
+        <p>```python
+# parallelize a rdd
+data_heterogenous = sc.parallelize([ 
+  (‘Ferrari’, ‘fast’),
+	{‘Porsche’: 100000}, 
+  [‘Spain’,’visited’, 4504]
+]).collect()</p>
+
+        <h1 id="access-element">access element</h1>
+        <p>data_heterogenous[1][‘Porsche’]
+```</p>
+      </li>
+      <li>Transformations
+        <ol>
+          <li>
+            <p>.map(…)</p>
+          </li>
+          <li>
+            <p>.filter(…)  </p>
+          </li>
+          <li>
+            <p>.flatMap(…) </p>
+          </li>
+          <li>
+            <p>.distinct(…)</p>
+          </li>
+          <li>
+            <p>.sample(…)</p>
+          </li>
+          <li>
+            <p>.leftOuterJoin(…)</p>
+          </li>
+          <li>
+            <p>.repartition(…)</p>
+          </li>
+        </ol>
+      </li>
+      <li>Actions
+        <ol>
+          <li>.take(…)</li>
+          <li>.reduce(…)</li>
+          <li>.reduceByKey(…)</li>
+          <li>.count()</li>
+          <li>.collect()</li>
+          <li>.saveAsTextFile(…)</li>
+          <li>.foreach(…)</li>
+        </ol>
+      </li>
+    </ol>
+  </li>
+  <li>
+    <h5 id="dataframes">DataFrames</h5>
+
+    <ol>
+      <li>
+        <p>specify the schema</p>
+
+        <p>```python
+from pyspark.sql.types import *</p>
+
+        <h1 id="generate-our-own-csv-data">Generate our own CSV data</h1>
+        <p>#   This way we don’t have to access the file system yet.
+stringCSVRDD = sc.parallelize([(123, ‘Katie’, 19, ‘brown’), (234, ‘Michael’, 22, ‘green’), (345, ‘Simone’, 23, ‘blue’)])</p>
+
+        <h1 id="the-schema-is-encoded-in-a-string-using-structtype-we-define-the-schema-using-various-pysparksqltypes">The schema is encoded in a string, using StructType we define the schema using various pyspark.sql.types</h1>
+        <p>schemaString = “id name age eyeColor”
+schema = StructType([
+    StructField(“id”, LongType(), True),  <br />
+    StructField(“name”, StringType(), True),
+    StructField(“age”, LongType(), True),
+    StructField(“eyeColor”, StringType(), True)
+])</p>
+
+        <h1 id="apply-the-schema-to-the-rdd-and-create-dataframe">Apply the schema to the RDD and Create DataFrame</h1>
+        <p>swimmers = spark.createDataFrame(stringCSVRDD, schema)</p>
+
+        <h1 id="creates-a-temporary-view-using-the-dataframe">Creates a temporary view using the DataFrame</h1>
+        <p>swimmers.createOrReplaceTempView(“swimmers”)
+```</p>
+      </li>
+      <li>
+        <p>DataFrame Query</p>
+
+        <p>```python
+# Set File Paths
+flightPerfFilePath = “/databricks-datasets/flights/departuredelays.csv”
+airportsFilePath = “/databricks-datasets/flights/airport-codes-na.txt”</p>
+
+        <h1 id="obtain-airports-dataset">Obtain Airports dataset</h1>
+        <p>airports = spark.read.csv(airportsFilePath, header=’true’, inferSchema=’true’, sep=’\t’)
+airports.createOrReplaceTempView(“airports”)</p>
+
+        <h1 id="obtain-departure-delays-dataset">Obtain Departure Delays dataset</h1>
+        <p>flightPerf = spark.read.csv(flightPerfFilePath, header=’true’)
+flightPerf.createOrReplaceTempView(“FlightPerformance”)</p>
+
+        <h1 id="cache-the-departure-delays-dataset">Cache the Departure Delays dataset</h1>
+        <p>flightPerf.cache()</p>
+
+        <h1 id="query-sum-of-flight-delays-by-city-and-origin-code-for-washington-state">Query Sum of Flight Delays by City and Origin Code (for Washington State)</h1>
+        <p>spark.sql(“select a.City, f.origin, sum(f.delay) as Delays from FlightPerformance f join airports a on a.IATA = f.origin where a.State = ‘WA’ group by a.City, f.origin order by sum(f.delay) desc”).show()
+```</p>
+      </li>
+    </ol>
+  </li>
+  <li>
+    <p>Prepare Data</p>
+
+    <ol>
+      <li>
+        <p>create data frame</p>
+
+        <p><code>python
+df = spark.createDataFrame([
+(1, 144.5, 5.9, 33, 'M'), (2, 167.2, 5.4, 45, 'M'), (3, 124.1, 5.2, 23, 'F'), (4, 144.5, 5.9, 33, 'M'), (5, 133.2, 5.7, 54, 'F'), (3, 124.1, 5.2, 23, 'F'), (5, 129.2, 5.3, 42, 'M'), ], ['id', 'weight', 'height',
+'age', 'gender'])
+</code></p>
+      </li>
+      <li>
+        <p>get basic description</p>
+
+        <p><code>python
+print('Count of rows: {0}'.format(df.count()))
+print('Count of distinct rows: {0}'.format(df.distinct().count()))
+df = df.dropDuplicates()
+df = df.dropDuplicates(subset=[c for c in df.columns if c != 'id'])
+df.show()
+</code></p>
+      </li>
+      <li>
+        <p>To calculate the total and distinct number of IDs in one step we can use the <code>.agg(...)</code> method.</p>
+
+        <p>```python
+import pyspark.sql.functions as fn</p>
+
+        <p>df.agg(
+    fn.count(‘id’).alias(‘count’),
+    fn.countDistinct(‘id’).alias(‘distinct’)
+).show()</p>
+
+        <h1 id="give-each-row-a-unique-id">Give each row a unique ID.</h1>
+        <p>df.withColumn(‘new_id’, fn.monotonically_increasing_id()).show()
+```</p>
+      </li>
+      <li>
+        <p>missing observations</p>
+
+        <p>```python
+df_miss = spark.createDataFrame([
+        (1, 143.5, 5.6, 28,   ‘M’,  100000),
+        (2, 167.2, 5.4, 45,   ‘M’,  None),
+        (3, None , 5.2, None, None, None),
+        (4, 144.5, 5.9, 33,   ‘M’,  None),
+        (5, 133.2, 5.7, 54,   ‘F’,  None),
+        (6, 124.1, 5.2, None, ‘F’,  None),
+        (7, 129.2, 5.3, 42,   ‘M’,  76000),
+    ], [‘id’, ‘weight’, ‘height’, ‘age’, ‘gender’, ‘income’])</p>
+
+        <h1 id="to-find-the-number-of-missing-observations-per-row">To find the number of missing observations per row</h1>
+        <p>df_miss.rdd.map(
+    lambda row: (row[‘id’], sum([c == None for c in row]))
+).collect()</p>
+
+        <h1 id="see-what-values-are-missing">see what values are missing</h1>
+        <p>df_miss.where(‘id == 3’).show()</p>
+
+        <h1 id="get-the-percentage-of-missing-observations-we-see-in-each-column">get the percentage of missing observations we see in each column</h1>
+        <p>df_miss.agg(<em>[
+    (1 - (fn.count(c) / fn.count(‘</em>’))).alias(c + ‘_missing’)
+    for c in df_miss.columns
+]).show()</p>
+
+        <h1 id="drop-the-income-feature-as-most-of-its-values-are-missing">drop the ‘income’ feature as most of its values are missing</h1>
+        <p>df_miss_no_income = df_miss.select([c for c in df_miss.columns if c != ‘income’])
+df_miss_no_income.show()</p>
+
+        <h1 id="impute">impute</h1>
+        <p>means = df_miss_no_income.agg(
+    *[fn.mean(c).alias(c) for c in df_miss_no_income.columns if c != ‘gender’]
+).toPandas().to_dict(‘records’)[0]</p>
+
+        <p>means[‘gender’] = ‘missing’</p>
+
+        <p>df_miss_no_income.fillna(means).show()</p>
+
+        <h1 id="descriptive-statistics">Descriptive statistics</h1>
+        <p>import pyspark.sql.types as typ
+fraud = sc.textFile(‘ccFraud.csv.gz’)
+header = fraud.first()</p>
+
+        <p>fraud = fraud \
+    .filter(lambda row: row != header) \
+    .map(lambda row: [int(elem) for elem in row.split(‘,’)])</p>
+
+        <p>fields = [
+    *[
+        typ.StructField(h[1:-1], typ.IntegerType(), True)
+        for h in header.split(‘,’)
+    ]
+]</p>
+
+        <p>schema = typ.StructType(fields)</p>
+
+        <p>fraud_df = spark.createDataFrame(fraud, schema)
+fraud_df.printSchema()
+fraud_df.groupby(‘gender’).count().show()</p>
+
+        <p>numerical = [‘balance’, ‘numTrans’, ‘numIntlTrans’]
+desc = fraud_df.describe(numerical)
+desc.show()</p>
+
+        <p>fraud_df.agg({‘balance’: ‘skewness’}).show()</p>
+
+        <h1 id="find-correlations">find Correlations</h1>
+        <p>fraud_df.corr(‘balance’, ‘numTrans’)</p>
+
+        <h1 id="to-create-a-correlations-matrix">to create a correlations matrix</h1>
+        <p>n_numerical = len(numerical)</p>
+
+        <p>corr = []</p>
+
+        <p>for i in range(0, n_numerical):
+    temp = [None] * i</p>
+
+        <pre><code>for j in range(i, n_numerical):
+    temp.append(fraud_df.corr(numerical[i], numerical[j]))
+corr.append(temp)
+</code></pre>
+
+        <p>corr
+```</p>
+      </li>
+    </ol>
+  </li>
+</ol>
+
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Data Science at the Command Line]]></title>
     <link href="http://isunix.github.io/blog/2019/08/14/data-science-at-the-command-line/"/>
     <updated>2019-08-14T14:13:16+08:00</updated>
     <id>http://isunix.github.io/blog/2019/08/14/data-science-at-the-command-line</id>
     <content type="html"><![CDATA[<p>本文是关于如何使用命令行的方式，来更好的认识你的数据.</p>
+
+<h2 id="section">1. 常用的命令和工具:</h2>
+
+<ul>
+  <li>
+    <p>基本操作命令</p>
+
+    <p><code>sh
+cd, mv, cat, ls, wc, rm, sort, uniq, echo
+printf, pwd, mkdir, dirname, mktemp， find
+mail, sendmail, crontab, export, ps
+zip, du, df, tar, split
+exec, type, readlink
+</code></p>
+  </li>
+  <li>
+    <p>基本工具</p>
+
+    <p><code>sh
+grep, egrep, pcregrep, ack
+curl, wget
+ssh, tmux
+awk, sed
+</code></p>
+  </li>
+  <li>
+    <p>辅助命令</p>
+
+    <p><code>sh
+jq, git, 
+man, tldr
+conda, pip
+</code></p>
+  </li>
+  <li>
+    <p>辅助工具</p>
+
+    <p><code>sh
+zsh, oh-my-zsh, sexy-bash-prompt
+</code></p>
+  </li>
+  <li>
+    <p>瑞士军刀</p>
+  </li>
+</ul>
+
+<p><code>sh
+  Perl
+ </code></p>
+
+<h2 id="section-1">2. 一些应用场景:</h2>
+
+<ul>
+  <li>
+    <p>使用 <code>split</code> 按照特定的行数或者大小，将一个文本进行分割</p>
+
+    <p><code>sh
+# Split a file, each split having 10 lines (except the last split)
+split -l 10 filename
+# plit a file with 512 bytes in each split
+split -b 512 filename
+</code></p>
+  </li>
+  <li>
+    <p>使用 <code>grep -x -f</code>  找到两个文件中的相同的行</p>
+
+    <p><code>sh
+grep -x -f  file1 file2
+</code></p>
+  </li>
+  <li>
+    <p>使用 <code>grep</code> 或者 <code>egrep</code> 或者 <code>pcregrep</code> 或者 <code>ack</code> 并且辅助以正则表达式， 进行复杂的文本搜索</p>
+
+    <p><code>sh
+# print file name with the corresponding line number for each match
+grep -Hn search_string path/to/file
+# invert match for excluding specific strings:
+grep -v search_string path/to/file
+# search in case-insensitive mode:
+grep -i search_string path/to/file
+# search consecutive 9 numbers
+grep -E '\d{9}' path/to/file
+# search consecutive 9 numbers and grab it
+grep -Eo '\d{9}' path/to/file
+# recursively search
+grep -eilr "\bamazfit\b\|\bwatch\b" path/to/dir
+</code></p>
+  </li>
+  <li>
+    <p><code>ssh</code> 登陆远程机器并且同时运行远程操作命令</p>
+
+    <p><code>sh
+# ssh 远程执行命令
+ssh yyy@xxx.xxx.xxx.xxx "df -h"
+# ssh 使用key文件登陆， 并且做远程的端口转发
+ssh -L 9007:${hive_server} ${xiaomi_host} -N -i ${keyfile}
+</code></p>
+  </li>
+  <li>
+    <p><code>awk</code> 按照特定的分隔符，查看文本有多少列， 查看想要看的列，按照条件进行筛选</p>
+
+    <p><code>sh
+# 以空格做分隔符， 并且打印出第二列小于20的行
+awk '($2 &lt; 20){print}' 
+# 以'#' 做分隔符， 并且打印出第二列小于20的行
+awk -F '#' '($2&gt;=8){print}' 
+# 以',' 做分隔符， 并且打印出列数
+awk -F"," '{print NF}' 
+# 有多个判断条件
+awk '{if ($4&lt;1 &amp;&amp; $4&gt;=0.85 &amp;&amp; $2 &gt;= 0.001) print $7}'
+</code></p>
+  </li>
+  <li>
+    <p><code>sort</code> 结合 <code>uniq</code> 去重</p>
+
+    <p><code>sh
+du -cks * | sort | uniq | wc -l 
+</code></p>
+  </li>
+  <li>
+    <p><code>xargs</code> 传递参数</p>
+
+    <p><code>sh
+# xargs 结合 kill 来干掉进程
+ps auxww | grep file | grep -v grep | awk '{print $2}' | xargs kill -9
+# 删除找到的文件
+find . -name "*.txt" | xargs -I , rm -rf ,
+</code></p>
+  </li>
+  <li>
+    <p>使用 <code>jq</code> 命令来在命令行下更好的查看json文件 </p>
+
+    <p><code>sh
+cat file.json | jq
+</code></p>
+  </li>
+  <li>
+    <p>非常好用的 <code>|</code></p>
+
+    <p><code>sh 
+xx | yy | zz | dd | ee | ff | gg | hh
+</code></p>
+  </li>
+</ul>
+
+<h2 id="section-2">3. 参考资料:</h2>
+
+<ul>
+  <li>
+    <p><a href="https://www.runoob.com/linux/linux-tutorial.html">Linux 菜鸟教程</a></p>
+  </li>
+  <li>
+    <p><a href="https://www.runoob.com/regexp/regexp-tutorial.html">正则表达式 - 教程</a></p>
+  </li>
+  <li>
+    <p><a href="https://github.com/alebcay/awesome-shell">Awesome-Shell</a></p>
+  </li>
+</ul>
 
 <p>参考链接:</p>
 
@@ -42,58 +510,39 @@
     <content type="html"><![CDATA[<p>Gradient Boosting Algorithm 算法参考链接：</p>
 
 <ul>
-  <li>
-    <p><a href="https://arxiv.org/pdf/1603.02754v1.pdf">XGBoost: A Scalable Tree Boosting System</a></p>
-  </li>
-  <li>
-    <p><a href="https://www.analyticsvidhya.com/blog/2017/06/which-algorithm-takes-the-crown-light-gbm-vs-xgboost/">Which algorithm takes the crown: Light GBM vs XGBOOST?</a></p>
-  </li>
-  <li>
-    <p><a href="https://www.analyticsvidhya.com/blog/2015/09/complete-guide-boosting-methods/">Learn Gradient Boosting Algorithm for better predictions (with codes in R)</a></p>
-  </li>
-  <li>
-    <p><a href="https://www.analyticsvidhya.com/blog/2015/05/boosting-algorithms-simplified/">Getting smart with Machine Learning – AdaBoost and Gradient Boost</a></p>
-  </li>
-  <li>
-    <p><a href="https://www.analyticsvidhya.com/blog/2015/11/quick-introduction-boosting-algorithms-machine-learning/">Quick Introduction to Boosting Algorithms in Machine Learning</a></p>
-  </li>
+  <li><a href="https://arxiv.org/pdf/1603.02754v1.pdf">XGBoost: A Scalable Tree Boosting System</a></li>
+  <li><a href="https://www.analyticsvidhya.com/blog/2017/06/which-algorithm-takes-the-crown-light-gbm-vs-xgboost/">Which algorithm takes the crown: Light GBM vs XGBOOST?</a></li>
+  <li><a href="https://www.analyticsvidhya.com/blog/2015/09/complete-guide-boosting-methods/">Learn Gradient Boosting Algorithm for better predictions (with codes in R)</a></li>
+  <li><a href="https://www.analyticsvidhya.com/blog/2015/05/boosting-algorithms-simplified/">Getting smart with Machine Learning – AdaBoost and Gradient Boost</a></li>
+  <li><a href="https://www.analyticsvidhya.com/blog/2015/11/quick-introduction-boosting-algorithms-machine-learning/">Quick Introduction to Boosting Algorithms in Machine Learning</a></li>
   <li><a href="https://www.analyticsvidhya.com/blog/2016/02/complete-guide-parameter-tuning-gradient-boosting-gbm-python/">Complete Machine Learning Guide to Parameter Tuning in Gradient Boosting (GBM) in Python</a></li>
-  <li>
-    <p><a href="https://www.analyticsvidhya.com/blog/2016/03/complete-guide-parameter-tuning-xgboost-with-codes-python/">Complete Guide to Parameter Tuning in XGBoost with codes in Python</a></p>
-  </li>
-  <li>
-    <p><a href="https://segmentfault.com/a/1190000014040317">XGboost数据比赛实战之调参篇</a></p>
-  </li>
+  <li><a href="https://www.analyticsvidhya.com/blog/2016/03/complete-guide-parameter-tuning-xgboost-with-codes-python/">Complete Guide to Parameter Tuning in XGBoost with codes in Python</a></li>
+  <li><a href="https://segmentfault.com/a/1190000014040317">XGboost数据比赛实战之调参篇</a></li>
   <li><a href="http://www.sohu.com/a/226265476_609569">通俗的将Xgboost的原理讲明白</a></li>
   <li><a href="https://blog.csdn.net/app_12062011/article/details/52136117">决策树</a> 和 <a href="https://blog.csdn.net/zhaocj/article/details/50503450">决策树源码剖析</a></li>
   <li><a href="[http://matafight.github.io/2017/03/14/XGBoost-%E7%AE%80%E4%BB%8B/](http://matafight.github.io/2017/03/14/XGBoost-简介/)">XGBoost 笔记</a></li>
-  <li>
-    <p><a href="https://blog.csdn.net/liuzonghao88/article/details/88808408">XGBoost如何避免过拟合</a></p>
-  </li>
+  <li><a href="https://blog.csdn.net/liuzonghao88/article/details/88808408">XGBoost如何避免过拟合</a></li>
   <li><a href="https://blog.csdn.net/u012735708/article/details/83651832">XGBoost调参笔记</a></li>
   <li><a href="https://blog.csdn.net/a358463121/article/details/68617389">xgboost中的数学原理</a></li>
   <li><a href="https://blog.csdn.net/sb19931201/article/details/52557382">xgboost入门与实战</a></li>
   <li><a href="https://blog.csdn.net/xiaocong1990/article/details/55107239">XGBoost参数调优</a></li>
   <li><a href="https://blog.csdn.net/Totoro1745/article/details/53328725">xgboost：一个纯小白的学习历程</a></li>
-  <li>
-    <p><a href="https://blog.csdn.net/github_38414650/article/details/76061893">通俗、有逻辑的写一篇说下Xgboost的原理</a></p>
-  </li>
-  <li>
-    <p><a href="https://towardsdatascience.com/boosting-algorithm-gbm-97737c63daa3">Boosting algorithm: GBM</a></p>
-  </li>
-  <li><a href="https://www.imooc.com/article/43784?block_id=tuijian_wz"><strong>LightGBM 调参方法</strong></a></li>
+  <li><a href="https://blog.csdn.net/github_38414650/article/details/76061893">通俗、有逻辑的写一篇说下Xgboost的原理</a></li>
+  <li><a href="https://towardsdatascience.com/boosting-algorithm-gbm-97737c63daa3">Boosting algorithm: GBM</a></li>
+  <li><a href="https://www.imooc.com/article/43784?block_id=tuijian_wz">LightGBM 调参方法</a></li>
   <li><a href="https://www.kaggle.com/c/LANL-Earthquake-Prediction/discussion/89909">Good summary of XGBoost vs CatBoost vs LightGBM</a></li>
   <li><a href="https://www.kaggle.com/samratp/lightgbm-xgboost-catboost">LightGBM + XGBoost + Catboost</a></li>
   <li><a href="https://datascience.stackexchange.com/questions/49567/lightgbm-vs-xgboost-vs-catboost">lightgbm-vs-xgboost-vs-catboost</a></li>
   <li><a href="https://medium.com/kaggle-nyc/gradient-boosting-decision-trees-xgboost-vs-lightgbm-and-catboost-72df6979e0bb">Gradient Boosting Decision trees: XGBoost vs LightGBM (and catboost)</a></li>
-  <li>
-    <p><a href="https://towardsdatascience.com/catboost-vs-light-gbm-vs-xgboost-5f93620723db">CatBoost vs. Light GBM vs. XGBoost</a></p>
-  </li>
+  <li><a href="https://towardsdatascience.com/catboost-vs-light-gbm-vs-xgboost-5f93620723db">CatBoost vs. Light GBM vs. XGBoost</a></li>
   <li><a href="https://blog.csdn.net/LrS62520kV/article/details/79620615">CatBoost vs. Light GBM vs. XGBoost 的中文翻译</a></li>
   <li><a href="https://stackoverflow.com/questions/44937698/lightgbm-oserror-library-not-loaded">关于lightgbm的安装</a></li>
   <li><a href="https://towardsdatascience.com/custom-loss-functions-for-gradient-boosting-f79c1b40466d">Custom Loss Functions for Gradient Boosting</a></li>
   <li><a href="https://github.com/Microsoft/LightGBM/blob/master/examples/README.md#machine-learning-challenge-winning-solutions">machine-learning-challenge-winning-solutions-lightgbm-winned</a></li>
+  <li><a href="https://www.jianshu.com/p/b4ac0596e5ef">LightGBM 如何调参</a></li>
+  <li><a href="https://www.cnblogs.com/ljygoodgoodstudydaydayup/p/6665239.html">xgboost调参</a></li>
 </ul>
+
 ]]></content>
   </entry>
   
@@ -106,61 +555,6 @@
 
 <p><a href="https://towardsdatascience.com/p-values-explained-by-data-scientist-f40a746cfc8">p值是什么？数据科学家用最简单的方式告诉你</a></p>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[关于正态分布还有偏度与峰度]]></title>
-    <link href="http://isunix.github.io/blog/2019/08/02/guan-yu-zheng-tai-fen-bu-huan-you-pian-du-yu-feng-du/"/>
-    <updated>2019-08-02T08:29:35+08:00</updated>
-    <id>http://isunix.github.io/blog/2019/08/02/guan-yu-zheng-tai-fen-bu-huan-you-pian-du-yu-feng-du</id>
-    <content type="html"><![CDATA[
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[使用Spark的MLlib进行机器学习]]></title>
-    <link href="http://isunix.github.io/blog/2019/08/01/shi-yong-sparkde-mllibjin-xing-ji-qi-xue-xi/"/>
-    <updated>2019-08-01T17:55:54+08:00</updated>
-    <id>http://isunix.github.io/blog/2019/08/01/shi-yong-sparkde-mllibjin-xing-ji-qi-xue-xi</id>
-    <content type="html"><![CDATA[<p>1.比如我们有个 case class</p>
-
-<p><code>scala
-case class CaseClassTest(user: String, name: String)
-</code></p>
-
-<p>我们通过使用<code>mapPartitions</code>来进行操作， 注意此处<code>mapPartitions</code>的用法:</p>
-
-<p><code>scala
-val mapResult = spark.read.textFile(input).map(_.split("\t")).mapPartitions {
-      iter =&gt;
-        iter.map {
-          iterms =&gt; CaseClassTest(iterms(0), iterms(1))
-        }
-    }
-</code></p>
-
-<p>2.reduceByKey<code>  和 </code>case` 的用法</p>
-
-<p><code>scala
-val data = gowalla.map {
-      check: CheckIn =&gt; (check.user, (1L, Set(check.time), Set(check.location)))
-    }.rdd.reduceByKey{
-      case (left, right) =&gt; (left._1 + right._1, left._2.union(right._2),left._3.union(right._3))
-    }.map{
-      case (_, (checkins, days:Set[String], locations:Set[String])) =&gt;
-        Vectors.dense(checkins.toDouble, days.size.toDouble, locations.size.toDouble)
-        //次数，天数，地点数
-    }
-</code></p>
-
-<p><code>reduceByKey</code> 这里是求 <code>(1L, Set(check.time), Set(check.location))</code> 中的一个元素累加，第二个元素求并集，第三个元素也是求并集. <code>case</code> 的作用是让输入符合规范； 注意在 <code>map</code> 中，我们可以限定指示变量的类型， 比如这里的 <code>check: CheckIn =&gt;</code></p>
-
-<h4 id="section">参考</h4>
-
-<ol>
-  <li>Spark机器学习进阶实战</li>
-</ol>
 ]]></content>
   </entry>
   

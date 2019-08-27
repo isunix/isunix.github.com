@@ -4,7 +4,7 @@
   <title><![CDATA[catogories：Linux&Mac | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/linux-and-mac/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2019-08-14T18:38:04+08:00</updated>
+  <updated>2019-08-27T11:22:28+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,26 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[如何查看Linux中的内存占用情况]]></title>
+    <link href="http://isunix.github.io/blog/2019/08/27/ru-he-cha-kan-linuxzhong-de-nei-cun-zhan-yong-qing-kuang/"/>
+    <updated>2019-08-27T11:17:03+08:00</updated>
+    <id>http://isunix.github.io/blog/2019/08/27/ru-he-cha-kan-linuxzhong-de-nei-cun-zhan-yong-qing-kuang</id>
+    <content type="html"><![CDATA[<p><code>shell
+ps -o pid,user,%mem,command ax | awk '($3 &gt; 0){print}' | sort -b -k3 -r
+</code></p>
+
+<p>可以使用如上的命令来看那些占用了内存的程序，并且排序.</p>
+
+<p>也可以将上上面的命令搞成一个alias:</p>
+
+<p><code>shell
+alias memcheck="ps -o pid,user,%mem,command ax | awk '(\$3 &gt; 0){print}' | sort -b -k3 -r"
+</code></p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[CentOS中安装nodejs]]></title>
@@ -63,65 +83,6 @@ sudo yum -y install nodejs
 然后我们就可以使用如下的方式来进行psql的连接了<code>psql -h $host -p $port -U $user -d $db</code>.
 同理，这里的每个变量实际过程中替换成真实的值.</p>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[使用rpm安装crontab命令备忘]]></title>
-    <link href="http://isunix.github.io/blog/2019/05/22/shi-yong-rpman-zhuang-crontabming-ling-bei-wang/"/>
-    <updated>2019-05-22T16:36:21+08:00</updated>
-    <id>http://isunix.github.io/blog/2019/05/22/shi-yong-rpman-zhuang-crontabming-ling-bei-wang</id>
-    <content type="html"><![CDATA[<p>我这边有台ec2, 但是在yum update的时候，总是报错说依赖冲突，后来处理这个问题的时候，过于激进，导致yum不可以用了, 最后把rpm也删了</p>
-
-<p>参考这篇文章
-<a href="https://blog.seosiwei.com/detail/27">https://blog.seosiwei.com/detail/27</a>
-里的方法2，把rpm和yum都删了然后重装了, 软件下载链接是
-<a href="http://mirrors.ustc.edu.cn/centos/6/os/x86_64/Packages/">http://mirrors.ustc.edu.cn/centos/6/os/x86_64/Packages/</a></p>
-
-<p>安装好了之后，发现yum还是不能用，总是报错</p>
-
-<p><code>
-liblzma.so.0: cannot open shared object file: No such file or directory
-</code>
-之类的信息</p>
-
-<p>无可奈何，只好使用rpm了, 我这边需要使用crontab，于是从上面的软件库中下载了</p>
-
-<p><code>
-cronie-1.4.4-16.el6_8.2.x86_64.rpm</code> 和 <code>crontabs-1.10-33.el6.noarch.rpm
-</code></p>
-
-<p>然后执行如下的命令来安装</p>
-
-<p><code>
-rpm -Uvh --replacepkgs --nodeps --force cron*.rpm
-</code></p>
-
-<p>然后报各种依赖找不到的错误, 比如</p>
-
-<p><code>
-librpmio.so.3 not found
-</code>
-之类的</p>
-
-<p>好在我们有别的ec2，我们可以去这个另外的ec2上找对应的依赖，然后copy到这个我们出问题的机器上</p>
-
-<p><code>
-find / -name librpm.so.3 -type f
-</code></p>
-
-<p>然后发现在/usr/lib64中，librpm.so.3是个软连接，指向/usr/lib64中的librpm.so.3.2.2, 我们把librpm.so.3.2.2copy到我们出问题的机器的/usr/lib64里，然后参照
-<a href="http://isunix.github.io/blog/2019/05/22/linuxming-ling-lnde-shi-yong-bei-wang/">http://isunix.github.io/blog/2019/05/22/linuxming-ling-lnde-shi-yong-bei-wang/</a>
-中的方式来做个软连接</p>
-
-<p>仿照这个方式，如果还有问题，重复找依赖-copy-做软连接的过程</p>
-
-<p>最后再执行</p>
-
-<p><code>
-rpm -Uvh --replacepkgs --nodeps --force cron*.rpm
-</code>
-crontab命令成功安装了.</p>
 ]]></content>
   </entry>
   

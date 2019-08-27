@@ -9,42 +9,34 @@ categories: Data&ML&AI
 Gradient Boosting Algorithm 算法参考链接：
 
 - [XGBoost: A Scalable Tree Boosting System](https://arxiv.org/pdf/1603.02754v1.pdf)
-
 - [Which algorithm takes the crown: Light GBM vs XGBOOST?](https://www.analyticsvidhya.com/blog/2017/06/which-algorithm-takes-the-crown-light-gbm-vs-xgboost/)
-
 - [Learn Gradient Boosting Algorithm for better predictions (with codes in R)](https://www.analyticsvidhya.com/blog/2015/09/complete-guide-boosting-methods/)
-
 - [Getting smart with Machine Learning – AdaBoost and Gradient Boost](https://www.analyticsvidhya.com/blog/2015/05/boosting-algorithms-simplified/)
-
 - [Quick Introduction to Boosting Algorithms in Machine Learning](https://www.analyticsvidhya.com/blog/2015/11/quick-introduction-boosting-algorithms-machine-learning/)
-
 - [Complete Machine Learning Guide to Parameter Tuning in Gradient Boosting (GBM) in Python](https://www.analyticsvidhya.com/blog/2016/02/complete-guide-parameter-tuning-gradient-boosting-gbm-python/)
 - [Complete Guide to Parameter Tuning in XGBoost with codes in Python](https://www.analyticsvidhya.com/blog/2016/03/complete-guide-parameter-tuning-xgboost-with-codes-python/)
-
 - [XGboost数据比赛实战之调参篇](https://segmentfault.com/a/1190000014040317)
-
 - [通俗的将Xgboost的原理讲明白](http://www.sohu.com/a/226265476_609569)
 - [决策树](https://blog.csdn.net/app_12062011/article/details/52136117) 和 [决策树源码剖析](https://blog.csdn.net/zhaocj/article/details/50503450)
 - [XGBoost 笔记]([http://matafight.github.io/2017/03/14/XGBoost-%E7%AE%80%E4%BB%8B/](http://matafight.github.io/2017/03/14/XGBoost-简介/))
 - [XGBoost如何避免过拟合](https://blog.csdn.net/liuzonghao88/article/details/88808408)
-
 - [XGBoost调参笔记](https://blog.csdn.net/u012735708/article/details/83651832)
 - [xgboost中的数学原理](https://blog.csdn.net/a358463121/article/details/68617389)
 - [xgboost入门与实战](https://blog.csdn.net/sb19931201/article/details/52557382)
 - [XGBoost参数调优](https://blog.csdn.net/xiaocong1990/article/details/55107239)
 - [xgboost：一个纯小白的学习历程](https://blog.csdn.net/Totoro1745/article/details/53328725)
 - [通俗、有逻辑的写一篇说下Xgboost的原理](https://blog.csdn.net/github_38414650/article/details/76061893)
-
 - [Boosting algorithm: GBM](https://towardsdatascience.com/boosting-algorithm-gbm-97737c63daa3)
-
-- [**LightGBM 调参方法**](https://www.imooc.com/article/43784?block_id=tuijian_wz)
+- [LightGBM 调参方法](https://www.imooc.com/article/43784?block_id=tuijian_wz)
 - [Good summary of XGBoost vs CatBoost vs LightGBM](https://www.kaggle.com/c/LANL-Earthquake-Prediction/discussion/89909)
 - [LightGBM + XGBoost + Catboost](https://www.kaggle.com/samratp/lightgbm-xgboost-catboost)
 - [lightgbm-vs-xgboost-vs-catboost](https://datascience.stackexchange.com/questions/49567/lightgbm-vs-xgboost-vs-catboost)
 - [Gradient Boosting Decision trees: XGBoost vs LightGBM (and catboost)](https://medium.com/kaggle-nyc/gradient-boosting-decision-trees-xgboost-vs-lightgbm-and-catboost-72df6979e0bb)
 - [CatBoost vs. Light GBM vs. XGBoost](https://towardsdatascience.com/catboost-vs-light-gbm-vs-xgboost-5f93620723db)
-
 - [CatBoost vs. Light GBM vs. XGBoost 的中文翻译](https://blog.csdn.net/LrS62520kV/article/details/79620615)
 - [关于lightgbm的安装](https://stackoverflow.com/questions/44937698/lightgbm-oserror-library-not-loaded)
 - [Custom Loss Functions for Gradient Boosting](https://towardsdatascience.com/custom-loss-functions-for-gradient-boosting-f79c1b40466d)
 - [machine-learning-challenge-winning-solutions-lightgbm-winned](https://github.com/Microsoft/LightGBM/blob/master/examples/README.md#machine-learning-challenge-winning-solutions)
+- [LightGBM 如何调参](https://www.jianshu.com/p/b4ac0596e5ef)
+- [xgboost调参](https://www.cnblogs.com/ljygoodgoodstudydaydayup/p/6665239.html)
+

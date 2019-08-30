@@ -12,7 +12,7 @@ categories: Data&ML&AI
 
 - 基本操作命令
 
-  ```shell
+  ```bash
   cd, mv, cat, ls, wc, rm, sort, uniq, echo
   printf, pwd, mkdir, dirname, mktemp， find
   mail, sendmail, crontab, export, ps

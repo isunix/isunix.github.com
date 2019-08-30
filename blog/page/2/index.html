@@ -9,10 +9,10 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="本文是关于如何使用命令行的方式，来更好的认识你的数据. 1. 常用的命令和工具: 基本操作命令 sh
+  <meta name="description" content="本文是关于如何使用命令行的方式，来更好的认识你的数据. 1. 常用的命令和工具: 基本操作命令 shell
 cd, mv, cat, ls, wc, rm, sort, uniq, echo
 printf, pwd, mkdir, dirname, mktemp， find
-mail, sendmail &hellip;">
+mail, &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -133,7 +133,7 @@ mail, sendmail &hellip;">
   <li>
     <p>基本操作命令</p>
 
-    <p><code>sh
+    <p><code>shell
 cd, mv, cat, ls, wc, rm, sort, uniq, echo
 printf, pwd, mkdir, dirname, mktemp， find
 mail, sendmail, crontab, export, ps
@@ -144,7 +144,7 @@ exec, type, readlink
   <li>
     <p>基本工具</p>
 
-    <p><code>sh
+    <p><code>shell
 grep, egrep, pcregrep, ack
 curl, wget
 ssh, tmux
@@ -154,8 +154,8 @@ awk, sed
   <li>
     <p>辅助命令</p>
 
-    <p><code>sh
-jq, git, 
+    <p><code>shell
+jq, git,
 man, tldr
 conda, pip
 </code></p>
@@ -163,7 +163,7 @@ conda, pip
   <li>
     <p>辅助工具</p>
 
-    <p><code>sh
+    <p><code>shell
 zsh, oh-my-zsh, sexy-bash-prompt
 </code></p>
   </li>
@@ -172,7 +172,7 @@ zsh, oh-my-zsh, sexy-bash-prompt
   </li>
 </ul>
 
-<p><code>sh
+<p><code>shell
   Perl
  </code></p>
 
@@ -182,7 +182,7 @@ zsh, oh-my-zsh, sexy-bash-prompt
   <li>
     <p>使用 <code>split</code> 按照特定的行数或者大小，将一个文本进行分割</p>
 
-    <p><code>sh
+    <p><code>shell
 # Split a file, each split having 10 lines (except the last split)
 split -l 10 filename
 # plit a file with 512 bytes in each split
@@ -192,14 +192,14 @@ split -b 512 filename
   <li>
     <p>使用 <code>grep -x -f</code>  找到两个文件中的相同的行</p>
 
-    <p><code>sh
+    <p><code>shell
 grep -x -f  file1 file2
 </code></p>
   </li>
   <li>
     <p>使用 <code>grep</code> 或者 <code>egrep</code> 或者 <code>pcregrep</code> 或者 <code>ack</code> 并且辅助以正则表达式， 进行复杂的文本搜索</p>
 
-    <p><code>sh
+    <p><code>shell
 # print file name with the corresponding line number for each match
 grep -Hn search_string path/to/file
 # invert match for excluding specific strings:
@@ -217,7 +217,7 @@ grep -eilr "\bamazfit\b\|\bwatch\b" path/to/dir
   <li>
     <p><code>ssh</code> 登陆远程机器并且同时运行远程操作命令</p>
 
-    <p><code>sh
+    <p><code>shell
 # ssh 远程执行命令
 ssh yyy@xxx.xxx.xxx.xxx "df -h"
 # ssh 使用key文件登陆， 并且做远程的端口转发
@@ -227,13 +227,13 @@ ssh -L 9007:${hive_server} ${xiaomi_host} -N -i ${keyfile}
   <li>
     <p><code>awk</code> 按照特定的分隔符，查看文本有多少列， 查看想要看的列，按照条件进行筛选</p>
 
-    <p><code>sh
+    <p><code>shell
 # 以空格做分隔符， 并且打印出第二列小于20的行
-awk '($2 &lt; 20){print}' 
+awk '($2 &lt; 20){print}'
 # 以'#' 做分隔符， 并且打印出第二列小于20的行
-awk -F '#' '($2&gt;=8){print}' 
+awk -F '#' '($2&gt;=8){print}'
 # 以',' 做分隔符， 并且打印出列数
-awk -F"," '{print NF}' 
+awk -F"," '{print NF}'
 # 有多个判断条件
 awk '{if ($4&lt;1 &amp;&amp; $4&gt;=0.85 &amp;&amp; $2 &gt;= 0.001) print $7}'
 </code></p>
@@ -241,14 +241,14 @@ awk '{if ($4&lt;1 &amp;&amp; $4&gt;=0.85 &amp;&amp; $2 &gt;= 0.001) print $7}'
   <li>
     <p><code>sort</code> 结合 <code>uniq</code> 去重</p>
 
-    <p><code>sh
-du -cks * | sort | uniq | wc -l 
+    <p><code>shell
+du -cks * | sort | uniq | wc -l
 </code></p>
   </li>
   <li>
     <p><code>xargs</code> 传递参数</p>
 
-    <p><code>sh
+    <p><code>shell
 # xargs 结合 kill 来干掉进程
 ps auxww | grep file | grep -v grep | awk '{print $2}' | xargs kill -9
 # 删除找到的文件
@@ -256,16 +256,16 @@ find . -name "*.txt" | xargs -I , rm -rf ,
 </code></p>
   </li>
   <li>
-    <p>使用 <code>jq</code> 命令来在命令行下更好的查看json文件 </p>
+    <p>使用 <code>jq</code> 命令来在命令行下更好的查看json文件</p>
 
-    <p><code>sh
+    <p><code>shell
 cat file.json | jq
 </code></p>
   </li>
   <li>
     <p>非常好用的 <code>|</code></p>
 
-    <p><code>sh 
+    <p><code>shell
 xx | yy | zz | dd | ee | ff | gg | hh
 </code></p>
   </li>

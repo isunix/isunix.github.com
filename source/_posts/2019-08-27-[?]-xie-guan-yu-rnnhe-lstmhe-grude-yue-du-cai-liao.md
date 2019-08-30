@@ -46,3 +46,5 @@ categories: Data&ML&AI
 
 [卷积神经网络数学原理解析](https://www.leiphone.com/news/201908/wq1m4fNK8LNuG0Rs.html)
 
+[Interpretable Machine Learning](https://christophm.github.io/interpretable-ml-book/)
+

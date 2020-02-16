@@ -9,8 +9,13 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="Several days I met some perl one-liner like this: 1
-cat $file | perl -Mautodie -MList::MoreUtils=none -ne &#39;chomp; push @re, $_ }{ open $fh, $ENV{ &hellip;">
+  <meta name="description" content="The following is a collection of sed. They are from the following blogs. 1
+2
+3
+4
+5
+6
+http://www.catonmat.net/blog/sed-one-liners-explained-part-one/ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -94,6 +99,324 @@ cat $file | perl -Mautodie -MList::MoreUtils=none -ne &#39;chomp; push @re, $_ }
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/12/18/sed-one-liners/">Sed One-liners</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-12-18T14:48:18+08:00" pubdate data-updated="true">2015 年12 月18 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>The following is a collection of sed. They are from the following blogs.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line">http://www.catonmat.net/blog/sed-one-liners-explained-part-one/
+</span><span class="line">http://www.catonmat.net/blog/sed-one-liners-explained-part-two/
+</span><span class="line">http://www.catonmat.net/blog/sed-one-liners-explained-part-three/
+</span><span class="line">
+</span><span class="line">http://www.grymoire.com/Unix/Sed.html
+</span><span class="line">http://www.catonmat.net/blog/wp-content/uploads/2008/09/sed1line.txt
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>I will pick some I that I think might be useful for me and listed them here.</p>
+
+<p>1.Insert a blank line above every line that matches “regex”.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | sed <span class="s1">&#39;/regex/{x;p;x;}&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>2.Insert a blank line below every line that matches “regex”.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | sed <span class="s1">&#39;/regex/G&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>3.Insert a blank line above and below every line that matches “regex”.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | sed <span class="s1">&#39;/regex/{x;p;x;G;}&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>4.Number each line of a file (named filename). Left align the number.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nv">sed</span> <span class="o">=</span> filename | sed <span class="s1">&#39;N;s/\n/\t/&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>5.Convert DOS/Windows newlines (CRLF) to Unix newlines (LF). (All 3 have not been tested!)</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | sed <span class="s1">&#39;s/.$//&#39;</span>
+</span><span class="line">cat file | sed <span class="s1">&#39;s/^M$//&#39;</span>
+</span><span class="line">cat file | sed <span class="s1">&#39;s/\x0D$//&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>6.Convert Unix newlines (LF) to DOS/Windows newlines (CRLF). (All 3 have not been tested!)</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">sed <span class="s1">&#39;s/$/\r/&#39;</span>
+</span><span class="line">sed <span class="s2">&quot;s/$//&quot;</span>
+</span><span class="line">sed <span class="s2">&quot;s/$/`echo -e \\\r`/&quot;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>7.Delete leading whitespace (tabs and spaces) from each line.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | sed <span class="s1">&#39;s/^[ \t]*//&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>8.Delete trailing whitespace (tabs and spaces) from each line.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | sed <span class="s1">&#39;s/[ \t]*$//&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>9.Delete both leading and trailing whitespace from each line.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | sed <span class="s1">&#39;s/^[ \t]*//;s/[ \t]*$//&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>10.Insert five blank spaces at the beginning of each line.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | sed <span class="s1">&#39;s/^/     /&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>11.Substitute (find and replace) the fourth occurrence of “foo” with “bar” on each line.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | sed <span class="s1">&#39;s/foo/bar/4&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>12.Substitute (find and replace) the first occurrence of a repeated occurrence of “foo” with “bar”.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | sed <span class="s1">&#39;s/\(.*\)foo\(.*foo\)/\1bar\2/&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>13.Substitute all occurrences of “foo” with “bar” on all lines that contain “baz”.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | sed <span class="s1">&#39;/baz/s/foo/bar/g&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>14.Substitute all occurrences of “foo” with “bar” on all lines that DO NOT contain “baz”.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | sed <span class="s1">&#39;/baz/!s/foo/bar/g&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>15.Change text “scarlet”, “ruby” or “puce” to “red”.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | sed <span class="s1">&#39;s/scarlet/red/g;s/ruby/red/g;s/puce/red/g&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>16.Add a blank line after every five lines.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | sed <span class="s1">&#39;n;n;n;n;G;&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>17.Print the first 10 lines of a file (emulates “head -10”).</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | sed 10q
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>18.Print only the lines that match a regular expression (emulates “grep”).</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | sed -n <span class="s1">&#39;/regexp/p&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>19.Print only the lines that do not match a regular expression (emulates “grep -v”).</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | sed -n <span class="s1">&#39;/regexp/!p&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>20.Print the line immediately before regexp, but not the line containing the regexp.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | sed -n <span class="s1">&#39;/regexp/{g;1!p;};h&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>21.Print the line immediately after regexp, but not the line containing the regexp.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | sed -n <span class="s1">&#39;/regexp/{n;p;}&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>22.Print one line before and after regexp. Also print the line matching regexp and its line number. (emulates “grep -A1 -B1”).</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | sed -n -e <span class="s1">&#39;/regexp/{=;x;1!p;g;$!N;p;D;}&#39;</span> -e h
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>23.Grep for “AAA” and “BBB” and “CCC” in any order.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | sed <span class="s1">&#39;/AAA/!d; /BBB/!d; /CCC/!d&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>24.Grep for “AAA” and “BBB” and “CCC” in that order.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | sed <span class="s1">&#39;/AAA.*BBB.*CCC/!d&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>25.Grep for “AAA” or “BBB”, or “CCC”.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | sed -e <span class="s1">&#39;/AAA/b&#39;</span> -e <span class="s1">&#39;/BBB/b&#39;</span> -e <span class="s1">&#39;/CCC/b&#39;</span> -e d
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>26.Print only the lines that are 65 characters in length or more.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | sed -n <span class="s1">&#39;/^.\{65\}/p&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>27.Print only the lines that are less than 65 chars.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | sed <span class="s1">&#39;/^.\{65\}/d&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>28.Print section of a file from a regex to end of file.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | sed -n <span class="s1">&#39;/regexp/,$p&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>29.Print lines 8-12 (inclusive) of a file.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | sed -n <span class="s1">&#39;8,12p&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>30.Print line number 52.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | sed -n <span class="s1">&#39;52p&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>31.Beginning at line 3, print every 7th line.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | sed -n <span class="s1">&#39;3,${p;n;n;n;n;n;n;}&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>32.Print section of lines between two regular expressions (inclusive).</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | sed -n <span class="s1">&#39;/Iowa/,/Montana/p&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>33.Print all lines in the file except a section between two regular expressions.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | sed <span class="s1">&#39;/Iowa/,/Montana/d&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>34.Delete duplicate, consecutive lines from a file (emulates “uniq”).</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | sed <span class="s1">&#39;$!N; /^\(.*\)\n\1$/!P; D&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>35.Delete all lines except duplicate consecutive lines (emulates “uniq -d”).</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | sed <span class="s1">&#39;$!N; s/^\(.*\)\n\1$/\1/; t; D&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>36.Delete the first 10 lines of a file.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | sed <span class="s1">&#39;1,10d&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>37.Delete the last line of a file.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | sed <span class="s1">&#39;$d&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>38.Delete the last 2 lines of a file.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | sed <span class="s1">&#39;N;$!P;$!D;$d&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>39.Delete lines that match regular expression pattern.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | sed <span class="s1">&#39;/pattern/d&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>40.Delete all blank lines in a file (emulates “grep ‘.’”.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | sed <span class="s1">&#39;/^$/d&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>41.Delete all consecutive blank lines from a file (emulates “cat -s”).</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | sed <span class="s1">&#39;/./,/^$/!d&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>42.Delete all leading blank lines at the top of a file.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | sed <span class="s1">&#39;/./,$!d&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>43.Delete all trailing blank lines at the end of a file.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | sed -e :a -e <span class="s1">&#39;/^\n*$/{$d;N;ba&#39;</span> -e <span class="s1">&#39;}&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -243,455 +566,6 @@ cat $file | perl -Mautodie -MList::MoreUtils=none -ne &#39;chomp; push @re, $_ }
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/12/11/more-perl-one-liners/">More Perl One-liners</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-12-11T10:18:24+08:00" pubdate data-updated="true">2015 年12 月11 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Some maybe useful perl one-liners here for easy reference.</p>
-
-<p>Some of the tip are from the post:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line">http://www.catonmat.net/blog/perl-one-liners-explained-part-one/
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>Some are from my own daily usage.</p>
-
-<p>I also found there are posts about useful sed/awk/perl one-liners:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line">http://www.catonmat.net/blog/awk-one-liners-explained-part-one/
-</span><span class="line">http://www.catonmat.net/blog/sed-one-liners-explained-part-one/
-</span><span class="line">http://www.catonmat.net/blog/introduction-to-perl-one-liners/
-</span><span class="line">http://linux.gda.pl/spotkania/sp_13/perl-one-liners.pdf
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>1.Loop through a file for each line to find the lines matching certain pattern. Then grep those pattern against a file, and print those lines which has a column meets certain criteria.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file1.txt | perl -nle <span class="s1">&#39;print $1 if /\b(__[0-9a-z]\w+)\b/i;&#39;</span> | sort | uniq | xargs -I , grep , -w fileb.txt | awk <span class="s1">&#39;$2==0&#39;</span> | awk <span class="s1">&#39;{print $7}&#39;</span> | sort | uniq | xargs -I , grep , -w filec.txt | awk <span class="s1">&#39;$8==0&#39;</span> | awk <span class="s1">&#39;{print $8,&quot; &quot;,$13}&#39;</span> &gt; /tmp/<span class="sb">`</span>date +%Y%m%d<span class="sb">`</span>.txt
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>2.Add a blank line before every line.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">perl -pe <span class="s1">&#39;s//\n/&#39;</span> file.txt
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>3.Remove all blank lines</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file.txt | perl -ne <span class="s1">&#39;print unless /^$/&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>4.Remove all consecutive blank lines, leaving just one.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file.txt | perl -00 -pe <span class="s1">&#39;&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>5.Compress/expand all blank lines into N consecutive ones.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat 1.txt| perl -00 -pe <span class="s1">&#39;$_.=&quot;\n&quot;x4&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>6.substitute something in a file:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">perl -pi -e <span class="s1">&#39;s/good/bad/g&#39;</span> file.txt
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>7.same as item-6 but only on lines match something:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">perl -pi -e <span class="s1">&#39;s/good/bad/g if /matched/&#39;</span> file
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>8.Finding all repeated lines in a file:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">perl -ne <span class="s1">&#39;print if $a{$_}++&#39;</span> 1.txt
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>9.Numbering lines in a file:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">perl -ne <span class="s1">&#39;print &quot;$. $_&quot;&#39;</span> file.txt
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>or with the ‘-p’ argument:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">perl -pe <span class="s1">&#39;$_ = &quot;$. $_&quot;&#39;</span> file.txt
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>10.Sum up all the numbers on each line:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file.txt| perl -MList::Util<span class="o">=</span>sum -alne <span class="s1">&#39;print sum @F&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>11.TO see how the above one-liner works, use the Data::Dumper module to get a look at it:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file.txt| perl -MData::Dumper -alne <span class="s1">&#39;print  Dumper @F&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>12.Finding the date 10 days ago:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">perl -MPOSIX -le <span class="s1">&#39;@now = localtime; $now[3] -= 10; print scalar localtime mktime @now&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>13.Find the sum of the numbers in the first column:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file.txt| perl -lane <span class="s1">&#39;$sum += $F[0]; END { print $sum }&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>14.Getting a list of the names of all users on the system:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">perl -a -F: -lne <span class="s1">&#39;print $F[4]&#39;</span> /etc/passwd
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>15.Print the number of non-empty lines in a file:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file.txt | perl -le <span class="s1">&#39;print scalar(grep{/./}&lt;&gt;)&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>16.Print the number of empty lines in a file:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file.txt| perl -lne <span class="s1">&#39;$a++ if /^$/; END {print $a+0}&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>or </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file.txt | perl -le <span class="s1">&#39;print scalar(grep{/^$/}&lt;&gt;)&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>or </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file.txt | perl -le <span class="s1">&#39;print ~~grep{/^$/}&lt;&gt;&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>17.Print the number of lines in a file that match a pattern (emulate grep -c):</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat 3.txt| perl -lne <span class="s1">&#39;$a++ if /good/; END {print $a+0}&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>or </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat 3.txt | grep -c <span class="s2">&quot;good&quot;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>18.Generate and print the alphabet:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">perl -le <span class="s1">&#39;print (&quot;a&quot;..&quot;z&quot;)&#39;</span>
-</span><span class="line">or
-</span><span class="line">perl -le <span class="s1">&#39;print a..z&#39;</span>
-</span><span class="line">or
-</span><span class="line">perl -le <span class="s1">&#39;print join &quot;&quot;, (&quot;a&quot;..&quot;z&quot;)&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>19.Generate a random 8 character password:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">perl -le <span class="s1">&#39;print map { (&quot;a&quot;..&quot;z&quot;)[rand 26] } 1..8&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>20.Find the numeric values for characters in the string:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">perl -le <span class="s1">&#39;print join &quot;, &quot;, map { ord } split //, &quot;hello world&quot;&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>21.Generate an array with odd numbers from 1 to 100:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">perl -le <span class="s1">&#39;@odd = grep {$_ % 2 == 1} 1..100; print &quot;@odd&quot;&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>22.Find the length of the string:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">perl -le <span class="s1">&#39;print length &quot;hello boy&quot;&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>23.Find the number of elements in an array:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">perl -le <span class="s1">&#39;@array = (&quot;a&quot;..&quot;z&quot;); print ~~@array&#39;</span>
-</span><span class="line">or
-</span><span class="line">perl -le <span class="s1">&#39;@array = (&quot;a&quot;..&quot;z&quot;); print scalar @array&#39;</span>
-</span><span class="line">or
-</span><span class="line">perl -le <span class="s1">&#39;@array = (&quot;a&quot;..&quot;z&quot;); print $#array + 1&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>24.Base64 encode a string:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">perl -MMIME::Base64 -e <span class="s1">&#39;print encode_base64(&quot;string&quot;)&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>25.base64 encode the whole file:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">perl -MMIME::Base64 -0777 -ne <span class="s1">&#39;print encode_base64($_)&#39;</span> file
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>26.Base64 decode a string:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">perl -MMIME::Base64 -le <span class="s1">&#39;print decode_base64(&quot;c3RyaW5n&quot;)&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>27.URL-escape a string:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">perl -MURI::Escape -le <span class="s1">&#39;print uri_escape(&quot;1+2&quot;)&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>28.URL-unescape a string:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">perl -MURI::Escape -le <span class="s1">&#39;print uri_unescape(&quot;1%2B2&quot;)&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>29.HTML-encode a string:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">perl -MHTML::Entities -le <span class="s1">&#39;print encode_entities(&quot;&lt;br&gt;&quot;)&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>30.HTML-decode a string:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">perl -MHTML::Entities -le <span class="s1">&#39;print decode_entities(&quot;&amp;lt;br&amp;gt;&quot;)&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>31.Convert all text to uppercase:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | perl -nle <span class="s1">&#39;print uc&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>32.Camel case each line:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | perl -ple <span class="s1">&#39;s/(\w+)/\u$1/g&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>33.Strip leading whitespace (spaces, tabs) from the beginning of each line:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | perl -ple <span class="s1">&#39;s/^[ \t]+//&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>34.Strip trailing whitespace (space, tabs) from the end of each line:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | perl -ple <span class="s1">&#39;s/[ \t]+$//&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>35.Strip whitespace from the beginning and end of each line:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | perl -ple <span class="s1">&#39;s/^[ \t]+|[ \t]+$//g&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>36.Substitute (find and replace) “foo” with “bar” on lines that match “baz”:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | perl -pe <span class="s1">&#39;/baz/ &amp;&amp; s/foo/bar/&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>37.Print the first line of a file (emulate head -1):</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | perl -ne <span class="s1">&#39;print; exit&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>38.Print the first 10 lines of a file (emulate head -10):</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">perl -ne <span class="s1">&#39;print if $. &lt;= 10&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>This one-liner uses the $. special variable. This variable stands for “current line number.” </p>
-
-<p>39.Print the last line of a file:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | perl -ne <span class="s1">&#39;$last = $_; END { print $last }&#39;</span>
-</span><span class="line">or
-</span><span class="line">cat file | perl -ne <span class="s1">&#39;print if eof&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>40.Print the last 10 lines of a file (emulate tail -10):</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | perl -ne <span class="s1">&#39;push @a, $_; @a = @a[@a-10..$#a]; END { print @a }&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>41.Print only lines that do not match a regular expression:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | perl -ne <span class="s1">&#39;!/regex/ &amp;&amp; print&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>42.Print the line before a line that matches a regular expression:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | perl -ne <span class="s1">&#39;/regex/ &amp;&amp; $last &amp;&amp; print $last; $last = $_&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>43.Print the line after a line that matches a regular expression:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | perl -ne <span class="s1">&#39;if ($p) { print; $p = 0 } $p++ if /regex/&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>44.Print lines that match regex AAA and regex BBB in any order:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | perl -ne <span class="s1">&#39;/AAA/ &amp;&amp; /BBB/ &amp;&amp; print&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>45.Print lines that don’t match match regexes AAA and BBB:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | perl -ne <span class="s1">&#39;!/AAA/ &amp;&amp; !/BBB/ &amp;&amp; print&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>46.Print lines that match regex AAA followed by regex BBB followed by CCC:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | perl -ne <span class="s1">&#39;/AAA.*BBB.*CCC/ &amp;&amp; print&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>47.Print lines that are 20 chars or longer:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | perl -ne <span class="s1">&#39;print if length &gt;= 80&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>48.Print only line 13:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | perl -ne <span class="s1">&#39;$. == 13 &amp;&amp; print &amp;&amp; exit&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>49.Print all lines except line 13.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">perl -ne <span class="s1">&#39;$. != 13 &amp;&amp; print&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>50.Print only lines 13, 19 and 67:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">perl -ne <span class="s1">&#39;print if $. == 13 || $. == 19 || $. == 67&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>51.Print all lines between two regexes:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | perl -ne <span class="s1">&#39;print if /regex1/../regex2/&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>52.Print all lines from line 17 to line 30:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | perl -ne <span class="s1">&#39;print if $. &gt;= 17 &amp;&amp; $. &lt;= 30&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>53.Print the longest line:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | perl -ne <span class="s1">&#39;$l = $_ if length($_) &gt; length($l); END { print $l }&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>54.Print the shortest line:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | perl -ne <span class="s1">&#39;$s = $_ if $. == 1; $s = $_ if length($_) &lt; length($s); END { print $s }&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>55.Print all lines that contain only characters:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | perl -ne <span class="s1">&#39;print if /^[[:alpha:]]+$/&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>56.Print all lines that repeat:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | perl -ne <span class="s1">&#39;print if ++$a{$_} == 2&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>57.Print all unique lines:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | perl -ne <span class="s1">&#39;print unless $a{$_}++&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>58.To remove blank lines:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat file | perl -pi -e <span class="s1">&#39;s!^\s+?$!!&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/19/">&larr; Older</a>
@@ -707,6 +581,10 @@ cat $file | perl -Mautodie -MList::MoreUtils=none -ne &#39;chomp; push @re, $_ }
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2020/02/16/gao-deng-shu-li-tong-ji-xue-qian-yan-zhai-lu/">高等数理统计学前言摘录</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2019/08/27/%5B%3F%5D-xie-guan-yu-rnnhe-lstmhe-grude-yue-du-cai-liao/">一些关于RNN和LSTM和GRU的阅读材料</a>
@@ -744,10 +622,6 @@ cat $file | perl -Mautodie -MList::MoreUtils=none -ne &#39;chomp; push @re, $_ }
         <a href="/blog/2019/07/29/pythonzhong-bu-shu-chu-warningde-xin-xi/">Python中不输出warning的信息</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2019/07/24/vscode-remote-yuan-cheng-kai-fa-yu-diao-shi/">VScode Remote 远程开发与调试</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -756,7 +630,7 @@ cat $file | perl -Mautodie -MList::MoreUtils=none -ne &#39;chomp; push @re, $_ }
   <ul id="categories">
     <li class='category'><a href='/blog/categories/algorithms/'>Algorithms (8)</a></li>
 <li class='category'><a href='/blog/categories/bigdata/'>BigData (11)</a></li>
-<li class='category'><a href='/blog/categories/blog/'>Blog (6)</a></li>
+<li class='category'><a href='/blog/categories/blog/'>Blog (7)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
 <li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (12)</a></li>
 <li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (5)</a></li>
@@ -780,7 +654,7 @@ cat $file | perl -Mautodie -MList::MoreUtils=none -ne &#39;chomp; push @re, $_ }
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2019 - Steven Sun -
+  Copyright &copy; 2020 - Steven Sun -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

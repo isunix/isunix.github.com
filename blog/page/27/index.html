@@ -9,7 +9,8 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="While writing perl cgi scripts, when we need to add css or js files, there are two ways to add the file, one using absolute path, one using relative &hellip;">
+  <meta name="description" content="Will keep notes of some of the mojo tips I got. 1.A helper command to generate app for us. 1
+mojo generate app This will generate Mojolicious &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -93,6 +94,108 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/12/02/notes-on-mojolicious/">Notes on Mojolicious</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-12-02T20:52:52+08:00" pubdate data-updated="true">2014 年12 月2 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Will keep notes of some of the mojo tips I got.</p>
+
+<p>1.A helper command to generate app for us.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">mojo</span> <span class="n">generate</span> <span class="n">app</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>This will generate Mojolicious application directory structure.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">mojo</span> <span class="n">generate</span> <span class="n">lite_app</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>This will generate Mojolicious::Lite application for us.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">mojo</span> <span class="n">generate</span> <span class="n">lite_app</span> <span class="n">hello</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>This will generate the app with the name “hello”</p>
+
+<p>2.about deploying your app to heroku</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">cpanm</span> <span class="nn">Mojolicious::Command::deploy::</span><span class="n">heroku</span>
+</span><span class="line"><span class="n">mojo</span> <span class="n">generate</span> <span class="n">lite_app</span> <span class="n">bigfan</span>
+</span><span class="line"><span class="o">./</span><span class="n">bigfan</span> <span class="n">deploy</span> <span class="n">heroku</span> <span class="o">--</span><span class="n">create</span>
+</span><span class="line"><span class="ow">or</span> <span class="n">we</span> <span class="n">can</span> <span class="n">assign</span> <span class="k">our</span> <span class="n">app</span> <span class="n">name</span> <span class="n">like</span> <span class="n">the</span> <span class="n">following:</span>
+</span><span class="line"><span class="o">./</span><span class="n">bigfan</span> <span class="n">deploy</span> <span class="n">heroku</span> <span class="o">-</span><span class="n">n</span> <span class="n">bigfan</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>3.In mojo, something like “hello.html.ep”, here “ep” stands for “embedded perl”, we can have html.ep, json.ep, txt.ep.</p>
+
+<p>4.Three kinds of placeholders.</p>
+
+<p>generic placeholders:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">get</span> <span class="s">&#39;/:fname/:lname&#39;</span> <span class="o">=&gt;</span> <span class="n">sub</span><span class="p">{</span>
+</span><span class="line">	<span class="nb">shift</span><span class="o">-&gt;</span><span class="n">render</span><span class="p">(</span><span class="err">&#39;</span><span class="n">capture</span><span class="p">);</span>
+</span><span class="line"><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>relaxed placeholders:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">get</span> <span class="s">&#39;/:fname/(.lname)&#39;</span> <span class="o">=&gt;</span> <span class="n">sub</span><span class="p">{</span>
+</span><span class="line">	<span class="nb">shift</span><span class="o">-&gt;</span><span class="n">render</span><span class="p">(</span><span class="err">&#39;</span><span class="n">capture</span><span class="p">);</span>
+</span><span class="line"><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>wildcard placeholders:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">get</span> <span class="s">&#39;/:fname/(*lname)&#39;</span> <span class="o">=&gt;</span> <span class="n">sub</span><span class="p">{</span>
+</span><span class="line">	<span class="nb">shift</span><span class="o">-&gt;</span><span class="n">render</span><span class="p">(</span><span class="err">&#39;</span><span class="n">capture</span><span class="p">);</span>
+</span><span class="line"><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -283,46 +386,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/11/18/print-stderr-in-perl/">Print Stderr in Perl</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-11-18T16:52:16+08:00" pubdate data-updated="true">2014 年11 月18 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I better not write one by myself, there is a very good article on this:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line">http://perlmaven.com/stdout-stderr-and-redirection
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/28/">&larr; Older</a>
@@ -338,6 +401,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2020/02/16/gao-deng-shu-li-tong-ji-xue-qian-yan-zhai-lu/">高等数理统计学前言摘录</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2019/08/27/%5B%3F%5D-xie-guan-yu-rnnhe-lstmhe-grude-yue-du-cai-liao/">一些关于RNN和LSTM和GRU的阅读材料</a>
@@ -375,10 +442,6 @@
         <a href="/blog/2019/07/29/pythonzhong-bu-shu-chu-warningde-xin-xi/">Python中不输出warning的信息</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2019/07/24/vscode-remote-yuan-cheng-kai-fa-yu-diao-shi/">VScode Remote 远程开发与调试</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -387,7 +450,7 @@
   <ul id="categories">
     <li class='category'><a href='/blog/categories/algorithms/'>Algorithms (8)</a></li>
 <li class='category'><a href='/blog/categories/bigdata/'>BigData (11)</a></li>
-<li class='category'><a href='/blog/categories/blog/'>Blog (6)</a></li>
+<li class='category'><a href='/blog/categories/blog/'>Blog (7)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
 <li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (12)</a></li>
 <li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (5)</a></li>
@@ -411,7 +474,7 @@
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2019 - Steven Sun -
+  Copyright &copy; 2020 - Steven Sun -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

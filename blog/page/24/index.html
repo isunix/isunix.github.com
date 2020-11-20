@@ -9,8 +9,39 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="There is a “tap” method in Ruby and I find it is very useful. The definitionof “tap” in ruby documentaion is: 1
-Yields self to the block, and then &hellip;">
+  <meta name="description" content="Will use python linked list to solve the following problem: 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -94,6 +125,178 @@ Yields self to the block, and then &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/07/27/python-linked-list-example/">Python Linked List Example</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-07-27T16:21:27+08:00" pubdate data-updated="true">2015 年7 月27 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Will use python linked list to solve the following problem:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+<span class="line-number">35</span>
+<span class="line-number">36</span>
+<span class="line-number">37</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="k">class</span> <span class="nc">Node</span><span class="p">:</span>
+</span><span class="line">    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="bp">None</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class="line">        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="k">class</span> <span class="nc">LinkedList</span><span class="p">:</span>
+</span><span class="line">    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">head</span> <span class="o">=</span> <span class="bp">None</span>
+</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">tail</span> <span class="o">=</span> <span class="bp">None</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">def</span> <span class="nf">addNode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+</span><span class="line">        <span class="n">node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</span><span class="line">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+</span><span class="line">            <span class="bp">self</span><span class="o">.</span><span class="n">head</span> <span class="o">=</span> <span class="n">node</span>
+</span><span class="line">            <span class="bp">self</span><span class="o">.</span><span class="n">tail</span> <span class="o">=</span> <span class="n">node</span>
+</span><span class="line">        <span class="k">else</span><span class="p">:</span>
+</span><span class="line">            <span class="bp">self</span><span class="o">.</span><span class="n">tail</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">node</span>
+</span><span class="line">            <span class="bp">self</span><span class="o">.</span><span class="n">tail</span> <span class="o">=</span> <span class="n">node</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class="line">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+</span><span class="line">            <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span>
+</span><span class="line">            <span class="n">nodeStore</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">index</span><span class="o">.</span><span class="n">value</span><span class="p">)]</span>
+</span><span class="line">            <span class="k">while</span> <span class="n">index</span><span class="o">.</span><span class="n">next</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+</span><span class="line">                <span class="n">index</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">next</span>
+</span><span class="line">                <span class="n">nodeStore</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">index</span><span class="o">.</span><span class="n">value</span><span class="p">))</span>
+</span><span class="line">            <span class="k">return</span> <span class="s">&quot;LinkedList  [ &quot;</span> <span class="o">+</span> <span class="s">&quot;-&gt;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">nodeStore</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot; ]&quot;</span>
+</span><span class="line">        <span class="k">return</span> <span class="s">&quot;LinkedList  []&quot;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">def</span> <span class="nf">generatedLinkedList</span><span class="p">(</span><span class="n">numArray</span><span class="p">):</span>
+</span><span class="line">    <span class="n">linkedlist</span> <span class="o">=</span> <span class="n">LinkedList</span><span class="p">()</span>
+</span><span class="line">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">numArray</span><span class="p">)):</span>
+</span><span class="line">        <span class="n">linkedlist</span><span class="o">.</span><span class="n">addNode</span><span class="p">(</span><span class="n">numArray</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+</span><span class="line">    <span class="k">return</span> <span class="n">linkedlist</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Then we will start to solve the problem:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="kn">from</span> <span class="nn">LinkedList</span> <span class="kn">import</span> <span class="o">*</span>
+</span><span class="line">
+</span><span class="line"><span class="k">class</span> <span class="nc">ListsSum</span><span class="p">:</span>
+</span><span class="line">    <span class="k">def</span> <span class="nf">addLists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">l1</span><span class="p">,</span> <span class="n">l2</span><span class="p">):</span>
+</span><span class="line">        <span class="n">p1</span> <span class="o">=</span> <span class="n">l1</span><span class="o">.</span><span class="n">head</span>
+</span><span class="line">        <span class="n">p2</span> <span class="o">=</span> <span class="n">l2</span><span class="o">.</span><span class="n">head</span>
+</span><span class="line">        <span class="n">carry</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class="line">        <span class="n">linkedlist_sum</span> <span class="o">=</span> <span class="n">LinkedList</span><span class="p">()</span>
+</span><span class="line">        <span class="k">while</span> <span class="p">(</span><span class="n">p1</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">p2</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">carry</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
+</span><span class="line">            <span class="n">dig_sum</span> <span class="o">=</span> <span class="n">carry</span>
+</span><span class="line">            <span class="k">if</span> <span class="n">p1</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+</span><span class="line">                <span class="n">dig_sum</span> <span class="o">+=</span> <span class="n">p1</span><span class="o">.</span><span class="n">value</span>
+</span><span class="line">                <span class="n">p1</span> <span class="o">=</span> <span class="n">p1</span><span class="o">.</span><span class="n">next</span>
+</span><span class="line">            <span class="k">if</span> <span class="n">p2</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+</span><span class="line">                <span class="n">dig_sum</span> <span class="o">+=</span> <span class="n">p2</span><span class="o">.</span><span class="n">value</span>
+</span><span class="line">                <span class="n">p2</span> <span class="o">=</span> <span class="n">p2</span><span class="o">.</span><span class="n">next</span>
+</span><span class="line">
+</span><span class="line">            <span class="n">linkedlist_sum</span><span class="o">.</span><span class="n">addNode</span><span class="p">(</span><span class="n">dig_sum</span><span class="o">%</span><span class="mi">10</span><span class="p">)</span>
+</span><span class="line">            <span class="n">carry</span> <span class="o">=</span> <span class="n">dig_sum</span><span class="o">/</span><span class="mi">10</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">linkedlist_sum</span>
+</span><span class="line">
+</span><span class="line"><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+</span><span class="line">    <span class="n">solution</span> <span class="o">=</span> <span class="n">ListsSum</span><span class="p">()</span>
+</span><span class="line">    <span class="n">list1</span> <span class="o">=</span> <span class="n">generatedLinkedList</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+</span><span class="line">    <span class="n">list2</span> <span class="o">=</span> <span class="n">generatedLinkedList</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span>
+</span><span class="line">    <span class="k">print</span><span class="p">(</span><span class="n">list1</span><span class="p">)</span>
+</span><span class="line">    <span class="k">print</span><span class="p">(</span><span class="n">list2</span><span class="p">)</span>
+</span><span class="line">    <span class="k">print</span><span class="p">(</span><span class="n">solution</span><span class="o">.</span><span class="n">addLists</span><span class="p">(</span><span class="n">list1</span><span class="p">,</span><span class="n">list2</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -247,50 +450,6 @@ Yields self to the block, and then &hellip;">
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/06/19/tmux-cant-create-socket-permission-denied/">Tmux:can&#8217;t Create Socket: Permission Denied</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-06-19T13:04:00+08:00" pubdate data-updated="true">2015 年6 月19 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>my tmux’s sockets are output to the dir “~/tmp”, however today I encountered the problem saying “can’t create socket: Permission denied” while I start tmux.</p>
-
-<p>The reason is I have changed the rights on the folder ~/tmp/tmux* , so after the following command:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">chmod 700 -R tmux*
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>It is back to normal.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/25/">&larr; Older</a>
@@ -306,6 +465,10 @@ Yields self to the block, and then &hellip;">
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2020/11/20/sparksqlru-men-he-jin-jie/">SparkSQL入门和进阶</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2020/02/16/gao-deng-shu-li-tong-ji-xue-qian-yan-zhai-lu/">高等数理统计学前言摘录</a>
@@ -343,10 +506,6 @@ Yields self to the block, and then &hellip;">
         <a href="/blog/2019/07/30/macshang-dan-ji-qi-pysparkyu-dao-de-wen-ti-debug/">Mac上单机起PySpark遇到的问题debug</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2019/07/29/pythonzhong-bu-shu-chu-warningde-xin-xi/">Python中不输出warning的信息</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -357,7 +516,7 @@ Yields self to the block, and then &hellip;">
 <li class='category'><a href='/blog/categories/bigdata/'>BigData (11)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (7)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
-<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (12)</a></li>
+<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (13)</a></li>
 <li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (5)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (2)</a></li>
 <li class='category'><a href='/blog/categories/fun/'>Fun (1)</a></li>

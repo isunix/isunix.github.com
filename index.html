@@ -9,7 +9,7 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="参考链接: SparkSQL DSL开发 Column Dataset functions sql ">
+  <meta name="description" content="常用的函数： select、lit、as、groupBy、agg、sum、as、where、withColumn、 col、 when、 otherwise、 join、withColumnRenamed、 isin、 cast、 $、 union、 gt、 struct、sort、desc、 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -122,7 +122,30 @@
   </header>
 
 
-  <div class="entry-content"><h2 id="section">参考链接:</h2>
+  <div class="entry-content"><h2 id="section">常用的函数：</h2>
+
+<p><code>select</code>、<code>lit</code>、<code>as</code>、<code>groupBy</code>、<code>agg</code>、<code>sum</code>、<code>as</code>、<code>where</code>、<code>withColumn</code>、 <code>col</code>、 <code>when</code>、 <code>otherwise</code>、 <code>join</code>、<code>withColumnRenamed</code>、 <code>isin</code>、 <code>cast</code>、 <code>$</code>、 <code>union</code>、 <code>gt</code>、 <code>struct</code>、<code>sort</code>、<code>desc</code>、<code>show</code>、<code>orderBy</code>、<code>asc</code>、<code>repartition</code>、<code>sortWithinPartitions</code>、<code>filter</code>、<code>selectExpr</code>、<code>pivot</code>、<code>expr</code>、<code>row_number</code>、<code>over</code>、 <code>partitionBy</code></p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+</pre></td><td class="code"><pre><code class="scala"><span class="line"><span class="n">df</span>
+</span><span class="line"><span class="o">.</span><span class="n">select</span><span class="o">(</span><span class="n">$</span><span class="s">&quot;id&quot;</span><span class="o">,</span><span class="n">lit</span><span class="o">(</span><span class="mi">1</span><span class="o">).</span><span class="n">as</span><span class="o">(</span><span class="s">&quot;cnt&quot;</span><span class="o">))</span>
+</span><span class="line"><span class="o">.</span><span class="n">groupBy</span><span class="o">(</span><span class="s">&quot;idd&quot;</span><span class="o">)</span>
+</span><span class="line"><span class="o">.</span><span class="n">agg</span><span class="o">(</span><span class="n">sum</span><span class="o">(</span><span class="s">&quot;cnt&quot;</span><span class="o">).</span><span class="n">as</span><span class="o">(</span><span class="s">&quot;total&quot;</span><span class="o">))</span>
+</span><span class="line"><span class="o">.</span><span class="n">where</span><span class="o">(</span><span class="s">&quot;total &gt;=&quot;</span> <span class="o">+</span> <span class="n">cnt2</span><span class="o">)</span>
+</span><span class="line"><span class="o">.</span><span class="n">select</span><span class="o">(</span><span class="s">&quot;uid&quot;</span><span class="o">,</span><span class="s">&quot;total&quot;</span><span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<h2 id="udf">UDF：</h2>
+
+<p><code>spark.udf.register
+</code></p>
+
+<h2 id="section-1">参考链接:</h2>
 <ul>
   <li><a href="https://blog.csdn.net/weixin_40652340/article/details/79207455">SparkSQL DSL开发
 </a></li>
@@ -130,6 +153,11 @@
   <li><a href="http://spark.apache.org/docs/latest/api/scala/org/apache/spark/sql/Dataset.html">Dataset</a></li>
   <li><a href="http://spark.apache.org/docs/latest/api/scala/org/apache/spark/sql/functions\$.html">functions</a></li>
   <li><a href="http://spark.apache.org/docs/latest/api/scala/org/apache/spark/sql/index.html\#DataFrame=org.apache.spark.sql.Dataset\[org.apache.spark.sql.Row\]">sql</a></li>
+  <li><a href="https://spark.apache.org/docs/latest/sql-ref-functions-udf-scalar.html">Scalar User Defined Functions (UDFs)
+</a></li>
+  <li><a href="https://www.cnblogs.com/Diyo/p/11410895.html">SparkSQL DSL 随便写写</a></li>
+  <li><a href="https://blog.csdn.net/weixin_42419342/article/details/108918139?utm_medium=distribute.pc_aggpage_search_result.none-task-blog-2~all~sobaiduend\~default-2-108918139.nonecase&amp;utm_term=sparksql中dsl&amp;spm=1000.2123.3001.4430">SparkSQL案例——用SQL和DSL两种语法格式，求出用户连续登录天数
+</a></li>
 </ul>
 </div>
   

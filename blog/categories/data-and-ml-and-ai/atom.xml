@@ -4,7 +4,7 @@
   <title><![CDATA[catogories：Data&ML&AI | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/data-and-ml-and-ai/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2020-11-21T18:51:32+08:00</updated>
+  <updated>2020-11-21T18:54:25+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -18,7 +18,26 @@
     <link href="http://isunix.github.io/blog/2020/11/20/sparksqlru-men-he-jin-jie/"/>
     <updated>2020-11-20T22:08:55+08:00</updated>
     <id>http://isunix.github.io/blog/2020/11/20/sparksqlru-men-he-jin-jie</id>
-    <content type="html"><![CDATA[<h2 id="section">参考链接:</h2>
+    <content type="html"><![CDATA[<h2 id="section">常用的函数：</h2>
+
+<p><code>select</code>、<code>lit</code>、<code>as</code>、<code>groupBy</code>、<code>agg</code>、<code>sum</code>、<code>as</code>、<code>where</code>、<code>withColumn</code>、 <code>col</code>、 <code>when</code>、 <code>otherwise</code>、 <code>join</code>、<code>withColumnRenamed</code>、 <code>isin</code>、 <code>cast</code>、 <code>$</code>、 <code>union</code>、 <code>gt</code>、 <code>struct</code>、<code>sort</code>、<code>desc</code>、<code>show</code>、<code>orderBy</code>、<code>asc</code>、<code>repartition</code>、<code>sortWithinPartitions</code>、<code>filter</code>、<code>selectExpr</code>、<code>pivot</code>、<code>expr</code>、<code>row_number</code>、<code>over</code>、 <code>partitionBy</code></p>
+
+<p>```scala
+df
+.select($”id”,lit(1).as(“cnt”)) 
+.groupBy(“idd”) 
+.agg(sum(“cnt”).as(“total”))
+.where(“total &gt;=” + cnt2) 
+.select(“uid”,”total”)</p>
+
+<p>```</p>
+
+<h2 id="udf">UDF：</h2>
+
+<p><code>spark.udf.register
+</code></p>
+
+<h2 id="section-1">参考链接:</h2>
 <ul>
   <li><a href="https://blog.csdn.net/weixin_40652340/article/details/79207455">SparkSQL DSL开发
 </a></li>
@@ -26,6 +45,11 @@
   <li><a href="http://spark.apache.org/docs/latest/api/scala/org/apache/spark/sql/Dataset.html">Dataset</a></li>
   <li><a href="http://spark.apache.org/docs/latest/api/scala/org/apache/spark/sql/functions\$.html">functions</a></li>
   <li><a href="http://spark.apache.org/docs/latest/api/scala/org/apache/spark/sql/index.html\#DataFrame=org.apache.spark.sql.Dataset\[org.apache.spark.sql.Row\]">sql</a></li>
+  <li><a href="https://spark.apache.org/docs/latest/sql-ref-functions-udf-scalar.html">Scalar User Defined Functions (UDFs)
+</a></li>
+  <li><a href="https://www.cnblogs.com/Diyo/p/11410895.html">SparkSQL DSL 随便写写</a></li>
+  <li><a href="https://blog.csdn.net/weixin_42419342/article/details/108918139?utm_medium=distribute.pc_aggpage_search_result.none-task-blog-2~all~sobaiduend\~default-2-108918139.nonecase&amp;utm_term=sparksql中dsl&amp;spm=1000.2123.3001.4430">SparkSQL案例——用SQL和DSL两种语法格式，求出用户连续登录天数
+</a></li>
 </ul>
 ]]></content>
   </entry>

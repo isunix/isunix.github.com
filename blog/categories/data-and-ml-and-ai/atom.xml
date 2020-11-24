@@ -4,7 +4,7 @@
   <title><![CDATA[catogories：Data&ML&AI | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/data-and-ml-and-ai/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2020-11-21T18:54:25+08:00</updated>
+  <updated>2020-11-24T17:59:57+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,115 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[文本主题挖掘浅尝辄止]]></title>
+    <link href="http://isunix.github.io/blog/2020/11/24/wen-ben-zhu-ti-wa-jue-qian-chang-zhe-zhi/"/>
+    <updated>2020-11-24T17:32:37+08:00</updated>
+    <id>http://isunix.github.io/blog/2020/11/24/wen-ben-zhu-ti-wa-jue-qian-chang-zhe-zhi</id>
+    <content type="html"><![CDATA[<h2 id="section">前言:</h2>
+
+<p>LDA模型还是有点复杂了，目前完全没有掌握，处于调包侠的阶段.</p>
+
+<h2 id="section-1">代码:</h2>
+
+<p>```python
+import re
+import sys
+import jieba</p>
+
+<p>user_dict_file = “my_dict_watch_77.csv”
+jieba.load_userdict(user_dict_file)</p>
+
+<p>stop_words_file = “hit_stopwords.txt”
+stopwords = open(stop_words_file, ‘r’, encoding = ‘utf8’).readlines()
+stopwords = [w.strip() for w in stopwords]</p>
+
+<p>file_to_process = “watch_77.csv”</p>
+
+<p>def word_cut(input_file):
+    result_arr = []</p>
+
+<pre><code>with open(file_to_process, 'r') as f:
+for line in f.readlines():
+    line = line.strip()
+    if len(line) &lt; 3:
+        continue
+
+    out_str = ""
+    re_chinese = re.compile(u"[\u4e00-\u9fa5]+")
+    w = re.sub(r'[A-Za-z0-9]|\d+', '', str(line)) # removed chars, but what about "app"? 
+    seg_list = jieba.lcut(w, cut_all=False)
+
+    for word in seg_list:
+        if word not in stopwords and word != '\t' and re_chinese.search(word, 0) and len(word.strip()) &gt;= 2:
+            out_str += word
+            out_str += " "
+
+    result_arr.append(out_str.strip().split(" "))
+return result_arr
+</code></pre>
+
+<p>seg_out_file = “out_file_20201124.txt”
+result_arr = word_cut(file_to_process)</p>
+
+<p>with open(seg_out_file, ‘w’,encoding = ‘utf-8’) as file:
+        file.write(str(result_arr))</p>
+
+<p>from jieba import analyse
+tfidf = analyse.extract_tags</p>
+
+<p>with open(seg_out_file, ‘r’, encoding=’utf-8’) as file:
+    texts = file.readlines()</p>
+
+<p>keywords = jieba.analyse.extract_tags(str(texts),
+                                      topK=150,
+                                      withWeight=True,
+                                      allowPOS=(‘nr’, ‘ns’, ‘nt’, ‘nz’, ‘n’, ‘vn’, ‘v’))
+for item in keywords:
+    print(item)</p>
+
+<p>from gensim import corpora, models, similarities
+from gensim.models import LdaModel
+from gensim.corpora import Dictionary
+import pyLDAvis
+import pyLDAvis.gensim</p>
+
+<p>dictionary = corpora.Dictionary(result_arr)
+corpus = [dictionary.doc2bow(text) for text in result_arr]</p>
+
+<p>lda = LdaModel(corpus=corpus, id2word=dictionary, num_topics=10)
+lda.print_topics(2)</p>
+
+<p>vis_data = pyLDAvis.gensim.prepare(lda, corpus, dictionary)
+pyLDAvis.display(vis_data)
+```</p>
+
+<h2 id="section-2">参考:</h2>
+<ul>
+  <li><a href="https://en.wikipedia.org/wiki/Latent_Dirichlet_allocation">LDA wiki</a></li>
+  <li><a href="https://juejin.cn/post/6844904094771970056">文本挖掘之LDA主题模型</a></li>
+  <li><a href="https://scikit-learn.org/dev/auto_examples/applications/plot_topics_extraction_with_nmf_lda.html#sphx-glr-auto-examples-applications-plot-topics-extraction-with-nmf-lda-py">LDA sk-learn</a></li>
+  <li><a href="https://github.com/Nitro/scalda">LDA Scala</a></li>
+  <li><a href="https://github.com/XiaoMi/MiNLP/tree/main/minlp-tokenizer">MiNLP-Tokenizer</a></li>
+  <li><a href="https://www.cnblogs.com/pinard/p/6831308.html">文本主题模型之LDA(一) LDA基础： 刘建平</a></li>
+  <li><a href="https://zhuanlan.zhihu.com/p/263065290">文本主题模型之LDA</a></li>
+  <li><a href="https://github.com/isnowfy/snownlp">snownlp</a></li>
+  <li><a href="https://www.cnblogs.com/Luv-GEM/p/10881838.html">文本主题抽取：用gensim训练LDA模型</a></li>
+  <li><a href="https://github.com/fxsjy/jieba">jieba</a></li>
+  <li><a href="https://github.com/lancopku/pkuseg-python">pkuseg-python</a></li>
+  <li><a href="https://github.com/kimmy-sil/Python-beginning-practice">中文分词处理</a></li>
+  <li><a href="https://blog.csdn.net/qq_16633405/article/details/80578804">Doc2Bow简介与实践Demo</a></li>
+  <li><a href="https://www.analyticsvidhya.com/blog/2016/08/beginners-guide-to-topic-modeling-in-python/">Beginners Guide to Topic Modeling in Python</a></li>
+  <li><a href="https://blog.csdn.net/selinda001/article/details/80446766">主题模型 LDA 入门（附 Python 代码）</a></li>
+  <li><a href="https://github.com/goto456/stopwords">中文常用停用词表</a></li>
+  <li><a href="https://towardsdatascience.com/topic-modeling-and-latent-dirichlet-allocation-in-python-9bf156893c24">Topic Modeling and Latent Dirichlet Allocation (LDA) in Python</a></li>
+  <li><a href="https://blog.csdn.net/vs412237401/article/details/52238248">用docsim/doc2vec/LSH比较两个文档之间的相似度</a></li>
+  <li><a href="https://github.com/amueller/word_cloud">wordcloud</a></li>
+  <li><a href="https://github.com/bmabey/pyLDAvis">pyLDAvis</a></li>
+</ul>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[SparkSQL入门和进阶]]></title>
@@ -300,50 +409,6 @@ xx | yy | zz | dd | ee | ff | gg | hh
   <li>
     <p><a href="[https://www.datascienceatthecommandline.com](https://www.datascienceatthecommandline.com/)">Data Science at the Command Line</a></p>
   </li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Gradient Boosting Algorithm]]></title>
-    <link href="http://isunix.github.io/blog/2019/08/14/gradient-boosting-algorithm/"/>
-    <updated>2019-08-14T13:51:36+08:00</updated>
-    <id>http://isunix.github.io/blog/2019/08/14/gradient-boosting-algorithm</id>
-    <content type="html"><![CDATA[<p>Gradient Boosting Algorithm 算法参考链接：</p>
-
-<ul>
-  <li><a href="https://arxiv.org/pdf/1603.02754v1.pdf">XGBoost: A Scalable Tree Boosting System</a></li>
-  <li><a href="https://www.analyticsvidhya.com/blog/2017/06/which-algorithm-takes-the-crown-light-gbm-vs-xgboost/">Which algorithm takes the crown: Light GBM vs XGBOOST?</a></li>
-  <li><a href="https://www.analyticsvidhya.com/blog/2015/09/complete-guide-boosting-methods/">Learn Gradient Boosting Algorithm for better predictions (with codes in R)</a></li>
-  <li><a href="https://www.analyticsvidhya.com/blog/2015/05/boosting-algorithms-simplified/">Getting smart with Machine Learning – AdaBoost and Gradient Boost</a></li>
-  <li><a href="https://www.analyticsvidhya.com/blog/2015/11/quick-introduction-boosting-algorithms-machine-learning/">Quick Introduction to Boosting Algorithms in Machine Learning</a></li>
-  <li><a href="https://www.analyticsvidhya.com/blog/2016/02/complete-guide-parameter-tuning-gradient-boosting-gbm-python/">Complete Machine Learning Guide to Parameter Tuning in Gradient Boosting (GBM) in Python</a></li>
-  <li><a href="https://www.analyticsvidhya.com/blog/2016/03/complete-guide-parameter-tuning-xgboost-with-codes-python/">Complete Guide to Parameter Tuning in XGBoost with codes in Python</a></li>
-  <li><a href="https://segmentfault.com/a/1190000014040317">XGboost数据比赛实战之调参篇</a></li>
-  <li><a href="http://www.sohu.com/a/226265476_609569">通俗的将Xgboost的原理讲明白</a></li>
-  <li><a href="https://blog.csdn.net/app_12062011/article/details/52136117">决策树</a> 和 <a href="https://blog.csdn.net/zhaocj/article/details/50503450">决策树源码剖析</a></li>
-  <li><a href="[http://matafight.github.io/2017/03/14/XGBoost-%E7%AE%80%E4%BB%8B/](http://matafight.github.io/2017/03/14/XGBoost-简介/)">XGBoost 笔记</a></li>
-  <li><a href="https://blog.csdn.net/liuzonghao88/article/details/88808408">XGBoost如何避免过拟合</a></li>
-  <li><a href="https://blog.csdn.net/u012735708/article/details/83651832">XGBoost调参笔记</a></li>
-  <li><a href="https://blog.csdn.net/a358463121/article/details/68617389">xgboost中的数学原理</a></li>
-  <li><a href="https://blog.csdn.net/sb19931201/article/details/52557382">xgboost入门与实战</a></li>
-  <li><a href="https://blog.csdn.net/xiaocong1990/article/details/55107239">XGBoost参数调优</a></li>
-  <li><a href="https://blog.csdn.net/Totoro1745/article/details/53328725">xgboost：一个纯小白的学习历程</a></li>
-  <li><a href="https://blog.csdn.net/github_38414650/article/details/76061893">通俗、有逻辑的写一篇说下Xgboost的原理</a></li>
-  <li><a href="https://towardsdatascience.com/boosting-algorithm-gbm-97737c63daa3">Boosting algorithm: GBM</a></li>
-  <li><a href="https://www.imooc.com/article/43784?block_id=tuijian_wz">LightGBM 调参方法</a></li>
-  <li><a href="https://www.kaggle.com/c/LANL-Earthquake-Prediction/discussion/89909">Good summary of XGBoost vs CatBoost vs LightGBM</a></li>
-  <li><a href="https://www.kaggle.com/samratp/lightgbm-xgboost-catboost">LightGBM + XGBoost + Catboost</a></li>
-  <li><a href="https://datascience.stackexchange.com/questions/49567/lightgbm-vs-xgboost-vs-catboost">lightgbm-vs-xgboost-vs-catboost</a></li>
-  <li><a href="https://medium.com/kaggle-nyc/gradient-boosting-decision-trees-xgboost-vs-lightgbm-and-catboost-72df6979e0bb">Gradient Boosting Decision trees: XGBoost vs LightGBM (and catboost)</a></li>
-  <li><a href="https://towardsdatascience.com/catboost-vs-light-gbm-vs-xgboost-5f93620723db">CatBoost vs. Light GBM vs. XGBoost</a></li>
-  <li><a href="https://blog.csdn.net/LrS62520kV/article/details/79620615">CatBoost vs. Light GBM vs. XGBoost 的中文翻译</a></li>
-  <li><a href="https://stackoverflow.com/questions/44937698/lightgbm-oserror-library-not-loaded">关于lightgbm的安装</a></li>
-  <li><a href="https://towardsdatascience.com/custom-loss-functions-for-gradient-boosting-f79c1b40466d">Custom Loss Functions for Gradient Boosting</a></li>
-  <li><a href="https://github.com/Microsoft/LightGBM/blob/master/examples/README.md#machine-learning-challenge-winning-solutions">machine-learning-challenge-winning-solutions-lightgbm-winned</a></li>
-  <li><a href="https://www.jianshu.com/p/b4ac0596e5ef">LightGBM 如何调参</a></li>
-  <li><a href="https://www.cnblogs.com/ljygoodgoodstudydaydayup/p/6665239.html">xgboost调参</a></li>
 </ul>
 
 ]]></content>

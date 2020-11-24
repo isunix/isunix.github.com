@@ -9,8 +9,8 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="The following blogs are referenced, 1
-http://www.catonmat.net/blog/awk-one-liners-explained-part-one/ And I will list some of the commands I think &hellip;">
+  <meta name="description" content="I want to down the lecture notes on the page 1
+http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-001-structure-and- &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -94,6 +94,55 @@ http://www.catonmat.net/blog/awk-one-liners-explained-part-one/ And I will list 
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/12/31/wget-several-files-using-bash-cmd/">Wget Several Files Using Bash Cmd</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-12-31T18:36:09+08:00" pubdate data-updated="true">2015 年12 月31 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I want to down the lecture notes on the page </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line">http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-001-structure-and-interpretation-of-computer-programs-spring-2005/lecture-notes/
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Here is the command I am using.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">wget http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-001-structure-and-interpretation-of-computer-programs-spring-2005/lecture-notes/lecture<span class="o">{</span>1..26<span class="o">}</span>webhand.pdf
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>The sad thing is not all the sequences are consecutive.</p>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -764,80 +813,6 @@ http://www.catonmat.net/blog/awk-one-liners-explained-part-one/ And I will list 
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/12/17/perl-secret-operators-and-constants/">Perl Secret Operators and Constants</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-12-17T10:37:47+08:00" pubdate data-updated="true">2015 年12 月17 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Several days I met some perl one-liner like this:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">cat <span class="nv">$file</span> | perl -Mautodie -MList::MoreUtils<span class="o">=</span>none -ne <span class="s1">&#39;chomp; push @re, $_ }{ open $fh, $ENV{CF}; @s = &lt;$fh&gt;; foreach $s (@s) { print $s if none { $s =~ qr/$_/ } @re };&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>I have no idea what the “}{“ here means, at first I thought it maybe some typo.</p>
-
-<p>Then my colleagues showed me the following page, which lists many weird perl operators.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line">http://search.cpan.org/dist/perlsecret/lib/perlsecret.pod
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>To have a look at how it is used in the backend:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nv">$ </span>perl -MO<span class="o">=</span>Deparse -lne <span class="s1">&#39;}{print$.&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>It will give the following code:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="o">-</span><span class="n">e</span> <span class="n">syntax</span> <span class="n">OK</span>
-</span><span class="line">    <span class="k">BEGIN</span> <span class="p">{</span> <span class="vg">$/</span> <span class="o">=</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span> <span class="vg">$\</span> <span class="o">=</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span> <span class="p">}</span>
-</span><span class="line">    <span class="n">LINE:</span> <span class="k">while</span> <span class="p">(</span><span class="nb">defined</span><span class="p">(</span><span class="nv">$_</span> <span class="o">=</span> <span class="sr">&lt;ARGV&gt;</span><span class="p">))</span> <span class="p">{</span>
-</span><span class="line">        <span class="nb">chomp</span> <span class="nv">$_</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">    <span class="p">{</span>
-</span><span class="line">        <span class="k">print</span> <span class="vg">$.</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/19/">&larr; Older</a>
@@ -853,6 +828,10 @@ http://www.catonmat.net/blog/awk-one-liners-explained-part-one/ And I will list 
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2020/11/24/wen-ben-zhu-ti-wa-jue-qian-chang-zhe-zhi/">文本主题挖掘浅尝辄止</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2020/11/20/sparksqlru-men-he-jin-jie/">SparkSQL入门和进阶</a>
@@ -890,10 +869,6 @@ http://www.catonmat.net/blog/awk-one-liners-explained-part-one/ And I will list 
         <a href="/blog/2019/08/01/shi-yong-sparkde-mllibjin-xing-ji-qi-xue-xi/">使用Spark的MLlib进行机器学习</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2019/07/30/macshang-dan-ji-qi-pysparkyu-dao-de-wen-ti-debug/">Mac上单机起PySpark遇到的问题debug</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -904,7 +879,7 @@ http://www.catonmat.net/blog/awk-one-liners-explained-part-one/ And I will list 
 <li class='category'><a href='/blog/categories/bigdata/'>BigData (11)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (7)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
-<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (13)</a></li>
+<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (14)</a></li>
 <li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (5)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (2)</a></li>
 <li class='category'><a href='/blog/categories/fun/'>Fun (1)</a></li>

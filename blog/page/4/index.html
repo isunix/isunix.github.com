@@ -9,9 +9,14 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="今天在本地起个pyspark 发现总是遇到 1
-Caused by: java.net.UnknownHostException: master: nodename nor servname provided, or not known
-尝试了设置 SPARK_HOME, HADOOP_HOME &hellip;">
+  <meta name="description" content="1.比如我们有个 case class 1
+case class CaseClassTest(user: String, name: String) 我们通过使用mapPartitions来进行操作， 注意此处mapPartitions的用法: 1
+2
+3
+4
+5
+6
+val mapResult &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -95,6 +100,92 @@ Caused by: java.net.UnknownHostException: master: nodename nor servname provided
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2019/08/01/shi-yong-sparkde-mllibjin-xing-ji-qi-xue-xi/">使用Spark的MLlib进行机器学习</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2019-08-01T17:55:54+08:00" pubdate data-updated="true">2019 年8 月1 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>1.比如我们有个 case class</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="scala"><span class="line"><span class="k">case</span> <span class="k">class</span> <span class="nc">CaseClassTest</span><span class="o">(</span><span class="n">user</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">name</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>我们通过使用<code>mapPartitions</code>来进行操作， 注意此处<code>mapPartitions</code>的用法:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+</pre></td><td class="code"><pre><code class="scala"><span class="line"><span class="k">val</span> <span class="n">mapResult</span> <span class="k">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">textFile</span><span class="o">(</span><span class="n">input</span><span class="o">).</span><span class="n">map</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="n">split</span><span class="o">(</span><span class="s">&quot;\t&quot;</span><span class="o">)).</span><span class="n">mapPartitions</span> <span class="o">{</span>
+</span><span class="line">      <span class="n">iter</span> <span class="k">=&gt;</span>
+</span><span class="line">        <span class="n">iter</span><span class="o">.</span><span class="n">map</span> <span class="o">{</span>
+</span><span class="line">          <span class="n">iterms</span> <span class="k">=&gt;</span> <span class="nc">CaseClassTest</span><span class="o">(</span><span class="n">iterms</span><span class="o">(</span><span class="mi">0</span><span class="o">),</span> <span class="n">iterms</span><span class="o">(</span><span class="mi">1</span><span class="o">))</span>
+</span><span class="line">        <span class="o">}</span>
+</span><span class="line">    <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>2.reduceByKey<code>  和 </code>case` 的用法</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class="scala"><span class="line"><span class="k">val</span> <span class="n">data</span> <span class="k">=</span> <span class="n">gowalla</span><span class="o">.</span><span class="n">map</span> <span class="o">{</span>
+</span><span class="line">      <span class="n">check</span><span class="k">:</span> <span class="kt">CheckIn</span> <span class="o">=&gt;</span> <span class="o">(</span><span class="n">check</span><span class="o">.</span><span class="n">user</span><span class="o">,</span> <span class="o">(</span><span class="mi">1L</span><span class="o">,</span> <span class="nc">Set</span><span class="o">(</span><span class="n">check</span><span class="o">.</span><span class="n">time</span><span class="o">),</span> <span class="nc">Set</span><span class="o">(</span><span class="n">check</span><span class="o">.</span><span class="n">location</span><span class="o">)))</span>
+</span><span class="line">    <span class="o">}.</span><span class="n">rdd</span><span class="o">.</span><span class="n">reduceByKey</span><span class="o">{</span>
+</span><span class="line">      <span class="k">case</span> <span class="o">(</span><span class="n">left</span><span class="o">,</span> <span class="n">right</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="o">(</span><span class="n">left</span><span class="o">.</span><span class="n">_1</span> <span class="o">+</span> <span class="n">right</span><span class="o">.</span><span class="n">_1</span><span class="o">,</span> <span class="n">left</span><span class="o">.</span><span class="n">_2</span><span class="o">.</span><span class="n">union</span><span class="o">(</span><span class="n">right</span><span class="o">.</span><span class="n">_2</span><span class="o">),</span><span class="n">left</span><span class="o">.</span><span class="n">_3</span><span class="o">.</span><span class="n">union</span><span class="o">(</span><span class="n">right</span><span class="o">.</span><span class="n">_3</span><span class="o">))</span>
+</span><span class="line">    <span class="o">}.</span><span class="n">map</span><span class="o">{</span>
+</span><span class="line">      <span class="k">case</span> <span class="o">(</span><span class="k">_</span><span class="o">,</span> <span class="o">(</span><span class="n">checkins</span><span class="o">,</span> <span class="n">days</span><span class="k">:</span><span class="kt">Set</span><span class="o">[</span><span class="kt">String</span><span class="o">],</span> <span class="n">locations</span><span class="k">:</span><span class="kt">Set</span><span class="o">[</span><span class="kt">String</span><span class="o">]))</span> <span class="k">=&gt;</span>
+</span><span class="line">        <span class="nc">Vectors</span><span class="o">.</span><span class="n">dense</span><span class="o">(</span><span class="n">checkins</span><span class="o">.</span><span class="n">toDouble</span><span class="o">,</span> <span class="n">days</span><span class="o">.</span><span class="n">size</span><span class="o">.</span><span class="n">toDouble</span><span class="o">,</span> <span class="n">locations</span><span class="o">.</span><span class="n">size</span><span class="o">.</span><span class="n">toDouble</span><span class="o">)</span>
+</span><span class="line">        <span class="c1">//次数，天数，地点数</span>
+</span><span class="line">    <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p><code>reduceByKey</code> 这里是求 <code>(1L, Set(check.time), Set(check.location))</code> 中的一个元素累加，第二个元素求并集，第三个元素也是求并集. <code>case</code> 的作用是让输入符合规范； 注意在 <code>map</code> 中，我们可以限定指示变量的类型， 比如这里的 <code>check: CheckIn =&gt;</code></p>
+
+<h4 id="section">参考</h4>
+
+<ol>
+  <li>Spark机器学习进阶实战</li>
+</ol>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -195,53 +286,6 @@ Caused by: java.net.UnknownHostException: master: nodename nor servname provided
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2019/07/24/vscode-remote-yuan-cheng-kai-fa-yu-diao-shi/">VScode Remote 远程开发与调试</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2019-07-24T15:28:32+08:00" pubdate data-updated="true">2019 年7 月24 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>最近要给别的团队A，在AWS的EC2 上面去搭建一个算法的开发环境。鉴于自己之前在 AWS 上都是使用的Linux，在和团队A讨论了之后，最后决定建个Linux 的 EC2。 但是在基本的Python和数据分析和算法开发的环境都搭建好了之后，团队A的同学，又提了没有IDE, 影响效率。
-没有办法，得考虑是不是换个windows 的 EC2 了。这个时候 <code>VS Code Remote Development</code> comes to my rescue.</p>
-
-<p>可以参考下面的文章去看看怎么搞 <code>VS Code Remote Development</code>.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">https://code.visualstudio.com/docs/remote/remote-overview
-</span><span class="line">https://www.jianshu.com/p/0f2fb935a9a1</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>试用了下来， 感觉这个 <code>VS Code Remote Development</code> 是个神器啊.</p>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/5/">&larr; Older</a>
@@ -257,6 +301,10 @@ Caused by: java.net.UnknownHostException: master: nodename nor servname provided
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2020/11/24/wen-ben-zhu-ti-wa-jue-qian-chang-zhe-zhi/">文本主题挖掘浅尝辄止</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2020/11/20/sparksqlru-men-he-jin-jie/">SparkSQL入门和进阶</a>
@@ -294,10 +342,6 @@ Caused by: java.net.UnknownHostException: master: nodename nor servname provided
         <a href="/blog/2019/08/01/shi-yong-sparkde-mllibjin-xing-ji-qi-xue-xi/">使用Spark的MLlib进行机器学习</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2019/07/30/macshang-dan-ji-qi-pysparkyu-dao-de-wen-ti-debug/">Mac上单机起PySpark遇到的问题debug</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -308,7 +352,7 @@ Caused by: java.net.UnknownHostException: master: nodename nor servname provided
 <li class='category'><a href='/blog/categories/bigdata/'>BigData (11)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (7)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
-<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (13)</a></li>
+<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (14)</a></li>
 <li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (5)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (2)</a></li>
 <li class='category'><a href='/blog/categories/fun/'>Fun (1)</a></li>

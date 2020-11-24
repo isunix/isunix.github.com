@@ -9,8 +9,11 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="I have a file containing quite many lines of strings and I want to sort them by line length. Here is how. 1
-cat $file | awk &#39;{ print length($0) & &hellip;">
+  <meta name="description" content="I have something like the following, 1
+2
+3
+var sophos = {name: &quot;aa&quot;, time:&quot;2016/03/02 01:12&quot;};
+var mcafee = {name: &quot;bb&quot &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -94,6 +97,94 @@ cat $file | awk &#39;{ print length($0) & &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2016/03/09/sort-an-object-by-one-key-using-js/">Sort an Object by One Key Using Js</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2016-03-09T09:41:03+08:00" pubdate data-updated="true">2016 年3 月9 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I have something like the following,</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="kd">var</span> <span class="nx">sophos</span> <span class="o">=</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;aa&quot;</span><span class="p">,</span> <span class="nx">time</span><span class="o">:</span><span class="s2">&quot;2016/03/02 01:12&quot;</span><span class="p">};</span>
+</span><span class="line"><span class="kd">var</span> <span class="nx">mcafee</span> <span class="o">=</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;bb&quot;</span><span class="p">,</span> <span class="nx">time</span><span class="o">:</span><span class="s2">&quot;2016/03/03 01:12&quot;</span><span class="p">};</span>
+</span><span class="line"><span class="kd">var</span> <span class="nx">trend</span> <span class="o">=</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;cc&quot;</span><span class="p">,</span> <span class="nx">time</span><span class="o">:</span><span class="s2">&quot;2016/03/04 01:12&quot;</span><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>and I want to find out the one with the earliest time, in the above code, it is “2016/03/02 01:12”, and the corresponding item is “sophos”, here is the realization is js code.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="kd">var</span> <span class="nx">sophos</span> <span class="o">=</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;aa&quot;</span><span class="p">,</span> <span class="nx">time</span><span class="o">:</span><span class="s2">&quot;2016/03/02 01:12&quot;</span><span class="p">};</span>
+</span><span class="line"><span class="kd">var</span> <span class="nx">mcafee</span> <span class="o">=</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;bb&quot;</span><span class="p">,</span> <span class="nx">time</span><span class="o">:</span><span class="s2">&quot;2016/03/03 01:12&quot;</span><span class="p">};</span>
+</span><span class="line"><span class="kd">var</span> <span class="nx">trend</span> <span class="o">=</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;cc&quot;</span><span class="p">,</span> <span class="nx">time</span><span class="o">:</span><span class="s2">&quot;2016/03/04 01:12&quot;</span><span class="p">};</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">[</span><span class="nx">sophos</span><span class="p">,</span> <span class="nx">mcafee</span><span class="p">,</span> <span class="nx">trend</span><span class="p">];</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">function</span> <span class="nx">compare</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">){</span>
+</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="nx">a</span><span class="p">.</span><span class="nx">time</span> <span class="o">&lt;</span> <span class="nx">b</span><span class="p">.</span><span class="nx">time</span><span class="p">){</span>
+</span><span class="line">        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">a</span><span class="p">.</span><span class="nx">time</span> <span class="o">&gt;</span> <span class="nx">b</span><span class="p">.</span><span class="nx">time</span><span class="p">){</span>
+</span><span class="line">        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">    <span class="k">else</span> <span class="p">{</span>
+</span><span class="line">        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">sort</span><span class="p">(</span><span class="nx">compare</span><span class="p">);</span>
+</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -185,55 +276,6 @@ cat $file | awk &#39;{ print length($0) & &hellip;">
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/12/31/wget-several-files-using-bash-cmd/">Wget Several Files Using Bash Cmd</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-12-31T18:36:09+08:00" pubdate data-updated="true">2015 年12 月31 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I want to down the lecture notes on the page </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line">http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-001-structure-and-interpretation-of-computer-programs-spring-2005/lecture-notes/
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>Here is the command I am using.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">wget http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-001-structure-and-interpretation-of-computer-programs-spring-2005/lecture-notes/lecture<span class="o">{</span>1..26<span class="o">}</span>webhand.pdf
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>The sad thing is not all the sequences are consecutive.</p>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/18/">&larr; Older</a>
@@ -249,6 +291,10 @@ cat $file | awk &#39;{ print length($0) & &hellip;">
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2020/11/24/wen-ben-zhu-ti-wa-jue-qian-chang-zhe-zhi/">文本主题挖掘浅尝辄止</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2020/11/20/sparksqlru-men-he-jin-jie/">SparkSQL入门和进阶</a>
@@ -286,10 +332,6 @@ cat $file | awk &#39;{ print length($0) & &hellip;">
         <a href="/blog/2019/08/01/shi-yong-sparkde-mllibjin-xing-ji-qi-xue-xi/">使用Spark的MLlib进行机器学习</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2019/07/30/macshang-dan-ji-qi-pysparkyu-dao-de-wen-ti-debug/">Mac上单机起PySpark遇到的问题debug</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -300,7 +342,7 @@ cat $file | awk &#39;{ print length($0) & &hellip;">
 <li class='category'><a href='/blog/categories/bigdata/'>BigData (11)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (7)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
-<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (13)</a></li>
+<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (14)</a></li>
 <li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (5)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (2)</a></li>
 <li class='category'><a href='/blog/categories/fun/'>Fun (1)</a></li>

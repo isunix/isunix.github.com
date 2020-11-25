@@ -5,8 +5,10 @@ date: 2019-08-14 13:51:36 +0800
 comments: true
 categories: Data&ML&AI
 ---
+## 想要了解xgboost，至少需要了解以下的一些概念：
+`梯度`, `Boosting`, `分类器`, `决策树`, `概率分布`, `CART`, `损失函数`, `分裂准则`, `加法模型`, `叶子节点`, `分裂点`, `学习率`, `分类`, `回归`, `初始化`, `泰勒公式`, `贪心法`, `信息增益`, `信息增益比`, `特征`, `特征值`, 
 
-Gradient Boosting Algorithm 算法参考链接：
+## Gradient Boosting Algorithm 算法参考链接：
 
 - [XGBoost: A Scalable Tree Boosting System](https://arxiv.org/pdf/1603.02754v1.pdf)
 - [Which algorithm takes the crown: Light GBM vs XGBOOST?](https://www.analyticsvidhya.com/blog/2017/06/which-algorithm-takes-the-crown-light-gbm-vs-xgboost/)
@@ -39,4 +41,9 @@ Gradient Boosting Algorithm 算法参考链接：
 - [machine-learning-challenge-winning-solutions-lightgbm-winned](https://github.com/Microsoft/LightGBM/blob/master/examples/README.md#machine-learning-challenge-winning-solutions)
 - [LightGBM 如何调参](https://www.jianshu.com/p/b4ac0596e5ef)
 - [xgboost调参](https://www.cnblogs.com/ljygoodgoodstudydaydayup/p/6665239.html)
-
+- [为什么负梯度是函数值减小的最快方向](https://zhuanlan.zhihu.com/p/57601606)
+- [GBDT原理与Sklearn源码分析-回归篇](https://blog.csdn.net/qq_22238533/article/details/79185969)
+- [GBDT原理与Sklearn源码分析-分类篇](https://blog.csdn.net/qq_22238533/article/details/79192579?utm_medium=distribute.pc_relevant.none-task-blog-title-6&spm=1001.2101.3001.4242)
+- [GBDT原理与实践-多分类篇](https://blog.csdn.net/qq_22238533/article/details/79199605)
+- [XGBoost超详细推导，终于有人讲明白了](https://cloud.tencent.com/developer/article/1513111)
+- [珍藏版 | 20道XGBoost面试题](https://mp.weixin.qq.com/s?__biz=MzI1MzY0MzE4Mg==&mid=2247485159&idx=1&sn=d429aac8370ca5127e1e786995d4e8ec&chksm=e9d01626dea79f30043ab80652c4a859760c1ebc0d602e58e13490bf525ad7608a9610495b3d&scene=21#wechat_redirect)

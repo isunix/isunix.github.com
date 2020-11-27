@@ -6,7 +6,7 @@ comments: true
 categories: Data&ML&AI
 ---
 ## 想要了解xgboost，至少需要了解以下的一些概念：
-`梯度`, `Boosting`, `分类器`, `决策树`, `概率分布`, `CART`, `损失函数`, `分裂准则`, `加法模型`, `叶子节点`, `分裂点`, `学习率`, `分类`, `回归`, `初始化`, `泰勒公式`, `贪心法`, `信息增益`, `信息增益比`, `特征`, `特征值`, 
+`梯度`, `Boosting`, `分类器`, `决策树`, `概率分布`, `CART`, `损失函数`, `分裂准则`, `加法模型`, `叶子节点`, `分裂点`, `学习率`, `分类`, `回归`, `初始化`, `泰勒公式`, `贪心法`, `信息增益`, `信息增益比`, `特征`, `特征值`, `直方图算法`, `DenseVector`, `凸函数`, `弱学习器`, `强学习器`
 
 ## Gradient Boosting Algorithm 算法参考链接：
 
@@ -47,3 +47,8 @@ categories: Data&ML&AI
 - [GBDT原理与实践-多分类篇](https://blog.csdn.net/qq_22238533/article/details/79199605)
 - [XGBoost超详细推导，终于有人讲明白了](https://cloud.tencent.com/developer/article/1513111)
 - [珍藏版 | 20道XGBoost面试题](https://mp.weixin.qq.com/s?__biz=MzI1MzY0MzE4Mg==&mid=2247485159&idx=1&sn=d429aac8370ca5127e1e786995d4e8ec&chksm=e9d01626dea79f30043ab80652c4a859760c1ebc0d602e58e13490bf525ad7608a9610495b3d&scene=21#wechat_redirect)
+- [Gradient boosting wiki Page](https://en.wikipedia.org/wiki/Gradient_boosting)
+- [xgboost introduction by xgboost-R's author](http://link.zhihu.com/?target=http%3A//www.saedsayad.com/docs/xgboost.pdf)
+- [GBDT算法原理以及实例理解 - 非常好
+](https://blog.csdn.net/zpalyq110/article/details/79527653
+)

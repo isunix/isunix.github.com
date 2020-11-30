@@ -104,3 +104,9 @@ pyLDAvis.display(vis_data)
 - [用docsim/doc2vec/LSH比较两个文档之间的相似度](https://blog.csdn.net/vs412237401/article/details/52238248)
 - [wordcloud](https://github.com/amueller/word_cloud)
 - [pyLDAvis](https://github.com/bmabey/pyLDAvis)
+- [通俗理解LDA主题模型
+](https://blog.csdn.net/v\_july\_v/article/details/41209515
+)
+- [Introduction to Probabilistic Topic Models
+](https://www.eecis.udel.edu/\~shatkay/Course/papers/UIntrotoTopicModelsBlei2011-5.pdf
+)

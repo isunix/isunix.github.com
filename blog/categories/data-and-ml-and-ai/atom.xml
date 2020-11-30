@@ -4,7 +4,7 @@
   <title><![CDATA[catogories：Data&ML&AI | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/data-and-ml-and-ai/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2020-11-27T09:47:55+08:00</updated>
+  <updated>2020-11-30T18:02:45+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,22 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[单纯形法介绍和Python代码实现]]></title>
+    <link href="http://isunix.github.io/blog/2020/11/30/dan-chun-xing-fa-jie-shao-he-pythondai-ma-shi-xian/"/>
+    <updated>2020-11-30T09:31:44+08:00</updated>
+    <id>http://isunix.github.io/blog/2020/11/30/dan-chun-xing-fa-jie-shao-he-pythondai-ma-shi-xian</id>
+    <content type="html"><![CDATA[<h1 id="section">参考链接:</h1>
+<ul>
+  <li><a href="https://zhuanlan.zhihu.com/p/31644892">简单理解线性规划的单纯形算法</a></li>
+  <li><a href="https://jeremykun.com/2014/06/02/linear-programming-and-the-most-affordable-healthy-diet-part-1/">Linear Programming and Healthy Diets
+</a></li>
+  <li><a href="https://jeremykun.com/2014/12/01/linear-programming-and-the-simplex-algorithm/">Linear Programming and the Simplex Algorithm
+</a></li>
+</ul>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[文本主题挖掘浅尝辄止]]></title>
@@ -118,6 +134,10 @@ pyLDAvis.display(vis_data)
   <li><a href="https://blog.csdn.net/vs412237401/article/details/52238248">用docsim/doc2vec/LSH比较两个文档之间的相似度</a></li>
   <li><a href="https://github.com/amueller/word_cloud">wordcloud</a></li>
   <li><a href="https://github.com/bmabey/pyLDAvis">pyLDAvis</a></li>
+  <li><a href="https://blog.csdn.net/v\_july\_v/article/details/41209515">通俗理解LDA主题模型
+</a></li>
+  <li><a href="https://www.eecis.udel.edu/\~shatkay/Course/papers/UIntrotoTopicModelsBlei2011-5.pdf">Introduction to Probabilistic Topic Models
+</a></li>
 </ul>
 ]]></content>
   </entry>
@@ -245,171 +265,6 @@ file = os.path.join(folder, filename)</p>
 
 <p>df.orderBy(“<em>1”, “</em>2”).coalesce(1).write.csv(“xxx2”, sep=’\t’)
 ```</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Data Science at the Command Line]]></title>
-    <link href="http://isunix.github.io/blog/2019/08/14/data-science-at-the-command-line/"/>
-    <updated>2019-08-14T14:13:16+08:00</updated>
-    <id>http://isunix.github.io/blog/2019/08/14/data-science-at-the-command-line</id>
-    <content type="html"><![CDATA[<p>本文是关于如何使用命令行的方式，来更好的认识你的数据.</p>
-
-<h2 id="section">1. 常用的命令和工具:</h2>
-
-<ul>
-  <li>
-    <p>基本操作命令
-<code>sh
-cd, mv, cat, ls, wc, rm, sort, uniq, echo
-printf, pwd, mkdir, dirname, mktemp， find
-mail, sendmail, crontab, export, ps
-zip, du, df, tar, split
-exec, type, readlink
-</code></p>
-  </li>
-  <li>
-    <p>基本工具
-<code>sh
-grep, egrep, pcregrep, ack
-curl, wget
-ssh, tmux
-awk, sed
-</code></p>
-  </li>
-  <li>
-    <p>辅助命令
-<code>sh
-jq, git,
-man, tldr
-conda, pip
-</code></p>
-  </li>
-  <li>
-    <p>辅助工具
-<code>sh
-zsh, oh-my-zsh, sexy-bash-prompt
-</code></p>
-  </li>
-  <li>
-    <p>瑞士军刀
-  <code>sh
-  Perl
- </code></p>
-  </li>
-</ul>
-
-<h2 id="section-1">2. 一些应用场景:</h2>
-
-<ul>
-  <li>
-    <p>使用 <code>split</code> 按照特定的行数或者大小，将一个文本进行分割
-<code>sh
-# Split a file, each split having 10 lines (except the last split)
-split -l 10 filename
-# plit a file with 512 bytes in each split
-split -b 512 filename
-</code></p>
-  </li>
-  <li>
-    <p>使用 <code>grep -x -f</code>  找到两个文件中的相同的行
-<code>sh
-grep -x -f  file1 file2
-</code></p>
-  </li>
-  <li>
-    <p>使用 <code>grep</code> 或者 <code>egrep</code> 或者 <code>pcregrep</code> 或者 <code>ack</code> 并且辅助以正则表达式， 进行复杂的文本搜索
-<code>sh
-# print file name with the corresponding line number for each match
-grep -Hn search_string path/to/file
-# invert match for excluding specific strings:
-grep -v search_string path/to/file
-# search in case-insensitive mode:
-grep -i search_string path/to/file
-# search consecutive 9 numbers
-grep -E '\d{9}' path/to/file
-# search consecutive 9 numbers and grab it
-grep -Eo '\d{9}' path/to/file
-# recursively search
-grep -eilr "\bamazfit\b\|\bwatch\b" path/to/dir
-</code></p>
-  </li>
-  <li>
-    <p><code>ssh</code> 登陆远程机器并且同时运行远程操作命令
-<code>sh
-# ssh 远程执行命令
-ssh yyy@xxx.xxx.xxx.xxx "df -h"
-# ssh 使用key文件登陆， 并且做远程的端口转发
-ssh -L 9007:${hive_server} ${xiaomi_host} -N -i ${keyfile}
-</code></p>
-  </li>
-  <li>
-    <p><code>awk</code> 按照特定的分隔符，查看文本有多少列， 查看想要看的列，按照条件进行筛选
-<code>sh
-# 以空格做分隔符， 并且打印出第二列小于20的行
-awk '($2 &lt; 20){print}'
-# 以'#' 做分隔符， 并且打印出第二列小于20的行
-awk -F '#' '($2&gt;=8){print}'
-# 以',' 做分隔符， 并且打印出列数
-awk -F"," '{print NF}'
-# 有多个判断条件
-awk '{if ($4&lt;1 &amp;&amp; $4&gt;=0.85 &amp;&amp; $2 &gt;= 0.001) print $7}'
-</code></p>
-  </li>
-  <li>
-    <p><code>sort</code> 结合 <code>uniq</code> 去重
-<code>sh
-du -cks * | sort | uniq | wc -l
-</code></p>
-  </li>
-  <li>
-    <p><code>xargs</code> 传递参数
-<code>sh
-# xargs 结合 kill 来干掉进程
-ps auxww | grep file | grep -v grep | awk '{print $2}' | xargs kill -9
-# 删除找到的文件
-find . -name "*.txt" | xargs -I , rm -rf ,
-</code></p>
-  </li>
-  <li>
-    <p>使用 <code>jq</code> 命令来在命令行下更好的查看json文件
-<code>sh
-cat file.json | jq
-</code></p>
-  </li>
-  <li>
-    <p>非常好用的 <code>|</code>
-<code>sh
-xx | yy | zz | dd | ee | ff | gg | hh
-</code></p>
-  </li>
-</ul>
-
-<h2 id="section-2">3. 参考资料:</h2>
-
-<ul>
-  <li>
-    <p><a href="https://www.runoob.com/linux/linux-tutorial.html">Linux 菜鸟教程</a></p>
-  </li>
-  <li>
-    <p><a href="https://www.runoob.com/regexp/regexp-tutorial.html">正则表达式 - 教程</a></p>
-  </li>
-  <li>
-    <p><a href="https://github.com/alebcay/awesome-shell">Awesome-Shell</a></p>
-  </li>
-</ul>
-
-<p>参考链接:</p>
-
-<ul>
-  <li>
-    <p><a href="https://csvkit.readthedocs.io/en/latest/tutorial/1_getting_started.html#installing-csvkit">csvkit</a></p>
-  </li>
-  <li>
-    <p><a href="[https://www.datascienceatthecommandline.com](https://www.datascienceatthecommandline.com/)">Data Science at the Command Line</a></p>
-  </li>
-</ul>
 
 ]]></content>
   </entry>

@@ -110,3 +110,5 @@ pyLDAvis.display(vis_data)
 - [Introduction to Probabilistic Topic Models
 ](https://www.eecis.udel.edu/\~shatkay/Course/papers/UIntrotoTopicModelsBlei2011-5.pdf
 )
+- [python-LDA Git Code](https://github.com/nkhuyu/python-LDA
+)

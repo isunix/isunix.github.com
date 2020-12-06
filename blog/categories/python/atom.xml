@@ -4,7 +4,7 @@
   <title><![CDATA[catogories：Python | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/python/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2020-12-06T13:14:00+08:00</updated>
+  <updated>2020-12-06T15:15:18+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -25,6 +25,32 @@ import warnings
 warnings.filterwarnings('ignore')
 </code>
 filterwarnings 函数可以带参数的，上述的方式是把所有的warnings都给ignore了.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[用Python来发送markdown格式的邮件]]></title>
+    <link href="http://isunix.github.io/blog/2019/07/02/yong-pythonlai-fa-song-markdownge-shi-de-you-jian/"/>
+    <updated>2019-07-02T15:19:06+08:00</updated>
+    <id>http://isunix.github.io/blog/2019/07/02/yong-pythonlai-fa-song-markdownge-shi-de-you-jian</id>
+    <content type="html"><![CDATA[<h2 id="httpsgithubcomyejianyemdmail">https://github.com/yejianye/mdmail</h2>
+
+<p>mdmail， 这个是一个支持用 markdown 格式来发送邮件的工具.</p>
+
+<p>```py
+import mdmail</p>
+
+<p>email=”””
+# Sample Email
+- Python is awesome
+- Markdown is cool
+“””</p>
+
+<p>mdmail.send(email, subject=’Sample Email Mdmail’,
+            from_email=’mypeacelover@163.com’, to_email=’mypeacelover@163.com’)
+```</p>
+
+<p>很好用, 汪汪.</p>
 ]]></content>
   </entry>
   
@@ -96,55 +122,6 @@ from subprocess import call</p>
     call(“pip install –upgrade “ + dist.project_name, shell=True)
 ```</p>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Use Python Request to Download Movies]]></title>
-    <link href="http://isunix.github.io/blog/2015/12/04/use-python-request-to-download-movies/"/>
-    <updated>2015-12-04T14:50:25+08:00</updated>
-    <id>http://isunix.github.io/blog/2015/12/04/use-python-request-to-download-movies</id>
-    <content type="html"><![CDATA[<p>This post shows a working way to download movies using python requests module.</p>
-
-<p>```py
-import requests
-import re
-import sys</p>
-
-<p>class MovieDownload:
-    def <strong>init</strong>(self, url):
-        self.url = url
-        if self.url.<strong>contains</strong>(‘//’):
-            self.download_movie()
-        else:
-            print(“wrong url entered”)</p>
-
-<pre><code>def download_movie(self):
-    r = requests.get(self.url)
-    pattern_title = re.compile('&lt;h2 class="entry_title"&gt;(.*?)&lt;/h2&gt;')
-    title = re.findall(pattern_title, r.text)[0].split('/')[0]
-    pattern_to_download = re.compile('&lt;li&gt;&lt;a href="(.*?)"&gt;.*?1024\.mkv.*?&lt;/a&gt;')
-    movie_urls = re.findall(pattern_to_download, r.text)
-
-    with open('movie.txt', 'w') as f:
-        print("There are {} urls here!\n".format(len(movie_urls)))
-        f.write("There are {} urls here!\n\n".format(len(movie_urls)))
-        for movie_url in movie_urls:
-            print("{}\n".format(movie_url))
-            f.write("{}\n\n".format(movie_url))
-</code></pre>
-
-<p>url = “http://cn163.net/archives/3639/”
-MovieDownload(url)</p>
-
-<p>sys.exit(0)
-```</p>
-
-<p>and then execute the script as:</p>
-
-<p><code>sh
-python3 movie_download.py
-</code></p>
 ]]></content>
   </entry>
   

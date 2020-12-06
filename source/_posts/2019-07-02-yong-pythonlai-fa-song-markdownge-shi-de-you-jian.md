@@ -3,7 +3,7 @@ layout: post
 title: "用Python来发送markdown格式的邮件"
 date: 2019-07-02 15:19:06 +0800
 comments: true
-categories: Fun
+categories: Python
 ---
 ## https://github.com/yejianye/mdmail
 

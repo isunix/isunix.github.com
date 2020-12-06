@@ -9,7 +9,20 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="I need to use the regexp_extract function to extract certain parts of a string recently when I am doing big data analysis. http://www.cloudera.com/ &hellip;">
+  <meta name="description" content="I have met the following scripts, say aa.sh 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+echo &quot;OPTIND for aa.sh before calling is: &quot; $OPTIND
+while getopts & &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -93,6 +106,276 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2016/07/19/weird-things-happen-when-scripts-executing-with-and-passing-args-with-getopts/">Weird Things Happen When Scripts Executing With . And Passing Args With Getopts</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2016-07-19T17:43:32+08:00" pubdate data-updated="true">2016 年7 月19 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I have met the following scripts, say aa.sh</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nb">echo</span> <span class="s2">&quot;OPTIND for aa.sh before calling is: &quot;</span> <span class="nv">$OPTIND</span>
+</span><span class="line"><span class="k">while </span><span class="nb">getopts</span> <span class="s2">&quot;t:c:&quot;</span> opt
+</span><span class="line"><span class="k">do</span>
+</span><span class="line"><span class="k">    case</span> <span class="s2">&quot;$opt&quot;</span> in
+</span><span class="line">        t<span class="o">)</span> <span class="nb">time</span><span class="o">=</span><span class="s2">&quot;${OPTARG}&quot;</span>;;
+</span><span class="line">        c<span class="o">)</span> <span class="nv">count</span><span class="o">=</span><span class="s2">&quot;${OPTARG}&quot;</span>;;
+</span><span class="line">    <span class="k">esac</span>
+</span><span class="line"><span class="k">done</span>
+</span><span class="line">
+</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;time for aa.sh is $time&quot;</span>
+</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;count for aa.sh is $count&quot;</span>
+</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;OPTIND for aa.sh after calling is: &quot;</span> <span class="nv">$OPTIND</span><span class="sb">`</span>sh
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>and bb.sh</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nb">echo</span> <span class="s2">&quot;OPTIND for bb.sh before calling is: &quot;</span> <span class="nv">$OPTIND</span>
+</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;we are setting the OPTIND to 1&quot;</span>
+</span><span class="line"><span class="k">while </span><span class="nb">getopts</span> <span class="s2">&quot;t:c:&quot;</span> opt
+</span><span class="line"><span class="k">do</span>
+</span><span class="line"><span class="k">    case</span> <span class="s2">&quot;$opt&quot;</span> in
+</span><span class="line">        t<span class="o">)</span> <span class="nb">time</span><span class="o">=</span><span class="s2">&quot;${OPTARG}&quot;</span>;;
+</span><span class="line">        c<span class="o">)</span> <span class="nv">count</span><span class="o">=</span><span class="s2">&quot;${OPTARG}&quot;</span>;;
+</span><span class="line">    <span class="k">esac</span>
+</span><span class="line"><span class="k">done</span>
+</span><span class="line">
+</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;time for bb.sh is $time&quot;</span>
+</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;count for bb.sh is $count&quot;</span>
+</span><span class="line">
+</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;OPTIND for bb.sh after calling is: &quot;</span> <span class="nv">$OPTIND</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>and call.sh</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">. ./aa.sh -t 2016-07-15 -c 4
+</span><span class="line">. ./bb.sh -a 2016-07-20 -c 0
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>and now execute the script, it will give out the followig result,</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">OPTIND <span class="k">for </span>aa.sh before calling is:  1
+</span><span class="line"><span class="nb">time </span><span class="k">for </span>aa.sh is 2016-07-15
+</span><span class="line">count <span class="k">for </span>aa.sh is 4
+</span><span class="line">OPTIND <span class="k">for </span>aa.sh after calling is:  5
+</span><span class="line">OPTIND <span class="k">for </span>bb.sh before calling is:  <span class="nv">5</span>
+</span><span class="line"><span class="o">=</span><span class="nb">time </span><span class="k">for </span>bb.sh is 2016-07-15
+</span><span class="line">count <span class="k">for </span>bb.sh is 4
+</span><span class="line">OPTIND <span class="k">for </span>bb.sh after calling is:  5
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Which is definitely not what we want.</p>
+
+<p>We can now change bb.sh into the following to test it again.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nb">echo</span> <span class="s2">&quot;OPTIND for bb.sh before calling is: &quot;</span> <span class="nv">$OPTIND</span>
+</span><span class="line">
+</span><span class="line"><span class="nv">OPTIND</span><span class="o">=</span>1
+</span><span class="line">
+</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;we are setting the OPTIND to 1&quot;</span>
+</span><span class="line"><span class="k">while </span><span class="nb">getopts</span> <span class="s2">&quot;t:c:&quot;</span> opt
+</span><span class="line"><span class="k">do</span>
+</span><span class="line"><span class="k">    case</span> <span class="s2">&quot;$opt&quot;</span> in
+</span><span class="line">        t<span class="o">)</span> <span class="nb">time</span><span class="o">=</span><span class="s2">&quot;${OPTARG}&quot;</span>;;
+</span><span class="line">        c<span class="o">)</span> <span class="nv">count</span><span class="o">=</span><span class="s2">&quot;${OPTARG}&quot;</span>;;
+</span><span class="line">    <span class="k">esac</span>
+</span><span class="line"><span class="k">done</span>
+</span><span class="line">
+</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;time for bb.sh is $time&quot;</span>
+</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;count for bb.sh is $count&quot;</span>
+</span><span class="line">
+</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;OPTIND for bb.sh after calling is: &quot;</span> <span class="nv">$OPTIND</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>and now “sh call.sh” will give out the following result,</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">OPTIND <span class="k">for </span>aa.sh before calling is:  1
+</span><span class="line"><span class="nb">time </span><span class="k">for </span>aa.sh is 2016-07-15
+</span><span class="line">count <span class="k">for </span>aa.sh is 4
+</span><span class="line">OPTIND <span class="k">for </span>aa.sh after calling is:  5
+</span><span class="line">OPTIND <span class="k">for </span>bb.sh before calling is:  5
+</span><span class="line">we are setting the OPTIND to 1
+</span><span class="line"><span class="nb">time </span><span class="k">for </span>bb.sh is 2016-07-20
+</span><span class="line">count <span class="k">for </span>bb.sh is 0
+</span><span class="line">OPTIND <span class="k">for </span>bb.sh after calling is:  5
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>What if we set the OPTIND to 3 now?</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">OPTIND <span class="k">for </span>aa.sh before calling is:  1
+</span><span class="line"><span class="nb">time </span><span class="k">for </span>aa.sh is 2016-07-15
+</span><span class="line">count <span class="k">for </span>aa.sh is 4
+</span><span class="line">OPTIND <span class="k">for </span>aa.sh after calling is:  5
+</span><span class="line">OPTIND <span class="k">for </span>bb.sh before calling is:  5
+</span><span class="line">we are setting the OPTIND to 3
+</span><span class="line"><span class="nb">time </span><span class="k">for </span>bb.sh is 2016-07-15
+</span><span class="line">count <span class="k">for </span>bb.sh is 0
+</span><span class="line">OPTIND <span class="k">for </span>bb.sh after calling is:  5
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Now the count value is changed to 0, however time is still not changed.</p>
+
+<p>How to understand this? First let us look at the definitions of $OPTIND and getopts</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">A <span class="nb">getopts </span>construct usually comes packaged in a <span class="k">while </span>loop, which processes the options and
+</span><span class="line">arguments one at a <span class="nb">time</span>, <span class="k">then </span>increments the implicit <span class="nv">$OPTIND</span> variable to point to the next.
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>In a while loop contaning getopts, getopts will use $OPTIND to find the arguments. if we call the script using “dot” which is the same as using “source”, $OPTIND will be global and available to the next script using getopts, and the next script will then can not find the right argument using $OPTIND now. </p>
+
+<p>The solution here is, we can reset $OPTIND to 1 or we can call the script using “sh” rather than “.”</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2016/07/18/zen-yao-qu-chu-windowsbian-ji-guo-de-wen-jian-zhong-de-mzi-fu/">怎么去除windows编辑过的文件中的^M字符</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2016-07-18T08:12:34+08:00" pubdate data-updated="true">2016 年7 月18 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>We can use the following two methods to get rid of the “^M” character in a file which was edited on windows using vim.</p>
+
+<p>1.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">:%s/<span class="se">\r</span>//g
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>2.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">:%s/ctrl-v ctrl-m//g
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>The second one means pressing ctrl-v, then ctrl-m first.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -210,118 +493,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2016/07/12/tmux-error-while-loading-shared-libraries-libevent-2-dot-0-so-dot-5/">Tmux: Error While Loading Shared Libraries: libevent-2.0.so.5</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2016-07-12T10:34:50+08:00" pubdate data-updated="true">2016 年7 月12 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I have kept a blog on tmux installation which is about missing module libevent, and the post is on:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line">http://isunix.github.io/blog/2014/12/24/libevent-not-found-error-while-install-tmux/
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>Recently even after I install the livevent module, I still get the following errors after installing tmux and then running tmux:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line"> ./tmux: error while loading shared libraries: libevent-2.0.so.5: cannot open shared object file: No such file or
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>I installed the libevent lib in $HOME/local/lib, and tmux says it can not find the library, Weird. With the help of one of my colleague, this problem is solved.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nb">export </span><span class="nv">DIR</span><span class="o">=</span><span class="s2">&quot;$HOME/local&quot;</span>
-</span><span class="line"><span class="nb">export </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="nv">$LD_LIBRARY_PATH</span>:<span class="nv">$DIR</span>/lib
-</span><span class="line">./configure --prefix<span class="o">=</span><span class="nv">$DIR</span> <span class="nv">CFLAGS</span><span class="o">=</span><span class="s2">&quot;-I$DIR/include&quot;</span> <span class="nv">LDFLAGS</span><span class="o">=</span><span class="s2">&quot;-L$DIR/lib&quot;</span>
-</span><span class="line">make
-</span><span class="line">make install
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>As we can see, the point here is setting the “LD_LIBRARY_PATH” variable.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2016/07/02/configure-hive-on-mac/">Configure Hive on Mac</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2016-07-02T18:14:13+08:00" pubdate data-updated="true">2016 年7 月2 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>花了很长的时间在hive的安装和配置上， 先把有用的链接记下来， 等有空了再详细的写下安装过程。</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line">http://stackoverflow.com/questions/5016505/mysql-grant-all-privileges-on-database
-</span><span class="line">https://cwiki.apache.org/confluence/display/Hive/AdminManual+Configuration
-</span><span class="line">http://stackoverflow.com/questions/27099898/java-net-urisyntaxexception-when-starting-hive
-</span><span class="line">https://noobergeek.wordpress.com/2013/11/09/simplest-way-to-install-and-configure-hive-for-mac-osx-lion/
-</span><span class="line">https://cwiki.apache.org/confluence/display/Hive/GettingStarted
-</span><span class="line">https://amodernstory.com/2015/03/29/installing-hive-on-mac/
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/17/">&larr; Older</a>
@@ -337,6 +508,14 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2020/12/06/ti-du-xia-jiang-fa-he-niu-dun-fa/">梯度下降法和牛顿法</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2020/12/06/xian-xing-gui-hua-de-dui-ou-wen-ti/">线性规划的对偶问题</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2020/11/30/dan-chun-xing-fa-jie-shao-he-pythondai-ma-shi-xian/">单纯形法介绍和Python代码实现</a>
@@ -370,14 +549,6 @@
         <a href="/blog/2019/08/14/data-science-at-the-command-line/">Data Science at the Command Line</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2019/08/14/gradient-boosting-algorithm/">Gradient Boosting Algorithm</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2019/08/07/guan-yu-pzhi/">关于P值</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -400,6 +571,9 @@
 <li class='category'><a href='/blog/categories/ruby/'>Ruby (1)</a></li>
 <li class='category'><a href='/blog/categories/scala/'>Scala (1)</a></li>
 <li class='category'><a href='/blog/categories/shell/'>Shell (12)</a></li>
+<li class='category'><a href='/blog/categories/|/'>| (2)</a></li>
+<li class='category'><a href='/blog/categories/zui-you-hua/'>最优化 (2)</a></li>
+<li class='category'><a href='/blog/categories/yan-jiu-sheng/'>研究生 (2)</a></li>
 
   </ul>
 </section>

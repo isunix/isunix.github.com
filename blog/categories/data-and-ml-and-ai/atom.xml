@@ -4,7 +4,7 @@
   <title><![CDATA[catogories：Data&ML&AI | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/data-and-ml-and-ai/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2020-12-11T09:26:28+08:00</updated>
+  <updated>2020-12-11T09:44:55+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -49,6 +49,59 @@ auto['horsepower'] = auto['horsepower'].astype('int')
 <p><code>py
 auto = auto.sort_values(by = ['horsepower'],ascending = True, axis = 0)
 </code></p>
+
+<ol>
+  <li>pandas设置索引</li>
+</ol>
+
+<p><code>py
+college = college.set_index(['Unnamed: 0'], append=True, verify_integrity=True) college.rename_axis([None, 'Name'], inplace=True)
+</code> </p>
+
+<ol>
+  <li>对某一列进行判断并且置值</li>
+</ol>
+
+<p><code>py
+college['Elite'] = np.where(college['Top10perc'] &gt; 50,'Yes','No')
+</code></p>
+
+<ol>
+  <li>对某一列的值进行计数</li>
+</ol>
+
+<p><code>py
+college['Elite'].value_counts()
+</code></p>
+
+<ol>
+  <li>对某一列的值进行筛选</li>
+</ol>
+
+<p><code>py
+elite_colleges = college[college['Elite'] == 'Yes']
+</code></p>
+
+<ol>
+  <li>对某一列的数值进行分桶操作</li>
+</ol>
+
+<p><code>py
+college['Enroll'] = pd.cut(college['Enroll'], bins=3, labels = ['Low','Medium','High'])
+</code></p>
+
+<ol>
+  <li>查看df中的各个字段的unique的数目和字段类型信息等</li>
+</ol>
+
+<p><code>py
+auto.nunique()
+auto.info()
+auto['horsepower'].unique() # 看某一列的unique数目
+</code></p>
+
+<h2 id="section">参考链接</h2>
+<p><a href="https://blog.csdn.net/jingyi130705008/article/details/78162758">pandas中关于set_index和reset_index的用法</a></p>
 ]]></content>
   </entry>
   

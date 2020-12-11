@@ -153,6 +153,61 @@ auto[&#39;horsepower &hellip;">
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 </pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">auto</span> <span class="o">=</span> <span class="n">auto</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;horsepower&#39;</span><span class="p">],</span><span class="n">ascending</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<ol>
+  <li>pandas设置索引</li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">college</span> <span class="o">=</span> <span class="n">college</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s">&#39;Unnamed: 0&#39;</span><span class="p">],</span> <span class="n">append</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">verify_integrity</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span> <span class="n">college</span><span class="o">.</span><span class="n">rename_axis</span><span class="p">([</span><span class="bp">None</span><span class="p">,</span> <span class="s">&#39;Name&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<ol>
+  <li>对某一列进行判断并且置值</li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">college</span><span class="p">[</span><span class="s">&#39;Elite&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">college</span><span class="p">[</span><span class="s">&#39;Top10perc&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">50</span><span class="p">,</span><span class="s">&#39;Yes&#39;</span><span class="p">,</span><span class="s">&#39;No&#39;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<ol>
+  <li>对某一列的值进行计数</li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">college</span><span class="p">[</span><span class="s">&#39;Elite&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<ol>
+  <li>对某一列的值进行筛选</li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">elite_colleges</span> <span class="o">=</span> <span class="n">college</span><span class="p">[</span><span class="n">college</span><span class="p">[</span><span class="s">&#39;Elite&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;Yes&#39;</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<ol>
+  <li>对某一列的数值进行分桶操作</li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">college</span><span class="p">[</span><span class="s">&#39;Enroll&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">cut</span><span class="p">(</span><span class="n">college</span><span class="p">[</span><span class="s">&#39;Enroll&#39;</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;Low&#39;</span><span class="p">,</span><span class="s">&#39;Medium&#39;</span><span class="p">,</span><span class="s">&#39;High&#39;</span><span class="p">])</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<ol>
+  <li>查看df中的各个字段的unique的数目和字段类型信息等</li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">auto</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span>
+</span><span class="line"><span class="n">auto</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</span><span class="line"><span class="n">auto</span><span class="p">[</span><span class="s">&#39;horsepower&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span> <span class="c"># 看某一列的unique数目</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<h2 id="section">参考链接</h2>
+<p><a href="https://blog.csdn.net/jingyi130705008/article/details/78162758">pandas中关于set_index和reset_index的用法</a></p>
 </div>
 
 

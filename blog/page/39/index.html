@@ -9,7 +9,7 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="There are common structues and tips while practicing algorithms and data structueres using java. I will try to keep them down in this post. 1.hash &hellip;">
+  <meta name="description" content="In this post, we are going to implement a stack using Python. We are gonna do it using two ways. The first is by pushing to the end of the list, and &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -93,6 +93,182 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/14/using-python-to-implement-a-stack/">Using Python to Implement a Stack</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-14T10:53:40+08:00" pubdate data-updated="true">2014 年8 月14 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In this post, we are going to implement a stack using Python. We are gonna do it using two ways. The first is by pushing to the end of the list, and pop out the rightmost item. The second is by “pushing” to the leftmost and pop out the leftmost item.  </p>
+
+<ol>
+  <li>push to the end  </li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+<span class="line-number">35</span>
+<span class="line-number">36</span>
+<span class="line-number">37</span>
+<span class="line-number">38</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="k">class</span> <span class="nc">Stack</span><span class="p">:</span>
+</span><span class="line">    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">def</span> <span class="nf">is_empty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class="line">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="o">==</span> <span class="p">[]</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">def</span> <span class="nf">push</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">def</span> <span class="nf">pop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class="line">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+</span><span class="line">
+</span><span class="line">    <span class="sd">&#39;&#39;&#39;</span>
+</span><span class="line"><span class="sd">    returns the top item from the stack but does not remove it.</span>
+</span><span class="line"><span class="sd">    It needs no parameters.</span>
+</span><span class="line"><span class="sd">    The stack is not modified.</span>
+</span><span class="line"><span class="sd">    &#39;&#39;&#39;</span>
+</span><span class="line">    <span class="k">def</span> <span class="nf">peek</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class="line">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">def</span> <span class="nf">size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class="line">        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="n">s</span> <span class="o">=</span> <span class="n">Stack</span><span class="p">()</span>
+</span><span class="line"><span class="k">print</span> <span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">is_empty</span><span class="p">())</span>
+</span><span class="line"><span class="n">s</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+</span><span class="line"><span class="n">s</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="s">&#39;dog&#39;</span><span class="p">)</span>
+</span><span class="line"><span class="k">print</span> <span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">peek</span><span class="p">())</span>
+</span><span class="line"><span class="k">print</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
+</span><span class="line"><span class="k">print</span> <span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">peek</span><span class="p">())</span>
+</span><span class="line"><span class="n">s</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+</span><span class="line"><span class="k">print</span> <span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">size</span><span class="p">())</span>
+</span><span class="line"><span class="k">print</span> <span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">is_empty</span><span class="p">())</span>
+</span><span class="line"><span class="n">s</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="mf">8.4</span><span class="p">)</span>
+</span><span class="line"><span class="k">print</span> <span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
+</span><span class="line"><span class="k">print</span> <span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
+</span><span class="line"><span class="k">print</span> <span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">size</span><span class="p">())</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<ol>
+  <li>push to the front end</li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="k">class</span> <span class="nc">Stack</span><span class="p">:</span>
+</span><span class="line">    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">def</span> <span class="nf">is_empty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class="line">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="o">==</span> <span class="p">[]</span>
+</span><span class="line">
+</span><span class="line">    <span class="c">#push, inserting at the front end.</span>
+</span><span class="line">    <span class="k">def</span> <span class="nf">push</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line">    <span class="c">#pop out the leftest item.</span>
+</span><span class="line">    <span class="k">def</span> <span class="nf">pop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class="line">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">def</span> <span class="nf">peek</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class="line">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">def</span> <span class="nf">size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class="line">        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="n">s</span> <span class="o">=</span> <span class="n">Stack</span><span class="p">()</span>
+</span><span class="line"><span class="n">s</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="s">&#39;hello&#39;</span><span class="p">)</span>
+</span><span class="line"><span class="n">s</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="s">&#39;true&#39;</span><span class="p">)</span>
+</span><span class="line"><span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
+</span><span class="line"><span class="k">print</span> <span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1107,114 +1283,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/08/12/two-ways-to-create-a-module/">Two Ways to Build a Module</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-08-12T20:51:22+08:00" pubdate data-updated="true">2014 年8 月12 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>There are two build systems for building a module. One is to use the old and stable “ExtUtils::Makemaker”, and new one is using “Module::Build”. We will use the Module::Starter module to help us create a module.  </p>
-
-<p>By default, Module::Starter create a distribution with Makefile.PL</p>
-
-<p>First with Makefile.PL  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">module</span><span class="o">-</span><span class="n">starter</span> <span class="o">--</span><span class="n">module</span><span class="o">=</span><span class="s">&quot;Animal&quot;</span> <span class="o">--</span><span class="n">author</span><span class="o">=</span><span class="s">&quot;Steven Sun&quot;</span> <span class="o">--</span><span class="n">email</span><span class="o">=</span><span class="n">steven</span><span class="o">.</span><span class="n">sun2013</span><span class="nv">@gmail</span><span class="o">.</span><span class="n">com</span> <span class="o">--</span><span class="n">verbose</span>
-</span><span class="line">
-</span><span class="line"><span class="n">This</span> <span class="n">is</span> <span class="n">the</span> <span class="n">same</span> <span class="n">as:</span>
-</span><span class="line"><span class="n">module</span><span class="o">-</span><span class="n">starter</span> <span class="o">--</span><span class="n">builder</span><span class="o">=</span><span class="s">&quot;ExtUtils::Makemaker&quot;</span> <span class="o">--</span><span class="n">module</span><span class="o">=</span><span class="s">&quot;Animal&quot;</span> <span class="o">--</span><span class="n">author</span><span class="o">=</span><span class="s">&quot;Steven Sun&quot;</span> <span class="o">--</span><span class="n">email</span><span class="o">=</span><span class="n">steven</span><span class="o">.</span><span class="n">sun2013</span><span class="nv">@gmail</span><span class="o">.</span><span class="n">com</span> <span class="o">--</span><span class="n">verbose</span>
-</span><span class="line">
-</span><span class="line"><span class="n">perl</span> <span class="n">Makefile</span><span class="o">.</span><span class="n">PL</span>
-</span><span class="line"><span class="n">make</span>
-</span><span class="line"><span class="n">make</span> <span class="n">test</span>
-</span><span class="line"><span class="n">make</span> <span class="n">disttest</span>
-</span><span class="line"><span class="n">make</span> <span class="n">dist</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>Next we will show you the “Build.PL”</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">module</span><span class="o">-</span><span class="n">starter</span> <span class="o">--</span><span class="n">builder</span><span class="o">=</span><span class="s">&quot;Module::Build&quot;</span> <span class="o">--</span><span class="n">module</span><span class="o">=</span><span class="s">&quot;Animal&quot;</span> <span class="o">--</span><span class="n">author</span><span class="o">=</span><span class="s">&quot;Steven Sun&quot;</span> <span class="o">--</span><span class="n">email</span><span class="o">=</span><span class="n">steven</span><span class="o">.</span><span class="n">sun2013</span><span class="nv">@gmail</span><span class="o">.</span><span class="n">com</span> <span class="o">--</span><span class="n">verbose</span>
-</span><span class="line">
-</span><span class="line"><span class="ow">or</span> <span class="n">in</span> <span class="n">a</span> <span class="n">simpler</span> <span class="n">way</span><span class="p">,</span> <span class="n">we</span> <span class="n">can</span> <span class="k">do</span> <span class="n">this:</span>
-</span><span class="line"><span class="n">module</span><span class="o">-</span><span class="n">starter</span> <span class="o">--</span><span class="n">mb</span> <span class="o">--</span><span class="n">module</span><span class="o">=</span><span class="s">&quot;Animal&quot;</span> <span class="o">--</span><span class="n">author</span><span class="o">=</span><span class="s">&quot;Steven Sun&quot;</span> <span class="o">--</span><span class="n">email</span><span class="o">=</span><span class="n">steven</span><span class="o">.</span><span class="n">sun2013</span><span class="nv">@gmail</span><span class="o">.</span><span class="n">com</span> <span class="o">--</span><span class="n">verbose</span>
-</span><span class="line">
-</span><span class="line"><span class="n">perl</span> <span class="n">Build</span><span class="o">.</span><span class="n">PL</span>
-</span><span class="line"><span class="o">./</span><span class="n">Build</span>
-</span><span class="line"><span class="o">./</span><span class="n">Build</span> <span class="n">test</span>
-</span><span class="line"><span class="o">./</span><span class="n">Build</span> <span class="n">disttest</span>       <span class="c1">##this will create a .tar.gz archive which we can distribute now.  </span>
-</span><span class="line"><span class="o">./</span><span class="n">Build</span> <span class="n">dist</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>For the Module::Build way, there is a shortcut.   </p>
-
-<p>We don’t want to type that long command line every time, so module-starter can get that information from a    <br />
-configuration file $HOME/.module-starter/config. If we’re on Windows, that .module-starter name is a bit of a    <br />
-problem, so we can set the MODULE_STARTER_DIR environment variable to the name of the directory that contains
-config. Inside config, we can list the parameter names and values separated by a colon.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">author:</span> <span class="n">Steven</span> <span class="n">Sun</span>
-</span><span class="line"><span class="n">email:</span> <span class="n">steven</span><span class="o">.</span><span class="n">sun2013</span><span class="nv">@gmail</span><span class="o">.</span><span class="n">com</span>
-</span><span class="line"><span class="n">builder:</span> <span class="nn">Module::</span><span class="n">Build</span>
-</span><span class="line"><span class="n">verbose:</span> <span class="mi">1</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>Once we have our configuration file setup, life is much easier since we only need to specify the name of the distribution that we want to create. </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">%</span> <span class="nv">module</span><span class="err">−</span><span class="n">starter</span> <span class="err">−−</span><span class="n">module</span><span class="o">=</span><span class="n">Animal</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/40/">&larr; Older</a>
@@ -1230,6 +1298,10 @@ config. Inside config, we can list the parameter names and values separated by a
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2020/12/11/pandasshi-yong-tipsji-jin/">Pandas使用tips集锦</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2020/12/06/ti-du-xia-jiang-fa-he-niu-dun-fa/">梯度下降法和牛顿法</a>
@@ -1267,10 +1339,6 @@ config. Inside config, we can list the parameter names and values separated by a
         <a href="/blog/2019/08/27/sparkzhong-pai-xu-shu-chu/">Spark中排序输出</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2019/08/14/data-science-at-the-command-line/">Data Science at the Command Line</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -1281,7 +1349,7 @@ config. Inside config, we can list the parameter names and values separated by a
 <li class='category'><a href='/blog/categories/bigdata/'>BigData (11)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (7)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
-<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (15)</a></li>
+<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (16)</a></li>
 <li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (5)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (2)</a></li>
 <li class='category'><a href='/blog/categories/javascript/'>Javascript (4)</a></li>

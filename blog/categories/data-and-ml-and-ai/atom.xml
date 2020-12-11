@@ -4,7 +4,7 @@
   <title><![CDATA[catogories：Data&ML&AI | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/data-and-ml-and-ai/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2020-12-06T15:15:18+08:00</updated>
+  <updated>2020-12-11T09:26:28+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,45 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Pandas使用tips集锦]]></title>
+    <link href="http://isunix.github.io/blog/2020/12/11/pandasshi-yong-tipsji-jin/"/>
+    <updated>2020-12-11T09:18:43+08:00</updated>
+    <id>http://isunix.github.io/blog/2020/12/11/pandasshi-yong-tipsji-jin</id>
+    <content type="html"><![CDATA[<ol>
+  <li>替换字符</li>
+</ol>
+
+<p><code>py
+auto['horsepower'] = auto['horsepower'].replace('?',np.nan)
+</code></p>
+
+<ol>
+  <li>删除空值</li>
+</ol>
+
+<p><code>py
+auto = auto.dropna()
+</code></p>
+
+<ol>
+  <li>改变字段类型</li>
+</ol>
+
+<p><code>py
+auto['horsepower'] = auto['horsepower'].astype('int')
+</code></p>
+
+<ol>
+  <li>按照某一个字段排序</li>
+</ol>
+
+<p><code>py
+auto = auto.sort_values(by = ['horsepower'],ascending = True, axis = 0)
+</code></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[单纯形法介绍和Python代码实现]]></title>
@@ -230,42 +269,6 @@ df
 <p><a href="https://www.leiphone.com/news/201908/wq1m4fNK8LNuG0Rs.html">卷积神经网络数学原理解析</a></p>
 
 <p><a href="https://christophm.github.io/interpretable-ml-book/">Interpretable Machine Learning</a></p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Spark中排序输出]]></title>
-    <link href="http://isunix.github.io/blog/2019/08/27/sparkzhong-pai-xu-shu-chu/"/>
-    <updated>2019-08-27T10:11:02+08:00</updated>
-    <id>http://isunix.github.io/blog/2019/08/27/sparkzhong-pai-xu-shu-chu</id>
-    <content type="html"><![CDATA[<p>```python
-# initialize pyspark
-import pandas as pd
-import numpy as np
-import json
-np.set_printoptions(suppress=True)</p>
-
-<p>import findspark
-findspark.init()
-import pyspark</p>
-
-<p>from pyspark.sql import SparkSession
-spark = SparkSession.builder \
-    .appName(‘PySpark-Analysis’) \
-    .config(“spark.executor.memory”, “3g”) \
-    .config(“spark.executor.cores”, “8”) \
-    .getOrCreate()</p>
-
-<p>import os
-folder = “xxxx”
-filename = “one-big.tsv”
-file = os.path.join(folder, filename)</p>
-
-<p>df = spark.read.text(file).rdd.map(lambda r: r[0]).map(lambda line: line.split(“\t”)).toDF()</p>
-
-<p>df.orderBy(“<em>1”, “</em>2”).coalesce(1).write.csv(“xxx2”, sep=’\t’)
-```</p>
 
 ]]></content>
   </entry>

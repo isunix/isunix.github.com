@@ -5,12 +5,14 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Steven's Blog</title>
+  <title>Pandas使用tips集锦 - Steven's Blog</title>
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="I find that my bootstap files not working well while I am using gunicorn to start the app. 1
-gunicorn --env DJANGO_SETTINGS_MODULE=myapp.settings &hellip;">
+  <meta name="description" content="替换字符 1
+auto[&#39;horsepower&#39;] = auto[&#39;horsepower&#39;].replace(&#39;?&#39;,np.nan) 删除空值 1
+auto = auto.dropna() 改变字段类型 1
+auto[&#39;horsepower &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +21,7 @@ gunicorn --env DJANGO_SETTINGS_MODULE=myapp.settings &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://isunix.github.io/blog/page/22">
+  <link rel="canonical" href="http://isunix.github.io/blog/2020/12/11/pandasshi-yong-tipsji-jin">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Steven's Blog" type="application/atom+xml">
@@ -92,15 +94,12 @@ gunicorn --env DJANGO_SETTINGS_MODULE=myapp.settings &hellip;">
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2015/11/19/css-files-not-function-well-while-using-gunicorn/">Css Files Not Function Well While Using Gunicorn</a></h1>
+      <h1 class="entry-title">Pandas使用tips集锦</h1>
     
     
       <p class="meta">
@@ -116,96 +115,55 @@ gunicorn --env DJANGO_SETTINGS_MODULE=myapp.settings &hellip;">
   
 
 
-<time datetime="2015-11-19T16:42:04+08:00" pubdate data-updated="true">2015 年11 月19 日</time>
+<time datetime="2020-12-11T09:18:43+08:00" pubdate data-updated="true">2020 年12 月11 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>I find that my bootstap files not working well while I am using gunicorn to start the app.</p>
+<div class="entry-content"><ol>
+  <li>替换字符</li>
+</ol>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">gunicorn --env <span class="nv">DJANGO_SETTINGS_MODULE</span><span class="o">=</span>myapp.settings myapp_management.wsgi --timeout 300 --workers<span class="o">=</span>2 --pid gunicorn.pid -b 0:10000 --access-logfile<span class="o">=</span>log/access_charts.log --error-logfile<span class="o">=</span>log/error_charts.log --access-logformat <span class="s1">&#39;&quot;%(h)s %(l)s %(u)s %(t)s &quot;%(r)s&quot; %(s)s %(b)s &quot;%(f)s&quot; &quot;%(a)s&quot; %(D)s %(p)s&#39;</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">auto</span><span class="p">[</span><span class="s">&#39;horsepower&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">auto</span><span class="p">[</span><span class="s">&#39;horsepower&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;?&#39;</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>I find a solution for this:</p>
+<ol>
+  <li>删除空值</li>
+</ol>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line">http://stackoverflow.com/questions/12800862/django-static-files-under-gunicorn
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">auto</span> <span class="o">=</span> <span class="n">auto</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>To summarize it here, add the following contents to the urls.py file.</p>
+<ol>
+  <li>改变字段类型</li>
+</ol>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-</span><span class="line">
-</span><span class="line">
-</span><span class="line">urlpatterns +<span class="o">=</span> staticfiles_urlpatterns<span class="o">()</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">auto</span><span class="p">[</span><span class="s">&#39;horsepower&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">auto</span><span class="p">[</span><span class="s">&#39;horsepower&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s">&#39;int&#39;</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
+<ol>
+  <li>按照某一个字段排序</li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">auto</span> <span class="o">=</span> <span class="n">auto</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;horsepower&#39;</span><span class="p">],</span><span class="n">ascending</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 </div>
-  
-  
 
 
-    </article>
-  
-  
-    <article>
+  <footer>
+    <p class="meta">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/11/19/using-ptpython-with-python3-as-the-backend/">Using Ptpython With Python3 as the Backend</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
   
 
+<span class="byline author vcard">Posted by <span class="fn">Steven Sun</span></span>
 
-<time datetime="2015-11-19T12:32:02+08:00" pubdate data-updated="true">2015 年11 月19 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I want to use ptpython with python3 as the interpreter, here is how:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">pip3 install ptpython
-</span><span class="line">python3 -m ptpython
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/11/18/django-admin-changing-the-page-header/">Django Admin: Changing the Page Header</a></h1>
-    
-    
-      <p class="meta">
-        
 
 
 
@@ -217,37 +175,36 @@ gunicorn --env DJANGO_SETTINGS_MODULE=myapp.settings &hellip;">
   
 
 
-<time datetime="2015-11-18T16:58:31+08:00" pubdate data-updated="true">2015 年11 月18 日</time>
-        
-      </p>
+<time datetime="2020-12-11T09:18:43+08:00" pubdate data-updated="true">2020 年12 月11 日</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI</a>
+  
+</span>
+
+
+    </p>
     
-  </header>
-
-
-  <div class="entry-content"><p>This post shows how to change the header of the django admin page.</p>
-
-<p>The blog for reference is:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line">http://www.mc706.com/tip_trick_snippets/42/django-admin-changing-the-page-header/
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+      <div class="sharing">
+  
+  
+  
 </div>
-  
-  
 
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2020/12/06/ti-du-xia-jiang-fa-he-niu-dun-fa/" title="Previous Post: 梯度下降法和牛顿法">&laquo; 梯度下降法和牛顿法</a>
+      
+      
+    </p>
+  </footer>
+</article>
 
-    </article>
-  
-  <div class="pagination">
-    
-      <a class="prev" href="/blog/page/23/">&larr; Older</a>
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-    <a class="next" href="/blog/page/21/">Newer &rarr;</a>
-    
-  </div>
 </div>
+
 <aside class="sidebar">
   
     <section>
@@ -322,6 +279,7 @@ gunicorn --env DJANGO_SETTINGS_MODULE=myapp.settings &hellip;">
 
   
 </aside>
+
 
     </div>
   </div>

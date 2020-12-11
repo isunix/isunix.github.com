@@ -4,7 +4,7 @@
   <title><![CDATA[Steven's Blog]]></title>
   <link href="http://isunix.github.io/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2020-12-06T15:15:18+08:00</updated>
+  <updated>2020-12-11T09:26:28+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,45 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Pandas使用tips集锦]]></title>
+    <link href="http://isunix.github.io/blog/2020/12/11/pandasshi-yong-tipsji-jin/"/>
+    <updated>2020-12-11T09:18:43+08:00</updated>
+    <id>http://isunix.github.io/blog/2020/12/11/pandasshi-yong-tipsji-jin</id>
+    <content type="html"><![CDATA[<ol>
+  <li>替换字符</li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">auto</span><span class="p">[</span><span class="s">&#39;horsepower&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">auto</span><span class="p">[</span><span class="s">&#39;horsepower&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;?&#39;</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<ol>
+  <li>删除空值</li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">auto</span> <span class="o">=</span> <span class="n">auto</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<ol>
+  <li>改变字段类型</li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">auto</span><span class="p">[</span><span class="s">&#39;horsepower&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">auto</span><span class="p">[</span><span class="s">&#39;horsepower&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s">&#39;int&#39;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<ol>
+  <li>按照某一个字段排序</li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">auto</span> <span class="o">=</span> <span class="n">auto</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;horsepower&#39;</span><span class="p">],</span><span class="n">ascending</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[梯度下降法和牛顿法]]></title>
@@ -943,19 +982,6 @@ xx | yy | zz | dd | ee | ff | gg | hh
 </span><span class="line"><span class="k">val</span> <span class="n">result_df</span> <span class="k">=</span> <span class="n">joined_diff</span><span class="o">.</span><span class="n">select</span><span class="o">(</span><span class="n">$</span><span class="s">&quot;f1&quot;</span><span class="o">,</span> <span class="n">$</span><span class="s">&quot;f2&quot;</span><span class="o">,</span> <span class="n">$</span><span class="s">&quot;f3&quot;</span><span class="o">,</span> <span class="n">$</span><span class="s">&quot;f4&quot;</span><span class="o">)</span>
 </span><span class="line"><span class="n">result_df</span><span class="o">.</span><span class="n">repartition</span><span class="o">(</span><span class="mi">1</span><span class="o">).</span><span class="n">write</span><span class="o">.</span><span class="n">mode</span><span class="o">(</span><span class="s">&quot;overwrite&quot;</span><span class="o">).</span><span class="n">option</span><span class="o">(</span><span class="s">&quot;delimiter&quot;</span><span class="o">,</span> <span class="s">&quot;\t&quot;</span><span class="o">).</span><span class="n">csv</span><span class="o">(</span><span class="n">path2</span><span class="o">)</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[机器学习的流程图]]></title>
-    <link href="http://isunix.github.io/blog/2019/07/07/ji-qi-xue-xi-de-liu-cheng-tu/"/>
-    <updated>2019-07-07T07:32:15+08:00</updated>
-    <id>http://isunix.github.io/blog/2019/07/07/ji-qi-xue-xi-de-liu-cheng-tu</id>
-    <content type="html"><![CDATA[<p>下面的机器学习的一个流程图是从某视频中看到的，现在记录如下:</p>
-
-<p><img src="http://isunix.github.io/images/sun/machine_learning_flow.001.jpeg" /></p>
-
-<p>虽然说会的不难， 但是里面的每一步都很艰辛。比如被很多人认为脏活累活的”加载预处理数据集”这块，这个大家实践下来的基本共识是，这块就占了整个机器学习流程的60%到80%的工作量。所以，不要心存美好幻想，觉得机器学习或者人工智能是多么高大上和美好的事情。</p>
 ]]></content>
   </entry>
   

@@ -159,7 +159,13 @@ auto[&#39; &hellip;">
 <h3 id="section-4">6. 对某一列进行判断并且置值</h3>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
 </pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">college</span><span class="p">[</span><span class="s">&#39;Elite&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">college</span><span class="p">[</span><span class="s">&#39;Top10perc&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">50</span><span class="p">,</span><span class="s">&#39;Yes&#39;</span><span class="p">,</span><span class="s">&#39;No&#39;</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="c"># 使用map的方式</span>
+</span><span class="line"><span class="n">credit</span><span class="p">[</span><span class="s">&#39;Student2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">credit</span><span class="o">.</span><span class="n">Student</span><span class="o">.</span><span class="n">map</span><span class="p">({</span><span class="s">&#39;No&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s">&#39;Yes&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">})</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <h3 id="section-5">7. 对某一列的值进行计数</h3>
@@ -207,7 +213,11 @@ auto[&#39; &hellip;">
 <h3 id="load">13. load数据并且指定列名</h3>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
 </pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">boston</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">load_boston</span><span class="p">()</span><span class="o">.</span><span class="n">data</span><span class="p">,</span><span class="n">columns</span> <span class="o">=</span> <span class="n">load_boston</span><span class="p">()</span><span class="o">.</span><span class="n">feature_names</span> <span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">boston</span><span class="o">.</span><span class="n">data</span><span class="p">,</span><span class="n">columns</span> <span class="o">=</span> <span class="n">boston</span><span class="p">[</span><span class="s">&#39;feature_names&#39;</span><span class="p">])</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <h3 id="iloc">14. 通过iloc选取行和列</h3>
@@ -224,9 +234,38 @@ auto[&#39; &hellip;">
 </span><span class="line"><span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">1</span><span class="p">:]</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<h2 id="section-9">参考链接</h2>
+<h3 id="df">15. 按照行/列进行df的拼接</h3>
 
-<p><a href="https://blog.csdn.net/jingyi130705008/article/details/78162758">pandas中关于set_index和reset_index的用法</a></p>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="c"># 按行拼接</span>
+</span><span class="line"><span class="n">features</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">constant</span><span class="p">,</span><span class="n">features</span><span class="p">],</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<h3 id="load-1">16. load数据并且选定列</h3>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">credit</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">&#39;Data/Credit.csv&#39;</span><span class="p">,</span> <span class="n">usecols</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">12</span><span class="p">)))</span>
+</span><span class="line"><span class="n">advertising</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">&#39;Data/Advertising.csv&#39;</span><span class="p">,</span> <span class="n">usecols</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<h3 id="section-9">17. 读取数据的时候，就设置空值的表示方法</h3>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">auto</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">&#39;Data/Auto.csv&#39;</span><span class="p">,</span> <span class="n">na_values</span><span class="o">=</span><span class="s">&#39;?&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<h2 id="section-10">参考链接</h2>
+
+<ul>
+  <li>
+    <p><a href="https://blog.csdn.net/jingyi130705008/article/details/78162758">pandas中关于set_index和reset_index的用法</a></p>
+  </li>
+  <li>
+    <p><a href="https://stackoverflow.com/questions/39283339/what-is-the-meaning-of-axis-attribute-in-a-pandas-dataframe">What is the meaning of “axis” attribute in a Pandas DataFrame?</a></p>
+  </li>
+</ul>
 </div>
 
 
@@ -273,6 +312,8 @@ auto[&#39; &hellip;">
         <a class="basic-alignment left" href="/blog/2020/12/06/ti-du-xia-jiang-fa-he-niu-dun-fa/" title="Previous Post: 梯度下降法和牛顿法">&laquo; 梯度下降法和牛顿法</a>
       
       
+        <a class="basic-alignment right" href="/blog/2020/12/11/matplotlibhe-seabornshi-yong-fang-fa-ji-jin/" title="Next Post: Matplotlib和Seaborn使用方法集锦">Matplotlib和Seaborn使用方法集锦 &raquo;</a>
+      
     </p>
   </footer>
 </article>
@@ -284,6 +325,10 @@ auto[&#39; &hellip;">
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2020/12/11/matplotlibhe-seabornshi-yong-fang-fa-ji-jin/">Matplotlib和Seaborn使用方法集锦</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2020/12/11/pandasshi-yong-tipsji-jin/">Pandas使用tips集锦</a>
@@ -321,10 +366,6 @@ auto[&#39; &hellip;">
         <a href="/blog/2019/08/27/ru-he-cha-kan-linuxzhong-de-nei-cun-zhan-yong-qing-kuang/">如何查看Linux中的内存占用情况</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2019/08/27/sparkzhong-pai-xu-shu-chu/">Spark中排序输出</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -342,7 +383,7 @@ auto[&#39; &hellip;">
 <li class='category'><a href='/blog/categories/linux-and-mac/'>Linux&Mac (14)</a></li>
 <li class='category'><a href='/blog/categories/php/'>PHP (5)</a></li>
 <li class='category'><a href='/blog/categories/perl/'>Perl (50)</a></li>
-<li class='category'><a href='/blog/categories/python/'>Python (11)</a></li>
+<li class='category'><a href='/blog/categories/python/'>Python (12)</a></li>
 <li class='category'><a href='/blog/categories/ruby/'>Ruby (1)</a></li>
 <li class='category'><a href='/blog/categories/scala/'>Scala (1)</a></li>
 <li class='category'><a href='/blog/categories/shell/'>Shell (12)</a></li>

@@ -4,7 +4,7 @@
   <title><![CDATA[catogories：Data&ML&AI | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/data-and-ml-and-ai/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2020-12-11T10:02:01+08:00</updated>
+  <updated>2020-12-11T13:59:30+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -52,9 +52,12 @@ college = college.set_index(['Unnamed: 0'], append=True, verify_integrity=True) 
 
 <h3 id="section-4">6. 对某一列进行判断并且置值</h3>
 
-<p><code>py
-college['Elite'] = np.where(college['Top10perc'] &gt; 50,'Yes','No')
-</code></p>
+<p>```py
+college[‘Elite’] = np.where(college[‘Top10perc’] &gt; 50,’Yes’,’No’)</p>
+
+<h1 id="map">使用map的方式</h1>
+<p>credit[‘Student2’] = credit.Student.map({‘No’:0, ‘Yes’:1})
+```</p>
 
 <h3 id="section-5">7. 对某一列的值进行计数</h3>
 
@@ -97,9 +100,12 @@ info = auto.drop(auto.index[10:85]).describe().T
 
 <h3 id="load">13. load数据并且指定列名</h3>
 
-<p><code>py
-boston = pd.DataFrame(load_boston().data,columns = load_boston().feature_names )
-</code></p>
+<p>```py
+boston = pd.DataFrame(load_boston().data,columns = load_boston().feature_names )</p>
+
+<p>data = pd.DataFrame(boston.data,columns = boston[‘feature_names’])</p>
+
+<p>```</p>
 
 <h3 id="iloc">14. 通过iloc选取行和列</h3>
 
@@ -111,9 +117,36 @@ corr_matrix.iloc[1:,0].sort_values() </p>
 <p>data = data.iloc[:,1:]
 ```</p>
 
-<h2 id="section-10">参考链接</h2>
+<h3 id="df">15. 按照行/列进行df的拼接</h3>
 
-<p><a href="https://blog.csdn.net/jingyi130705008/article/details/78162758">pandas中关于set_index和reset_index的用法</a></p>
+<p><code>py
+# 按行拼接
+features = pd.concat([constant,features],axis = 1)
+</code></p>
+
+<h3 id="load-1">16. load数据并且选定列</h3>
+
+<p><code>py
+credit = pd.read_csv('Data/Credit.csv', usecols=list(range(1,12)))
+advertising = pd.read_csv('Data/Advertising.csv', usecols=[1,2,3,4])
+</code></p>
+
+<h3 id="section-10">17. 读取数据的时候，就设置空值的表示方法</h3>
+
+<p><code>py
+auto = pd.read_csv('Data/Auto.csv', na_values='?').dropna()
+</code></p>
+
+<h2 id="section-11">参考链接</h2>
+
+<ul>
+  <li>
+    <p><a href="https://blog.csdn.net/jingyi130705008/article/details/78162758">pandas中关于set_index和reset_index的用法</a></p>
+  </li>
+  <li>
+    <p><a href="https://stackoverflow.com/questions/39283339/what-is-the-meaning-of-axis-attribute-in-a-pandas-dataframe">What is the meaning of “axis” attribute in a Pandas DataFrame?</a></p>
+  </li>
+</ul>
 ]]></content>
   </entry>
   

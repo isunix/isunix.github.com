@@ -9,22 +9,7 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="Below are some links I used while I am learning SpamAssassin and machine learning, of course including Bayes. 1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16 &hellip;">
+  <meta name="description" content="On the centos server, I want to install gnuplot in my local dir, here are the steps: download the source code and cd into the dir. ./configure – &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -108,6 +93,59 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/17/install-gnuplot-from-the-source-code/">Install Gnuplot From the Source Code</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-17T10:38:15+08:00" pubdate data-updated="true">2014 年9 月17 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>On the centos server, I want to install gnuplot in my local dir, here are the steps:  </p>
+
+<ol>
+  <li>
+    <p>download the source code and cd into the dir.</p>
+  </li>
+  <li>
+    <p>./configure –prefix=$HOME/local –with-readline=gnu</p>
+  </li>
+  <li>
+    <p>make</p>
+  </li>
+  <li>
+    <p>make install</p>
+  </li>
+</ol>
+
+<p>That is all. </p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -320,83 +358,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/11/constructor-and-destructor-in-perl/">Constructor and Destructor in Perl</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-09-11T13:46:23+08:00" pubdate data-updated="true">2014 年9 月11 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>For Perl constructor, we can seperate the process of object creation from the process of initialization.  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nb">package</span> <span class="nn">CD::</span><span class="n">Music</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="n">strict</span><span class="p">;</span>
-</span><span class="line"><span class="k">sub </span><span class="nf">new</span> <span class="p">{</span>
-</span><span class="line">	<span class="k">my</span> <span class="nv">$self</span> <span class="o">=</span> <span class="p">{};</span>
-</span><span class="line">	<span class="nb">bless</span> <span class="nv">$self</span><span class="p">,</span> <span class="nb">shift</span><span class="p">;</span>
-</span><span class="line">	<span class="nv">$self</span><span class="o">-&gt;</span><span class="n">_incr_count</span><span class="p">();</span>
-</span><span class="line">	<span class="nv">$self</span><span class="o">-&gt;</span><span class="n">_init</span><span class="p">(</span><span class="nv">@_</span><span class="p">);</span>
-</span><span class="line">	<span class="k">return</span> <span class="nv">$self</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line"><span class="p">{</span>
-</span><span class="line">	<span class="k">my</span> <span class="nv">@_init_mems</span> <span class="o">=</span>
-</span><span class="line">	<span class="sx">qw( _name _artist _publisher _ISBN _tracks _room _shelf _rating )</span><span class="p">;</span>
-</span><span class="line">	<span class="k">sub </span><span class="nf">_init</span> <span class="p">{</span>
-</span><span class="line">		<span class="k">my</span> <span class="p">(</span><span class="nv">$self</span><span class="p">,</span><span class="nv">@args</span><span class="p">)</span> <span class="o">=</span> <span class="nv">@_</span><span class="p">;</span>
-</span><span class="line">		<span class="k">my</span> <span class="nv">%inits</span><span class="p">;</span>
-</span><span class="line">		<span class="nv">@inits</span><span class="p">{</span><span class="nv">@_init_mems</span><span class="p">}</span> <span class="o">=</span> <span class="nv">@args</span><span class="p">;</span>
-</span><span class="line">		<span class="nv">%$self</span> <span class="o">=</span> <span class="nv">%inits</span><span class="p">;</span>
-</span><span class="line">	<span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/35/">&larr; Older</a>
@@ -412,6 +373,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2020/12/11/matplotlibhe-seabornshi-yong-fang-fa-ji-jin/">Matplotlib和Seaborn使用方法集锦</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2020/12/11/pandasshi-yong-tipsji-jin/">Pandas使用tips集锦</a>
@@ -449,10 +414,6 @@
         <a href="/blog/2019/08/27/ru-he-cha-kan-linuxzhong-de-nei-cun-zhan-yong-qing-kuang/">如何查看Linux中的内存占用情况</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2019/08/27/sparkzhong-pai-xu-shu-chu/">Spark中排序输出</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -470,7 +431,7 @@
 <li class='category'><a href='/blog/categories/linux-and-mac/'>Linux&Mac (14)</a></li>
 <li class='category'><a href='/blog/categories/php/'>PHP (5)</a></li>
 <li class='category'><a href='/blog/categories/perl/'>Perl (50)</a></li>
-<li class='category'><a href='/blog/categories/python/'>Python (11)</a></li>
+<li class='category'><a href='/blog/categories/python/'>Python (12)</a></li>
 <li class='category'><a href='/blog/categories/ruby/'>Ruby (1)</a></li>
 <li class='category'><a href='/blog/categories/scala/'>Scala (1)</a></li>
 <li class='category'><a href='/blog/categories/shell/'>Shell (12)</a></li>

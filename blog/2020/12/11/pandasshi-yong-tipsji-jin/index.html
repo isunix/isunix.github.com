@@ -9,10 +9,10 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="替换字符 1
-auto[&#39;horsepower&#39;] = auto[&#39;horsepower&#39;].replace(&#39;?&#39;,np.nan) 删除空值 1
-auto = auto.dropna() 改变字段类型 1
-auto[&#39;horsepower &hellip;">
+  <meta name="description" content="1. 替换字符 1
+auto[&#39;horsepower&#39;] = auto[&#39;horsepower&#39;].replace(&#39;?&#39;,np.nan) 2. 删除空值 1
+auto = auto.dropna() 3. 改变字段类型 1
+auto[&#39; &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -122,81 +122,65 @@ auto[&#39;horsepower &hellip;">
   </header>
 
 
-<div class="entry-content"><ol>
-  <li>替换字符</li>
-</ol>
+<div class="entry-content"><h3 id="section">1. 替换字符</h3>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 </pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">auto</span><span class="p">[</span><span class="s">&#39;horsepower&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">auto</span><span class="p">[</span><span class="s">&#39;horsepower&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;?&#39;</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<ol>
-  <li>删除空值</li>
-</ol>
+<h3 id="section-1">2. 删除空值</h3>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 </pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">auto</span> <span class="o">=</span> <span class="n">auto</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<ol>
-  <li>改变字段类型</li>
-</ol>
+<h3 id="section-2">3. 改变字段类型</h3>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 </pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">auto</span><span class="p">[</span><span class="s">&#39;horsepower&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">auto</span><span class="p">[</span><span class="s">&#39;horsepower&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s">&#39;int&#39;</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<ol>
-  <li>按照某一个字段排序</li>
-</ol>
+<h3 id="section-3">4. 按照某一个/多个字段排序</h3>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
 </pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">auto</span> <span class="o">=</span> <span class="n">auto</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;horsepower&#39;</span><span class="p">],</span><span class="n">ascending</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line"><span class="n">boston</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span> <span class="p">[</span><span class="s">&#39;CRIM&#39;</span><span class="p">,</span><span class="s">&#39;TAX&#39;</span><span class="p">,</span><span class="s">&#39;PTRATIO&#39;</span><span class="p">],</span><span class="n">ascending</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span><span class="o">.</span><span class="n">index</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<ol>
-  <li>pandas设置索引</li>
-</ol>
+<h3 id="pandas">5. pandas设置索引</h3>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 </pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">college</span> <span class="o">=</span> <span class="n">college</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s">&#39;Unnamed: 0&#39;</span><span class="p">],</span> <span class="n">append</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">verify_integrity</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span> <span class="n">college</span><span class="o">.</span><span class="n">rename_axis</span><span class="p">([</span><span class="bp">None</span><span class="p">,</span> <span class="s">&#39;Name&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<ol>
-  <li>对某一列进行判断并且置值</li>
-</ol>
+<h3 id="section-4">6. 对某一列进行判断并且置值</h3>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 </pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">college</span><span class="p">[</span><span class="s">&#39;Elite&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">college</span><span class="p">[</span><span class="s">&#39;Top10perc&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">50</span><span class="p">,</span><span class="s">&#39;Yes&#39;</span><span class="p">,</span><span class="s">&#39;No&#39;</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<ol>
-  <li>对某一列的值进行计数</li>
-</ol>
+<h3 id="section-5">7. 对某一列的值进行计数</h3>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 </pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">college</span><span class="p">[</span><span class="s">&#39;Elite&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<ol>
-  <li>对某一列的值进行筛选</li>
-</ol>
+<h3 id="section-6">8. 对某一列的值进行筛选</h3>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 </pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">elite_colleges</span> <span class="o">=</span> <span class="n">college</span><span class="p">[</span><span class="n">college</span><span class="p">[</span><span class="s">&#39;Elite&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;Yes&#39;</span><span class="p">]</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<ol>
-  <li>对某一列的数值进行分桶操作</li>
-</ol>
+<h3 id="section-7">9. 对某一列的数值进行分桶操作</h3>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 </pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">college</span><span class="p">[</span><span class="s">&#39;Enroll&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">cut</span><span class="p">(</span><span class="n">college</span><span class="p">[</span><span class="s">&#39;Enroll&#39;</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;Low&#39;</span><span class="p">,</span><span class="s">&#39;Medium&#39;</span><span class="p">,</span><span class="s">&#39;High&#39;</span><span class="p">])</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<ol>
-  <li>查看df中的各个字段的unique的数目和字段类型信息等</li>
-</ol>
+<h3 id="dfunique">10. 查看df中的各个字段的unique的数目和字段类型信息等</h3>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
@@ -206,7 +190,42 @@ auto[&#39;horsepower &hellip;">
 </span><span class="line"><span class="n">auto</span><span class="p">[</span><span class="s">&#39;horsepower&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span> <span class="c"># 看某一列的unique数目</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<h2 id="section">参考链接</h2>
+<h3 id="section-8">11. 筛选单列和多列</h3>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">info</span><span class="p">[</span><span class="s">&#39;range&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">info</span><span class="p">[</span><span class="s">&#39;max&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">info</span><span class="p">[</span><span class="s">&#39;min&#39;</span><span class="p">]</span>
+</span><span class="line"><span class="n">info</span> <span class="o">=</span> <span class="n">info</span><span class="p">[[</span><span class="s">&#39;mean&#39;</span><span class="p">,</span><span class="s">&#39;range&#39;</span><span class="p">,</span><span class="s">&#39;std&#39;</span><span class="p">]]</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<h3 id="index">12. 根据index筛选和删除多列</h3>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">info</span> <span class="o">=</span> <span class="n">auto</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">auto</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">10</span><span class="p">:</span><span class="mi">85</span><span class="p">])</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">T</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<h3 id="load">13. load数据并且指定列名</h3>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">boston</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">load_boston</span><span class="p">()</span><span class="o">.</span><span class="n">data</span><span class="p">,</span><span class="n">columns</span> <span class="o">=</span> <span class="n">load_boston</span><span class="p">()</span><span class="o">.</span><span class="n">feature_names</span> <span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<h3 id="iloc">14. 通过iloc选取行和列</h3>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">corr_matrix</span> <span class="o">=</span> <span class="n">boston</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
+</span><span class="line"><span class="n">corr_matrix</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">()</span>
+</span><span class="line">
+</span><span class="line"><span class="c"># 选取所有行，和从第二列开始的所有列</span>
+</span><span class="line"><span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">1</span><span class="p">:]</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<h2 id="section-9">参考链接</h2>
+
 <p><a href="https://blog.csdn.net/jingyi130705008/article/details/78162758">pandas中关于set_index和reset_index的用法</a></p>
 </div>
 

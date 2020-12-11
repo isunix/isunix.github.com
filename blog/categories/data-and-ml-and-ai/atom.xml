@@ -4,7 +4,7 @@
   <title><![CDATA[catogories：Data&ML&AI | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/data-and-ml-and-ai/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2020-12-11T09:44:55+08:00</updated>
+  <updated>2020-12-11T10:02:01+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -18,81 +18,63 @@
     <link href="http://isunix.github.io/blog/2020/12/11/pandasshi-yong-tipsji-jin/"/>
     <updated>2020-12-11T09:18:43+08:00</updated>
     <id>http://isunix.github.io/blog/2020/12/11/pandasshi-yong-tipsji-jin</id>
-    <content type="html"><![CDATA[<ol>
-  <li>替换字符</li>
-</ol>
+    <content type="html"><![CDATA[<h3 id="section">1. 替换字符</h3>
 
 <p><code>py
 auto['horsepower'] = auto['horsepower'].replace('?',np.nan)
 </code></p>
 
-<ol>
-  <li>删除空值</li>
-</ol>
+<h3 id="section-1">2. 删除空值</h3>
 
 <p><code>py
 auto = auto.dropna()
 </code></p>
 
-<ol>
-  <li>改变字段类型</li>
-</ol>
+<h3 id="section-2">3. 改变字段类型</h3>
 
 <p><code>py
 auto['horsepower'] = auto['horsepower'].astype('int')
 </code></p>
 
-<ol>
-  <li>按照某一个字段排序</li>
-</ol>
+<h3 id="section-3">4. 按照某一个/多个字段排序</h3>
 
-<p><code>py
-auto = auto.sort_values(by = ['horsepower'],ascending = True, axis = 0)
-</code></p>
+<p>```py
+auto = auto.sort_values(by = [‘horsepower’],ascending = True, axis = 0)</p>
 
-<ol>
-  <li>pandas设置索引</li>
-</ol>
+<p>boston.sort_values(by= [‘CRIM’,’TAX’,’PTRATIO’],ascending=False).head().index
+```</p>
+
+<h3 id="pandas">5. pandas设置索引</h3>
 
 <p><code>py
 college = college.set_index(['Unnamed: 0'], append=True, verify_integrity=True) college.rename_axis([None, 'Name'], inplace=True)
 </code> </p>
 
-<ol>
-  <li>对某一列进行判断并且置值</li>
-</ol>
+<h3 id="section-4">6. 对某一列进行判断并且置值</h3>
 
 <p><code>py
 college['Elite'] = np.where(college['Top10perc'] &gt; 50,'Yes','No')
 </code></p>
 
-<ol>
-  <li>对某一列的值进行计数</li>
-</ol>
+<h3 id="section-5">7. 对某一列的值进行计数</h3>
 
 <p><code>py
 college['Elite'].value_counts()
 </code></p>
 
-<ol>
-  <li>对某一列的值进行筛选</li>
-</ol>
+<h3 id="section-6">8. 对某一列的值进行筛选</h3>
 
 <p><code>py
 elite_colleges = college[college['Elite'] == 'Yes']
 </code></p>
 
-<ol>
-  <li>对某一列的数值进行分桶操作</li>
-</ol>
+<h3 id="section-7">9. 对某一列的数值进行分桶操作</h3>
 
 <p><code>py
 college['Enroll'] = pd.cut(college['Enroll'], bins=3, labels = ['Low','Medium','High'])
 </code></p>
 
-<ol>
-  <li>查看df中的各个字段的unique的数目和字段类型信息等</li>
-</ol>
+<h3 id="dfunique">10. 查看df中的各个字段的unique的数目和字段类型信息等</h3>
 
 <p><code>py
 auto.nunique()
@@ -100,7 +82,37 @@ auto.info()
 auto['horsepower'].unique() # 看某一列的unique数目
 </code></p>
 
-<h2 id="section">参考链接</h2>
+<h3 id="section-8">11. 筛选单列和多列</h3>
+
+<p><code>py
+info['range'] = info['max'] - info['min'] 
+info = info[['mean','range','std']]
+</code></p>
+
+<h3 id="index">12. 根据index筛选和删除多列</h3>
+
+<p><code>py
+info = auto.drop(auto.index[10:85]).describe().T
+</code></p>
+
+<h3 id="load">13. load数据并且指定列名</h3>
+
+<p><code>py
+boston = pd.DataFrame(load_boston().data,columns = load_boston().feature_names )
+</code></p>
+
+<h3 id="iloc">14. 通过iloc选取行和列</h3>
+
+<p>```py
+corr_matrix = boston.corr() 
+corr_matrix.iloc[1:,0].sort_values() </p>
+
+<h1 id="section-9">选取所有行，和从第二列开始的所有列</h1>
+<p>data = data.iloc[:,1:]
+```</p>
+
+<h2 id="section-10">参考链接</h2>
+
 <p><a href="https://blog.csdn.net/jingyi130705008/article/details/78162758">pandas中关于set_index和reset_index的用法</a></p>
 ]]></content>
   </entry>

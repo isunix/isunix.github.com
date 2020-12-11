@@ -42,6 +42,9 @@ college = college.set_index(['Unnamed: 0'], append=True, verify_integrity=True) 
 
 ```py
 college['Elite'] = np.where(college['Top10perc'] > 50,'Yes','No')
+
+# 使用map的方式
+credit['Student2'] = credit.Student.map({'No':0, 'Yes':1})
 ```
 
 ### 7. 对某一列的值进行计数
@@ -87,6 +90,9 @@ info = auto.drop(auto.index[10:85]).describe().T
 
 ```py
 boston = pd.DataFrame(load_boston().data,columns = load_boston().feature_names )
+
+data = pd.DataFrame(boston.data,columns = boston['feature_names'])
+
 ```
 
 ### 14. 通过iloc选取行和列
@@ -99,7 +105,30 @@ corr_matrix.iloc[1:,0].sort_values()
 data = data.iloc[:,1:]
 ```
 
+### 15. 按照行/列进行df的拼接
+
+```py
+# 按行拼接
+features = pd.concat([constant,features],axis = 1)
+```
+
+### 16. load数据并且选定列
+
+```py
+credit = pd.read_csv('Data/Credit.csv', usecols=list(range(1,12)))
+advertising = pd.read_csv('Data/Advertising.csv', usecols=[1,2,3,4])
+```
+
+### 17. 读取数据的时候，就设置空值的表示方法
+
+```py
+auto = pd.read_csv('Data/Auto.csv', na_values='?').dropna()
+```
+
 ## 参考链接
 
-[pandas中关于set\_index和reset\_index的用法](https://blog.csdn.net/jingyi130705008/article/details/78162758
+- [pandas中关于set\_index和reset\_index的用法](https://blog.csdn.net/jingyi130705008/article/details/78162758
+)
+
+- [What is the meaning of "axis" attribute in a Pandas DataFrame?](https://stackoverflow.com/questions/39283339/what-is-the-meaning-of-axis-attribute-in-a-pandas-dataframe
 )

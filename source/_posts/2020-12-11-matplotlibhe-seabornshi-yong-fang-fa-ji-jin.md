@@ -244,5 +244,5 @@ gs.tight_layout(plt.gcf())
 
 ### 参考资料
 
-- github.com/JWarmenhoven/ISLR-python.git
-- github.com.cnpmjs.org/hardikkamboj/An-Introduction-to-Statistical-Learning.git
+- https://github.com/JWarmenhoven/ISLR-python.git
+- https://github.com/hardikkamboj/An-Introduction-to-Statistical-Learning.git

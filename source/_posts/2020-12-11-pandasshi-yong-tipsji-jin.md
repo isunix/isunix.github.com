@@ -125,6 +125,27 @@ advertising = pd.read_csv('Data/Advertising.csv', usecols=[1,2,3,4])
 auto = pd.read_csv('Data/Auto.csv', na_values='?').dropna()
 ```
 
+### 18. 构造pandas的df
+
+```py
+X = np.random.normal(size = 100) 
+y = np.random.permutation(X) 
+data = pd.DataFrame({'X':X,'y':y})
+```
+
+
+### 19. 读取文本文件的时候，设置某列为索引列
+
+```py
+data = pd.read_csv('../data/Smarket.csv',index_col=0)
+```
+
+### 20. 原地替换
+
+```py
+df_x.replace(to_replace={0:'No', 1:'Yes', 'True':'Yes', 'False':'No'}, inplace=True)
+```
+
 ## 参考链接
 
 - [pandas中关于set\_index和reset\_index的用法](https://blog.csdn.net/jingyi130705008/article/details/78162758

@@ -4,7 +4,7 @@
   <title><![CDATA[catogories：Data&ML&AI | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/data-and-ml-and-ai/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2020-12-11T13:59:30+08:00</updated>
+  <updated>2020-12-12T16:43:05+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,256 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Matplotlib和Seaborn使用方法集锦]]></title>
+    <link href="http://isunix.github.io/blog/2020/12/11/matplotlibhe-seabornshi-yong-fang-fa-ji-jin/"/>
+    <updated>2020-12-11T11:41:28+08:00</updated>
+    <id>http://isunix.github.io/blog/2020/12/11/matplotlibhe-seabornshi-yong-fang-fa-ji-jin</id>
+    <content type="html"><![CDATA[<h4 id="section">1. 引入常用的包</h4>
+
+<p><code>py
+import pandas as pd 
+import numpy as np
+import matplotlib.pyplot as plt 
+import seaborn as sns
+</code></p>
+
+<h4 id="pairplot">2. 选定若干列，画pairplot</h4>
+
+<p>```py
+sns.pairplot(college.iloc[:,1:11])</p>
+
+<p>sns.pairplot(auto) # 选择全部列的数据
+```</p>
+
+<h4 id="boxplot">3. 选定两列，画出来boxplot</h4>
+
+<p><code>py
+sns.boxplot(x = college['Private'],y = college['Outstate'])
+</code></p>
+
+<h4 id="bar">4. 通过bar画直方图</h4>
+
+<p>```py
+fig = plt.figure()</p>
+
+<p>plt.subplot(2,2,1) college[‘Enroll’].value_counts().plot.bar(title = ‘Enroll’)</p>
+
+<p>plt.subplot(2,2,2) college[‘PhD’].value_counts().plot.bar(title = ‘PhD’)</p>
+
+<p>plt.subplot(2,2,3) college[‘Terminal’].value_counts().plot.bar(title = ‘Terminal’)</p>
+
+<h1 id="to-add-space-in-between-the-subplots">to add space in between the subplots</h1>
+<p>fig.subplots_adjust(hspace=1)
+```</p>
+
+<h4 id="section-1">5. 画出散点图和曲线图，并且设置线的颜色</h4>
+
+<p><code>py
+plt.figure(figsize = (14,8)) 
+plt.scatter(auto['horsepower'],auto['mpg']) 
+plt.plot(auto['horsepower'],pred_1,color = 'orange') 
+plt.plot(auto['horsepower'],pred_2,color = 'green') 
+plt.plot(auto['horsepower'],pred_5,color = 'black') 
+plt.show()
+</code></p>
+
+<h4 id="x">6. 绘制平行于x轴的水平参考线</h4>
+
+<p><code>py
+error_1 = auto['mpg'] - pred_1 
+plt.figure(figsize = (12,6)) 
+sns.scatterplot(x = auto['mpg'],y = error_1) 
+plt.axhline(y = 0,linestyle = 'dashed',color = 'black',linewidth = 0.5)
+</code></p>
+
+<h4 id="snsregplot">7. 用sns.regplot来比较两个变量的关系是否符合线性回归</h4>
+
+<p>```py
+sns.regplot(data[‘LSTAT’],data[‘MEDV’])</p>
+
+<h1 id="regplot">regplot中设置参数</h1>
+<p>sns.regplot(advertising.TV, advertising.Sales, order=1, ci=None, scatter_kws={‘color’:’r’, ‘s’:9})
+plt.xlim(-10,310)
+plt.ylim(ymin=0);
+```</p>
+
+<h4 id="labeltitle">8. 设置label和title和</h4>
+
+<p><code>py
+plt.xlabel('Fitted Vales') 
+plt.ylabel('Residuals') 
+plt.title('Residual Plot')
+</code></p>
+
+<h4 id="sns">9. 使用sns画相关系数矩阵的热力图</h4>
+
+<p><code>py
+sns.heatmap(auto.iloc[:,:-1].corr())
+</code></p>
+
+<h4 id="labellegend">10. 设置线的label并且置成legend</h4>
+
+<p>```py
+plt.figure(figsize = (14,6)) 
+sns.scatterplot(X,Y) 
+plt.xlabel(‘X’) 
+plt.ylabel(‘Y’) </p>
+
+<p>plt.plot(data[‘X’],lin_model.predict(data[‘X’].to_frame()),color = ‘orange’,label = ‘Predicted Line’) 
+plt.title(‘Relationship b/w X and Y’) 
+plt.plot(tmp_x,tmp_y,color = ‘green’,label = ‘True Line’) 
+plt.legend()
+plt.show()
+```</p>
+
+<h4 id="section-2">11. 设置坐标范围, 设置相等的宽和高</h4>
+
+<p>```py
+fig, ax = plt.subplots()</p>
+
+<p>sns.scatterplot(simple_coeff,multi_coeff)</p>
+
+<p>lims = [
+    np.min([ax.get_xlim(), ax.get_ylim()]),  # min of both axes
+    np.max([ax.get_xlim(), ax.get_ylim()]),  # max of both axes
+]</p>
+
+<p>ax.plot(lims, lims, ‘k-‘, alpha=0.75, zorder=0,color = ‘orange’)
+ax.set_aspect(‘equal’)
+ax.set_xlim(lims)
+ax.set_ylim(lims)
+```</p>
+
+<h4 id="hue">12. 设置hue</h4>
+
+<p>```py
+plt.figure(figsize = (12,8))</p>
+
+<p>tmp = pd.DataFrame({‘Lag1’:X_train[‘Lag1’],’Lag2’:X_train[‘Lag2’],’Direction’:y_train})</p>
+
+<p>sns.scatterplot(y = ‘Lag2’,x = ‘Lag1’,hue = ‘Direction’,data = tmp)
+```</p>
+
+<h4 id="section-3">13. 画等高线和三维图</h4>
+
+<p>```py
+fig = plt.figure(figsize=(15,6))
+fig.suptitle(‘RSS - Regression coefficients’, fontsize=20)</p>
+
+<p>ax1 = fig.add_subplot(121)
+ax2 = fig.add_subplot(122, projection=’3d’)</p>
+
+<h1 id="left-plot">Left plot</h1>
+<p>CS = ax1.contour(xx, yy, Z, cmap=plt.cm.Set1, levels=[2.15, 2.2, 2.3, 2.5, 3])
+ax1.scatter(regr.intercept<em>, regr.coef</em>[0], c=’r’, label=min_RSS)
+ax1.clabel(CS, inline=True, fontsize=10, fmt=’%1.1f’)</p>
+
+<h1 id="right-plot">Right plot</h1>
+<p>ax2.plot_surface(xx, yy, Z, rstride=3, cstride=3, alpha=0.3)
+ax2.contour(xx, yy, Z, zdir=’z’, offset=Z.min(), cmap=plt.cm.Set1,
+            alpha=0.4, levels=[2.15, 2.2, 2.3, 2.5, 3])
+ax2.scatter3D(regr.intercept<em>, regr.coef</em>[0], min_rss, c=’r’, label=min_RSS)
+ax2.set_zlabel(‘RSS’)
+ax2.set_zlim(Z.min(),Z.max())
+ax2.set_ylim(0.02,0.07)</p>
+
+<h1 id="settings-common-to-both-plots">settings common to both plots</h1>
+<p>for ax in fig.axes:
+    ax.set_xlabel(r’$\beta<em>0$’, fontsize=17)
+    ax.set_ylabel(r’$\beta</em>1$’, fontsize=17)
+    ax.set_yticks([0.03,0.04,0.05,0.06])
+    ax.legend()
+```</p>
+
+<h4 id="d">14. 3D散点图</h4>
+
+<p>```py
+# Create plot
+fig = plt.figure(figsize=(10,6))
+fig.suptitle(‘Regression: Sales ~ Radio + TV Advertising’, fontsize=20)</p>
+
+<p>ax = axes3d.Axes3D(fig)</p>
+
+<p>ax.plot_surface(B1, B2, Z, rstride=10, cstride=5, alpha=0.4)
+ax.scatter3D(advertising.Radio, advertising.TV, advertising.Sales, c=’r’)</p>
+
+<p>ax.set_xlabel(‘Radio’)
+ax.set_xlim(0,50)
+ax.set_ylabel(‘TV’)
+ax.set_ylim(ymin=0)
+ax.set_zlabel(‘Sales’)
+```</p>
+
+<h4 id="suptitleclabel">15. suptitle、用clabel为等高线添加高程标签</h4>
+
+<p>```py
+fig = plt.figure(figsize=(12,5))
+fig.suptitle(‘RSS - Regression coefficients’, fontsize=20)</p>
+
+<p>ax1 = fig.add_subplot(121)
+ax2 = fig.add_subplot(122)</p>
+
+<p>min_RSS = r’$\beta<em>0$, $\beta</em>1$ for minimized RSS’</p>
+
+<h1 id="left-plot-1">Left plot</h1>
+<p>CS = ax1.contour(X1, Y1, Z1, cmap=plt.cm.Set1, levels=[21.25, 21.5, 21.8])
+ax1.scatter(regr1.coef<em>[1], regr1.coef</em>[0], c=’r’, label=min_RSS)
+ax1.clabel(CS, inline=True, fontsize=10, fmt=’%1.1f’)
+ax1.set_ylabel(r’$\beta_{Age}$’, fontsize=17)</p>
+
+<h1 id="right-plot-1">Right plot</h1>
+<p>CS = ax2.contour(X2, Y2, Z2, cmap=plt.cm.Set1, levels=[21.5, 21.8])
+ax2.scatter(regr2.coef<em>[1], regr2.coef</em>[0], c=’r’, label=min_RSS)
+ax2.clabel(CS, inline=True, fontsize=10, fmt=’%1.1f’)
+ax2.set_ylabel(r’$\beta_{Rating}$’, fontsize=17)
+ax2.set_xticks([-0.1, 0, 0.1, 0.2])</p>
+
+<p>for ax in fig.axes:
+    ax.set_xlabel(r’$\beta_{Limit}$’, fontsize=17)
+    ax.legend()
+```</p>
+
+<h4 id="section-4">16. 同时画两种不同的散点图</h4>
+
+<p>```py
+fig = plt.figure(figsize=(12,5))
+gs = mpl.gridspec.GridSpec(1, 4)
+ax1 = plt.subplot(gs[0,:-2])
+ax2 = plt.subplot(gs[0,-2])
+ax3 = plt.subplot(gs[0,-1])</p>
+
+<h1 id="take-a-fraction-of-the-samples-where-target-value-default-is-no">Take a fraction of the samples where target value (default) is ‘no’</h1>
+<p>df_no = df[df.default2 == 0].sample(frac=0.15)
+# Take all samples  where target value is ‘yes’
+df_yes = df[df.default2 == 1]
+df_ = df_no.append(df_yes)</p>
+
+<p>ax1.scatter(df<em>[df</em>.default == ‘Yes’].balance, df<em>[df</em>.default == ‘Yes’].income, s=40, c=’orange’, marker=’+’,
+            linewidths=1)
+ax1.scatter(df<em>[df</em>.default == ‘No’].balance, df<em>[df</em>.default == ‘No’].income, s=40, marker=’o’, linewidths=1,
+             edgecolors=’lightblue’, facecolors=’white’, alpha=.6)</p>
+
+<p>ax1.set_ylim(ymin=0)
+ax1.set_ylabel(‘Income’)
+ax1.set_xlim(xmin=-100)
+ax1.set_xlabel(‘Balance’)</p>
+
+<p>c_palette = {‘No’:’lightblue’, ‘Yes’:’orange’}
+sns.boxplot(‘default’, ‘balance’, data=df, orient=’v’, ax=ax2, palette=c_palette)
+sns.boxplot(‘default’, ‘income’, data=df, orient=’v’, ax=ax3, palette=c_palette)
+gs.tight_layout(plt.gcf())
+```</p>
+
+<h3 id="section-5">参考资料</h3>
+
+<ul>
+  <li>github.com/JWarmenhoven/ISLR-python.git</li>
+  <li>github.com.cnpmjs.org/hardikkamboj/An-Introduction-to-Statistical-Learning.git</li>
+</ul>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Pandas使用tips集锦]]></title>
@@ -137,7 +387,27 @@ advertising = pd.read_csv('Data/Advertising.csv', usecols=[1,2,3,4])
 auto = pd.read_csv('Data/Auto.csv', na_values='?').dropna()
 </code></p>
 
-<h2 id="section-11">参考链接</h2>
+<h3 id="pandasdf">18. 构造pandas的df</h3>
+
+<p><code>py
+X = np.random.normal(size = 100) 
+y = np.random.permutation(X) 
+data = pd.DataFrame({'X':X,'y':y})
+</code></p>
+
+<h3 id="section-11">19. 读取文本文件的时候，设置某列为索引列</h3>
+
+<p><code>py
+data = pd.read_csv('../data/Smarket.csv',index_col=0)
+</code></p>
+
+<h3 id="section-12">20. 原地替换</h3>
+
+<p><code>py
+df_x.replace(to_replace={0:'No', 1:'Yes', 'True':'Yes', 'False':'No'}, inplace=True)
+</code></p>
+
+<h2 id="section-13">参考链接</h2>
 
 <ul>
   <li>
@@ -318,56 +588,6 @@ df
   <li><a href="https://blog.csdn.net/weixin_42419342/article/details/108918139?utm_medium=distribute.pc_aggpage_search_result.none-task-blog-2~all~sobaiduend\~default-2-108918139.nonecase&amp;utm_term=sparksql中dsl&amp;spm=1000.2123.3001.4430">SparkSQL案例——用SQL和DSL两种语法格式，求出用户连续登录天数
 </a></li>
 </ul>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[一些关于RNN和LSTM和GRU的阅读材料]]></title>
-    <link href="http://isunix.github.io/blog/2019/08/27/%5B%3F%5D-xie-guan-yu-rnnhe-lstmhe-grude-yue-du-cai-liao/"/>
-    <updated>2019-08-27T15:40:38+08:00</updated>
-    <id>http://isunix.github.io/blog/2019/08/27/[?]-xie-guan-yu-rnnhe-lstmhe-grude-yue-du-cai-liao</id>
-    <content type="html"><![CDATA[<p><a href="https://towardsdatascience.com/illustrated-guide-to-recurrent-neural-networks-79e5eb8049c9">Illustrated Guide to Recurrent Neural Networks</a></p>
-
-<p><a href="https://towardsdatascience.com/illustrated-guide-to-lstms-and-gru-s-a-step-by-step-explanation-44e9eb85bf21">Illustrated Guide to LSTM’s and GRU’s: A step by step explanation</a></p>
-
-<p><a href="https://zhuanlan.zhihu.com/p/37204589">直觉理解LSTM和GRU</a></p>
-
-<p><a href="https://zhuanlan.zhihu.com/p/28687529">RNN梯度消失和爆炸的原因</a></p>
-
-<p><a href="https://zhuanlan.zhihu.com/p/28749444">LSTM如何解决梯度消失问题</a></p>
-
-<p><a href="https://zhuanlan.zhihu.com/p/32481747">人人都能看懂的GRU</a></p>
-
-<p><a href="https://zhuanlan.zhihu.com/p/32085405">人人都能看懂的LSTM</a></p>
-
-<p><a href="http://kyonhuang.top/Andrew-Ng-Deep-Learning-notes/#/Sequence_Models/循环序列模型">循环序列模型</a></p>
-
-<p><a href="http://www.ai-start.com/dl2017/html/lesson5-week1.html">第五门课 序列模型(Sequence Models)</a></p>
-
-<p><a href="https://machinelearningmastery.com/time-series-prediction-lstm-recurrent-neural-networks-python-keras/">Time Series Prediction with LSTM Recurrent Neural Networks in Python with Keras</a></p>
-
-<p><a href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/">Understanding LSTM Networks</a></p>
-
-<p><a href="http://www.wildml.com/2015/10/recurrent-neural-network-tutorial-part-4-implementing-a-grulstm-rnn-with-python-and-theano/">Implementing a GRU/LSTM RNN with Python and Theano</a></p>
-
-<p><a href="http://www.wildml.com/2015/09/recurrent-neural-networks-tutorial-part-1-introduction-to-rnns/">Introduction to RNNs</a></p>
-
-<p><a href="http://www.wildml.com/2015/09/implementing-a-neural-network-from-scratch/">Implementing a Neural Network from Scratch in Python</a></p>
-
-<p><a href="http://www.wildml.com/2015/09/speeding-up-your-neural-network-with-theano-and-the-gpu/">Speeding up your Neural Network with Theano and the GPU</a></p>
-
-<p><a href="http://cs231n.github.io/optimization-2/">CS231 On Gradients And BackPropagation</a></p>
-
-<p><a href="http://colah.github.io/posts/2015-08-Backprop/">Calculus on Computational Graphs: Backpropagation</a></p>
-
-<p><a href="http://neuralnetworksanddeeplearning.com/chap2.html">How the backpropagation algorithm works</a></p>
-
-<p><a href="http://cs231n.github.io/python-numpy-tutorial/">Numpy Tutorial From CS231</a></p>
-
-<p><a href="https://www.leiphone.com/news/201908/wq1m4fNK8LNuG0Rs.html">卷积神经网络数学原理解析</a></p>
-
-<p><a href="https://christophm.github.io/interpretable-ml-book/">Interpretable Machine Learning</a></p>
-
 ]]></content>
   </entry>
   

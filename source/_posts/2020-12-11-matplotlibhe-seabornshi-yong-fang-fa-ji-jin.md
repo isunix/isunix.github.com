@@ -242,6 +242,22 @@ sns.boxplot('default', 'income', data=df, orient='v', ax=ax3, palette=c_palette)
 gs.tight_layout(plt.gcf())
 ```
 
+
+#### 17. 使用注解(annotate)
+
+```py
+df.plot('Years', 'Hits', kind='scatter', color='orange', figsize=(7,6))
+plt.xlim(0,25)
+plt.ylim(ymin=-5)
+plt.xticks([1, 4.5, 24])
+plt.yticks([1, 117.5, 238])
+plt.vlines(4.5, ymin=-5, ymax=250)
+plt.hlines(117.5, xmin=4.5, xmax=25)
+plt.annotate('R1', xy=(2,117.5), fontsize='xx-large')
+plt.annotate('R2', xy=(11,60), fontsize='xx-large')
+plt.annotate('R3', xy=(11,170), fontsize='xx-large')
+```
+
 ### 参考资料
 
 - https://github.com/JWarmenhoven/ISLR-python.git

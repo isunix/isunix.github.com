@@ -9,9 +9,7 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="1
-ps -o pid,user,%mem,command ax | awk &#39;($3 &gt; 0){print}&#39; | sort -b -k3 -r 可以使用如上的命令来看那些占用了内存的程序，并且排序. 也可以将上上面的命令搞成一个alias: 1
-alias &hellip;">
+  <meta name="description" content="常用的函数： select、lit、as、groupBy、agg、sum、as、where、withColumn、 col、 when、 otherwise、 join、withColumnRenamed、 isin、 cast、 $、 union、 gt、 struct、sort、desc、 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -101,7 +99,7 @@ alias &hellip;">
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2019/08/27/ru-he-cha-kan-linuxzhong-de-nei-cun-zhan-yong-qing-kuang/">如何查看Linux中的内存占用情况</a></h1>
+      <h1 class="entry-title"><a href="/blog/2020/11/20/sparksqlru-men-he-jin-jie/">SparkSQL入门和进阶</a></h1>
     
     
       <p class="meta">
@@ -117,114 +115,50 @@ alias &hellip;">
   
 
 
-<time datetime="2019-08-27T11:17:03+08:00" pubdate data-updated="true">2019 年8 月27 日</time>
+<time datetime="2020-11-20T22:08:55+08:00" pubdate data-updated="true">2020 年11 月20 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line">ps -o pid,user,%mem,command ax | awk <span class="s1">&#39;($3 &gt; 0){print}&#39;</span> | sort -b -k3 -r
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+  <div class="entry-content"><h2 id="section">常用的函数：</h2>
 
-<p>可以使用如上的命令来看那些占用了内存的程序，并且排序.</p>
-
-<p>也可以将上上面的命令搞成一个alias:</p>
+<p><code>select</code>、<code>lit</code>、<code>as</code>、<code>groupBy</code>、<code>agg</code>、<code>sum</code>、<code>as</code>、<code>where</code>、<code>withColumn</code>、 <code>col</code>、 <code>when</code>、 <code>otherwise</code>、 <code>join</code>、<code>withColumnRenamed</code>、 <code>isin</code>、 <code>cast</code>、 <code>$</code>、 <code>union</code>、 <code>gt</code>、 <code>struct</code>、<code>sort</code>、<code>desc</code>、<code>show</code>、<code>orderBy</code>、<code>asc</code>、<code>repartition</code>、<code>sortWithinPartitions</code>、<code>filter</code>、<code>selectExpr</code>、<code>pivot</code>、<code>expr</code>、<code>row_number</code>、<code>over</code>、 <code>partitionBy</code></p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nb">alias </span><span class="nv">memcheck</span><span class="o">=</span><span class="s2">&quot;ps -o pid,user,%mem,command ax | awk &#39;(\$3 &gt; 0){print}&#39; | sort -b -k3 -r&quot;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2019/08/27/sparkzhong-pai-xu-shu-chu/">Spark中排序输出</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2019-08-27T10:11:02+08:00" pubdate data-updated="true">2019 年8 月27 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
 <span class="line-number">3</span>
 <span class="line-number">4</span>
 <span class="line-number">5</span>
 <span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="c"># initialize pyspark</span>
-</span><span class="line"><span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
-</span><span class="line"><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-</span><span class="line"><span class="kn">import</span> <span class="nn">json</span>
-</span><span class="line"><span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">suppress</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-</span><span class="line">
-</span><span class="line"><span class="kn">import</span> <span class="nn">findspark</span>
-</span><span class="line"><span class="n">findspark</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
-</span><span class="line"><span class="kn">import</span> <span class="nn">pyspark</span>
-</span><span class="line">
-</span><span class="line"><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
-</span><span class="line"><span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span><span class="o">.</span><span class="n">builder</span> \
-</span><span class="line">    <span class="o">.</span><span class="n">appName</span><span class="p">(</span><span class="s">&#39;PySpark-Analysis&#39;</span><span class="p">)</span> \
-</span><span class="line">    <span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="s">&quot;spark.executor.memory&quot;</span><span class="p">,</span> <span class="s">&quot;3g&quot;</span><span class="p">)</span> \
-</span><span class="line">    <span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="s">&quot;spark.executor.cores&quot;</span><span class="p">,</span> <span class="s">&quot;8&quot;</span><span class="p">)</span> \
-</span><span class="line">    <span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
-</span><span class="line">
-</span><span class="line">
-</span><span class="line"><span class="kn">import</span> <span class="nn">os</span>
-</span><span class="line"><span class="n">folder</span> <span class="o">=</span> <span class="s">&quot;xxxx&quot;</span>
-</span><span class="line"><span class="n">filename</span> <span class="o">=</span> <span class="s">&quot;one-big.tsv&quot;</span>
-</span><span class="line"><span class="nb">file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
-</span><span class="line">
-</span><span class="line"><span class="n">df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="nb">file</span><span class="p">)</span><span class="o">.</span><span class="n">rdd</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">line</span><span class="p">:</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\t</span><span class="s">&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">toDF</span><span class="p">()</span>
-</span><span class="line">
-</span><span class="line"><span class="n">df</span><span class="o">.</span><span class="n">orderBy</span><span class="p">(</span><span class="s">&quot;_1&quot;</span><span class="p">,</span> <span class="s">&quot;_2&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">coalesce</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="o">.</span><span class="n">csv</span><span class="p">(</span><span class="s">&quot;xxx2&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s">&#39;</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">)</span>
+</pre></td><td class="code"><pre><code class="scala"><span class="line"><span class="n">df</span>
+</span><span class="line"><span class="o">.</span><span class="n">select</span><span class="o">(</span><span class="n">$</span><span class="s">&quot;id&quot;</span><span class="o">,</span><span class="n">lit</span><span class="o">(</span><span class="mi">1</span><span class="o">).</span><span class="n">as</span><span class="o">(</span><span class="s">&quot;cnt&quot;</span><span class="o">))</span>
+</span><span class="line"><span class="o">.</span><span class="n">groupBy</span><span class="o">(</span><span class="s">&quot;idd&quot;</span><span class="o">)</span>
+</span><span class="line"><span class="o">.</span><span class="n">agg</span><span class="o">(</span><span class="n">sum</span><span class="o">(</span><span class="s">&quot;cnt&quot;</span><span class="o">).</span><span class="n">as</span><span class="o">(</span><span class="s">&quot;total&quot;</span><span class="o">))</span>
+</span><span class="line"><span class="o">.</span><span class="n">where</span><span class="o">(</span><span class="s">&quot;total &gt;=&quot;</span> <span class="o">+</span> <span class="n">cnt2</span><span class="o">)</span>
+</span><span class="line"><span class="o">.</span><span class="n">select</span><span class="o">(</span><span class="s">&quot;uid&quot;</span><span class="o">,</span><span class="s">&quot;total&quot;</span><span class="o">)</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
+<h2 id="udf">UDF：</h2>
+
+<p><code>spark.udf.register
+</code></p>
+
+<h2 id="section-1">参考链接:</h2>
+<ul>
+  <li><a href="https://blog.csdn.net/weixin_40652340/article/details/79207455">SparkSQL DSL开发
+</a></li>
+  <li><a href="http://spark.apache.org/docs/latest/api/scala/org/apache/spark/sql/Column.html">Column</a></li>
+  <li><a href="http://spark.apache.org/docs/latest/api/scala/org/apache/spark/sql/Dataset.html">Dataset</a></li>
+  <li><a href="http://spark.apache.org/docs/latest/api/scala/org/apache/spark/sql/functions\$.html">functions</a></li>
+  <li><a href="http://spark.apache.org/docs/latest/api/scala/org/apache/spark/sql/index.html\#DataFrame=org.apache.spark.sql.Dataset\[org.apache.spark.sql.Row\]">sql</a></li>
+  <li><a href="https://spark.apache.org/docs/latest/sql-ref-functions-udf-scalar.html">Scalar User Defined Functions (UDFs)
+</a></li>
+  <li><a href="https://www.cnblogs.com/Diyo/p/11410895.html">SparkSQL DSL 随便写写</a></li>
+  <li><a href="https://blog.csdn.net/weixin_42419342/article/details/108918139?utm_medium=distribute.pc_aggpage_search_result.none-task-blog-2~all~sobaiduend\~default-2-108918139.nonecase&amp;utm_term=sparksql中dsl&amp;spm=1000.2123.3001.4430">SparkSQL案例——用SQL和DSL两种语法格式，求出用户连续登录天数
+</a></li>
+</ul>
 </div>
   
   
@@ -237,7 +171,7 @@ alias &hellip;">
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2019/08/14/data-science-at-the-command-line/">Data Science at the Command Line</a></h1>
+      <h1 class="entry-title"><a href="/blog/2020/02/16/gao-deng-shu-li-tong-ji-xue-qian-yan-zhai-lu/">高等数理统计学前言摘录</a></h1>
     
     
       <p class="meta">
@@ -253,169 +187,100 @@ alias &hellip;">
   
 
 
-<time datetime="2019-08-14T14:13:16+08:00" pubdate data-updated="true">2019 年8 月14 日</time>
+<time datetime="2020-02-16T10:41:40+08:00" pubdate data-updated="true">2020 年2 月16 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>本文是关于如何使用命令行的方式，来更好的认识你的数据.</p>
+  <div class="entry-content"><p>陈希孺在他的«高等数理统计学»一书的前言中, 关于学习方法的建议，真的让人十分认同。 我们自己或者观察别人就会发现，很多时候对一个概念的理解很肤浅，又或者以为对理论的内容已经知道了，但是要做题或者真的上手的时候，有会不知从何下手。 现在将陈希孺的建议摘抄在下面， 以供自勉。</p>
 
-<h2 id="section">1. 常用的命令和工具:</h2>
+<p>书中习题及提示占了近半的篇幅，从写作时间言，则占了四分之三以上. 总计得题五百，若计小题，则不止千数. 其中除少量选摘自有关著作外，大半属作者自创. 有时一题之设，累日始成，可以说倾注了不少心力. 这样做完全是因为，多做习题，尤其是多做难题，对掌握并熟练数理统计学基本的论证方法和技巧，有着不可替代的重要性. 如果通过一门基础课的学习，只是记住了若干概念，背了几个定理，而未能在这方面有所长进，那就真是”入宝山而空返”了. 技巧的熟练固非一日之功，但取法乎上，仅得乎中，必须在开始学基础课时就设定一个高目标. 日后进入研究工作，克服难点的能力如何，相当一部分就取决于在这上面修为的深浅了. 同时，经验表明，在打基础的阶段因忽视习题而导致素质上的缺陷，在日后不易弥补，或事倍功半.</p>
 
-<ul>
-  <li>
-    <p>基本操作命令
-<code>sh
-cd, mv, cat, ls, wc, rm, sort, uniq, echo
-printf, pwd, mkdir, dirname, mktemp， find
-mail, sendmail, crontab, export, ps
-zip, du, df, tar, split
-exec, type, readlink
-</code></p>
-  </li>
-  <li>
-    <p>基本工具
-<code>sh
-grep, egrep, pcregrep, ack
-curl, wget
-ssh, tmux
-awk, sed
-</code></p>
-  </li>
-  <li>
-    <p>辅助命令
-<code>sh
-jq, git,
-man, tldr
-conda, pip
-</code></p>
-  </li>
-  <li>
-    <p>辅助工具
-<code>sh
-zsh, oh-my-zsh, sexy-bash-prompt
-</code></p>
-  </li>
-  <li>
-    <p>瑞士军刀
-  <code>sh
-  Perl
- </code></p>
-  </li>
-</ul>
+<p>笔者在学生时代及其后的几年中，对做习题未给予足够重视. 当时误认为做题费时间，不增长新知识，不如多读些书，占得实地. 以后试做研究工作，就日渐感到其不良后果，表现在碰到问题办法少，容易钻死胡同，克服难点的能力弱，以致对自己缺乏信心. 对许多方法，都似雾里看花，似曾识面，而不能切实掌握和灵活运用. 有如十八般兵器，样样都见过，但拿到手里，就使不动或很笨拙. 欲以此克敌制胜，自难有成. 以后稍明白了这一点，做了些亡羊之补，终究晚了一些，所谓”困而学之，又其次也”. “熟能生巧”，前人的经验不诬. 而要达到”熟”，舍大量做题，无他捷径可循. 几十年来，审了大量的杂志稿件，每见某些工作，由于未经深思，为一个并不难克服之点加上了若干不必需的繁复条件，从而使整个工作流于肤浅. 这根子，大略也在于早先在习题上下的工夫不够，以致难以产生别出心裁的想法.</p>
 
-<h2 id="section-1">2. 一些应用场景:</h2>
+<p>以本书的习题量，要求学员在课程时间范围内做完，恐不现实. 但作者本意并非把这一组题全作为课内习题，而是把它作为”打基础”这个工作的一环，一两年、两三年完成都可以，有空就做一点. 根据题的难易，将其分为三类：加”*“号的难度较大，加””号的相对容易，教师可考虑作为课外作业;不加任何记号的，其难度介乎二者之间. 对自学者、已经研究生毕业的青年教师和研究者，可利用这组题测试一下自己解题的能力如何. 可能会有一种意见，认为这组题过于偏难. 作为课程作业，这的确如此. 但笔者觉得，从”打基础”，锻炼技巧和提高能力诸目标看，非做难题不行，这道理正如训练运动员要加大运动量，做高难动作，不然，在训练的过程中舒服了，就别指望出好成绩.</p>
 
-<ul>
-  <li>
-    <p>使用 <code>split</code> 按照特定的行数或者大小，将一个文本进行分割
-<code>sh
-# Split a file, each split having 10 lines (except the last split)
-split -l 10 filename
-# plit a file with 512 bytes in each split
-split -b 512 filename
-</code></p>
-  </li>
-  <li>
-    <p>使用 <code>grep -x -f</code>  找到两个文件中的相同的行
-<code>sh
-grep -x -f  file1 file2
-</code></p>
-  </li>
-  <li>
-    <p>使用 <code>grep</code> 或者 <code>egrep</code> 或者 <code>pcregrep</code> 或者 <code>ack</code> 并且辅助以正则表达式， 进行复杂的文本搜索
-<code>sh
-# print file name with the corresponding line number for each match
-grep -Hn search_string path/to/file
-# invert match for excluding specific strings:
-grep -v search_string path/to/file
-# search in case-insensitive mode:
-grep -i search_string path/to/file
-# search consecutive 9 numbers
-grep -E '\d{9}' path/to/file
-# search consecutive 9 numbers and grab it
-grep -Eo '\d{9}' path/to/file
-# recursively search
-grep -eilr "\bamazfit\b\|\bwatch\b" path/to/dir
-</code></p>
-  </li>
-  <li>
-    <p><code>ssh</code> 登陆远程机器并且同时运行远程操作命令
-<code>sh
-# ssh 远程执行命令
-ssh yyy@xxx.xxx.xxx.xxx "df -h"
-# ssh 使用key文件登陆， 并且做远程的端口转发
-ssh -L 9007:${hive_server} ${xiaomi_host} -N -i ${keyfile}
-</code></p>
-  </li>
-  <li>
-    <p><code>awk</code> 按照特定的分隔符，查看文本有多少列， 查看想要看的列，按照条件进行筛选
-<code>sh
-# 以空格做分隔符， 并且打印出第二列小于20的行
-awk '($2 &lt; 20){print}'
-# 以'#' 做分隔符， 并且打印出第二列小于20的行
-awk -F '#' '($2&gt;=8){print}'
-# 以',' 做分隔符， 并且打印出列数
-awk -F"," '{print NF}'
-# 有多个判断条件
-awk '{if ($4&lt;1 &amp;&amp; $4&gt;=0.85 &amp;&amp; $2 &gt;= 0.001) print $7}'
-</code></p>
-  </li>
-  <li>
-    <p><code>sort</code> 结合 <code>uniq</code> 去重
-<code>sh
-du -cks * | sort | uniq | wc -l
-</code></p>
-  </li>
-  <li>
-    <p><code>xargs</code> 传递参数
-<code>sh
-# xargs 结合 kill 来干掉进程
-ps auxww | grep file | grep -v grep | awk '{print $2}' | xargs kill -9
-# 删除找到的文件
-find . -name "*.txt" | xargs -I , rm -rf ,
-</code></p>
-  </li>
-  <li>
-    <p>使用 <code>jq</code> 命令来在命令行下更好的查看json文件
-<code>sh
-cat file.json | jq
-</code></p>
-  </li>
-  <li>
-    <p>非常好用的 <code>|</code>
-<code>sh
-xx | yy | zz | dd | ee | ff | gg | hh
-</code></p>
-  </li>
-</ul>
+<p>各题都有详细提示，大多数较难的题都给出了完整解答. 这是因为，鉴于这些题的难度，需要有一个解答文本在，以作为依据. 对读者而言，笔者切望这部分是备而不用、备而少用. 如碰到一个题一时做不出来，宁肯暂时搁一搁，也不要轻易翻看解答. 譬如登山，经过艰苦努力上了峰顶，自有其乐趣和成就感. 反之，如在未尽全力之前就任人抬上去，则不惟无益，实足以挫折信心.</p>
 
-<h2 id="section-2">3. 参考资料:</h2>
+<p>以上就习题一事唠叨了半天，读者也许烦了，就此打住. 千言万语，归结到一点：希望大家多做题，做难题. “千里之行，始于足下”，就从今日开始吧!</p>
+</div>
+  
+  
 
-<ul>
-  <li>
-    <p><a href="https://www.runoob.com/linux/linux-tutorial.html">Linux 菜鸟教程</a></p>
-  </li>
-  <li>
-    <p><a href="https://www.runoob.com/regexp/regexp-tutorial.html">正则表达式 - 教程</a></p>
-  </li>
-  <li>
-    <p><a href="https://github.com/alebcay/awesome-shell">Awesome-Shell</a></p>
-  </li>
-</ul>
 
-<p>参考链接:</p>
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2019/08/27/%5B%3F%5D-xie-guan-yu-rnnhe-lstmhe-grude-yue-du-cai-liao/">一些关于RNN和LSTM和GRU的阅读材料</a></h1>
+    
+    
+      <p class="meta">
+        
 
-<ul>
-  <li>
-    <p><a href="https://csvkit.readthedocs.io/en/latest/tutorial/1_getting_started.html#installing-csvkit">csvkit</a></p>
-  </li>
-  <li>
-    <p><a href="[https://www.datascienceatthecommandline.com](https://www.datascienceatthecommandline.com/)">Data Science at the Command Line</a></p>
-  </li>
-</ul>
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2019-08-27T15:40:38+08:00" pubdate data-updated="true">2019 年8 月27 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="https://towardsdatascience.com/illustrated-guide-to-recurrent-neural-networks-79e5eb8049c9">Illustrated Guide to Recurrent Neural Networks</a></p>
+
+<p><a href="https://towardsdatascience.com/illustrated-guide-to-lstms-and-gru-s-a-step-by-step-explanation-44e9eb85bf21">Illustrated Guide to LSTM’s and GRU’s: A step by step explanation</a></p>
+
+<p><a href="https://zhuanlan.zhihu.com/p/37204589">直觉理解LSTM和GRU</a></p>
+
+<p><a href="https://zhuanlan.zhihu.com/p/28687529">RNN梯度消失和爆炸的原因</a></p>
+
+<p><a href="https://zhuanlan.zhihu.com/p/28749444">LSTM如何解决梯度消失问题</a></p>
+
+<p><a href="https://zhuanlan.zhihu.com/p/32481747">人人都能看懂的GRU</a></p>
+
+<p><a href="https://zhuanlan.zhihu.com/p/32085405">人人都能看懂的LSTM</a></p>
+
+<p><a href="http://kyonhuang.top/Andrew-Ng-Deep-Learning-notes/#/Sequence_Models/循环序列模型">循环序列模型</a></p>
+
+<p><a href="http://www.ai-start.com/dl2017/html/lesson5-week1.html">第五门课 序列模型(Sequence Models)</a></p>
+
+<p><a href="https://machinelearningmastery.com/time-series-prediction-lstm-recurrent-neural-networks-python-keras/">Time Series Prediction with LSTM Recurrent Neural Networks in Python with Keras</a></p>
+
+<p><a href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/">Understanding LSTM Networks</a></p>
+
+<p><a href="http://www.wildml.com/2015/10/recurrent-neural-network-tutorial-part-4-implementing-a-grulstm-rnn-with-python-and-theano/">Implementing a GRU/LSTM RNN with Python and Theano</a></p>
+
+<p><a href="http://www.wildml.com/2015/09/recurrent-neural-networks-tutorial-part-1-introduction-to-rnns/">Introduction to RNNs</a></p>
+
+<p><a href="http://www.wildml.com/2015/09/implementing-a-neural-network-from-scratch/">Implementing a Neural Network from Scratch in Python</a></p>
+
+<p><a href="http://www.wildml.com/2015/09/speeding-up-your-neural-network-with-theano-and-the-gpu/">Speeding up your Neural Network with Theano and the GPU</a></p>
+
+<p><a href="http://cs231n.github.io/optimization-2/">CS231 On Gradients And BackPropagation</a></p>
+
+<p><a href="http://colah.github.io/posts/2015-08-Backprop/">Calculus on Computational Graphs: Backpropagation</a></p>
+
+<p><a href="http://neuralnetworksanddeeplearning.com/chap2.html">How the backpropagation algorithm works</a></p>
+
+<p><a href="http://cs231n.github.io/python-numpy-tutorial/">Numpy Tutorial From CS231</a></p>
+
+<p><a href="https://www.leiphone.com/news/201908/wq1m4fNK8LNuG0Rs.html">卷积神经网络数学原理解析</a></p>
+
+<p><a href="https://christophm.github.io/interpretable-ml-book/">Interpretable Machine Learning</a></p>
 
 </div>
   
@@ -439,6 +304,18 @@ xx | yy | zz | dd | ee | ff | gg | hh
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2020/12/13/pu-ju-lei-jian-jie/">谱聚类简介</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2020/12/13/zhu-cheng-fen-fen-xi-pca-jian-jie/">主成分分析-PCA-简介</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2020/12/13/xian-xing-pan-bie-fen-xi-jian-jie/">线性判别分析简介</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2020/12/11/matplotlibhe-seabornshi-yong-fang-fa-ji-jin/">Matplotlib和Seaborn使用方法集锦</a>
@@ -468,18 +345,6 @@ xx | yy | zz | dd | ee | ff | gg | hh
         <a href="/blog/2020/11/20/sparksqlru-men-he-jin-jie/">SparkSQL入门和进阶</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2020/02/16/gao-deng-shu-li-tong-ji-xue-qian-yan-zhai-lu/">高等数理统计学前言摘录</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2019/08/27/%5B%3F%5D-xie-guan-yu-rnnhe-lstmhe-grude-yue-du-cai-liao/">一些关于RNN和LSTM和GRU的阅读材料</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2019/08/27/ru-he-cha-kan-linuxzhong-de-nei-cun-zhan-yong-qing-kuang/">如何查看Linux中的内存占用情况</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -490,7 +355,7 @@ xx | yy | zz | dd | ee | ff | gg | hh
 <li class='category'><a href='/blog/categories/bigdata/'>BigData (11)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (7)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
-<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (17)</a></li>
+<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (20)</a></li>
 <li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (5)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (2)</a></li>
 <li class='category'><a href='/blog/categories/javascript/'>Javascript (4)</a></li>

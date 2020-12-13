@@ -9,7 +9,7 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="While I was installing tmux on cent-os, I met the error saying that “libevent not found”, something like this. Then I download libevent and install &hellip;">
+  <meta name="description" content="When I try to upgrade my ubuntu version from 14.04 to 14.10, the system rebooted during the upgrade. When I try to login to the gnu desktop, it goes &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -99,7 +99,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/12/24/libevent-not-found-error-while-install-tmux/">Libevent Not Found Error While Install Tmux</a></h1>
+      <h1 class="entry-title"><a href="/blog/2015/06/01/reconfigure-partially-installed-packages-in-ubuntu/">Reconfigure Partially Installed Packages in Ubuntu</a></h1>
     
     
       <p class="meta">
@@ -115,125 +115,24 @@
   
 
 
-<time datetime="2014-12-24T21:13:11+08:00" pubdate data-updated="true">2014 年12 月24 日</time>
+<time datetime="2015-06-01T13:22:30+08:00" pubdate data-updated="true">2015 年6 月1 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>While I was installing tmux on cent-os, I met the error saying that “libevent not found”, something like this. Then I download libevent and install it into the location ‘/home/stsun/local’ dir.</p>
+  <div class="entry-content"><p>When I try to upgrade my ubuntu version from 14.04 to 14.10, the system rebooted during the upgrade. When I try to login to the gnu desktop, it goes back to the login screen again and again.</p>
 
-<p>Still I get the error saying that “libevent not found”. I solved the problem by the following way.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nv">DIR</span><span class="o">=</span><span class="s2">&quot;$HOME/local&quot;</span>
-</span><span class="line">./configure --prefix<span class="o">=</span><span class="nv">$DIR</span> <span class="nv">CFLAGS</span><span class="o">=</span><span class="s2">&quot;-I$DIR/include&quot;</span> <span class="nv">LDFLAGS</span><span class="o">=</span><span class="s2">&quot;-L$DIR/lib&quot;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>Since I install libevent with the option, “–prefix=$HOME/local”.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/12/02/notes-on-mojolicious/">Notes on Mojolicious</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-12-02T20:52:52+08:00" pubdate data-updated="true">2014 年12 月2 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Will keep notes of some of the mojo tips I got.</p>
-
-<p>1.A helper command to generate app for us.</p>
+<p>So I have to login in using the “tty” terminal by “ctrl+alt+F3”, and then issue the following command:</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">mojo</span> <span class="n">generate</span> <span class="n">app</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>This will generate Mojolicious application directory structure.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">mojo</span> <span class="n">generate</span> <span class="n">lite_app</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>This will generate Mojolicious::Lite application for us.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">mojo</span> <span class="n">generate</span> <span class="n">lite_app</span> <span class="n">hello</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>This will generate the app with the name “hello”</p>
-
-<p>2.about deploying your app to heroku</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">cpanm</span> <span class="nn">Mojolicious::Command::deploy::</span><span class="n">heroku</span>
-</span><span class="line"><span class="n">mojo</span> <span class="n">generate</span> <span class="n">lite_app</span> <span class="n">bigfan</span>
-</span><span class="line"><span class="o">./</span><span class="n">bigfan</span> <span class="n">deploy</span> <span class="n">heroku</span> <span class="o">--</span><span class="n">create</span>
-</span><span class="line"><span class="ow">or</span> <span class="n">we</span> <span class="n">can</span> <span class="n">assign</span> <span class="k">our</span> <span class="n">app</span> <span class="n">name</span> <span class="n">like</span> <span class="n">the</span> <span class="n">following:</span>
-</span><span class="line"><span class="o">./</span><span class="n">bigfan</span> <span class="n">deploy</span> <span class="n">heroku</span> <span class="o">-</span><span class="n">n</span> <span class="n">bigfan</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">sudo dpkg --configure -a
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>3.In mojo, something like “hello.html.ep”, here “ep” stands for “embedded perl”, we can have html.ep, json.ep, txt.ep.</p>
+<p>There maybe something wrong logging in using the mosted updated kernal, so we can choose to log in using an previous version of kernal(provided if is not removed yet]).</p>
 
-<p>4.Three kinds of placeholders.</p>
-
-<p>generic placeholders:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">get</span> <span class="s">&#39;/:fname/:lname&#39;</span> <span class="o">=&gt;</span> <span class="n">sub</span><span class="p">{</span>
-</span><span class="line">	<span class="nb">shift</span><span class="o">-&gt;</span><span class="n">render</span><span class="p">(</span><span class="err">&#39;</span><span class="n">capture</span><span class="p">);</span>
-</span><span class="line"><span class="p">};</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>relaxed placeholders:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">get</span> <span class="s">&#39;/:fname/(.lname)&#39;</span> <span class="o">=&gt;</span> <span class="n">sub</span><span class="p">{</span>
-</span><span class="line">	<span class="nb">shift</span><span class="o">-&gt;</span><span class="n">render</span><span class="p">(</span><span class="err">&#39;</span><span class="n">capture</span><span class="p">);</span>
-</span><span class="line"><span class="p">};</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>wildcard placeholders:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">get</span> <span class="s">&#39;/:fname/(*lname)&#39;</span> <span class="o">=&gt;</span> <span class="n">sub</span><span class="p">{</span>
-</span><span class="line">	<span class="nb">shift</span><span class="o">-&gt;</span><span class="n">render</span><span class="p">(</span><span class="err">&#39;</span><span class="n">capture</span><span class="p">);</span>
-</span><span class="line"><span class="p">};</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>Then if we still want to upgrade, we can do it when we successfully log in to the system.</p>
 
 </div>
   
@@ -247,7 +146,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/11/26/siting-css-in-cgi-script/">Siting Css in Cgi Script</a></h1>
+      <h1 class="entry-title"><a href="/blog/2015/06/01/alternative-way-to-bypass-problems-met-when-rake-new-post/">Alternative Way to Bypass Problems Met When Rake New_post</a></h1>
     
     
       <p class="meta">
@@ -263,71 +162,64 @@
   
 
 
-<time datetime="2014-11-26T17:09:55+08:00" pubdate data-updated="true">2014 年11 月26 日</time>
+<time datetime="2015-06-01T11:06:22+08:00" pubdate data-updated="true">2015 年6 月1 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>While writing perl cgi scripts, when we need to add css or js files, there are two ways to add the file, one using absolute path, one using relative path. </p>
-
-<p>First we want to check the document root of our file, we cat get it using the following way. </p>
+  <div class="entry-content"><p>I met errors while I am issuing the command “rake new_post” add generate a new post. Here is an alternative way to generate new post:</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="c1">#!/usr/bin/env perl</span>
-</span><span class="line">
-</span><span class="line"><span class="k">print</span> <span class="s">&quot;Content-type: text/plain; charset=utf-8\n\n&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="k">print</span> <span class="nv">$ENV</span><span class="p">{</span><span class="n">DOCUMENT_ROOT</span><span class="p">};</span>
+</pre></td><td class="code"><pre><code class="ruby"><span class="line"><span class="n">bundle</span> <span class="nb">exec</span> <span class="n">rake</span> <span class="s2">&quot;new_post[alternative way to bypass problems met when rake new_post]&quot;</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>For example, in my case, it gives out the following result:  </p>
+<p>and then we can use the “Mou” app to open the page:</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="s">&quot;/usr/local/www/apache22/data&quot;</span>
+</pre></td><td class="code"><pre><code class="ruby"><span class="line"><span class="nb">open</span> <span class="o">-</span><span class="n">a</span> <span class="no">Mou</span> <span class="n">source</span><span class="o">/</span><span class="n">_posts</span><span class="o">/</span><span class="mi">2015</span><span class="o">-</span><span class="mo">06</span><span class="o">-</span><span class="mo">01</span><span class="o">-</span><span class="n">alternative</span><span class="o">-</span><span class="n">way</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">bypass</span><span class="o">-</span><span class="n">problems</span><span class="o">-</span><span class="n">met</span><span class="o">-</span><span class="k">when</span><span class="o">-</span><span class="n">rake</span><span class="o">-</span><span class="kp">new</span><span class="o">-</span><span class="n">post</span><span class="o">.</span><span class="n">markdown</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
 
-<p>We assume that our server name is gopid.com, in the /usr/local/www/apache22/ dir, there are the data dir, cgi-bin dir, we make a sub-dir named steven in the data dir, then we can using the following two ways to site the css and js files.</p>
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/06/01/login-to-mysql-server-without-entering-password/">Login to Mysql Server Without Entering Password</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-06-01T10:58:02+08:00" pubdate data-updated="true">2015 年6 月1 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Enter the user name and password in a shell script in the following way will make the login process easier.</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line"><span class="nt">&lt;link</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span> <span class="na">href=</span><span class="s">&quot;/steven/js/bootstrap/css/bootstrap.min.css&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span><span class="nt">&gt;</span>
-</span><span class="line"><span class="nt">&lt;link</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span> <span class="na">href=</span><span class="s">&quot;/steven/css/margin.css&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span><span class="nt">&gt;</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">mysql -h <span class="nv">$host</span> -u<span class="nv">$user</span> -p<span class="nv">$pass</span> <span class="nv">$db</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>Or using the absolute path: </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line"><span class="nt">&lt;link</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span> <span class="na">href=</span><span class="s">&quot;https://goopig.com/steven/js/bootstrap/css/bootstrap.min.css&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span><span class="nt">&gt;</span>
-</span><span class="line"><span class="nt">&lt;link</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span> <span class="na">href=</span><span class="s">&quot;https://goopig.com/steven/css/margin.css&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span><span class="nt">&gt;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>PS, if we want to print out the whole env infomation using cgi, we can using the following script:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="c1">#!/usr/local/bin/perl</span>
-</span><span class="line">
-</span><span class="line"><span class="k">print</span> <span class="s">&quot;Content-type: text/plain; charset=utf-8\n\n&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="k">foreach</span> <span class="nv">$var</span> <span class="p">(</span><span class="nb">sort</span><span class="p">(</span><span class="nb">keys</span><span class="p">(</span><span class="nv">%ENV</span><span class="p">)))</span> <span class="p">{</span>
-</span><span class="line">    <span class="nv">$val</span> <span class="o">=</span> <span class="nv">$ENV</span><span class="p">{</span><span class="nv">$var</span><span class="p">};</span>
-</span><span class="line">    <span class="nv">$val</span> <span class="o">=~</span> <span class="n">s</span><span class="o">|\</span><span class="n">n</span><span class="o">|\\</span><span class="n">n</span><span class="o">|</span><span class="n">g</span><span class="p">;</span>
-</span><span class="line">    <span class="nv">$val</span> <span class="o">=~</span> <span class="n">s</span><span class="o">|</span><span class="s">&quot;|\\&quot;</span><span class="o">|</span><span class="n">g</span><span class="p">;</span>
-</span><span class="line">    <span class="k">print</span> <span class="s">&quot;${var}=\&quot;${val}\&quot;\n&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
 </div>
   
   
@@ -350,6 +242,18 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2020/12/13/pu-ju-lei-jian-jie/">谱聚类简介</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2020/12/13/zhu-cheng-fen-fen-xi-pca-jian-jie/">主成分分析-PCA-简介</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2020/12/13/xian-xing-pan-bie-fen-xi-jian-jie/">线性判别分析简介</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2020/12/11/matplotlibhe-seabornshi-yong-fang-fa-ji-jin/">Matplotlib和Seaborn使用方法集锦</a>
@@ -379,18 +283,6 @@
         <a href="/blog/2020/11/20/sparksqlru-men-he-jin-jie/">SparkSQL入门和进阶</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2020/02/16/gao-deng-shu-li-tong-ji-xue-qian-yan-zhai-lu/">高等数理统计学前言摘录</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2019/08/27/%5B%3F%5D-xie-guan-yu-rnnhe-lstmhe-grude-yue-du-cai-liao/">一些关于RNN和LSTM和GRU的阅读材料</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2019/08/27/ru-he-cha-kan-linuxzhong-de-nei-cun-zhan-yong-qing-kuang/">如何查看Linux中的内存占用情况</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -401,7 +293,7 @@
 <li class='category'><a href='/blog/categories/bigdata/'>BigData (11)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (7)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
-<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (17)</a></li>
+<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (20)</a></li>
 <li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (5)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (2)</a></li>
 <li class='category'><a href='/blog/categories/javascript/'>Javascript (4)</a></li>

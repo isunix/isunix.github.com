@@ -9,8 +9,7 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="Here below is the one-liner I found to remove a blank line in a file. 1
-perl -pi -e &#39;s!^\s+?$!!&#39; file.txt ">
+  <meta name="description" content="在”perl for dummies” 这本书中有段很精彩的关于defined 函数的说明。现在记录如下: 在perl中构建语句的一个基本规则是: 使用变量前应该在赋值语句的右边定义它们，这样做可以防止perl给未定义的变量插入默认值. 未定义的变量的存在是有意义的。照搬书中的例子， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -100,7 +99,7 @@ perl -pi -e &#39;s!^\s+?$!!&#39; file.txt ">
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/07/24/perl-one-liner-to-remove-blank-lines/">Perl One-liner to Remove Blank Lines</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/07/24/about-the-defined-function-in-perl/">About the Defined Function in Perl</a></h1>
     
     
       <p class="meta">
@@ -116,18 +115,30 @@ perl -pi -e &#39;s!^\s+?$!!&#39; file.txt ">
   
 
 
-<time datetime="2014-07-24T15:05:16+08:00" pubdate data-updated="true">2014 年7 月24 日</time>
+<time datetime="2014-07-24T16:09:53+08:00" pubdate data-updated="true">2014 年7 月24 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>Here below is the one-liner I found to remove a blank line in a file.   </p>
+  <div class="entry-content"><p>在”perl for dummies” 这本书中有段很精彩的关于defined 函数的说明。现在记录如下:    </p>
+
+<p>在perl中构建语句的一个基本规则是: 使用变量前应该在赋值语句的右边定义它们，这样做可以防止perl给未定义的变量插入默认值.  </p>
+
+<p>未定义的变量的存在是有意义的。照搬书中的例子，如果试图从空列表中提取数据， pop函数就会返回一个未定义的值。让pop函数返回未定义的值比返回假值要好，因为’false’可能就是列表中的某个元素。  </p>
+
+<p>那么我们怎么去判断一个函数是否返回未定义的值呢？ 这里”defined” 就派上用场了。该函数会作用于一个变量或者表达式。如果这个被作用的对象已被定义，defined函数就会返回真， 否则就会返回假。 通常会跟着if或者unless来使用的。  </p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">perl</span> <span class="o">-</span><span class="n">pi</span> <span class="o">-</span><span class="n">e</span> <span class="s">&#39;s!^\s+?$!!&#39;</span> <span class="n">file</span><span class="o">.</span><span class="n">txt</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">unless</span> <span class="p">(</span><span class="nb">defined</span><span class="p">(</span><span class="nv">$Yummy</span> <span class="o">=</span> <span class="nb">pop</span><span class="p">(</span><span class="nv">@Bonbons</span><span class="p">))){</span>
+</span><span class="line">	<span class="k">print</span> <span class="s">&quot;there are no more bonbos left.&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>如果@Bonbons这个列表是空的， defined函数就会返回假值，就会执行print语句，这个时候$Yummy变量将包含一个未定义的值。   </p>
+
 </div>
   
   
@@ -140,7 +151,7 @@ perl -pi -e &#39;s!^\s+?$!!&#39; file.txt ">
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/07/21/perl-script-to-comiple-c-slash-cpp-files-conveniently/">Perl Script to Comiple C/cpp Files Conveniently</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/07/24/a-typical-perl-script-to-search-info-in-a-file/">A Typical Perl Script to Search Info in a File</a></h1>
     
     
       <p class="meta">
@@ -156,30 +167,14 @@ perl -pi -e &#39;s!^\s+?$!!&#39; file.txt ">
   
 
 
-<time datetime="2014-07-21T21:31:33+08:00" pubdate data-updated="true">2014 年7 月21 日</time>
+<time datetime="2014-07-24T15:33:54+08:00" pubdate data-updated="true">2014 年7 月24 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>我自己在编译c还有c++文件的时候， 总感觉每次都得敲像下面这种格式的一串字符， 感觉很麻烦的。   </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="n">gcc</span> <span class="o">-</span><span class="n">o</span> <span class="n">hello</span> <span class="n">hello</span><span class="p">.</span><span class="n">c</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>所以就有了现在的这个脚本。使用方法很简单，想上面这个hello.c的文件，我们只要发出下面的命令:    </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="n">cpl</span> <span class="n">hello</span><span class="p">.</span><span class="n">c</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>就可以编译出来一个去掉以原来的文件名去掉ext的文件。  </p>
-
-<p>很简单吧！哈哈！  </p>
-
-<p>下面给出来代码， 还是继续把doc写进去的那种。</p>
+  <div class="entry-content"><p>This one is where I excerpted from the book “perl for dummies”.  </p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
@@ -225,51 +220,53 @@ perl -pi -e &#39;s!^\s+?$!!&#39; file.txt ">
 <span class="line-number">42</span>
 <span class="line-number">43</span>
 <span class="line-number">44</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="mf">5.010</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="n">strict</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="n">warnings</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="n">utf8</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="n">Cwd</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="nn">File::</span><span class="n">Basename</span><span class="p">;</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">$TheDB</span> <span class="o">=</span> <span class="s">&#39;edata.txt&#39;</span><span class="p">;</span>
 </span><span class="line">
-</span><span class="line"><span class="k">my</span> <span class="nv">$currentDir</span> <span class="o">=</span> <span class="n">getcwd</span><span class="p">;</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">$file</span> <span class="o">=</span> <span class="nv">$ARGV</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">$fullpath</span> <span class="o">=</span> <span class="s">&quot;$currentDir/$file&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">@suffix_list</span> <span class="o">=</span> <span class="sx">qw(.cpp .c)</span><span class="p">;</span>
 </span><span class="line">
-</span><span class="line"><span class="k">my</span> <span class="p">(</span><span class="nv">$name</span><span class="p">,</span> <span class="nv">$dir</span><span class="p">,</span> <span class="nv">$ext</span><span class="p">)</span> <span class="o">=</span> <span class="n">fileparse</span><span class="p">(</span><span class="nv">$file</span><span class="p">,</span> <span class="nv">@suffix_list</span><span class="p">);</span>
-</span><span class="line"><span class="n">given</span><span class="p">(</span><span class="nv">$ext</span><span class="p">){</span>
+</span><span class="line"><span class="nb">open</span><span class="p">(</span><span class="n">INDB</span><span class="p">,</span> <span class="nv">$TheDB</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">die</span> <span class="s">&quot;The database $TheDB could &quot;</span> <span class="o">.</span> <span class="s">&quot;not be found.\n&quot;</span><span class="p">;</span>
 </span><span class="line">
-</span><span class="line">    <span class="n">when</span><span class="p">(</span><span class="s">&quot;.c&quot;</span><span class="p">){</span>
-</span><span class="line">        <span class="k">my</span> <span class="nv">$compile_c</span> <span class="o">=</span> <span class="s">&quot;gcc -o $name $file&quot;</span><span class="p">;</span>
-</span><span class="line">        <span class="nb">system</span><span class="p">(</span><span class="nv">$compile_c</span><span class="p">);</span>
+</span><span class="line"><span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">
+</span><span class="line">  <span class="k">print</span> <span class="s">&quot;\nDo you want to search by employee ID (I), &quot;</span> <span class="o">.</span> <span class="s">&quot; or quit (Q): &quot;</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">  <span class="nv">$DoSearch</span> <span class="o">=</span> <span class="sr">&lt;STDIN&gt;</span><span class="p">;</span>
+</span><span class="line">  <span class="nb">chomp</span><span class="p">(</span><span class="nv">$DoSearch</span><span class="p">);</span>
+</span><span class="line">  <span class="nv">$DoSearch</span> <span class="o">=~</span> <span class="nb">tr</span><span class="sr">/A-Z/</span><span class="n">a</span><span class="o">-</span><span class="n">z</span><span class="o">/</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">  <span class="k">if</span><span class="p">(</span><span class="nv">$DoSearch</span> <span class="ow">eq</span> <span class="s">&#39;q&#39;</span><span class="p">)</span> <span class="p">{</span> <span class="k">last</span> <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">  <span class="k">unless</span><span class="p">(</span><span class="nv">$DoSearch</span> <span class="ow">eq</span> <span class="s">&#39;i&#39;</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">    <span class="k">print</span> <span class="s">&quot;You must enter either I or Q.\n&quot;</span><span class="p">;</span>
+</span><span class="line">    <span class="k">next</span><span class="p">;</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">  <span class="k">print</span> <span class="s">&quot;Search for ID number: &quot;</span><span class="p">;</span>
+</span><span class="line">  <span class="nv">$SearchFor</span> <span class="o">=</span> <span class="sr">&lt;STDIN&gt;</span><span class="p">;</span>
+</span><span class="line">  <span class="nb">chomp</span><span class="p">(</span><span class="nv">$SearchFor</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line">  <span class="nb">seek</span><span class="p">(</span><span class="n">INDB</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>   <span class="c1">##search from the beginning of file.</span>
+</span><span class="line">
+</span><span class="line">  <span class="nv">$SuccessCount</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">  <span class="k">while</span><span class="p">(</span><span class="sr">&lt;INDB&gt;</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">    <span class="nv">$TheRec</span> <span class="o">=</span> <span class="nv">$_</span><span class="p">;</span>
+</span><span class="line">    <span class="nb">chomp</span><span class="p">(</span><span class="nv">$TheRec</span><span class="p">);</span>
+</span><span class="line">    <span class="p">(</span><span class="nv">$LastName</span><span class="p">,</span> <span class="nv">$FirstName</span><span class="p">,</span> <span class="nv">$ID</span><span class="p">,</span> <span class="nv">$Tel</span><span class="p">)</span> <span class="o">=</span>
+</span><span class="line">      <span class="nb">split</span><span class="p">(</span><span class="sr">/\t/</span><span class="p">,</span> <span class="nv">$TheRec</span><span class="p">);</span>
+</span><span class="line">    <span class="k">if</span><span class="p">(</span><span class="nv">$ID</span> <span class="ow">eq</span> <span class="nv">$SearchFor</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">      <span class="nv">$SuccessCount</span> <span class="o">=</span> <span class="nv">$SuccessCount</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class="line">      <span class="k">print</span> <span class="s">&quot;$ID: $FirstName $LastName, ext. &quot;</span><span class="o">.</span> <span class="s">&quot;$Tel\n&quot;</span><span class="p">;</span>
 </span><span class="line">    <span class="p">}</span>
+</span><span class="line">  <span class="p">}</span>
 </span><span class="line">
-</span><span class="line">    <span class="n">when</span><span class="p">(</span><span class="s">&quot;.cpp&quot;</span><span class="p">){</span>
-</span><span class="line">        <span class="k">my</span> <span class="nv">$compile_cpp</span> <span class="o">=</span> <span class="s">&quot;g++ -o $name $file&quot;</span><span class="p">;</span>
-</span><span class="line">        <span class="nb">system</span><span class="p">(</span><span class="nv">$compile_cpp</span><span class="p">);</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">
-</span><span class="line">    <span class="n">default</span><span class="p">{</span>
-</span><span class="line">        <span class="n">say</span> <span class="s">&quot;$file is of an type not compilable!&quot;</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span>
+</span><span class="line">  <span class="k">if</span><span class="p">(</span><span class="nv">$SuccessCount</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span> <span class="k">print</span> <span class="s">&quot;No records found.\n&quot;</span> <span class="p">}</span>
+</span><span class="line">  <span class="k">else</span> <span class="p">{</span> <span class="k">print</span> <span class="s">&quot;$SuccessCount records found.\n&quot;</span> <span class="p">}</span>
 </span><span class="line"><span class="p">}</span>
 </span><span class="line">
-</span><span class="line"><span class="cp">__END__</span>
-</span><span class="line"><span class="cp">=pod</span>
-</span><span class="line">
-</span><span class="line"><span class="cp">=head1 NAME</span>
-</span><span class="line">
-</span><span class="line"><span class="cp">cpl</span>
-</span><span class="line">
-</span><span class="line"><span class="cp">=head1 SYNOPSIS</span>
-</span><span class="line"><span class="cp">    $ cpl filename</span>
-</span><span class="line">
-</span><span class="line"><span class="cp">cpl --use gcc/g++ to compile a file with c/cpp extension. Usually we will do things like &quot;gcc -o hello hello.c&quot;, but with this scipt, we can just issue command like this, &quot;gcp hello.c&quot;;</span>
-</span><span class="line">
-</span><span class="line"><span class="cp">Thanks,</span>
-</span><span class="line"><span class="cp">Steven</span>
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;Program finished.\n&quot;</span><span class="p">;</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>We can learn the use of while, endless loop, file-handle, last, tr, seek, $_, eq, split, string concatenation if-else, chomp, ==, eq all these things in one perl script.  </p>
+
 </div>
   
   
@@ -282,7 +279,7 @@ perl -pi -e &#39;s!^\s+?$!!&#39; file.txt ">
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/07/21/perl-script-to-delete-files-without-extension/">Perl Script to Delete Files Without Extension</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/07/24/a-typical-perl-program/">A Typical Perl Program</a></h1>
     
     
       <p class="meta">
@@ -298,14 +295,14 @@ perl -pi -e &#39;s!^\s+?$!!&#39; file.txt ">
   
 
 
-<time datetime="2014-07-21T18:18:34+08:00" pubdate data-updated="true">2014 年7 月21 日</time>
+<time datetime="2014-07-24T15:17:20+08:00" pubdate data-updated="true">2014 年7 月24 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>I want to delete those files without the extension I need, so I just write this perl script. The directory can also be specified on the command line. I list all those extensions I need as a pattern.</p>
+  <div class="entry-content"><p>Of courese there are many perl programms that can be claimed as “typical”, yet you can not what is truely “typical”. The one below is where I met in the book “perl for dummies”. Ok, show you the code now.   </p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
@@ -338,64 +335,40 @@ perl -pi -e &#39;s!^\s+?$!!&#39; file.txt ">
 <span class="line-number">29</span>
 <span class="line-number">30</span>
 <span class="line-number">31</span>
-<span class="line-number">32</span>
-<span class="line-number">33</span>
-<span class="line-number">34</span>
-<span class="line-number">35</span>
-<span class="line-number">36</span>
-<span class="line-number">37</span>
-<span class="line-number">38</span>
-<span class="line-number">39</span>
-<span class="line-number">40</span>
-<span class="line-number">41</span>
-<span class="line-number">42</span>
-<span class="line-number">43</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="n">strict</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="n">warnings</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="n">utf8</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="n">Cwd</span><span class="p">;</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">$TheFile</span> <span class="o">=</span> <span class="s">&quot;sample.txt&quot;</span><span class="p">;</span>
 </span><span class="line">
-</span><span class="line"><span class="k">my</span> <span class="nv">$targetDir</span> <span class="o">=</span> <span class="nv">$ARGV</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">||</span> <span class="n">getcwd</span><span class="p">;</span>
-</span><span class="line"><span class="nb">chdir</span> <span class="nv">$targetDir</span><span class="p">;</span>
+</span><span class="line"><span class="nb">open</span><span class="p">(</span><span class="n">INFILE</span><span class="p">,</span> <span class="nv">$TheFile</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">die</span> <span class="s">&quot;The file $TheFile could &quot;</span> <span class="o">.</span>  <span class="s">&quot;not be found.\n&quot;</span><span class="p">;</span>
 </span><span class="line">
-</span><span class="line"><span class="k">my</span> <span class="nv">$pattern</span> <span class="o">=</span> <span class="sx">qr/\.(md|py|php|sh|bash|zsh|vimrc|eamcs|c|cpp|java|pl|js|css|html|rb|txt)$/</span><span class="n">i</span><span class="p">,</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">@file_list</span><span class="p">;</span>
+</span><span class="line"><span class="nv">$CharCount</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line"><span class="nv">$WordCount</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line"><span class="nv">$LineCount</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 </span><span class="line">
+</span><span class="line"><span class="k">while</span><span class="p">(</span><span class="sr">&lt;INFILE&gt;</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">  <span class="nv">$TheLine</span> <span class="o">=</span> <span class="nv">$_</span><span class="p">;</span>
+</span><span class="line">  <span class="nb">chomp</span><span class="p">(</span><span class="nv">$TheLine</span><span class="p">);</span>
 </span><span class="line">
-</span><span class="line"><span class="nb">opendir</span><span class="p">(</span><span class="k">my</span> <span class="nv">$dh</span><span class="p">,</span> <span class="nv">$targetDir</span><span class="p">)</span> <span class="o">||</span> <span class="nb">die</span> <span class="s">&quot;can&#39;t opendir $targetDir: $!&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="k">while</span> <span class="p">(</span><span class="nb">readdir</span> <span class="nv">$dh</span><span class="p">){</span>
-</span><span class="line">    <span class="k">next</span> <span class="k">unless</span> <span class="o">-</span><span class="n">f</span><span class="p">;</span>
-</span><span class="line">    <span class="k">next</span> <span class="k">if</span> <span class="nv">$_</span> <span class="o">=~</span> <span class="nv">$pattern</span><span class="p">;</span>
-</span><span class="line">    <span class="nb">push</span> <span class="nv">@file_list</span><span class="p">,</span> <span class="nv">$_</span><span class="p">;</span>
+</span><span class="line">  <span class="nv">$LineCount</span> <span class="o">=</span> <span class="nv">$LineCount</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class="line">  <span class="nv">$LineLen</span> <span class="o">=</span> <span class="nb">length</span><span class="p">(</span><span class="nv">$TheLine</span><span class="p">);</span>
+</span><span class="line">  <span class="nv">$CharCount</span> <span class="o">=</span> <span class="nv">$CharCount</span> <span class="o">+</span> <span class="nv">$LineLen</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">  <span class="k">if</span><span class="p">(</span><span class="nv">$TheLine</span> <span class="ow">eq</span> <span class="s">&quot;&quot;</span><span class="p">)</span> <span class="p">{</span> <span class="k">next</span> <span class="p">};</span> <span class="c1">##evaluate the next line;</span>
+</span><span class="line">  <span class="nv">$WordCount</span> <span class="o">=</span> <span class="nv">$WordCount</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class="line">  <span class="nv">$CharPos</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">  <span class="k">until</span><span class="p">(</span><span class="nv">$CharPos</span> <span class="o">==</span> <span class="nv">$LineLen</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">    <span class="k">if</span><span class="p">(</span><span class="nb">substr</span><span class="p">(</span><span class="nv">$TheLine</span><span class="p">,</span> <span class="nv">$CharPos</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="ow">eq</span> <span class="s">&quot; &quot;</span><span class="p">)</span>
+</span><span class="line">      <span class="p">{</span> <span class="nv">$WordCount</span> <span class="o">=</span> <span class="nv">$WordCount</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">}</span>
+</span><span class="line">    <span class="nv">$CharPos</span> <span class="o">=</span> <span class="nv">$CharPos</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class="line">  <span class="p">}</span>
 </span><span class="line"><span class="p">}</span>
-</span><span class="line"><span class="nb">closedir</span> <span class="nv">$dh</span><span class="p">;</span>
 </span><span class="line">
-</span><span class="line"><span class="k">print</span> <span class="s">&quot;The following files are going to be deleted: @file_list\n&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="nb">unlink</span> <span class="nv">@file_list</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="cp">__END__</span>
-</span><span class="line"><span class="cp">=pod</span>
-</span><span class="line">
-</span><span class="line"><span class="cp">=head1 NAME</span>
-</span><span class="line">
-</span><span class="line"><span class="cp">delete-files.pl -delete those files without the extension as specifed in the pattern</span>
-</span><span class="line">
-</span><span class="line"><span class="cp">=head1 SYNOPSIS</span>
-</span><span class="line">
-</span><span class="line"><span class="cp">    $ delete-files</span>
-</span><span class="line"><span class="cp">It reads the files in the directory where you execute this script, and delete those</span>
-</span><span class="line"><span class="cp">not having the extension as is specified &quot;(md|py|php|sh|bash|zsh|vimrc|eamcs|c|cpp|java|pl|js|css|html|rb|txt)&quot;</span>
-</span><span class="line">
-</span><span class="line"><span class="cp">Please use this script carefully. If you have somefile without extension which you also</span>
-</span><span class="line"><span class="cp">consider them important, they maybe deleted.</span>
-</span><span class="line">
-</span><span class="line"><span class="cp">Thanks,</span>
-</span><span class="line"><span class="cp">Steven</span>
-</span><span class="line">
-</span><span class="line"><span class="cp">=cut</span>
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;For the file $TheFile:\n&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;Number of characters $CharCount\n&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;Number of words    $WordCount\n&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;Number of lines    $LineCount\n&quot;</span><span class="p">;</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>I also wrote document for this scirpt. haha!</p>
+<p>I list this program here, because We can learn how to use chomp, length, $_, &lt;&gt;, until, next, eq, ==, next, substr, FILEHANDLE, string concatenation, how to tell if it is a word and so on, all these import concepts in perl programming in one script. </p>
 </div>
   
   
@@ -418,6 +391,18 @@ perl -pi -e &#39;s!^\s+?$!!&#39; file.txt ">
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2020/12/13/pu-ju-lei-jian-jie/">谱聚类简介</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2020/12/13/zhu-cheng-fen-fen-xi-pca-jian-jie/">主成分分析-PCA-简介</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2020/12/13/xian-xing-pan-bie-fen-xi-jian-jie/">线性判别分析简介</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2020/12/11/matplotlibhe-seabornshi-yong-fang-fa-ji-jin/">Matplotlib和Seaborn使用方法集锦</a>
@@ -447,18 +432,6 @@ perl -pi -e &#39;s!^\s+?$!!&#39; file.txt ">
         <a href="/blog/2020/11/20/sparksqlru-men-he-jin-jie/">SparkSQL入门和进阶</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2020/02/16/gao-deng-shu-li-tong-ji-xue-qian-yan-zhai-lu/">高等数理统计学前言摘录</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2019/08/27/%5B%3F%5D-xie-guan-yu-rnnhe-lstmhe-grude-yue-du-cai-liao/">一些关于RNN和LSTM和GRU的阅读材料</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2019/08/27/ru-he-cha-kan-linuxzhong-de-nei-cun-zhan-yong-qing-kuang/">如何查看Linux中的内存占用情况</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -469,7 +442,7 @@ perl -pi -e &#39;s!^\s+?$!!&#39; file.txt ">
 <li class='category'><a href='/blog/categories/bigdata/'>BigData (11)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (7)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
-<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (17)</a></li>
+<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (20)</a></li>
 <li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (5)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (2)</a></li>
 <li class='category'><a href='/blog/categories/javascript/'>Javascript (4)</a></li>

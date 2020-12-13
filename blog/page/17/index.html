@@ -9,9 +9,8 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="We can use the following two methods to get rid of the “^M” character in a file which was edited on windows using vim. 1. 1
-:%s/\r//g 2. 1
-:%s/ctrl-v &hellip;">
+  <meta name="description" content="I want to insert into a table with values from another table. and I want to use the follwing statements, 1
+insert into table table_a select * from &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -101,7 +100,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2016/07/18/zen-yao-qu-chu-windowsbian-ji-guo-de-wen-jian-zhong-de-mzi-fu/">怎么去除windows编辑过的文件中的^M字符</a></h1>
+      <h1 class="entry-title"><a href="/blog/2016/08/09/hive-insert-using-select-star/">Hive Insert Using Select *</a></h1>
     
     
       <p class="meta">
@@ -117,28 +116,38 @@
   
 
 
-<time datetime="2016-07-18T08:12:34+08:00" pubdate data-updated="true">2016 年7 月18 日</time>
+<time datetime="2016-08-09T09:34:49+08:00" pubdate data-updated="true">2016 年8 月9 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>We can use the following two methods to get rid of the “^M” character in a file which was edited on windows using vim.</p>
-
-<p>1.</p>
+  <div class="entry-content"><p>I want to insert into a table with values from another table. and I want to use the follwing statements,</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">:%s/<span class="se">\r</span>//g
+</pre></td><td class="code"><pre><code class="sql"><span class="line"><span class="k">insert</span> <span class="k">into</span> <span class="k">table</span> <span class="n">table_a</span> <span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="n">table_b</span><span class="p">;</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>2.</p>
+<p>Both table_a and table_b have the followig 3 fields, “name”, “age”, and the “load_day” field which is used to partition.</p>
+
+<p>If using the above syntax, we will get errors saying table has just 2 fields and table_b has 3.</p>
+
+<p>So one right way to insert the data is:</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">:%s/ctrl-v ctrl-m//g
+</pre></td><td class="code"><pre><code class="sql"><span class="line"><span class="k">insert</span> <span class="k">into</span> <span class="k">table</span> <span class="n">table_a</span><span class="p">(</span><span class="n">partition</span><span class="o">=</span><span class="ss">&quot;2016-08-01&quot;</span><span class="p">)</span> <span class="k">select</span> <span class="n">name</span><span class="p">,</span> <span class="n">age</span> <span class="k">from</span> <span class="n">table_b</span> <span class="k">where</span> <span class="n">load_day</span> <span class="o">=</span> <span class="ss">&quot;2016-08-01&quot;</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>The second one means pressing ctrl-v, then ctrl-m first.</p>
+<p>What if there are many fields, thus we will need to list them one by one after select which is very tedious.</p>
+
+<p>Here is the solution,</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="sql"><span class="line"><span class="k">set</span> <span class="n">hive</span><span class="p">.</span><span class="k">exec</span><span class="p">.</span><span class="k">dynamic</span><span class="p">.</span><span class="n">partition</span><span class="p">.</span><span class="k">mode</span><span class="o">=</span><span class="n">nonstrict</span><span class="p">;</span>
+</span><span class="line"><span class="k">insert</span> <span class="k">into</span> <span class="k">table</span> <span class="n">table_a</span> <span class="n">partition</span><span class="p">(</span><span class="n">load_day</span><span class="p">)</span> <span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="n">table_b</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 </div>
   
   
@@ -151,7 +160,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2016/07/15/regexp-extract-usage-in-impala/">Regexp_extract Usage in Impala</a></h1>
+      <h1 class="entry-title"><a href="/blog/2016/08/04/copy-and-paste-spaces-separated-text-into-excel/">Copy and Paste Spaces Separated Text Into Excel</a></h1>
     
     
       <p class="meta">
@@ -167,94 +176,28 @@
   
 
 
-<time datetime="2016-07-15T10:43:30+08:00" pubdate data-updated="true">2016 年7 月15 日</time>
+<time datetime="2016-08-04T16:06:03+08:00" pubdate data-updated="true">2016 年8 月4 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>I need to use the regexp_extract function to extract certain parts of a string recently when I am doing big data analysis.</p>
+  <div class="entry-content"><p>最近经常需要把空格作为delimiter的文本粘贴到excel里。之前的做法是</p>
 
-<p>http://www.cloudera.com/documentation/archive/impala/2-x/2-1-x/topics/impala_string_functions.html, this link shows us how to do, but sadly regex in impala is a little different from those in perl or python, so I have to look through the page and try again.</p>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat aa.log | awk <span class="s1">&#39;{print $1}&#39;</span> | pbcopy
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>来一列一列地copy到excel里。甚是繁琐。 excel不会用的啊。</p>
 
-<p>I keep a note here for regexp_extract for my later own usage.</p>
-
-<p>Say I have a string </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">%2C%22hidisp%22%3A27%2C%22quietMode</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>and I want to extract the number followd by “hidisp” and ‘”:’, which is number ‘27’ here.</p>
-
-<p>As describe in the above document, </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">Because the impala-shell interpreter uses the \ character for escaping, use \\ to represent the regular expression escape character in any regular expressions that you submit through impala-shell</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>So if we want to represent the numbers here, we have use ‘\d’ rather than just ‘\d’ which is a standard in other programming  languages.</p>
-
-<p>regexp_extract usage is in the following format,</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">regexp_extract(string subject, string pattern, int index)</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>今天发现了原来还可以这么来操作。</p>
 
 <ol>
-  <li>group 0 matches the full pattern string, including the portion outside any () group, so</li>
+  <li>把整个文件的内容粘贴到excel里去</li>
+  <li>在excel中选中文件内容， 然后点击 Data-&gt;Text to Columns, 然后选择合适的delimiter去把文本内容给搞到excel中去。</li>
 </ol>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">select regexp_extract('%2C%22hidisp%22%3A27%2C%22quietMode', 'hidisp%22%3A(\\d+)', 0);</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>this will give out:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">hidisp%22%3A27</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ol>
-  <li>group 1 matches just the contents inside the first () group in the pattern string:</li>
-</ol>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">select regexp_extract('%2C%22hidisp%22%3A27%2C%22quietMode', 'hidisp%22%3A(\\d+)', 1);</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>will give out</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">27</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>And for the support of non-greedy matches using .*?, take the following string as an example,</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">%2C%22reboot%22%3A27%2C%22quietMode%2C%22reboot%22%3A12%2C%22quietMode</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>How to extract the first match number for “reboot”, we can get the result in the following ways</p>
-
-<p>a. without any “.*?” around the string pattern ‘reboot%22%3A(\d+)’, which is the easiest way I think </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">select regexp_extract('%2C%22reboot%22%3A27%2C%22quietMode%2C%22reboot%22%3A12%2C%22quietMode', 'reboot%22%3A(\\d+)', 1);</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>or </p>
-
-<p>b. append “.*?” right after the string pattern ‘reboot%22%3A(\d+)’,</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">select regexp_extract('%2C%22reboot%22%3A27%2C%22quietMode%2C%22reboot%22%3A12%2C%22quietMode', 'reboot%22%3A(\\d+).*?', 1);</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>or</p>
-
-<p>c. surround the string pattern ‘reboot%22%3A(\d+)’ with ‘.*?’ at both sides</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">select regexp_extract('%2C%22reboot%22%3A27%2C%22quietMode%2C%22reboot%22%3A12%2C%22quietMode', '.*?reboot%22%3A(\\d+).*?', 1);</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>So after the tree ways to get the leftmost match, we can easily guess how to get the rifht-most match.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">select regexp_extract('%2C%22reboot%22%3A27%2C%22quietMode%2C%22reboot%22%3A12%2C%22quietMode', '.*?reboot%22%3A(\\d+)', 1);</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>That is just by appending the string pattern with ‘.*?’ at its left side.</p>
+<p>Bingo！</p>
 </div>
   
   
@@ -267,7 +210,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2016/07/12/tmux-error-while-loading-shared-libraries-libevent-2-dot-0-so-dot-5/">Tmux: Error While Loading Shared Libraries: libevent-2.0.so.5</a></h1>
+      <h1 class="entry-title"><a href="/blog/2016/07/19/weird-things-happen-when-scripts-executing-with-and-passing-args-with-getopts/">Weird Things Happen When Scripts Executing With . And Passing Args With Getopts</a></h1>
     
     
       <p class="meta">
@@ -283,40 +226,198 @@
   
 
 
-<time datetime="2016-07-12T10:34:50+08:00" pubdate data-updated="true">2016 年7 月12 日</time>
+<time datetime="2016-07-19T17:43:32+08:00" pubdate data-updated="true">2016 年7 月19 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>I have kept a blog on tmux installation which is about missing module libevent, and the post is on:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line">http://isunix.github.io/blog/2014/12/24/libevent-not-found-error-while-install-tmux/
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>Recently even after I install the livevent module, I still get the following errors after installing tmux and then running tmux:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line"> ./tmux: error while loading shared libraries: libevent-2.0.so.5: cannot open shared object file: No such file or
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>I installed the libevent lib in $HOME/local/lib, and tmux says it can not find the library, Weird. With the help of one of my colleague, this problem is solved.</p>
+  <div class="entry-content"><p>I have met the following scripts, say aa.sh</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
 <span class="line-number">3</span>
 <span class="line-number">4</span>
 <span class="line-number">5</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nb">export </span><span class="nv">DIR</span><span class="o">=</span><span class="s2">&quot;$HOME/local&quot;</span>
-</span><span class="line"><span class="nb">export </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="nv">$LD_LIBRARY_PATH</span>:<span class="nv">$DIR</span>/lib
-</span><span class="line">./configure --prefix<span class="o">=</span><span class="nv">$DIR</span> <span class="nv">CFLAGS</span><span class="o">=</span><span class="s2">&quot;-I$DIR/include&quot;</span> <span class="nv">LDFLAGS</span><span class="o">=</span><span class="s2">&quot;-L$DIR/lib&quot;</span>
-</span><span class="line">make
-</span><span class="line">make install
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nb">echo</span> <span class="s2">&quot;OPTIND for aa.sh before calling is: &quot;</span> <span class="nv">$OPTIND</span>
+</span><span class="line"><span class="k">while </span><span class="nb">getopts</span> <span class="s2">&quot;t:c:&quot;</span> opt
+</span><span class="line"><span class="k">do</span>
+</span><span class="line"><span class="k">    case</span> <span class="s2">&quot;$opt&quot;</span> in
+</span><span class="line">        t<span class="o">)</span> <span class="nb">time</span><span class="o">=</span><span class="s2">&quot;${OPTARG}&quot;</span>;;
+</span><span class="line">        c<span class="o">)</span> <span class="nv">count</span><span class="o">=</span><span class="s2">&quot;${OPTARG}&quot;</span>;;
+</span><span class="line">    <span class="k">esac</span>
+</span><span class="line"><span class="k">done</span>
+</span><span class="line">
+</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;time for aa.sh is $time&quot;</span>
+</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;count for aa.sh is $count&quot;</span>
+</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;OPTIND for aa.sh after calling is: &quot;</span> <span class="nv">$OPTIND</span><span class="sb">`</span>sh
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>As we can see, the point here is setting the “LD_LIBRARY_PATH” variable.</p>
+<p>and bb.sh</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nb">echo</span> <span class="s2">&quot;OPTIND for bb.sh before calling is: &quot;</span> <span class="nv">$OPTIND</span>
+</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;we are setting the OPTIND to 1&quot;</span>
+</span><span class="line"><span class="k">while </span><span class="nb">getopts</span> <span class="s2">&quot;t:c:&quot;</span> opt
+</span><span class="line"><span class="k">do</span>
+</span><span class="line"><span class="k">    case</span> <span class="s2">&quot;$opt&quot;</span> in
+</span><span class="line">        t<span class="o">)</span> <span class="nb">time</span><span class="o">=</span><span class="s2">&quot;${OPTARG}&quot;</span>;;
+</span><span class="line">        c<span class="o">)</span> <span class="nv">count</span><span class="o">=</span><span class="s2">&quot;${OPTARG}&quot;</span>;;
+</span><span class="line">    <span class="k">esac</span>
+</span><span class="line"><span class="k">done</span>
+</span><span class="line">
+</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;time for bb.sh is $time&quot;</span>
+</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;count for bb.sh is $count&quot;</span>
+</span><span class="line">
+</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;OPTIND for bb.sh after calling is: &quot;</span> <span class="nv">$OPTIND</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>and call.sh</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">. ./aa.sh -t 2016-07-15 -c 4
+</span><span class="line">. ./bb.sh -a 2016-07-20 -c 0
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>and now execute the script, it will give out the followig result,</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">OPTIND <span class="k">for </span>aa.sh before calling is:  1
+</span><span class="line"><span class="nb">time </span><span class="k">for </span>aa.sh is 2016-07-15
+</span><span class="line">count <span class="k">for </span>aa.sh is 4
+</span><span class="line">OPTIND <span class="k">for </span>aa.sh after calling is:  5
+</span><span class="line">OPTIND <span class="k">for </span>bb.sh before calling is:  <span class="nv">5</span>
+</span><span class="line"><span class="o">=</span><span class="nb">time </span><span class="k">for </span>bb.sh is 2016-07-15
+</span><span class="line">count <span class="k">for </span>bb.sh is 4
+</span><span class="line">OPTIND <span class="k">for </span>bb.sh after calling is:  5
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Which is definitely not what we want.</p>
+
+<p>We can now change bb.sh into the following to test it again.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nb">echo</span> <span class="s2">&quot;OPTIND for bb.sh before calling is: &quot;</span> <span class="nv">$OPTIND</span>
+</span><span class="line">
+</span><span class="line"><span class="nv">OPTIND</span><span class="o">=</span>1
+</span><span class="line">
+</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;we are setting the OPTIND to 1&quot;</span>
+</span><span class="line"><span class="k">while </span><span class="nb">getopts</span> <span class="s2">&quot;t:c:&quot;</span> opt
+</span><span class="line"><span class="k">do</span>
+</span><span class="line"><span class="k">    case</span> <span class="s2">&quot;$opt&quot;</span> in
+</span><span class="line">        t<span class="o">)</span> <span class="nb">time</span><span class="o">=</span><span class="s2">&quot;${OPTARG}&quot;</span>;;
+</span><span class="line">        c<span class="o">)</span> <span class="nv">count</span><span class="o">=</span><span class="s2">&quot;${OPTARG}&quot;</span>;;
+</span><span class="line">    <span class="k">esac</span>
+</span><span class="line"><span class="k">done</span>
+</span><span class="line">
+</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;time for bb.sh is $time&quot;</span>
+</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;count for bb.sh is $count&quot;</span>
+</span><span class="line">
+</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;OPTIND for bb.sh after calling is: &quot;</span> <span class="nv">$OPTIND</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>and now “sh call.sh” will give out the following result,</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">OPTIND <span class="k">for </span>aa.sh before calling is:  1
+</span><span class="line"><span class="nb">time </span><span class="k">for </span>aa.sh is 2016-07-15
+</span><span class="line">count <span class="k">for </span>aa.sh is 4
+</span><span class="line">OPTIND <span class="k">for </span>aa.sh after calling is:  5
+</span><span class="line">OPTIND <span class="k">for </span>bb.sh before calling is:  5
+</span><span class="line">we are setting the OPTIND to 1
+</span><span class="line"><span class="nb">time </span><span class="k">for </span>bb.sh is 2016-07-20
+</span><span class="line">count <span class="k">for </span>bb.sh is 0
+</span><span class="line">OPTIND <span class="k">for </span>bb.sh after calling is:  5
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>What if we set the OPTIND to 3 now?</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">OPTIND <span class="k">for </span>aa.sh before calling is:  1
+</span><span class="line"><span class="nb">time </span><span class="k">for </span>aa.sh is 2016-07-15
+</span><span class="line">count <span class="k">for </span>aa.sh is 4
+</span><span class="line">OPTIND <span class="k">for </span>aa.sh after calling is:  5
+</span><span class="line">OPTIND <span class="k">for </span>bb.sh before calling is:  5
+</span><span class="line">we are setting the OPTIND to 3
+</span><span class="line"><span class="nb">time </span><span class="k">for </span>bb.sh is 2016-07-15
+</span><span class="line">count <span class="k">for </span>bb.sh is 0
+</span><span class="line">OPTIND <span class="k">for </span>bb.sh after calling is:  5
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Now the count value is changed to 0, however time is still not changed.</p>
+
+<p>How to understand this? First let us look at the definitions of $OPTIND and getopts</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">A <span class="nb">getopts </span>construct usually comes packaged in a <span class="k">while </span>loop, which processes the options and
+</span><span class="line">arguments one at a <span class="nb">time</span>, <span class="k">then </span>increments the implicit <span class="nv">$OPTIND</span> variable to point to the next.
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>In a while loop contaning getopts, getopts will use $OPTIND to find the arguments. if we call the script using “dot” which is the same as using “source”, $OPTIND will be global and available to the next script using getopts, and the next script will then can not find the right argument using $OPTIND now. </p>
+
+<p>The solution here is, we can reset $OPTIND to 1 or we can call the script using “sh” rather than “.”</p>
 </div>
   
   
@@ -339,6 +440,18 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2020/12/13/pu-ju-lei-jian-jie/">谱聚类简介</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2020/12/13/zhu-cheng-fen-fen-xi-pca-jian-jie/">主成分分析-PCA-简介</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2020/12/13/xian-xing-pan-bie-fen-xi-jian-jie/">线性判别分析简介</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2020/12/11/matplotlibhe-seabornshi-yong-fang-fa-ji-jin/">Matplotlib和Seaborn使用方法集锦</a>
@@ -368,18 +481,6 @@
         <a href="/blog/2020/11/20/sparksqlru-men-he-jin-jie/">SparkSQL入门和进阶</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2020/02/16/gao-deng-shu-li-tong-ji-xue-qian-yan-zhai-lu/">高等数理统计学前言摘录</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2019/08/27/%5B%3F%5D-xie-guan-yu-rnnhe-lstmhe-grude-yue-du-cai-liao/">一些关于RNN和LSTM和GRU的阅读材料</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2019/08/27/ru-he-cha-kan-linuxzhong-de-nei-cun-zhan-yong-qing-kuang/">如何查看Linux中的内存占用情况</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -390,7 +491,7 @@
 <li class='category'><a href='/blog/categories/bigdata/'>BigData (11)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (7)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
-<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (17)</a></li>
+<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (20)</a></li>
 <li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (5)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (2)</a></li>
 <li class='category'><a href='/blog/categories/javascript/'>Javascript (4)</a></li>

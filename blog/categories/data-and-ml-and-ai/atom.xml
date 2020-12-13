@@ -4,7 +4,7 @@
   <title><![CDATA[catogories：Data&ML&AI | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/data-and-ml-and-ai/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2020-12-12T19:30:18+08:00</updated>
+  <updated>2020-12-13T19:49:57+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -12,6 +12,81 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[谱聚类简介]]></title>
+    <link href="http://isunix.github.io/blog/2020/12/13/pu-ju-lei-jian-jie/"/>
+    <updated>2020-12-13T16:48:11+08:00</updated>
+    <id>http://isunix.github.io/blog/2020/12/13/pu-ju-lei-jian-jie</id>
+    <content type="html"><![CDATA[<p>```
+假如我们的数据集是n维的，共有m个数据, 
+我们希望将这m个数据的维度从n维降到n’维，希望这m个n’维的数据集尽可能的代表原始数据集. </p>
+
+<p>假设我们有这样的n’维的超平面，我们希望得到什么样的效果呢？</p>
+
+<ol>
+  <li>样本点到这个超平面的距离足够近;</li>
+  <li>样本点在这个直线上的投影能尽可能的分开;</li>
+</ol>
+
+<p>基于上面这两种标准，我们可以得到如下的PCA的推导:</p>
+
+<ol>
+  <li>基于最小投影距离;</li>
+  <li>基于最大投影方差;
+```</li>
+</ol>
+
+<h3 id="section">参考资料:</h3>
+
+<p><a href="https://www.cnblogs.com/pinard/p/6239403.html">主成分分析（PCA）原理总结</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[主成分分析-PCA-简介]]></title>
+    <link href="http://isunix.github.io/blog/2020/12/13/zhu-cheng-fen-fen-xi-pca-jian-jie/"/>
+    <updated>2020-12-13T16:41:20+08:00</updated>
+    <id>http://isunix.github.io/blog/2020/12/13/zhu-cheng-fen-fen-xi-pca-jian-jie</id>
+    <content type="html"><![CDATA[<p>```
+    假如我们的数据集是n维的，共有m个数据, 
+    我们希望将这m个数据的维度从n维降到n’维，希望这m个n’维的数据集尽可能的代表原始数据集. </p>
+
+<pre><code>假设我们有这样的n'维的超平面，我们希望得到什么样的效果呢？
+
+1. 样本点到这个超平面的距离足够近;
+2. 样本点在这个直线上的投影能尽可能的分开;
+
+基于上面这两种标准，我们可以得到如下的PCA的推导:
+
+1. 基于最小投影距离;
+2. 基于最大投影方差; ```
+</code></pre>
+
+<h3 id="section">参考资料:</h3>
+
+<p><a href="https://www.cnblogs.com/pinard/p/6239403.html">主成分分析（PCA）原理总结</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[线性判别分析简介]]></title>
+    <link href="http://isunix.github.io/blog/2020/12/13/xian-xing-pan-bie-fen-xi-jian-jie/"/>
+    <updated>2020-12-13T09:46:36+08:00</updated>
+    <id>http://isunix.github.io/blog/2020/12/13/xian-xing-pan-bie-fen-xi-jian-jie</id>
+    <content type="html"><![CDATA[<p>简单概括下线性判别分析(Linear Discriminant Analysis)的思想就是:</p>
+
+<p>```
+数据投影到一个向量上，使得同一种类别数据的投影点尽可能的接近，也就是要同类样本投影点的协方差尽可能的小; </p>
+
+<p>同时让不同类别的数据的类别中心之间的距离尽可能的大
+```</p>
+
+<h3 id="section">参考资料：</h3>
+
+<p><a href="https://www.cnblogs.com/pinard/p/6244265.html">线性判别分析LDA原理总结</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Matplotlib和Seaborn使用方法集锦]]></title>
@@ -254,6 +329,21 @@ sns.boxplot(‘default’, ‘income’, data=df, orient=’v’, ax=ax3, palett
 gs.tight_layout(plt.gcf())
 ```</p>
 
+<h4 id="annotate">17. 使用注解(annotate)</h4>
+
+<p><code>py
+df.plot('Years', 'Hits', kind='scatter', color='orange', figsize=(7,6))
+plt.xlim(0,25)
+plt.ylim(ymin=-5)
+plt.xticks([1, 4.5, 24])
+plt.yticks([1, 117.5, 238])
+plt.vlines(4.5, ymin=-5, ymax=250)
+plt.hlines(117.5, xmin=4.5, xmax=25)
+plt.annotate('R1', xy=(2,117.5), fontsize='xx-large')
+plt.annotate('R2', xy=(11,60), fontsize='xx-large')
+plt.annotate('R3', xy=(11,170), fontsize='xx-large')
+</code></p>
+
 <h3 id="section-5">参考资料</h3>
 
 <ul>
@@ -416,177 +506,6 @@ df_x.replace(to_replace={0:'No', 1:'Yes', 'True':'Yes', 'False':'No'}, inplace=T
   <li>
     <p><a href="https://stackoverflow.com/questions/39283339/what-is-the-meaning-of-axis-attribute-in-a-pandas-dataframe">What is the meaning of “axis” attribute in a Pandas DataFrame?</a></p>
   </li>
-</ul>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[单纯形法介绍和Python代码实现]]></title>
-    <link href="http://isunix.github.io/blog/2020/11/30/dan-chun-xing-fa-jie-shao-he-pythondai-ma-shi-xian/"/>
-    <updated>2020-11-30T09:31:44+08:00</updated>
-    <id>http://isunix.github.io/blog/2020/11/30/dan-chun-xing-fa-jie-shao-he-pythondai-ma-shi-xian</id>
-    <content type="html"><![CDATA[<h1 id="section">参考链接:</h1>
-<ul>
-  <li><a href="https://zhuanlan.zhihu.com/p/31644892">简单理解线性规划的单纯形算法</a></li>
-  <li><a href="https://jeremykun.com/2014/06/02/linear-programming-and-the-most-affordable-healthy-diet-part-1/">Linear Programming and Healthy Diets
-</a></li>
-  <li><a href="https://jeremykun.com/2014/12/01/linear-programming-and-the-simplex-algorithm/">Linear Programming and the Simplex Algorithm
-</a></li>
-</ul>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[文本主题挖掘浅尝辄止]]></title>
-    <link href="http://isunix.github.io/blog/2020/11/24/wen-ben-zhu-ti-wa-jue-qian-chang-zhe-zhi/"/>
-    <updated>2020-11-24T17:32:37+08:00</updated>
-    <id>http://isunix.github.io/blog/2020/11/24/wen-ben-zhu-ti-wa-jue-qian-chang-zhe-zhi</id>
-    <content type="html"><![CDATA[<h2 id="section">关键词:</h2>
-
-<p><code>向量</code>, <code>分布</code>, <code>期望</code>, <code>隐含狄利克雷分布</code>, <code>贝叶斯模型</code>, <code>先验分布</code>, <code>似然</code>, <code>后验分布</code>, <code>二项分布</code>, <code>Beta分布</code>, <code>Gamma函数</code>, <code>多项分布</code>, <code>Dirichlet 分布</code>, <code>文档</code>, <code>词</code>, <code>主题</code>, <code>超参数</code>, <code>Gibbs采样</code>, <code>变分推断EM</code>, <code>联合分布</code>, <code>条件分布</code>, <code>状态转移矩阵</code>, <code>马尔科夫链</code>, <code>平稳</code>, <code>二维正态分布</code>,  <code>变分推断</code>, <code>EM算法</code>, <code>KL散度</code>, <code>KL距离</code>, <code>交叉熵</code>, <code>变分分布</code>, <code>Jensen不等式</code>, <code>凸函数</code>, <code>正则</code>, <code>分词</code>, <code>bow(bag of word)</code>, <code>相似度度量</code></p>
-
-<h2 id="section-1">代码:</h2>
-
-<p>```python
-import re
-import sys
-import jieba</p>
-
-<p>user_dict_file = “my_dict_watch_77.csv”
-jieba.load_userdict(user_dict_file)</p>
-
-<p>stop_words_file = “hit_stopwords.txt”
-stopwords = open(stop_words_file, ‘r’, encoding = ‘utf8’).readlines()
-stopwords = [w.strip() for w in stopwords]</p>
-
-<p>file_to_process = “watch_77.csv”</p>
-
-<p>def word_cut(input_file):
-    result_arr = []</p>
-
-<pre><code>with open(file_to_process, 'r') as f:
-for line in f.readlines():
-    line = line.strip()
-    if len(line) &lt; 3:
-        continue
-
-    out_str = ""
-    re_chinese = re.compile(u"[\u4e00-\u9fa5]+")
-    w = re.sub(r'[A-Za-z0-9]|\d+', '', str(line)) # removed chars, but what about "app"? 
-    seg_list = jieba.lcut(w, cut_all=False)
-
-    for word in seg_list:
-        if word not in stopwords and word != '\t' and re_chinese.search(word, 0) and len(word.strip()) &gt;= 2:
-            out_str += word
-            out_str += " "
-
-    result_arr.append(out_str.strip().split(" "))
-return result_arr
-</code></pre>
-
-<p>seg_out_file = “out_file_20201124.txt”
-result_arr = word_cut(file_to_process)</p>
-
-<p>with open(seg_out_file, ‘w’,encoding = ‘utf-8’) as file:
-        file.write(str(result_arr))</p>
-
-<p>from jieba import analyse
-tfidf = analyse.extract_tags</p>
-
-<p>with open(seg_out_file, ‘r’, encoding=’utf-8’) as file:
-    texts = file.readlines()</p>
-
-<p>keywords = jieba.analyse.extract_tags(str(texts),
-                                      topK=150,
-                                      withWeight=True,
-                                      allowPOS=(‘nr’, ‘ns’, ‘nt’, ‘nz’, ‘n’, ‘vn’, ‘v’))
-for item in keywords:
-    print(item)</p>
-
-<p>from gensim import corpora, models, similarities
-from gensim.models import LdaModel
-from gensim.corpora import Dictionary
-import pyLDAvis
-import pyLDAvis.gensim</p>
-
-<p>dictionary = corpora.Dictionary(result_arr)
-corpus = [dictionary.doc2bow(text) for text in result_arr]</p>
-
-<p>lda = LdaModel(corpus=corpus, id2word=dictionary, num_topics=10)
-lda.print_topics(2)</p>
-
-<p>vis_data = pyLDAvis.gensim.prepare(lda, corpus, dictionary)
-pyLDAvis.display(vis_data)
-```</p>
-
-<h2 id="section-2">参考:</h2>
-<ul>
-  <li><a href="https://en.wikipedia.org/wiki/Latent_Dirichlet_allocation">LDA wiki</a></li>
-  <li><a href="https://juejin.cn/post/6844904094771970056">文本挖掘之LDA主题模型</a></li>
-  <li><a href="https://scikit-learn.org/dev/auto_examples/applications/plot_topics_extraction_with_nmf_lda.html#sphx-glr-auto-examples-applications-plot-topics-extraction-with-nmf-lda-py">LDA sk-learn</a></li>
-  <li><a href="https://github.com/Nitro/scalda">LDA Scala</a></li>
-  <li><a href="https://github.com/XiaoMi/MiNLP/tree/main/minlp-tokenizer">MiNLP-Tokenizer</a></li>
-  <li><a href="https://www.cnblogs.com/pinard/p/6831308.html">文本主题模型之LDA(一) LDA基础： 刘建平</a></li>
-  <li><a href="https://zhuanlan.zhihu.com/p/263065290">文本主题模型之LDA</a></li>
-  <li><a href="https://github.com/isnowfy/snownlp">snownlp</a></li>
-  <li><a href="https://www.cnblogs.com/Luv-GEM/p/10881838.html">文本主题抽取：用gensim训练LDA模型</a></li>
-  <li><a href="https://github.com/fxsjy/jieba">jieba</a></li>
-  <li><a href="https://github.com/lancopku/pkuseg-python">pkuseg-python</a></li>
-  <li><a href="https://github.com/kimmy-sil/Python-beginning-practice">中文分词处理</a></li>
-  <li><a href="https://blog.csdn.net/qq_16633405/article/details/80578804">Doc2Bow简介与实践Demo</a></li>
-  <li><a href="https://www.analyticsvidhya.com/blog/2016/08/beginners-guide-to-topic-modeling-in-python/">Beginners Guide to Topic Modeling in Python</a></li>
-  <li><a href="https://blog.csdn.net/selinda001/article/details/80446766">主题模型 LDA 入门（附 Python 代码）</a></li>
-  <li><a href="https://github.com/goto456/stopwords">中文常用停用词表</a></li>
-  <li><a href="https://towardsdatascience.com/topic-modeling-and-latent-dirichlet-allocation-in-python-9bf156893c24">Topic Modeling and Latent Dirichlet Allocation (LDA) in Python</a></li>
-  <li><a href="https://blog.csdn.net/vs412237401/article/details/52238248">用docsim/doc2vec/LSH比较两个文档之间的相似度</a></li>
-  <li><a href="https://github.com/amueller/word_cloud">wordcloud</a></li>
-  <li><a href="https://github.com/bmabey/pyLDAvis">pyLDAvis</a></li>
-  <li><a href="https://blog.csdn.net/v\_july\_v/article/details/41209515">通俗理解LDA主题模型
-</a></li>
-  <li><a href="https://www.eecis.udel.edu/\~shatkay/Course/papers/UIntrotoTopicModelsBlei2011-5.pdf">Introduction to Probabilistic Topic Models
-</a></li>
-  <li><a href="https://github.com/nkhuyu/python-LDA">python-LDA Git Code</a></li>
-</ul>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[SparkSQL入门和进阶]]></title>
-    <link href="http://isunix.github.io/blog/2020/11/20/sparksqlru-men-he-jin-jie/"/>
-    <updated>2020-11-20T22:08:55+08:00</updated>
-    <id>http://isunix.github.io/blog/2020/11/20/sparksqlru-men-he-jin-jie</id>
-    <content type="html"><![CDATA[<h2 id="section">常用的函数：</h2>
-
-<p><code>select</code>、<code>lit</code>、<code>as</code>、<code>groupBy</code>、<code>agg</code>、<code>sum</code>、<code>as</code>、<code>where</code>、<code>withColumn</code>、 <code>col</code>、 <code>when</code>、 <code>otherwise</code>、 <code>join</code>、<code>withColumnRenamed</code>、 <code>isin</code>、 <code>cast</code>、 <code>$</code>、 <code>union</code>、 <code>gt</code>、 <code>struct</code>、<code>sort</code>、<code>desc</code>、<code>show</code>、<code>orderBy</code>、<code>asc</code>、<code>repartition</code>、<code>sortWithinPartitions</code>、<code>filter</code>、<code>selectExpr</code>、<code>pivot</code>、<code>expr</code>、<code>row_number</code>、<code>over</code>、 <code>partitionBy</code></p>
-
-<p>```scala
-df
-.select($”id”,lit(1).as(“cnt”)) 
-.groupBy(“idd”) 
-.agg(sum(“cnt”).as(“total”))
-.where(“total &gt;=” + cnt2) 
-.select(“uid”,”total”)</p>
-
-<p>```</p>
-
-<h2 id="udf">UDF：</h2>
-
-<p><code>spark.udf.register
-</code></p>
-
-<h2 id="section-1">参考链接:</h2>
-<ul>
-  <li><a href="https://blog.csdn.net/weixin_40652340/article/details/79207455">SparkSQL DSL开发
-</a></li>
-  <li><a href="http://spark.apache.org/docs/latest/api/scala/org/apache/spark/sql/Column.html">Column</a></li>
-  <li><a href="http://spark.apache.org/docs/latest/api/scala/org/apache/spark/sql/Dataset.html">Dataset</a></li>
-  <li><a href="http://spark.apache.org/docs/latest/api/scala/org/apache/spark/sql/functions\$.html">functions</a></li>
-  <li><a href="http://spark.apache.org/docs/latest/api/scala/org/apache/spark/sql/index.html\#DataFrame=org.apache.spark.sql.Dataset\[org.apache.spark.sql.Row\]">sql</a></li>
-  <li><a href="https://spark.apache.org/docs/latest/sql-ref-functions-udf-scalar.html">Scalar User Defined Functions (UDFs)
-</a></li>
-  <li><a href="https://www.cnblogs.com/Diyo/p/11410895.html">SparkSQL DSL 随便写写</a></li>
-  <li><a href="https://blog.csdn.net/weixin_42419342/article/details/108918139?utm_medium=distribute.pc_aggpage_search_result.none-task-blog-2~all~sobaiduend\~default-2-108918139.nonecase&amp;utm_term=sparksql中dsl&amp;spm=1000.2123.3001.4430">SparkSQL案例——用SQL和DSL两种语法格式，求出用户连续登录天数
-</a></li>
 </ul>
 ]]></content>
   </entry>

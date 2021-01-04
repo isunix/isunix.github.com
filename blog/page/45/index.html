@@ -9,8 +9,17 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="Here below is the one-liner I found to remove a blank line in a file. 1
-perl -pi -e &#39;s!^\s+?$!!&#39; file.txt ">
+  <meta name="description" content="1.要求用户输入人名， 打印出对应的item. 1
+2
+3
+4
+5
+6
+7
+8
+9
+my %last_name = qw{ fred flintstone barney rubble wilma flintstone
+}; print &quot;please enter a first name &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -100,7 +109,7 @@ perl -pi -e &#39;s!^\s+?$!!&#39; file.txt ">
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/07/24/perl-one-liner-to-remove-blank-lines/">Perl One-liner to Remove Blank Lines</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/07/18/use-examples-regarding-hash-in-perl/">Use Examples Regarding Hash in Perl</a></h1>
     
     
       <p class="meta">
@@ -116,17 +125,66 @@ perl -pi -e &#39;s!^\s+?$!!&#39; file.txt ">
   
 
 
-<time datetime="2014-07-24T15:05:16+08:00" pubdate data-updated="true">2014 年7 月24 日</time>
+<time datetime="2014-07-18T19:18:44+08:00" pubdate data-updated="true">2014 年7 月18 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>Here below is the one-liner I found to remove a blank line in a file.   </p>
+  <div class="entry-content"><p>1.要求用户输入人名， 打印出对应的item.</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">perl</span> <span class="o">-</span><span class="n">pi</span> <span class="o">-</span><span class="n">e</span> <span class="s">&#39;s!^\s+?$!!&#39;</span> <span class="n">file</span><span class="o">.</span><span class="n">txt</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">%last_name</span> <span class="o">=</span> <span class="sx">qw{</span>
+</span><span class="line"><span class="sx">    fred flintstone</span>
+</span><span class="line"><span class="sx">    barney rubble</span>
+</span><span class="line"><span class="sx">    wilma flintstone</span>
+</span><span class="line"><span class="sx">}</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;please enter a first name: &quot;</span><span class="p">;</span>
+</span><span class="line"><span class="nb">chomp</span><span class="p">(</span><span class="k">my</span> <span class="nv">$name</span> <span class="o">=</span> <span class="sr">&lt;STDIN&gt;</span><span class="p">);</span>
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;that&#39;s $name $last_name{$name}.\n&quot;</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>这是一个很典型的标准用法了。  </p>
+
+<p>2.要求用户进行几行输入，然后统计频数.   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="n">strict</span><span class="p">;</span>
+</span><span class="line"><span class="k">use</span> <span class="n">warnings</span><span class="p">;</span>
+</span><span class="line"><span class="k">use</span> <span class="n">utf8</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">my</span> <span class="p">(</span><span class="nv">@words</span><span class="p">,</span> <span class="nv">%count</span><span class="p">,</span> <span class="nv">$word</span><span class="p">);</span>
+</span><span class="line"><span class="nb">chomp</span><span class="p">(</span><span class="nv">@words</span> <span class="o">=</span> <span class="sr">&lt;STDIN&gt;</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="k">foreach</span> <span class="nv">$word</span> <span class="p">(</span><span class="nv">@words</span><span class="p">){</span>
+</span><span class="line">    <span class="nv">$count</span><span class="p">{</span><span class="nv">$word</span><span class="p">}</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="k">foreach</span> <span class="nv">$word</span> <span class="p">(</span><span class="nb">keys</span> <span class="nv">%count</span><span class="p">){</span>
+</span><span class="line">    <span class="k">print</span> <span class="s">&quot;$word was seen $count{$word} times.\n&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 </div>
   
@@ -140,7 +198,7 @@ perl -pi -e &#39;s!^\s+?$!!&#39; file.txt ">
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/07/21/perl-script-to-comiple-c-slash-cpp-files-conveniently/">Perl Script to Comiple C/cpp Files Conveniently</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/07/18/notes-on-tail-recursion-using-c/">Notes on Tail Recursion Using C</a></h1>
     
     
       <p class="meta">
@@ -156,30 +214,60 @@ perl -pi -e &#39;s!^\s+?$!!&#39; file.txt ">
   
 
 
-<time datetime="2014-07-21T21:31:33+08:00" pubdate data-updated="true">2014 年7 月21 日</time>
+<time datetime="2014-07-18T13:50:41+08:00" pubdate data-updated="true">2014 年7 月18 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>我自己在编译c还有c++文件的时候， 总感觉每次都得敲像下面这种格式的一串字符， 感觉很麻烦的。   </p>
+  <div class="entry-content"><p>还是先上一段递归的c代码吧:  </p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="n">gcc</span> <span class="o">-</span><span class="n">o</span> <span class="n">hello</span> <span class="n">hello</span><span class="p">.</span><span class="n">c</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="cp">#include &lt;stdlib.h&gt;</span>
+</span><span class="line"><span class="cp">#include &lt;stdio.h&gt;</span>
+</span><span class="line">
+</span><span class="line"><span class="kt">int</span> <span class="nf">FibonacciRecursive</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">){</span>
+</span><span class="line">  <span class="k">if</span><span class="p">(</span><span class="n">n</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">){</span>
+</span><span class="line">    <span class="k">return</span> <span class="n">n</span><span class="p">;</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line">  <span class="k">return</span> <span class="p">(</span><span class="n">FibonacciRecursive</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">FibonacciRecursive</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">));</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+</span><span class="line">  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Fibonacci number till 6 is: %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">FibonacciRecursive</span><span class="p">(</span><span class="mi">6</span><span class="p">));</span>
+</span><span class="line"><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>所以就有了现在的这个脚本。使用方法很简单，想上面这个hello.c的文件，我们只要发出下面的命令:    </p>
+<p>而所谓的尾递归就是把当前的运算结果（或路径）放在参数里传给下层函数, 采用尾递归的算法示例如下:   </p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="n">cpl</span> <span class="n">hello</span><span class="p">.</span><span class="n">c</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="kt">int</span> <span class="nf">FibonacciTailRecursive</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="kt">int</span> <span class="n">ret1</span><span class="p">,</span> <span class="kt">int</span> <span class="n">ret2</span><span class="p">){</span>
+</span><span class="line">  <span class="k">if</span><span class="p">(</span><span class="n">n</span><span class="o">==</span><span class="mi">0</span><span class="p">){</span>
+</span><span class="line">    <span class="k">return</span> <span class="n">ret1</span><span class="p">;</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line">  <span class="k">return</span> <span class="n">FibonacciTailRecursive</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">ret2</span><span class="p">,</span> <span class="n">ret1</span> <span class="o">+</span> <span class="n">ret2</span><span class="p">);</span>
+</span><span class="line"><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>就可以编译出来一个去掉以原来的文件名去掉ext的文件。  </p>
-
-<p>很简单吧！哈哈！  </p>
-
-<p>下面给出来代码， 还是继续把doc写进去的那种。</p>
+<p>一下是一个在别人的博客中看到的利用递归还有尾递归来求单链表的长度的例子。 </p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
@@ -225,50 +313,94 @@ perl -pi -e &#39;s!^\s+?$!!&#39; file.txt ">
 <span class="line-number">42</span>
 <span class="line-number">43</span>
 <span class="line-number">44</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="mf">5.010</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="n">strict</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="n">warnings</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="n">utf8</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="n">Cwd</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="nn">File::</span><span class="n">Basename</span><span class="p">;</span>
+<span class="line-number">45</span>
+<span class="line-number">46</span>
+<span class="line-number">47</span>
+<span class="line-number">48</span>
+<span class="line-number">49</span>
+<span class="line-number">50</span>
+<span class="line-number">51</span>
+<span class="line-number">52</span>
+<span class="line-number">53</span>
+<span class="line-number">54</span>
+<span class="line-number">55</span>
+<span class="line-number">56</span>
+<span class="line-number">57</span>
+<span class="line-number">58</span>
+<span class="line-number">59</span>
+<span class="line-number">60</span>
+<span class="line-number">61</span>
+<span class="line-number">62</span>
+<span class="line-number">63</span>
+<span class="line-number">64</span>
+<span class="line-number">65</span>
+<span class="line-number">66</span>
+</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="cp">#include &lt;stdlib.h&gt;</span>
+</span><span class="line"><span class="cp">#include &lt;stdio.h&gt;</span>
 </span><span class="line">
-</span><span class="line"><span class="k">my</span> <span class="nv">$currentDir</span> <span class="o">=</span> <span class="n">getcwd</span><span class="p">;</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">$file</span> <span class="o">=</span> <span class="nv">$ARGV</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">$fullpath</span> <span class="o">=</span> <span class="s">&quot;$currentDir/$file&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">@suffix_list</span> <span class="o">=</span> <span class="sx">qw(.cpp .c)</span><span class="p">;</span>
+</span><span class="line"><span class="k">typedef</span> <span class="k">struct</span> <span class="n">node</span><span class="p">{</span>
+</span><span class="line">  <span class="kt">int</span> <span class="n">data</span><span class="p">;</span>
+</span><span class="line">  <span class="k">struct</span> <span class="n">node</span><span class="o">*</span> <span class="n">next</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span><span class="n">node</span><span class="p">,</span> <span class="o">*</span><span class="n">linklist</span><span class="p">;</span>
 </span><span class="line">
-</span><span class="line"><span class="k">my</span> <span class="p">(</span><span class="nv">$name</span><span class="p">,</span> <span class="nv">$dir</span><span class="p">,</span> <span class="nv">$ext</span><span class="p">)</span> <span class="o">=</span> <span class="n">fileparse</span><span class="p">(</span><span class="nv">$file</span><span class="p">,</span> <span class="nv">@suffix_list</span><span class="p">);</span>
-</span><span class="line"><span class="n">given</span><span class="p">(</span><span class="nv">$ext</span><span class="p">){</span>
-</span><span class="line">
-</span><span class="line">    <span class="n">when</span><span class="p">(</span><span class="s">&quot;.c&quot;</span><span class="p">){</span>
-</span><span class="line">        <span class="k">my</span> <span class="nv">$compile_c</span> <span class="o">=</span> <span class="s">&quot;gcc -o $name $file&quot;</span><span class="p">;</span>
-</span><span class="line">        <span class="nb">system</span><span class="p">(</span><span class="nv">$compile_c</span><span class="p">);</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">
-</span><span class="line">    <span class="n">when</span><span class="p">(</span><span class="s">&quot;.cpp&quot;</span><span class="p">){</span>
-</span><span class="line">        <span class="k">my</span> <span class="nv">$compile_cpp</span> <span class="o">=</span> <span class="s">&quot;g++ -o $name $file&quot;</span><span class="p">;</span>
-</span><span class="line">        <span class="nb">system</span><span class="p">(</span><span class="nv">$compile_cpp</span><span class="p">);</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">
-</span><span class="line">    <span class="n">default</span><span class="p">{</span>
-</span><span class="line">        <span class="n">say</span> <span class="s">&quot;$file is of an type not compilable!&quot;</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span>
+</span><span class="line"><span class="kt">void</span> <span class="nf">InitLinklist</span><span class="p">(</span><span class="n">linklist</span><span class="o">*</span> <span class="n">head</span><span class="p">){</span>
+</span><span class="line">  <span class="k">if</span><span class="p">(</span><span class="o">*</span><span class="n">head</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">){</span>
+</span><span class="line">    <span class="n">free</span><span class="p">(</span><span class="o">*</span><span class="n">head</span><span class="p">);</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line">  <span class="o">*</span><span class="n">head</span> <span class="o">=</span> <span class="p">(</span><span class="n">node</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">node</span><span class="p">));</span>
+</span><span class="line">  <span class="p">(</span><span class="o">*</span><span class="n">head</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
 </span><span class="line"><span class="p">}</span>
 </span><span class="line">
-</span><span class="line"><span class="cp">__END__</span>
-</span><span class="line"><span class="cp">=pod</span>
+</span><span class="line"><span class="kt">void</span> <span class="nf">InsertNode</span><span class="p">(</span><span class="n">linklist</span><span class="o">*</span> <span class="n">head</span><span class="p">,</span> <span class="kt">int</span> <span class="n">d</span><span class="p">){</span>
+</span><span class="line">  <span class="n">node</span><span class="o">*</span> <span class="n">newNode</span> <span class="o">=</span> <span class="p">(</span><span class="n">node</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">node</span><span class="p">));</span>
+</span><span class="line">  <span class="n">newNode</span><span class="o">-&gt;</span><span class="n">data</span> <span class="o">=</span> <span class="n">d</span><span class="p">;</span>
+</span><span class="line">  <span class="n">newNode</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">head</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+</span><span class="line">  <span class="p">(</span><span class="o">*</span><span class="n">head</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="n">newNode</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
 </span><span class="line">
-</span><span class="line"><span class="cp">=head1 NAME</span>
+</span><span class="line"><span class="c1">//using recursion to get the length of the linklist;</span>
+</span><span class="line"><span class="kt">int</span> <span class="nf">GetLengthRecursive</span><span class="p">(</span><span class="n">linklist</span> <span class="n">head</span><span class="p">){</span>
+</span><span class="line">  <span class="k">if</span><span class="p">(</span><span class="n">head</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">){</span>
+</span><span class="line">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line">  <span class="k">return</span> <span class="p">(</span><span class="n">GetLengthRecursive</span><span class="p">(</span><span class="n">head</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+</span><span class="line"><span class="p">}</span>
 </span><span class="line">
-</span><span class="line"><span class="cp">cpl</span>
+</span><span class="line"><span class="c1">//using tail recursive to get the length of a linklist,</span>
+</span><span class="line"><span class="c1">//with the help of the variable &quot;acc&quot; to store the length of the current linklist, increment it</span>
 </span><span class="line">
-</span><span class="line"><span class="cp">=head1 SYNOPSIS</span>
-</span><span class="line"><span class="cp">    $ cpl filename</span>
+</span><span class="line"><span class="kt">int</span> <span class="nf">GetLengthTailRecursive</span><span class="p">(</span><span class="n">linklist</span> <span class="n">head</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">acc</span><span class="p">){</span>
+</span><span class="line">  <span class="k">if</span><span class="p">(</span><span class="n">head</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">){</span>
+</span><span class="line">    <span class="k">return</span> <span class="o">*</span><span class="n">acc</span><span class="p">;</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line">  <span class="o">*</span><span class="n">acc</span> <span class="o">=</span> <span class="o">*</span><span class="n">acc</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class="line">  <span class="k">return</span> <span class="n">GetLengthTailRecursive</span><span class="p">(</span><span class="n">head</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">,</span> <span class="n">acc</span><span class="p">);</span>
+</span><span class="line"><span class="p">}</span>
 </span><span class="line">
-</span><span class="line"><span class="cp">cpl --use gcc/g++ to compile a file with c/cpp extension. Usually we will do things like &quot;gcc -o hello hello.c&quot;, but with this scipt, we can just issue command like this, &quot;gcp hello.c&quot;;</span>
+</span><span class="line"><span class="kt">void</span> <span class="nf">PrintLinklist</span><span class="p">(</span><span class="n">linklist</span> <span class="n">head</span><span class="p">){</span>
+</span><span class="line">  <span class="n">node</span><span class="o">*</span> <span class="n">pnode</span> <span class="o">=</span> <span class="n">head</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+</span><span class="line">  <span class="k">while</span><span class="p">(</span><span class="n">pnode</span><span class="p">){</span>
+</span><span class="line">    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d-&gt;&quot;</span><span class="p">,</span> <span class="n">pnode</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">);</span>
+</span><span class="line">    <span class="n">pnode</span> <span class="o">=</span> <span class="n">pnode</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line">  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;-&gt;NULL</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class="line"><span class="p">}</span>
 </span><span class="line">
-</span><span class="line"><span class="cp">Thanks,</span>
-</span><span class="line"><span class="cp">Steven</span>
+</span><span class="line"><span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+</span><span class="line">  <span class="n">linklist</span> <span class="n">head</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span><span class="line">  <span class="kt">int</span> <span class="n">len</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line">  <span class="n">InitLinklist</span><span class="p">(</span><span class="o">&amp;</span><span class="n">head</span><span class="p">);</span>
+</span><span class="line">  <span class="n">InsertNode</span><span class="p">(</span><span class="o">&amp;</span><span class="n">head</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+</span><span class="line">  <span class="n">InsertNode</span><span class="p">(</span><span class="o">&amp;</span><span class="n">head</span><span class="p">,</span> <span class="mi">21</span><span class="p">);</span>
+</span><span class="line">  <span class="n">InsertNode</span><span class="p">(</span><span class="o">&amp;</span><span class="n">head</span><span class="p">,</span> <span class="mi">14</span><span class="p">);</span>
+</span><span class="line">  <span class="n">InsertNode</span><span class="p">(</span><span class="o">&amp;</span><span class="n">head</span><span class="p">,</span> <span class="mi">19</span><span class="p">);</span>
+</span><span class="line">  <span class="n">InsertNode</span><span class="p">(</span><span class="o">&amp;</span><span class="n">head</span><span class="p">,</span> <span class="mi">132</span><span class="p">);</span>
+</span><span class="line">  <span class="n">InsertNode</span><span class="p">(</span><span class="o">&amp;</span><span class="n">head</span><span class="p">,</span> <span class="mi">192</span><span class="p">);</span>
+</span><span class="line">  <span class="n">PrintLinklist</span><span class="p">(</span><span class="n">head</span><span class="p">);</span>
+</span><span class="line">  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;The length of linklist is: %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">GetLengthRecursive</span><span class="p">(</span><span class="n">head</span><span class="p">));</span>
+</span><span class="line">  <span class="n">GetLengthTailRecursive</span><span class="p">(</span><span class="n">head</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">len</span><span class="p">);</span>
+</span><span class="line">  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;the length of linklist is: %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">len</span><span class="p">);</span>
+</span><span class="line"><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 </div>
   
@@ -282,7 +414,7 @@ perl -pi -e &#39;s!^\s+?$!!&#39; file.txt ">
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/07/21/perl-script-to-delete-files-without-extension/">Perl Script to Delete Files Without Extension</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/07/17/interesting-use-of-state-in-perl/">Interesting Use of State in Perl</a></h1>
     
     
       <p class="meta">
@@ -298,14 +430,63 @@ perl -pi -e &#39;s!^\s+?$!!&#39; file.txt ">
   
 
 
-<time datetime="2014-07-21T18:18:34+08:00" pubdate data-updated="true">2014 年7 月21 日</time>
+<time datetime="2014-07-17T18:48:44+08:00" pubdate data-updated="true">2014 年7 月17 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>I want to delete those files without the extension I need, so I just write this perl script. The directory can also be specified on the command line. I list all those extensions I need as a pattern.</p>
+  <div class="entry-content"><p>还是来自«learning perl»中的例子。</p>
+
+<ol>
+  <li>写一个名为greet的子例程，当给定一个人名作为参数的时候，打出欢迎他的信息，并告诉他前一个来宾的名字。  </li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="mf">5.010</span><span class="p">;</span>
+</span><span class="line"><span class="n">greet</span><span class="p">(</span><span class="s">&#39;Fred&#39;</span><span class="p">);</span>
+</span><span class="line"><span class="n">greet</span><span class="p">(</span><span class="s">&#39;Barney&#39;</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="k">sub </span><span class="nf">greet</span><span class="p">{</span>
+</span><span class="line">    <span class="n">state</span> <span class="nv">$last_person</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">my</span> <span class="nv">$name</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">print</span> <span class="s">&quot;Hi, $name!&quot;</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="nb">defined</span> <span class="nv">$last_person</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">        <span class="k">print</span> <span class="s">&quot;$last_person is also here!\n&quot;</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">else</span> <span class="p">{</span>
+</span><span class="line">        <span class="k">print</span> <span class="s">&quot;you are the first one here!\n&quot;</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">    <span class="nv">$last_person</span> <span class="o">=</span> <span class="nv">$name</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>2.修改程序1， 告诉所有新来的人之前已经迎来了哪些人.   </p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
@@ -330,72 +511,30 @@ perl -pi -e &#39;s!^\s+?$!!&#39; file.txt ">
 <span class="line-number">21</span>
 <span class="line-number">22</span>
 <span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-<span class="line-number">28</span>
-<span class="line-number">29</span>
-<span class="line-number">30</span>
-<span class="line-number">31</span>
-<span class="line-number">32</span>
-<span class="line-number">33</span>
-<span class="line-number">34</span>
-<span class="line-number">35</span>
-<span class="line-number">36</span>
-<span class="line-number">37</span>
-<span class="line-number">38</span>
-<span class="line-number">39</span>
-<span class="line-number">40</span>
-<span class="line-number">41</span>
-<span class="line-number">42</span>
-<span class="line-number">43</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="n">strict</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="n">warnings</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="n">utf8</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="n">Cwd</span><span class="p">;</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="nn">Data::</span><span class="n">Dumper</span><span class="p">;</span>
+</span><span class="line"><span class="k">use</span> <span class="mf">5.010</span><span class="p">;</span>
 </span><span class="line">
-</span><span class="line"><span class="k">my</span> <span class="nv">$targetDir</span> <span class="o">=</span> <span class="nv">$ARGV</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">||</span> <span class="n">getcwd</span><span class="p">;</span>
-</span><span class="line"><span class="nb">chdir</span> <span class="nv">$targetDir</span><span class="p">;</span>
+</span><span class="line"><span class="n">greet</span><span class="p">(</span><span class="s">&#39;Fred&#39;</span><span class="p">);</span>
+</span><span class="line"><span class="n">greet</span><span class="p">(</span><span class="s">&#39;Barney&#39;</span><span class="p">);</span>
+</span><span class="line"><span class="n">greet</span><span class="p">(</span><span class="s">&#39;Wilma&#39;</span><span class="p">);</span>
+</span><span class="line"><span class="n">greet</span><span class="p">(</span><span class="s">&#39;Betty&#39;</span><span class="p">);</span>
 </span><span class="line">
-</span><span class="line"><span class="k">my</span> <span class="nv">$pattern</span> <span class="o">=</span> <span class="sx">qr/\.(md|py|php|sh|bash|zsh|vimrc|eamcs|c|cpp|java|pl|js|css|html|rb|txt)$/</span><span class="n">i</span><span class="p">,</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">@file_list</span><span class="p">;</span>
+</span><span class="line"><span class="k">sub </span><span class="nf">greet</span><span class="p">{</span>
+</span><span class="line">    <span class="n">state</span> <span class="nv">@before</span><span class="p">;</span>
 </span><span class="line">
+</span><span class="line">    <span class="k">my</span> <span class="nv">$name</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
+</span><span class="line">    <span class="k">print</span> <span class="s">&quot;Hi, $name!&quot;</span><span class="p">;</span>
 </span><span class="line">
-</span><span class="line"><span class="nb">opendir</span><span class="p">(</span><span class="k">my</span> <span class="nv">$dh</span><span class="p">,</span> <span class="nv">$targetDir</span><span class="p">)</span> <span class="o">||</span> <span class="nb">die</span> <span class="s">&quot;can&#39;t opendir $targetDir: $!&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="k">while</span> <span class="p">(</span><span class="nb">readdir</span> <span class="nv">$dh</span><span class="p">){</span>
-</span><span class="line">    <span class="k">next</span> <span class="k">unless</span> <span class="o">-</span><span class="n">f</span><span class="p">;</span>
-</span><span class="line">    <span class="k">next</span> <span class="k">if</span> <span class="nv">$_</span> <span class="o">=~</span> <span class="nv">$pattern</span><span class="p">;</span>
-</span><span class="line">    <span class="nb">push</span> <span class="nv">@file_list</span><span class="p">,</span> <span class="nv">$_</span><span class="p">;</span>
+</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="nv">@before</span><span class="p">){</span>
+</span><span class="line">        <span class="k">print</span> <span class="s">&quot; I have seen @before\n&quot;</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">    <span class="k">else</span> <span class="p">{</span>
+</span><span class="line">        <span class="k">print</span> <span class="s">&quot; you are the first one here!\n&quot;</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">    <span class="nb">push</span> <span class="nv">@before</span><span class="p">,</span> <span class="nv">$name</span><span class="p">;</span>
 </span><span class="line"><span class="p">}</span>
-</span><span class="line"><span class="nb">closedir</span> <span class="nv">$dh</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">print</span> <span class="s">&quot;The following files are going to be deleted: @file_list\n&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="nb">unlink</span> <span class="nv">@file_list</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="cp">__END__</span>
-</span><span class="line"><span class="cp">=pod</span>
-</span><span class="line">
-</span><span class="line"><span class="cp">=head1 NAME</span>
-</span><span class="line">
-</span><span class="line"><span class="cp">delete-files.pl -delete those files without the extension as specifed in the pattern</span>
-</span><span class="line">
-</span><span class="line"><span class="cp">=head1 SYNOPSIS</span>
-</span><span class="line">
-</span><span class="line"><span class="cp">    $ delete-files</span>
-</span><span class="line"><span class="cp">It reads the files in the directory where you execute this script, and delete those</span>
-</span><span class="line"><span class="cp">not having the extension as is specified &quot;(md|py|php|sh|bash|zsh|vimrc|eamcs|c|cpp|java|pl|js|css|html|rb|txt)&quot;</span>
-</span><span class="line">
-</span><span class="line"><span class="cp">Please use this script carefully. If you have somefile without extension which you also</span>
-</span><span class="line"><span class="cp">consider them important, they maybe deleted.</span>
-</span><span class="line">
-</span><span class="line"><span class="cp">Thanks,</span>
-</span><span class="line"><span class="cp">Steven</span>
-</span><span class="line">
-</span><span class="line"><span class="cp">=cut</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>I also wrote document for this scirpt. haha!</p>
 </div>
   
   
@@ -420,15 +559,7 @@ perl -pi -e &#39;s!^\s+?$!!&#39; file.txt ">
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2020/12/13/pu-ju-lei-jian-jie/">谱聚类简介</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2020/12/13/zhu-cheng-fen-fen-xi-pca-jian-jie/">主成分分析-PCA-简介</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2020/12/13/xian-xing-pan-bie-fen-xi-jian-jie/">线性判别分析简介</a>
+        <a href="/blog/2021/01/04/jupytershang-shi-yong-matplotlibhua-tu-de-%5B%3F%5D-xie-you-yong-de-she-zhi/">Jupyter上使用matplotlib画图的一些有用的设置</a>
       </li>
     
       <li class="post">
@@ -440,23 +571,31 @@ perl -pi -e &#39;s!^\s+?$!!&#39; file.txt ">
       </li>
     
       <li class="post">
-        <a href="/blog/2020/12/06/ti-du-xia-jiang-fa-he-niu-dun-fa/">梯度下降法和牛顿法</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2020/12/06/xian-xing-gui-hua-de-dui-ou-wen-ti/">线性规划的对偶问题</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2020/11/30/dan-chun-xing-fa-jie-shao-he-pythondai-ma-shi-xian/">单纯形法介绍和Python代码实现</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2020/11/24/wen-ben-zhu-ti-wa-jue-qian-chang-zhe-zhi/">文本主题挖掘浅尝辄止</a>
-      </li>
-    
-      <li class="post">
         <a href="/blog/2020/11/20/sparksqlru-men-he-jin-jie/">SparkSQL入门和进阶</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2020/02/16/gao-deng-shu-li-tong-ji-xue-qian-yan-zhai-lu/">高等数理统计学前言摘录</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/27/%5B%3F%5D-xie-guan-yu-rnnhe-lstmhe-grude-yue-du-cai-liao/">一些关于RNN和LSTM和GRU的阅读材料</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/27/ru-he-cha-kan-linuxzhong-de-nei-cun-zhan-yong-qing-kuang/">如何查看Linux中的内存占用情况</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/27/sparkzhong-pai-xu-shu-chu/">Spark中排序输出</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/14/data-science-at-the-command-line/">Data Science at the Command Line</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/14/gradient-boosting-algorithm/">Gradient Boosting Algorithm</a>
       </li>
     
   </ul>
@@ -469,7 +608,7 @@ perl -pi -e &#39;s!^\s+?$!!&#39; file.txt ">
 <li class='category'><a href='/blog/categories/bigdata/'>BigData (11)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (7)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
-<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (20)</a></li>
+<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (16)</a></li>
 <li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (5)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (2)</a></li>
 <li class='category'><a href='/blog/categories/javascript/'>Javascript (4)</a></li>
@@ -480,7 +619,6 @@ perl -pi -e &#39;s!^\s+?$!!&#39; file.txt ">
 <li class='category'><a href='/blog/categories/ruby/'>Ruby (1)</a></li>
 <li class='category'><a href='/blog/categories/scala/'>Scala (1)</a></li>
 <li class='category'><a href='/blog/categories/shell/'>Shell (12)</a></li>
-<li class='category'><a href='/blog/categories/yan-jiu-sheng/'>研究生 (2)</a></li>
 
   </ul>
 </section>
@@ -491,7 +629,7 @@ perl -pi -e &#39;s!^\s+?$!!&#39; file.txt ">
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2020 - Steven Sun -
+  Copyright &copy; 2021 - Steven Sun -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

@@ -9,9 +9,8 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="我们要想不每次手动输入密码来连接PostgreSQL, 可以在home目录创建一个pgpass文件touch ~/.pgpass.
-然后在里面输入如下的信息$host:$port:$db:$user:$password.
-这里的每个变量实际过程中替换成真实的值. &hellip;">
+  <meta name="description" content="I want to insert into a table with values from another table. and I want to use the follwing statements, 1
+insert into table table_a select * from &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -101,7 +100,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2019/05/23/zen-yang-wu-xu-shou-dong-shu-ru-mi-ma-lian-jie-postgresql/">怎样无需手动输入密码连接PostgreSQL</a></h1>
+      <h1 class="entry-title"><a href="/blog/2016/08/09/hive-insert-using-select-star/">Hive Insert Using Select *</a></h1>
     
     
       <p class="meta">
@@ -117,19 +116,38 @@
   
 
 
-<time datetime="2019-05-23T08:44:13+08:00" pubdate data-updated="true">2019 年5 月23 日</time>
+<time datetime="2016-08-09T09:34:49+08:00" pubdate data-updated="true">2016 年8 月9 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>我们要想不每次手动输入密码来连接PostgreSQL, 可以在home目录创建一个pgpass文件<code>touch ~/.pgpass</code>.
-然后在里面输入如下的信息<code>$host:$port:$db:$user:$password</code>.
-这里的每个变量实际过程中替换成真实的值.
-然后我们就可以使用如下的方式来进行psql的连接了<code>psql -h $host -p $port -U $user -d $db</code>.
-同理，这里的每个变量实际过程中替换成真实的值.</p>
+  <div class="entry-content"><p>I want to insert into a table with values from another table. and I want to use the follwing statements,</p>
 
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sql"><span class="line"><span class="k">insert</span> <span class="k">into</span> <span class="k">table</span> <span class="n">table_a</span> <span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="n">table_b</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Both table_a and table_b have the followig 3 fields, “name”, “age”, and the “load_day” field which is used to partition.</p>
+
+<p>If using the above syntax, we will get errors saying table has just 2 fields and table_b has 3.</p>
+
+<p>So one right way to insert the data is:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sql"><span class="line"><span class="k">insert</span> <span class="k">into</span> <span class="k">table</span> <span class="n">table_a</span><span class="p">(</span><span class="n">partition</span><span class="o">=</span><span class="ss">&quot;2016-08-01&quot;</span><span class="p">)</span> <span class="k">select</span> <span class="n">name</span><span class="p">,</span> <span class="n">age</span> <span class="k">from</span> <span class="n">table_b</span> <span class="k">where</span> <span class="n">load_day</span> <span class="o">=</span> <span class="ss">&quot;2016-08-01&quot;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>What if there are many fields, thus we will need to list them one by one after select which is very tedious.</p>
+
+<p>Here is the solution,</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="sql"><span class="line"><span class="k">set</span> <span class="n">hive</span><span class="p">.</span><span class="k">exec</span><span class="p">.</span><span class="k">dynamic</span><span class="p">.</span><span class="n">partition</span><span class="p">.</span><span class="k">mode</span><span class="o">=</span><span class="n">nonstrict</span><span class="p">;</span>
+</span><span class="line"><span class="k">insert</span> <span class="k">into</span> <span class="k">table</span> <span class="n">table_a</span> <span class="n">partition</span><span class="p">(</span><span class="n">load_day</span><span class="p">)</span> <span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="n">table_b</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 </div>
   
   
@@ -142,7 +160,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2019/05/22/shi-yong-rpman-zhuang-crontabming-ling-bei-wang/">使用rpm安装crontab命令备忘</a></h1>
+      <h1 class="entry-title"><a href="/blog/2016/08/04/copy-and-paste-spaces-separated-text-into-excel/">Copy and Paste Spaces Separated Text Into Excel</a></h1>
     
     
       <p class="meta">
@@ -158,58 +176,28 @@
   
 
 
-<time datetime="2019-05-22T16:36:21+08:00" pubdate data-updated="true">2019 年5 月22 日</time>
+<time datetime="2016-08-04T16:06:03+08:00" pubdate data-updated="true">2016 年8 月4 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>我这边有台ec2, 但是在yum update的时候，总是报错说依赖冲突，后来处理这个问题的时候，过于激进，导致yum不可以用了, 最后把rpm也删了</p>
+  <div class="entry-content"><p>最近经常需要把空格作为delimiter的文本粘贴到excel里。之前的做法是</p>
 
-<p>参考这篇文章
-<a href="https://blog.seosiwei.com/detail/27">https://blog.seosiwei.com/detail/27</a>
-里的方法2，把rpm和yum都删了然后重装了, 软件下载链接是
-<a href="http://mirrors.ustc.edu.cn/centos/6/os/x86_64/Packages/">http://mirrors.ustc.edu.cn/centos/6/os/x86_64/Packages/</a></p>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat aa.log | awk <span class="s1">&#39;{print $1}&#39;</span> | pbcopy
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>来一列一列地copy到excel里。甚是繁琐。 excel不会用的啊。</p>
 
-<p>安装好了之后，发现yum还是不能用，总是报错</p>
+<p>今天发现了原来还可以这么来操作。</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">liblzma.so.0: cannot open shared object file: No such file or directory</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>之类的信息</p>
+<ol>
+  <li>把整个文件的内容粘贴到excel里去</li>
+  <li>在excel中选中文件内容， 然后点击 Data-&gt;Text to Columns, 然后选择合适的delimiter去把文本内容给搞到excel中去。</li>
+</ol>
 
-<p>无可奈何，只好使用rpm了, 我这边需要使用crontab，于是从上面的软件库中下载了</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">cronie-1.4.4-16.el6_8.2.x86_64.rpm``` 和 ```crontabs-1.10-33.el6.noarch.rpm</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>然后执行如下的命令来安装</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">rpm -Uvh --replacepkgs --nodeps --force cron*.rpm</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>然后报各种依赖找不到的错误, 比如</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">librpmio.so.3 not found</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>之类的</p>
-
-<p>好在我们有别的ec2，我们可以去这个另外的ec2上找对应的依赖，然后copy到这个我们出问题的机器上</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">find / -name librpm.so.3 -type f</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>然后发现在/usr/lib64中，librpm.so.3是个软连接，指向/usr/lib64中的librpm.so.3.2.2, 我们把librpm.so.3.2.2copy到我们出问题的机器的/usr/lib64里，然后参照
-<a href="http://isunix.github.io/blog/2019/05/22/linuxming-ling-lnde-shi-yong-bei-wang/">http://isunix.github.io/blog/2019/05/22/linuxming-ling-lnde-shi-yong-bei-wang/</a>
-中的方式来做个软连接</p>
-
-<p>仿照这个方式，如果还有问题，重复找依赖-copy-做软连接的过程</p>
-
-<p>最后再执行</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">rpm -Uvh --replacepkgs --nodeps --force cron*.rpm</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>crontab命令成功安装了.</p>
+<p>Bingo！</p>
 </div>
   
   
@@ -222,7 +210,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2019/05/22/linuxming-ling-lnde-shi-yong-bei-wang/">Linux命令ln的使用备忘</a></h1>
+      <h1 class="entry-title"><a href="/blog/2016/07/19/weird-things-happen-when-scripts-executing-with-and-passing-args-with-getopts/">Weird Things Happen When Scripts Executing With . And Passing Args With Getopts</a></h1>
     
     
       <p class="meta">
@@ -238,16 +226,198 @@
   
 
 
-<time datetime="2019-05-22T16:22:49+08:00" pubdate data-updated="true">2019 年5 月22 日</time>
+<time datetime="2016-07-19T17:43:32+08:00" pubdate data-updated="true">2016 年7 月19 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>我们现在在/usr/lib64中有个文件librpm.so.3.2.2, 我们想要在/usr/lib64做个软连接, 起名叫做librpm.so.3, 指向librpm.so.3.2.2, 我们可以这样做,</p>
+  <div class="entry-content"><p>I have met the following scripts, say aa.sh</p>
 
-<p><code>cd /usr/lib64 &amp;&amp; ln -s librpm.so.3.2.2 librpm.so.3</code></p>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nb">echo</span> <span class="s2">&quot;OPTIND for aa.sh before calling is: &quot;</span> <span class="nv">$OPTIND</span>
+</span><span class="line"><span class="k">while </span><span class="nb">getopts</span> <span class="s2">&quot;t:c:&quot;</span> opt
+</span><span class="line"><span class="k">do</span>
+</span><span class="line"><span class="k">    case</span> <span class="s2">&quot;$opt&quot;</span> in
+</span><span class="line">        t<span class="o">)</span> <span class="nb">time</span><span class="o">=</span><span class="s2">&quot;${OPTARG}&quot;</span>;;
+</span><span class="line">        c<span class="o">)</span> <span class="nv">count</span><span class="o">=</span><span class="s2">&quot;${OPTARG}&quot;</span>;;
+</span><span class="line">    <span class="k">esac</span>
+</span><span class="line"><span class="k">done</span>
+</span><span class="line">
+</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;time for aa.sh is $time&quot;</span>
+</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;count for aa.sh is $count&quot;</span>
+</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;OPTIND for aa.sh after calling is: &quot;</span> <span class="nv">$OPTIND</span><span class="sb">`</span>sh
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>and bb.sh</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nb">echo</span> <span class="s2">&quot;OPTIND for bb.sh before calling is: &quot;</span> <span class="nv">$OPTIND</span>
+</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;we are setting the OPTIND to 1&quot;</span>
+</span><span class="line"><span class="k">while </span><span class="nb">getopts</span> <span class="s2">&quot;t:c:&quot;</span> opt
+</span><span class="line"><span class="k">do</span>
+</span><span class="line"><span class="k">    case</span> <span class="s2">&quot;$opt&quot;</span> in
+</span><span class="line">        t<span class="o">)</span> <span class="nb">time</span><span class="o">=</span><span class="s2">&quot;${OPTARG}&quot;</span>;;
+</span><span class="line">        c<span class="o">)</span> <span class="nv">count</span><span class="o">=</span><span class="s2">&quot;${OPTARG}&quot;</span>;;
+</span><span class="line">    <span class="k">esac</span>
+</span><span class="line"><span class="k">done</span>
+</span><span class="line">
+</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;time for bb.sh is $time&quot;</span>
+</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;count for bb.sh is $count&quot;</span>
+</span><span class="line">
+</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;OPTIND for bb.sh after calling is: &quot;</span> <span class="nv">$OPTIND</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>and call.sh</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">. ./aa.sh -t 2016-07-15 -c 4
+</span><span class="line">. ./bb.sh -a 2016-07-20 -c 0
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>and now execute the script, it will give out the followig result,</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">OPTIND <span class="k">for </span>aa.sh before calling is:  1
+</span><span class="line"><span class="nb">time </span><span class="k">for </span>aa.sh is 2016-07-15
+</span><span class="line">count <span class="k">for </span>aa.sh is 4
+</span><span class="line">OPTIND <span class="k">for </span>aa.sh after calling is:  5
+</span><span class="line">OPTIND <span class="k">for </span>bb.sh before calling is:  <span class="nv">5</span>
+</span><span class="line"><span class="o">=</span><span class="nb">time </span><span class="k">for </span>bb.sh is 2016-07-15
+</span><span class="line">count <span class="k">for </span>bb.sh is 4
+</span><span class="line">OPTIND <span class="k">for </span>bb.sh after calling is:  5
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Which is definitely not what we want.</p>
+
+<p>We can now change bb.sh into the following to test it again.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nb">echo</span> <span class="s2">&quot;OPTIND for bb.sh before calling is: &quot;</span> <span class="nv">$OPTIND</span>
+</span><span class="line">
+</span><span class="line"><span class="nv">OPTIND</span><span class="o">=</span>1
+</span><span class="line">
+</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;we are setting the OPTIND to 1&quot;</span>
+</span><span class="line"><span class="k">while </span><span class="nb">getopts</span> <span class="s2">&quot;t:c:&quot;</span> opt
+</span><span class="line"><span class="k">do</span>
+</span><span class="line"><span class="k">    case</span> <span class="s2">&quot;$opt&quot;</span> in
+</span><span class="line">        t<span class="o">)</span> <span class="nb">time</span><span class="o">=</span><span class="s2">&quot;${OPTARG}&quot;</span>;;
+</span><span class="line">        c<span class="o">)</span> <span class="nv">count</span><span class="o">=</span><span class="s2">&quot;${OPTARG}&quot;</span>;;
+</span><span class="line">    <span class="k">esac</span>
+</span><span class="line"><span class="k">done</span>
+</span><span class="line">
+</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;time for bb.sh is $time&quot;</span>
+</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;count for bb.sh is $count&quot;</span>
+</span><span class="line">
+</span><span class="line"><span class="nb">echo</span> <span class="s2">&quot;OPTIND for bb.sh after calling is: &quot;</span> <span class="nv">$OPTIND</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>and now “sh call.sh” will give out the following result,</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">OPTIND <span class="k">for </span>aa.sh before calling is:  1
+</span><span class="line"><span class="nb">time </span><span class="k">for </span>aa.sh is 2016-07-15
+</span><span class="line">count <span class="k">for </span>aa.sh is 4
+</span><span class="line">OPTIND <span class="k">for </span>aa.sh after calling is:  5
+</span><span class="line">OPTIND <span class="k">for </span>bb.sh before calling is:  5
+</span><span class="line">we are setting the OPTIND to 1
+</span><span class="line"><span class="nb">time </span><span class="k">for </span>bb.sh is 2016-07-20
+</span><span class="line">count <span class="k">for </span>bb.sh is 0
+</span><span class="line">OPTIND <span class="k">for </span>bb.sh after calling is:  5
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>What if we set the OPTIND to 3 now?</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">OPTIND <span class="k">for </span>aa.sh before calling is:  1
+</span><span class="line"><span class="nb">time </span><span class="k">for </span>aa.sh is 2016-07-15
+</span><span class="line">count <span class="k">for </span>aa.sh is 4
+</span><span class="line">OPTIND <span class="k">for </span>aa.sh after calling is:  5
+</span><span class="line">OPTIND <span class="k">for </span>bb.sh before calling is:  5
+</span><span class="line">we are setting the OPTIND to 3
+</span><span class="line"><span class="nb">time </span><span class="k">for </span>bb.sh is 2016-07-15
+</span><span class="line">count <span class="k">for </span>bb.sh is 0
+</span><span class="line">OPTIND <span class="k">for </span>bb.sh after calling is:  5
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Now the count value is changed to 0, however time is still not changed.</p>
+
+<p>How to understand this? First let us look at the definitions of $OPTIND and getopts</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">A <span class="nb">getopts </span>construct usually comes packaged in a <span class="k">while </span>loop, which processes the options and
+</span><span class="line">arguments one at a <span class="nb">time</span>, <span class="k">then </span>increments the implicit <span class="nv">$OPTIND</span> variable to point to the next.
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>In a while loop contaning getopts, getopts will use $OPTIND to find the arguments. if we call the script using “dot” which is the same as using “source”, $OPTIND will be global and available to the next script using getopts, and the next script will then can not find the right argument using $OPTIND now. </p>
+
+<p>The solution here is, we can reset $OPTIND to 1 or we can call the script using “sh” rather than “.”</p>
 </div>
   
   
@@ -272,15 +442,7 @@
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2020/12/13/pu-ju-lei-jian-jie/">谱聚类简介</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2020/12/13/zhu-cheng-fen-fen-xi-pca-jian-jie/">主成分分析-PCA-简介</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2020/12/13/xian-xing-pan-bie-fen-xi-jian-jie/">线性判别分析简介</a>
+        <a href="/blog/2021/01/04/jupytershang-shi-yong-matplotlibhua-tu-de-%5B%3F%5D-xie-you-yong-de-she-zhi/">Jupyter上使用matplotlib画图的一些有用的设置</a>
       </li>
     
       <li class="post">
@@ -292,23 +454,31 @@
       </li>
     
       <li class="post">
-        <a href="/blog/2020/12/06/ti-du-xia-jiang-fa-he-niu-dun-fa/">梯度下降法和牛顿法</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2020/12/06/xian-xing-gui-hua-de-dui-ou-wen-ti/">线性规划的对偶问题</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2020/11/30/dan-chun-xing-fa-jie-shao-he-pythondai-ma-shi-xian/">单纯形法介绍和Python代码实现</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2020/11/24/wen-ben-zhu-ti-wa-jue-qian-chang-zhe-zhi/">文本主题挖掘浅尝辄止</a>
-      </li>
-    
-      <li class="post">
         <a href="/blog/2020/11/20/sparksqlru-men-he-jin-jie/">SparkSQL入门和进阶</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2020/02/16/gao-deng-shu-li-tong-ji-xue-qian-yan-zhai-lu/">高等数理统计学前言摘录</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/27/%5B%3F%5D-xie-guan-yu-rnnhe-lstmhe-grude-yue-du-cai-liao/">一些关于RNN和LSTM和GRU的阅读材料</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/27/ru-he-cha-kan-linuxzhong-de-nei-cun-zhan-yong-qing-kuang/">如何查看Linux中的内存占用情况</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/27/sparkzhong-pai-xu-shu-chu/">Spark中排序输出</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/14/data-science-at-the-command-line/">Data Science at the Command Line</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/14/gradient-boosting-algorithm/">Gradient Boosting Algorithm</a>
       </li>
     
   </ul>
@@ -321,7 +491,7 @@
 <li class='category'><a href='/blog/categories/bigdata/'>BigData (11)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (7)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
-<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (20)</a></li>
+<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (16)</a></li>
 <li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (5)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (2)</a></li>
 <li class='category'><a href='/blog/categories/javascript/'>Javascript (4)</a></li>
@@ -332,7 +502,6 @@
 <li class='category'><a href='/blog/categories/ruby/'>Ruby (1)</a></li>
 <li class='category'><a href='/blog/categories/scala/'>Scala (1)</a></li>
 <li class='category'><a href='/blog/categories/shell/'>Shell (12)</a></li>
-<li class='category'><a href='/blog/categories/yan-jiu-sheng/'>研究生 (2)</a></li>
 
   </ul>
 </section>
@@ -343,7 +512,7 @@
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2020 - Steven Sun -
+  Copyright &copy; 2021 - Steven Sun -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

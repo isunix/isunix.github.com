@@ -9,8 +9,7 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="算了还是引用一下«learning perl»中文翻译版本中的话吧: 1
-在Perl中可以使用my操作符来创建私有变量， 但是每次调用这个子程序的时候，这个私有变量都会被重新定义。而使用state操作符来声明的变量，我们便可以在子程序的多次调用期间保留变量之前的值， 并将变量的作用域限于子程序内部 &hellip;">
+  <meta name="description" content="In Perl, function sort() sort the item of an array according to its corresponding acssci code. for example, if we have an array @array = (1, 3, 10, 2 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -100,7 +99,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/07/17/about-the-use-of-state-in-perl/">About the Use of State in Perl</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/06/22/sort-in-perl/">Sort in Perl</a></h1>
     
     
       <p class="meta">
@@ -116,110 +115,21 @@
   
 
 
-<time datetime="2014-07-17T16:02:20+08:00" pubdate data-updated="true">2014 年7 月17 日</time>
+<time datetime="2014-06-22T12:31:50+08:00" pubdate data-updated="true">2014 年6 月22 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>算了还是引用一下«learning perl»中文翻译版本中的话吧:   </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">在Perl中可以使用my操作符来创建私有变量， 但是每次调用这个子程序的时候，这个私有变量都会被重新定义。而使用state操作符来声明的变量，我们便可以在子程序的多次调用期间保留变量之前的值， 并将变量的作用域限于子程序内部
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>让我们来看下使用my还有使用state所产生的不同的效果吧。  </p>
-
-<p>首先是my:  </p>
+  <div class="entry-content"><p>In Perl, function sort() sort the item of an array according to its corresponding acssci code. for example, if we have an array @array = (1, 3, 10, 2, 21) and use sort against this array, we will get the following result: 1 10 2 21 3. However if we want to sort these numbers according to its value, we can use the following method:   </p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
 <span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="mf">5.010</span><span class="p">;</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nb">sort</span><span class="p">{</span><span class="nv">$a</span> <span class="sr">&lt;=&gt;</span> <span class="nv">$b</span><span class="p">}</span> <span class="nv">@array</span><span class="p">;</span>   <span class="c1">#ascending</span>
 </span><span class="line">
-</span><span class="line"><span class="n">running_sum</span><span class="p">(</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span> <span class="p">);</span>
-</span><span class="line"><span class="n">running_sum</span><span class="p">(</span> <span class="mi">1</span><span class="o">..</span><span class="mi">3</span> <span class="p">);</span>
-</span><span class="line"><span class="n">running_sum</span><span class="p">(</span> <span class="mi">4</span> <span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="k">sub </span><span class="nf">running_sum</span> <span class="p">{</span>
-</span><span class="line">    <span class="k">my</span> <span class="nv">$sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class="line">    <span class="k">my</span> <span class="nv">@numbers</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line">    <span class="k">foreach</span> <span class="k">my</span> <span class="nv">$number</span> <span class="p">(</span> <span class="nv">@_</span> <span class="p">)</span> <span class="p">{</span>
-</span><span class="line">      <span class="nb">push</span> <span class="nv">@numbers</span><span class="p">,</span> <span class="nv">$number</span><span class="p">;</span>
-</span><span class="line">      <span class="nv">$sum</span> <span class="o">+=</span> <span class="nv">$number</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">
-</span><span class="line">    <span class="n">say</span> <span class="s">&quot;the sum of (@numbers) is $sum&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>这段code产生的结果是:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">the</span> <span class="n">sum</span> <span class="n">of</span> <span class="p">(</span><span class="mi">5</span> <span class="mi">6</span><span class="p">)</span> <span class="n">is</span> <span class="mi">11</span>
-</span><span class="line"><span class="n">the</span> <span class="n">sum</span> <span class="n">of</span> <span class="p">(</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">)</span> <span class="n">is</span> <span class="mi">6</span>
-</span><span class="line"><span class="n">the</span> <span class="n">sum</span> <span class="n">of</span> <span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="n">is</span> <span class="mi">4</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>下面是state:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="mf">5.010</span><span class="p">;</span>
-</span><span class="line"><span class="n">running_sum</span><span class="p">(</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span> <span class="p">);</span>
-</span><span class="line"><span class="n">running_sum</span><span class="p">(</span> <span class="mi">1</span><span class="o">..</span><span class="mi">3</span> <span class="p">);</span>
-</span><span class="line"><span class="n">running_sum</span><span class="p">(</span> <span class="mi">4</span> <span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="k">sub </span><span class="nf">running_sum</span> <span class="p">{</span>
-</span><span class="line">    <span class="n">state</span> <span class="nv">$sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class="line">    <span class="n">state</span> <span class="nv">@numbers</span><span class="p">;</span>
-</span><span class="line">    <span class="k">foreach</span> <span class="k">my</span> <span class="nv">$number</span> <span class="p">(</span> <span class="nv">@_</span> <span class="p">)</span> <span class="p">{</span>
-</span><span class="line">        <span class="nb">push</span> <span class="nv">@numbers</span><span class="p">,</span> <span class="nv">$number</span><span class="p">;</span>
-</span><span class="line">        <span class="nv">$sum</span> <span class="o">+=</span> <span class="nv">$number</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="n">say</span> <span class="s">&quot;The sum of (@numbers) is $sum&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>它的结果是:   </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">The</span> <span class="n">sum</span> <span class="n">of</span> <span class="p">(</span><span class="mi">5</span> <span class="mi">6</span><span class="p">)</span> <span class="n">is</span> <span class="mi">11</span>
-</span><span class="line"><span class="n">The</span> <span class="n">sum</span> <span class="n">of</span> <span class="p">(</span><span class="mi">5</span> <span class="mi">6</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">)</span> <span class="n">is</span> <span class="mi">17</span>
-</span><span class="line"><span class="n">The</span> <span class="n">sum</span> <span class="n">of</span> <span class="p">(</span><span class="mi">5</span> <span class="mi">6</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">)</span> <span class="n">is</span> <span class="mi">21</span>
+</span><span class="line"><span class="nb">sort</span><span class="p">{</span><span class="nv">$b</span> <span class="sr">&lt;=&gt;</span> <span class="nv">$a</span><span class="p">}</span> <span class="nv">@array</span><span class="p">;</span>   <span class="c1">#descending</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 </div>
   
@@ -233,7 +143,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/07/17/perlzhong-dan-xing-huo-zhe-duo-xing-shu-chu-jie-guo/">Perl中单行或者多行输出结果</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/06/16/dancer-introduction-notes/">Dancer::Introduction Notes</a></h1>
     
     
       <p class="meta">
@@ -249,30 +159,110 @@
   
 
 
-<time datetime="2014-07-17T15:14:23+08:00" pubdate data-updated="true">2014 年7 月17 日</time>
+<time datetime="2014-06-16T00:05:17+08:00" pubdate data-updated="true">2014 年6 月16 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>我们在标准输入中得到多行的值， 现在我们想要以单行还有多行的结果来把它们给显示出来， 要是想单行显示的话，可以如下:</p>
+  <div class="entry-content"><p>1.A route pattern can contain one or more tokens, and tokens can be optional.</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
 <span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nb">chomp</span><span class="p">(</span><span class="nv">@lines</span> <span class="o">=</span> <span class="sr">&lt;STDIN&gt;</span><span class="p">);</span>
-</span><span class="line"><span class="nv">@sorted</span> <span class="o">=</span> <span class="nb">sort</span> <span class="nv">@lines</span><span class="p">;</span>
-</span><span class="line"><span class="k">print</span> <span class="s">&quot;@sorted\n&quot;</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">get</span> <span class="s">&#39;/hello/:name?&#39;</span> <span class="o">=&gt;</span> <span class="k">sub </span><span class="p">{</span>
+</span><span class="line">    <span class="s">&quot;Hello there &quot;</span> <span class="o">.</span> <span class="p">(</span><span class="n">param</span><span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">)</span> <span class="o">||</span> <span class="s">&quot;whoever you are!&quot;</span><span class="p">);</span>
+</span><span class="line"><span class="p">};</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>多行的话可以:  </p>
+<p>2.A route can contain a wildcard (represented by a ‘*’). Each wildcard match will be returned in an arrayref, accessible via the `splat’ keyword:</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">print</span> <span class="nb">sort</span> <span class="sr">&lt;STDIN&gt;</span><span class="p">;</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">get</span> <span class="s">&#39;/download/*.*&#39;</span> <span class="o">=&gt;</span> <span class="k">sub </span><span class="p">{</span>
+</span><span class="line">    <span class="k">my</span> <span class="p">(</span><span class="nv">$file</span><span class="p">,</span> <span class="nv">$ext</span><span class="p">)</span> <span class="o">=</span> <span class="n">splat</span><span class="p">;</span>
+</span><span class="line">    <span class="c1"># do something with $file.$ext here</span>
+</span><span class="line"><span class="p">};</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>这里的关键的地方就是chomp这个函数。</p>
+<p>3.A route can be defined with a Perl regular expression. In order to tell Dancer to consider the route as a real regexp, the route must be defined explicitly with qr{}, like the following:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">get</span> <span class="sx">qr{/hello/([\w]+)}</span> <span class="o">=&gt;</span> <span class="k">sub </span><span class="p">{</span>
+</span><span class="line">    <span class="k">my</span> <span class="p">(</span><span class="nv">$name</span><span class="p">)</span> <span class="o">=</span> <span class="n">splat</span><span class="p">;</span>
+</span><span class="line">    <span class="k">return</span> <span class="s">&quot;Hello $name&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>4.Routes may include some matching conditions (on the useragent and the hostname at the moment):</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">get</span> <span class="s">&#39;/foo&#39;</span><span class="p">,</span> <span class="p">{</span><span class="n">agent</span> <span class="o">=&gt;</span> <span class="s">&#39;Songbird (\d\.\d)[\d\/]*?&#39;</span><span class="p">}</span> <span class="o">=&gt;</span> <span class="k">sub </span><span class="p">{</span>
+</span><span class="line">  <span class="s">&#39;foo method for songbird&#39;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="n">get</span> <span class="s">&#39;/foo&#39;</span> <span class="o">=&gt;</span> <span class="k">sub </span><span class="p">{</span>
+</span><span class="line">  <span class="s">&#39;all browsers except songbird&#39;</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>5.An action can choose not to serve the current request and ask Dancer to process the request with the next matching route. This is done with the pass keyword, like in the following example:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">get</span> <span class="s">&#39;/say/:word&#39;</span> <span class="o">=&gt;</span> <span class="k">sub </span><span class="p">{</span>
+</span><span class="line">    <span class="k">return</span> <span class="n">pass</span> <span class="k">if</span> <span class="p">(</span><span class="n">params</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">word</span><span class="p">}</span> <span class="o">=~</span><span class="sr"> /^\d+$/</span><span class="p">);</span>
+</span><span class="line">    <span class="s">&quot;I say a word: &quot;</span><span class="o">.</span><span class="n">params</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">word</span><span class="p">};</span>
+</span><span class="line"><span class="p">};</span>
+</span><span class="line">
+</span><span class="line"><span class="n">get</span> <span class="s">&#39;/say/:number&#39;</span> <span class="o">=&gt;</span> <span class="k">sub </span><span class="p">{</span>
+</span><span class="line">    <span class="s">&quot;I say a number: &quot;</span><span class="o">.</span><span class="n">params</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">number</span><span class="p">};</span>
+</span><span class="line"><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>6.Before hooks, after hooks, before_template_render hooks.</p>
+
+<p>7.You can use the load method to include additional routes into your application.</p>
+
+<p>8.A Dancer application can access the information from its config file easily with the config keyword:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">get</span> <span class="s">&#39;/appname&#39;</span> <span class="o">=&gt;</span> <span class="k">sub </span><span class="p">{</span>
+</span><span class="line">    <span class="k">return</span> <span class="s">&quot;This is &quot;</span> <span class="o">.</span> <span class="n">config</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">appname</span><span class="p">};</span>
+</span><span class="line"><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>9.In order to enable the logging system for your application, you first have to start the logger engine in your config.yml:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">logger:</span> <span class="s">&#39;file&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>10.Dancer configures the Template::Toolkit engine to use &lt;% %&gt; brackets instead of its default [% %] brackets, although you can change this in your config file. Of course you have to import the “Template” module.</p>
+
+<p>11.A layout is a special view, located in the ‘layouts’ directory (inside the views directory) which must have a token named `content’. That token marks the place where to render the action view. This lets you define a global layout for your actions. Any tokens that you defined when you called the ‘template’ keyword are available in the layouts, as well as the standard session, request, and params tokens. This allows you to insert per-page content into the HTML boilerplate, such as page titles, current-page tags for navigation, etc. (refer to the standard document for more details).</p>
+
+<p>12.Through  “set serializer =&gt; ‘JSON’;”  we can do data serializer;</p>
 </div>
   
   
@@ -285,7 +275,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/07/17/generate-chapters-at-once/">Generate Chapters at Once</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/06/15/how-to-insert-pictures-in-octopress/">How to Insert Pictures in Octopress</a></h1>
     
     
       <p class="meta">
@@ -301,36 +291,24 @@
   
 
 
-<time datetime="2014-07-17T10:47:48+08:00" pubdate data-updated="true">2014 年7 月17 日</time>
+<time datetime="2014-06-15T23:14:54+08:00" pubdate data-updated="true">2014 年6 月15 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>I use this script to generate chapters at once. The number of chapters you want to generate in passed through the command line as the first argument.  </p>
+  <div class="entry-content"><p>Of course you can google about it, but I just keep it down so that every time I do it, I do not need to google again. It is pretty easy. </p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="n">strict</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="n">warnings</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="n">utf8</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="nn">Data::</span><span class="n">Dumper</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">my</span> <span class="nv">$chap_num</span> <span class="o">=</span> <span class="nv">$ARGV</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
-</span><span class="line">
-</span><span class="line"><span class="k">for</span><span class="p">(</span><span class="k">my</span> <span class="nv">$i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;=</span> <span class="nv">$chap_num</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">){</span>
-</span><span class="line">    <span class="nb">mkdir</span> <span class="s">&quot;chap_$i&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line">{\% img [class names] /path/to/image [width] [height] [title text [alt text]] \%}
 </span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Of course you need to remove the “\” in the above line. I just it there so it will be interpreted as inserting a pic here. Sorry about this.</p>
+
+<p>Just add your pics in the above format. Note here I add a subdir in the source/images/ dir.  </p>
+
+<p>That is it. </p>
 </div>
   
   
@@ -355,15 +333,7 @@
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2020/12/13/pu-ju-lei-jian-jie/">谱聚类简介</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2020/12/13/zhu-cheng-fen-fen-xi-pca-jian-jie/">主成分分析-PCA-简介</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2020/12/13/xian-xing-pan-bie-fen-xi-jian-jie/">线性判别分析简介</a>
+        <a href="/blog/2021/01/04/jupytershang-shi-yong-matplotlibhua-tu-de-%5B%3F%5D-xie-you-yong-de-she-zhi/">Jupyter上使用matplotlib画图的一些有用的设置</a>
       </li>
     
       <li class="post">
@@ -375,23 +345,31 @@
       </li>
     
       <li class="post">
-        <a href="/blog/2020/12/06/ti-du-xia-jiang-fa-he-niu-dun-fa/">梯度下降法和牛顿法</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2020/12/06/xian-xing-gui-hua-de-dui-ou-wen-ti/">线性规划的对偶问题</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2020/11/30/dan-chun-xing-fa-jie-shao-he-pythondai-ma-shi-xian/">单纯形法介绍和Python代码实现</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2020/11/24/wen-ben-zhu-ti-wa-jue-qian-chang-zhe-zhi/">文本主题挖掘浅尝辄止</a>
-      </li>
-    
-      <li class="post">
         <a href="/blog/2020/11/20/sparksqlru-men-he-jin-jie/">SparkSQL入门和进阶</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2020/02/16/gao-deng-shu-li-tong-ji-xue-qian-yan-zhai-lu/">高等数理统计学前言摘录</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/27/%5B%3F%5D-xie-guan-yu-rnnhe-lstmhe-grude-yue-du-cai-liao/">一些关于RNN和LSTM和GRU的阅读材料</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/27/ru-he-cha-kan-linuxzhong-de-nei-cun-zhan-yong-qing-kuang/">如何查看Linux中的内存占用情况</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/27/sparkzhong-pai-xu-shu-chu/">Spark中排序输出</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/14/data-science-at-the-command-line/">Data Science at the Command Line</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/14/gradient-boosting-algorithm/">Gradient Boosting Algorithm</a>
       </li>
     
   </ul>
@@ -404,7 +382,7 @@
 <li class='category'><a href='/blog/categories/bigdata/'>BigData (11)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (7)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
-<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (20)</a></li>
+<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (16)</a></li>
 <li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (5)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (2)</a></li>
 <li class='category'><a href='/blog/categories/javascript/'>Javascript (4)</a></li>
@@ -415,7 +393,6 @@
 <li class='category'><a href='/blog/categories/ruby/'>Ruby (1)</a></li>
 <li class='category'><a href='/blog/categories/scala/'>Scala (1)</a></li>
 <li class='category'><a href='/blog/categories/shell/'>Shell (12)</a></li>
-<li class='category'><a href='/blog/categories/yan-jiu-sheng/'>研究生 (2)</a></li>
 
   </ul>
 </section>
@@ -426,7 +403,7 @@
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2020 - Steven Sun -
+  Copyright &copy; 2021 - Steven Sun -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

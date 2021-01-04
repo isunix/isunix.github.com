@@ -9,9 +9,7 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="今天在本地起个pyspark 发现总是遇到 1
-Caused by: java.net.UnknownHostException: master: nodename nor servname provided, or not known
-尝试了设置 SPARK_HOME, HADOOP_HOME &hellip;">
+  <meta name="description" content="下面的机器学习的一个流程图是从某视频中看到的，现在记录如下: 虽然说会的不难， 但是里面的每一步都很艰辛。比如被很多人认为脏活累活的”加载预处理数据集”这块，这个大家实践下来的基本共识是，这块就占了整个机器学习流程的60%到80%的工作量。所以，不要心存美好幻想， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -101,7 +99,7 @@ Caused by: java.net.UnknownHostException: master: nodename nor servname provided
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2019/07/30/macshang-dan-ji-qi-pysparkyu-dao-de-wen-ti-debug/">Mac上单机起PySpark遇到的问题debug</a></h1>
+      <h1 class="entry-title"><a href="/blog/2019/07/07/ji-qi-xue-xi-de-liu-cheng-tu/">机器学习的流程图</a></h1>
     
     
       <p class="meta">
@@ -117,34 +115,18 @@ Caused by: java.net.UnknownHostException: master: nodename nor servname provided
   
 
 
-<time datetime="2019-07-30T10:38:15+08:00" pubdate data-updated="true">2019 年7 月30 日</time>
+<time datetime="2019-07-07T07:32:15+08:00" pubdate data-updated="true">2019 年7 月7 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>今天在本地起个<code>pyspark</code> 发现总是遇到</p>
+  <div class="entry-content"><p>下面的机器学习的一个流程图是从某视频中看到的，现在记录如下:</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">Caused by: java.net.UnknownHostException: master: nodename nor servname provided, or not known</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>尝试了设置 <code>SPARK_HOME</code>, <code>HADOOP_HOME</code> 等变量之后，依然不起作用。</p>
+<p><img src="/images/sun/machine_learning_flow.001.jpeg" /></p>
 
-<p>最后发现是要修改 <code>SPARK_HOME</code> 里面的配置文件<code>spark-env.sh</code></p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nb">export </span><span class="nv">SPARK_MASTER_IP</span><span class="o">=</span>StevenMac
-</span><span class="line"><span class="nb">export </span><span class="nv">SPARK_LOCAL_IP</span><span class="o">=</span>StevenMac
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>并且在<code>/etc/hosts</code> 文件中，加入如下的内容:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">127.0.0.1  StevenMac
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>Bingo!!!</p>
-
+<p>虽然说会的不难， 但是里面的每一步都很艰辛。比如被很多人认为脏活累活的”加载预处理数据集”这块，这个大家实践下来的基本共识是，这块就占了整个机器学习流程的60%到80%的工作量。所以，不要心存美好幻想，觉得机器学习或者人工智能是多么高大上和美好的事情。</p>
 </div>
   
   
@@ -157,7 +139,7 @@ Caused by: java.net.UnknownHostException: master: nodename nor servname provided
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2019/07/29/pythonzhong-bu-shu-chu-warningde-xin-xi/">Python中不输出warning的信息</a></h1>
+      <h1 class="entry-title"><a href="/blog/2019/07/05/ryu-yan-de-%5B%3F%5D-xie-ji-lu/">R语言的一些记录</a></h1>
     
     
       <p class="meta">
@@ -173,21 +155,76 @@ Caused by: java.net.UnknownHostException: master: nodename nor servname provided
   
 
 
-<time datetime="2019-07-29T13:36:53+08:00" pubdate data-updated="true">2019 年7 月29 日</time>
+<time datetime="2019-07-05T08:00:01+08:00" pubdate data-updated="true">2019 年7 月5 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>我们在<code>Python</code> 代码中，如果不想输出一些warnings, 可以在代码的一开始，加入如下的代码，就可以了.</p>
+  <div class="entry-content"><p>在R语言中，如果我们有一个<code>vector</code> 叫 <code>x</code>, <code>x</code> 的值中有 <code>NA</code>，如果我们想要过滤掉 <code>x</code> 中的 <code>NA</code>, 并把过滤后的结果，赋值给变量 <code>y</code>， 可以如下操作:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="r"><span class="line">y <span class="o">&lt;-</span> x<span class="p">[</span><span class="o">!</span>is.na<span class="p">(</span>x<span class="p">)]</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>如果我们再想找出 <code>y</code> 中元素大于0的元素，可以如下操作L:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="r"><span class="line">y<span class="p">[</span>y <span class="o">&gt;</span> <span class="m">0</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>以上两步合在一起，可以如下操作:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="r"><span class="line">x<span class="p">[</span><span class="o">!</span>is.na<span class="p">(</span>x<span class="p">)</span> <span class="o">&amp;</span> x <span class="o">&gt;</span> <span class="m">0</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>如果我们直接使用 <code>x[x &gt; 0]</code> 是不行的，会得到如下的包含<code>NA</code> 值的一个 <code>vector</code>:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="r"><span class="line"> <span class="kc">NA</span>        <span class="kc">NA</span> <span class="m">0.3488261</span>        <span class="kc">NA</span> <span class="m">2.4099262</span>        <span class="kc">NA</span>        <span class="kc">NA</span>        <span class="kc">NA</span>        <span class="kc">NA</span>        <span class="kc">NA</span> <span class="m">0.4626879</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>创建一个4行5列的<code>matrix</code>，包含的数值是从1到20，</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="r"><span class="line">my_matrix <span class="o">&lt;-</span> matrix<span class="p">(</span>data<span class="o">=</span><span class="m">1</span><span class="o">:</span><span class="m">20</span><span class="p">,</span> nrow <span class="o">=</span> <span class="m">4</span><span class="p">,</span> ncol <span class="o">=</span> <span class="m">5</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>如果我想给这个<code>matrix</code>的每行添加一列，作为名字，可以采用如下的方式</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="kn">import</span> <span class="nn">warnings</span>
-</span><span class="line"><span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s">&#39;ignore&#39;</span><span class="p">)</span>
+</pre></td><td class="code"><pre><code class="r"><span class="line">patients <span class="o">&lt;-</span> c<span class="p">(</span><span class="s">&quot;Bill&quot;</span><span class="p">,</span> <span class="s">&quot;Gina&quot;</span><span class="p">,</span> <span class="s">&quot;Kelly&quot;</span><span class="p">,</span> <span class="s">&quot;Sean&quot;</span><span class="p">)</span>
+</span><span class="line">cbind<span class="p">(</span>patients<span class="p">,</span> my_matrix<span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>filterwarnings 函数可以带参数的，上述的方式是把所有的warnings都给ignore了.</p>
+
+<p>但是上面这种方式，会导致<code>implicit coercion</code>, 把数字变成字符，为了解决这个问题，我们可以使用如下的方式</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="r"><span class="line">my_data <span class="o">&lt;-</span> data.frame<span class="p">(</span>patients<span class="p">,</span> my_matrix<span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>如果我们再想给每个列增加一个<code>name</code>, 可以使用如下的方式:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="r"><span class="line">cnames <span class="o">&lt;-</span> c<span class="p">(</span><span class="s">&quot;patient&quot;</span><span class="p">,</span> <span class="s">&quot;age&quot;</span><span class="p">,</span> <span class="s">&quot;weight&quot;</span><span class="p">,</span> <span class="s">&quot;bp&quot;</span><span class="p">,</span> <span class="s">&quot;rating&quot;</span><span class="p">,</span> <span class="s">&quot;test&quot;</span><span class="p">)</span>
+</span><span class="line">colnames<span class="p">(</span>my_data<span class="p">)</span> <span class="o">&lt;-</span> cnames
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>如果我们想要获取当前的工作目录,</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="r"><span class="line">getwd<span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>如果我们想要切换到另外一个目录，可以</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="r"><span class="line">setwd<span class="p">(</span><span class="s">&quot;~/data/ISLR&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 </div>
   
   
@@ -200,7 +237,7 @@ Caused by: java.net.UnknownHostException: master: nodename nor servname provided
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2019/07/24/vscode-remote-yuan-cheng-kai-fa-yu-diao-shi/">VScode Remote 远程开发与调试</a></h1>
+      <h1 class="entry-title"><a href="/blog/2019/07/04/shu-ju-fen-xi-he-ji-qi-xue-xi-%5B%3F%5D-xie-zhai-chao/">数据分析和机器学习一些摘抄</a></h1>
     
     
       <p class="meta">
@@ -216,24 +253,19 @@ Caused by: java.net.UnknownHostException: master: nodename nor servname provided
   
 
 
-<time datetime="2019-07-24T15:28:32+08:00" pubdate data-updated="true">2019 年7 月24 日</time>
+<time datetime="2019-07-04T18:24:50+08:00" pubdate data-updated="true">2019 年7 月4 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>最近要给别的团队A，在AWS的EC2 上面去搭建一个算法的开发环境。鉴于自己之前在 AWS 上都是使用的Linux，在和团队A讨论了之后，最后决定建个Linux 的 EC2。 但是在基本的Python和数据分析和算法开发的环境都搭建好了之后，团队A的同学，又提了没有IDE, 影响效率。
-没有办法，得考虑是不是换个windows 的 EC2 了。这个时候 <code>VS Code Remote Development</code> comes to my rescue.</p>
+  <div class="entry-content"><ul>
+  <li>怎么对待缺失值</li>
+</ul>
 
-<p>可以参考下面的文章去看看怎么搞 <code>VS Code Remote Development</code>.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">https://code.visualstudio.com/docs/remote/remote-overview
-</span><span class="line">https://www.jianshu.com/p/0f2fb935a9a1</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>试用了下来， 感觉这个 <code>VS Code Remote Development</code> 是个神器啊.</p>
+<p><code>Missing values play an important role in statistics and data analysis. Often, missing values must not be ignored, but rather they should be carefully
+| studied to see if there's an underlying pattern or cause for their missingness.</code></p>
 
 </div>
   
@@ -259,15 +291,7 @@ Caused by: java.net.UnknownHostException: master: nodename nor servname provided
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2020/12/13/pu-ju-lei-jian-jie/">谱聚类简介</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2020/12/13/zhu-cheng-fen-fen-xi-pca-jian-jie/">主成分分析-PCA-简介</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2020/12/13/xian-xing-pan-bie-fen-xi-jian-jie/">线性判别分析简介</a>
+        <a href="/blog/2021/01/04/jupytershang-shi-yong-matplotlibhua-tu-de-%5B%3F%5D-xie-you-yong-de-she-zhi/">Jupyter上使用matplotlib画图的一些有用的设置</a>
       </li>
     
       <li class="post">
@@ -279,23 +303,31 @@ Caused by: java.net.UnknownHostException: master: nodename nor servname provided
       </li>
     
       <li class="post">
-        <a href="/blog/2020/12/06/ti-du-xia-jiang-fa-he-niu-dun-fa/">梯度下降法和牛顿法</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2020/12/06/xian-xing-gui-hua-de-dui-ou-wen-ti/">线性规划的对偶问题</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2020/11/30/dan-chun-xing-fa-jie-shao-he-pythondai-ma-shi-xian/">单纯形法介绍和Python代码实现</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2020/11/24/wen-ben-zhu-ti-wa-jue-qian-chang-zhe-zhi/">文本主题挖掘浅尝辄止</a>
-      </li>
-    
-      <li class="post">
         <a href="/blog/2020/11/20/sparksqlru-men-he-jin-jie/">SparkSQL入门和进阶</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2020/02/16/gao-deng-shu-li-tong-ji-xue-qian-yan-zhai-lu/">高等数理统计学前言摘录</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/27/%5B%3F%5D-xie-guan-yu-rnnhe-lstmhe-grude-yue-du-cai-liao/">一些关于RNN和LSTM和GRU的阅读材料</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/27/ru-he-cha-kan-linuxzhong-de-nei-cun-zhan-yong-qing-kuang/">如何查看Linux中的内存占用情况</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/27/sparkzhong-pai-xu-shu-chu/">Spark中排序输出</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/14/data-science-at-the-command-line/">Data Science at the Command Line</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/14/gradient-boosting-algorithm/">Gradient Boosting Algorithm</a>
       </li>
     
   </ul>
@@ -308,7 +340,7 @@ Caused by: java.net.UnknownHostException: master: nodename nor servname provided
 <li class='category'><a href='/blog/categories/bigdata/'>BigData (11)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (7)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
-<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (20)</a></li>
+<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (16)</a></li>
 <li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (5)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (2)</a></li>
 <li class='category'><a href='/blog/categories/javascript/'>Javascript (4)</a></li>
@@ -319,7 +351,6 @@ Caused by: java.net.UnknownHostException: master: nodename nor servname provided
 <li class='category'><a href='/blog/categories/ruby/'>Ruby (1)</a></li>
 <li class='category'><a href='/blog/categories/scala/'>Scala (1)</a></li>
 <li class='category'><a href='/blog/categories/shell/'>Shell (12)</a></li>
-<li class='category'><a href='/blog/categories/yan-jiu-sheng/'>研究生 (2)</a></li>
 
   </ul>
 </section>
@@ -330,7 +361,7 @@ Caused by: java.net.UnknownHostException: master: nodename nor servname provided
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2020 - Steven Sun -
+  Copyright &copy; 2021 - Steven Sun -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

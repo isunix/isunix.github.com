@@ -9,9 +9,9 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="1
-ps -o pid,user,%mem,command ax | awk &#39;($3 &gt; 0){print}&#39; | sort -b -k3 -r 可以使用如上的命令来看那些占用了内存的程序，并且排序. 也可以将上上面的命令搞成一个alias: 1
-alias &hellip;">
+  <meta name="description" content="今天在本地起个pyspark 发现总是遇到 1
+Caused by: java.net.UnknownHostException: master: nodename nor servname provided, or not known
+尝试了设置 SPARK_HOME, HADOOP_HOME &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -101,7 +101,7 @@ alias &hellip;">
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2019/08/27/ru-he-cha-kan-linuxzhong-de-nei-cun-zhan-yong-qing-kuang/">如何查看Linux中的内存占用情况</a></h1>
+      <h1 class="entry-title"><a href="/blog/2019/07/30/macshang-dan-ji-qi-pysparkyu-dao-de-wen-ti-debug/">Mac上单机起PySpark遇到的问题debug</a></h1>
     
     
       <p class="meta">
@@ -117,113 +117,33 @@ alias &hellip;">
   
 
 
-<time datetime="2019-08-27T11:17:03+08:00" pubdate data-updated="true">2019 年8 月27 日</time>
+<time datetime="2019-07-30T10:38:15+08:00" pubdate data-updated="true">2019 年7 月30 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line">ps -o pid,user,%mem,command ax | awk <span class="s1">&#39;($3 &gt; 0){print}&#39;</span> | sort -b -k3 -r
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+  <div class="entry-content"><p>今天在本地起个<code>pyspark</code> 发现总是遇到</p>
 
-<p>可以使用如上的命令来看那些占用了内存的程序，并且排序.</p>
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">Caused by: java.net.UnknownHostException: master: nodename nor servname provided, or not known</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>尝试了设置 <code>SPARK_HOME</code>, <code>HADOOP_HOME</code> 等变量之后，依然不起作用。</p>
 
-<p>也可以将上上面的命令搞成一个alias:</p>
+<p>最后发现是要修改 <code>SPARK_HOME</code> 里面的配置文件<code>spark-env.sh</code></p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nb">alias </span><span class="nv">memcheck</span><span class="o">=</span><span class="s2">&quot;ps -o pid,user,%mem,command ax | awk &#39;(\$3 &gt; 0){print}&#39; | sort -b -k3 -r&quot;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2019/08/27/sparkzhong-pai-xu-shu-chu/">Spark中排序输出</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2019-08-27T10:11:02+08:00" pubdate data-updated="true">2019 年8 月27 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="c"># initialize pyspark</span>
-</span><span class="line"><span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
-</span><span class="line"><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-</span><span class="line"><span class="kn">import</span> <span class="nn">json</span>
-</span><span class="line"><span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">suppress</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-</span><span class="line">
-</span><span class="line"><span class="kn">import</span> <span class="nn">findspark</span>
-</span><span class="line"><span class="n">findspark</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
-</span><span class="line"><span class="kn">import</span> <span class="nn">pyspark</span>
-</span><span class="line">
-</span><span class="line"><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
-</span><span class="line"><span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span><span class="o">.</span><span class="n">builder</span> \
-</span><span class="line">    <span class="o">.</span><span class="n">appName</span><span class="p">(</span><span class="s">&#39;PySpark-Analysis&#39;</span><span class="p">)</span> \
-</span><span class="line">    <span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="s">&quot;spark.executor.memory&quot;</span><span class="p">,</span> <span class="s">&quot;3g&quot;</span><span class="p">)</span> \
-</span><span class="line">    <span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="s">&quot;spark.executor.cores&quot;</span><span class="p">,</span> <span class="s">&quot;8&quot;</span><span class="p">)</span> \
-</span><span class="line">    <span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
-</span><span class="line">
-</span><span class="line">
-</span><span class="line"><span class="kn">import</span> <span class="nn">os</span>
-</span><span class="line"><span class="n">folder</span> <span class="o">=</span> <span class="s">&quot;xxxx&quot;</span>
-</span><span class="line"><span class="n">filename</span> <span class="o">=</span> <span class="s">&quot;one-big.tsv&quot;</span>
-</span><span class="line"><span class="nb">file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
-</span><span class="line">
-</span><span class="line"><span class="n">df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="nb">file</span><span class="p">)</span><span class="o">.</span><span class="n">rdd</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">line</span><span class="p">:</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\t</span><span class="s">&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">toDF</span><span class="p">()</span>
-</span><span class="line">
-</span><span class="line"><span class="n">df</span><span class="o">.</span><span class="n">orderBy</span><span class="p">(</span><span class="s">&quot;_1&quot;</span><span class="p">,</span> <span class="s">&quot;_2&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">coalesce</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="o">.</span><span class="n">csv</span><span class="p">(</span><span class="s">&quot;xxx2&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s">&#39;</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">)</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nb">export </span><span class="nv">SPARK_MASTER_IP</span><span class="o">=</span>StevenMac
+</span><span class="line"><span class="nb">export </span><span class="nv">SPARK_LOCAL_IP</span><span class="o">=</span>StevenMac
 </span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>并且在<code>/etc/hosts</code> 文件中，加入如下的内容:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">127.0.0.1  StevenMac
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>Bingo!!!</p>
 
 </div>
   
@@ -237,7 +157,7 @@ alias &hellip;">
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2019/08/14/data-science-at-the-command-line/">Data Science at the Command Line</a></h1>
+      <h1 class="entry-title"><a href="/blog/2019/07/29/pythonzhong-bu-shu-chu-warningde-xin-xi/">Python中不输出warning的信息</a></h1>
     
     
       <p class="meta">
@@ -253,169 +173,67 @@ alias &hellip;">
   
 
 
-<time datetime="2019-08-14T14:13:16+08:00" pubdate data-updated="true">2019 年8 月14 日</time>
+<time datetime="2019-07-29T13:36:53+08:00" pubdate data-updated="true">2019 年7 月29 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>本文是关于如何使用命令行的方式，来更好的认识你的数据.</p>
+  <div class="entry-content"><p>我们在<code>Python</code> 代码中，如果不想输出一些warnings, 可以在代码的一开始，加入如下的代码，就可以了.</p>
 
-<h2 id="section">1. 常用的命令和工具:</h2>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="kn">import</span> <span class="nn">warnings</span>
+</span><span class="line"><span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s">&#39;ignore&#39;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>filterwarnings 函数可以带参数的，上述的方式是把所有的warnings都给ignore了.</p>
+</div>
+  
+  
 
-<ul>
-  <li>
-    <p>基本操作命令
-<code>sh
-cd, mv, cat, ls, wc, rm, sort, uniq, echo
-printf, pwd, mkdir, dirname, mktemp， find
-mail, sendmail, crontab, export, ps
-zip, du, df, tar, split
-exec, type, readlink
-</code></p>
-  </li>
-  <li>
-    <p>基本工具
-<code>sh
-grep, egrep, pcregrep, ack
-curl, wget
-ssh, tmux
-awk, sed
-</code></p>
-  </li>
-  <li>
-    <p>辅助命令
-<code>sh
-jq, git,
-man, tldr
-conda, pip
-</code></p>
-  </li>
-  <li>
-    <p>辅助工具
-<code>sh
-zsh, oh-my-zsh, sexy-bash-prompt
-</code></p>
-  </li>
-  <li>
-    <p>瑞士军刀
-  <code>sh
-  Perl
- </code></p>
-  </li>
-</ul>
 
-<h2 id="section-1">2. 一些应用场景:</h2>
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2019/07/24/vscode-remote-yuan-cheng-kai-fa-yu-diao-shi/">VScode Remote 远程开发与调试</a></h1>
+    
+    
+      <p class="meta">
+        
 
-<ul>
-  <li>
-    <p>使用 <code>split</code> 按照特定的行数或者大小，将一个文本进行分割
-<code>sh
-# Split a file, each split having 10 lines (except the last split)
-split -l 10 filename
-# plit a file with 512 bytes in each split
-split -b 512 filename
-</code></p>
-  </li>
-  <li>
-    <p>使用 <code>grep -x -f</code>  找到两个文件中的相同的行
-<code>sh
-grep -x -f  file1 file2
-</code></p>
-  </li>
-  <li>
-    <p>使用 <code>grep</code> 或者 <code>egrep</code> 或者 <code>pcregrep</code> 或者 <code>ack</code> 并且辅助以正则表达式， 进行复杂的文本搜索
-<code>sh
-# print file name with the corresponding line number for each match
-grep -Hn search_string path/to/file
-# invert match for excluding specific strings:
-grep -v search_string path/to/file
-# search in case-insensitive mode:
-grep -i search_string path/to/file
-# search consecutive 9 numbers
-grep -E '\d{9}' path/to/file
-# search consecutive 9 numbers and grab it
-grep -Eo '\d{9}' path/to/file
-# recursively search
-grep -eilr "\bamazfit\b\|\bwatch\b" path/to/dir
-</code></p>
-  </li>
-  <li>
-    <p><code>ssh</code> 登陆远程机器并且同时运行远程操作命令
-<code>sh
-# ssh 远程执行命令
-ssh yyy@xxx.xxx.xxx.xxx "df -h"
-# ssh 使用key文件登陆， 并且做远程的端口转发
-ssh -L 9007:${hive_server} ${xiaomi_host} -N -i ${keyfile}
-</code></p>
-  </li>
-  <li>
-    <p><code>awk</code> 按照特定的分隔符，查看文本有多少列， 查看想要看的列，按照条件进行筛选
-<code>sh
-# 以空格做分隔符， 并且打印出第二列小于20的行
-awk '($2 &lt; 20){print}'
-# 以'#' 做分隔符， 并且打印出第二列小于20的行
-awk -F '#' '($2&gt;=8){print}'
-# 以',' 做分隔符， 并且打印出列数
-awk -F"," '{print NF}'
-# 有多个判断条件
-awk '{if ($4&lt;1 &amp;&amp; $4&gt;=0.85 &amp;&amp; $2 &gt;= 0.001) print $7}'
-</code></p>
-  </li>
-  <li>
-    <p><code>sort</code> 结合 <code>uniq</code> 去重
-<code>sh
-du -cks * | sort | uniq | wc -l
-</code></p>
-  </li>
-  <li>
-    <p><code>xargs</code> 传递参数
-<code>sh
-# xargs 结合 kill 来干掉进程
-ps auxww | grep file | grep -v grep | awk '{print $2}' | xargs kill -9
-# 删除找到的文件
-find . -name "*.txt" | xargs -I , rm -rf ,
-</code></p>
-  </li>
-  <li>
-    <p>使用 <code>jq</code> 命令来在命令行下更好的查看json文件
-<code>sh
-cat file.json | jq
-</code></p>
-  </li>
-  <li>
-    <p>非常好用的 <code>|</code>
-<code>sh
-xx | yy | zz | dd | ee | ff | gg | hh
-</code></p>
-  </li>
-</ul>
 
-<h2 id="section-2">3. 参考资料:</h2>
 
-<ul>
-  <li>
-    <p><a href="https://www.runoob.com/linux/linux-tutorial.html">Linux 菜鸟教程</a></p>
-  </li>
-  <li>
-    <p><a href="https://www.runoob.com/regexp/regexp-tutorial.html">正则表达式 - 教程</a></p>
-  </li>
-  <li>
-    <p><a href="https://github.com/alebcay/awesome-shell">Awesome-Shell</a></p>
-  </li>
-</ul>
 
-<p>参考链接:</p>
 
-<ul>
-  <li>
-    <p><a href="https://csvkit.readthedocs.io/en/latest/tutorial/1_getting_started.html#installing-csvkit">csvkit</a></p>
-  </li>
-  <li>
-    <p><a href="[https://www.datascienceatthecommandline.com](https://www.datascienceatthecommandline.com/)">Data Science at the Command Line</a></p>
-  </li>
-</ul>
+
+
+
+  
+
+
+<time datetime="2019-07-24T15:28:32+08:00" pubdate data-updated="true">2019 年7 月24 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>最近要给别的团队A，在AWS的EC2 上面去搭建一个算法的开发环境。鉴于自己之前在 AWS 上都是使用的Linux，在和团队A讨论了之后，最后决定建个Linux 的 EC2。 但是在基本的Python和数据分析和算法开发的环境都搭建好了之后，团队A的同学，又提了没有IDE, 影响效率。
+没有办法，得考虑是不是换个windows 的 EC2 了。这个时候 <code>VS Code Remote Development</code> comes to my rescue.</p>
+
+<p>可以参考下面的文章去看看怎么搞 <code>VS Code Remote Development</code>.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">https://code.visualstudio.com/docs/remote/remote-overview
+</span><span class="line">https://www.jianshu.com/p/0f2fb935a9a1</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>试用了下来， 感觉这个 <code>VS Code Remote Development</code> 是个神器啊.</p>
 
 </div>
   
@@ -441,15 +259,7 @@ xx | yy | zz | dd | ee | ff | gg | hh
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2020/12/13/pu-ju-lei-jian-jie/">谱聚类简介</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2020/12/13/zhu-cheng-fen-fen-xi-pca-jian-jie/">主成分分析-PCA-简介</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2020/12/13/xian-xing-pan-bie-fen-xi-jian-jie/">线性判别分析简介</a>
+        <a href="/blog/2021/01/04/jupytershang-shi-yong-matplotlibhua-tu-de-%5B%3F%5D-xie-you-yong-de-she-zhi/">Jupyter上使用matplotlib画图的一些有用的设置</a>
       </li>
     
       <li class="post">
@@ -461,23 +271,31 @@ xx | yy | zz | dd | ee | ff | gg | hh
       </li>
     
       <li class="post">
-        <a href="/blog/2020/12/06/ti-du-xia-jiang-fa-he-niu-dun-fa/">梯度下降法和牛顿法</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2020/12/06/xian-xing-gui-hua-de-dui-ou-wen-ti/">线性规划的对偶问题</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2020/11/30/dan-chun-xing-fa-jie-shao-he-pythondai-ma-shi-xian/">单纯形法介绍和Python代码实现</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2020/11/24/wen-ben-zhu-ti-wa-jue-qian-chang-zhe-zhi/">文本主题挖掘浅尝辄止</a>
-      </li>
-    
-      <li class="post">
         <a href="/blog/2020/11/20/sparksqlru-men-he-jin-jie/">SparkSQL入门和进阶</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2020/02/16/gao-deng-shu-li-tong-ji-xue-qian-yan-zhai-lu/">高等数理统计学前言摘录</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/27/%5B%3F%5D-xie-guan-yu-rnnhe-lstmhe-grude-yue-du-cai-liao/">一些关于RNN和LSTM和GRU的阅读材料</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/27/ru-he-cha-kan-linuxzhong-de-nei-cun-zhan-yong-qing-kuang/">如何查看Linux中的内存占用情况</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/27/sparkzhong-pai-xu-shu-chu/">Spark中排序输出</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/14/data-science-at-the-command-line/">Data Science at the Command Line</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/14/gradient-boosting-algorithm/">Gradient Boosting Algorithm</a>
       </li>
     
   </ul>
@@ -490,7 +308,7 @@ xx | yy | zz | dd | ee | ff | gg | hh
 <li class='category'><a href='/blog/categories/bigdata/'>BigData (11)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (7)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
-<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (20)</a></li>
+<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (16)</a></li>
 <li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (5)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (2)</a></li>
 <li class='category'><a href='/blog/categories/javascript/'>Javascript (4)</a></li>
@@ -501,7 +319,6 @@ xx | yy | zz | dd | ee | ff | gg | hh
 <li class='category'><a href='/blog/categories/ruby/'>Ruby (1)</a></li>
 <li class='category'><a href='/blog/categories/scala/'>Scala (1)</a></li>
 <li class='category'><a href='/blog/categories/shell/'>Shell (12)</a></li>
-<li class='category'><a href='/blog/categories/yan-jiu-sheng/'>研究生 (2)</a></li>
 
   </ul>
 </section>
@@ -512,7 +329,7 @@ xx | yy | zz | dd | ee | ff | gg | hh
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2020 - Steven Sun -
+  Copyright &copy; 2021 - Steven Sun -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

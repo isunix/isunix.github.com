@@ -9,7 +9,8 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="常用的函数： select、lit、as、groupBy、agg、sum、as、where、withColumn、 col、 when、 otherwise、 join、withColumnRenamed、 isin、 cast、 $、 union、 gt、 struct、sort、desc、 &hellip;">
+  <meta name="description" content="想要了解xgboost，至少需要了解以下的一些概念：
+梯度, Boosting, 分类器, 决策树, 概率分布, CART, 损失函数, 分裂准则, 加法模型, 叶子节点, 分裂点, 学习率, 分类, 回归, 初始化, 泰勒公式, 贪心法, 信息增益, 信息增益比, 特征, 特征值, 直方图算法 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -99,7 +100,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2020/11/20/sparksqlru-men-he-jin-jie/">SparkSQL入门和进阶</a></h1>
+      <h1 class="entry-title"><a href="/blog/2019/08/14/gradient-boosting-algorithm/">Gradient Boosting Algorithm</a></h1>
     
     
       <p class="meta">
@@ -115,48 +116,68 @@
   
 
 
-<time datetime="2020-11-20T22:08:55+08:00" pubdate data-updated="true">2020 年11 月20 日</time>
+<time datetime="2019-08-14T13:51:36+08:00" pubdate data-updated="true">2019 年8 月14 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><h2 id="section">常用的函数：</h2>
+  <div class="entry-content"><h2 id="xgboost">想要了解xgboost，至少需要了解以下的一些概念：</h2>
+<p><code>梯度</code>, <code>Boosting</code>, <code>分类器</code>, <code>决策树</code>, <code>概率分布</code>, <code>CART</code>, <code>损失函数</code>, <code>分裂准则</code>, <code>加法模型</code>, <code>叶子节点</code>, <code>分裂点</code>, <code>学习率</code>, <code>分类</code>, <code>回归</code>, <code>初始化</code>, <code>泰勒公式</code>, <code>贪心法</code>, <code>信息增益</code>, <code>信息增益比</code>, <code>特征</code>, <code>特征值</code>, <code>直方图算法</code>, <code>DenseVector</code>, <code>凸函数</code>, <code>弱学习器</code>, <code>强学习器</code></p>
 
-<p><code>select</code>、<code>lit</code>、<code>as</code>、<code>groupBy</code>、<code>agg</code>、<code>sum</code>、<code>as</code>、<code>where</code>、<code>withColumn</code>、 <code>col</code>、 <code>when</code>、 <code>otherwise</code>、 <code>join</code>、<code>withColumnRenamed</code>、 <code>isin</code>、 <code>cast</code>、 <code>$</code>、 <code>union</code>、 <code>gt</code>、 <code>struct</code>、<code>sort</code>、<code>desc</code>、<code>show</code>、<code>orderBy</code>、<code>asc</code>、<code>repartition</code>、<code>sortWithinPartitions</code>、<code>filter</code>、<code>selectExpr</code>、<code>pivot</code>、<code>expr</code>、<code>row_number</code>、<code>over</code>、 <code>partitionBy</code></p>
+<h2 id="gradient-boosting-algorithm-">Gradient Boosting Algorithm 算法参考链接：</h2>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-</pre></td><td class="code"><pre><code class="scala"><span class="line"><span class="n">df</span>
-</span><span class="line"><span class="o">.</span><span class="n">select</span><span class="o">(</span><span class="n">$</span><span class="s">&quot;id&quot;</span><span class="o">,</span><span class="n">lit</span><span class="o">(</span><span class="mi">1</span><span class="o">).</span><span class="n">as</span><span class="o">(</span><span class="s">&quot;cnt&quot;</span><span class="o">))</span>
-</span><span class="line"><span class="o">.</span><span class="n">groupBy</span><span class="o">(</span><span class="s">&quot;idd&quot;</span><span class="o">)</span>
-</span><span class="line"><span class="o">.</span><span class="n">agg</span><span class="o">(</span><span class="n">sum</span><span class="o">(</span><span class="s">&quot;cnt&quot;</span><span class="o">).</span><span class="n">as</span><span class="o">(</span><span class="s">&quot;total&quot;</span><span class="o">))</span>
-</span><span class="line"><span class="o">.</span><span class="n">where</span><span class="o">(</span><span class="s">&quot;total &gt;=&quot;</span> <span class="o">+</span> <span class="n">cnt2</span><span class="o">)</span>
-</span><span class="line"><span class="o">.</span><span class="n">select</span><span class="o">(</span><span class="s">&quot;uid&quot;</span><span class="o">,</span><span class="s">&quot;total&quot;</span><span class="o">)</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<h2 id="udf">UDF：</h2>
-
-<p><code>spark.udf.register
-</code></p>
-
-<h2 id="section-1">参考链接:</h2>
 <ul>
-  <li><a href="https://blog.csdn.net/weixin_40652340/article/details/79207455">SparkSQL DSL开发
-</a></li>
-  <li><a href="http://spark.apache.org/docs/latest/api/scala/org/apache/spark/sql/Column.html">Column</a></li>
-  <li><a href="http://spark.apache.org/docs/latest/api/scala/org/apache/spark/sql/Dataset.html">Dataset</a></li>
-  <li><a href="http://spark.apache.org/docs/latest/api/scala/org/apache/spark/sql/functions\$.html">functions</a></li>
-  <li><a href="http://spark.apache.org/docs/latest/api/scala/org/apache/spark/sql/index.html\#DataFrame=org.apache.spark.sql.Dataset\[org.apache.spark.sql.Row\]">sql</a></li>
-  <li><a href="https://spark.apache.org/docs/latest/sql-ref-functions-udf-scalar.html">Scalar User Defined Functions (UDFs)
-</a></li>
-  <li><a href="https://www.cnblogs.com/Diyo/p/11410895.html">SparkSQL DSL 随便写写</a></li>
-  <li><a href="https://blog.csdn.net/weixin_42419342/article/details/108918139?utm_medium=distribute.pc_aggpage_search_result.none-task-blog-2~all~sobaiduend\~default-2-108918139.nonecase&amp;utm_term=sparksql中dsl&amp;spm=1000.2123.3001.4430">SparkSQL案例——用SQL和DSL两种语法格式，求出用户连续登录天数
+  <li><a href="https://arxiv.org/pdf/1603.02754v1.pdf">XGBoost: A Scalable Tree Boosting System</a></li>
+  <li><a href="https://www.analyticsvidhya.com/blog/2017/06/which-algorithm-takes-the-crown-light-gbm-vs-xgboost/">Which algorithm takes the crown: Light GBM vs XGBOOST?</a></li>
+  <li><a href="https://www.analyticsvidhya.com/blog/2015/09/complete-guide-boosting-methods/">Learn Gradient Boosting Algorithm for better predictions (with codes in R)</a></li>
+  <li><a href="https://www.analyticsvidhya.com/blog/2015/05/boosting-algorithms-simplified/">Getting smart with Machine Learning – AdaBoost and Gradient Boost</a></li>
+  <li><a href="https://www.analyticsvidhya.com/blog/2015/11/quick-introduction-boosting-algorithms-machine-learning/">Quick Introduction to Boosting Algorithms in Machine Learning</a></li>
+  <li><a href="https://www.analyticsvidhya.com/blog/2016/02/complete-guide-parameter-tuning-gradient-boosting-gbm-python/">Complete Machine Learning Guide to Parameter Tuning in Gradient Boosting (GBM) in Python</a></li>
+  <li><a href="https://www.analyticsvidhya.com/blog/2016/03/complete-guide-parameter-tuning-xgboost-with-codes-python/">Complete Guide to Parameter Tuning in XGBoost with codes in Python</a></li>
+  <li><a href="https://segmentfault.com/a/1190000014040317">XGboost数据比赛实战之调参篇</a></li>
+  <li><a href="http://www.sohu.com/a/226265476_609569">通俗的将Xgboost的原理讲明白</a></li>
+  <li><a href="https://blog.csdn.net/app_12062011/article/details/52136117">决策树</a> 和 <a href="https://blog.csdn.net/zhaocj/article/details/50503450">决策树源码剖析</a></li>
+  <li><a href="[http://matafight.github.io/2017/03/14/XGBoost-%E7%AE%80%E4%BB%8B/](http://matafight.github.io/2017/03/14/XGBoost-简介/)">XGBoost 笔记</a></li>
+  <li><a href="https://blog.csdn.net/liuzonghao88/article/details/88808408">XGBoost如何避免过拟合</a></li>
+  <li><a href="https://blog.csdn.net/u012735708/article/details/83651832">XGBoost调参笔记</a></li>
+  <li><a href="https://blog.csdn.net/a358463121/article/details/68617389">xgboost中的数学原理</a></li>
+  <li><a href="https://blog.csdn.net/sb19931201/article/details/52557382">xgboost入门与实战</a></li>
+  <li><a href="https://blog.csdn.net/xiaocong1990/article/details/55107239">XGBoost参数调优</a></li>
+  <li><a href="https://blog.csdn.net/Totoro1745/article/details/53328725">xgboost：一个纯小白的学习历程</a></li>
+  <li><a href="https://blog.csdn.net/github_38414650/article/details/76061893">通俗、有逻辑的写一篇说下Xgboost的原理</a></li>
+  <li><a href="https://towardsdatascience.com/boosting-algorithm-gbm-97737c63daa3">Boosting algorithm: GBM</a></li>
+  <li><a href="https://www.imooc.com/article/43784?block_id=tuijian_wz">LightGBM 调参方法</a></li>
+  <li><a href="https://www.kaggle.com/c/LANL-Earthquake-Prediction/discussion/89909">Good summary of XGBoost vs CatBoost vs LightGBM</a></li>
+  <li><a href="https://www.kaggle.com/samratp/lightgbm-xgboost-catboost">LightGBM + XGBoost + Catboost</a></li>
+  <li><a href="https://datascience.stackexchange.com/questions/49567/lightgbm-vs-xgboost-vs-catboost">lightgbm-vs-xgboost-vs-catboost</a></li>
+  <li><a href="https://medium.com/kaggle-nyc/gradient-boosting-decision-trees-xgboost-vs-lightgbm-and-catboost-72df6979e0bb">Gradient Boosting Decision trees: XGBoost vs LightGBM (and catboost)</a></li>
+  <li><a href="https://towardsdatascience.com/catboost-vs-light-gbm-vs-xgboost-5f93620723db">CatBoost vs. Light GBM vs. XGBoost</a></li>
+  <li><a href="https://blog.csdn.net/LrS62520kV/article/details/79620615">CatBoost vs. Light GBM vs. XGBoost 的中文翻译</a></li>
+  <li><a href="https://stackoverflow.com/questions/44937698/lightgbm-oserror-library-not-loaded">关于lightgbm的安装</a></li>
+  <li><a href="https://towardsdatascience.com/custom-loss-functions-for-gradient-boosting-f79c1b40466d">Custom Loss Functions for Gradient Boosting</a></li>
+  <li><a href="https://github.com/Microsoft/LightGBM/blob/master/examples/README.md#machine-learning-challenge-winning-solutions">machine-learning-challenge-winning-solutions-lightgbm-winned</a></li>
+  <li><a href="https://www.jianshu.com/p/b4ac0596e5ef">LightGBM 如何调参</a></li>
+  <li><a href="https://www.cnblogs.com/ljygoodgoodstudydaydayup/p/6665239.html">xgboost调参</a></li>
+  <li><a href="https://zhuanlan.zhihu.com/p/57601606">为什么负梯度是函数值减小的最快方向</a></li>
+  <li><a href="https://blog.csdn.net/qq_22238533/article/details/79185969">GBDT原理与Sklearn源码分析-回归篇</a></li>
+  <li><a href="https://blog.csdn.net/qq_22238533/article/details/79192579?utm_medium=distribute.pc_relevant.none-task-blog-title-6&amp;spm=1001.2101.3001.4242">GBDT原理与Sklearn源码分析-分类篇</a></li>
+  <li><a href="https://blog.csdn.net/qq_22238533/article/details/79199605">GBDT原理与实践-多分类篇</a></li>
+  <li><a href="https://cloud.tencent.com/developer/article/1513111">XGBoost超详细推导，终于有人讲明白了</a></li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>[珍藏版</td>
+          <td>20道XGBoost面试题](https://mp.weixin.qq.com/s?__biz=MzI1MzY0MzE4Mg==&amp;mid=2247485159&amp;idx=1&amp;sn=d429aac8370ca5127e1e786995d4e8ec&amp;chksm=e9d01626dea79f30043ab80652c4a859760c1ebc0d602e58e13490bf525ad7608a9610495b3d&amp;scene=21#wechat_redirect)</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li><a href="https://en.wikipedia.org/wiki/Gradient_boosting">Gradient boosting wiki Page</a></li>
+  <li><a href="http://link.zhihu.com/?target=http%3A//www.saedsayad.com/docs/xgboost.pdf">xgboost introduction by xgboost-R’s author</a></li>
+  <li><a href="https://blog.csdn.net/zpalyq110/article/details/79527653">GBDT算法原理以及实例理解 - 非常好
 </a></li>
 </ul>
 </div>
@@ -171,7 +192,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2020/02/16/gao-deng-shu-li-tong-ji-xue-qian-yan-zhai-lu/">高等数理统计学前言摘录</a></h1>
+      <h1 class="entry-title"><a href="/blog/2019/08/07/guan-yu-pzhi/">关于P值</a></h1>
     
     
       <p class="meta">
@@ -187,24 +208,17 @@
   
 
 
-<time datetime="2020-02-16T10:41:40+08:00" pubdate data-updated="true">2020 年2 月16 日</time>
+<time datetime="2019-08-07T13:45:59+08:00" pubdate data-updated="true">2019 年8 月7 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>陈希孺在他的«高等数理统计学»一书的前言中, 关于学习方法的建议，真的让人十分认同。 我们自己或者观察别人就会发现，很多时候对一个概念的理解很肤浅，又或者以为对理论的内容已经知道了，但是要做题或者真的上手的时候，有会不知从何下手。 现在将陈希孺的建议摘抄在下面， 以供自勉。</p>
+  <div class="entry-content"><p>参考链接:</p>
 
-<p>书中习题及提示占了近半的篇幅，从写作时间言，则占了四分之三以上. 总计得题五百，若计小题，则不止千数. 其中除少量选摘自有关著作外，大半属作者自创. 有时一题之设，累日始成，可以说倾注了不少心力. 这样做完全是因为，多做习题，尤其是多做难题，对掌握并熟练数理统计学基本的论证方法和技巧，有着不可替代的重要性. 如果通过一门基础课的学习，只是记住了若干概念，背了几个定理，而未能在这方面有所长进，那就真是”入宝山而空返”了. 技巧的熟练固非一日之功，但取法乎上，仅得乎中，必须在开始学基础课时就设定一个高目标. 日后进入研究工作，克服难点的能力如何，相当一部分就取决于在这上面修为的深浅了. 同时，经验表明，在打基础的阶段因忽视习题而导致素质上的缺陷，在日后不易弥补，或事倍功半.</p>
+<p><a href="https://towardsdatascience.com/p-values-explained-by-data-scientist-f40a746cfc8">p值是什么？数据科学家用最简单的方式告诉你</a></p>
 
-<p>笔者在学生时代及其后的几年中，对做习题未给予足够重视. 当时误认为做题费时间，不增长新知识，不如多读些书，占得实地. 以后试做研究工作，就日渐感到其不良后果，表现在碰到问题办法少，容易钻死胡同，克服难点的能力弱，以致对自己缺乏信心. 对许多方法，都似雾里看花，似曾识面，而不能切实掌握和灵活运用. 有如十八般兵器，样样都见过，但拿到手里，就使不动或很笨拙. 欲以此克敌制胜，自难有成. 以后稍明白了这一点，做了些亡羊之补，终究晚了一些，所谓”困而学之，又其次也”. “熟能生巧”，前人的经验不诬. 而要达到”熟”，舍大量做题，无他捷径可循. 几十年来，审了大量的杂志稿件，每见某些工作，由于未经深思，为一个并不难克服之点加上了若干不必需的繁复条件，从而使整个工作流于肤浅. 这根子，大略也在于早先在习题上下的工夫不够，以致难以产生别出心裁的想法.</p>
-
-<p>以本书的习题量，要求学员在课程时间范围内做完，恐不现实. 但作者本意并非把这一组题全作为课内习题，而是把它作为”打基础”这个工作的一环，一两年、两三年完成都可以，有空就做一点. 根据题的难易，将其分为三类：加”*“号的难度较大，加””号的相对容易，教师可考虑作为课外作业;不加任何记号的，其难度介乎二者之间. 对自学者、已经研究生毕业的青年教师和研究者，可利用这组题测试一下自己解题的能力如何. 可能会有一种意见，认为这组题过于偏难. 作为课程作业，这的确如此. 但笔者觉得，从”打基础”，锻炼技巧和提高能力诸目标看，非做难题不行，这道理正如训练运动员要加大运动量，做高难动作，不然，在训练的过程中舒服了，就别指望出好成绩.</p>
-
-<p>各题都有详细提示，大多数较难的题都给出了完整解答. 这是因为，鉴于这些题的难度，需要有一个解答文本在，以作为依据. 对读者而言，笔者切望这部分是备而不用、备而少用. 如碰到一个题一时做不出来，宁肯暂时搁一搁，也不要轻易翻看解答. 譬如登山，经过艰苦努力上了峰顶，自有其乐趣和成就感. 反之，如在未尽全力之前就任人抬上去，则不惟无益，实足以挫折信心.</p>
-
-<p>以上就习题一事唠叨了半天，读者也许烦了，就此打住. 千言万语，归结到一点：希望大家多做题，做难题. “千里之行，始于足下”，就从今日开始吧!</p>
 </div>
   
   
@@ -217,7 +231,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2019/08/27/%5B%3F%5D-xie-guan-yu-rnnhe-lstmhe-grude-yue-du-cai-liao/">一些关于RNN和LSTM和GRU的阅读材料</a></h1>
+      <h1 class="entry-title"><a href="/blog/2019/08/01/shi-yong-sparkde-mllibjin-xing-ji-qi-xue-xi/">使用Spark的MLlib进行机器学习</a></h1>
     
     
       <p class="meta">
@@ -233,55 +247,64 @@
   
 
 
-<time datetime="2019-08-27T15:40:38+08:00" pubdate data-updated="true">2019 年8 月27 日</time>
+<time datetime="2019-08-01T17:55:54+08:00" pubdate data-updated="true">2019 年8 月1 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p><a href="https://towardsdatascience.com/illustrated-guide-to-recurrent-neural-networks-79e5eb8049c9">Illustrated Guide to Recurrent Neural Networks</a></p>
+  <div class="entry-content"><p>1.比如我们有个 case class</p>
 
-<p><a href="https://towardsdatascience.com/illustrated-guide-to-lstms-and-gru-s-a-step-by-step-explanation-44e9eb85bf21">Illustrated Guide to LSTM’s and GRU’s: A step by step explanation</a></p>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="scala"><span class="line"><span class="k">case</span> <span class="k">class</span> <span class="nc">CaseClassTest</span><span class="o">(</span><span class="n">user</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">name</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p><a href="https://zhuanlan.zhihu.com/p/37204589">直觉理解LSTM和GRU</a></p>
+<p>我们通过使用<code>mapPartitions</code>来进行操作， 注意此处<code>mapPartitions</code>的用法:</p>
 
-<p><a href="https://zhuanlan.zhihu.com/p/28687529">RNN梯度消失和爆炸的原因</a></p>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+</pre></td><td class="code"><pre><code class="scala"><span class="line"><span class="k">val</span> <span class="n">mapResult</span> <span class="k">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">textFile</span><span class="o">(</span><span class="n">input</span><span class="o">).</span><span class="n">map</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="n">split</span><span class="o">(</span><span class="s">&quot;\t&quot;</span><span class="o">)).</span><span class="n">mapPartitions</span> <span class="o">{</span>
+</span><span class="line">      <span class="n">iter</span> <span class="k">=&gt;</span>
+</span><span class="line">        <span class="n">iter</span><span class="o">.</span><span class="n">map</span> <span class="o">{</span>
+</span><span class="line">          <span class="n">iterms</span> <span class="k">=&gt;</span> <span class="nc">CaseClassTest</span><span class="o">(</span><span class="n">iterms</span><span class="o">(</span><span class="mi">0</span><span class="o">),</span> <span class="n">iterms</span><span class="o">(</span><span class="mi">1</span><span class="o">))</span>
+</span><span class="line">        <span class="o">}</span>
+</span><span class="line">    <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p><a href="https://zhuanlan.zhihu.com/p/28749444">LSTM如何解决梯度消失问题</a></p>
+<p>2.reduceByKey<code>  和 </code>case` 的用法</p>
 
-<p><a href="https://zhuanlan.zhihu.com/p/32481747">人人都能看懂的GRU</a></p>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class="scala"><span class="line"><span class="k">val</span> <span class="n">data</span> <span class="k">=</span> <span class="n">gowalla</span><span class="o">.</span><span class="n">map</span> <span class="o">{</span>
+</span><span class="line">      <span class="n">check</span><span class="k">:</span> <span class="kt">CheckIn</span> <span class="o">=&gt;</span> <span class="o">(</span><span class="n">check</span><span class="o">.</span><span class="n">user</span><span class="o">,</span> <span class="o">(</span><span class="mi">1L</span><span class="o">,</span> <span class="nc">Set</span><span class="o">(</span><span class="n">check</span><span class="o">.</span><span class="n">time</span><span class="o">),</span> <span class="nc">Set</span><span class="o">(</span><span class="n">check</span><span class="o">.</span><span class="n">location</span><span class="o">)))</span>
+</span><span class="line">    <span class="o">}.</span><span class="n">rdd</span><span class="o">.</span><span class="n">reduceByKey</span><span class="o">{</span>
+</span><span class="line">      <span class="k">case</span> <span class="o">(</span><span class="n">left</span><span class="o">,</span> <span class="n">right</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="o">(</span><span class="n">left</span><span class="o">.</span><span class="n">_1</span> <span class="o">+</span> <span class="n">right</span><span class="o">.</span><span class="n">_1</span><span class="o">,</span> <span class="n">left</span><span class="o">.</span><span class="n">_2</span><span class="o">.</span><span class="n">union</span><span class="o">(</span><span class="n">right</span><span class="o">.</span><span class="n">_2</span><span class="o">),</span><span class="n">left</span><span class="o">.</span><span class="n">_3</span><span class="o">.</span><span class="n">union</span><span class="o">(</span><span class="n">right</span><span class="o">.</span><span class="n">_3</span><span class="o">))</span>
+</span><span class="line">    <span class="o">}.</span><span class="n">map</span><span class="o">{</span>
+</span><span class="line">      <span class="k">case</span> <span class="o">(</span><span class="k">_</span><span class="o">,</span> <span class="o">(</span><span class="n">checkins</span><span class="o">,</span> <span class="n">days</span><span class="k">:</span><span class="kt">Set</span><span class="o">[</span><span class="kt">String</span><span class="o">],</span> <span class="n">locations</span><span class="k">:</span><span class="kt">Set</span><span class="o">[</span><span class="kt">String</span><span class="o">]))</span> <span class="k">=&gt;</span>
+</span><span class="line">        <span class="nc">Vectors</span><span class="o">.</span><span class="n">dense</span><span class="o">(</span><span class="n">checkins</span><span class="o">.</span><span class="n">toDouble</span><span class="o">,</span> <span class="n">days</span><span class="o">.</span><span class="n">size</span><span class="o">.</span><span class="n">toDouble</span><span class="o">,</span> <span class="n">locations</span><span class="o">.</span><span class="n">size</span><span class="o">.</span><span class="n">toDouble</span><span class="o">)</span>
+</span><span class="line">        <span class="c1">//次数，天数，地点数</span>
+</span><span class="line">    <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p><a href="https://zhuanlan.zhihu.com/p/32085405">人人都能看懂的LSTM</a></p>
+<p><code>reduceByKey</code> 这里是求 <code>(1L, Set(check.time), Set(check.location))</code> 中的一个元素累加，第二个元素求并集，第三个元素也是求并集. <code>case</code> 的作用是让输入符合规范； 注意在 <code>map</code> 中，我们可以限定指示变量的类型， 比如这里的 <code>check: CheckIn =&gt;</code></p>
 
-<p><a href="http://kyonhuang.top/Andrew-Ng-Deep-Learning-notes/#/Sequence_Models/循环序列模型">循环序列模型</a></p>
+<h4 id="section">参考</h4>
 
-<p><a href="http://www.ai-start.com/dl2017/html/lesson5-week1.html">第五门课 序列模型(Sequence Models)</a></p>
-
-<p><a href="https://machinelearningmastery.com/time-series-prediction-lstm-recurrent-neural-networks-python-keras/">Time Series Prediction with LSTM Recurrent Neural Networks in Python with Keras</a></p>
-
-<p><a href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/">Understanding LSTM Networks</a></p>
-
-<p><a href="http://www.wildml.com/2015/10/recurrent-neural-network-tutorial-part-4-implementing-a-grulstm-rnn-with-python-and-theano/">Implementing a GRU/LSTM RNN with Python and Theano</a></p>
-
-<p><a href="http://www.wildml.com/2015/09/recurrent-neural-networks-tutorial-part-1-introduction-to-rnns/">Introduction to RNNs</a></p>
-
-<p><a href="http://www.wildml.com/2015/09/implementing-a-neural-network-from-scratch/">Implementing a Neural Network from Scratch in Python</a></p>
-
-<p><a href="http://www.wildml.com/2015/09/speeding-up-your-neural-network-with-theano-and-the-gpu/">Speeding up your Neural Network with Theano and the GPU</a></p>
-
-<p><a href="http://cs231n.github.io/optimization-2/">CS231 On Gradients And BackPropagation</a></p>
-
-<p><a href="http://colah.github.io/posts/2015-08-Backprop/">Calculus on Computational Graphs: Backpropagation</a></p>
-
-<p><a href="http://neuralnetworksanddeeplearning.com/chap2.html">How the backpropagation algorithm works</a></p>
-
-<p><a href="http://cs231n.github.io/python-numpy-tutorial/">Numpy Tutorial From CS231</a></p>
-
-<p><a href="https://www.leiphone.com/news/201908/wq1m4fNK8LNuG0Rs.html">卷积神经网络数学原理解析</a></p>
-
-<p><a href="https://christophm.github.io/interpretable-ml-book/">Interpretable Machine Learning</a></p>
-
+<ol>
+  <li>Spark机器学习进阶实战</li>
+</ol>
 </div>
   
   
@@ -306,15 +329,7 @@
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2020/12/13/pu-ju-lei-jian-jie/">谱聚类简介</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2020/12/13/zhu-cheng-fen-fen-xi-pca-jian-jie/">主成分分析-PCA-简介</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2020/12/13/xian-xing-pan-bie-fen-xi-jian-jie/">线性判别分析简介</a>
+        <a href="/blog/2021/01/04/jupytershang-shi-yong-matplotlibhua-tu-de-%5B%3F%5D-xie-you-yong-de-she-zhi/">Jupyter上使用matplotlib画图的一些有用的设置</a>
       </li>
     
       <li class="post">
@@ -326,23 +341,31 @@
       </li>
     
       <li class="post">
-        <a href="/blog/2020/12/06/ti-du-xia-jiang-fa-he-niu-dun-fa/">梯度下降法和牛顿法</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2020/12/06/xian-xing-gui-hua-de-dui-ou-wen-ti/">线性规划的对偶问题</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2020/11/30/dan-chun-xing-fa-jie-shao-he-pythondai-ma-shi-xian/">单纯形法介绍和Python代码实现</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2020/11/24/wen-ben-zhu-ti-wa-jue-qian-chang-zhe-zhi/">文本主题挖掘浅尝辄止</a>
-      </li>
-    
-      <li class="post">
         <a href="/blog/2020/11/20/sparksqlru-men-he-jin-jie/">SparkSQL入门和进阶</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2020/02/16/gao-deng-shu-li-tong-ji-xue-qian-yan-zhai-lu/">高等数理统计学前言摘录</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/27/%5B%3F%5D-xie-guan-yu-rnnhe-lstmhe-grude-yue-du-cai-liao/">一些关于RNN和LSTM和GRU的阅读材料</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/27/ru-he-cha-kan-linuxzhong-de-nei-cun-zhan-yong-qing-kuang/">如何查看Linux中的内存占用情况</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/27/sparkzhong-pai-xu-shu-chu/">Spark中排序输出</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/14/data-science-at-the-command-line/">Data Science at the Command Line</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/14/gradient-boosting-algorithm/">Gradient Boosting Algorithm</a>
       </li>
     
   </ul>
@@ -355,7 +378,7 @@
 <li class='category'><a href='/blog/categories/bigdata/'>BigData (11)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (7)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
-<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (20)</a></li>
+<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (16)</a></li>
 <li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (5)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (2)</a></li>
 <li class='category'><a href='/blog/categories/javascript/'>Javascript (4)</a></li>
@@ -366,7 +389,6 @@
 <li class='category'><a href='/blog/categories/ruby/'>Ruby (1)</a></li>
 <li class='category'><a href='/blog/categories/scala/'>Scala (1)</a></li>
 <li class='category'><a href='/blog/categories/shell/'>Shell (12)</a></li>
-<li class='category'><a href='/blog/categories/yan-jiu-sheng/'>研究生 (2)</a></li>
 
   </ul>
 </section>
@@ -377,7 +399,7 @@
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2020 - Steven Sun -
+  Copyright &copy; 2021 - Steven Sun -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

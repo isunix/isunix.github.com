@@ -5,11 +5,13 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>单纯形法介绍和Python代码实现 - Steven's Blog</title>
+  <title>Jupyter上使用matplotlib画图的一些有用的设置 - Steven's Blog</title>
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="参考链接: 简单理解线性规划的单纯形算法 Linear Programming and Healthy Diets Linear Programming and the Simplex Algorithm ">
+  <meta name="description" content="我们在mac上使用jupyter的时候，用matplotlib画图，产出的图形的质量不是很高，可以在如下的文件中, 加上设置: ~/.ipython/profile_default/ipython_kernel_config.py 1
+2
+c.IPKernelApp.matplotlib =&# &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +20,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://isunix.github.io/blog/2020/11/30/dan-chun-xing-fa-jie-shao-he-pythondai-ma-shi-xian">
+  <link rel="canonical" href="http://isunix.github.io/blog/2021/01/04/jupytershang-shi-yong-matplotlibhua-tu-de-%5B%3F%5D-xie-you-yong-de-she-zhi">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Steven's Blog" type="application/atom+xml">
@@ -96,7 +98,7 @@
   
   <header>
     
-      <h1 class="entry-title">单纯形法介绍和Python代码实现</h1>
+      <h1 class="entry-title">Jupyter上使用matplotlib画图的一些有用的设置</h1>
     
     
       <p class="meta">
@@ -112,21 +114,30 @@
   
 
 
-<time datetime="2020-11-30T09:31:44+08:00" pubdate data-updated="true">2020 年11 月30 日</time>
+<time datetime="2021-01-04T09:41:29+08:00" pubdate data-updated="true">2021 年1 月4 日</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><h1 id="section">参考链接:</h1>
-<ul>
-  <li><a href="https://zhuanlan.zhihu.com/p/31644892">简单理解线性规划的单纯形算法</a></li>
-  <li><a href="https://jeremykun.com/2014/06/02/linear-programming-and-the-most-affordable-healthy-diet-part-1/">Linear Programming and Healthy Diets
-</a></li>
-  <li><a href="https://jeremykun.com/2014/12/01/linear-programming-and-the-simplex-algorithm/">Linear Programming and the Simplex Algorithm
-</a></li>
-</ul>
+<div class="entry-content"><p>我们在mac上使用jupyter的时候，用matplotlib画图，产出的图形的质量不是很高，可以在如下的文件中, 加上设置:</p>
+
+<p><code>~/.ipython/profile_default/ipython_kernel_config.py</code></p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">c</span><span class="o">.</span><span class="n">IPKernelApp</span><span class="o">.</span><span class="n">matplotlib</span> <span class="o">=</span><span class="s">&#39;inline&#39;</span>
+</span><span class="line"><span class="n">c</span><span class="o">.</span><span class="n">InlineBackend</span><span class="o">.</span><span class="n">figure_format</span> <span class="o">=</span><span class="s">&#39;retina&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>默认的matplotlib画图的样式不是很美观， 我们可以做出如下的设置:</p>
+
+<p><code>plt.style.use('seaborn')</code></p>
+
+<p>我们可以使用如下的命令查看都有哪些可供选择的style</p>
+
+<p><code>plt.style.available</code></p>
 </div>
 
 
@@ -149,7 +160,7 @@
   
 
 
-<time datetime="2020-11-30T09:31:44+08:00" pubdate data-updated="true">2020 年11 月30 日</time>
+<time datetime="2021-01-04T09:41:29+08:00" pubdate data-updated="true">2021 年1 月4 日</time>
       
 
 <span class="categories">
@@ -170,10 +181,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2020/11/24/wen-ben-zhu-ti-wa-jue-qian-chang-zhe-zhi/" title="Previous Post: 文本主题挖掘浅尝辄止">&laquo; 文本主题挖掘浅尝辄止</a>
+        <a class="basic-alignment left" href="/blog/2020/12/11/matplotlibhe-seabornshi-yong-fang-fa-ji-jin/" title="Previous Post: Matplotlib和Seaborn使用方法集锦">&laquo; Matplotlib和Seaborn使用方法集锦</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2020/12/06/xian-xing-gui-hua-de-dui-ou-wen-ti/" title="Next Post: 线性规划的对偶问题">线性规划的对偶问题 &raquo;</a>
       
     </p>
   </footer>
@@ -188,15 +197,7 @@
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2020/12/13/pu-ju-lei-jian-jie/">谱聚类简介</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2020/12/13/zhu-cheng-fen-fen-xi-pca-jian-jie/">主成分分析-PCA-简介</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2020/12/13/xian-xing-pan-bie-fen-xi-jian-jie/">线性判别分析简介</a>
+        <a href="/blog/2021/01/04/jupytershang-shi-yong-matplotlibhua-tu-de-%5B%3F%5D-xie-you-yong-de-she-zhi/">Jupyter上使用matplotlib画图的一些有用的设置</a>
       </li>
     
       <li class="post">
@@ -208,23 +209,31 @@
       </li>
     
       <li class="post">
-        <a href="/blog/2020/12/06/ti-du-xia-jiang-fa-he-niu-dun-fa/">梯度下降法和牛顿法</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2020/12/06/xian-xing-gui-hua-de-dui-ou-wen-ti/">线性规划的对偶问题</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2020/11/30/dan-chun-xing-fa-jie-shao-he-pythondai-ma-shi-xian/">单纯形法介绍和Python代码实现</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2020/11/24/wen-ben-zhu-ti-wa-jue-qian-chang-zhe-zhi/">文本主题挖掘浅尝辄止</a>
-      </li>
-    
-      <li class="post">
         <a href="/blog/2020/11/20/sparksqlru-men-he-jin-jie/">SparkSQL入门和进阶</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2020/02/16/gao-deng-shu-li-tong-ji-xue-qian-yan-zhai-lu/">高等数理统计学前言摘录</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/27/%5B%3F%5D-xie-guan-yu-rnnhe-lstmhe-grude-yue-du-cai-liao/">一些关于RNN和LSTM和GRU的阅读材料</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/27/ru-he-cha-kan-linuxzhong-de-nei-cun-zhan-yong-qing-kuang/">如何查看Linux中的内存占用情况</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/27/sparkzhong-pai-xu-shu-chu/">Spark中排序输出</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/14/data-science-at-the-command-line/">Data Science at the Command Line</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/14/gradient-boosting-algorithm/">Gradient Boosting Algorithm</a>
       </li>
     
   </ul>
@@ -237,7 +246,7 @@
 <li class='category'><a href='/blog/categories/bigdata/'>BigData (11)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (7)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
-<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (20)</a></li>
+<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (16)</a></li>
 <li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (5)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (2)</a></li>
 <li class='category'><a href='/blog/categories/javascript/'>Javascript (4)</a></li>
@@ -248,7 +257,6 @@
 <li class='category'><a href='/blog/categories/ruby/'>Ruby (1)</a></li>
 <li class='category'><a href='/blog/categories/scala/'>Scala (1)</a></li>
 <li class='category'><a href='/blog/categories/shell/'>Shell (12)</a></li>
-<li class='category'><a href='/blog/categories/yan-jiu-sheng/'>研究生 (2)</a></li>
 
   </ul>
 </section>
@@ -260,7 +268,7 @@
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2020 - Steven Sun -
+  Copyright &copy; 2021 - Steven Sun -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

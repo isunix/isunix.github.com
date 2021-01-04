@@ -9,7 +9,7 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="One of the best illustration of the use of select I read maybe from the book “data munging with perl”. Look at the the differences between the &hellip;">
+  <meta name="description" content="On the centos server, I want to install gnuplot in my local dir, here are the steps: download the source code and cd into the dir. ./configure – &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -99,7 +99,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/10/24/use-of-select-in-perl/">Use of Select in Perl</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/09/17/install-gnuplot-from-the-source-code/">Install Gnuplot From the Source Code</a></h1>
     
     
       <p class="meta">
@@ -115,90 +115,31 @@
   
 
 
-<time datetime="2014-10-24T13:34:51+08:00" pubdate data-updated="true">2014 年10 月24 日</time>
+<time datetime="2014-09-17T10:38:15+08:00" pubdate data-updated="true">2014 年9 月17 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>One of the best illustration of the use of select I read maybe from the book “data munging with perl”.   </p>
+  <div class="entry-content"><p>On the centos server, I want to install gnuplot in my local dir, here are the steps:  </p>
 
-<p>Look at the the differences between the following 3 ones.  </p>
+<ol>
+  <li>
+    <p>download the source code and cd into the dir.</p>
+  </li>
+  <li>
+    <p>./configure –prefix=$HOME/local –with-readline=gnu</p>
+  </li>
+  <li>
+    <p>make</p>
+  </li>
+  <li>
+    <p>make install</p>
+  </li>
+</ol>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">print</span><span class="p">;</span>
-</span><span class="line"><span class="k">print</span> <span class="n">LIST</span><span class="p">;</span>
-</span><span class="line"><span class="k">print</span> <span class="n">FILEHANDLE</span> <span class="n">LIST</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>For the first one “print”, since on target is specified, the contents of <code>$_</code> are printed to the default output file handle(usually STDOUT).    </p>
-
-<p>For the second one “print LIST”, the contents of LIST are printed to the default output file handle.  </p>
-
-<p>For the third one “print FILEHANDLE LIST”, the contents of LIST are printed to the specified file handle, “FILEHANDLE”.  </p>
-
-<p>If you call select with no parameters, it will return the name of the currently selected output file handle, so </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">print</span> <span class="nb">select</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>will normally print main::STDOUT.   </p>
-
-<p>If you call select with the name of a file handle, it will replace the current default output file handle with the new one. It returns the previously selected file handle so that you can store it and reset it later. If you
-need to write a lot of data to a particular file, you could use code like this:   </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nb">open</span> <span class="n">FILE</span><span class="p">,</span> <span class="s">&#39;&gt;out.txt&#39;</span> <span class="ow">or</span> <span class="nb">die</span> <span class="s">&quot;Can&#39;t open out.txt: $!&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">$old</span> <span class="o">=</span> <span class="nb">select</span> <span class="n">FILE</span><span class="p">;</span>
-</span><span class="line"><span class="k">foreach</span> <span class="p">(</span><span class="nv">@data</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">	<span class="k">print</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line"><span class="nb">select</span> <span class="nv">$old</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>Another variable that is useful when writing data is <code>$|</code>. Setting this variable to a nonzero value will force the output buffer to be flushed immediately after every print (or write) statement. This has the effect of making the output stream look as if it were unbuffered. This variable acts on the currently selected output file handle. If you want to unbuffer any other file handle, you will need to select it, change the value of <code>$|</code>, and then reselect the previous file handle using code like this:   </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">$file</span> <span class="o">=</span> <span class="nb">select</span> <span class="n">FILE</span><span class="p">;</span>
-</span><span class="line"><span class="vg">$|</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-</span><span class="line"><span class="nb">select</span> <span class="nv">$file</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>In its compact form, it can be written as:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nb">select</span><span class="p">((</span><span class="nb">select</span><span class="p">(</span><span class="n">FILE</span><span class="p">),</span> <span class="vg">$|</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>Finally we will take a look at an example,  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nb">open</span><span class="p">(</span><span class="n">FILE</span><span class="p">,</span><span class="s">&quot;&gt;./test.out&quot;</span><span class="p">);</span>
-</span><span class="line"><span class="nv">$oldHandle</span> <span class="o">=</span> <span class="nb">select</span><span class="p">(</span><span class="n">FILE</span><span class="p">);</span>
-</span><span class="line"><span class="k">print</span> <span class="nb">select</span><span class="p">;</span>
-</span><span class="line"><span class="k">print</span> <span class="s">&quot;This is sent to test.out.\n&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="nv">$second</span> <span class="o">=</span> <span class="nb">select</span><span class="p">(</span><span class="nv">$oldHandle</span><span class="p">);</span>
-</span><span class="line"><span class="k">print</span> <span class="s">&quot;to default stdout!\n&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="k">print</span> <span class="nv">$second</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>If you understand how “select” works, the output for this piece of code is quite obvious.  </p>
+<p>That is all. </p>
 </div>
   
   
@@ -211,7 +152,7 @@ need to write a lot of data to a particular file, you could use code like this: 
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/10/17/some-advanced-perl-tricks/">Some Advanced Perl Tricks</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/09/15/useful-links-for-learning-ml-and-spamassassin/">Useful Links for Learning ML and SpamAssassin</a></h1>
     
     
       <p class="meta">
@@ -227,82 +168,16 @@ need to write a lot of data to a particular file, you could use code like this: 
   
 
 
-<time datetime="2014-10-17T18:50:35+08:00" pubdate data-updated="true">2014 年10 月17 日</time>
+<time datetime="2014-09-15T10:32:36+08:00" pubdate data-updated="true">2014 年9 月15 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>I am taking notes of some of the advanced perl tricks used in perl.</p>
+  <div class="entry-content"><p>Below are some links I used while I am learning SpamAssassin and machine learning, of course including Bayes.</p>
 
-<p>1.to get all the matched items using the /g flag,</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">$_</span> <span class="o">=</span> <span class="s">&quot;Just another Perl hacker,&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">@words</span> <span class="o">=</span> <span class="sr">/(\S+)/g</span><span class="p">;</span> <span class="c1"># &quot;Just&quot; &quot;another&quot; &quot;Perl&quot; &quot;hacker,&quot;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>2.to get the word count,</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">$word_count</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=</span> <span class="sr">/(\S+)/g</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>3.The built-in pos() operator returns the match position for the string we give it (or $_ by default).</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">$_</span> <span class="o">=</span> <span class="s">&quot;just another perl hacker&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="sr">/(just)/g</span><span class="p">;</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">$pos</span> <span class="o">=</span> <span class="nb">pos</span><span class="p">();</span>
-</span><span class="line"><span class="k">print</span> <span class="s">&quot;[$1] ends at position $pos\n&quot;</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>4.To anchor our next match exactly where we left off the last time, we can use the \G anchor. It’s just like the beginning of string anchor \A, except for where \G anchors at the current match position. If our match fails, Perl resets pos() and we start at the beginning of the string.</p>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/10/17/a-perl-script-to-rename-file-names/">A Perl Script to Rename File Names</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-10-17T16:15:19+08:00" pubdate data-updated="true">2014 年10 月17 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I have some files with file name quite weird in the format, “[Alex_Holmes]_Hadoop_in_Practice(BookZZ.org).pdf
-“. What I want to achieve is removing the parts in the [] or ().  Here below is the perl script I wrote. </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
 <span class="line-number">3</span>
 <span class="line-number">4</span>
@@ -323,28 +198,159 @@ need to write a lot of data to a particular file, you could use code like this: 
 <span class="line-number">19</span>
 <span class="line-number">20</span>
 <span class="line-number">21</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="n">strict</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="n">warnings</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="nn">Data::</span><span class="n">Dumper</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="n">Cwd</span><span class="p">;</span>
+<span class="line-number">22</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">http://blog.sina.com.cn/s/blog_77dc7b520100pzwd.html
+</span><span class="line">http://spamassassin.apache.org/full/3.4.x/doc/Mail_SpamAssassin.html
+</span><span class="line">http://www.jb51.net/article/6214.htm
 </span><span class="line">
-</span><span class="line"><span class="k">my</span> <span class="nv">$target_dir</span> <span class="o">=</span> <span class="n">getcwd</span><span class="p">();</span>
+</span><span class="line">http://www.baidu.com/index.php?wd=%E8%B4%9D%E5%8F%B6%E6%96%AF&amp;rsv_spt=1&amp;issp=1&amp;rsv_bp=0&amp;ie=utf-8&amp;tn=monline_5_dg&amp;rsv_sug3=7&amp;rsv_sug4=171&amp;rsv_sug1=8&amp;oq=beiyes&amp;rsv_sug2=0&amp;f=3&amp;rsp=0&amp;inputT=6003
 </span><span class="line">
-</span><span class="line"><span class="nb">opendir</span><span class="p">(</span><span class="k">my</span> <span class="nv">$dh</span><span class="p">,</span> <span class="nv">$target_dir</span><span class="p">)</span> <span class="o">||</span> <span class="nb">die</span> <span class="s">&quot;can&#39;t opendir $target_dir: $!&quot;</span><span class="p">;</span>
+</span><span class="line">http://www.ruanyifeng.com/blog/2011/08/bayesian_inference_part_one.html
+</span><span class="line">http://mindhacks.cn/2008/09/21/the-magical-bayesian-method/
+</span><span class="line">http://mindhacks.cn/2008/09/11/machine-learning-and-ai-resources/
+</span><span class="line">http://en.wikipedia.org/wiki/Herbert_A._Simon
+</span><span class="line">http://en.wikipedia.org/wiki/Machine_learning
+</span><span class="line">http://en.wikipedia.org/wiki/Artificial_intelligence
+</span><span class="line">http://en.wikipedia.org/wiki/History_of_artificial_intelligence
+</span><span class="line">http://en.wikipedia.org/wiki/Unsupervised_learning
+</span><span class="line">http://www.yeeyan.org/articles/view/sylviaangel/9995
+</span><span class="line">http://blog.youxu.info/spell-correct.html
+</span><span class="line">http://en.wikipedia.org/wiki/Thomas_Bayes
+</span><span class="line">http://mindhacks.cn/2008/07/07/the-importance-of-knowing-why/
+</span><span class="line">http://blog.csdn.net/g9yuayon/article/details/2574781
+</span><span class="line">http://blog.csdn.net/pongba/article/details/2544933
+</span><span class="line">http://www.chinaunix.net/old_jh/14/412857.html
+</span><span class="line">http://blog.chinaunix.net/uid-10182882-id-2969692.html</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/12/static-variable-in-c/">Static Variable in C</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-12T18:18:08+08:00" pubdate data-updated="true">2014 年9 月12 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Static variables are the final type of variable available; these variables keep their value between calls to a function. About their effects, we will take a look at them through the following examples.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="cp">#include &lt;stdio.h&gt;</span>
 </span><span class="line">
-</span><span class="line"><span class="k">my</span> <span class="nv">@files</span> <span class="o">=</span> <span class="nb">grep</span> <span class="p">{</span> <span class="sr">/\w/</span> <span class="o">&amp;&amp;</span> <span class="o">-</span><span class="n">f</span> <span class="s">&quot;$_&quot;</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="sr">/^\./</span><span class="p">}</span> <span class="nb">readdir</span><span class="p">(</span><span class="nv">$dh</span><span class="p">);</span>
-</span><span class="line"><span class="c1"># [Alex_Holmes]_Hadoop_in_Practice(BookZZ.org).pdf</span>
-</span><span class="line"><span class="c1">#files not staring with &quot;.&quot; and contains char, thus (., .., .DS_STORE) will be ignored.</span>
-</span><span class="line"><span class="c1">#print Dumper @files;</span>
+</span><span class="line"><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
+</span><span class="line">    <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
 </span><span class="line">
-</span><span class="line"><span class="k">for</span><span class="p">(</span><span class="nv">@files</span><span class="p">){</span>
-</span><span class="line">    <span class="k">my</span> <span class="nv">$file</span> <span class="o">=</span> <span class="nv">$_</span><span class="p">;</span>
-</span><span class="line">    <span class="k">if</span><span class="p">(</span><span class="sr">/^(?:\[[\S\s]+\])([\S\s]+)(?:\([\S\s]+\))\.pdf$/</span><span class="p">){</span>
-</span><span class="line">        <span class="k">my</span> <span class="nv">$new_name</span> <span class="o">=</span> <span class="nv">$1</span><span class="o">.</span><span class="s">&quot;.pdf&quot;</span><span class="p">;</span>
-</span><span class="line">        <span class="nb">rename</span><span class="p">(</span><span class="s">&quot;$file&quot;</span><span class="p">,</span> <span class="s">&quot;$new_name&quot;</span><span class="p">)</span> <span class="o">||</span> <span class="nb">die</span><span class="p">(</span><span class="s">&quot;error in renaming: $!&quot;</span><span class="p">);</span>
-</span><span class="line">    <span class="p">}</span>
+</span><span class="line">    <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;=</span><span class="mi">10</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+</span><span class="line">      <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">return</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
 </span><span class="line"><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>We all know it will print out 1, 2, till 10.  </p>
+
+<p>If we change it a little bit, like thhis:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="cp">#include &lt;stdio.h&gt;</span>
+</span><span class="line">
+</span><span class="line"><span class="kt">int</span> <span class="nf">foo</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">    <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line">    <span class="k">return</span> <span class="o">++</span><span class="n">x</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
+</span><span class="line">    <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;=</span><span class="mi">10</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+</span><span class="line">        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">foo</span><span class="p">());</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">return</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>This program will print out 1, all 1.  </p>
+
+<p>What if we want to print out the “i” incrementally, we will use the static keyword.  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="cp">#include &lt;stdio.h&gt;</span>
+</span><span class="line">
+</span><span class="line"><span class="kt">int</span> <span class="nf">foo</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">    <span class="k">static</span> <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line">    <span class="k">return</span> <span class="o">++</span><span class="n">x</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
+</span><span class="line">    <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;=</span><span class="mi">10</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+</span><span class="line">        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">foo</span><span class="p">());</span>
+</span><span class="line">    <span class="k">return</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>This example is excerpted from the book “extending and embedding perl”.  </p>
+
 </div>
   
   
@@ -369,15 +375,7 @@ need to write a lot of data to a particular file, you could use code like this: 
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2020/12/13/pu-ju-lei-jian-jie/">谱聚类简介</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2020/12/13/zhu-cheng-fen-fen-xi-pca-jian-jie/">主成分分析-PCA-简介</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2020/12/13/xian-xing-pan-bie-fen-xi-jian-jie/">线性判别分析简介</a>
+        <a href="/blog/2021/01/04/jupytershang-shi-yong-matplotlibhua-tu-de-%5B%3F%5D-xie-you-yong-de-she-zhi/">Jupyter上使用matplotlib画图的一些有用的设置</a>
       </li>
     
       <li class="post">
@@ -389,23 +387,31 @@ need to write a lot of data to a particular file, you could use code like this: 
       </li>
     
       <li class="post">
-        <a href="/blog/2020/12/06/ti-du-xia-jiang-fa-he-niu-dun-fa/">梯度下降法和牛顿法</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2020/12/06/xian-xing-gui-hua-de-dui-ou-wen-ti/">线性规划的对偶问题</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2020/11/30/dan-chun-xing-fa-jie-shao-he-pythondai-ma-shi-xian/">单纯形法介绍和Python代码实现</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2020/11/24/wen-ben-zhu-ti-wa-jue-qian-chang-zhe-zhi/">文本主题挖掘浅尝辄止</a>
-      </li>
-    
-      <li class="post">
         <a href="/blog/2020/11/20/sparksqlru-men-he-jin-jie/">SparkSQL入门和进阶</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2020/02/16/gao-deng-shu-li-tong-ji-xue-qian-yan-zhai-lu/">高等数理统计学前言摘录</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/27/%5B%3F%5D-xie-guan-yu-rnnhe-lstmhe-grude-yue-du-cai-liao/">一些关于RNN和LSTM和GRU的阅读材料</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/27/ru-he-cha-kan-linuxzhong-de-nei-cun-zhan-yong-qing-kuang/">如何查看Linux中的内存占用情况</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/27/sparkzhong-pai-xu-shu-chu/">Spark中排序输出</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/14/data-science-at-the-command-line/">Data Science at the Command Line</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/14/gradient-boosting-algorithm/">Gradient Boosting Algorithm</a>
       </li>
     
   </ul>
@@ -418,7 +424,7 @@ need to write a lot of data to a particular file, you could use code like this: 
 <li class='category'><a href='/blog/categories/bigdata/'>BigData (11)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (7)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
-<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (20)</a></li>
+<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (16)</a></li>
 <li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (5)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (2)</a></li>
 <li class='category'><a href='/blog/categories/javascript/'>Javascript (4)</a></li>
@@ -429,7 +435,6 @@ need to write a lot of data to a particular file, you could use code like this: 
 <li class='category'><a href='/blog/categories/ruby/'>Ruby (1)</a></li>
 <li class='category'><a href='/blog/categories/scala/'>Scala (1)</a></li>
 <li class='category'><a href='/blog/categories/shell/'>Shell (12)</a></li>
-<li class='category'><a href='/blog/categories/yan-jiu-sheng/'>研究生 (2)</a></li>
 
   </ul>
 </section>
@@ -440,7 +445,7 @@ need to write a lot of data to a particular file, you could use code like this: 
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2020 - Steven Sun -
+  Copyright &copy; 2021 - Steven Sun -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

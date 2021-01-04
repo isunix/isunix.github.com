@@ -4,7 +4,7 @@
   <title><![CDATA[catogories：Data&ML&AI | Steven's Blog]]></title>
   <link href="http://isunix.github.io/blog/categories/data-and-ml-and-ai/atom.xml" rel="self"/>
   <link href="http://isunix.github.io/"/>
-  <updated>2020-12-13T19:49:57+08:00</updated>
+  <updated>2021-01-04T09:48:54+08:00</updated>
   <id>http://isunix.github.io/</id>
   <author>
     <name><![CDATA[Steven Sun]]></name>
@@ -14,77 +14,26 @@
 
   
   <entry>
-    <title type="html"><![CDATA[谱聚类简介]]></title>
-    <link href="http://isunix.github.io/blog/2020/12/13/pu-ju-lei-jian-jie/"/>
-    <updated>2020-12-13T16:48:11+08:00</updated>
-    <id>http://isunix.github.io/blog/2020/12/13/pu-ju-lei-jian-jie</id>
-    <content type="html"><![CDATA[<p>```
-假如我们的数据集是n维的，共有m个数据, 
-我们希望将这m个数据的维度从n维降到n’维，希望这m个n’维的数据集尽可能的代表原始数据集. </p>
+    <title type="html"><![CDATA[Jupyter上使用matplotlib画图的一些有用的设置]]></title>
+    <link href="http://isunix.github.io/blog/2021/01/04/jupytershang-shi-yong-matplotlibhua-tu-de-%5B%3F%5D-xie-you-yong-de-she-zhi/"/>
+    <updated>2021-01-04T09:41:29+08:00</updated>
+    <id>http://isunix.github.io/blog/2021/01/04/jupytershang-shi-yong-matplotlibhua-tu-de-[?]-xie-you-yong-de-she-zhi</id>
+    <content type="html"><![CDATA[<p>我们在mac上使用jupyter的时候，用matplotlib画图，产出的图形的质量不是很高，可以在如下的文件中, 加上设置:</p>
 
-<p>假设我们有这样的n’维的超平面，我们希望得到什么样的效果呢？</p>
+<p><code>~/.ipython/profile_default/ipython_kernel_config.py</code></p>
 
-<ol>
-  <li>样本点到这个超平面的距离足够近;</li>
-  <li>样本点在这个直线上的投影能尽可能的分开;</li>
-</ol>
+<p><code>py
+c.IPKernelApp.matplotlib ='inline' 
+c.InlineBackend.figure_format ='retina'
+</code></p>
 
-<p>基于上面这两种标准，我们可以得到如下的PCA的推导:</p>
+<p>默认的matplotlib画图的样式不是很美观， 我们可以做出如下的设置:</p>
 
-<ol>
-  <li>基于最小投影距离;</li>
-  <li>基于最大投影方差;
-```</li>
-</ol>
+<p><code>plt.style.use('seaborn')</code></p>
 
-<h3 id="section">参考资料:</h3>
+<p>我们可以使用如下的命令查看都有哪些可供选择的style</p>
 
-<p><a href="https://www.cnblogs.com/pinard/p/6239403.html">主成分分析（PCA）原理总结</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[主成分分析-PCA-简介]]></title>
-    <link href="http://isunix.github.io/blog/2020/12/13/zhu-cheng-fen-fen-xi-pca-jian-jie/"/>
-    <updated>2020-12-13T16:41:20+08:00</updated>
-    <id>http://isunix.github.io/blog/2020/12/13/zhu-cheng-fen-fen-xi-pca-jian-jie</id>
-    <content type="html"><![CDATA[<p>```
-    假如我们的数据集是n维的，共有m个数据, 
-    我们希望将这m个数据的维度从n维降到n’维，希望这m个n’维的数据集尽可能的代表原始数据集. </p>
-
-<pre><code>假设我们有这样的n'维的超平面，我们希望得到什么样的效果呢？
-
-1. 样本点到这个超平面的距离足够近;
-2. 样本点在这个直线上的投影能尽可能的分开;
-
-基于上面这两种标准，我们可以得到如下的PCA的推导:
-
-1. 基于最小投影距离;
-2. 基于最大投影方差; ```
-</code></pre>
-
-<h3 id="section">参考资料:</h3>
-
-<p><a href="https://www.cnblogs.com/pinard/p/6239403.html">主成分分析（PCA）原理总结</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[线性判别分析简介]]></title>
-    <link href="http://isunix.github.io/blog/2020/12/13/xian-xing-pan-bie-fen-xi-jian-jie/"/>
-    <updated>2020-12-13T09:46:36+08:00</updated>
-    <id>http://isunix.github.io/blog/2020/12/13/xian-xing-pan-bie-fen-xi-jian-jie</id>
-    <content type="html"><![CDATA[<p>简单概括下线性判别分析(Linear Discriminant Analysis)的思想就是:</p>
-
-<p>```
-数据投影到一个向量上，使得同一种类别数据的投影点尽可能的接近，也就是要同类样本投影点的协方差尽可能的小; </p>
-
-<p>同时让不同类别的数据的类别中心之间的距离尽可能的大
-```</p>
-
-<h3 id="section">参考资料：</h3>
-
-<p><a href="https://www.cnblogs.com/pinard/p/6244265.html">线性判别分析LDA原理总结</a></p>
+<p><code>plt.style.available</code></p>
 ]]></content>
   </entry>
   
@@ -507,6 +456,97 @@ df_x.replace(to_replace={0:'No', 1:'Yes', 'True':'Yes', 'False':'No'}, inplace=T
     <p><a href="https://stackoverflow.com/questions/39283339/what-is-the-meaning-of-axis-attribute-in-a-pandas-dataframe">What is the meaning of “axis” attribute in a Pandas DataFrame?</a></p>
   </li>
 </ul>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[SparkSQL入门和进阶]]></title>
+    <link href="http://isunix.github.io/blog/2020/11/20/sparksqlru-men-he-jin-jie/"/>
+    <updated>2020-11-20T22:08:55+08:00</updated>
+    <id>http://isunix.github.io/blog/2020/11/20/sparksqlru-men-he-jin-jie</id>
+    <content type="html"><![CDATA[<h2 id="section">常用的函数：</h2>
+
+<p><code>select</code>、<code>lit</code>、<code>as</code>、<code>groupBy</code>、<code>agg</code>、<code>sum</code>、<code>as</code>、<code>where</code>、<code>withColumn</code>、 <code>col</code>、 <code>when</code>、 <code>otherwise</code>、 <code>join</code>、<code>withColumnRenamed</code>、 <code>isin</code>、 <code>cast</code>、 <code>$</code>、 <code>union</code>、 <code>gt</code>、 <code>struct</code>、<code>sort</code>、<code>desc</code>、<code>show</code>、<code>orderBy</code>、<code>asc</code>、<code>repartition</code>、<code>sortWithinPartitions</code>、<code>filter</code>、<code>selectExpr</code>、<code>pivot</code>、<code>expr</code>、<code>row_number</code>、<code>over</code>、 <code>partitionBy</code></p>
+
+<p>```scala
+df
+.select($”id”,lit(1).as(“cnt”)) 
+.groupBy(“idd”) 
+.agg(sum(“cnt”).as(“total”))
+.where(“total &gt;=” + cnt2) 
+.select(“uid”,”total”)</p>
+
+<p>```</p>
+
+<h2 id="udf">UDF：</h2>
+
+<p><code>spark.udf.register
+</code></p>
+
+<h2 id="section-1">参考链接:</h2>
+<ul>
+  <li><a href="https://blog.csdn.net/weixin_40652340/article/details/79207455">SparkSQL DSL开发
+</a></li>
+  <li><a href="http://spark.apache.org/docs/latest/api/scala/org/apache/spark/sql/Column.html">Column</a></li>
+  <li><a href="http://spark.apache.org/docs/latest/api/scala/org/apache/spark/sql/Dataset.html">Dataset</a></li>
+  <li><a href="http://spark.apache.org/docs/latest/api/scala/org/apache/spark/sql/functions\$.html">functions</a></li>
+  <li><a href="http://spark.apache.org/docs/latest/api/scala/org/apache/spark/sql/index.html\#DataFrame=org.apache.spark.sql.Dataset\[org.apache.spark.sql.Row\]">sql</a></li>
+  <li><a href="https://spark.apache.org/docs/latest/sql-ref-functions-udf-scalar.html">Scalar User Defined Functions (UDFs)
+</a></li>
+  <li><a href="https://www.cnblogs.com/Diyo/p/11410895.html">SparkSQL DSL 随便写写</a></li>
+  <li><a href="https://blog.csdn.net/weixin_42419342/article/details/108918139?utm_medium=distribute.pc_aggpage_search_result.none-task-blog-2~all~sobaiduend\~default-2-108918139.nonecase&amp;utm_term=sparksql中dsl&amp;spm=1000.2123.3001.4430">SparkSQL案例——用SQL和DSL两种语法格式，求出用户连续登录天数
+</a></li>
+</ul>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[一些关于RNN和LSTM和GRU的阅读材料]]></title>
+    <link href="http://isunix.github.io/blog/2019/08/27/%5B%3F%5D-xie-guan-yu-rnnhe-lstmhe-grude-yue-du-cai-liao/"/>
+    <updated>2019-08-27T15:40:38+08:00</updated>
+    <id>http://isunix.github.io/blog/2019/08/27/[?]-xie-guan-yu-rnnhe-lstmhe-grude-yue-du-cai-liao</id>
+    <content type="html"><![CDATA[<p><a href="https://towardsdatascience.com/illustrated-guide-to-recurrent-neural-networks-79e5eb8049c9">Illustrated Guide to Recurrent Neural Networks</a></p>
+
+<p><a href="https://towardsdatascience.com/illustrated-guide-to-lstms-and-gru-s-a-step-by-step-explanation-44e9eb85bf21">Illustrated Guide to LSTM’s and GRU’s: A step by step explanation</a></p>
+
+<p><a href="https://zhuanlan.zhihu.com/p/37204589">直觉理解LSTM和GRU</a></p>
+
+<p><a href="https://zhuanlan.zhihu.com/p/28687529">RNN梯度消失和爆炸的原因</a></p>
+
+<p><a href="https://zhuanlan.zhihu.com/p/28749444">LSTM如何解决梯度消失问题</a></p>
+
+<p><a href="https://zhuanlan.zhihu.com/p/32481747">人人都能看懂的GRU</a></p>
+
+<p><a href="https://zhuanlan.zhihu.com/p/32085405">人人都能看懂的LSTM</a></p>
+
+<p><a href="http://kyonhuang.top/Andrew-Ng-Deep-Learning-notes/#/Sequence_Models/循环序列模型">循环序列模型</a></p>
+
+<p><a href="http://www.ai-start.com/dl2017/html/lesson5-week1.html">第五门课 序列模型(Sequence Models)</a></p>
+
+<p><a href="https://machinelearningmastery.com/time-series-prediction-lstm-recurrent-neural-networks-python-keras/">Time Series Prediction with LSTM Recurrent Neural Networks in Python with Keras</a></p>
+
+<p><a href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/">Understanding LSTM Networks</a></p>
+
+<p><a href="http://www.wildml.com/2015/10/recurrent-neural-network-tutorial-part-4-implementing-a-grulstm-rnn-with-python-and-theano/">Implementing a GRU/LSTM RNN with Python and Theano</a></p>
+
+<p><a href="http://www.wildml.com/2015/09/recurrent-neural-networks-tutorial-part-1-introduction-to-rnns/">Introduction to RNNs</a></p>
+
+<p><a href="http://www.wildml.com/2015/09/implementing-a-neural-network-from-scratch/">Implementing a Neural Network from Scratch in Python</a></p>
+
+<p><a href="http://www.wildml.com/2015/09/speeding-up-your-neural-network-with-theano-and-the-gpu/">Speeding up your Neural Network with Theano and the GPU</a></p>
+
+<p><a href="http://cs231n.github.io/optimization-2/">CS231 On Gradients And BackPropagation</a></p>
+
+<p><a href="http://colah.github.io/posts/2015-08-Backprop/">Calculus on Computational Graphs: Backpropagation</a></p>
+
+<p><a href="http://neuralnetworksanddeeplearning.com/chap2.html">How the backpropagation algorithm works</a></p>
+
+<p><a href="http://cs231n.github.io/python-numpy-tutorial/">Numpy Tutorial From CS231</a></p>
+
+<p><a href="https://www.leiphone.com/news/201908/wq1m4fNK8LNuG0Rs.html">卷积神经网络数学原理解析</a></p>
+
+<p><a href="https://christophm.github.io/interpretable-ml-book/">Interpretable Machine Learning</a></p>
+
 ]]></content>
   </entry>
   

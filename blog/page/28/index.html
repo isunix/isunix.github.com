@@ -9,7 +9,7 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="my tmux’s sockets are output to the dir “~/tmp”, however today I encountered the problem saying “can’t create socket: Permission denied” while I &hellip;">
+  <meta name="description" content="While I was installing tmux on cent-os, I met the error saying that “libevent not found”, something like this. Then I download libevent and install &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -99,7 +99,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2015/06/19/tmux-cant-create-socket-permission-denied/">Tmux:can&#8217;t Create Socket: Permission Denied</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/12/24/libevent-not-found-error-while-install-tmux/">Libevent Not Found Error While Install Tmux</a></h1>
     
     
       <p class="meta">
@@ -115,22 +115,24 @@
   
 
 
-<time datetime="2015-06-19T13:04:00+08:00" pubdate data-updated="true">2015 年6 月19 日</time>
+<time datetime="2014-12-24T21:13:11+08:00" pubdate data-updated="true">2014 年12 月24 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>my tmux’s sockets are output to the dir “~/tmp”, however today I encountered the problem saying “can’t create socket: Permission denied” while I start tmux.</p>
+  <div class="entry-content"><p>While I was installing tmux on cent-os, I met the error saying that “libevent not found”, something like this. Then I download libevent and install it into the location ‘/home/stsun/local’ dir.</p>
 
-<p>The reason is I have changed the rights on the folder ~/tmp/tmux* , so after the following command:</p>
+<p>Still I get the error saying that “libevent not found”. I solved the problem by the following way.</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">chmod 700 -R tmux*
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nv">DIR</span><span class="o">=</span><span class="s2">&quot;$HOME/local&quot;</span>
+</span><span class="line">./configure --prefix<span class="o">=</span><span class="nv">$DIR</span> <span class="nv">CFLAGS</span><span class="o">=</span><span class="s2">&quot;-I$DIR/include&quot;</span> <span class="nv">LDFLAGS</span><span class="o">=</span><span class="s2">&quot;-L$DIR/lib&quot;</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>It is back to normal.</p>
+<p>Since I install libevent with the option, “–prefix=$HOME/local”.</p>
 </div>
   
   
@@ -143,7 +145,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2015/06/09/find-cgi-bin-dir-on-a-linux-server/">Find Cgi-bin Dir on a Linux Server</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/12/02/notes-on-mojolicious/">Notes on Mojolicious</a></h1>
     
     
       <p class="meta">
@@ -159,18 +161,80 @@
   
 
 
-<time datetime="2015-06-09T18:49:22+08:00" pubdate data-updated="true">2015 年6 月9 日</time>
+<time datetime="2014-12-02T20:52:52+08:00" pubdate data-updated="true">2014 年12 月2 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line">ps -ef | grep cgi
+  <div class="entry-content"><p>Will keep notes of some of the mojo tips I got.</p>
+
+<p>1.A helper command to generate app for us.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">mojo</span> <span class="n">generate</span> <span class="n">app</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>This will generate Mojolicious application directory structure.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">mojo</span> <span class="n">generate</span> <span class="n">lite_app</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>This will generate Mojolicious::Lite application for us.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">mojo</span> <span class="n">generate</span> <span class="n">lite_app</span> <span class="n">hello</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>This will generate the app with the name “hello”</p>
+
+<p>2.about deploying your app to heroku</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">cpanm</span> <span class="nn">Mojolicious::Command::deploy::</span><span class="n">heroku</span>
+</span><span class="line"><span class="n">mojo</span> <span class="n">generate</span> <span class="n">lite_app</span> <span class="n">bigfan</span>
+</span><span class="line"><span class="o">./</span><span class="n">bigfan</span> <span class="n">deploy</span> <span class="n">heroku</span> <span class="o">--</span><span class="n">create</span>
+</span><span class="line"><span class="ow">or</span> <span class="n">we</span> <span class="n">can</span> <span class="n">assign</span> <span class="k">our</span> <span class="n">app</span> <span class="n">name</span> <span class="n">like</span> <span class="n">the</span> <span class="n">following:</span>
+</span><span class="line"><span class="o">./</span><span class="n">bigfan</span> <span class="n">deploy</span> <span class="n">heroku</span> <span class="o">-</span><span class="n">n</span> <span class="n">bigfan</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>On my server, this will give out the cgi-bin dir.</p>
+<p>3.In mojo, something like “hello.html.ep”, here “ep” stands for “embedded perl”, we can have html.ep, json.ep, txt.ep.</p>
+
+<p>4.Three kinds of placeholders.</p>
+
+<p>generic placeholders:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">get</span> <span class="s">&#39;/:fname/:lname&#39;</span> <span class="o">=&gt;</span> <span class="n">sub</span><span class="p">{</span>
+</span><span class="line">	<span class="nb">shift</span><span class="o">-&gt;</span><span class="n">render</span><span class="p">(</span><span class="err">&#39;</span><span class="n">capture</span><span class="p">);</span>
+</span><span class="line"><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>relaxed placeholders:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">get</span> <span class="s">&#39;/:fname/(.lname)&#39;</span> <span class="o">=&gt;</span> <span class="n">sub</span><span class="p">{</span>
+</span><span class="line">	<span class="nb">shift</span><span class="o">-&gt;</span><span class="n">render</span><span class="p">(</span><span class="err">&#39;</span><span class="n">capture</span><span class="p">);</span>
+</span><span class="line"><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>wildcard placeholders:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">get</span> <span class="s">&#39;/:fname/(*lname)&#39;</span> <span class="o">=&gt;</span> <span class="n">sub</span><span class="p">{</span>
+</span><span class="line">	<span class="nb">shift</span><span class="o">-&gt;</span><span class="n">render</span><span class="p">(</span><span class="err">&#39;</span><span class="n">capture</span><span class="p">);</span>
+</span><span class="line"><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
 </div>
   
   
@@ -183,7 +247,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2015/06/02/remove-obsolete-packages-on-ubuntu/">Remove Obsolete Packages on Ubuntu</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/11/26/siting-css-in-cgi-script/">Siting Css in Cgi Script</a></h1>
     
     
       <p class="meta">
@@ -199,21 +263,50 @@
   
 
 
-<time datetime="2015-06-02T10:03:32+08:00" pubdate data-updated="true">2015 年6 月2 日</time>
+<time datetime="2014-11-26T17:09:55+08:00" pubdate data-updated="true">2014 年11 月26 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>After upgrading ubuntu to a new version, there will be many obsolete packages. To see these packages, you can </p>
+  <div class="entry-content"><p>While writing perl cgi scripts, when we need to add css or js files, there are two ways to add the file, one using absolute path, one using relative path. </p>
+
+<p>First we want to check the document root of our file, we cat get it using the following way. </p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line">sudo apt-get upgrade
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="c1">#!/usr/bin/env perl</span>
+</span><span class="line">
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;Content-type: text/plain; charset=utf-8\n\n&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="k">print</span> <span class="nv">$ENV</span><span class="p">{</span><span class="n">DOCUMENT_ROOT</span><span class="p">};</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>It will list all those obsolete packages.</p>
 
-<p>To autoremove them one by one will be will tedious, we can first copy those packages into a file, like aa.txt, then use the following perl script to do it once:</p>
+<p>For example, in my case, it gives out the following result:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="s">&quot;/usr/local/www/apache22/data&quot;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>We assume that our server name is gopid.com, in the /usr/local/www/apache22/ dir, there are the data dir, cgi-bin dir, we make a sub-dir named steven in the data dir, then we can using the following two ways to site the css and js files.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line"><span class="nt">&lt;link</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span> <span class="na">href=</span><span class="s">&quot;/steven/js/bootstrap/css/bootstrap.min.css&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span><span class="nt">&gt;</span>
+</span><span class="line"><span class="nt">&lt;link</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span> <span class="na">href=</span><span class="s">&quot;/steven/css/margin.css&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span><span class="nt">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Or using the absolute path: </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line"><span class="nt">&lt;link</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span> <span class="na">href=</span><span class="s">&quot;https://goopig.com/steven/js/bootstrap/css/bootstrap.min.css&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span><span class="nt">&gt;</span>
+</span><span class="line"><span class="nt">&lt;link</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span> <span class="na">href=</span><span class="s">&quot;https://goopig.com/steven/css/margin.css&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span><span class="nt">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>PS, if we want to print out the whole env infomation using cgi, we can using the following script:  </p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
@@ -222,16 +315,19 @@
 <span class="line-number">5</span>
 <span class="line-number">6</span>
 <span class="line-number">7</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="nn">File::</span><span class="n">Slurp</span><span class="p">;</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">@modules</span><span class="p">;</span>
-</span><span class="line"><span class="k">my</span> <span class="nv">$text</span> <span class="o">=</span> <span class="n">read_file</span><span class="p">(</span><span class="s">&#39;aa.txt&#39;</span><span class="p">,</span> <span class="n">text_ref</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">);</span>
-</span><span class="line"><span class="nv">@modules</span> <span class="o">=</span> <span class="nb">grep</span> <span class="p">{</span><span class="ow">not</span> <span class="sr">/\s+/</span><span class="p">}</span> <span class="nb">split</span><span class="p">(</span><span class="s">&#39;[\s+]&#39;</span><span class="p">,</span> <span class="nv">$text</span><span class="p">);</span>
-</span><span class="line"><span class="k">foreach</span> <span class="k">my</span> <span class="nv">$module</span> <span class="p">(</span><span class="nv">@modules</span><span class="p">){</span>
-</span><span class="line">	<span class="nb">system</span><span class="p">(</span><span class="s">&quot;sudo apt-get autoremove $module&quot;</span><span class="p">);</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="c1">#!/usr/local/bin/perl</span>
+</span><span class="line">
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;Content-type: text/plain; charset=utf-8\n\n&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="k">foreach</span> <span class="nv">$var</span> <span class="p">(</span><span class="nb">sort</span><span class="p">(</span><span class="nb">keys</span><span class="p">(</span><span class="nv">%ENV</span><span class="p">)))</span> <span class="p">{</span>
+</span><span class="line">    <span class="nv">$val</span> <span class="o">=</span> <span class="nv">$ENV</span><span class="p">{</span><span class="nv">$var</span><span class="p">};</span>
+</span><span class="line">    <span class="nv">$val</span> <span class="o">=~</span> <span class="n">s</span><span class="o">|\</span><span class="n">n</span><span class="o">|\\</span><span class="n">n</span><span class="o">|</span><span class="n">g</span><span class="p">;</span>
+</span><span class="line">    <span class="nv">$val</span> <span class="o">=~</span> <span class="n">s</span><span class="o">|</span><span class="s">&quot;|\\&quot;</span><span class="o">|</span><span class="n">g</span><span class="p">;</span>
+</span><span class="line">    <span class="k">print</span> <span class="s">&quot;${var}=\&quot;${val}\&quot;\n&quot;</span><span class="p">;</span>
 </span><span class="line"><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>Done!</p>
 </div>
   
   
@@ -256,15 +352,7 @@
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2020/12/13/pu-ju-lei-jian-jie/">谱聚类简介</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2020/12/13/zhu-cheng-fen-fen-xi-pca-jian-jie/">主成分分析-PCA-简介</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2020/12/13/xian-xing-pan-bie-fen-xi-jian-jie/">线性判别分析简介</a>
+        <a href="/blog/2021/01/04/jupytershang-shi-yong-matplotlibhua-tu-de-%5B%3F%5D-xie-you-yong-de-she-zhi/">Jupyter上使用matplotlib画图的一些有用的设置</a>
       </li>
     
       <li class="post">
@@ -276,23 +364,31 @@
       </li>
     
       <li class="post">
-        <a href="/blog/2020/12/06/ti-du-xia-jiang-fa-he-niu-dun-fa/">梯度下降法和牛顿法</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2020/12/06/xian-xing-gui-hua-de-dui-ou-wen-ti/">线性规划的对偶问题</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2020/11/30/dan-chun-xing-fa-jie-shao-he-pythondai-ma-shi-xian/">单纯形法介绍和Python代码实现</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2020/11/24/wen-ben-zhu-ti-wa-jue-qian-chang-zhe-zhi/">文本主题挖掘浅尝辄止</a>
-      </li>
-    
-      <li class="post">
         <a href="/blog/2020/11/20/sparksqlru-men-he-jin-jie/">SparkSQL入门和进阶</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2020/02/16/gao-deng-shu-li-tong-ji-xue-qian-yan-zhai-lu/">高等数理统计学前言摘录</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/27/%5B%3F%5D-xie-guan-yu-rnnhe-lstmhe-grude-yue-du-cai-liao/">一些关于RNN和LSTM和GRU的阅读材料</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/27/ru-he-cha-kan-linuxzhong-de-nei-cun-zhan-yong-qing-kuang/">如何查看Linux中的内存占用情况</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/27/sparkzhong-pai-xu-shu-chu/">Spark中排序输出</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/14/data-science-at-the-command-line/">Data Science at the Command Line</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/14/gradient-boosting-algorithm/">Gradient Boosting Algorithm</a>
       </li>
     
   </ul>
@@ -305,7 +401,7 @@
 <li class='category'><a href='/blog/categories/bigdata/'>BigData (11)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (7)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
-<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (20)</a></li>
+<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (16)</a></li>
 <li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (5)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (2)</a></li>
 <li class='category'><a href='/blog/categories/javascript/'>Javascript (4)</a></li>
@@ -316,7 +412,6 @@
 <li class='category'><a href='/blog/categories/ruby/'>Ruby (1)</a></li>
 <li class='category'><a href='/blog/categories/scala/'>Scala (1)</a></li>
 <li class='category'><a href='/blog/categories/shell/'>Shell (12)</a></li>
-<li class='category'><a href='/blog/categories/yan-jiu-sheng/'>研究生 (2)</a></li>
 
   </ul>
 </section>
@@ -327,7 +422,7 @@
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2020 - Steven Sun -
+  Copyright &copy; 2021 - Steven Sun -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

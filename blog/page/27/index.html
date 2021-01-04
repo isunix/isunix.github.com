@@ -9,39 +9,7 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="Will use python linked list to solve the following problem: 1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33 &hellip;">
+  <meta name="description" content="When I try to upgrade my ubuntu version from 14.04 to 14.10, the system rebooted during the upgrade. When I try to login to the gnu desktop, it goes &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -131,7 +99,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2015/07/27/python-linked-list-example/">Python Linked List Example</a></h1>
+      <h1 class="entry-title"><a href="/blog/2015/06/01/reconfigure-partially-installed-packages-in-ubuntu/">Reconfigure Partially Installed Packages in Ubuntu</a></h1>
     
     
       <p class="meta">
@@ -147,149 +115,70 @@
   
 
 
-<time datetime="2015-07-27T16:21:27+08:00" pubdate data-updated="true">2015 年7 月27 日</time>
+<time datetime="2015-06-01T13:22:30+08:00" pubdate data-updated="true">2015 年6 月1 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>Will use python linked list to solve the following problem:</p>
+  <div class="entry-content"><p>When I try to upgrade my ubuntu version from 14.04 to 14.10, the system rebooted during the upgrade. When I try to login to the gnu desktop, it goes back to the login screen again and again.</p>
+
+<p>So I have to login in using the “tty” terminal by “ctrl+alt+F3”, and then issue the following command:</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-<span class="line-number">28</span>
-<span class="line-number">29</span>
-<span class="line-number">30</span>
-<span class="line-number">31</span>
-<span class="line-number">32</span>
-<span class="line-number">33</span>
-<span class="line-number">34</span>
-<span class="line-number">35</span>
-<span class="line-number">36</span>
-<span class="line-number">37</span>
-</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="k">class</span> <span class="nc">Node</span><span class="p">:</span>
-</span><span class="line">    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
-</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="bp">None</span>
-</span><span class="line">
-</span><span class="line">    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span class="line">        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
-</span><span class="line">
-</span><span class="line"><span class="k">class</span> <span class="nc">LinkedList</span><span class="p">:</span>
-</span><span class="line">    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">head</span> <span class="o">=</span> <span class="bp">None</span>
-</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">tail</span> <span class="o">=</span> <span class="bp">None</span>
-</span><span class="line">
-</span><span class="line">    <span class="k">def</span> <span class="nf">addNode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-</span><span class="line">        <span class="n">node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
-</span><span class="line">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
-</span><span class="line">            <span class="bp">self</span><span class="o">.</span><span class="n">head</span> <span class="o">=</span> <span class="n">node</span>
-</span><span class="line">            <span class="bp">self</span><span class="o">.</span><span class="n">tail</span> <span class="o">=</span> <span class="n">node</span>
-</span><span class="line">        <span class="k">else</span><span class="p">:</span>
-</span><span class="line">            <span class="bp">self</span><span class="o">.</span><span class="n">tail</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">node</span>
-</span><span class="line">            <span class="bp">self</span><span class="o">.</span><span class="n">tail</span> <span class="o">=</span> <span class="n">node</span>
-</span><span class="line">
-</span><span class="line">    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span class="line">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
-</span><span class="line">            <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span>
-</span><span class="line">            <span class="n">nodeStore</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">index</span><span class="o">.</span><span class="n">value</span><span class="p">)]</span>
-</span><span class="line">            <span class="k">while</span> <span class="n">index</span><span class="o">.</span><span class="n">next</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
-</span><span class="line">                <span class="n">index</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">next</span>
-</span><span class="line">                <span class="n">nodeStore</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">index</span><span class="o">.</span><span class="n">value</span><span class="p">))</span>
-</span><span class="line">            <span class="k">return</span> <span class="s">&quot;LinkedList  [ &quot;</span> <span class="o">+</span> <span class="s">&quot;-&gt;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">nodeStore</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot; ]&quot;</span>
-</span><span class="line">        <span class="k">return</span> <span class="s">&quot;LinkedList  []&quot;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">def</span> <span class="nf">generatedLinkedList</span><span class="p">(</span><span class="n">numArray</span><span class="p">):</span>
-</span><span class="line">    <span class="n">linkedlist</span> <span class="o">=</span> <span class="n">LinkedList</span><span class="p">()</span>
-</span><span class="line">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">numArray</span><span class="p">)):</span>
-</span><span class="line">        <span class="n">linkedlist</span><span class="o">.</span><span class="n">addNode</span><span class="p">(</span><span class="n">numArray</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-</span><span class="line">    <span class="k">return</span> <span class="n">linkedlist</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">sudo dpkg --configure -a
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>Then we will start to solve the problem:</p>
+<p>There maybe something wrong logging in using the mosted updated kernal, so we can choose to log in using an previous version of kernal(provided if is not removed yet]).</p>
+
+<p>Then if we still want to upgrade, we can do it when we successfully log in to the system.</p>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/06/01/alternative-way-to-bypass-problems-met-when-rake-new-post/">Alternative Way to Bypass Problems Met When Rake New_post</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-06-01T11:06:22+08:00" pubdate data-updated="true">2015 年6 月1 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I met errors while I am issuing the command “rake new_post” add generate a new post. Here is an alternative way to generate new post:</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-<span class="line-number">28</span>
-</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="kn">from</span> <span class="nn">LinkedList</span> <span class="kn">import</span> <span class="o">*</span>
-</span><span class="line">
-</span><span class="line"><span class="k">class</span> <span class="nc">ListsSum</span><span class="p">:</span>
-</span><span class="line">    <span class="k">def</span> <span class="nf">addLists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">l1</span><span class="p">,</span> <span class="n">l2</span><span class="p">):</span>
-</span><span class="line">        <span class="n">p1</span> <span class="o">=</span> <span class="n">l1</span><span class="o">.</span><span class="n">head</span>
-</span><span class="line">        <span class="n">p2</span> <span class="o">=</span> <span class="n">l2</span><span class="o">.</span><span class="n">head</span>
-</span><span class="line">        <span class="n">carry</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span class="line">        <span class="n">linkedlist_sum</span> <span class="o">=</span> <span class="n">LinkedList</span><span class="p">()</span>
-</span><span class="line">        <span class="k">while</span> <span class="p">(</span><span class="n">p1</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">p2</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">carry</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
-</span><span class="line">            <span class="n">dig_sum</span> <span class="o">=</span> <span class="n">carry</span>
-</span><span class="line">            <span class="k">if</span> <span class="n">p1</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
-</span><span class="line">                <span class="n">dig_sum</span> <span class="o">+=</span> <span class="n">p1</span><span class="o">.</span><span class="n">value</span>
-</span><span class="line">                <span class="n">p1</span> <span class="o">=</span> <span class="n">p1</span><span class="o">.</span><span class="n">next</span>
-</span><span class="line">            <span class="k">if</span> <span class="n">p2</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
-</span><span class="line">                <span class="n">dig_sum</span> <span class="o">+=</span> <span class="n">p2</span><span class="o">.</span><span class="n">value</span>
-</span><span class="line">                <span class="n">p2</span> <span class="o">=</span> <span class="n">p2</span><span class="o">.</span><span class="n">next</span>
-</span><span class="line">
-</span><span class="line">            <span class="n">linkedlist_sum</span><span class="o">.</span><span class="n">addNode</span><span class="p">(</span><span class="n">dig_sum</span><span class="o">%</span><span class="mi">10</span><span class="p">)</span>
-</span><span class="line">            <span class="n">carry</span> <span class="o">=</span> <span class="n">dig_sum</span><span class="o">/</span><span class="mi">10</span>
-</span><span class="line">        <span class="k">return</span> <span class="n">linkedlist_sum</span>
-</span><span class="line">
-</span><span class="line"><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
-</span><span class="line">    <span class="n">solution</span> <span class="o">=</span> <span class="n">ListsSum</span><span class="p">()</span>
-</span><span class="line">    <span class="n">list1</span> <span class="o">=</span> <span class="n">generatedLinkedList</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
-</span><span class="line">    <span class="n">list2</span> <span class="o">=</span> <span class="n">generatedLinkedList</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span>
-</span><span class="line">    <span class="k">print</span><span class="p">(</span><span class="n">list1</span><span class="p">)</span>
-</span><span class="line">    <span class="k">print</span><span class="p">(</span><span class="n">list2</span><span class="p">)</span>
-</span><span class="line">    <span class="k">print</span><span class="p">(</span><span class="n">solution</span><span class="o">.</span><span class="n">addLists</span><span class="p">(</span><span class="n">list1</span><span class="p">,</span><span class="n">list2</span><span class="p">))</span>
+</pre></td><td class="code"><pre><code class="ruby"><span class="line"><span class="n">bundle</span> <span class="nb">exec</span> <span class="n">rake</span> <span class="s2">&quot;new_post[alternative way to bypass problems met when rake new_post]&quot;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>and then we can use the “Mou” app to open the page:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="ruby"><span class="line"><span class="nb">open</span> <span class="o">-</span><span class="n">a</span> <span class="no">Mou</span> <span class="n">source</span><span class="o">/</span><span class="n">_posts</span><span class="o">/</span><span class="mi">2015</span><span class="o">-</span><span class="mo">06</span><span class="o">-</span><span class="mo">01</span><span class="o">-</span><span class="n">alternative</span><span class="o">-</span><span class="n">way</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">bypass</span><span class="o">-</span><span class="n">problems</span><span class="o">-</span><span class="n">met</span><span class="o">-</span><span class="k">when</span><span class="o">-</span><span class="n">rake</span><span class="o">-</span><span class="kp">new</span><span class="o">-</span><span class="n">post</span><span class="o">.</span><span class="n">markdown</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 </div>
   
@@ -303,7 +192,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2015/07/20/tap-method-in-ruby/">Tap Method in Ruby</a></h1>
+      <h1 class="entry-title"><a href="/blog/2015/06/01/login-to-mysql-server-without-entering-password/">Login to Mysql Server Without Entering Password</a></h1>
     
     
       <p class="meta">
@@ -319,129 +208,17 @@
   
 
 
-<time datetime="2015-07-20T15:31:51+08:00" pubdate data-updated="true">2015 年7 月20 日</time>
+<time datetime="2015-06-01T10:58:02+08:00" pubdate data-updated="true">2015 年6 月1 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>There is a “tap” method in Ruby and I find it is very useful.</p>
-
-<p>The definitionof “tap” in ruby documentaion is:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">Yields self to the block, and then returns self. The primary purpose of this method is to “tap into” a method chain, in order to perform operations on intermediate results within the chain.</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>Put it anonther way:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">It’s a helper for call chaining. It passes its object into the given block and, after the block finishes, returns the object:</span></code></pre></td></tr></table></div></figure></notextile></div>
+  <div class="entry-content"><p>Enter the user name and password in a shell script in the following way will make the login process easier.</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="ruby"><span class="line"><span class="n">an_object</span><span class="o">.</span><span class="n">tap</span> <span class="k">do</span> <span class="o">|</span><span class="n">o</span><span class="o">|</span>
-</span><span class="line">  <span class="c1"># do stuff with an_object, which is in o</span>
-</span><span class="line"><span class="k">end</span> <span class="c1"># ===&gt; an_object</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>Another example:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-</pre></td><td class="code"><pre><code class="ruby"><span class="line"><span class="k">def</span> <span class="nf">hash_table</span><span class="p">(</span><span class="n">numbers</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
-</span><span class="line">    <span class="o">[].</span><span class="n">tap</span> <span class="k">do</span> <span class="o">|</span><span class="n">result</span><span class="o">|</span>
-</span><span class="line">      <span class="nb">hash</span> <span class="o">=</span> <span class="p">{}</span>
-</span><span class="line">      <span class="n">numbers</span><span class="o">.</span><span class="n">each_with_index</span> <span class="k">do</span> <span class="o">|</span> <span class="n">n</span><span class="p">,</span> <span class="n">i</span> <span class="o">|</span>
-</span><span class="line">        <span class="k">if</span> <span class="n">j</span> <span class="o">=</span> <span class="nb">hash</span><span class="o">[</span><span class="n">target</span> <span class="o">-</span> <span class="n">n</span><span class="o">]</span>
-</span><span class="line">          <span class="k">return</span> <span class="n">result</span> <span class="o">&lt;&lt;</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
-</span><span class="line">        <span class="k">end</span>
-</span><span class="line">        <span class="nb">hash</span><span class="o">[</span><span class="n">n</span><span class="o">]</span> <span class="o">=</span> <span class="n">i</span>
-</span><span class="line">      <span class="k">end</span>
-</span><span class="line">    <span class="k">end</span>
-</span><span class="line">  <span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/07/02/minutes-on-setting-up-emacs-on-macos/">Minutes on Setting Up Emacs on Macos</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-07-02T15:29:18+08:00" pubdate data-updated="true">2015 年7 月2 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><ol>
-  <li>I am am using gui emacs and I want to it to be started from the command line, then I have to do this:</li>
-</ol>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nb">alias </span><span class="nv">emacs</span><span class="o">=</span><span class="s1">&#39;open -a /Applications/Emacs.app $1&#39;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ol>
-  <li>I want to change the default font and font size:</li>
-</ol>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="o">(</span><span class="nb">set</span>-default-font <span class="s2">&quot;Monaco 28&quot;</span><span class="o">)</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ol>
-  <li>I want to use evil, after putting it into ~/.emacs.d, also I need to put the folliwng things in to ~/.emacs.d/init.el</li>
-</ol>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="o">(</span>add-to-list <span class="s1">&#39;load-path &quot;~/.emacs.d/evil&quot;)</span>
-</span><span class="line"><span class="s1">(require &#39;</span>evil<span class="o">)</span>
-</span><span class="line"><span class="o">(</span>evil-mode 1<span class="o">)</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ol>
-  <li>I am using slime, so I have to put the following things into my ~/.emacs.d/init.el</li>
-</ol>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="o">(</span>setq inferior-lisp-program <span class="s2">&quot;/usr/local/bin/sbcl&quot;</span><span class="o">)</span>
-</span><span class="line"><span class="o">(</span>setq slime-contribs <span class="err">&#39;</span><span class="o">(</span>slime-fancy<span class="o">))</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">mysql -h <span class="nv">$host</span> -u<span class="nv">$user</span> -p<span class="nv">$pass</span> <span class="nv">$db</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 </div>
   
@@ -467,15 +244,7 @@
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2020/12/13/pu-ju-lei-jian-jie/">谱聚类简介</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2020/12/13/zhu-cheng-fen-fen-xi-pca-jian-jie/">主成分分析-PCA-简介</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2020/12/13/xian-xing-pan-bie-fen-xi-jian-jie/">线性判别分析简介</a>
+        <a href="/blog/2021/01/04/jupytershang-shi-yong-matplotlibhua-tu-de-%5B%3F%5D-xie-you-yong-de-she-zhi/">Jupyter上使用matplotlib画图的一些有用的设置</a>
       </li>
     
       <li class="post">
@@ -487,23 +256,31 @@
       </li>
     
       <li class="post">
-        <a href="/blog/2020/12/06/ti-du-xia-jiang-fa-he-niu-dun-fa/">梯度下降法和牛顿法</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2020/12/06/xian-xing-gui-hua-de-dui-ou-wen-ti/">线性规划的对偶问题</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2020/11/30/dan-chun-xing-fa-jie-shao-he-pythondai-ma-shi-xian/">单纯形法介绍和Python代码实现</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2020/11/24/wen-ben-zhu-ti-wa-jue-qian-chang-zhe-zhi/">文本主题挖掘浅尝辄止</a>
-      </li>
-    
-      <li class="post">
         <a href="/blog/2020/11/20/sparksqlru-men-he-jin-jie/">SparkSQL入门和进阶</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2020/02/16/gao-deng-shu-li-tong-ji-xue-qian-yan-zhai-lu/">高等数理统计学前言摘录</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/27/%5B%3F%5D-xie-guan-yu-rnnhe-lstmhe-grude-yue-du-cai-liao/">一些关于RNN和LSTM和GRU的阅读材料</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/27/ru-he-cha-kan-linuxzhong-de-nei-cun-zhan-yong-qing-kuang/">如何查看Linux中的内存占用情况</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/27/sparkzhong-pai-xu-shu-chu/">Spark中排序输出</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/14/data-science-at-the-command-line/">Data Science at the Command Line</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/08/14/gradient-boosting-algorithm/">Gradient Boosting Algorithm</a>
       </li>
     
   </ul>
@@ -516,7 +293,7 @@
 <li class='category'><a href='/blog/categories/bigdata/'>BigData (11)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (7)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
-<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (20)</a></li>
+<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (16)</a></li>
 <li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (5)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (2)</a></li>
 <li class='category'><a href='/blog/categories/javascript/'>Javascript (4)</a></li>
@@ -527,7 +304,6 @@
 <li class='category'><a href='/blog/categories/ruby/'>Ruby (1)</a></li>
 <li class='category'><a href='/blog/categories/scala/'>Scala (1)</a></li>
 <li class='category'><a href='/blog/categories/shell/'>Shell (12)</a></li>
-<li class='category'><a href='/blog/categories/yan-jiu-sheng/'>研究生 (2)</a></li>
 
   </ul>
 </section>
@@ -538,7 +314,7 @@
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2020 - Steven Sun -
+  Copyright &copy; 2021 - Steven Sun -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

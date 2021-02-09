@@ -24,35 +24,35 @@ footer: true
 
 ## 2018.07~now:
 -   安徽华米科技
-    -   高级大数据工程师
+    -   高级大数据分析师
 
 ## 2016.06~2018.07:
 
 -   安徽华米科技(是的,小米手环, 但是不仅仅是小米手环);
-    -   大数据工程师
+    -   大数据分析师
     -   这年从上海回到了老家合肥, 命中注定般进入大数据行业
-
-## 2012.10~2014.11:
-
--   自协软件(Sonata Services)
-    -   Threat Operations Analyst(L1 Rule Engineer)
-    -   AntiSpam; 防垃圾邮件; 工作中常用到Regex, PHP, Bash, Perl, Perl Dancer web框架
 
 ## 2014.11~2016.06:
 
 -   自协软件(Sonata Services)
-    -   Perl Developer(L2 Rule Engineer)
+    -   Perl Developer(L2 Rule Engineer - 高级AntiSpam工程师)
     -   AntiSpam; 防垃圾邮件; 工作中常用到Regex, PHP, Bash, Perl, Perl Dancer web框架; Python的Django框架; Sonata待了快有四年, 很难忘的经历；现在的所知所会，很多都是在Sonata打下的基础;
 
-## 2011.07~2012.08:
-- 美库尔商务信息咨询有限公司(Merkle Inc)
-    - Database Production Analyst
-    - 获得了One Team Award; 学会了基础的SQL, Shell Script和一点点的Perl; 事后回想, 美企很多地方做的还是很赞的, 也很开心能够一毕业就进入Merkle
+## 2012.10~2014.11:
+
+-   自协软件(Sonata Services)
+    -   Threat Operations Analyst(L1 Rule Engineer - 初级AntiSpam工程师)
+    -   AntiSpam; 防垃圾邮件; 工作中常用到Regex, PHP, Bash, Perl, Perl Dancer web框架
 
 ## 2012.08~2012.09:
 - 安居客
-    - BI Developer
+    - BI Developer(BI开发工程师)
     - 一个多月点离职; 学会了点BI工具和更多的MySQL的知识; 实在是不喜欢不习惯当时的安居客的那个小组的工作氛围和某些人的管理
+
+## 2011.07~2012.08:
+- 美库尔商务信息咨询有限公司(Merkle Inc)
+    - Database Production Analyst (数据库运营工程师)
+    - 获得了One Team Award; 学会了基础的SQL, Shell Script和一点点的Perl; 事后回想, 美企很多地方做的还是很赞的, 也很开心能够一毕业就进入Merkle
 
 
 # 兴趣爱好:

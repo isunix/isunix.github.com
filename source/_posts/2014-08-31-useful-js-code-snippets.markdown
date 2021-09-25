@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "useful js code snippets"
+title: "有用的JS代码片段"
 date: 2014-08-31 17:47:03 +0800
 comments: true
 categories: Javascript

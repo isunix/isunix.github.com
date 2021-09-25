@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Two Ways to Build a Module"
+title: "Perl中创建module"
 date: 2014-08-12 20:51:22 +0800
 comments: true
 categories: Perl
@@ -43,7 +43,8 @@ For the Module::Build way, there is a shortcut.
 
 We don’t want to type that long command line every time, so module-starter can get that information from a      
 configuration file $HOME/.module-starter/config. If we’re on Windows, that .module-starter name is a bit of a      
-problem, so we can set the MODULE_STARTER_DIR environment variable to the name of the directory that containsconfig. Inside config, we can list the parameter names and values separated by a colon.
+problem, so we can set the MODULE_STARTER_DIR environment variable to the name of the directory that contains
+config. Inside config, we can list the parameter names and values separated by a colon.
 
 ```perl
 
@@ -55,5 +56,6 @@ verbose: 1
 Once we have our configuration file setup, life is much easier since we only need to specify the name of the distribution that we want to create. 
 
 ```perl  
-% module−starter −−module=Animal  
-```
+
+% module−starter −−module=Animal  
+```

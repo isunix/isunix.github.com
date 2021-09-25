@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "using python to implement a stack"
+title: "使用Python来实现一个栈(stack)"
 date: 2014-08-14 10:53:40 +0800
 comments: true
 categories: Algorithms

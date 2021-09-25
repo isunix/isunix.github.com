@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "fun perl code snippets"
+title: "有趣的Perl代码片段"
 date: 2014-09-06 10:02:29 +0800
 comments: true
 categories: Perl
@@ -18,7 +18,8 @@ find(sub { print "$_\n" if -s $_ > $ARGV[0]; }, ".");
 3.For the first example, if using require, we can write it as the following:  
 
 ```pl
-require File::Find;File::Find::find(sub { print "$File::Find::name\n" if -s > 1_024_000; }, '.');
+require File::Find;
+File::Find::find(sub { print "$File::Find::name\n" if -s > 1_024_000; }, '.');
 ```  
 
 4."use" happens during compile time, whereas "require" happens at runtime.    

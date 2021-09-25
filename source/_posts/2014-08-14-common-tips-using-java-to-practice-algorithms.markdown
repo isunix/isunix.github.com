@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "common tips using java to practice algorithms"
+title: "使用Java来练习算法"
 date: 2014-08-14 10:07:16 +0800
 comments: true
 categories: Algorithms

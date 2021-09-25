@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "about the use of my and our in perl"
+title: "Perl中my和our的使用"
 date: 2014-07-24 19:32:11 +0800
 comments: true
 categories: Perl

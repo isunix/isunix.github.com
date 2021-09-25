@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "perl script to delete files without extension"
+title: "使用Perl删除后缀不符和期望的文件"
 date: 2014-07-21 18:18:34 +0800
 comments: true
 categories: Perl

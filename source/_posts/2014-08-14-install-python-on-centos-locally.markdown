@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "install python on centos locally"
+title: "在centos上源码安装Python"
 date: 2014-08-14 12:25:15 +0800
 comments: true
 categories: Python

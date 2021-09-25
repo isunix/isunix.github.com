@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "useful perl man page"
+title: "常用Perl帮助页(man page)"
 date: 2014-09-05 18:14:03 +0800
 comments: true
 categories: Perl

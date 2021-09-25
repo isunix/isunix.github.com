@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "minutes about stdin"
+title: "Perl中的stdin备忘"
 date: 2014-07-24 17:26:27 +0800
 comments: true
 categories: Perl

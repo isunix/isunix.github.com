@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "a typical perl script to search info in a file"
+title: "使用Perl脚本从文件中找需要的信息"
 date: 2014-07-24 15:33:54 +0800
 comments: true
 categories: Perl

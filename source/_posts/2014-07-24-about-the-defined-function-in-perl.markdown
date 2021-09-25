@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "about the defined function in perl"
+title: "Perl中函数defined的使用"
 date: 2014-07-24 16:09:53 +0800
 comments: true
 categories: Perl

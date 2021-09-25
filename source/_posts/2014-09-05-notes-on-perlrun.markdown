@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "notes on perlrun"
+title: "perlrun备忘"
 date: 2014-09-05 19:24:02 +0800
 comments: true
 categories: Perl

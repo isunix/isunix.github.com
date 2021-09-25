@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "object oriented perl"
+title: "Perl面向对象"
 date: 2014-09-05 15:46:51 +0800
 comments: true
 categories: Perl

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "remove duplicates from an unsorted linked list"
+title: "从没有排序的链表中删除重复值"
 date: 2014-08-18 15:12:52 +0800
 comments: true
 categories: Algorithms

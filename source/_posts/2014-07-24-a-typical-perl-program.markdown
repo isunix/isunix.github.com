@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "a typical perl program"
+title: "一个Perl脚本典型案例"
 date: 2014-07-24 15:17:20 +0800
 comments: true
 categories: Perl

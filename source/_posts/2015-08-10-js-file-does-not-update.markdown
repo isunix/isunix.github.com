@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "js file does not update"
+title: "因缓存原因导致的js文件没有生效的问题解决"
 date: 2015-08-10 16:00:36 +0800
 comments: true
 categories: Javascript

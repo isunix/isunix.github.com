@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "wget several files using bash cmd"
+title: "wget下载多个文件"
 date: 2015-12-31 18:36:09 +0800
 comments: true
 categories: Shell

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "siting css in cgi script"
+title: "cgi脚本中设置css"
 date: 2014-11-26 17:09:55 +0800
 comments: true
 categories: Perl

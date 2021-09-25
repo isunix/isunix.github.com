@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "configure hive on mac"
+title: "mac上安装Hive"
 date: 2016-07-02 18:14:13 +0800
 comments: true
 categories: BigData

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "copy and paste spaces separated text into excel"
+title: "复制和粘贴以空格分割的文本到excel中去"
 date: 2016-08-04 16:06:03 +0800
 comments: true
 categories: Linux&Mac

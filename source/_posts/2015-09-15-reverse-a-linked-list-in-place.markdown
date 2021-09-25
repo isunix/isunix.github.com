@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "reverse a linked list in place"
+title: "Python倒置一个链表"
 date: 2015-09-15 09:33:40 +0800
 comments: true
 categories: Algorithms

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "using ptpython with python3 as the backend"
+title: "设置ptpython作为Python3的后端"
 date: 2015-11-19 12:32:02 +0800
 comments: true
 categories: Python

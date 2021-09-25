@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "alternative way to bypass problems met when rake new_post"
+title: "rake new_post错误解决"
 date: 2015-06-01 11:06:22 +0800
 comments: true
 categories: Blog	

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "trap interrupts in shell scripts"
+title: "Shell中的trap中断(interrupts)"
 date: 2015-11-02 14:45:18 +0800
 comments: true
 categories: Shell

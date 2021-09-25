@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "enable multiple versions of python in pyenv"
+title: "pyenv中开启多个Python版本"
 date: 2015-07-28 15:12:47 +0800
 comments: true
 categories: Python

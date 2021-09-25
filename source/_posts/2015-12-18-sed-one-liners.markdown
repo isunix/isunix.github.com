@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "sed one-liners"
+title: "sed一行命令(one-liners)"
 date: 2015-12-18 14:48:18 +0800
 comments: true
 categories: Shell

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "some advanced perl tricks"
+title: "一些高阶的Perl小技巧"
 date: 2014-10-17 18:50:35 +0800
 comments: true
 categories: Perl
@@ -10,7 +10,8 @@ I am taking notes of some of the advanced perl tricks used in perl.
 1.to get all the matched items using the /g flag,
 
 ```pl
-$_ = "Just another Perl hacker,";my @words = /(\S+)/g; # "Just" "another" "Perl" "hacker,"
+$_ = "Just another Perl hacker,";
+my @words = /(\S+)/g; # "Just" "another" "Perl" "hacker,"
 ```
 
 2.to get the word count,

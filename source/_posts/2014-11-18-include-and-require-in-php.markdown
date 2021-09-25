@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "include and require in PHP"
+title: "PHP里include和require的使用"
 date: 2014-11-18 13:42:05 +0800
 comments: true
 categories: PHP

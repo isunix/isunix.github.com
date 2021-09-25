@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "cgi set up on macos"
+title: "mac上配置cgi"
 date: 2014-09-30 16:57:08 +0800
 comments: true
 categories: Perl

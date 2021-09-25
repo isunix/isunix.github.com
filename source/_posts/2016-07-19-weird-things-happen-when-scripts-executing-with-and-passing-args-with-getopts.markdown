@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "weird things happen when scripts executing with . and passing args with getopts"
+title: "bash中getopts使用备忘"
 date: 2016-07-19 17:43:32 +0800
 comments: true
 categories: Shell
@@ -119,7 +119,8 @@ Now the count value is changed to 0, however time is still not changed.
 How to understand this? First let us look at the definitions of $OPTIND and getopts
 
 ```
-A getopts construct usually comes packaged in a while loop, which processes the options andarguments one at a time, then increments the implicit $OPTIND variable to point to the next.
+A getopts construct usually comes packaged in a while loop, which processes the options and
+arguments one at a time, then increments the implicit $OPTIND variable to point to the next.
 ```
 
 In a while loop contaning getopts, getopts will use $OPTIND to find the arguments. if we call the script using "dot" which is the same as using "source", $OPTIND will be global and available to the next script using getopts, and the next script will then can not find the right argument using $OPTIND now. 

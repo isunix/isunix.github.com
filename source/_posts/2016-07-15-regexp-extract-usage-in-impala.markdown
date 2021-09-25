@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "regexp_extract usage in impala"
+title: "impala里使用regexp_extract函数"
 date: 2016-07-15 10:43:30 +0800
 comments: true
 categories: BigData

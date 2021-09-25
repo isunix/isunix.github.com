@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "tmux:can't create socket: Permission denied"
+title: "Tmux中的can't create socket: Permission denied问题解决"
 date: 2015-06-19 13:04:00 +0800
 comments: true
 categories: Linux&Mac

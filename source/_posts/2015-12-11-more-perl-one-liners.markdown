@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "more perl one-liners"
+title: "Perl的一行命令(one-liner)"
 date: 2015-12-11 10:18:24 +0800
 comments: true
 categories: Perl

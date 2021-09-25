@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "installing from multiple requirements files"
+title: "Python从多个requirements文件安装包"
 date: 2015-09-21 16:18:23 +0800
 comments: true
 categories: Python

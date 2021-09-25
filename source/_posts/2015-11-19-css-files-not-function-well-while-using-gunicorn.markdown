@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "css files not function well while using gunicorn"
+title: "gunicorn中css文件没有起作用的问题解决"
 date: 2015-11-19 16:42:04 +0800
 comments: true
 categories: Django&Flask

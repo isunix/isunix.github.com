@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "static variable in c"
+title: "C语言里面的静态变量"
 date: 2014-09-12 18:18:08 +0800
 comments: true
 categories: C

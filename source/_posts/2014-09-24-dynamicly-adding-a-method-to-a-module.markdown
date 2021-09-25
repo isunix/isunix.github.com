@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "dynamicly adding a method to a module"
+title: "Perl中动态地往模块里添加module"
 date: 2014-09-24 12:57:20 +0800
 comments: true
 categories: Perl

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "the most used shell commands"
+title: "常用命令行"
 date: 2015-11-02 16:21:57 +0800
 comments: true
 categories: Shell

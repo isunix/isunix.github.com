@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "use python request to download movies"
+title: "使用Python的requests包下载电影"
 date: 2015-12-04 14:50:25 +0800
 comments: true
 categories: Python

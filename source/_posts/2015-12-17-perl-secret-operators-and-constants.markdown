@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "perl secret operators and constants"
+title: "Perl中的秘密(secret) operators和constants"
 date: 2015-12-17 10:37:47 +0800
 comments: true
 categories: Perl

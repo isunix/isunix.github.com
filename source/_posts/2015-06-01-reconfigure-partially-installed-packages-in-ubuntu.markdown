@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "reconfigure partially installed packages in ubuntu"
+title: "重新安装在ubuntu中部分安装的包"
 date: 2015-06-01 13:22:30 +0800
 comments: true
 categories: Linux&Mac

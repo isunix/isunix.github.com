@@ -1,6 +1,7 @@
 ---
 layout: post
-title: "django development in python3 environemnt"
+title: "Python3中开发Django
+"
 date: 2015-10-12 14:55:22 +0800
 comments: true
 categories: Django&Flask

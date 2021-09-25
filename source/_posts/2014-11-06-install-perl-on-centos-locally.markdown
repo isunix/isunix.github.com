@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "install perl on centos locally"
+title: "centOS上源码安装Perl"
 date: 2014-11-06 16:55:54 +0800
 comments: true
 categories: Perl

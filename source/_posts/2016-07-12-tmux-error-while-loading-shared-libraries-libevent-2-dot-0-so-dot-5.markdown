@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "tmux: error while loading shared libraries: libevent-2.0.so.5"
+title: "安装tmux时error while loading shared libraries: libevent-2.0.so.5问题的解决"
 date: 2016-07-12 10:34:50 +0800
 comments: true
 categories: Shell

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "minutes on setting up emacs on macos"
+title: "macos上安装emacs"
 date: 2015-07-02 15:29:18 +0800
 comments: true
 categories: Linux&Mac

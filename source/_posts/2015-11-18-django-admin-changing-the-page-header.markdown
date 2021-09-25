@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Django Admin: Changing the Page Header"
+title: "Django Admin中改页面的Header"
 date: 2015-11-18 16:58:31 +0800
 comments: true
 categories: Django&Flask

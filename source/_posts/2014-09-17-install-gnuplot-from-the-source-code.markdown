@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "install gnuplot from the source code"
+title: "源码安装gnuplot"
 date: 2014-09-17 10:38:15 +0800
 comments: true
 categories: Perl

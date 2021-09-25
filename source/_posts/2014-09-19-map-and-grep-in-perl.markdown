@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "map and grep in perl"
+title: "Perl中的map和grep"
 date: 2014-09-19 12:27:58 +0800
 comments: true
 categories: Perl

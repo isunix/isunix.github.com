@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "remove obsolete packages on ubuntu"
+title: "ubuntu中删除孤立的包"
 date: 2015-06-02 10:03:32 +0800
 comments: true
 categories: Perl

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "apache setup to redirect a site"
+title: "apache服务设置重定向地址"
 date: 2014-11-24 14:31:59 +0800
 comments: true
 categories: Perl

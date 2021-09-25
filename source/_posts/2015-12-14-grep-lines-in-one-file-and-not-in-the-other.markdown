@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "grep lines in one file and not in the other"
+title: "使用grep找到在一个文件但是不在另一个文件中的记录"
 date: 2015-12-14 14:46:10 +0800
 comments: true
 categories: Shell

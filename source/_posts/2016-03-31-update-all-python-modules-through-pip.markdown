@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "update all python modules through pip"
+title: "pip更新所有的包"
 date: 2016-03-31 16:32:49 +0800
 comments: true
 categories: Python

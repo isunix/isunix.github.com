@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "python linked list example"
+title: "Python的链表"
 date: 2015-07-27 16:21:27 +0800
 comments: true
 categories: Python

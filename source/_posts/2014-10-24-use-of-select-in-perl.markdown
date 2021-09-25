@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "use of select in perl"
+title: "Perl中的select的使用"
 date: 2014-10-24 13:34:51 +0800
 comments: true
 categories: Perl		
@@ -32,13 +32,20 @@ If you call select with the name of a file handle, it will replace the current d
 need to write a lot of data to a particular file, you could use code like this:   
 
 ```pl
-open FILE, '>out.txt' or die "Can't open out.txt: $!";my $old = select FILE;foreach (@data) {	print;}select $old;
+open FILE, '>out.txt' or die "Can't open out.txt: $!";
+my $old = select FILE;
+foreach (@data) {
+	print;
+}
+select $old;
 ```    
 
 Another variable that is useful when writing data is ```$|```. Setting this variable to a nonzero value will force the output buffer to be flushed immediately after every print (or write) statement. This has the effect of making the output stream look as if it were unbuffered. This variable acts on the currently selected output file handle. If you want to unbuffer any other file handle, you will need to select it, change the value of ```$|```, and then reselect the previous file handle using code like this:   
 
 ```pl
-my $file = select FILE;$| = 1;select $file;
+my $file = select FILE;
+$| = 1;
+select $file;
 ```  
 
 In its compact form, it can be written as:  

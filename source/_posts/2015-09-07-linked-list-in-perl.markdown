@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Linked List in Perl"
+title: "Perl的链表"
 date: 2015-09-07 12:30:05 +0800
 comments: true
 categories: Perl

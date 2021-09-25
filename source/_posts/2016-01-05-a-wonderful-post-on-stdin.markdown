@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "a wonderful post on stdin"
+title: "介绍stdin的一个好文章"
 date: 2016-01-05 14:30:04 +0800
 comments: true
 categories: Shell

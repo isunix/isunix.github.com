@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "notes on mojolicious"
+title: "Mojolicious框架备忘"
 date: 2014-12-02 20:52:52 +0800
 comments: true
 categories: Perl

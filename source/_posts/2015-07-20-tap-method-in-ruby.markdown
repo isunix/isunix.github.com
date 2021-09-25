@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "tap method in ruby"
+title: "ruby中的tap方法"
 date: 2015-07-20 15:31:51 +0800
 comments: true
 categories: Ruby

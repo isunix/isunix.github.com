@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "useful links for learning ML and SpamAssassin"
+title: "机器学习和SpamAssassin工具的一些有用的资料"
 date: 2014-09-15 10:32:36 +0800
 comments: true
 categories: Data&ML&AI

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "useful awk commands"
+title: "有用的awk命令"
 date: 2015-12-21 16:51:15 +0800
 comments: true
 categories: Shell

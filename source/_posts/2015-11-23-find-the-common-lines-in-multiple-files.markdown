@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "find the common lines in multiple files"
+title: "Linux命令从多个文件中找到公共的行"
 date: 2015-11-23 17:22:11 +0800
 comments: true
 categories: Linux&Mac

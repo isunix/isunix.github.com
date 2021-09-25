@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "libevent not found error while install tmux"
+title: "源码安装tmux时libevent not found错误解决"
 date: 2014-12-24 21:13:11 +0800
 comments: true
 categories: Shell

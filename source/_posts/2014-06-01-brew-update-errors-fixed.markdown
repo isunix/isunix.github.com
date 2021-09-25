@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "brew update errors fixed"
+title: "brew update 错误"
 date: 2014-06-01 16:12:00 +0800
 comments: true
 categories: Linux&Mac

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "interesting use of state in perl"
+title: "Perl中state的有趣的使用"
 date: 2014-07-17 18:48:44 +0800
 comments: true
 categories: Perl

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Gradient Boosting Algorithm"
+title: "Gradient Boosting 算法的一些资料"
 date: 2019-08-14 13:51:36 +0800
 comments: true
 categories: Data&ML&AI

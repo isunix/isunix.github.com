@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "sort in perl"
+title: "Perl中sort函数的使用"
 date: 2014-06-22 12:31:50 +0800
 comments: true
 categories: Perl

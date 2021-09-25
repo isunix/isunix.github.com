@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "remove the ^M chareacters in a file"
+title: "删除文本文件中的^M符号"
 date: 2014-07-01 13:45:23 +0800
 comments: true
 categories: Editor

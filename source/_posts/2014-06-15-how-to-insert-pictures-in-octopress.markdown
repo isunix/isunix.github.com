@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "How to insert pictures in Octopress"
+title: "在Octopress中插入图片"
 date: 2014-06-15 23:14:54 +0800
 comments: true
 categories: Blog

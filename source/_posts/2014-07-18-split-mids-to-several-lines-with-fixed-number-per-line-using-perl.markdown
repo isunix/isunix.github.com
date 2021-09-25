@@ -1,6 +1,7 @@
 ---
 layout: post
-title: "Split Mids to Several Lines With Fixed Number Per Line using perl"
+title: "将一个每行一个item的多行文本转变成每行固定数目的item的文本(Perl)
+"
 date: 2014-07-18 21:38:16 +0800
 comments: true
 categories: Perl

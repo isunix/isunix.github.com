@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "use examples regarding hash in perl"
+title: "Perl中hash的使用"
 date: 2014-07-18 19:18:44 +0800
 comments: true
 categories: Perl

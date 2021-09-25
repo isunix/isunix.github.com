@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "notes on tail recursion using c"
+title: "C语言里面的尾递归的例子"
 date: 2014-07-18 13:50:41 +0800
 comments: true
 categories: C

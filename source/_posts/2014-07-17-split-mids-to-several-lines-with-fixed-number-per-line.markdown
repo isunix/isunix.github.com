@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "split mids to several lines with fixed number per line"
+title: "将一个每行一个item的多行文本转变成每行固定数目的item的文本(PHP)"
 date: 2014-07-17 10:26:09 +0800
 comments: true
 categories: PHP

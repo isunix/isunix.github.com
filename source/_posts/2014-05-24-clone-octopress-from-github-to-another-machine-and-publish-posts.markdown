@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "clone octopress from github to another machine and publish posts"
+title: "换机之后Octopress如何安装"
 date: 2014-05-24 14:00:50 +0800
 comments: true
 categories: Blog

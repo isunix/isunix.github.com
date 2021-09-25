@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "examples of using grep and map in perl"
+title: "Perl中的grep和map的使用"
 date: 2014-07-18 20:55:08 +0800
 comments: true
 categories: Perl
@@ -14,11 +14,27 @@ my @matching_lines = grep { /\bfred\b/i } <$fh>;
 
 my @matching_lines = grep /\bfred\b/i, <$fh>;  
 
-my @matching_lines = grep /\bfred\b/i, <$fh>;my $line_count = @matching_lines;  
-my $line_count = grep /\bfred\b/i, <$fh>;  
-my @data = (4.75, 1.5, 2, 1234, 6.9456, 12345678.9, 29.95);my @formatted_data = map { &big_money($_) } @data;  
-print "The money numbers are:\n",map { sprintf("%25s\n", $_) } @formatted_data;  
-my @data = (4.75, 1.5, 2, 1234, 6.9456, 12345678.9, 29.95);print "The money numbers are:\n",map { sprintf("%25s\n", &big_money($_) ) } @data;  
-print "Some powers of two are:\n",map "\t" . ( 2 ** $_ ) . "\n", 0..15;  
+my @matching_lines = grep /\bfred\b/i, <$fh>;
+my $line_count = @matching_lines;  
+
+
+my $line_count = grep /\bfred\b/i, <$fh>;  
+
+
+my @data = (4.75, 1.5, 2, 1234, 6.9456, 12345678.9, 29.95);
+my @formatted_data = map { &big_money($_) } @data;  
+
+
+print "The money numbers are:\n",
+map { sprintf("%25s\n", $_) } @formatted_data;  
+
+
+my @data = (4.75, 1.5, 2, 1234, 6.9456, 12345678.9, 29.95);
+print "The money numbers are:\n",
+map { sprintf("%25s\n", &big_money($_) ) } @data;  
+
+
+print "Some powers of two are:\n",
+map "\t" . ( 2 ** $_ ) . "\n", 0..15;  
 
 ```

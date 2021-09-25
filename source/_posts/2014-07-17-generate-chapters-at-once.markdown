@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "generate chapters at once"
+title: "使用Perl来批量创建目录"
 date: 2014-07-17 10:47:48 +0800
 comments: true
 categories: Perl

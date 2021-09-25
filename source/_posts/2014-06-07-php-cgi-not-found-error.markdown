@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "php-cgi not found error"
+title: "php-cgi not found 错误处理"
 date: 2014-06-07 14:56:33 +0800
 comments: true
 categories: PHP

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "on the error using rake new_post under zsh"
+title: "ZSH下使用rake new_post报错"
 date: 2014-05-31 17:48:54 +0800
 comments: true
 categories: Blog

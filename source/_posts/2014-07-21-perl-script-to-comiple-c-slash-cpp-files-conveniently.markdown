@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "perl script to comiple c/cpp files conveniently"
+title: "使用Perl来更加方便地编译c/cpp文件"
 date: 2014-07-21 21:31:33 +0800
 comments: true
 categories: Perl

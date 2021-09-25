@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Set up PHP and Apache on Mac OS"
+title: "在mac上搭建PHP和Apache服务"
 date: 2014-06-07 14:25:00 +0800
 comments: true
 categories: PHP

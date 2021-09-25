@@ -9,19 +9,8 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="Say we have a file a, which has the following contentL: 1
-2
-3
-4
-5
-a
-b
-c
-d
-e and b, 1
-2
-c
-d What if we want to get all those in file a and not in file &hellip;">
+  <meta name="description" content="Some maybe useful perl one-liners here for easy reference. Some of the tip are from the post: 1
+http://www.catonmat.net/blog/perl-one-liners- &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -105,80 +94,6 @@ d What if we want to get all those in file a and not in file &hellip;">
     <div id="content">
       <div class="blog-index">
   
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/12/14/grep-lines-in-one-file-and-not-in-the-other/">Grep Lines in One File and Not in the Other</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-12-14T14:46:10+08:00" pubdate data-updated="true">2015 年12 月14 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Say we have a file a, which has the following contentL:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">a
-</span><span class="line">b
-</span><span class="line">c
-</span><span class="line">d
-</span><span class="line">e</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>and b,</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">c
-</span><span class="line">d</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>What if we want to get all those in file a and not in file b, in this case, a, b, e?</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">grep -F -x -v -f b.txt a.txt
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>To qutoe from the page</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line">http://unix.stackexchange.com/questions/28158/is-there-a-tool-to-get-the-lines-in-one-file-that-are-not-in-another
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>The above command is doing the following things:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line">This works by using each line in b.txt as a pattern (-f b.txt) and treating it as a plain string to match (not a regular regex) (-F). You force the match to happen on the whole line (-x) and print out only the lines that don&#39;t match (-v). Therefore you are printing out the lines in a.txt that don&#39;t contain the same data as any line in b.txt.
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>So remember the order of file a and b matters if you really understand what the command is doing.</p>
-</div>
-  
-  
-
-
-    </article>
   
   
     <article>
@@ -737,6 +652,52 @@ d What if we want to get all those in file a and not in file &hellip;">
 
     </article>
   
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/11/23/find-the-common-lines-in-multiple-files/">Find the Common Lines in Multiple Files</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-11-23T17:22:11+08:00" pubdate data-updated="true">2015 年11 月23 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>What if I want to find the lines exist in all the given files under linux. Of course I can write a small script but I do not want to do that, cause I am sure there are commands for this kind of task.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">grep -F -x -f file1 file2 ...
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>you can refer to the following page for more details.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line">http://unix.stackexchange.com/questions/28158/is-there-a-tool-to-get-the-lines-in-one-file-that-are-not-in-another
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
+  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/21/">&larr; Older</a>
@@ -786,11 +747,11 @@ d What if we want to get all those in file a and not in file &hellip;">
       </li>
     
       <li class="post">
-        <a href="/blog/2019/08/14/data-science-at-the-command-line/">Data Science at the Command Line</a>
+        <a href="/blog/2019/08/14/gradient-boosting-algorithm/">Gradient Boosting Algorithm</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2019/08/14/gradient-boosting-algorithm/">Gradient Boosting Algorithm</a>
+        <a href="/blog/2019/08/07/guan-yu-pzhi/">关于P值</a>
       </li>
     
   </ul>
@@ -803,7 +764,7 @@ d What if we want to get all those in file a and not in file &hellip;">
 <li class='category'><a href='/blog/categories/bigdata/'>BigData (11)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (7)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
-<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (16)</a></li>
+<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (15)</a></li>
 <li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (5)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (2)</a></li>
 <li class='category'><a href='/blog/categories/javascript/'>Javascript (4)</a></li>

@@ -9,24 +9,10 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="For Perl constructor, we can seperate the process of object creation from the process of initialization. 1
+  <meta name="description" content="As well as getting the value of an attribute, you may well want to set or change it. The syntax you’ll use is as follows: 1
 2
 3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18 &hellip;">
+print &quot;Old &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -116,196 +102,6 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/09/11/constructor-and-destructor-in-perl/">Constructor and Destructor in Perl</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-09-11T13:46:23+08:00" pubdate data-updated="true">2014 年9 月11 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>For Perl constructor, we can seperate the process of object creation from the process of initialization.  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nb">package</span> <span class="nn">CD::</span><span class="n">Music</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="n">strict</span><span class="p">;</span>
-</span><span class="line"><span class="k">sub </span><span class="nf">new</span> <span class="p">{</span>
-</span><span class="line">	<span class="k">my</span> <span class="nv">$self</span> <span class="o">=</span> <span class="p">{};</span>
-</span><span class="line">	<span class="nb">bless</span> <span class="nv">$self</span><span class="p">,</span> <span class="nb">shift</span><span class="p">;</span>
-</span><span class="line">	<span class="nv">$self</span><span class="o">-&gt;</span><span class="n">_incr_count</span><span class="p">();</span>
-</span><span class="line">	<span class="nv">$self</span><span class="o">-&gt;</span><span class="n">_init</span><span class="p">(</span><span class="nv">@_</span><span class="p">);</span>
-</span><span class="line">	<span class="k">return</span> <span class="nv">$self</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line"><span class="p">{</span>
-</span><span class="line">	<span class="k">my</span> <span class="nv">@_init_mems</span> <span class="o">=</span>
-</span><span class="line">	<span class="sx">qw( _name _artist _publisher _ISBN _tracks _room _shelf _rating )</span><span class="p">;</span>
-</span><span class="line">	<span class="k">sub </span><span class="nf">_init</span> <span class="p">{</span>
-</span><span class="line">		<span class="k">my</span> <span class="p">(</span><span class="nv">$self</span><span class="p">,</span><span class="nv">@args</span><span class="p">)</span> <span class="o">=</span> <span class="nv">@_</span><span class="p">;</span>
-</span><span class="line">		<span class="k">my</span> <span class="nv">%inits</span><span class="p">;</span>
-</span><span class="line">		<span class="nv">@inits</span><span class="p">{</span><span class="nv">@_init_mems</span><span class="p">}</span> <span class="o">=</span> <span class="nv">@args</span><span class="p">;</span>
-</span><span class="line">		<span class="nv">%$self</span> <span class="o">=</span> <span class="nv">%inits</span><span class="p">;</span>
-</span><span class="line">	<span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/10/named-arguments/">Perl中的命名参数(named Arguments)</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-09-10T15:58:10+08:00" pubdate data-updated="true">2014 年9 月10 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>For named argument, it many uses the trick of changing a list into a hash. Take a look at the following code.  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">listdir</span><span class="p">(</span><span class="n">cols</span><span class="o">=&gt;</span><span class="mi">4</span><span class="p">,</span> <span class="n">page</span><span class="o">=&gt;</span><span class="mi">1</span><span class="p">,</span> <span class="n">hidden</span><span class="o">=&gt;</span><span class="mi">1</span><span class="p">,</span> <span class="n">sep_dirs</span><span class="o">=&gt;</span><span class="mi">1</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="k">sub </span><span class="nf">listdir</span> <span class="p">{</span>
-</span><span class="line">	<span class="nv">%arg</span> <span class="o">=</span> <span class="nv">@_</span><span class="p">;</span><span class="c1"># Convert argument list to hash</span>
-</span><span class="line">
-</span><span class="line">	<span class="nv">$arg</span><span class="p">{</span><span class="n">match</span><span class="p">}</span> <span class="o">=</span> <span class="s">&quot;*&quot;</span> <span class="k">unless</span> <span class="nb">exists</span> <span class="nv">$arg</span><span class="p">{</span><span class="n">match</span><span class="p">};</span>
-</span><span class="line">	<span class="nv">$arg</span><span class="p">{</span><span class="n">cols</span><span class="p">}</span> <span class="o">=</span> <span class="mi">1</span><span class="k">unless</span> <span class="nb">exists</span> <span class="nv">$arg</span><span class="p">{</span><span class="n">cols</span><span class="p">};</span>
-</span><span class="line"><span class="c1"># etc.</span>
-</span><span class="line"><span class="c1"># Use arguments to control behaviour...</span>
-</span><span class="line">	<span class="nv">@files</span> <span class="o">=</span> <span class="n">get_files</span><span class="p">(</span> <span class="nv">$arg</span><span class="p">{</span><span class="n">match</span><span class="p">}</span> <span class="p">);</span>
-</span><span class="line">	<span class="nb">push</span> <span class="nv">@files</span><span class="p">,</span> <span class="n">get_hidden_files</span><span class="p">()</span> <span class="k">if</span> <span class="nv">$arg</span><span class="p">{</span><span class="n">hidden</span><span class="p">};</span> <span class="c1"># etc.</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>Apart from documenting the call better, this approach has another important advantage. Since the entries of a hash can be initialized in any convenient order, we no longer need to re- member the order of the nine potential arguments, as long as we remember their names. In addition, because hashes are flattened inside lists, if we have several calls that require the same subset of arguments, we can store that subset in a separate hash and reuse it:    </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">%std_listing</span> <span class="o">=</span> <span class="p">(</span><span class="n">cols</span><span class="o">=&gt;</span><span class="mi">2</span><span class="p">,</span> <span class="n">page</span><span class="o">=&gt;</span><span class="mi">1</span><span class="p">,</span> <span class="n">sort_by</span><span class="o">=&gt;</span><span class="s">&quot;date&quot;</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="n">listdir</span><span class="p">(</span><span class="n">file</span><span class="o">=&gt;</span><span class="s">&quot;*.txt&quot;</span><span class="p">,</span> <span class="nv">%std_listing</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="n">listdir</span><span class="p">(</span><span class="n">file</span><span class="o">=&gt;</span><span class="s">&quot;*.log&quot;</span><span class="p">,</span> <span class="nv">%std_listing</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="n">listdir</span><span class="p">(</span><span class="n">file</span><span class="o">=&gt;</span><span class="s">&quot;*.dat&quot;</span><span class="p">,</span> <span class="nv">%std_listing</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>We can even override specific elements of the standard set of arguments, by placing an explicit version after the standard set. Then the explicit version will reinitialize (i.e., overwrite) the corresponding entry in the hash:      </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">listdir</span><span class="p">(</span><span class="n">file</span><span class="o">=&gt;</span><span class="s">&quot;*.exe&quot;</span><span class="p">,</span> <span class="nv">%std_listing</span><span class="p">,</span> <span class="n">sort_by</span><span class="o">=&gt;</span><span class="s">&quot;size&quot;</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>This idea of a standard argument set, overridden by explicitly specified arguments, can also be used within the subroutine to simplify the handling of default values. For example:   </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">sub </span><span class="nf">listdir</span> <span class="p">{</span>
-</span><span class="line">	<span class="nv">%defaults</span> <span class="o">=</span> <span class="p">(</span><span class="n">match</span><span class="o">=&gt;</span><span class="s">&quot;*&quot;</span><span class="p">,</span> <span class="n">cols</span><span class="o">=&gt;</span><span class="mi">1</span><span class="p">,</span> <span class="n">sort_by</span><span class="o">=&gt;</span><span class="s">&quot;name&quot;</span><span class="p">);</span> <span class="nv">%arg</span> <span class="o">=</span> <span class="p">(</span><span class="nv">%defaults</span><span class="p">,</span> <span class="nv">@_</span><span class="p">);</span>
-</span><span class="line">	<span class="c1"># Use arguments to control behaviour...	</span>
-</span><span class="line">	<span class="c1"># etc.</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>In this version, the default values are stored in the %defaults hash, and are then flat- tened into the list used to initialize the %arg hash. The default values appear first in the ini- tializer list. Any entry of the same name passed in via @_ will therefore overwrite the corresponding entry in %arg, replacing the default value with the user-specified one. As a final optimization, the default hash could be moved outside listdir, so that it need only be ini- tialized once, before the program runs, rather than each time listdir is called:    </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">%defaults</span> <span class="o">=</span> <span class="p">(</span><span class="n">match</span><span class="o">=&gt;</span><span class="s">&quot;*&quot;</span><span class="p">,</span> <span class="n">cols</span><span class="o">=&gt;</span><span class="mi">1</span><span class="p">,</span> <span class="n">sort_by</span><span class="o">=&gt;</span><span class="s">&quot;name&quot;</span><span class="p">);</span>
-</span><span class="line"><span class="k">sub </span><span class="nf">listdir</span> <span class="p">{</span>
-</span><span class="line">	<span class="nv">%arg</span> <span class="o">=</span> <span class="p">(</span><span class="nv">%defaults</span><span class="p">,</span> <span class="nv">@_</span><span class="p">);</span>
-</span><span class="line">	<span class="c1"># etc.</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
       <h1 class="entry-title"><a href="/blog/2014/09/07/getter-setter-methods-in-perl/">Perl中的getter-setter方法</a></h1>
     
     
@@ -377,6 +173,105 @@
 </span><span class="line"><span class="k">sub </span><span class="nf">firstname</span> <span class="p">{</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">firstname</span><span class="p">}</span> <span class="o">=</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="nb">defined</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span> <span class="nv">$_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">firstname</span><span class="p">}</span> <span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/06/fun-perl-code-snippets/">有趣的Perl代码片段</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-06T10:02:29+08:00" pubdate data-updated="true">2014 年9 月6 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I collect some useful code snippets here for later usage or just keep a note of what I have read.  </p>
+
+<p>1.find files larger than a specifed size(in byte):   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="nn">File::</span><span class="n">Find</span><span class="p">;</span>
+</span><span class="line"><span class="n">find</span><span class="p">(</span><span class="k">sub </span><span class="p">{</span> <span class="k">print</span> <span class="s">&quot;$_\n&quot;</span> <span class="k">if</span> <span class="o">-</span><span class="n">s</span> <span class="nv">$_</span> <span class="o">&gt;</span> <span class="nv">$ARGV</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span> <span class="p">},</span> <span class="s">&quot;.&quot;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>2.we can use “man module::name” or “perldoc module::name” to check the detailed info of a module.   </p>
+
+<p>3.For the first example, if using require, we can write it as the following:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nb">require</span> <span class="nn">File::</span><span class="n">Find</span><span class="p">;</span>
+</span><span class="line"><span class="nn">File::Find::</span><span class="n">find</span><span class="p">(</span><span class="k">sub </span><span class="p">{</span> <span class="k">print</span> <span class="s">&quot;$File::Find::name\n&quot;</span> <span class="k">if</span> <span class="o">-</span><span class="n">s</span> <span class="o">&gt;</span> <span class="mi">1_024_000</span><span class="p">;</span> <span class="p">},</span> <span class="s">&#39;.&#39;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>4.”use” happens during compile time, whereas “require” happens at runtime.    </p>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/05/notes-on-perlrun/">Perlrun备忘</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-05T19:24:02+08:00" pubdate data-updated="true">2014 年9 月5 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>We keep notes on some of the useful notes on perl command line knowledge here.  </p>
+
+<p>1.-i[extension]:  </p>
+
+<p>specifies that files processed by the “&lt;&gt;” construct are to be edited in-place.  It does this by renaming the input file, opening the output file by the original name, and selecting that output file as the default for print() statements.   </p>
+
+<p>2.-p:
+causes Perl to assume the following loop around your program, which makes it iterate over filename arguments somewhat like sed.</p>
 </div>
   
   
@@ -456,7 +351,7 @@
 <li class='category'><a href='/blog/categories/javascript/'>Javascript (4)</a></li>
 <li class='category'><a href='/blog/categories/linux-and-mac/'>Linux&Mac (13)</a></li>
 <li class='category'><a href='/blog/categories/php/'>PHP (5)</a></li>
-<li class='category'><a href='/blog/categories/perl/'>Perl (49)</a></li>
+<li class='category'><a href='/blog/categories/perl/'>Perl (47)</a></li>
 <li class='category'><a href='/blog/categories/python/'>Python (11)</a></li>
 <li class='category'><a href='/blog/categories/ruby/'>Ruby (1)</a></li>
 <li class='category'><a href='/blog/categories/scala/'>Scala (1)</a></li>

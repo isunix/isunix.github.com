@@ -9,7 +9,7 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="Today while I was running a php script from the PHPStrom by a browser, I got the following error telling me that “php-cgi not found.”. I have no &hellip;">
+  <meta name="description" content="在我们开始这本书的实质内容之前， 我们想介绍些在本书中使用的中级水平的Perl习语。通常就是这些东西把初级的还有中级水平的Perl程序员区别开的。 在这个过程中， 我们还会把你介绍给将在本书中的例子中使用的一组角色。 列表操作符 你已经知道了一些Perl中的列表操作符， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -93,98 +93,6 @@
     <div id="content">
       <div class="blog-index">
   
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/06/07/php-cgi-not-found-error/">Php-cgi Not Found 错误处理</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-06-07T14:56:33+08:00" pubdate data-updated="true">2014 年6 月7 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Today while I was running a php script from the PHPStrom by a browser, I got the following error telling me that “php-cgi not found.”. I have no other way but to install a new version of php, my original version is 5.4.24, I then installed a 5.5 version.  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line">curl -s http://php-osx.liip.ch/install.sh | bash -s 5.5
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>and in my phpstorm, I use the path, “usr/local/php5/bin” as the interpreter’s path. It works now.</p>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/06/07/set-up-php-and-apache-on-mac-os/">在mac上搭建PHP和Apache服务</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-06-07T14:25:00+08:00" pubdate data-updated="true">2014 年6 月7 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I have set up Apache and PHP on my computer many times, every time I googled or Baidued about it, it is high time to keep a note about those steps.    </p>
-
-<ol>
-  <li>sudo mate /etc/apache2/httpd.conf</li>
-  <li>uncomment “#LoadModule php5_module libexec/apache2/libphp5.so”</li>
-  <li>save the file and quit. </li>
-  <li>sudo cp /etc/php.ini.default /etc/php.ini</li>
-  <li>sudo apachectl start </li>
-  <li>ln -s /Library/WebServer/Document $HOME/www</li>
-  <li>rename the file “index.html.en” or just delete the file if you do not want to be botthered.  </li>
-</ol>
-
-<p>That’s the steps all it takes to set up your apache and PHP on a MAC OS machine.</p>
-
-</div>
-  
-  
-
-
-    </article>
   
   
     <article>
@@ -521,6 +429,106 @@
 
     </article>
   
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/05/how-to-find-the-password-for-pidgin/">命令行找到pidgin的密码</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-06-05T20:49:16+08:00" pubdate data-updated="true">2014 年6 月5 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Use the following command line to find the password for your account on pidgin:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">cat <span class="nv">$HOME</span>/.purple/accounts.xml | grep pass
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>and it works.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/01/brew-update-errors-fixed/">Brew Update 错误</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-06-01T16:12:00+08:00" pubdate data-updated="true">2014 年6 月1 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I met several errors while updating my homebrew, one is:</p>
+
+<p><img src="/images/sun/first.png" /></p>
+
+<p>the solution is:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">cd `brew --prefix`
+</span><span class="line">git remote add origin https://github.com/mxcl/homebrew.git
+</span><span class="line">git fetch origin
+</span><span class="line">git reset --hard origin/master
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>the other is:</p>
+
+<p><img src="/images/sun/second.png" /></p>
+
+<p>To address this this error, we just have have to change the permissions on the folder to a certain user:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">chown -R sun .git</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
+  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/48/">&larr; Older</a>
@@ -593,7 +601,7 @@
 <li class='category'><a href='/blog/categories/javascript/'>Javascript (4)</a></li>
 <li class='category'><a href='/blog/categories/linux-and-mac/'>Linux&Mac (13)</a></li>
 <li class='category'><a href='/blog/categories/php/'>PHP (5)</a></li>
-<li class='category'><a href='/blog/categories/perl/'>Perl (49)</a></li>
+<li class='category'><a href='/blog/categories/perl/'>Perl (47)</a></li>
 <li class='category'><a href='/blog/categories/python/'>Python (11)</a></li>
 <li class='category'><a href='/blog/categories/ruby/'>Ruby (1)</a></li>
 <li class='category'><a href='/blog/categories/scala/'>Scala (1)</a></li>

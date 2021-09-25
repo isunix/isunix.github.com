@@ -9,28 +9,7 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="这是关于线性表链式存住的两种实现方式，一个使用指针，一个使用c++中的引用。其实这两种方式是大同小异的。 The first method will use pointer in c. 1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22 &hellip;">
+  <meta name="description" content="在线性表的顺序存储中， 我们既可以使用指针来实现这些抽象的数据类型，也可以使用C++中的引用来操作。 下面让我们来先用指针来实现。 For the sake of convenience, the following paragraphs will be using English to &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -114,629 +93,6 @@
     <div id="content">
       <div class="blog-index">
   
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/08/02/lian-biao-de-liang-chong-shi-xian-fang-shi/">链表的两种实现方式</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-08-02T10:31:18+08:00" pubdate data-updated="true">2014 年8 月2 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>这是关于线性表链式存住的两种实现方式，一个使用指针，一个使用c++中的引用。其实这两种方式是大同小异的。  </p>
-
-<p>The first method will use pointer in c.  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-<span class="line-number">28</span>
-<span class="line-number">29</span>
-<span class="line-number">30</span>
-<span class="line-number">31</span>
-<span class="line-number">32</span>
-<span class="line-number">33</span>
-<span class="line-number">34</span>
-<span class="line-number">35</span>
-<span class="line-number">36</span>
-<span class="line-number">37</span>
-<span class="line-number">38</span>
-<span class="line-number">39</span>
-<span class="line-number">40</span>
-<span class="line-number">41</span>
-<span class="line-number">42</span>
-<span class="line-number">43</span>
-<span class="line-number">44</span>
-<span class="line-number">45</span>
-<span class="line-number">46</span>
-<span class="line-number">47</span>
-<span class="line-number">48</span>
-<span class="line-number">49</span>
-<span class="line-number">50</span>
-<span class="line-number">51</span>
-<span class="line-number">52</span>
-<span class="line-number">53</span>
-<span class="line-number">54</span>
-<span class="line-number">55</span>
-<span class="line-number">56</span>
-<span class="line-number">57</span>
-<span class="line-number">58</span>
-<span class="line-number">59</span>
-<span class="line-number">60</span>
-<span class="line-number">61</span>
-<span class="line-number">62</span>
-<span class="line-number">63</span>
-<span class="line-number">64</span>
-<span class="line-number">65</span>
-<span class="line-number">66</span>
-<span class="line-number">67</span>
-<span class="line-number">68</span>
-<span class="line-number">69</span>
-<span class="line-number">70</span>
-<span class="line-number">71</span>
-<span class="line-number">72</span>
-<span class="line-number">73</span>
-<span class="line-number">74</span>
-<span class="line-number">75</span>
-<span class="line-number">76</span>
-<span class="line-number">77</span>
-<span class="line-number">78</span>
-<span class="line-number">79</span>
-<span class="line-number">80</span>
-<span class="line-number">81</span>
-<span class="line-number">82</span>
-<span class="line-number">83</span>
-<span class="line-number">84</span>
-<span class="line-number">85</span>
-<span class="line-number">86</span>
-<span class="line-number">87</span>
-<span class="line-number">88</span>
-<span class="line-number">89</span>
-<span class="line-number">90</span>
-<span class="line-number">91</span>
-<span class="line-number">92</span>
-<span class="line-number">93</span>
-<span class="line-number">94</span>
-<span class="line-number">95</span>
-<span class="line-number">96</span>
-<span class="line-number">97</span>
-<span class="line-number">98</span>
-<span class="line-number">99</span>
-<span class="line-number">100</span>
-<span class="line-number">101</span>
-<span class="line-number">102</span>
-<span class="line-number">103</span>
-<span class="line-number">104</span>
-<span class="line-number">105</span>
-<span class="line-number">106</span>
-<span class="line-number">107</span>
-<span class="line-number">108</span>
-<span class="line-number">109</span>
-<span class="line-number">110</span>
-<span class="line-number">111</span>
-<span class="line-number">112</span>
-<span class="line-number">113</span>
-<span class="line-number">114</span>
-<span class="line-number">115</span>
-<span class="line-number">116</span>
-<span class="line-number">117</span>
-<span class="line-number">118</span>
-<span class="line-number">119</span>
-<span class="line-number">120</span>
-<span class="line-number">121</span>
-<span class="line-number">122</span>
-<span class="line-number">123</span>
-<span class="line-number">124</span>
-<span class="line-number">125</span>
-<span class="line-number">126</span>
-<span class="line-number">127</span>
-<span class="line-number">128</span>
-<span class="line-number">129</span>
-<span class="line-number">130</span>
-<span class="line-number">131</span>
-<span class="line-number">132</span>
-<span class="line-number">133</span>
-<span class="line-number">134</span>
-<span class="line-number">135</span>
-<span class="line-number">136</span>
-<span class="line-number">137</span>
-<span class="line-number">138</span>
-<span class="line-number">139</span>
-<span class="line-number">140</span>
-<span class="line-number">141</span>
-<span class="line-number">142</span>
-<span class="line-number">143</span>
-<span class="line-number">144</span>
-<span class="line-number">145</span>
-<span class="line-number">146</span>
-<span class="line-number">147</span>
-<span class="line-number">148</span>
-<span class="line-number">149</span>
-<span class="line-number">150</span>
-<span class="line-number">151</span>
-<span class="line-number">152</span>
-<span class="line-number">153</span>
-<span class="line-number">154</span>
-<span class="line-number">155</span>
-<span class="line-number">156</span>
-<span class="line-number">157</span>
-<span class="line-number">158</span>
-<span class="line-number">159</span>
-<span class="line-number">160</span>
-<span class="line-number">161</span>
-<span class="line-number">162</span>
-<span class="line-number">163</span>
-<span class="line-number">164</span>
-<span class="line-number">165</span>
-<span class="line-number">166</span>
-<span class="line-number">167</span>
-<span class="line-number">168</span>
-<span class="line-number">169</span>
-<span class="line-number">170</span>
-<span class="line-number">171</span>
-<span class="line-number">172</span>
-<span class="line-number">173</span>
-<span class="line-number">174</span>
-<span class="line-number">175</span>
-<span class="line-number">176</span>
-<span class="line-number">177</span>
-<span class="line-number">178</span>
-<span class="line-number">179</span>
-<span class="line-number">180</span>
-<span class="line-number">181</span>
-<span class="line-number">182</span>
-<span class="line-number">183</span>
-<span class="line-number">184</span>
-<span class="line-number">185</span>
-<span class="line-number">186</span>
-<span class="line-number">187</span>
-<span class="line-number">188</span>
-<span class="line-number">189</span>
-<span class="line-number">190</span>
-<span class="line-number">191</span>
-<span class="line-number">192</span>
-<span class="line-number">193</span>
-<span class="line-number">194</span>
-<span class="line-number">195</span>
-<span class="line-number">196</span>
-<span class="line-number">197</span>
-<span class="line-number">198</span>
-<span class="line-number">199</span>
-<span class="line-number">200</span>
-<span class="line-number">201</span>
-<span class="line-number">202</span>
-<span class="line-number">203</span>
-<span class="line-number">204</span>
-<span class="line-number">205</span>
-<span class="line-number">206</span>
-<span class="line-number">207</span>
-<span class="line-number">208</span>
-<span class="line-number">209</span>
-<span class="line-number">210</span>
-<span class="line-number">211</span>
-<span class="line-number">212</span>
-<span class="line-number">213</span>
-<span class="line-number">214</span>
-<span class="line-number">215</span>
-</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="cm">/*first inlcude all those need header files.*/</span>
-</span><span class="line"><span class="cp">#include &quot;stdio.h&quot;</span>
-</span><span class="line"><span class="cp">#include &quot;string.h&quot;</span>
-</span><span class="line"><span class="cp">#include &quot;ctype.h&quot;</span>
-</span><span class="line"><span class="cp">#include &quot;stdlib.h&quot;</span>
-</span><span class="line"><span class="cp">#include &quot;math.h&quot;</span>
-</span><span class="line">
-</span><span class="line"><span class="cm">/*define those constants needed*/</span>
-</span><span class="line"><span class="cp">#define OK 1</span>
-</span><span class="line"><span class="cp">#define ERROR 0</span>
-</span><span class="line"><span class="cp">#define TRUE 1</span>
-</span><span class="line"><span class="cp">#define FALSE 0</span>
-</span><span class="line">
-</span><span class="line"><span class="cm">/*define the initial size allocated.*/</span>
-</span><span class="line"><span class="cp">#define MAXSIZE 20</span>
-</span><span class="line">
-</span><span class="line"><span class="cm">/*define the return type of a function*/</span>
-</span><span class="line"><span class="k">typedef</span> <span class="kt">int</span> <span class="n">Status</span><span class="p">;</span>
-</span><span class="line"><span class="k">typedef</span> <span class="kt">int</span> <span class="n">ElemType</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="cm">/*define a struct Node with the name Node, and make LinkList a pointer point to Node*/</span>
-</span><span class="line"><span class="k">typedef</span> <span class="k">struct</span> <span class="n">Node</span> <span class="p">{</span>
-</span><span class="line">    <span class="n">ElemType</span> <span class="n">data</span><span class="p">;</span>
-</span><span class="line">    <span class="k">struct</span> <span class="n">Node</span> <span class="o">*</span><span class="n">next</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span><span class="n">Node</span><span class="p">;</span>
-</span><span class="line"><span class="k">typedef</span> <span class="k">struct</span> <span class="n">Node</span> <span class="o">*</span><span class="n">LinkList</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="cm">/*initialize the LinkList*/</span>
-</span><span class="line"><span class="n">Status</span> <span class="nf">InitList</span><span class="p">(</span><span class="n">LinkList</span> <span class="o">*</span><span class="n">L</span><span class="p">)</span>
-</span><span class="line"><span class="p">{</span>
-</span><span class="line">    <span class="o">*</span><span class="n">L</span><span class="o">=</span><span class="p">(</span><span class="n">LinkList</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Node</span><span class="p">));</span>
-</span><span class="line">    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="o">*</span><span class="n">L</span><span class="p">))</span>
-</span><span class="line">    	<span class="k">return</span> <span class="n">ERROR</span><span class="p">;</span>
-</span><span class="line">    <span class="p">(</span><span class="o">*</span><span class="n">L</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">next</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line">    <span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="n">Status</span> <span class="nf">ListEmpty</span><span class="p">(</span><span class="n">LinkList</span> <span class="n">L</span><span class="p">){</span>
-</span><span class="line">    <span class="k">if</span><span class="p">(</span><span class="n">L</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">)</span>
-</span><span class="line">    	<span class="k">return</span> <span class="n">FALSE</span><span class="p">;</span>
-</span><span class="line">    <span class="k">else</span>
-</span><span class="line">    	<span class="k">return</span> <span class="n">TRUE</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="cm">/*if the linklist already exists, set it to empty*/</span>
-</span><span class="line"><span class="n">Status</span> <span class="nf">ClearList</span><span class="p">(</span><span class="n">LinkList</span> <span class="o">*</span><span class="n">L</span><span class="p">)</span>
-</span><span class="line"><span class="p">{</span>
-</span><span class="line">	<span class="n">LinkList</span> <span class="n">p</span><span class="p">,</span><span class="n">q</span><span class="p">;</span>
-</span><span class="line">	<span class="n">p</span><span class="o">=</span><span class="p">(</span><span class="o">*</span><span class="n">L</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>     <span class="cm">/*p points to the first node*/</span>
-</span><span class="line">	<span class="k">while</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>          <span class="cm">/*it means not to the end of the linklist*/</span>
-</span><span class="line">	<span class="p">{</span>
-</span><span class="line">		<span class="n">q</span><span class="o">=</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
-</span><span class="line">		<span class="n">free</span><span class="p">(</span><span class="n">p</span><span class="p">);</span>
-</span><span class="line">		<span class="n">p</span><span class="o">=</span><span class="n">q</span><span class="p">;</span>
-</span><span class="line">	<span class="p">}</span>
-</span><span class="line">	<span class="p">(</span><span class="o">*</span><span class="n">L</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">next</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>  <span class="cm">/*pointer field for the head Node will be null*/</span>
-</span><span class="line">	<span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="cm">/*return the length of the linklist*/</span>
-</span><span class="line"><span class="kt">int</span> <span class="nf">ListLength</span><span class="p">(</span><span class="n">LinkList</span> <span class="n">L</span><span class="p">)</span>
-</span><span class="line"><span class="p">{</span>
-</span><span class="line">    <span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-</span><span class="line">    <span class="n">LinkList</span> <span class="n">p</span><span class="o">=</span><span class="n">L</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>  <span class="cm">/*p points to the first node*/</span>
-</span><span class="line">    <span class="k">while</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
-</span><span class="line">    <span class="p">{</span>
-</span><span class="line">        <span class="n">i</span><span class="o">++</span><span class="p">;</span>
-</span><span class="line">        <span class="n">p</span><span class="o">=</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">    <span class="k">return</span> <span class="n">i</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="cm">/*get the i th element of L and returning its value using e*/</span>
-</span><span class="line"><span class="n">Status</span> <span class="nf">GetElem</span><span class="p">(</span><span class="n">LinkList</span> <span class="n">L</span><span class="p">,</span><span class="kt">int</span> <span class="n">i</span><span class="p">,</span><span class="n">ElemType</span> <span class="o">*</span><span class="n">e</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">	<span class="kt">int</span> <span class="n">j</span><span class="p">;</span>
-</span><span class="line">	<span class="n">LinkList</span> <span class="n">p</span><span class="p">;</span>		<span class="cm">/* declare a node &quot;p&quot; */</span>
-</span><span class="line">	<span class="n">p</span> <span class="o">=</span> <span class="n">L</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>		<span class="cm">/* let p point to the first node of L */</span>
-</span><span class="line">	<span class="n">j</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>		
-</span><span class="line">	<span class="k">while</span> <span class="p">(</span><span class="n">p</span> <span class="o">&amp;&amp;</span> <span class="n">j</span><span class="o">&lt;</span><span class="n">i</span><span class="p">)</span>
-</span><span class="line">	<span class="p">{</span>
-</span><span class="line">		<span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>  <span class="cm">/* let p point to the next node */</span>
-</span><span class="line">		<span class="o">++</span><span class="n">j</span><span class="p">;</span>
-</span><span class="line">	<span class="p">}</span>
-</span><span class="line">	<span class="k">if</span> <span class="p">(</span> <span class="o">!</span><span class="n">p</span> <span class="o">||</span> <span class="n">j</span><span class="o">&gt;</span><span class="n">i</span> <span class="p">)</span>
-</span><span class="line">		<span class="k">return</span> <span class="n">ERROR</span><span class="p">;</span>  <span class="cm">/*  the i th element does not exist */</span>
-</span><span class="line">	<span class="o">*</span><span class="n">e</span> <span class="o">=</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">;</span>   <span class="cm">/*  get the data of the i th element */</span>
-</span><span class="line">	<span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="cm">/* locate element e in L */</span>
-</span><span class="line"><span class="kt">int</span> <span class="nf">LocateElem</span><span class="p">(</span><span class="n">LinkList</span> <span class="n">L</span><span class="p">,</span><span class="n">ElemType</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">    <span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-</span><span class="line">    <span class="n">LinkList</span> <span class="n">p</span><span class="o">=</span><span class="n">L</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
-</span><span class="line">    <span class="k">while</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
-</span><span class="line">    <span class="p">{</span>
-</span><span class="line">        <span class="n">i</span><span class="o">++</span><span class="p">;</span>
-</span><span class="line">        <span class="k">if</span><span class="p">(</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">data</span><span class="o">==</span><span class="n">e</span><span class="p">)</span> <span class="cm">/* find the element */</span>
-</span><span class="line">                <span class="k">return</span> <span class="n">i</span><span class="p">;</span>
-</span><span class="line">        <span class="n">p</span><span class="o">=</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">
-</span><span class="line">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">	
-</span><span class="line"><span class="cm">/*insert at the location of the i th element*/</span> 	
-</span><span class="line"><span class="n">Status</span> <span class="nf">ListInsert</span><span class="p">(</span><span class="n">LinkList</span> <span class="o">*</span><span class="n">L</span><span class="p">,</span><span class="kt">int</span> <span class="n">i</span><span class="p">,</span><span class="n">ElemType</span> <span class="n">e</span><span class="p">)</span>
-</span><span class="line"><span class="p">{</span>
-</span><span class="line">	<span class="kt">int</span> <span class="n">j</span><span class="p">;</span>
-</span><span class="line">	<span class="n">LinkList</span> <span class="n">p</span><span class="p">,</span><span class="n">s</span><span class="p">;</span>
-</span><span class="line">	<span class="n">p</span> <span class="o">=</span> <span class="o">*</span><span class="n">L</span><span class="p">;</span>
-</span><span class="line">	<span class="n">j</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-</span><span class="line">	<span class="k">while</span> <span class="p">(</span><span class="n">p</span> <span class="o">&amp;&amp;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">i</span><span class="p">)</span>     <span class="cm">/* find the i th node */</span>
-</span><span class="line">	<span class="p">{</span>
-</span><span class="line">		<span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
-</span><span class="line">		<span class="o">++</span><span class="n">j</span><span class="p">;</span>
-</span><span class="line">	<span class="p">}</span>
-</span><span class="line">	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">p</span> <span class="o">||</span> <span class="n">j</span> <span class="o">&gt;</span> <span class="n">i</span><span class="p">)</span>
-</span><span class="line">		<span class="k">return</span> <span class="n">ERROR</span><span class="p">;</span>
-</span><span class="line">	<span class="n">s</span> <span class="o">=</span> <span class="p">(</span><span class="n">LinkList</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Node</span><span class="p">));</span>
-</span><span class="line">	<span class="n">s</span><span class="o">-&gt;</span><span class="n">data</span> <span class="o">=</span> <span class="n">e</span><span class="p">;</span>
-</span><span class="line">	<span class="n">s</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
-</span><span class="line">	<span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="n">s</span><span class="p">;</span>
-</span><span class="line">	<span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="cm">/*delete the i th element, returning its value using e*/</span>
-</span><span class="line">
-</span><span class="line"><span class="n">Status</span> <span class="nf">ListDelete</span><span class="p">(</span><span class="n">LinkList</span> <span class="o">*</span><span class="n">L</span><span class="p">,</span><span class="kt">int</span> <span class="n">i</span><span class="p">,</span><span class="n">ElemType</span> <span class="o">*</span><span class="n">e</span><span class="p">)</span>
-</span><span class="line"><span class="p">{</span>
-</span><span class="line">	<span class="kt">int</span> <span class="n">j</span><span class="p">;</span>
-</span><span class="line">	<span class="n">LinkList</span> <span class="n">p</span><span class="p">,</span><span class="n">q</span><span class="p">;</span>
-</span><span class="line">	<span class="n">p</span> <span class="o">=</span> <span class="o">*</span><span class="n">L</span><span class="p">;</span>
-</span><span class="line">	<span class="n">j</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-</span><span class="line">	<span class="k">while</span> <span class="p">(</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">&amp;&amp;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">i</span><span class="p">)</span>	
-</span><span class="line">	<span class="p">{</span>
-</span><span class="line">        <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
-</span><span class="line">        <span class="o">++</span><span class="n">j</span><span class="p">;</span>
-</span><span class="line">	<span class="p">}</span>
-</span><span class="line">	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">)</span> <span class="o">||</span> <span class="n">j</span> <span class="o">&gt;</span> <span class="n">i</span><span class="p">)</span>
-</span><span class="line">	    <span class="k">return</span> <span class="n">ERROR</span><span class="p">;</span>
-</span><span class="line">	<span class="n">q</span> <span class="o">=</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
-</span><span class="line">	<span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="n">q</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>			
-</span><span class="line">	<span class="o">*</span><span class="n">e</span> <span class="o">=</span> <span class="n">q</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">;</span>
-</span><span class="line">	<span class="n">free</span><span class="p">(</span><span class="n">q</span><span class="p">);</span>
-</span><span class="line">	<span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="cm">/*print out all elements*/</span>
-</span><span class="line">
-</span><span class="line"><span class="n">Status</span> <span class="nf">visit</span><span class="p">(</span><span class="n">ElemType</span> <span class="n">c</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d &quot;</span><span class="p">,</span><span class="n">c</span><span class="p">);</span>
-</span><span class="line">    <span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="n">Status</span> <span class="nf">ListTraverse</span><span class="p">(</span><span class="n">LinkList</span> <span class="n">L</span><span class="p">)</span>
-</span><span class="line"><span class="p">{</span>
-</span><span class="line">    <span class="n">LinkList</span> <span class="n">p</span><span class="o">=</span><span class="n">L</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
-</span><span class="line">    <span class="k">while</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
-</span><span class="line">    <span class="p">{</span>
-</span><span class="line">        <span class="n">visit</span><span class="p">(</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">);</span>
-</span><span class="line">        <span class="n">p</span><span class="o">=</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-</span><span class="line">    <span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="cm">/*create the data for the n elements randomly, create a linked list with head node*/</span>
-</span><span class="line">
-</span><span class="line"><span class="kt">void</span> <span class="nf">CreateListHead</span><span class="p">(</span><span class="n">LinkList</span> <span class="o">*</span><span class="n">L</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">)</span>
-</span><span class="line"><span class="p">{</span>
-</span><span class="line">	<span class="n">LinkList</span> <span class="n">p</span><span class="p">;</span>
-</span><span class="line">	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
-</span><span class="line">	<span class="n">srand</span><span class="p">(</span><span class="n">time</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span>
-</span><span class="line">	<span class="o">*</span><span class="n">L</span> <span class="o">=</span> <span class="p">(</span><span class="n">LinkList</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Node</span><span class="p">));</span>
-</span><span class="line">	<span class="p">(</span><span class="o">*</span><span class="n">L</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-</span><span class="line">	<span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-</span><span class="line">	<span class="p">{</span>
-</span><span class="line">		<span class="n">p</span> <span class="o">=</span> <span class="p">(</span><span class="n">LinkList</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Node</span><span class="p">));</span>
-</span><span class="line">		<span class="n">p</span><span class="o">-&gt;</span><span class="n">data</span> <span class="o">=</span> <span class="n">rand</span><span class="p">()</span><span class="o">%</span><span class="mi">100</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
-</span><span class="line">		<span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">L</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
-</span><span class="line">		<span class="p">(</span><span class="o">*</span><span class="n">L</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="n">p</span><span class="p">;</span>						
-</span><span class="line">	<span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="cm">/*create the data for the n elements randomly, create a linked list with tail node*/</span>
-</span><span class="line">
-</span><span class="line"><span class="kt">void</span> <span class="nf">CreateListTail</span><span class="p">(</span><span class="n">LinkList</span> <span class="o">*</span><span class="n">L</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">)</span>
-</span><span class="line"><span class="p">{</span>
-</span><span class="line">	<span class="n">LinkList</span> <span class="n">p</span><span class="p">,</span><span class="n">r</span><span class="p">;</span>
-</span><span class="line">	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
-</span><span class="line">	<span class="n">srand</span><span class="p">(</span><span class="n">time</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span>
-</span><span class="line">	<span class="o">*</span><span class="n">L</span> <span class="o">=</span> <span class="p">(</span><span class="n">LinkList</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Node</span><span class="p">));</span>
-</span><span class="line">	<span class="n">r</span><span class="o">=*</span><span class="n">L</span><span class="p">;</span>
-</span><span class="line">	<span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-</span><span class="line">	<span class="p">{</span>
-</span><span class="line">		<span class="n">p</span> <span class="o">=</span> <span class="p">(</span><span class="n">Node</span> <span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Node</span><span class="p">));</span>
-</span><span class="line">		<span class="n">p</span><span class="o">-&gt;</span><span class="n">data</span> <span class="o">=</span> <span class="n">rand</span><span class="p">()</span><span class="o">%</span><span class="mi">100</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
-</span><span class="line">		<span class="n">r</span><span class="o">-&gt;</span><span class="n">next</span><span class="o">=</span><span class="n">p</span><span class="p">;</span>
-</span><span class="line">		<span class="n">r</span> <span class="o">=</span> <span class="n">p</span><span class="p">;</span>
-</span><span class="line">	<span class="p">}</span>
-</span><span class="line">	<span class="n">r</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="cm">/*in the main function you  have to do the following initializations*/</span>
-</span><span class="line">
-</span><span class="line"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
-</span><span class="line"><span class="p">{</span>
-</span><span class="line">    <span class="n">LinkList</span> <span class="n">L</span><span class="p">;</span>
-</span><span class="line">    <span class="n">ElemType</span> <span class="n">e</span><span class="p">;</span>
-</span><span class="line">    <span class="n">Status</span> <span class="n">i</span><span class="p">;</span>
-</span><span class="line">    <span class="kt">int</span> <span class="n">j</span><span class="p">,</span><span class="n">k</span><span class="p">;</span>
-</span><span class="line">    <span class="n">i</span><span class="o">=</span><span class="n">InitList</span><span class="p">(</span><span class="o">&amp;</span><span class="n">L</span><span class="p">);</span>
-</span><span class="line">	<span class="cm">/*blahblah*/</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>The following is a version using c++’s reference “&amp;”, it is a little different, but mostly wil be the same as the above.  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-<span class="line-number">28</span>
-<span class="line-number">29</span>
-<span class="line-number">30</span>
-<span class="line-number">31</span>
-<span class="line-number">32</span>
-<span class="line-number">33</span>
-<span class="line-number">34</span>
-<span class="line-number">35</span>
-<span class="line-number">36</span>
-<span class="line-number">37</span>
-<span class="line-number">38</span>
-<span class="line-number">39</span>
-<span class="line-number">40</span>
-<span class="line-number">41</span>
-<span class="line-number">42</span>
-<span class="line-number">43</span>
-<span class="line-number">44</span>
-</pre></td><td class="code"><pre><code class="cpp"><span class="line"><span class="cp">#include &lt;stdio.h&gt;</span>
-</span><span class="line"><span class="cp">#include &lt;stdlib.h&gt;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">typedef</span> <span class="kt">char</span> <span class="n">ElemType</span><span class="p">;</span>
-</span><span class="line"><span class="k">typedef</span> <span class="k">struct</span> <span class="n">LNode</span>  		
-</span><span class="line"><span class="p">{</span>
-</span><span class="line">	<span class="n">ElemType</span> <span class="n">data</span><span class="p">;</span>
-</span><span class="line">	<span class="k">struct</span> <span class="n">LNode</span> <span class="o">*</span><span class="n">next</span><span class="p">;</span>		
-</span><span class="line"><span class="p">}</span> <span class="n">LinkList</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="cm">/*creating the linked list by inserting at the head*/</span>
-</span><span class="line">
-</span><span class="line"><span class="kt">void</span> <span class="n">CreateListF</span><span class="p">(</span><span class="n">LinkList</span> <span class="o">*&amp;</span><span class="n">L</span><span class="p">,</span><span class="n">ElemType</span> <span class="n">a</span><span class="p">[],</span><span class="kt">int</span> <span class="n">n</span><span class="p">)</span>
-</span><span class="line"><span class="p">{</span>
-</span><span class="line">	<span class="n">LinkList</span> <span class="o">*</span><span class="n">s</span><span class="p">;</span><span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
-</span><span class="line">	<span class="n">L</span><span class="o">=</span><span class="p">(</span><span class="n">LinkList</span> <span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">LinkList</span><span class="p">));</span>  	
-</span><span class="line">	<span class="n">L</span><span class="o">-&gt;</span><span class="n">next</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
-</span><span class="line">	<span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">n</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
-</span><span class="line">	<span class="p">{</span>
-</span><span class="line">		<span class="n">s</span><span class="o">=</span><span class="p">(</span><span class="n">LinkList</span> <span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">LinkList</span><span class="p">));</span>
-</span><span class="line">		<span class="n">s</span><span class="o">-&gt;</span><span class="n">data</span><span class="o">=</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-</span><span class="line">		<span class="n">s</span><span class="o">-&gt;</span><span class="n">next</span><span class="o">=</span><span class="n">L</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>			
-</span><span class="line">		<span class="n">L</span><span class="o">-&gt;</span><span class="n">next</span><span class="o">=</span><span class="n">s</span><span class="p">;</span>
-</span><span class="line">	<span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="cm">/*creating the linked list by inserting at the tail*/</span>
-</span><span class="line"><span class="kt">void</span> <span class="n">CreateListR</span><span class="p">(</span><span class="n">LinkList</span> <span class="o">*&amp;</span><span class="n">L</span><span class="p">,</span><span class="n">ElemType</span> <span class="n">a</span><span class="p">[],</span><span class="kt">int</span> <span class="n">n</span><span class="p">)</span>
-</span><span class="line"><span class="p">{</span>
-</span><span class="line">	<span class="n">LinkList</span> <span class="o">*</span><span class="n">s</span><span class="p">,</span><span class="o">*</span><span class="n">r</span><span class="p">;</span><span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
-</span><span class="line">	<span class="n">L</span><span class="o">=</span><span class="p">(</span><span class="n">LinkList</span> <span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">LinkList</span><span class="p">));</span>  	
-</span><span class="line">	<span class="n">L</span><span class="o">-&gt;</span><span class="n">next</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
-</span><span class="line">	<span class="n">r</span><span class="o">=</span><span class="n">L</span><span class="p">;</span>					
-</span><span class="line">	<span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">n</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
-</span><span class="line">	<span class="p">{</span>
-</span><span class="line">		<span class="n">s</span><span class="o">=</span><span class="p">(</span><span class="n">LinkList</span> <span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">LinkList</span><span class="p">));</span>
-</span><span class="line">		<span class="n">s</span><span class="o">-&gt;</span><span class="n">data</span><span class="o">=</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-</span><span class="line">		<span class="n">r</span><span class="o">-&gt;</span><span class="n">next</span><span class="o">=</span><span class="n">s</span><span class="p">;</span>			
-</span><span class="line">		<span class="n">r</span><span class="o">=</span><span class="n">s</span><span class="p">;</span>
-</span><span class="line">	<span class="p">}</span>
-</span><span class="line">	<span class="n">r</span><span class="o">-&gt;</span><span class="n">next</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>			
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="cm">/*and blah and blah*/</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/08/01/ways-to-include-a-jquery-file/">PHP中添加jquery文件的几种方法</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-08-01T15:03:11+08:00" pubdate data-updated="true">2014 年8 月1 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>The following are several addtional ways to include a jquery file in your php script.  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;js/jquery-1.11.1.min.js&quot;</span><span class="o">&gt;&lt;</span><span class="err">/script&gt;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>or  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js&quot;</span><span class="o">&gt;</span>
-</span><span class="line"><span class="o">&lt;</span><span class="err">/script&gt;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>or  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;http://www.google.com/jsapi&quot;</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="err">/script&gt;</span>
-</span><span class="line">
-</span><span class="line"><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span><span class="o">&gt;</span>
-</span><span class="line">	<span class="nx">google</span><span class="p">.</span><span class="nx">load</span><span class="p">(</span><span class="s2">&quot;jquery&quot;</span><span class="p">,</span> <span class="s2">&quot;1.7.1&quot;</span><span class="p">);</span>
-</span><span class="line"><span class="o">&lt;</span><span class="err">/script&gt; </span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-</div>
-  
-  
-
-
-    </article>
   
   
     <article>
@@ -1244,6 +600,323 @@
 
     </article>
   
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/24/about-the-of-my-and-our-and-local-in-perl/">Perl中my和our的使用</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-24T19:32:11+08:00" pubdate data-updated="true">2014 年7 月24 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>关于perl中的my， our的用法自己一直都是一知半解的。以至于基本上在程序中把所有的变量的前面都加上my， 省事还不报错!   </p>
+
+<p>I am still not familiar the concept, but I will list some examples here to add as a reminder.  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">our</span> <span class="nv">$var</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">	<span class="k">our</span> <span class="nv">$var</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+</span><span class="line">	<span class="k">print</span> <span class="s">&quot;$var\n&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;$var\n&quot;</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>It will give us the result:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="mi">2</span>
+</span><span class="line"><span class="mi">2</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>If the code looks like this:   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">$var</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">	<span class="k">my</span> <span class="nv">$var</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+</span><span class="line">	<span class="k">print</span> <span class="s">&quot;$var\n&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;$var\n&quot;</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>It will give us the result:   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="mi">2</span>
+</span><span class="line"><span class="mi">1</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>If the code is:   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">our</span> <span class="nv">$var</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">	<span class="k">my</span> <span class="nv">$var</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+</span><span class="line">	<span class="k">print</span> <span class="s">&quot;$var\n&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;$var\n&quot;</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>It will give us the following result:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="mi">2</span>
+</span><span class="line"><span class="mi">1</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>if the code is:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">$var</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class="line"><span class="p">{</span>
+</span><span class="line">	<span class="k">our</span> <span class="nv">$var</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+</span><span class="line">	<span class="k">print</span> <span class="s">&quot;$var\n&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;$var\n&quot;</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>It will give us the result:   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="mi">2</span>
+</span><span class="line"><span class="mi">1</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>If the code is one of the following, it will give us the result 2:  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">$var</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">$var</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+</span><span class="line"><span class="k">print</span> <span class="nv">$var</span><span class="p">,</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">our</span> <span class="nv">$var</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class="line"><span class="k">our</span> <span class="nv">$var</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+</span><span class="line"><span class="k">print</span> <span class="nv">$var</span><span class="p">,</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">my</span> <span class="nv">$var</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class="line"><span class="k">our</span> <span class="nv">$var</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+</span><span class="line"><span class="k">print</span> <span class="nv">$var</span><span class="p">,</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">our</span> <span class="nv">$var</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">$var</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+</span><span class="line"><span class="k">print</span> <span class="nv">$var</span><span class="p">,</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>I still can not claim I understand my and our.   </p>
+
+<p>We will give more examples on this.  </p>
+
+<p>The following 3 code snippets will give us the result (1, 6, 11):   </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line"><span class="k">for</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nv">$i</span><span class="o">&lt;</span><span class="mi">10</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">){</span>
+</span><span class="line">    <span class="k">print</span> <span class="nv">$i</span><span class="p">,</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span>
+</span><span class="line">    <span class="nv">$i</span> <span class="o">=</span> <span class="nv">$i</span> <span class="o">+</span> <span class="mi">4</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line"><span class="k">print</span> <span class="nv">$i</span><span class="p">,</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="c1">#1,6,11   </span>
+</span><span class="line">
+</span><span class="line"><span class="k">our</span> <span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line"><span class="k">for</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nv">$i</span><span class="o">&lt;</span><span class="mi">10</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">){</span>
+</span><span class="line">    <span class="k">print</span> <span class="nv">$i</span><span class="p">,</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span>
+</span><span class="line">    <span class="nv">$i</span> <span class="o">=</span> <span class="nv">$i</span> <span class="o">+</span> <span class="mi">4</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line"><span class="k">print</span> <span class="nv">$i</span><span class="p">,</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="c1">#1,6,11   </span>
+</span><span class="line">
+</span><span class="line"><span class="k">our</span> <span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line"><span class="k">for</span> <span class="p">(</span><span class="k">our</span> <span class="nv">$i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nv">$i</span><span class="o">&lt;</span><span class="mi">10</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">){</span>
+</span><span class="line">    <span class="k">print</span> <span class="nv">$i</span><span class="p">,</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span>
+</span><span class="line">    <span class="nv">$i</span> <span class="o">=</span> <span class="nv">$i</span> <span class="o">+</span> <span class="mi">4</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="k">print</span> <span class="nv">$i</span><span class="p">,</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="c1">#1,6,11   </span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>While the following 3 will give us the result (1, 6, 0):  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line"><span class="k">for</span> <span class="p">(</span><span class="k">my</span> <span class="nv">$i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nv">$i</span><span class="o">&lt;</span><span class="mi">10</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">){</span>
+</span><span class="line">    <span class="k">print</span> <span class="nv">$i</span><span class="p">,</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span>
+</span><span class="line">    <span class="nv">$i</span> <span class="o">=</span> <span class="nv">$i</span> <span class="o">+</span> <span class="mi">4</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line"><span class="k">print</span> <span class="nv">$i</span><span class="p">,</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="c1">#1,6,0</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line"><span class="k">my</span> <span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line"><span class="k">for</span> <span class="p">(</span><span class="k">our</span> <span class="nv">$i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nv">$i</span><span class="o">&lt;</span><span class="mi">10</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">){</span>
+</span><span class="line">    <span class="k">print</span> <span class="nv">$i</span><span class="p">,</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span>
+</span><span class="line">    <span class="nv">$i</span> <span class="o">=</span> <span class="nv">$i</span> <span class="o">+</span> <span class="mi">4</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line"><span class="c1">#1,6,0  </span>
+</span><span class="line">
+</span><span class="line"><span class="k">our</span> <span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line"><span class="k">for</span> <span class="p">(</span><span class="k">my</span> <span class="nv">$i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nv">$i</span><span class="o">&lt;</span><span class="mi">10</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">){</span>
+</span><span class="line">    <span class="k">print</span> <span class="nv">$i</span><span class="p">,</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span>
+</span><span class="line">    <span class="nv">$i</span> <span class="o">=</span> <span class="nv">$i</span> <span class="o">+</span> <span class="mi">4</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line"><span class="k">print</span> <span class="nv">$i</span><span class="p">,</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="c1">#1,6,0  </span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/24/minutes-about-stdin/">Perl中的stdin备忘</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-24T17:26:27+08:00" pubdate data-updated="true">2014 年7 月24 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>There are some minute details about perl that we need to take care. So here I take a note for later reminder. </p>
+
+<ol>
+  <li>
+    <p>STDERR will print out the error messages to the screen or to a file if you want.   </p>
+  </li>
+  <li>
+    <p>If we have a line of code like:  </p>
+  </li>
+</ol>
+
+<p><code>perl  
+  $GetALine = &lt;STDIN&gt;;
+ </code></p>
+
+<p>It will wait for the user to enter something and then append a line ending character to the string that the user enters. </p>
+</div>
+  
+  
+
+
+    </article>
+  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/39/">&larr; Older</a>
@@ -1316,7 +989,7 @@
 <li class='category'><a href='/blog/categories/javascript/'>Javascript (4)</a></li>
 <li class='category'><a href='/blog/categories/linux-and-mac/'>Linux&Mac (13)</a></li>
 <li class='category'><a href='/blog/categories/php/'>PHP (5)</a></li>
-<li class='category'><a href='/blog/categories/perl/'>Perl (49)</a></li>
+<li class='category'><a href='/blog/categories/perl/'>Perl (47)</a></li>
 <li class='category'><a href='/blog/categories/python/'>Python (11)</a></li>
 <li class='category'><a href='/blog/categories/ruby/'>Ruby (1)</a></li>
 <li class='category'><a href='/blog/categories/scala/'>Scala (1)</a></li>

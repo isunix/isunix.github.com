@@ -9,7 +9,7 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="This one is where I excerpted from the book “perl for dummies”. 1
+  <meta name="description" content="事情是这样的，在工作中有许多的mids，想要贴到一个文本框中去，但是在进行reinjection后，是成每行一个mid的格式。我们想要把它们变成是每行给定数目的mids这样的格式， 方便贴到文本框中去. 之前用php实现过， 现在贴出来perl的版本的。 1
 2
 3
 4
@@ -18,28 +18,7 @@
 7
 8
 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31 &hellip;">
+10 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -129,7 +108,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/07/24/a-typical-perl-script-to-search-info-in-a-file/">A Typical Perl Script to Search Info in a File</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/07/18/split-mids-to-several-lines-with-fixed-number-per-line-using-perl/">将一个每行一个item的多行文本转变成每行固定数目的item的文本(Perl)</a></h1>
     
     
       <p class="meta">
@@ -145,14 +124,14 @@
   
 
 
-<time datetime="2014-07-24T15:33:54+08:00" pubdate data-updated="true">2014 年7 月24 日</time>
+<time datetime="2014-07-18T21:38:16+08:00" pubdate data-updated="true">2014 年7 月18 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>This one is where I excerpted from the book “perl for dummies”.  </p>
+  <div class="entry-content"><p>事情是这样的，在工作中有许多的mids，想要贴到一个文本框中去，但是在进行reinjection后，是成每行一个mid的格式。我们想要把它们变成是每行给定数目的mids这样的格式， 方便贴到文本框中去. 之前用php实现过， 现在贴出来perl的版本的。</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
@@ -177,74 +156,30 @@
 <span class="line-number">21</span>
 <span class="line-number">22</span>
 <span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-<span class="line-number">28</span>
-<span class="line-number">29</span>
-<span class="line-number">30</span>
-<span class="line-number">31</span>
-<span class="line-number">32</span>
-<span class="line-number">33</span>
-<span class="line-number">34</span>
-<span class="line-number">35</span>
-<span class="line-number">36</span>
-<span class="line-number">37</span>
-<span class="line-number">38</span>
-<span class="line-number">39</span>
-<span class="line-number">40</span>
-<span class="line-number">41</span>
-<span class="line-number">42</span>
-<span class="line-number">43</span>
-<span class="line-number">44</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">$TheDB</span> <span class="o">=</span> <span class="s">&#39;edata.txt&#39;</span><span class="p">;</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="c1">#usage：perl script.pl file.txt</span>
+</span><span class="line"><span class="k">use</span> <span class="n">strict</span><span class="p">;</span>
+</span><span class="line"><span class="k">use</span> <span class="n">warnings</span><span class="p">;</span>
+</span><span class="line"><span class="k">use</span> <span class="n">utf8</span><span class="p">;</span>
 </span><span class="line">
 </span><span class="line">
-</span><span class="line"><span class="nb">open</span><span class="p">(</span><span class="n">INDB</span><span class="p">,</span> <span class="nv">$TheDB</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">die</span> <span class="s">&quot;The database $TheDB could &quot;</span> <span class="o">.</span> <span class="s">&quot;not be found.\n&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">$columns</span> <span class="o">=</span> <span class="nv">$ARGV</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">||</span> <span class="mi">8</span><span class="p">;</span>
+</span><span class="line"><span class="nb">open</span><span class="p">(</span><span class="k">my</span> <span class="nv">$IN</span><span class="p">,</span> <span class="s">&quot;$ARGV[0]&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">die</span> <span class="s">&quot;in: $@&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="nb">open</span><span class="p">(</span><span class="k">my</span> <span class="nv">$OUT</span><span class="p">,</span> <span class="s">&quot;&gt;&quot;</span><span class="p">,</span> <span class="s">&quot;$ARGV[0].new&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">die</span> <span class="s">&quot;out: $@&quot;</span><span class="p">;</span>
 </span><span class="line">
-</span><span class="line"><span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line"><span class="k">while</span><span class="p">(</span><span class="nb">chomp</span><span class="p">(</span><span class="k">my</span> <span class="nv">@lines</span> <span class="o">=</span> <span class="sr">&lt;$IN&gt;</span><span class="p">)){</span>
 </span><span class="line">
-</span><span class="line">  <span class="k">print</span> <span class="s">&quot;\nDo you want to search by employee ID (I), &quot;</span> <span class="o">.</span> <span class="s">&quot; or quit (Q): &quot;</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line">  <span class="nv">$DoSearch</span> <span class="o">=</span> <span class="sr">&lt;STDIN&gt;</span><span class="p">;</span>
-</span><span class="line">  <span class="nb">chomp</span><span class="p">(</span><span class="nv">$DoSearch</span><span class="p">);</span>
-</span><span class="line">  <span class="nv">$DoSearch</span> <span class="o">=~</span> <span class="nb">tr</span><span class="sr">/A-Z/</span><span class="n">a</span><span class="o">-</span><span class="n">z</span><span class="o">/</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line">  <span class="k">if</span><span class="p">(</span><span class="nv">$DoSearch</span> <span class="ow">eq</span> <span class="s">&#39;q&#39;</span><span class="p">)</span> <span class="p">{</span> <span class="k">last</span> <span class="p">}</span>
-</span><span class="line">
-</span><span class="line">  <span class="k">unless</span><span class="p">(</span><span class="nv">$DoSearch</span> <span class="ow">eq</span> <span class="s">&#39;i&#39;</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">    <span class="k">print</span> <span class="s">&quot;You must enter either I or Q.\n&quot;</span><span class="p">;</span>
-</span><span class="line">    <span class="k">next</span><span class="p">;</span>
-</span><span class="line">  <span class="p">}</span>
-</span><span class="line">
-</span><span class="line">  <span class="k">print</span> <span class="s">&quot;Search for ID number: &quot;</span><span class="p">;</span>
-</span><span class="line">  <span class="nv">$SearchFor</span> <span class="o">=</span> <span class="sr">&lt;STDIN&gt;</span><span class="p">;</span>
-</span><span class="line">  <span class="nb">chomp</span><span class="p">(</span><span class="nv">$SearchFor</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line">  <span class="nb">seek</span><span class="p">(</span><span class="n">INDB</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>   <span class="c1">##search from the beginning of file.</span>
-</span><span class="line">
-</span><span class="line">  <span class="nv">$SuccessCount</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line">  <span class="k">while</span><span class="p">(</span><span class="sr">&lt;INDB&gt;</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">    <span class="nv">$TheRec</span> <span class="o">=</span> <span class="nv">$_</span><span class="p">;</span>
-</span><span class="line">    <span class="nb">chomp</span><span class="p">(</span><span class="nv">$TheRec</span><span class="p">);</span>
-</span><span class="line">    <span class="p">(</span><span class="nv">$LastName</span><span class="p">,</span> <span class="nv">$FirstName</span><span class="p">,</span> <span class="nv">$ID</span><span class="p">,</span> <span class="nv">$Tel</span><span class="p">)</span> <span class="o">=</span>
-</span><span class="line">      <span class="nb">split</span><span class="p">(</span><span class="sr">/\t/</span><span class="p">,</span> <span class="nv">$TheRec</span><span class="p">);</span>
-</span><span class="line">    <span class="k">if</span><span class="p">(</span><span class="nv">$ID</span> <span class="ow">eq</span> <span class="nv">$SearchFor</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">      <span class="nv">$SuccessCount</span> <span class="o">=</span> <span class="nv">$SuccessCount</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
-</span><span class="line">      <span class="k">print</span> <span class="s">&quot;$ID: $FirstName $LastName, ext. &quot;</span><span class="o">.</span> <span class="s">&quot;$Tel\n&quot;</span><span class="p">;</span>
+</span><span class="line">        <span class="k">for</span><span class="p">(</span><span class="k">my</span> <span class="nv">$i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;=</span> <span class="nv">@lines</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">){</span>
+</span><span class="line">            <span class="k">my</span> <span class="nv">$t</span> <span class="o">=</span> <span class="nv">$i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class="line">            <span class="k">print</span> <span class="nv">$OUT</span> <span class="s">&quot;$lines[$t]&quot;</span><span class="p">;</span>
+</span><span class="line">            <span class="k">if</span><span class="p">(</span><span class="nv">$i</span> <span class="nv">%</span> <span class="err">$</span><span class="nv">columns</span> <span class="o">==</span> <span class="mi">0</span><span class="p">){</span>
+</span><span class="line">                <span class="k">print</span> <span class="nv">$OUT</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span>
+</span><span class="line">            <span class="p">}</span>
+</span><span class="line">        <span class="p">}</span>
 </span><span class="line">    <span class="p">}</span>
-</span><span class="line">  <span class="p">}</span>
 </span><span class="line">
-</span><span class="line">  <span class="k">if</span><span class="p">(</span><span class="nv">$SuccessCount</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span> <span class="k">print</span> <span class="s">&quot;No records found.\n&quot;</span> <span class="p">}</span>
-</span><span class="line">  <span class="k">else</span> <span class="p">{</span> <span class="k">print</span> <span class="s">&quot;$SuccessCount records found.\n&quot;</span> <span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="k">print</span> <span class="s">&quot;Program finished.\n&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="nb">close</span><span class="p">(</span><span class="nv">$IN</span><span class="p">);</span>
+</span><span class="line"><span class="nb">close</span><span class="p">(</span><span class="nv">$OUT</span><span class="p">);</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>We can learn the use of while, endless loop, file-handle, last, tr, seek, $_, eq, split, string concatenation if-else, chomp, ==, eq all these things in one perl script.  </p>
-
 </div>
   
   
@@ -257,7 +192,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/07/24/a-typical-perl-program/">A Typical Perl Program</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/07/18/examples-of-using-grep-and-map-in-perl/">Perl中的grep和map的使用</a></h1>
     
     
       <p class="meta">
@@ -273,14 +208,14 @@
   
 
 
-<time datetime="2014-07-24T15:17:20+08:00" pubdate data-updated="true">2014 年7 月24 日</time>
+<time datetime="2014-07-18T20:55:08+08:00" pubdate data-updated="true">2014 年7 月18 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>Of courese there are many perl programms that can be claimed as “typical”, yet you can not what is truely “typical”. The one below is where I met in the book “perl for dummies”. Ok, show you the code now.   </p>
+  <div class="entry-content"><p>在«Learnign Perl»中，初步介绍了perl的一些高级用法， 我之前翻译了些intermediate perl, 但是最近这段时间实在是太忙了， 而且现在还有很多其他的事情得去处理，所以真的不知道得到什么时候才可以继续拾起翻译intermediate perl的任务来。好了，下面把学习perl中的一些关于map还有grep的例子记录在这里，也方便自己以后来查询。   </p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
@@ -310,43 +245,35 @@
 <span class="line-number">26</span>
 <span class="line-number">27</span>
 <span class="line-number">28</span>
-<span class="line-number">29</span>
-<span class="line-number">30</span>
-<span class="line-number">31</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nv">$TheFile</span> <span class="o">=</span> <span class="s">&quot;sample.txt&quot;</span><span class="p">;</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">@odd_numbers</span> <span class="o">=</span> <span class="nb">grep</span> <span class="p">{</span> <span class="nv">$_</span> <span class="nv">%</span> <span class="nv">2</span> <span class="p">}</span> <span class="mi">1</span><span class="o">..</span><span class="mi">1000</span><span class="p">;</span>
 </span><span class="line">
-</span><span class="line"><span class="nb">open</span><span class="p">(</span><span class="n">INFILE</span><span class="p">,</span> <span class="nv">$TheFile</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">die</span> <span class="s">&quot;The file $TheFile could &quot;</span> <span class="o">.</span>  <span class="s">&quot;not be found.\n&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">@matching_lines</span> <span class="o">=</span> <span class="nb">grep</span> <span class="p">{</span> <span class="sr">/\bfred\b/i</span> <span class="p">}</span> <span class="sr">&lt;$fh&gt;</span><span class="p">;</span>
 </span><span class="line">
-</span><span class="line"><span class="nv">$CharCount</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class="line"><span class="nv">$WordCount</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class="line"><span class="nv">$LineCount</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">@matching_lines</span> <span class="o">=</span> <span class="nb">grep</span> <span class="sr">/\bfred\b/i</span><span class="p">,</span> <span class="sr">&lt;$fh&gt;</span><span class="p">;</span>
 </span><span class="line">
-</span><span class="line"><span class="k">while</span><span class="p">(</span><span class="sr">&lt;INFILE&gt;</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">  <span class="nv">$TheLine</span> <span class="o">=</span> <span class="nv">$_</span><span class="p">;</span>
-</span><span class="line">  <span class="nb">chomp</span><span class="p">(</span><span class="nv">$TheLine</span><span class="p">);</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">@matching_lines</span> <span class="o">=</span> <span class="nb">grep</span> <span class="sr">/\bfred\b/i</span><span class="p">,</span> <span class="sr">&lt;$fh&gt;</span><span class="p">;</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">$line_count</span> <span class="o">=</span> <span class="nv">@matching_lines</span><span class="p">;</span>
 </span><span class="line">
-</span><span class="line">  <span class="nv">$LineCount</span> <span class="o">=</span> <span class="nv">$LineCount</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
-</span><span class="line">  <span class="nv">$LineLen</span> <span class="o">=</span> <span class="nb">length</span><span class="p">(</span><span class="nv">$TheLine</span><span class="p">);</span>
-</span><span class="line">  <span class="nv">$CharCount</span> <span class="o">=</span> <span class="nv">$CharCount</span> <span class="o">+</span> <span class="nv">$LineLen</span><span class="p">;</span>
 </span><span class="line">
-</span><span class="line">  <span class="k">if</span><span class="p">(</span><span class="nv">$TheLine</span> <span class="ow">eq</span> <span class="s">&quot;&quot;</span><span class="p">)</span> <span class="p">{</span> <span class="k">next</span> <span class="p">};</span> <span class="c1">##evaluate the next line;</span>
-</span><span class="line">  <span class="nv">$WordCount</span> <span class="o">=</span> <span class="nv">$WordCount</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
-</span><span class="line">  <span class="nv">$CharPos</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">$line_count</span> <span class="o">=</span> <span class="nb">grep</span> <span class="sr">/\bfred\b/i</span><span class="p">,</span> <span class="sr">&lt;$fh&gt;</span><span class="p">;</span>
 </span><span class="line">
-</span><span class="line">  <span class="k">until</span><span class="p">(</span><span class="nv">$CharPos</span> <span class="o">==</span> <span class="nv">$LineLen</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">    <span class="k">if</span><span class="p">(</span><span class="nb">substr</span><span class="p">(</span><span class="nv">$TheLine</span><span class="p">,</span> <span class="nv">$CharPos</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="ow">eq</span> <span class="s">&quot; &quot;</span><span class="p">)</span>
-</span><span class="line">      <span class="p">{</span> <span class="nv">$WordCount</span> <span class="o">=</span> <span class="nv">$WordCount</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">}</span>
-</span><span class="line">    <span class="nv">$CharPos</span> <span class="o">=</span> <span class="nv">$CharPos</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
-</span><span class="line">  <span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
 </span><span class="line">
-</span><span class="line"><span class="k">print</span> <span class="s">&quot;For the file $TheFile:\n&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="k">print</span> <span class="s">&quot;Number of characters $CharCount\n&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="k">print</span> <span class="s">&quot;Number of words    $WordCount\n&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="k">print</span> <span class="s">&quot;Number of lines    $LineCount\n&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">@data</span> <span class="o">=</span> <span class="p">(</span><span class="mf">4.75</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1234</span><span class="p">,</span> <span class="mf">6.9456</span><span class="p">,</span> <span class="mf">12345678.9</span><span class="p">,</span> <span class="mf">29.95</span><span class="p">);</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">@formatted_data</span> <span class="o">=</span> <span class="nb">map</span> <span class="p">{</span> <span class="o">&amp;</span><span class="n">big_money</span><span class="p">(</span><span class="nv">$_</span><span class="p">)</span> <span class="p">}</span> <span class="nv">@data</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;The money numbers are:\n&quot;</span><span class="p">,</span>
+</span><span class="line"><span class="nb">map</span> <span class="p">{</span> <span class="nb">sprintf</span><span class="p">(</span><span class="s">&quot;%25s\n&quot;</span><span class="p">,</span> <span class="nv">$_</span><span class="p">)</span> <span class="p">}</span> <span class="nv">@formatted_data</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line"><span class="k">my</span> <span class="nv">@data</span> <span class="o">=</span> <span class="p">(</span><span class="mf">4.75</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1234</span><span class="p">,</span> <span class="mf">6.9456</span><span class="p">,</span> <span class="mf">12345678.9</span><span class="p">,</span> <span class="mf">29.95</span><span class="p">);</span>
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;The money numbers are:\n&quot;</span><span class="p">,</span>
+</span><span class="line"><span class="nb">map</span> <span class="p">{</span> <span class="nb">sprintf</span><span class="p">(</span><span class="s">&quot;%25s\n&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">big_money</span><span class="p">(</span><span class="nv">$_</span><span class="p">)</span> <span class="p">)</span> <span class="p">}</span> <span class="nv">@data</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;Some powers of two are:\n&quot;</span><span class="p">,</span>
+</span><span class="line"><span class="nb">map</span> <span class="s">&quot;\t&quot;</span> <span class="o">.</span> <span class="p">(</span> <span class="mi">2</span> <span class="o">**</span> <span class="nv">$_</span> <span class="p">)</span> <span class="o">.</span> <span class="s">&quot;\n&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="o">..</span><span class="mi">15</span><span class="p">;</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>I list this program here, because We can learn how to use chomp, length, $_, &lt;&gt;, until, next, eq, ==, next, substr, FILEHANDLE, string concatenation, how to tell if it is a word and so on, all these import concepts in perl programming in one script. </p>
 </div>
   
   
@@ -359,7 +286,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/07/24/perl-one-liner-to-remove-blank-lines/">Perl One-liner to Remove Blank Lines</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/07/18/using-of-loops-in-perl/">Perl中循环的使用</a></h1>
     
     
       <p class="meta">
@@ -375,17 +302,66 @@
   
 
 
-<time datetime="2014-07-24T15:05:16+08:00" pubdate data-updated="true">2014 年7 月24 日</time>
+<time datetime="2014-07-18T19:59:02+08:00" pubdate data-updated="true">2014 年7 月18 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>Here below is the one-liner I found to remove a blank line in a file.   </p>
+  <div class="entry-content"><p>«Learning Perl»中的一个例子。  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">Make a program that will repeatedly ask the user to guess a secret number
+</span><span class="line">from 1 to 100 until the user guesses the secret number. Your program should pick
+</span><span class="line">the number at random by using the magical formula int(1 + rand 100).§ When
+</span><span class="line">the user guesses wrong, the program should respond, “Too high” or “Too low.” If
+</span><span class="line">the user enters the word quit or exit, or if the user enters a blank line, the program
+</span><span class="line">should quit. Of course, if the user guesses correctly, the program should quit then
+</span><span class="line">as well!</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>还是把code贴在这里吧！ </p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="n">perl</span> <span class="o">-</span><span class="n">pi</span> <span class="o">-</span><span class="n">e</span> <span class="s">&#39;s!^\s+?$!!&#39;</span> <span class="n">file</span><span class="o">.</span><span class="n">txt</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">$secret</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="nb">rand</span><span class="p">(</span><span class="mi">100</span><span class="p">));</span>
+</span><span class="line">
+</span><span class="line"><span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">){</span>
+</span><span class="line">    <span class="k">print</span> <span class="s">&quot;please enter a guess from 1 to 100: &quot;</span><span class="p">;</span>
+</span><span class="line">    <span class="nb">chomp</span><span class="p">(</span><span class="k">my</span> <span class="nv">$guess</span> <span class="o">=</span> <span class="sr">&lt;STDIN&gt;</span><span class="p">);</span>
+</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="nv">$guess</span> <span class="o">=~</span><span class="sr"> /quit|exit|\A\s*\z/i</span><span class="p">){</span>
+</span><span class="line">        <span class="k">print</span> <span class="s">&quot;sorry you gave up, the number was $secret.\n&quot;</span><span class="p">;</span>
+</span><span class="line">        <span class="k">last</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span> <span class="k">elsif</span> <span class="p">(</span><span class="nv">$guess</span> <span class="o">&lt;</span> <span class="nv">$secret</span><span class="p">){</span>
+</span><span class="line">        <span class="k">print</span> <span class="s">&quot;too small!\n&quot;</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span> <span class="k">elsif</span> <span class="p">(</span><span class="nv">$guess</span> <span class="o">==</span> <span class="nv">$secret</span><span class="p">){</span>
+</span><span class="line">        <span class="k">print</span> <span class="s">&quot;that was it!\n&quot;</span><span class="p">;</span>
+</span><span class="line">        <span class="k">last</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class="line">        <span class="k">print</span> <span class="s">&quot;too large!\n&quot;</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 </div>
   
@@ -443,7 +419,7 @@
       </li>
     
       <li class="post">
-        <a href="/blog/2019/08/14/gradient-boosting-algorithm/">Gradient Boosting Algorithm</a>
+        <a href="/blog/2019/08/14/gradient-boosting-algorithm/">Gradient Boosting 算法的一些资料</a>
       </li>
     
       <li class="post">
@@ -457,16 +433,16 @@
   <h1>Categories</h1>
   <ul id="categories">
     <li class='category'><a href='/blog/categories/algorithms/'>Algorithms (8)</a></li>
-<li class='category'><a href='/blog/categories/bigdata/'>BigData (11)</a></li>
+<li class='category'><a href='/blog/categories/bigdata/'>BigData (10)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (7)</a></li>
-<li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
-<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (15)</a></li>
-<li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (5)</a></li>
+<li class='category'><a href='/blog/categories/c/'>C (3)</a></li>
+<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (14)</a></li>
+<li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (4)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (2)</a></li>
 <li class='category'><a href='/blog/categories/javascript/'>Javascript (4)</a></li>
-<li class='category'><a href='/blog/categories/linux-and-mac/'>Linux&Mac (14)</a></li>
+<li class='category'><a href='/blog/categories/linux-and-mac/'>Linux&Mac (13)</a></li>
 <li class='category'><a href='/blog/categories/php/'>PHP (5)</a></li>
-<li class='category'><a href='/blog/categories/perl/'>Perl (50)</a></li>
+<li class='category'><a href='/blog/categories/perl/'>Perl (49)</a></li>
 <li class='category'><a href='/blog/categories/python/'>Python (11)</a></li>
 <li class='category'><a href='/blog/categories/ruby/'>Ruby (1)</a></li>
 <li class='category'><a href='/blog/categories/scala/'>Scala (1)</a></li>

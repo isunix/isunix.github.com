@@ -9,7 +9,8 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="I need to use the regexp_extract function to extract certain parts of a string recently when I am doing big data analysis. http://www.cloudera.com/ &hellip;">
+  <meta name="description" content="I have a file containing quite many lines of strings and I want to sort them by line length. Here is how. 1
+cat $file | awk &#39;{ print length($0) & &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -99,7 +100,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2016/07/15/regexp-extract-usage-in-impala/">Regexp_extract Usage in Impala</a></h1>
+      <h1 class="entry-title"><a href="/blog/2016/01/20/sort-lines-by-length/">Sort Lines by Length</a></h1>
     
     
       <p class="meta">
@@ -115,94 +116,18 @@
   
 
 
-<time datetime="2016-07-15T10:43:30+08:00" pubdate data-updated="true">2016 年7 月15 日</time>
+<time datetime="2016-01-20T10:14:15+08:00" pubdate data-updated="true">2016 年1 月20 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>I need to use the regexp_extract function to extract certain parts of a string recently when I am doing big data analysis.</p>
+  <div class="entry-content"><p>I have a file containing quite many lines of strings and I want to sort them by line length. Here is how.</p>
 
-<p>http://www.cloudera.com/documentation/archive/impala/2-x/2-1-x/topics/impala_string_functions.html, this link shows us how to do, but sadly regex in impala is a little different from those in perl or python, so I have to look through the page and try again.</p>
-
-<p>I keep a note here for regexp_extract for my later own usage.</p>
-
-<p>Say I have a string </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">%2C%22hidisp%22%3A27%2C%22quietMode</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>and I want to extract the number followd by “hidisp” and ‘”:’, which is number ‘27’ here.</p>
-
-<p>As describe in the above document, </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">Because the impala-shell interpreter uses the \ character for escaping, use \\ to represent the regular expression escape character in any regular expressions that you submit through impala-shell</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>So if we want to represent the numbers here, we have use ‘\d’ rather than just ‘\d’ which is a standard in other programming  languages.</p>
-
-<p>regexp_extract usage is in the following format,</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">regexp_extract(string subject, string pattern, int index)</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ol>
-  <li>group 0 matches the full pattern string, including the portion outside any () group, so</li>
-</ol>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">select regexp_extract('%2C%22hidisp%22%3A27%2C%22quietMode', 'hidisp%22%3A(\\d+)', 0);</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>this will give out:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">hidisp%22%3A27</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ol>
-  <li>group 1 matches just the contents inside the first () group in the pattern string:</li>
-</ol>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">select regexp_extract('%2C%22hidisp%22%3A27%2C%22quietMode', 'hidisp%22%3A(\\d+)', 1);</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>will give out</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">27</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>And for the support of non-greedy matches using .*?, take the following string as an example,</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">%2C%22reboot%22%3A27%2C%22quietMode%2C%22reboot%22%3A12%2C%22quietMode</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>How to extract the first match number for “reboot”, we can get the result in the following ways</p>
-
-<p>a. without any “.*?” around the string pattern ‘reboot%22%3A(\d+)’, which is the easiest way I think </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">select regexp_extract('%2C%22reboot%22%3A27%2C%22quietMode%2C%22reboot%22%3A12%2C%22quietMode', 'reboot%22%3A(\\d+)', 1);</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>or </p>
-
-<p>b. append “.*?” right after the string pattern ‘reboot%22%3A(\d+)’,</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">select regexp_extract('%2C%22reboot%22%3A27%2C%22quietMode%2C%22reboot%22%3A12%2C%22quietMode', 'reboot%22%3A(\\d+).*?', 1);</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>or</p>
-
-<p>c. surround the string pattern ‘reboot%22%3A(\d+)’ with ‘.*?’ at both sides</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">select regexp_extract('%2C%22reboot%22%3A27%2C%22quietMode%2C%22reboot%22%3A12%2C%22quietMode', '.*?reboot%22%3A(\\d+).*?', 1);</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>So after the tree ways to get the leftmost match, we can easily guess how to get the rifht-most match.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">select regexp_extract('%2C%22reboot%22%3A27%2C%22quietMode%2C%22reboot%22%3A12%2C%22quietMode', '.*?reboot%22%3A(\\d+)', 1);</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>That is just by appending the string pattern with ‘.*?’ at its left side.</p>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cat <span class="nv">$file</span> | awk <span class="s1">&#39;{ print length($0) &quot; &quot; $0; }&#39;</span> | sort -r -n | cut -d <span class="s1">&#39; &#39;</span> -f 2- | less
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 </div>
   
   
@@ -215,7 +140,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2016/07/12/tmux-error-while-loading-shared-libraries-libevent-2-dot-0-so-dot-5/">Tmux: Error While Loading Shared Libraries: libevent-2.0.so.5</a></h1>
+      <h1 class="entry-title"><a href="/blog/2016/01/05/a-wonderful-post-on-stdin/">A Wonderful Post on Stdin</a></h1>
     
     
       <p class="meta">
@@ -231,40 +156,28 @@
   
 
 
-<time datetime="2016-07-12T10:34:50+08:00" pubdate data-updated="true">2016 年7 月12 日</time>
+<time datetime="2016-01-05T14:30:04+08:00" pubdate data-updated="true">2016 年1 月5 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>I have kept a blog on tmux installation which is about missing module libevent, and the post is on:</p>
+  <div class="entry-content"><p>The following is a wonderful post on stdin, stdout, stderr.</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line">http://isunix.github.io/blog/2014/12/24/libevent-not-found-error-while-install-tmux/
+</pre></td><td class="code"><pre><code class="html"><span class="line">http://www.jstorimer.com/blogs/workingwithcode/7766119-when-to-use-stderr-instead-of-stdout
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>Recently even after I install the livevent module, I still get the following errors after installing tmux and then running tmux:</p>
+<p>Notes:</p>
+
+<p>1.[-n string] 将会测试string的长度，如果大于0， 则返回true</p>
+
+<p>2.awesome os-x command line:</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line"> ./tmux: error while loading shared libraries: libevent-2.0.so.5: cannot open shared object file: No such file or
+</pre></td><td class="code"><pre><code class="html"><span class="line">https://github.com/herrbischoff/awesome-osx-command-line
 </span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>I installed the libevent lib in $HOME/local/lib, and tmux says it can not find the library, Weird. With the help of one of my colleague, this problem is solved.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nb">export </span><span class="nv">DIR</span><span class="o">=</span><span class="s2">&quot;$HOME/local&quot;</span>
-</span><span class="line"><span class="nb">export </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="nv">$LD_LIBRARY_PATH</span>:<span class="nv">$DIR</span>/lib
-</span><span class="line">./configure --prefix<span class="o">=</span><span class="nv">$DIR</span> <span class="nv">CFLAGS</span><span class="o">=</span><span class="s2">&quot;-I$DIR/include&quot;</span> <span class="nv">LDFLAGS</span><span class="o">=</span><span class="s2">&quot;-L$DIR/lib&quot;</span>
-</span><span class="line">make
-</span><span class="line">make install
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>As we can see, the point here is setting the “LD_LIBRARY_PATH” variable.</p>
 </div>
   
   
@@ -277,7 +190,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2016/07/02/configure-hive-on-mac/">Configure Hive on Mac</a></h1>
+      <h1 class="entry-title"><a href="/blog/2015/12/31/wget-several-files-using-bash-cmd/">Wget Several Files Using Bash Cmd</a></h1>
     
     
       <p class="meta">
@@ -293,28 +206,27 @@
   
 
 
-<time datetime="2016-07-02T18:14:13+08:00" pubdate data-updated="true">2016 年7 月2 日</time>
+<time datetime="2015-12-31T18:36:09+08:00" pubdate data-updated="true">2015 年12 月31 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>花了很长的时间在hive的安装和配置上， 先把有用的链接记下来， 等有空了再详细的写下安装过程。</p>
+  <div class="entry-content"><p>I want to down the lecture notes on the page </p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line">http://stackoverflow.com/questions/5016505/mysql-grant-all-privileges-on-database
-</span><span class="line">https://cwiki.apache.org/confluence/display/Hive/AdminManual+Configuration
-</span><span class="line">http://stackoverflow.com/questions/27099898/java-net-urisyntaxexception-when-starting-hive
-</span><span class="line">https://noobergeek.wordpress.com/2013/11/09/simplest-way-to-install-and-configure-hive-for-mac-osx-lion/
-</span><span class="line">https://cwiki.apache.org/confluence/display/Hive/GettingStarted
-</span><span class="line">https://amodernstory.com/2015/03/29/installing-hive-on-mac/
+</pre></td><td class="code"><pre><code class="html"><span class="line">http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-001-structure-and-interpretation-of-computer-programs-spring-2005/lecture-notes/
 </span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Here is the command I am using.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">wget http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-001-structure-and-interpretation-of-computer-programs-spring-2005/lecture-notes/lecture<span class="o">{</span>1..26<span class="o">}</span>webhand.pdf
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>The sad thing is not all the sequences are consecutive.</p>
+
 </div>
   
   
@@ -371,7 +283,7 @@
       </li>
     
       <li class="post">
-        <a href="/blog/2019/08/14/gradient-boosting-algorithm/">Gradient Boosting Algorithm</a>
+        <a href="/blog/2019/08/14/gradient-boosting-algorithm/">Gradient Boosting 算法的一些资料</a>
       </li>
     
       <li class="post">
@@ -385,16 +297,16 @@
   <h1>Categories</h1>
   <ul id="categories">
     <li class='category'><a href='/blog/categories/algorithms/'>Algorithms (8)</a></li>
-<li class='category'><a href='/blog/categories/bigdata/'>BigData (11)</a></li>
+<li class='category'><a href='/blog/categories/bigdata/'>BigData (10)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (7)</a></li>
-<li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
-<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (15)</a></li>
-<li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (5)</a></li>
+<li class='category'><a href='/blog/categories/c/'>C (3)</a></li>
+<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (14)</a></li>
+<li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (4)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (2)</a></li>
 <li class='category'><a href='/blog/categories/javascript/'>Javascript (4)</a></li>
-<li class='category'><a href='/blog/categories/linux-and-mac/'>Linux&Mac (14)</a></li>
+<li class='category'><a href='/blog/categories/linux-and-mac/'>Linux&Mac (13)</a></li>
 <li class='category'><a href='/blog/categories/php/'>PHP (5)</a></li>
-<li class='category'><a href='/blog/categories/perl/'>Perl (50)</a></li>
+<li class='category'><a href='/blog/categories/perl/'>Perl (49)</a></li>
 <li class='category'><a href='/blog/categories/python/'>Python (11)</a></li>
 <li class='category'><a href='/blog/categories/ruby/'>Ruby (1)</a></li>
 <li class='category'><a href='/blog/categories/scala/'>Scala (1)</a></li>

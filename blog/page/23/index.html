@@ -9,7 +9,39 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="Say we want to install modules from multiple requirement files. We will put the requirement files in the directory “requirements”. First the base.txt &hellip;">
+  <meta name="description" content="Will use python linked list to solve the following problem: 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -99,7 +131,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2015/09/21/installing-from-multiple-requirements-files/">Installing From Multiple Requirements Files</a></h1>
+      <h1 class="entry-title"><a href="/blog/2015/07/27/python-linked-list-example/">Python Linked List Example</a></h1>
     
     
       <p class="meta">
@@ -115,133 +147,14 @@
   
 
 
-<time datetime="2015-09-21T16:18:23+08:00" pubdate data-updated="true">2015 年9 月21 日</time>
+<time datetime="2015-07-27T16:21:27+08:00" pubdate data-updated="true">2015 年7 月27 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>Say we want to install modules from multiple requirement files. We will put the requirement files in the directory “requirements”.</p>
-
-<p>First the base.txt file.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">Django==1.7.10
-</span><span class="line">psycopg2==2.4.5</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>Then the file local.txt</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">-r base.txt
-</span><span class="line">django-discover-runner==0.2.2</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>and production.txt(production installaions should be close to what is used in other locations, so production.txt commonly just calls base.txt)</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">-r base.txt</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>The for local and production env, we can issue the following commands:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">pip install -r requirements/local.txt
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">pip install -r requirements/production.txt
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/09/15/reverse-a-linked-list-in-place/">Reverse a Linked List in Place</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-09-15T09:33:40+08:00" pubdate data-updated="true">2015 年9 月15 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>We will show how to reverse a linked list in place using both python and javascript(actually converted from coffeescript).</p>
-
-<p>1.python version:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="k">class</span> <span class="nc">ListNode</span><span class="p">:</span>
-</span><span class="line">    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">val</span> <span class="o">=</span> <span class="n">x</span>
-</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="bp">None</span>
-</span><span class="line">
-</span><span class="line"><span class="k">def</span> <span class="nf">reverse</span><span class="p">(</span><span class="n">head</span><span class="p">):</span>
-</span><span class="line">    <span class="n">p</span> <span class="o">=</span> <span class="n">head</span>
-</span><span class="line">    <span class="n">start</span> <span class="o">=</span> <span class="bp">None</span>
-</span><span class="line">    <span class="k">while</span> <span class="n">p</span><span class="p">:</span>
-</span><span class="line">        <span class="n">next_one</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">next</span>
-</span><span class="line">        <span class="n">p</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">start</span>
-</span><span class="line">        <span class="n">start</span> <span class="o">=</span> <span class="n">p</span>
-</span><span class="line">        <span class="n">p</span> <span class="o">=</span> <span class="n">next_one</span>
-</span><span class="line">
-</span><span class="line">    <span class="k">return</span> <span class="n">start</span>
-</span><span class="line">
-</span><span class="line"><span class="n">head</span> <span class="o">=</span> <span class="n">ListNode</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-</span><span class="line"><span class="n">head</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">ListNode</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</span><span class="line"><span class="n">head</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">ListNode</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-</span><span class="line">
-</span><span class="line"><span class="n">result</span> <span class="o">=</span> <span class="n">reverse</span><span class="p">(</span><span class="n">head</span><span class="p">)</span>
-</span><span class="line"><span class="k">while</span> <span class="n">result</span><span class="p">:</span>
-</span><span class="line">    <span class="k">print</span> <span class="n">result</span><span class="o">.</span><span class="n">val</span>
-</span><span class="line">    <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">next</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>2.javascript version:</p>
+  <div class="entry-content"><p>Will use python linked list to solve the following problem:</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
@@ -280,48 +193,46 @@
 <span class="line-number">35</span>
 <span class="line-number">36</span>
 <span class="line-number">37</span>
-<span class="line-number">38</span>
-</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="c1">// Generated by CoffeeScript 1.9.3</span>
-</span><span class="line"><span class="kd">var</span> <span class="nx">ListNode</span><span class="p">,</span> <span class="nx">head</span><span class="p">,</span> <span class="nx">result</span><span class="p">,</span> <span class="nx">reverse_linkedList</span><span class="p">;</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="k">class</span> <span class="nc">Node</span><span class="p">:</span>
+</span><span class="line">    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="bp">None</span>
 </span><span class="line">
-</span><span class="line"><span class="nx">ListNode</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class="line">  <span class="kd">function</span> <span class="nx">ListNode</span><span class="p">(</span><span class="nx">val</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">    <span class="k">this</span><span class="p">.</span><span class="nx">val</span> <span class="o">=</span> <span class="nx">val</span><span class="p">;</span>
-</span><span class="line">    <span class="k">this</span><span class="p">.</span><span class="nx">next</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
-</span><span class="line">  <span class="p">}</span>
+</span><span class="line">    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class="line">        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
 </span><span class="line">
-</span><span class="line">  <span class="k">return</span> <span class="nx">ListNode</span><span class="p">;</span>
+</span><span class="line"><span class="k">class</span> <span class="nc">LinkedList</span><span class="p">:</span>
+</span><span class="line">    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">head</span> <span class="o">=</span> <span class="bp">None</span>
+</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">tail</span> <span class="o">=</span> <span class="bp">None</span>
 </span><span class="line">
-</span><span class="line"><span class="p">})();</span>
+</span><span class="line">    <span class="k">def</span> <span class="nf">addNode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+</span><span class="line">        <span class="n">node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</span><span class="line">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+</span><span class="line">            <span class="bp">self</span><span class="o">.</span><span class="n">head</span> <span class="o">=</span> <span class="n">node</span>
+</span><span class="line">            <span class="bp">self</span><span class="o">.</span><span class="n">tail</span> <span class="o">=</span> <span class="n">node</span>
+</span><span class="line">        <span class="k">else</span><span class="p">:</span>
+</span><span class="line">            <span class="bp">self</span><span class="o">.</span><span class="n">tail</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">node</span>
+</span><span class="line">            <span class="bp">self</span><span class="o">.</span><span class="n">tail</span> <span class="o">=</span> <span class="n">node</span>
 </span><span class="line">
-</span><span class="line"><span class="nx">reverse_linkedList</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">head</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">  <span class="kd">var</span> <span class="nx">next_one</span><span class="p">,</span> <span class="nx">p</span><span class="p">,</span> <span class="nx">start</span><span class="p">;</span>
-</span><span class="line">  <span class="nx">p</span> <span class="o">=</span> <span class="nx">head</span><span class="p">;</span>
-</span><span class="line">  <span class="nx">start</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
-</span><span class="line">  <span class="k">while</span> <span class="p">(</span><span class="nx">p</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">    <span class="nx">next_one</span> <span class="o">=</span> <span class="nx">p</span><span class="p">.</span><span class="nx">next</span><span class="p">;</span>
-</span><span class="line">    <span class="nx">p</span><span class="p">.</span><span class="nx">next</span> <span class="o">=</span> <span class="nx">start</span><span class="p">;</span>
-</span><span class="line">    <span class="nx">start</span> <span class="o">=</span> <span class="nx">p</span><span class="p">;</span>
-</span><span class="line">    <span class="nx">p</span> <span class="o">=</span> <span class="nx">next_one</span><span class="p">;</span>
-</span><span class="line">  <span class="p">}</span>
-</span><span class="line">  <span class="k">return</span> <span class="nx">start</span><span class="p">;</span>
-</span><span class="line"><span class="p">};</span>
+</span><span class="line">    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class="line">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+</span><span class="line">            <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span>
+</span><span class="line">            <span class="n">nodeStore</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">index</span><span class="o">.</span><span class="n">value</span><span class="p">)]</span>
+</span><span class="line">            <span class="k">while</span> <span class="n">index</span><span class="o">.</span><span class="n">next</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+</span><span class="line">                <span class="n">index</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">next</span>
+</span><span class="line">                <span class="n">nodeStore</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">index</span><span class="o">.</span><span class="n">value</span><span class="p">))</span>
+</span><span class="line">            <span class="k">return</span> <span class="s">&quot;LinkedList  [ &quot;</span> <span class="o">+</span> <span class="s">&quot;-&gt;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">nodeStore</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot; ]&quot;</span>
+</span><span class="line">        <span class="k">return</span> <span class="s">&quot;LinkedList  []&quot;</span>
 </span><span class="line">
-</span><span class="line"><span class="nx">head</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ListNode</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="nx">head</span><span class="p">.</span><span class="nx">next</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ListNode</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="nx">head</span><span class="p">.</span><span class="nx">next</span><span class="p">.</span><span class="nx">next</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ListNode</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="nx">result</span> <span class="o">=</span> <span class="nx">reverse_linkedList</span><span class="p">(</span><span class="nx">head</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="k">while</span> <span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">val</span><span class="p">);</span>
-</span><span class="line">  <span class="nx">result</span> <span class="o">=</span> <span class="nx">result</span><span class="p">.</span><span class="nx">next</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
+</span><span class="line"><span class="k">def</span> <span class="nf">generatedLinkedList</span><span class="p">(</span><span class="n">numArray</span><span class="p">):</span>
+</span><span class="line">    <span class="n">linkedlist</span> <span class="o">=</span> <span class="n">LinkedList</span><span class="p">()</span>
+</span><span class="line">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">numArray</span><span class="p">)):</span>
+</span><span class="line">        <span class="n">linkedlist</span><span class="o">.</span><span class="n">addNode</span><span class="p">(</span><span class="n">numArray</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+</span><span class="line">    <span class="k">return</span> <span class="n">linkedlist</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>3.to reverse a linked from position m to n:</p>
+<p>Then we will start to solve the problem:</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
@@ -351,200 +262,34 @@
 <span class="line-number">26</span>
 <span class="line-number">27</span>
 <span class="line-number">28</span>
-<span class="line-number">29</span>
-<span class="line-number">30</span>
-<span class="line-number">31</span>
-<span class="line-number">32</span>
-<span class="line-number">33</span>
-<span class="line-number">34</span>
-<span class="line-number">35</span>
-<span class="line-number">36</span>
-<span class="line-number">37</span>
-<span class="line-number">38</span>
-<span class="line-number">39</span>
-<span class="line-number">40</span>
-<span class="line-number">41</span>
-<span class="line-number">42</span>
-<span class="line-number">43</span>
-<span class="line-number">44</span>
-<span class="line-number">45</span>
-<span class="line-number">46</span>
-<span class="line-number">47</span>
-</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="k">class</span> <span class="nc">ListNode</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-</span><span class="line">    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">val</span> <span class="o">=</span> <span class="n">x</span>
-</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="bp">None</span>
+</pre></td><td class="code"><pre><code class="python"><span class="line"><span class="kn">from</span> <span class="nn">LinkedList</span> <span class="kn">import</span> <span class="o">*</span>
 </span><span class="line">
-</span><span class="line"><span class="k">class</span> <span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-</span><span class="line">    <span class="k">def</span> <span class="nf">reverseBetween</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">head</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
-</span><span class="line">        <span class="n">dummyNode</span> <span class="o">=</span> <span class="n">ListNode</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-</span><span class="line">        <span class="n">p</span> <span class="o">=</span> <span class="n">dummyNode</span>
-</span><span class="line">        <span class="n">q</span> <span class="o">=</span> <span class="n">head</span>
+</span><span class="line"><span class="k">class</span> <span class="nc">ListsSum</span><span class="p">:</span>
+</span><span class="line">    <span class="k">def</span> <span class="nf">addLists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">l1</span><span class="p">,</span> <span class="n">l2</span><span class="p">):</span>
+</span><span class="line">        <span class="n">p1</span> <span class="o">=</span> <span class="n">l1</span><span class="o">.</span><span class="n">head</span>
+</span><span class="line">        <span class="n">p2</span> <span class="o">=</span> <span class="n">l2</span><span class="o">.</span><span class="n">head</span>
+</span><span class="line">        <span class="n">carry</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class="line">        <span class="n">linkedlist_sum</span> <span class="o">=</span> <span class="n">LinkedList</span><span class="p">()</span>
+</span><span class="line">        <span class="k">while</span> <span class="p">(</span><span class="n">p1</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">p2</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">carry</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
+</span><span class="line">            <span class="n">dig_sum</span> <span class="o">=</span> <span class="n">carry</span>
+</span><span class="line">            <span class="k">if</span> <span class="n">p1</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+</span><span class="line">                <span class="n">dig_sum</span> <span class="o">+=</span> <span class="n">p1</span><span class="o">.</span><span class="n">value</span>
+</span><span class="line">                <span class="n">p1</span> <span class="o">=</span> <span class="n">p1</span><span class="o">.</span><span class="n">next</span>
+</span><span class="line">            <span class="k">if</span> <span class="n">p2</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+</span><span class="line">                <span class="n">dig_sum</span> <span class="o">+=</span> <span class="n">p2</span><span class="o">.</span><span class="n">value</span>
+</span><span class="line">                <span class="n">p2</span> <span class="o">=</span> <span class="n">p2</span><span class="o">.</span><span class="n">next</span>
 </span><span class="line">
-</span><span class="line">        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
-</span><span class="line">            <span class="n">p</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">q</span>
-</span><span class="line">            <span class="n">q</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">next</span>
-</span><span class="line">            <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">next</span>
-</span><span class="line">
-</span><span class="line">        <span class="n">start</span> <span class="o">=</span> <span class="bp">None</span>
-</span><span class="line">        <span class="n">end</span> <span class="o">=</span> <span class="n">q</span>
-</span><span class="line">        <span class="n">next_one</span> <span class="o">=</span> <span class="bp">None</span>
-</span><span class="line">
-</span><span class="line">        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
-</span><span class="line">            <span class="n">next_one</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">next</span>
-</span><span class="line">            <span class="n">q</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">start</span>
-</span><span class="line">            <span class="n">start</span> <span class="o">=</span> <span class="n">q</span>
-</span><span class="line">            <span class="n">q</span> <span class="o">=</span> <span class="n">next_one</span>
-</span><span class="line">
-</span><span class="line">
-</span><span class="line">        <span class="n">p</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">start</span>
-</span><span class="line">        <span class="n">end</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">next_one</span>
-</span><span class="line">        <span class="k">return</span> <span class="n">dummyNode</span><span class="o">.</span><span class="n">next</span>
-</span><span class="line">
+</span><span class="line">            <span class="n">linkedlist_sum</span><span class="o">.</span><span class="n">addNode</span><span class="p">(</span><span class="n">dig_sum</span><span class="o">%</span><span class="mi">10</span><span class="p">)</span>
+</span><span class="line">            <span class="n">carry</span> <span class="o">=</span> <span class="n">dig_sum</span><span class="o">/</span><span class="mi">10</span>
+</span><span class="line">        <span class="k">return</span> <span class="n">linkedlist_sum</span>
 </span><span class="line">
 </span><span class="line"><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
-</span><span class="line">    <span class="n">solution</span> <span class="o">=</span> <span class="n">Solution</span><span class="p">()</span>
-</span><span class="line">
-</span><span class="line">    <span class="n">head</span> <span class="o">=</span> <span class="n">ListNode</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-</span><span class="line">    <span class="n">head</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">ListNode</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</span><span class="line">    <span class="n">head</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">ListNode</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-</span><span class="line">    <span class="n">head</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">ListNode</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
-</span><span class="line">    <span class="n">head</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">ListNode</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-</span><span class="line">
-</span><span class="line">    <span class="n">m</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span>
-</span><span class="line">
-</span><span class="line">    <span class="n">result</span> <span class="o">=</span> <span class="n">solution</span><span class="o">.</span><span class="n">reverseBetween</span><span class="p">(</span><span class="n">head</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
-</span><span class="line">    <span class="k">while</span> <span class="n">result</span><span class="p">:</span>
-</span><span class="line">        <span class="k">print</span> <span class="n">result</span><span class="o">.</span><span class="n">val</span>
-</span><span class="line">        <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">next</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>4.we will also show another ways to reverse a linked list, first the cursive way:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="k">class</span> <span class="nc">ListNode</span><span class="p">:</span>
-</span><span class="line">    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">val</span> <span class="o">=</span> <span class="n">x</span>
-</span><span class="line">        <span class="bp">self</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="bp">None</span>
-</span><span class="line">
-</span><span class="line"><span class="k">def</span> <span class="nf">reverse</span><span class="p">(</span><span class="n">head</span><span class="p">):</span>
-</span><span class="line">    <span class="k">if</span> <span class="n">head</span> <span class="o">==</span> <span class="bp">None</span> <span class="ow">or</span> <span class="n">head</span><span class="o">.</span><span class="n">next</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
-</span><span class="line">        <span class="k">return</span> <span class="n">head</span>
-</span><span class="line">
-</span><span class="line">    <span class="n">second</span> <span class="o">=</span> <span class="n">head</span><span class="o">.</span><span class="n">next</span>
-</span><span class="line">    <span class="n">head</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="bp">None</span>
-</span><span class="line">    <span class="n">result</span> <span class="o">=</span> <span class="n">reverse</span><span class="p">(</span><span class="n">second</span><span class="p">)</span>
-</span><span class="line">    <span class="n">second</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">head</span>
-</span><span class="line">
-</span><span class="line">    <span class="k">return</span> <span class="n">result</span>
-</span><span class="line">
-</span><span class="line"><span class="n">head</span> <span class="o">=</span> <span class="n">ListNode</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-</span><span class="line"><span class="n">head</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">ListNode</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</span><span class="line"><span class="n">head</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">ListNode</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-</span><span class="line">
-</span><span class="line"><span class="n">result</span> <span class="o">=</span> <span class="n">reverse</span><span class="p">(</span><span class="n">head</span><span class="p">)</span>
-</span><span class="line"><span class="k">while</span> <span class="n">result</span><span class="p">:</span>
-</span><span class="line">    <span class="k">print</span> <span class="n">result</span><span class="o">.</span><span class="n">val</span>
-</span><span class="line">    <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">next</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-<span class="line-number">28</span>
-<span class="line-number">29</span>
-<span class="line-number">30</span>
-<span class="line-number">31</span>
-<span class="line-number">32</span>
-<span class="line-number">33</span>
-<span class="line-number">34</span>
-<span class="line-number">35</span>
-<span class="line-number">36</span>
-<span class="line-number">37</span>
-</pre></td><td class="code"><pre><code class="js"><span class="line"><span class="c1">// Generated by CoffeeScript 1.9.3</span>
-</span><span class="line"><span class="kd">var</span> <span class="nx">ListNode</span><span class="p">,</span> <span class="nx">head</span><span class="p">,</span> <span class="nx">result</span><span class="p">,</span> <span class="nx">reverse_linkedList</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="nx">ListNode</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class="line">  <span class="kd">function</span> <span class="nx">ListNode</span><span class="p">(</span><span class="nx">val</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">    <span class="k">this</span><span class="p">.</span><span class="nx">val</span> <span class="o">=</span> <span class="nx">val</span><span class="p">;</span>
-</span><span class="line">    <span class="k">this</span><span class="p">.</span><span class="nx">next</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
-</span><span class="line">  <span class="p">}</span>
-</span><span class="line">
-</span><span class="line">  <span class="k">return</span> <span class="nx">ListNode</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="p">})();</span>
-</span><span class="line">
-</span><span class="line"><span class="nx">reverse_linkedList</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">head</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">  <span class="kd">var</span> <span class="nx">result</span><span class="p">,</span> <span class="nx">second</span><span class="p">;</span>
-</span><span class="line">  <span class="k">if</span> <span class="p">(</span><span class="nx">head</span> <span class="o">===</span> <span class="kc">null</span> <span class="o">||</span> <span class="nx">head</span><span class="p">.</span><span class="nx">next</span> <span class="o">===</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">    <span class="k">return</span> <span class="nx">head</span><span class="p">;</span>
-</span><span class="line">  <span class="p">}</span>
-</span><span class="line">  <span class="nx">second</span> <span class="o">=</span> <span class="nx">head</span><span class="p">.</span><span class="nx">next</span><span class="p">;</span>
-</span><span class="line">  <span class="nx">head</span><span class="p">.</span><span class="nx">next</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
-</span><span class="line">  <span class="nx">result</span> <span class="o">=</span> <span class="nx">reverse_linkedList</span><span class="p">(</span><span class="nx">second</span><span class="p">);</span>
-</span><span class="line">  <span class="nx">second</span><span class="p">.</span><span class="nx">next</span> <span class="o">=</span> <span class="nx">head</span><span class="p">;</span>
-</span><span class="line">  <span class="k">return</span> <span class="nx">result</span><span class="p">;</span>
-</span><span class="line"><span class="p">};</span>
-</span><span class="line">
-</span><span class="line"><span class="nx">head</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ListNode</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="nx">head</span><span class="p">.</span><span class="nx">next</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ListNode</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="nx">head</span><span class="p">.</span><span class="nx">next</span><span class="p">.</span><span class="nx">next</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ListNode</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="nx">result</span> <span class="o">=</span> <span class="nx">reverse_linkedList</span><span class="p">(</span><span class="nx">head</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="k">while</span> <span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">val</span><span class="p">);</span>
-</span><span class="line">  <span class="nx">result</span> <span class="o">=</span> <span class="nx">result</span><span class="p">.</span><span class="nx">next</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
+</span><span class="line">    <span class="n">solution</span> <span class="o">=</span> <span class="n">ListsSum</span><span class="p">()</span>
+</span><span class="line">    <span class="n">list1</span> <span class="o">=</span> <span class="n">generatedLinkedList</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+</span><span class="line">    <span class="n">list2</span> <span class="o">=</span> <span class="n">generatedLinkedList</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span>
+</span><span class="line">    <span class="k">print</span><span class="p">(</span><span class="n">list1</span><span class="p">)</span>
+</span><span class="line">    <span class="k">print</span><span class="p">(</span><span class="n">list2</span><span class="p">)</span>
+</span><span class="line">    <span class="k">print</span><span class="p">(</span><span class="n">solution</span><span class="o">.</span><span class="n">addLists</span><span class="p">(</span><span class="n">list1</span><span class="p">,</span><span class="n">list2</span><span class="p">))</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 </div>
   
@@ -558,7 +303,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2015/09/07/linked-list-in-perl/">Linked List in Perl</a></h1>
+      <h1 class="entry-title"><a href="/blog/2015/07/20/tap-method-in-ruby/">Tap Method in Ruby</a></h1>
     
     
       <p class="meta">
@@ -574,18 +319,34 @@
   
 
 
-<time datetime="2015-09-07T12:30:05+08:00" pubdate data-updated="true">2015 年9 月7 日</time>
+<time datetime="2015-07-20T15:31:51+08:00" pubdate data-updated="true">2015 年7 月20 日</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>We will use linked list to output words in a file in alphabetical order. This example is in:</p>
+  <div class="entry-content"><p>There is a “tap” method in Ruby and I find it is very useful.</p>
+
+<p>The definitionof “tap” in ruby documentaion is:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">Yields self to the block, and then returns self. The primary purpose of this method is to “tap into” a method chain, in order to perform operations on intermediate results within the chain.</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Put it anonther way:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">It’s a helper for call chaining. It passes its object into the given block and, after the block finishes, returns the object:</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line">http://man.ddvip.com/web/perl/perl9.htm#10.1
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="ruby"><span class="line"><span class="n">an_object</span><span class="o">.</span><span class="n">tap</span> <span class="k">do</span> <span class="o">|</span><span class="n">o</span><span class="o">|</span>
+</span><span class="line">  <span class="c1"># do stuff with an_object, which is in o</span>
+</span><span class="line"><span class="k">end</span> <span class="c1"># ===&gt; an_object</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Another example:</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
@@ -598,185 +359,89 @@
 <span class="line-number">9</span>
 <span class="line-number">10</span>
 <span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-<span class="line-number">28</span>
-<span class="line-number">29</span>
-<span class="line-number">30</span>
-<span class="line-number">31</span>
-<span class="line-number">32</span>
-<span class="line-number">33</span>
-<span class="line-number">34</span>
-<span class="line-number">35</span>
-<span class="line-number">36</span>
-<span class="line-number">37</span>
-<span class="line-number">38</span>
-<span class="line-number">39</span>
-<span class="line-number">40</span>
-<span class="line-number">41</span>
-<span class="line-number">42</span>
-<span class="line-number">43</span>
-<span class="line-number">44</span>
-<span class="line-number">45</span>
-<span class="line-number">46</span>
-<span class="line-number">47</span>
-<span class="line-number">48</span>
-<span class="line-number">49</span>
-<span class="line-number">50</span>
-<span class="line-number">51</span>
-<span class="line-number">52</span>
-<span class="line-number">53</span>
-<span class="line-number">54</span>
-<span class="line-number">55</span>
-<span class="line-number">56</span>
-<span class="line-number">57</span>
-<span class="line-number">58</span>
-<span class="line-number">59</span>
-<span class="line-number">60</span>
-<span class="line-number">61</span>
-<span class="line-number">62</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="n">utf8</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="nv">$header</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="p">;</span>
-</span><span class="line"><span class="k">while</span> <span class="p">(</span> <span class="nv">$line</span> <span class="o">=</span> <span class="sr">&lt;STDIN&gt;</span> <span class="p">)</span> <span class="p">{</span>
-</span><span class="line">    <span class="nb">chomp</span><span class="p">;</span>
-</span><span class="line">    <span class="nv">@words</span> <span class="o">=</span> <span class="nb">split</span><span class="p">(</span><span class="sr"> /\s+/</span><span class="p">,</span> <span class="nv">$line</span> <span class="p">);</span>
-</span><span class="line">    <span class="k">foreach</span> <span class="k">my</span> <span class="nv">$word</span> <span class="p">(</span><span class="nv">@words</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">        <span class="c1">##remove punctuation and transform from uppercase to lower case.</span>
-</span><span class="line">
-</span><span class="line">        <span class="nv">$word</span> <span class="o">=~</span> <span class="sr">s/[,.:;-]//</span><span class="p">;</span>
-</span><span class="line">        <span class="nv">$word</span> <span class="o">=~</span> <span class="nb">tr</span><span class="sr">/A-Z/</span><span class="n">a</span><span class="o">-</span><span class="n">z</span><span class="o">/</span><span class="p">;</span>
-</span><span class="line">        <span class="o">&amp;</span><span class="n">add_word_to_list</span><span class="p">(</span><span class="nv">$word</span><span class="p">);</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="o">&amp;</span><span class="n">print_list</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">sub </span><span class="nf">add_word_to_list</span> <span class="p">{</span>
-</span><span class="line">
-</span><span class="line">    <span class="c1">#these two are lists.</span>
-</span><span class="line">    <span class="k">my</span> <span class="p">(</span><span class="nv">$word</span><span class="p">)</span> <span class="o">=</span> <span class="nv">@_</span><span class="p">;</span>
-</span><span class="line">    <span class="k">my</span> <span class="p">(</span><span class="nv">$pointer</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line">    <span class="c1"># if list is empty, add first item;</span>
-</span><span class="line">    <span class="k">if</span> <span class="p">(</span> <span class="nv">$header</span> <span class="ow">eq</span> <span class="s">&quot;&quot;</span> <span class="p">)</span> <span class="p">{</span>
-</span><span class="line">        <span class="nv">$header</span> <span class="o">=</span> <span class="nv">$word</span><span class="p">;</span>
-</span><span class="line">        <span class="nv">$wordlist</span><span class="p">{</span><span class="nv">$word</span><span class="p">}</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="p">;</span>
-</span><span class="line">        <span class="k">return</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">
-</span><span class="line">    <span class="c1"># if word identical to first element in list, do nothing</span>
-</span><span class="line">    <span class="k">return</span> <span class="k">if</span> <span class="p">(</span> <span class="nv">$header</span> <span class="ow">eq</span> <span class="nv">$word</span> <span class="p">);</span>
-</span><span class="line">
-</span><span class="line">    <span class="c1"># to see if word should be the new first word in the list.</span>
-</span><span class="line">
-</span><span class="line">    <span class="k">if</span> <span class="p">(</span> <span class="nv">$header</span> <span class="ow">gt</span> <span class="nv">$word</span> <span class="p">)</span> <span class="p">{</span>
-</span><span class="line">        <span class="nv">$wordlist</span><span class="p">{</span><span class="nv">$word</span><span class="p">}</span> <span class="o">=</span> <span class="nv">$header</span><span class="p">;</span>
-</span><span class="line">        <span class="nv">$header</span> <span class="o">=</span> <span class="nv">$word</span><span class="p">;</span>
-</span><span class="line">        <span class="k">return</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">
-</span><span class="line">    <span class="c1"># find place where the word belongs</span>
-</span><span class="line">    <span class="nv">$pointer</span> <span class="o">=</span> <span class="nv">$header</span><span class="p">;</span>
-</span><span class="line">    <span class="k">while</span> <span class="p">(</span> <span class="nv">$wordlist</span><span class="p">{</span><span class="nv">$pointer</span><span class="p">}</span> <span class="ow">ne</span> <span class="s">&quot;&quot;</span> <span class="o">&amp;&amp;</span> <span class="nv">$wordlist</span><span class="p">{</span><span class="nv">$pointer</span><span class="p">}</span> <span class="ow">lt</span> <span class="nv">$word</span> <span class="p">)</span> <span class="p">{</span>
-</span><span class="line">        <span class="nv">$pointer</span> <span class="o">=</span> <span class="nv">$wordlist</span><span class="p">{</span><span class="nv">$pointer</span><span class="p">};</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">
-</span><span class="line">    <span class="c1"># if the word seen already, do nothing</span>
-</span><span class="line">    <span class="k">return</span> <span class="k">if</span> <span class="p">(</span> <span class="nv">$word</span> <span class="ow">eq</span> <span class="nv">$wordlist</span><span class="p">{</span><span class="nv">$pointer</span><span class="p">}</span> <span class="p">);</span>
-</span><span class="line">    <span class="nv">$wordlist</span><span class="p">{</span><span class="nv">$word</span><span class="p">}</span>    <span class="o">=</span> <span class="nv">$wordlist</span><span class="p">{</span><span class="nv">$pointer</span><span class="p">};</span>
-</span><span class="line">    <span class="nv">$wordlist</span><span class="p">{</span><span class="nv">$pointer</span><span class="p">}</span> <span class="o">=</span> <span class="nv">$word</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="k">sub </span><span class="nf">print_list</span> <span class="p">{</span>
-</span><span class="line">    <span class="nb">local</span> <span class="p">(</span><span class="nv">$pointer</span><span class="p">);</span>
-</span><span class="line">    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Words in the input are:\n&quot;</span><span class="p">);</span>
-</span><span class="line">    <span class="nv">$pointer</span> <span class="o">=</span> <span class="nv">$header</span><span class="p">;</span>
-</span><span class="line">    <span class="k">while</span> <span class="p">(</span> <span class="nv">$pointer</span> <span class="ow">ne</span> <span class="s">&quot;&quot;</span> <span class="p">)</span> <span class="p">{</span>
-</span><span class="line">        <span class="k">print</span><span class="p">(</span><span class="s">&quot;$pointer\n&quot;</span><span class="p">);</span>
-</span><span class="line">        <span class="nv">$pointer</span> <span class="o">=</span> <span class="nv">$wordlist</span><span class="p">{</span><span class="nv">$pointer</span><span class="p">};</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
+</pre></td><td class="code"><pre><code class="ruby"><span class="line"><span class="k">def</span> <span class="nf">hash_table</span><span class="p">(</span><span class="n">numbers</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+</span><span class="line">    <span class="o">[].</span><span class="n">tap</span> <span class="k">do</span> <span class="o">|</span><span class="n">result</span><span class="o">|</span>
+</span><span class="line">      <span class="nb">hash</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span class="line">      <span class="n">numbers</span><span class="o">.</span><span class="n">each_with_index</span> <span class="k">do</span> <span class="o">|</span> <span class="n">n</span><span class="p">,</span> <span class="n">i</span> <span class="o">|</span>
+</span><span class="line">        <span class="k">if</span> <span class="n">j</span> <span class="o">=</span> <span class="nb">hash</span><span class="o">[</span><span class="n">target</span> <span class="o">-</span> <span class="n">n</span><span class="o">]</span>
+</span><span class="line">          <span class="k">return</span> <span class="n">result</span> <span class="o">&lt;&lt;</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+</span><span class="line">        <span class="k">end</span>
+</span><span class="line">        <span class="nb">hash</span><span class="o">[</span><span class="n">n</span><span class="o">]</span> <span class="o">=</span> <span class="n">i</span>
+</span><span class="line">      <span class="k">end</span>
+</span><span class="line">    <span class="k">end</span>
+</span><span class="line">  <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/07/02/minutes-on-setting-up-emacs-on-macos/">Minutes on Setting Up Emacs on Macos</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-07-02T15:29:18+08:00" pubdate data-updated="true">2015 年7 月2 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><ol>
+  <li>I am am using gui emacs and I want to it to be started from the command line, then I have to do this:</li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nb">alias </span><span class="nv">emacs</span><span class="o">=</span><span class="s1">&#39;open -a /Applications/Emacs.app $1&#39;</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>and for a tree structure:</p>
+<ol>
+  <li>I want to change the default font and font size:</li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="o">(</span><span class="nb">set</span>-default-font <span class="s2">&quot;Monaco 28&quot;</span><span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<ol>
+  <li>I want to use evil, after putting it into ~/.emacs.d, also I need to put the folliwng things in to ~/.emacs.d/init.el</li>
+</ol>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
 <span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-<span class="line-number">28</span>
-<span class="line-number">29</span>
-<span class="line-number">30</span>
-<span class="line-number">31</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="n">utf8</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">my</span> <span class="nv">$rootname</span> <span class="o">=</span> <span class="s">&quot;parent&quot;</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">my</span> <span class="nv">%tree</span> <span class="o">=</span> <span class="p">(</span>
-</span><span class="line">    <span class="s">&quot;parentleft&quot;</span><span class="p">,</span> <span class="s">&quot;child1&quot;</span><span class="p">,</span>      <span class="s">&quot;parentright&quot;</span><span class="p">,</span> <span class="s">&quot;child2&quot;</span><span class="p">,</span>
-</span><span class="line">    <span class="s">&quot;child1left&quot;</span><span class="p">,</span> <span class="s">&quot;grandchild1&quot;</span><span class="p">,</span> <span class="s">&quot;child1right&quot;</span><span class="p">,</span> <span class="s">&quot;grandchild2&quot;</span><span class="p">,</span>
-</span><span class="line">    <span class="s">&quot;child2left&quot;</span><span class="p">,</span> <span class="s">&quot;grandchild3&quot;</span><span class="p">,</span> <span class="s">&quot;child2right&quot;</span><span class="p">,</span> <span class="s">&quot;grandchild4&quot;</span>
-</span><span class="line"><span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="c1"># traverse tree, printing its elements</span>
-</span><span class="line"><span class="o">&amp;</span><span class="n">print_tree</span><span class="p">(</span><span class="nv">$rootname</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="k">sub </span><span class="nf">print_tree</span> <span class="p">{</span>
-</span><span class="line">    <span class="nb">local</span> <span class="p">(</span><span class="nv">$nodename</span><span class="p">)</span> <span class="o">=</span> <span class="nv">@_</span><span class="p">;</span>
-</span><span class="line">    <span class="nb">local</span> <span class="p">(</span> <span class="nv">$leftchildname</span><span class="p">,</span> <span class="nv">$rightchildname</span> <span class="p">);</span>
-</span><span class="line">
-</span><span class="line">    <span class="nv">$leftchildname</span>  <span class="o">=</span> <span class="nv">$nodename</span> <span class="o">.</span> <span class="s">&quot;left&quot;</span><span class="p">;</span>
-</span><span class="line">    <span class="nv">$rightchildname</span> <span class="o">=</span> <span class="nv">$nodename</span> <span class="o">.</span> <span class="s">&quot;right&quot;</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line">    <span class="c1"># this is a left-order traversal.</span>
-</span><span class="line">
-</span><span class="line">    <span class="k">if</span> <span class="p">(</span> <span class="nv">$tree</span><span class="p">{</span><span class="nv">$leftchildname</span><span class="p">}</span> <span class="ow">ne</span> <span class="s">&quot;&quot;</span> <span class="p">)</span> <span class="p">{</span>
-</span><span class="line">        <span class="o">&amp;</span><span class="n">print_tree</span><span class="p">(</span> <span class="nv">$tree</span><span class="p">{</span><span class="nv">$leftchildname</span><span class="p">}</span> <span class="p">);</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">    <span class="k">print</span><span class="p">(</span><span class="s">&quot;$nodename\n&quot;</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line">    <span class="k">if</span> <span class="p">(</span> <span class="nv">$tree</span><span class="p">{</span><span class="nv">$rightchildname</span><span class="p">}</span> <span class="ow">ne</span> <span class="s">&quot;&quot;</span> <span class="p">)</span> <span class="p">{</span>
-</span><span class="line">        <span class="o">&amp;</span><span class="n">print_tree</span><span class="p">(</span> <span class="nv">$tree</span><span class="p">{</span><span class="nv">$rightchildname</span><span class="p">}</span> <span class="p">);</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="o">(</span>add-to-list <span class="s1">&#39;load-path &quot;~/.emacs.d/evil&quot;)</span>
+</span><span class="line"><span class="s1">(require &#39;</span>evil<span class="o">)</span>
+</span><span class="line"><span class="o">(</span>evil-mode 1<span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<ol>
+  <li>I am using slime, so I have to put the following things into my ~/.emacs.d/init.el</li>
+</ol>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="o">(</span>setq inferior-lisp-program <span class="s2">&quot;/usr/local/bin/sbcl&quot;</span><span class="o">)</span>
+</span><span class="line"><span class="o">(</span>setq slime-contribs <span class="err">&#39;</span><span class="o">(</span>slime-fancy<span class="o">))</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 </div>
   
@@ -834,7 +499,7 @@
       </li>
     
       <li class="post">
-        <a href="/blog/2019/08/14/gradient-boosting-algorithm/">Gradient Boosting Algorithm</a>
+        <a href="/blog/2019/08/14/gradient-boosting-algorithm/">Gradient Boosting 算法的一些资料</a>
       </li>
     
       <li class="post">
@@ -848,16 +513,16 @@
   <h1>Categories</h1>
   <ul id="categories">
     <li class='category'><a href='/blog/categories/algorithms/'>Algorithms (8)</a></li>
-<li class='category'><a href='/blog/categories/bigdata/'>BigData (11)</a></li>
+<li class='category'><a href='/blog/categories/bigdata/'>BigData (10)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (7)</a></li>
-<li class='category'><a href='/blog/categories/c/'>C (4)</a></li>
-<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (15)</a></li>
-<li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (5)</a></li>
+<li class='category'><a href='/blog/categories/c/'>C (3)</a></li>
+<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (14)</a></li>
+<li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (4)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (2)</a></li>
 <li class='category'><a href='/blog/categories/javascript/'>Javascript (4)</a></li>
-<li class='category'><a href='/blog/categories/linux-and-mac/'>Linux&Mac (14)</a></li>
+<li class='category'><a href='/blog/categories/linux-and-mac/'>Linux&Mac (13)</a></li>
 <li class='category'><a href='/blog/categories/php/'>PHP (5)</a></li>
-<li class='category'><a href='/blog/categories/perl/'>Perl (50)</a></li>
+<li class='category'><a href='/blog/categories/perl/'>Perl (49)</a></li>
 <li class='category'><a href='/blog/categories/python/'>Python (11)</a></li>
 <li class='category'><a href='/blog/categories/ruby/'>Ruby (1)</a></li>
 <li class='category'><a href='/blog/categories/scala/'>Scala (1)</a></li>

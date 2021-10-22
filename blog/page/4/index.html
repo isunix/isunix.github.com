@@ -9,7 +9,8 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="参考链接: p值是什么？数据科学家用最简单的方式告诉你 ">
+  <meta name="description" content="想要了解xgboost，至少需要了解以下的一些概念：
+梯度, Boosting, 分类器, 决策树, 概率分布, CART, 损失函数, 分裂准则, 加法模型, 叶子节点, 分裂点, 学习率, 分类, 回归, 初始化, 泰勒公式, 贪心法, 信息增益, 信息增益比, 特征, 特征值, 直方图算法 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -93,6 +94,98 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2019/08/14/gradient-boosting-algorithm/">Gradient Boosting 算法的一些资料</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2019-08-14T13:51:36+08:00" pubdate data-updated="true">2019 年8 月14 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2 id="xgboost">想要了解xgboost，至少需要了解以下的一些概念：</h2>
+<p><code>梯度</code>, <code>Boosting</code>, <code>分类器</code>, <code>决策树</code>, <code>概率分布</code>, <code>CART</code>, <code>损失函数</code>, <code>分裂准则</code>, <code>加法模型</code>, <code>叶子节点</code>, <code>分裂点</code>, <code>学习率</code>, <code>分类</code>, <code>回归</code>, <code>初始化</code>, <code>泰勒公式</code>, <code>贪心法</code>, <code>信息增益</code>, <code>信息增益比</code>, <code>特征</code>, <code>特征值</code>, <code>直方图算法</code>, <code>DenseVector</code>, <code>凸函数</code>, <code>弱学习器</code>, <code>强学习器</code></p>
+
+<h2 id="gradient-boosting-algorithm-">Gradient Boosting Algorithm 算法参考链接：</h2>
+
+<ul>
+  <li><a href="https://arxiv.org/pdf/1603.02754v1.pdf">XGBoost: A Scalable Tree Boosting System</a></li>
+  <li><a href="https://www.analyticsvidhya.com/blog/2017/06/which-algorithm-takes-the-crown-light-gbm-vs-xgboost/">Which algorithm takes the crown: Light GBM vs XGBOOST?</a></li>
+  <li><a href="https://www.analyticsvidhya.com/blog/2015/09/complete-guide-boosting-methods/">Learn Gradient Boosting Algorithm for better predictions (with codes in R)</a></li>
+  <li><a href="https://www.analyticsvidhya.com/blog/2015/05/boosting-algorithms-simplified/">Getting smart with Machine Learning – AdaBoost and Gradient Boost</a></li>
+  <li><a href="https://www.analyticsvidhya.com/blog/2015/11/quick-introduction-boosting-algorithms-machine-learning/">Quick Introduction to Boosting Algorithms in Machine Learning</a></li>
+  <li><a href="https://www.analyticsvidhya.com/blog/2016/02/complete-guide-parameter-tuning-gradient-boosting-gbm-python/">Complete Machine Learning Guide to Parameter Tuning in Gradient Boosting (GBM) in Python</a></li>
+  <li><a href="https://www.analyticsvidhya.com/blog/2016/03/complete-guide-parameter-tuning-xgboost-with-codes-python/">Complete Guide to Parameter Tuning in XGBoost with codes in Python</a></li>
+  <li><a href="https://segmentfault.com/a/1190000014040317">XGboost数据比赛实战之调参篇</a></li>
+  <li><a href="http://www.sohu.com/a/226265476_609569">通俗的将Xgboost的原理讲明白</a></li>
+  <li><a href="https://blog.csdn.net/app_12062011/article/details/52136117">决策树</a> 和 <a href="https://blog.csdn.net/zhaocj/article/details/50503450">决策树源码剖析</a></li>
+  <li><a href="[http://matafight.github.io/2017/03/14/XGBoost-%E7%AE%80%E4%BB%8B/](http://matafight.github.io/2017/03/14/XGBoost-简介/)">XGBoost 笔记</a></li>
+  <li><a href="https://blog.csdn.net/liuzonghao88/article/details/88808408">XGBoost如何避免过拟合</a></li>
+  <li><a href="https://blog.csdn.net/u012735708/article/details/83651832">XGBoost调参笔记</a></li>
+  <li><a href="https://blog.csdn.net/a358463121/article/details/68617389">xgboost中的数学原理</a></li>
+  <li><a href="https://blog.csdn.net/sb19931201/article/details/52557382">xgboost入门与实战</a></li>
+  <li><a href="https://blog.csdn.net/xiaocong1990/article/details/55107239">XGBoost参数调优</a></li>
+  <li><a href="https://blog.csdn.net/Totoro1745/article/details/53328725">xgboost：一个纯小白的学习历程</a></li>
+  <li><a href="https://blog.csdn.net/github_38414650/article/details/76061893">通俗、有逻辑的写一篇说下Xgboost的原理</a></li>
+  <li><a href="https://towardsdatascience.com/boosting-algorithm-gbm-97737c63daa3">Boosting algorithm: GBM</a></li>
+  <li><a href="https://www.imooc.com/article/43784?block_id=tuijian_wz">LightGBM 调参方法</a></li>
+  <li><a href="https://www.kaggle.com/c/LANL-Earthquake-Prediction/discussion/89909">Good summary of XGBoost vs CatBoost vs LightGBM</a></li>
+  <li><a href="https://www.kaggle.com/samratp/lightgbm-xgboost-catboost">LightGBM + XGBoost + Catboost</a></li>
+  <li><a href="https://datascience.stackexchange.com/questions/49567/lightgbm-vs-xgboost-vs-catboost">lightgbm-vs-xgboost-vs-catboost</a></li>
+  <li><a href="https://medium.com/kaggle-nyc/gradient-boosting-decision-trees-xgboost-vs-lightgbm-and-catboost-72df6979e0bb">Gradient Boosting Decision trees: XGBoost vs LightGBM (and catboost)</a></li>
+  <li><a href="https://towardsdatascience.com/catboost-vs-light-gbm-vs-xgboost-5f93620723db">CatBoost vs. Light GBM vs. XGBoost</a></li>
+  <li><a href="https://blog.csdn.net/LrS62520kV/article/details/79620615">CatBoost vs. Light GBM vs. XGBoost 的中文翻译</a></li>
+  <li><a href="https://stackoverflow.com/questions/44937698/lightgbm-oserror-library-not-loaded">关于lightgbm的安装</a></li>
+  <li><a href="https://towardsdatascience.com/custom-loss-functions-for-gradient-boosting-f79c1b40466d">Custom Loss Functions for Gradient Boosting</a></li>
+  <li><a href="https://github.com/Microsoft/LightGBM/blob/master/examples/README.md#machine-learning-challenge-winning-solutions">machine-learning-challenge-winning-solutions-lightgbm-winned</a></li>
+  <li><a href="https://www.jianshu.com/p/b4ac0596e5ef">LightGBM 如何调参</a></li>
+  <li><a href="https://www.cnblogs.com/ljygoodgoodstudydaydayup/p/6665239.html">xgboost调参</a></li>
+  <li><a href="https://zhuanlan.zhihu.com/p/57601606">为什么负梯度是函数值减小的最快方向</a></li>
+  <li><a href="https://blog.csdn.net/qq_22238533/article/details/79185969">GBDT原理与Sklearn源码分析-回归篇</a></li>
+  <li><a href="https://blog.csdn.net/qq_22238533/article/details/79192579?utm_medium=distribute.pc_relevant.none-task-blog-title-6&amp;spm=1001.2101.3001.4242">GBDT原理与Sklearn源码分析-分类篇</a></li>
+  <li><a href="https://blog.csdn.net/qq_22238533/article/details/79199605">GBDT原理与实践-多分类篇</a></li>
+  <li><a href="https://cloud.tencent.com/developer/article/1513111">XGBoost超详细推导，终于有人讲明白了</a></li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>[珍藏版</td>
+          <td>20道XGBoost面试题](https://mp.weixin.qq.com/s?__biz=MzI1MzY0MzE4Mg==&amp;mid=2247485159&amp;idx=1&amp;sn=d429aac8370ca5127e1e786995d4e8ec&amp;chksm=e9d01626dea79f30043ab80652c4a859760c1ebc0d602e58e13490bf525ad7608a9610495b3d&amp;scene=21#wechat_redirect)</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li><a href="https://en.wikipedia.org/wiki/Gradient_boosting">Gradient boosting wiki Page</a></li>
+  <li><a href="http://link.zhihu.com/?target=http%3A//www.saedsayad.com/docs/xgboost.pdf">xgboost introduction by xgboost-R’s author</a></li>
+  <li><a href="https://blog.csdn.net/zpalyq110/article/details/79527653">GBDT算法原理以及实例理解 - 非常好
+</a></li>
+</ul>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -219,62 +312,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2019/07/30/macshang-dan-ji-qi-pysparkyu-dao-de-wen-ti-debug/">Mac上单机起PySpark遇到的问题debug</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2019-07-30T10:38:15+08:00" pubdate data-updated="true">2019 年7 月30 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>今天在本地起个<code>pyspark</code> 发现总是遇到</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">Caused by: java.net.UnknownHostException: master: nodename nor servname provided, or not known</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>尝试了设置 <code>SPARK_HOME</code>, <code>HADOOP_HOME</code> 等变量之后，依然不起作用。</p>
-
-<p>最后发现是要修改 <code>SPARK_HOME</code> 里面的配置文件<code>spark-env.sh</code></p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nb">export </span><span class="nv">SPARK_MASTER_IP</span><span class="o">=</span>StevenMac
-</span><span class="line"><span class="nb">export </span><span class="nv">SPARK_LOCAL_IP</span><span class="o">=</span>StevenMac
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>并且在<code>/etc/hosts</code> 文件中，加入如下的内容:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">127.0.0.1  StevenMac
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>Bingo!!!</p>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/5/">&larr; Older</a>
@@ -290,6 +327,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2021/10/21/%3C%3Cji-qi-xue-xi-suan-fa-jing-sai-shi-zhan-%3E%3E-yao-dian-ji-lu/">《机器学习算法竞赛实战》要点记录</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2021/01/04/jupytershang-shi-yong-matplotlibhua-tu-de-%5B%3F%5D-xie-you-yong-de-she-zhi/">Jupyter上使用matplotlib画图的一些有用的设置</a>
@@ -327,10 +368,6 @@
         <a href="/blog/2019/08/14/gradient-boosting-algorithm/">Gradient Boosting 算法的一些资料</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2019/08/07/guan-yu-pzhi/">关于P值</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -341,7 +378,7 @@
 <li class='category'><a href='/blog/categories/bigdata/'>BigData (10)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (7)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (3)</a></li>
-<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (14)</a></li>
+<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (15)</a></li>
 <li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (4)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (2)</a></li>
 <li class='category'><a href='/blog/categories/javascript/'>Javascript (4)</a></li>

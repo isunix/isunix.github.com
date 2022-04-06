@@ -9,7 +9,7 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="记录numpy中的一些数据处理的方法. 比如我们通过如下的方式，获取到了iris的数据, 1
+  <meta name="description" content="https://github.com/yejianye/mdmail mdmail， 这个是一个支持用 markdown 格式来发送邮件的工具. 1
 2
 3
 4
@@ -17,9 +17,10 @@
 6
 7
 8
-import pandas as pd
-import numpy as np
-from sklearn.datasets import load_iris iris = &hellip;">
+9
+10
+import mdmail email=&quot;&quot;&quot;
+# Sample Email &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -103,244 +104,6 @@ from sklearn.datasets import load_iris iris = &hellip;">
     <div id="content">
       <div class="blog-index">
   
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2019/07/04/numpyde-%5B%3F%5D-xie-shu-ju-chu-li-bei-wang/">Numpy的一些数据处理备忘</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2019-07-04T11:43:34+08:00" pubdate data-updated="true">2019 年7 月4 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2 id="numpy">记录numpy中的一些数据处理的方法.</h2>
-
-<ul>
-  <li>比如我们通过如下的方式，获取到了iris的数据,</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
-</span><span class="line"><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-</span><span class="line"><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_iris</span>
-</span><span class="line">
-</span><span class="line"><span class="n">iris</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">()</span>
-</span><span class="line"><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">iris</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">iris</span><span class="o">.</span><span class="n">feature_names</span><span class="p">)</span>
-</span><span class="line">
-</span><span class="line"><span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;sepal length&#39;</span><span class="p">,</span> <span class="s">&#39;sepal width&#39;</span><span class="p">,</span> <span class="s">&#39;petal length&#39;</span><span class="p">,</span> <span class="s">&#39;petal width&#39;</span><span class="p">,</span> <span class="s">&#39;label&#39;</span><span class="p">]</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>A. 如果我们想要去取第一列，第二列，和最后一列(label), 可以使用如下的方式:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">100</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p><code>df.shape</code> 是 <code>(150, 5)</code>, <code>data.shape</code> 是 <code>(100, 3)</code></p>
-
-<p><code>data</code> 现在是<code>lists in list</code> 的一个<code>ndarray</code></p>
-
-<p>B. 如果我们想要去取<code>data</code>的每行的前两列， 还有最后一列，可以使用如下的方式:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">data</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p><code>X, y</code> 都是 ndarray. <code>x.shape</code> 是 <code>(100, 2)</code>, <code>y.shape</code> 是 <code>(100,)</code></p>
-
-<p>C. 如果要对标签进行二分类，我们可以使用 python 的 list comprehension:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span> <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">y</span><span class="p">])</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>这样处理了之后，y 的 shape 还是跟之前是一样的.</p>
-
-<ul>
-  <li>如果我们又一个ndarray, <code>an_ndarray = np.array([[11,12,13,14], [21,22,23,24], [31,32,33,34]])</code></li>
-</ul>
-
-<p><code>row_rank1 = an_array[1, :]</code> 和 <code>row_rank2 = an_array[1:2, :]</code> 将会给出不同的结果，可以输出来看看有啥不同， 这个很重要.</p>
-
-<ul>
-  <li>我们也可以使用如下的方式，对array中的元素进行判断</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">an_ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">11</span><span class="p">,</span><span class="mi">12</span><span class="p">],</span> <span class="p">[</span><span class="mi">21</span><span class="p">,</span> <span class="mi">22</span><span class="p">],</span> <span class="p">[</span><span class="mi">31</span><span class="p">,</span> <span class="mi">31</span><span class="p">]])</span>
-</span><span class="line"><span class="n">bigger_than_fifteen</span> <span class="o">=</span> <span class="p">(</span><span class="n">an_array</span> <span class="o">&gt;</span> <span class="mi">15</span><span class="p">)</span>
-</span><span class="line"><span class="n">an_ndarray</span><span class="p">[</span><span class="n">bigger_than_fifteen</span><span class="p">]</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>或者我们也可以直接如下操作:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">an_ndarray</span><span class="p">[(</span><span class="n">an_ndarray</span> <span class="o">&gt;</span> <span class="mi">15</span><span class="p">)]</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>下面是针对上面的<code>an_ndarray</code>进行的一些数学操作</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-<span class="line-number">28</span>
-<span class="line-number">29</span>
-<span class="line-number">30</span>
-<span class="line-number">31</span>
-<span class="line-number">32</span>
-<span class="line-number">33</span>
-<span class="line-number">34</span>
-<span class="line-number">35</span>
-<span class="line-number">36</span>
-<span class="line-number">37</span>
-</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="c"># 求各个元素的均值</span>
-</span><span class="line"><span class="n">an_ndarray</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-</span><span class="line">
-</span><span class="line"><span class="c"># 求每行的均值</span>
-</span><span class="line"><span class="n">an_ndarray</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-</span><span class="line">
-</span><span class="line"><span class="c"># 求每列的均值</span>
-</span><span class="line"><span class="n">an_ndarray</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-</span><span class="line">
-</span><span class="line"><span class="c"># 求所有元素的和</span>
-</span><span class="line"><span class="n">an_ndarray</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-</span><span class="line">
-</span><span class="line"><span class="c"># 求每行的中位数</span>
-</span><span class="line"><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">an_ndarray</span><span class="p">,</span> <span class="n">axix</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-</span><span class="line">
-</span><span class="line"><span class="c"># 求每列的中位数</span>
-</span><span class="line"><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">an_ndarray</span><span class="p">,</span> <span class="n">axix</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-</span><span class="line">
-</span><span class="line"><span class="c"># 想要找到unique的元素</span>
-</span><span class="line"><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">an_ndarray</span><span class="p">)</span>
-</span><span class="line">
-</span><span class="line"><span class="c"># 下面是一些集合的操作</span>
-</span><span class="line"><span class="n">s1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="s">&#39;desk&#39;</span><span class="p">,</span><span class="s">&#39;chair&#39;</span><span class="p">,</span><span class="s">&#39;bulb&#39;</span><span class="p">])</span>
-</span><span class="line"><span class="n">s2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="s">&#39;lamp&#39;</span><span class="p">,</span><span class="s">&#39;bulb&#39;</span><span class="p">,</span><span class="s">&#39;chair&#39;</span><span class="p">])</span>
-</span><span class="line"><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">)</span>
-</span><span class="line">
-</span><span class="line"><span class="c"># s1 和 s2 交集</span>
-</span><span class="line"><span class="n">np</span><span class="o">.</span><span class="n">intersect1d</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">)</span>
-</span><span class="line">
-</span><span class="line"><span class="c"># s1 和 s2 去重并集</span>
-</span><span class="line"><span class="n">np</span><span class="o">.</span><span class="n">union1d</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">)</span>
-</span><span class="line">
-</span><span class="line"><span class="c"># 在s1然后不在s2中的元素</span>
-</span><span class="line"><span class="n">np</span><span class="o">.</span><span class="n">setdiff1d</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">)</span>
-</span><span class="line">
-</span><span class="line"><span class="c"># 判断s1中的元素是不是在s2中</span>
-</span><span class="line"><span class="n">np</span><span class="o">.</span><span class="n">in1d</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>
-    <p>广播
-最好的操作方式是能打印出来看看长啥样.</p>
-  </li>
-  <li>
-    <p>文件的存取</p>
-  </li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span> <span class="mf">23.23</span><span class="p">,</span> <span class="mf">24.24</span><span class="p">])</span>
-</span><span class="line"><span class="n">np</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">&#39;an_array&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
-</span><span class="line"><span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s">&#39;an_array.npy&#39;</span><span class="p">)</span>
-</span><span class="line">
-</span><span class="line"><span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="s">&#39;array.txt&#39;</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s">&#39;,&#39;</span><span class="p">)</span>
-</span><span class="line"><span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s">&#39;array.txt&#39;</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s">&#39;,&#39;</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<ul>
-  <li>拼接数据集</li>
-</ul>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="n">K</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">high</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
-</span><span class="line"><span class="n">M</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">high</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
-</span><span class="line">
-</span><span class="line"><span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">K</span><span class="p">,</span><span class="n">M</span><span class="p">))</span>
-</span><span class="line"><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">K</span><span class="p">,</span><span class="n">M</span><span class="p">))</span>
-</span><span class="line">
-</span><span class="line"><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">K</span><span class="p">,</span> <span class="n">M</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
-</span><span class="line"><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">K</span><span class="p">,</span> <span class="n">M</span><span class="o">.</span><span class="n">T</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
-</span><span class="line">
-</span><span class="line"><span class="c"># vstack 和 hstack 和  最下面的两种方式是等价的</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
   
   
     <article>
@@ -456,6 +219,48 @@ from sklearn.datasets import load_iris iris = &hellip;">
 
     </article>
   
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2019/06/10/emrzhong-chuang-jian-huede-superuser/">EMR中创建HUE的superuser</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2019-06-10T17:48:43+08:00" pubdate data-updated="true">2019 年6 月10 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>想要在 EMR 中创建 HUE 的 superuser， 可以使用如下的方式</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nb">cd</span> /usr/lib/hue/
+</span><span class="line">sudo build/env/bin/hue  createsuperuser
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
+  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/9/">&larr; Older</a>
@@ -471,10 +276,6 @@ from sklearn.datasets import load_iris iris = &hellip;">
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/blog/2021/10/21/%3C%3Cji-qi-xue-xi-suan-fa-jing-sai-shi-zhan-%3E%3E-yao-dian-ji-lu/">《机器学习算法竞赛实战》要点记录</a>
-      </li>
     
       <li class="post">
         <a href="/blog/2021/01/04/jupytershang-shi-yong-matplotlibhua-tu-de-%5B%3F%5D-xie-you-yong-de-she-zhi/">Jupyter上使用matplotlib画图的一些有用的设置</a>
@@ -512,6 +313,10 @@ from sklearn.datasets import load_iris iris = &hellip;">
         <a href="/blog/2019/08/14/gradient-boosting-algorithm/">Gradient Boosting 算法的一些资料</a>
       </li>
     
+      <li class="post">
+        <a href="/blog/2019/08/07/guan-yu-pzhi/">关于P值</a>
+      </li>
+    
   </ul>
 </section>
 
@@ -522,7 +327,7 @@ from sklearn.datasets import load_iris iris = &hellip;">
 <li class='category'><a href='/blog/categories/bigdata/'>BigData (10)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (7)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (3)</a></li>
-<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (15)</a></li>
+<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (14)</a></li>
 <li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (4)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (2)</a></li>
 <li class='category'><a href='/blog/categories/javascript/'>Javascript (4)</a></li>
@@ -543,7 +348,7 @@ from sklearn.datasets import load_iris iris = &hellip;">
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2021 - Steven Sun -
+  Copyright &copy; 2022 - Steven Sun -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

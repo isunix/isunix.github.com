@@ -9,10 +9,8 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="I want to use ptpython with python3 as the interpreter, here is how: 1
-2
-pip3 install ptpython
-python3 -m ptpython ">
+  <meta name="description" content="This post shows how to change the header of the django admin page. The blog for reference is: 1
+http://www.mc706.com/tip_trick_snippets/42/django- &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -102,48 +100,6 @@ python3 -m ptpython ">
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2015/11/19/using-ptpython-with-python3-as-the-backend/">设置ptpython作为Python3的后端</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-11-19T12:32:02+08:00" pubdate data-updated="true">2015 年11 月19 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I want to use ptpython with python3 as the interpreter, here is how:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="sh"><span class="line">pip3 install ptpython
-</span><span class="line">python3 -m ptpython
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
       <h1 class="entry-title"><a href="/blog/2015/11/18/django-admin-changing-the-page-header/">Django Admin中改页面的Header</a></h1>
     
     
@@ -221,6 +177,77 @@ python3 -m ptpython ">
 
     </article>
   
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/11/02/trap-interrupts-in-shell-scripts/">Shell中的trap中断(interrupts)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-11-02T14:45:18+08:00" pubdate data-updated="true">2015 年11 月2 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Today I met some shell scirpts like the following:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line"><span class="nb">trap</span> <span class="s2">&quot;rm -f $file; exit&quot;</span> INT TERM EXIT
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p>More code here:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">cleanup<span class="o">()</span> <span class="o">{</span>
+</span><span class="line">    <span class="nb">echo</span> <span class="s2">&quot;Cleaning stuff up...&quot;</span>
+</span><span class="line">    <span class="nb">exit</span>
+</span><span class="line"><span class="o">}</span>
+</span><span class="line">
+</span><span class="line"><span class="nb">trap </span>cleanup INT TERM
+</span><span class="line"><span class="nb">echo</span> <span class="s1">&#39; --- press ENTER to close --- &#39;</span>
+</span><span class="line"><span class="nb">read </span>var
+</span><span class="line">cleanup
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>change “trap cleanup INT TERM” above to “trap cleanup INT TERM EXIT” and then execute the script. Enter ‘exit’ and see what differences will happen.</p>
+
+<p>The following are references:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line">http://unix.stackexchange.com/questions/57940/trap-int-term-exit-really-necessary
+</span><span class="line">http://kb.mit.edu/confluence/pages/viewpage.action?pageId=3907156
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
+  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/21/">&larr; Older</a>
@@ -236,10 +263,6 @@ python3 -m ptpython ">
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/blog/2021/10/21/%3C%3Cji-qi-xue-xi-suan-fa-jing-sai-shi-zhan-%3E%3E-yao-dian-ji-lu/">《机器学习算法竞赛实战》要点记录</a>
-      </li>
     
       <li class="post">
         <a href="/blog/2021/01/04/jupytershang-shi-yong-matplotlibhua-tu-de-%5B%3F%5D-xie-you-yong-de-she-zhi/">Jupyter上使用matplotlib画图的一些有用的设置</a>
@@ -277,6 +300,10 @@ python3 -m ptpython ">
         <a href="/blog/2019/08/14/gradient-boosting-algorithm/">Gradient Boosting 算法的一些资料</a>
       </li>
     
+      <li class="post">
+        <a href="/blog/2019/08/07/guan-yu-pzhi/">关于P值</a>
+      </li>
+    
   </ul>
 </section>
 
@@ -287,7 +314,7 @@ python3 -m ptpython ">
 <li class='category'><a href='/blog/categories/bigdata/'>BigData (10)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (7)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (3)</a></li>
-<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (15)</a></li>
+<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (14)</a></li>
 <li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (4)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (2)</a></li>
 <li class='category'><a href='/blog/categories/javascript/'>Javascript (4)</a></li>
@@ -308,7 +335,7 @@ python3 -m ptpython ">
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2021 - Steven Sun -
+  Copyright &copy; 2022 - Steven Sun -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

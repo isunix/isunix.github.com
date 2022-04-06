@@ -9,12 +9,7 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="我们在标准输入中得到多行的值， 现在我们想要以单行还有多行的结果来把它们给显示出来， 要是想单行显示的话，可以如下: 1
-2
-3
-chomp(@lines = &lt;STDIN&gt;);
-@sorted = sort @lines;
-print &quot;@sorted\n&quot; &hellip;">
+  <meta name="description" content="I use this script to generate chapters at once. The number of chapters you want to generate in passed through the command line as the first argument &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -98,58 +93,6 @@ print &quot;@sorted\n&quot; &hellip;">
     <div id="content">
       <div class="blog-index">
   
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/07/17/perlzhong-dan-xing-huo-zhe-duo-xing-shu-chu-jie-guo/">Perl中单行或者多行输出结果</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-07-17T15:14:23+08:00" pubdate data-updated="true">2014 年7 月17 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>我们在标准输入中得到多行的值， 现在我们想要以单行还有多行的结果来把它们给显示出来， 要是想单行显示的话，可以如下:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nb">chomp</span><span class="p">(</span><span class="nv">@lines</span> <span class="o">=</span> <span class="sr">&lt;STDIN&gt;</span><span class="p">);</span>
-</span><span class="line"><span class="nv">@sorted</span> <span class="o">=</span> <span class="nb">sort</span> <span class="nv">@lines</span><span class="p">;</span>
-</span><span class="line"><span class="k">print</span> <span class="s">&quot;@sorted\n&quot;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>多行的话可以:  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">print</span> <span class="nb">sort</span> <span class="sr">&lt;STDIN&gt;</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>这里的关键的地方就是chomp这个函数。</p>
-</div>
-  
-  
-
-
-    </article>
   
   
     <article>
@@ -292,6 +235,86 @@ print &quot;@sorted\n&quot; &hellip;">
 
     </article>
   
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/01/remove-the-m-chareacters-in-a-file/">删除文本文件中的^M符号</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-01T13:45:23+08:00" pubdate data-updated="true">2014 年7 月1 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In a file that have multiple “^M” characters in it , we can use vim to remove them.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="p">:</span><span class="nv">%s</span><span class="sr">/^M/</span><span class="o">/</span><span class="n">g</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>the ^M character is made by typing ctrl + v first then hit enter.</p>
+
+<p>Also I write a perl script to convert the from dos to unix and also delete chars in code followng the “//”.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="nb">open</span><span class="p">(</span><span class="nv">$IN</span><span class="p">,</span> <span class="s">&quot;$ARGV[0]&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">die</span> <span class="s">&quot;in: $@&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="nb">open</span><span class="p">(</span><span class="nv">$OUT</span><span class="p">,</span> <span class="s">&quot;&gt;&quot;</span><span class="p">,</span> <span class="s">&quot;$ARGV[0].new&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">die</span> <span class="s">&quot;out: $@&quot;</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">while</span> <span class="p">(</span><span class="sr">&lt;$IN&gt;</span><span class="p">){</span>
+</span><span class="line">    <span class="k">my</span> <span class="nv">$line</span> <span class="o">=</span> <span class="nv">$_</span><span class="p">;</span>
+</span><span class="line">    <span class="nv">$line</span> <span class="o">=~</span> <span class="sr">s/(\/\/.*)//g</span><span class="p">;</span>
+</span><span class="line">    <span class="k">print</span> <span class="nv">$OUT</span> <span class="nv">$line</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="nv">$command</span> <span class="o">=</span> <span class="s">&quot;mv $ARGV[0].new $ARGV[0] &amp;&amp; chmod 777 $ARGV[0] &amp;&amp; dos2unix $ARGV[0]&quot;</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="nb">system</span><span class="p">(</span><span class="nv">$command</span><span class="p">);</span>
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;successfully deleted and converted!\n&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="nb">close</span><span class="p">(</span><span class="nv">$IN</span><span class="p">);</span>
+</span><span class="line"><span class="nb">close</span><span class="p">(</span><span class="nv">$OUT</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>The code just explains itself.</p>
+
+<p>Bingo!</p>
+</div>
+  
+  
+
+
+    </article>
+  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/45/">&larr; Older</a>
@@ -307,10 +330,6 @@ print &quot;@sorted\n&quot; &hellip;">
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/blog/2021/10/21/%3C%3Cji-qi-xue-xi-suan-fa-jing-sai-shi-zhan-%3E%3E-yao-dian-ji-lu/">《机器学习算法竞赛实战》要点记录</a>
-      </li>
     
       <li class="post">
         <a href="/blog/2021/01/04/jupytershang-shi-yong-matplotlibhua-tu-de-%5B%3F%5D-xie-you-yong-de-she-zhi/">Jupyter上使用matplotlib画图的一些有用的设置</a>
@@ -348,6 +367,10 @@ print &quot;@sorted\n&quot; &hellip;">
         <a href="/blog/2019/08/14/gradient-boosting-algorithm/">Gradient Boosting 算法的一些资料</a>
       </li>
     
+      <li class="post">
+        <a href="/blog/2019/08/07/guan-yu-pzhi/">关于P值</a>
+      </li>
+    
   </ul>
 </section>
 
@@ -358,7 +381,7 @@ print &quot;@sorted\n&quot; &hellip;">
 <li class='category'><a href='/blog/categories/bigdata/'>BigData (10)</a></li>
 <li class='category'><a href='/blog/categories/blog/'>Blog (7)</a></li>
 <li class='category'><a href='/blog/categories/c/'>C (3)</a></li>
-<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (15)</a></li>
+<li class='category'><a href='/blog/categories/data-and-ml-and-ai/'>Data&ML&AI (14)</a></li>
 <li class='category'><a href='/blog/categories/django-and-flask/'>Django&Flask (4)</a></li>
 <li class='category'><a href='/blog/categories/editor/'>Editor (2)</a></li>
 <li class='category'><a href='/blog/categories/javascript/'>Javascript (4)</a></li>
@@ -379,7 +402,7 @@ print &quot;@sorted\n&quot; &hellip;">
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2021 - Steven Sun -
+  Copyright &copy; 2022 - Steven Sun -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

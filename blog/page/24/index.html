@@ -9,9 +9,7 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="1
-ps -ef | grep cgi On my server, this will give out the cgi-bin dir.
-">
+  <meta name="description" content="my tmux’s sockets are output to the dir “~/tmp”, however today I encountered the problem saying “can’t create socket: Permission denied” while I &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -95,6 +93,50 @@ ps -ef | grep cgi On my server, this will give out the cgi-bin dir.
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/06/19/tmux-cant-create-socket-permission-denied/">Tmux中的can&#8217;t Create Socket: Permission Denied问题解决</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-06-19T13:04:00+08:00" pubdate data-updated="true">2015 年6 月19 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>my tmux’s sockets are output to the dir “~/tmp”, however today I encountered the problem saying “can’t create socket: Permission denied” while I start tmux.</p>
+
+<p>The reason is I have changed the rights on the folder ~/tmp/tmux* , so after the following command:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">chmod 700 -R tmux*
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>It is back to normal.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -197,53 +239,6 @@ ps -ef | grep cgi On my server, this will give out the cgi-bin dir.
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/06/01/reconfigure-partially-installed-packages-in-ubuntu/">重新安装在ubuntu中部分安装的包</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-06-01T13:22:30+08:00" pubdate data-updated="true">2015 年6 月1 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>When I try to upgrade my ubuntu version from 14.04 to 14.10, the system rebooted during the upgrade. When I try to login to the gnu desktop, it goes back to the login screen again and again.</p>
-
-<p>So I have to login in using the “tty” terminal by “ctrl+alt+F3”, and then issue the following command:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line">sudo dpkg --configure -a
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>There maybe something wrong logging in using the mosted updated kernal, so we can choose to log in using an previous version of kernal(provided if is not removed yet]).</p>
-
-<p>Then if we still want to upgrade, we can do it when we successfully log in to the system.</p>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/25/">&larr; Older</a>
@@ -259,6 +254,10 @@ ps -ef | grep cgi On my server, this will give out the cgi-bin dir.
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2024/08/29/2022nian-de-gong-zuo-he-sheng-huo-jing-li/">2022年的工作和生活经历</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2021/01/04/jupytershang-shi-yong-matplotlibhua-tu-de-%5B%3F%5D-xie-you-yong-de-she-zhi/">Jupyter上使用matplotlib画图的一些有用的设置</a>
@@ -296,10 +295,6 @@ ps -ef | grep cgi On my server, this will give out the cgi-bin dir.
         <a href="/blog/2019/08/14/gradient-boosting-algorithm/">Gradient Boosting 算法的一些资料</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2019/08/01/shi-yong-sparkde-mllibjin-xing-ji-qi-xue-xi/">使用Spark的MLlib进行机器学习</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -321,6 +316,7 @@ ps -ef | grep cgi On my server, this will give out the cgi-bin dir.
 <li class='category'><a href='/blog/categories/ruby/'>Ruby (1)</a></li>
 <li class='category'><a href='/blog/categories/scala/'>Scala (1)</a></li>
 <li class='category'><a href='/blog/categories/shell/'>Shell (12)</a></li>
+<li class='category'><a href='/blog/categories/gan-wu/'>感悟 (1)</a></li>
 
   </ul>
 </section>
@@ -331,7 +327,7 @@ ps -ef | grep cgi On my server, this will give out the cgi-bin dir.
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2022 - Steven Sun -
+  Copyright &copy; 2024 - Steven Sun -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

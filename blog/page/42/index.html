@@ -9,17 +9,15 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="1.要求用户输入人名， 打印出对应的item. 1
+  <meta name="description" content="«Learning Perl»中的一个例子。 1
 2
 3
 4
 5
 6
 7
-8
-9
-my %last_name = qw{ fred flintstone barney rubble wilma flintstone
-}; print &quot;please enter a first name &hellip;">
+Make a program that will repeatedly ask the user to guess a secret number
+from 1 to 100 until the user guesses &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -103,6 +101,95 @@ my %last_name = qw{ fred flintstone barney rubble wilma flintstone
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/18/using-of-loops-in-perl/">Perl中循环的使用</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-18T19:59:02+08:00" pubdate data-updated="true">2014 年7 月18 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>«Learning Perl»中的一个例子。  </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">Make a program that will repeatedly ask the user to guess a secret number
+</span><span class="line">from 1 to 100 until the user guesses the secret number. Your program should pick
+</span><span class="line">the number at random by using the magical formula int(1 + rand 100).§ When
+</span><span class="line">the user guesses wrong, the program should respond, “Too high” or “Too low.” If
+</span><span class="line">the user enters the word quit or exit, or if the user enters a blank line, the program
+</span><span class="line">should quit. Of course, if the user guesses correctly, the program should quit then
+</span><span class="line">as well!</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>还是把code贴在这里吧！ </p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">$secret</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="nb">rand</span><span class="p">(</span><span class="mi">100</span><span class="p">));</span>
+</span><span class="line">
+</span><span class="line"><span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">){</span>
+</span><span class="line">    <span class="k">print</span> <span class="s">&quot;please enter a guess from 1 to 100: &quot;</span><span class="p">;</span>
+</span><span class="line">    <span class="nb">chomp</span><span class="p">(</span><span class="k">my</span> <span class="nv">$guess</span> <span class="o">=</span> <span class="sr">&lt;STDIN&gt;</span><span class="p">);</span>
+</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="nv">$guess</span> <span class="o">=~</span><span class="sr"> /quit|exit|\A\s*\z/i</span><span class="p">){</span>
+</span><span class="line">        <span class="k">print</span> <span class="s">&quot;sorry you gave up, the number was $secret.\n&quot;</span><span class="p">;</span>
+</span><span class="line">        <span class="k">last</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span> <span class="k">elsif</span> <span class="p">(</span><span class="nv">$guess</span> <span class="o">&lt;</span> <span class="nv">$secret</span><span class="p">){</span>
+</span><span class="line">        <span class="k">print</span> <span class="s">&quot;too small!\n&quot;</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span> <span class="k">elsif</span> <span class="p">(</span><span class="nv">$guess</span> <span class="o">==</span> <span class="nv">$secret</span><span class="p">){</span>
+</span><span class="line">        <span class="k">print</span> <span class="s">&quot;that was it!\n&quot;</span><span class="p">;</span>
+</span><span class="line">        <span class="k">last</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class="line">        <span class="k">print</span> <span class="s">&quot;too large!\n&quot;</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -409,139 +496,6 @@ my %last_name = qw{ fred flintstone barney rubble wilma flintstone
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/07/17/interesting-use-of-state-in-perl/">Perl中state的有趣的使用</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-07-17T18:48:44+08:00" pubdate data-updated="true">2014 年7 月17 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>还是来自«learning perl»中的例子。</p>
-
-<ol>
-  <li>写一个名为greet的子例程，当给定一个人名作为参数的时候，打出欢迎他的信息，并告诉他前一个来宾的名字。  </li>
-</ol>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="mf">5.010</span><span class="p">;</span>
-</span><span class="line"><span class="n">greet</span><span class="p">(</span><span class="s">&#39;Fred&#39;</span><span class="p">);</span>
-</span><span class="line"><span class="n">greet</span><span class="p">(</span><span class="s">&#39;Barney&#39;</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="k">sub </span><span class="nf">greet</span><span class="p">{</span>
-</span><span class="line">    <span class="n">state</span> <span class="nv">$last_person</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line">    <span class="k">my</span> <span class="nv">$name</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line">    <span class="k">print</span> <span class="s">&quot;Hi, $name!&quot;</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="nb">defined</span> <span class="nv">$last_person</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">        <span class="k">print</span> <span class="s">&quot;$last_person is also here!\n&quot;</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">
-</span><span class="line">    <span class="k">else</span> <span class="p">{</span>
-</span><span class="line">        <span class="k">print</span> <span class="s">&quot;you are the first one here!\n&quot;</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">
-</span><span class="line">    <span class="nv">$last_person</span> <span class="o">=</span> <span class="nv">$name</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>2.修改程序1， 告诉所有新来的人之前已经迎来了哪些人.   </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="nn">Data::</span><span class="n">Dumper</span><span class="p">;</span>
-</span><span class="line"><span class="k">use</span> <span class="mf">5.010</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="n">greet</span><span class="p">(</span><span class="s">&#39;Fred&#39;</span><span class="p">);</span>
-</span><span class="line"><span class="n">greet</span><span class="p">(</span><span class="s">&#39;Barney&#39;</span><span class="p">);</span>
-</span><span class="line"><span class="n">greet</span><span class="p">(</span><span class="s">&#39;Wilma&#39;</span><span class="p">);</span>
-</span><span class="line"><span class="n">greet</span><span class="p">(</span><span class="s">&#39;Betty&#39;</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="k">sub </span><span class="nf">greet</span><span class="p">{</span>
-</span><span class="line">    <span class="n">state</span> <span class="nv">@before</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line">    <span class="k">my</span> <span class="nv">$name</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
-</span><span class="line">    <span class="k">print</span> <span class="s">&quot;Hi, $name!&quot;</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="nv">@before</span><span class="p">){</span>
-</span><span class="line">        <span class="k">print</span> <span class="s">&quot; I have seen @before\n&quot;</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">    <span class="k">else</span> <span class="p">{</span>
-</span><span class="line">        <span class="k">print</span> <span class="s">&quot; you are the first one here!\n&quot;</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">
-</span><span class="line">    <span class="nb">push</span> <span class="nv">@before</span><span class="p">,</span> <span class="nv">$name</span><span class="p">;</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/43/">&larr; Older</a>
@@ -557,6 +511,10 @@ my %last_name = qw{ fred flintstone barney rubble wilma flintstone
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2024/08/29/2022nian-de-gong-zuo-he-sheng-huo-jing-li/">2022年的工作和生活经历</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2021/01/04/jupytershang-shi-yong-matplotlibhua-tu-de-%5B%3F%5D-xie-you-yong-de-she-zhi/">Jupyter上使用matplotlib画图的一些有用的设置</a>
@@ -594,10 +552,6 @@ my %last_name = qw{ fred flintstone barney rubble wilma flintstone
         <a href="/blog/2019/08/14/gradient-boosting-algorithm/">Gradient Boosting 算法的一些资料</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2019/08/01/shi-yong-sparkde-mllibjin-xing-ji-qi-xue-xi/">使用Spark的MLlib进行机器学习</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -619,6 +573,7 @@ my %last_name = qw{ fred flintstone barney rubble wilma flintstone
 <li class='category'><a href='/blog/categories/ruby/'>Ruby (1)</a></li>
 <li class='category'><a href='/blog/categories/scala/'>Scala (1)</a></li>
 <li class='category'><a href='/blog/categories/shell/'>Shell (12)</a></li>
+<li class='category'><a href='/blog/categories/gan-wu/'>感悟 (1)</a></li>
 
   </ul>
 </section>
@@ -629,7 +584,7 @@ my %last_name = qw{ fred flintstone barney rubble wilma flintstone
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2022 - Steven Sun -
+  Copyright &copy; 2024 - Steven Sun -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

@@ -9,16 +9,7 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="事情是这样的，在工作中有许多的mids，想要贴到一个文本框中去，但是在进行reinjection后，是成每行一个mid的格式。我们想要把它们变成是每行给定数目的mids这样的格式， 方便贴到文本框中去. 之前用php实现过， 现在贴出来perl的版本的。 1
-2
-3
-4
-5
-6
-7
-8
-9
-10 &hellip;">
+  <meta name="description" content="I want to delete those files without the extension I need, so I just write this perl script. The directory can also be specified on the command line &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -102,6 +93,132 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/21/perl-script-to-delete-files-without-extension/">使用Perl删除后缀不符和期望的文件</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-21T18:18:34+08:00" pubdate data-updated="true">2014 年7 月21 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I want to delete those files without the extension I need, so I just write this perl script. The directory can also be specified on the command line. I list all those extensions I need as a pattern.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+<span class="line-number">35</span>
+<span class="line-number">36</span>
+<span class="line-number">37</span>
+<span class="line-number">38</span>
+<span class="line-number">39</span>
+<span class="line-number">40</span>
+<span class="line-number">41</span>
+<span class="line-number">42</span>
+<span class="line-number">43</span>
+</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">use</span> <span class="n">strict</span><span class="p">;</span>
+</span><span class="line"><span class="k">use</span> <span class="n">warnings</span><span class="p">;</span>
+</span><span class="line"><span class="k">use</span> <span class="n">utf8</span><span class="p">;</span>
+</span><span class="line"><span class="k">use</span> <span class="n">Cwd</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">my</span> <span class="nv">$targetDir</span> <span class="o">=</span> <span class="nv">$ARGV</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">||</span> <span class="n">getcwd</span><span class="p">;</span>
+</span><span class="line"><span class="nb">chdir</span> <span class="nv">$targetDir</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">my</span> <span class="nv">$pattern</span> <span class="o">=</span> <span class="sx">qr/\.(md|py|php|sh|bash|zsh|vimrc|eamcs|c|cpp|java|pl|js|css|html|rb|txt)$/</span><span class="n">i</span><span class="p">,</span>
+</span><span class="line"><span class="k">my</span> <span class="nv">@file_list</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line"><span class="nb">opendir</span><span class="p">(</span><span class="k">my</span> <span class="nv">$dh</span><span class="p">,</span> <span class="nv">$targetDir</span><span class="p">)</span> <span class="o">||</span> <span class="nb">die</span> <span class="s">&quot;can&#39;t opendir $targetDir: $!&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="k">while</span> <span class="p">(</span><span class="nb">readdir</span> <span class="nv">$dh</span><span class="p">){</span>
+</span><span class="line">    <span class="k">next</span> <span class="k">unless</span> <span class="o">-</span><span class="n">f</span><span class="p">;</span>
+</span><span class="line">    <span class="k">next</span> <span class="k">if</span> <span class="nv">$_</span> <span class="o">=~</span> <span class="nv">$pattern</span><span class="p">;</span>
+</span><span class="line">    <span class="nb">push</span> <span class="nv">@file_list</span><span class="p">,</span> <span class="nv">$_</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line"><span class="nb">closedir</span> <span class="nv">$dh</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">print</span> <span class="s">&quot;The following files are going to be deleted: @file_list\n&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="nb">unlink</span> <span class="nv">@file_list</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="cp">__END__</span>
+</span><span class="line"><span class="cp">=pod</span>
+</span><span class="line">
+</span><span class="line"><span class="cp">=head1 NAME</span>
+</span><span class="line">
+</span><span class="line"><span class="cp">delete-files.pl -delete those files without the extension as specifed in the pattern</span>
+</span><span class="line">
+</span><span class="line"><span class="cp">=head1 SYNOPSIS</span>
+</span><span class="line">
+</span><span class="line"><span class="cp">    $ delete-files</span>
+</span><span class="line"><span class="cp">It reads the files in the directory where you execute this script, and delete those</span>
+</span><span class="line"><span class="cp">not having the extension as is specified &quot;(md|py|php|sh|bash|zsh|vimrc|eamcs|c|cpp|java|pl|js|css|html|rb|txt)&quot;</span>
+</span><span class="line">
+</span><span class="line"><span class="cp">Please use this script carefully. If you have somefile without extension which you also</span>
+</span><span class="line"><span class="cp">consider them important, they maybe deleted.</span>
+</span><span class="line">
+</span><span class="line"><span class="cp">Thanks,</span>
+</span><span class="line"><span class="cp">Steven</span>
+</span><span class="line">
+</span><span class="line"><span class="cp">=cut</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>I also wrote document for this scirpt. haha!</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -281,95 +398,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/07/18/using-of-loops-in-perl/">Perl中循环的使用</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-07-18T19:59:02+08:00" pubdate data-updated="true">2014 年7 月18 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>«Learning Perl»中的一个例子。  </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">Make a program that will repeatedly ask the user to guess a secret number
-</span><span class="line">from 1 to 100 until the user guesses the secret number. Your program should pick
-</span><span class="line">the number at random by using the magical formula int(1 + rand 100).§ When
-</span><span class="line">the user guesses wrong, the program should respond, “Too high” or “Too low.” If
-</span><span class="line">the user enters the word quit or exit, or if the user enters a blank line, the program
-</span><span class="line">should quit. Of course, if the user guesses correctly, the program should quit then
-</span><span class="line">as well!</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>还是把code贴在这里吧！ </p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-</pre></td><td class="code"><pre><code class="perl"><span class="line"><span class="k">my</span> <span class="nv">$secret</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="nb">rand</span><span class="p">(</span><span class="mi">100</span><span class="p">));</span>
-</span><span class="line">
-</span><span class="line"><span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">){</span>
-</span><span class="line">    <span class="k">print</span> <span class="s">&quot;please enter a guess from 1 to 100: &quot;</span><span class="p">;</span>
-</span><span class="line">    <span class="nb">chomp</span><span class="p">(</span><span class="k">my</span> <span class="nv">$guess</span> <span class="o">=</span> <span class="sr">&lt;STDIN&gt;</span><span class="p">);</span>
-</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="nv">$guess</span> <span class="o">=~</span><span class="sr"> /quit|exit|\A\s*\z/i</span><span class="p">){</span>
-</span><span class="line">        <span class="k">print</span> <span class="s">&quot;sorry you gave up, the number was $secret.\n&quot;</span><span class="p">;</span>
-</span><span class="line">        <span class="k">last</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span> <span class="k">elsif</span> <span class="p">(</span><span class="nv">$guess</span> <span class="o">&lt;</span> <span class="nv">$secret</span><span class="p">){</span>
-</span><span class="line">        <span class="k">print</span> <span class="s">&quot;too small!\n&quot;</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span> <span class="k">elsif</span> <span class="p">(</span><span class="nv">$guess</span> <span class="o">==</span> <span class="nv">$secret</span><span class="p">){</span>
-</span><span class="line">        <span class="k">print</span> <span class="s">&quot;that was it!\n&quot;</span><span class="p">;</span>
-</span><span class="line">        <span class="k">last</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span><span class="line">        <span class="k">print</span> <span class="s">&quot;too large!\n&quot;</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/42/">&larr; Older</a>
@@ -385,6 +413,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2024/08/29/2022nian-de-gong-zuo-he-sheng-huo-jing-li/">2022年的工作和生活经历</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2021/01/04/jupytershang-shi-yong-matplotlibhua-tu-de-%5B%3F%5D-xie-you-yong-de-she-zhi/">Jupyter上使用matplotlib画图的一些有用的设置</a>
@@ -422,10 +454,6 @@
         <a href="/blog/2019/08/14/gradient-boosting-algorithm/">Gradient Boosting 算法的一些资料</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2019/08/01/shi-yong-sparkde-mllibjin-xing-ji-qi-xue-xi/">使用Spark的MLlib进行机器学习</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -447,6 +475,7 @@
 <li class='category'><a href='/blog/categories/ruby/'>Ruby (1)</a></li>
 <li class='category'><a href='/blog/categories/scala/'>Scala (1)</a></li>
 <li class='category'><a href='/blog/categories/shell/'>Shell (12)</a></li>
+<li class='category'><a href='/blog/categories/gan-wu/'>感悟 (1)</a></li>
 
   </ul>
 </section>
@@ -457,7 +486,7 @@
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2022 - Steven Sun -
+  Copyright &copy; 2024 - Steven Sun -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

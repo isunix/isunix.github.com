@@ -9,7 +9,9 @@
   <meta name="author" content="Steven Sun">
 
   
-  <meta name="description" content="2019年年中开始，后面的工作内容应该有所调整。 自从16年6月底，从上海回到合肥，加入到华米科技， 到现在整整3年了。 从16年年中，到17年年初，基本一个人在做数据分析和报表。17年初到18年中， 带了一个新加入的同事A一起做数据分析和ETL等相关工作。 18年中，A去做上游的导数的事情， &hellip;">
+  <meta name="description" content="在R语言中，如果我们有一个vector 叫 x, x 的值中有 NA，如果我们想要过滤掉 x 中的 NA, 并把过滤后的结果，赋值给变量 y， 可以如下操作: 1
+y &lt;- x[!is.na(x)] 如果我们再想找出 y 中元素大于0的元素，可以如下操作L: 1
+y[y &gt; 0] &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -93,6 +95,104 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2019/07/05/ryu-yan-de-%5B%3F%5D-xie-ji-lu/">R语言的一些记录</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2019-07-05T08:00:01+08:00" pubdate data-updated="true">2019 年7 月5 日</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>在R语言中，如果我们有一个<code>vector</code> 叫 <code>x</code>, <code>x</code> 的值中有 <code>NA</code>，如果我们想要过滤掉 <code>x</code> 中的 <code>NA</code>, 并把过滤后的结果，赋值给变量 <code>y</code>， 可以如下操作:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="r"><span class="line">y <span class="o">&lt;-</span> x<span class="p">[</span><span class="o">!</span>is.na<span class="p">(</span>x<span class="p">)]</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>如果我们再想找出 <code>y</code> 中元素大于0的元素，可以如下操作L:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="r"><span class="line">y<span class="p">[</span>y <span class="o">&gt;</span> <span class="m">0</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>以上两步合在一起，可以如下操作:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="r"><span class="line">x<span class="p">[</span><span class="o">!</span>is.na<span class="p">(</span>x<span class="p">)</span> <span class="o">&amp;</span> x <span class="o">&gt;</span> <span class="m">0</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>如果我们直接使用 <code>x[x &gt; 0]</code> 是不行的，会得到如下的包含<code>NA</code> 值的一个 <code>vector</code>:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="r"><span class="line"> <span class="kc">NA</span>        <span class="kc">NA</span> <span class="m">0.3488261</span>        <span class="kc">NA</span> <span class="m">2.4099262</span>        <span class="kc">NA</span>        <span class="kc">NA</span>        <span class="kc">NA</span>        <span class="kc">NA</span>        <span class="kc">NA</span> <span class="m">0.4626879</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>创建一个4行5列的<code>matrix</code>，包含的数值是从1到20，</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="r"><span class="line">my_matrix <span class="o">&lt;-</span> matrix<span class="p">(</span>data<span class="o">=</span><span class="m">1</span><span class="o">:</span><span class="m">20</span><span class="p">,</span> nrow <span class="o">=</span> <span class="m">4</span><span class="p">,</span> ncol <span class="o">=</span> <span class="m">5</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>如果我想给这个<code>matrix</code>的每行添加一列，作为名字，可以采用如下的方式</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="r"><span class="line">patients <span class="o">&lt;-</span> c<span class="p">(</span><span class="s">&quot;Bill&quot;</span><span class="p">,</span> <span class="s">&quot;Gina&quot;</span><span class="p">,</span> <span class="s">&quot;Kelly&quot;</span><span class="p">,</span> <span class="s">&quot;Sean&quot;</span><span class="p">)</span>
+</span><span class="line">cbind<span class="p">(</span>patients<span class="p">,</span> my_matrix<span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>但是上面这种方式，会导致<code>implicit coercion</code>, 把数字变成字符，为了解决这个问题，我们可以使用如下的方式</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="r"><span class="line">my_data <span class="o">&lt;-</span> data.frame<span class="p">(</span>patients<span class="p">,</span> my_matrix<span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>如果我们再想给每个列增加一个<code>name</code>, 可以使用如下的方式:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="r"><span class="line">cnames <span class="o">&lt;-</span> c<span class="p">(</span><span class="s">&quot;patient&quot;</span><span class="p">,</span> <span class="s">&quot;age&quot;</span><span class="p">,</span> <span class="s">&quot;weight&quot;</span><span class="p">,</span> <span class="s">&quot;bp&quot;</span><span class="p">,</span> <span class="s">&quot;rating&quot;</span><span class="p">,</span> <span class="s">&quot;test&quot;</span><span class="p">)</span>
+</span><span class="line">colnames<span class="p">(</span>my_data<span class="p">)</span> <span class="o">&lt;-</span> cnames
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>如果我们想要获取当前的工作目录,</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="r"><span class="line">getwd<span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>如果我们想要切换到另外一个目录，可以</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="r"><span class="line">setwd<span class="p">(</span><span class="s">&quot;~/data/ISLR&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -431,68 +531,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2019/07/02/yong-pythonlai-fa-song-markdownge-shi-de-you-jian/">用Python来发送markdown格式的邮件</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2019-07-02T15:19:06+08:00" pubdate data-updated="true">2019 年7 月2 日</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2 id="httpsgithubcomyejianyemdmail">https://github.com/yejianye/mdmail</h2>
-
-<p>mdmail， 这个是一个支持用 markdown 格式来发送邮件的工具.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-</pre></td><td class="code"><pre><code class="py"><span class="line"><span class="kn">import</span> <span class="nn">mdmail</span>
-</span><span class="line">
-</span><span class="line"><span class="n">email</span><span class="o">=</span><span class="s">&quot;&quot;&quot;</span>
-</span><span class="line"><span class="s"># Sample Email</span>
-</span><span class="line"><span class="s">- Python is awesome</span>
-</span><span class="line"><span class="s">- Markdown is cool</span>
-</span><span class="line"><span class="s">&quot;&quot;&quot;</span>
-</span><span class="line">
-</span><span class="line"><span class="n">mdmail</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">email</span><span class="p">,</span> <span class="n">subject</span><span class="o">=</span><span class="s">&#39;Sample Email Mdmail&#39;</span><span class="p">,</span>
-</span><span class="line">            <span class="n">from_email</span><span class="o">=</span><span class="s">&#39;mypeacelover@163.com&#39;</span><span class="p">,</span> <span class="n">to_email</span><span class="o">=</span><span class="s">&#39;mypeacelover@163.com&#39;</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>很好用, 汪汪.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/8/">&larr; Older</a>
@@ -508,6 +546,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2024/08/29/2022nian-de-gong-zuo-he-sheng-huo-jing-li/">2022年的工作和生活经历</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2021/01/04/jupytershang-shi-yong-matplotlibhua-tu-de-%5B%3F%5D-xie-you-yong-de-she-zhi/">Jupyter上使用matplotlib画图的一些有用的设置</a>
@@ -545,10 +587,6 @@
         <a href="/blog/2019/08/14/gradient-boosting-algorithm/">Gradient Boosting 算法的一些资料</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2019/08/01/shi-yong-sparkde-mllibjin-xing-ji-qi-xue-xi/">使用Spark的MLlib进行机器学习</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -570,6 +608,7 @@
 <li class='category'><a href='/blog/categories/ruby/'>Ruby (1)</a></li>
 <li class='category'><a href='/blog/categories/scala/'>Scala (1)</a></li>
 <li class='category'><a href='/blog/categories/shell/'>Shell (12)</a></li>
+<li class='category'><a href='/blog/categories/gan-wu/'>感悟 (1)</a></li>
 
   </ul>
 </section>
@@ -580,7 +619,7 @@
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2022 - Steven Sun -
+  Copyright &copy; 2024 - Steven Sun -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 
